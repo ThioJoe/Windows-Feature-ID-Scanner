@@ -1,3 +1,4 @@
+# windows-scanner.yml
 name: Windows Feature Scanner
 
 on:
@@ -12,11 +13,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # windows-latest uses x64 architecture by default
-        # Note: GitHub-hosted runners currently only support x64 Windows.
-        # ARM64 Windows runners would need to be self-hosted.
-        # This configuration prioritizes windows-latest (x64) and can be
-        # extended to include windows-latest-arm when available.
         os: [windows-latest]
       fail-fast: false
 
@@ -42,10 +38,13 @@ jobs:
           echo "version=$version" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
 
-      - name: Run scanner script
+      - name: Download and Extract ViVeTool
         shell: powershell
-        run: |
-          .\scanner-script.ps1
+        run: .\download-vivetool.ps1
+
+      - name: Run feature scanner script
+        shell: powershell
+        run: .\scan-features.ps1
 
       - name: Create output directory based on build version
         shell: powershell
