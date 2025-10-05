@@ -38,17 +38,22 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: Added much more detailed logging and a final diagnostic step.
+      # UPDATED: Now installs the Windows SDK via winget if tools are missing.
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Downloading symbols..."
           
+          # 1. Install the Windows SDK to ensure debugging tools are present.
+          Write-Host "[LOG] Attempting to install the Windows SDK via winget..."
+          winget install -e --id Microsoft.WindowsSDK --accept-source-agreements --accept-package-agreements
+          
+          # 2. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           $symChkPath = $null
           
-          # Stage 1: Check the most common, specific paths first.
+          # 3. Stage 1: Check the most common, specific paths first for speed.
           Write-Host "[LOG] Stage 1: Performing fast check for symchk.exe..."
           $directPaths = @(
             "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
@@ -62,7 +67,7 @@ jobs:
             }
           }
           
-          # Stage 2: If not found, perform an optimized recursive search.
+          # 4. Stage 2: If not found, perform an optimized recursive search.
           if (-not $symChkPath) {
             Write-Host "[LOG] Stage 1 failed. Starting Stage 2: Optimized recursive search..."
             $baseSearchPaths = @(
@@ -70,8 +75,7 @@ jobs:
               "C:\Program Files\Windows Kits"
             )
             foreach ($path in $baseSearchPaths) {
-              if (-not (Test-Path $path)) { continue } # Skip if the base 'Windows Kits' folder doesn't exist
-              
+              if (-not (Test-Path $path)) { continue }
               $debuggerDir = Get-ChildItem -Path $path -Directory -Filter "Debuggers" -ErrorAction SilentlyContinue | Select-Object -First 1
               if ($debuggerDir) {
                 Write-Host "[LOG] Found Debuggers directory at $($debuggerDir.FullName). Searching inside..."
@@ -86,18 +90,12 @@ jobs:
             }
           }
 
-          # Stage 3: Run the symbol checker or fail with diagnostics.
+          # 5. Run the symbol checker or fail with diagnostics.
           if ($symChkPath) {
             Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
             & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
           } else {
-            Write-Error "Could not automatically locate symchk.exe after all search stages."
-            Write-Host "--- DIAGNOSTIC INFORMATION ---"
-            Write-Host "Listing contents of 'C:\Program Files (x86)\Windows Kits\10'..."
-            Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10" -ErrorAction SilentlyContinue
-            Write-Host "Listing contents of 'C:\Program Files\Windows Kits\10'..."
-            Get-ChildItem -Path "C:\Program Files\Windows Kits\10" -ErrorAction SilentlyContinue
-            Write-Host "--- END DIAGNOSTIC ---"
+            Write-Error "Could not automatically locate symchk.exe even after attempting SDK install."
             exit 1
           }
           
