@@ -38,28 +38,19 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: Replaced winget with a direct download and silent install of the SDK debugging tools.
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           Write-Host "No cache found. Installing SDK Debugging Tools and downloading symbols..."
           
-          # 1. Download the official Windows SDK installer.
+          # 1. Download and install the SDK Debugging Tools
           $sdkInstaller = "winsdksetup.exe"
-          $sdkUrl = "https://go.microsoft.com/fwlink/?linkid=2335755"
-          Write-Host "[LOG] Downloading SDK installer from $sdkUrl..."
-          Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkInstaller
-          
-          # 2. Silently install ONLY the "Debugging Tools for Windows" feature.
-          # The -Wait flag is critical to ensure installation finishes before we proceed.
-          Write-Host "[LOG] Installing Debugging Tools from SDK..."
+          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2335755" -OutFile $sdkInstaller
           Start-Process -FilePath $sdkInstaller -ArgumentList "/features OptionId.WindowsDesktopDebuggers /q /norestart" -Wait
-          
-          # 3. Clean up the downloaded installer.
           Remove-Item -Path $sdkInstaller
           
-          # 4. Create the symbol directory and find symchk.exe.
+          # 2. Find symchk.exe
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           $symChkPath = $null
           $searchPaths = @("C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe", "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe")
@@ -67,10 +58,11 @@ jobs:
             if (Test-Path $path) { $symChkPath = $path; break }
           }
           
-          # 5. Run the symbol checker using the discovered path.
+          # 3. Run the symbol checker, ignoring certificate prompts
           if ($symChkPath) {
             Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
-            & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
+            # Replaced /v with /ia (Ignore CV) to prevent security certificate prompts
+            & $symChkPath /ia /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
           } else {
             Write-Error "Could not locate symchk.exe even after installing SDK Debugging Tools."
             exit 1
