@@ -38,38 +38,55 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: Now updates WinGet itself before using it.
+      # UPDATED: Now installs the Windows SDK via winget if tools are missing.
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
         run: |
-          Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Preparing to download symbols..."
+          Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Downloading symbols..."
           
-          # 1. Update WinGet (App Installer) to fix the first-run agreement bug.
-          Write-Host "[LOG] Updating WinGet by installing the latest App Installer package..."
-          $wingetUpdaterPath = "winget_updater.msixbundle"
-          Invoke-WebRequest -Uri "https://aka.ms/getwinget" -OutFile $wingetUpdaterPath
-          Add-AppxPackage -Path $wingetUpdaterPath
-          Remove-Item -Path $wingetUpdaterPath
-          Write-Host "[LOG] WinGet update complete."
-
-          # 2. Now that WinGet is updated, install the Windows SDK.
-          Write-Host "[LOG] Attempting to install the Windows SDK via updated WinGet..."
-          winget install -e --id Microsoft.WindowsSDK --accept-source-agreements --accept-package-agreements
+          # 1. Install the Windows SDK to ensure debugging tools are present.
+          Write-Host "[LOG] Attempting to install the Windows SDK via winget..."
+          winget install -e --id Microsoft.WindowsSDK --accept-source-agreements --accept-package-agreements --source msstore
           
-          # 3. Create the directory for the symbols
+          # 2. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           $symChkPath = $null
           
-          # 4. Find symchk.exe
-          Write-Host "[LOG] Searching for symchk.exe..."
-          $baseSearchPaths = @("C:\Program Files (x86)\Windows Kits", "C:\Program Files\Windows Kits")
-          foreach ($path in $baseSearchPaths) {
-            if (-not (Test-Path $path)) { continue }
-            $debuggerDir = Get-ChildItem -Path $path -Directory -Filter "Debuggers" -ErrorAction SilentlyContinue | Select-Object -First 1
-            if ($debuggerDir) {
-              $found = Get-ChildItem -Path $debuggerDir.FullName -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-              if ($found) { $symChkPath = $found.FullName; break }
+          # 3. Stage 1: Check the most common, specific paths first for speed.
+          Write-Host "[LOG] Stage 1: Performing fast check for symchk.exe..."
+          $directPaths = @(
+            "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
+            "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe"
+          )
+          foreach ($path in $directPaths) {
+            Write-Host "[LOG] Checking path: $path"
+            if (Test-Path $path) {
+              $symChkPath = $path
+              break
+            }
+          }
+          
+          # 4. Stage 2: If not found, perform an optimized recursive search.
+          if (-not $symChkPath) {
+            Write-Host "[LOG] Stage 1 failed. Starting Stage 2: Optimized recursive search..."
+            $baseSearchPaths = @(
+              "C:\Program Files (x86)\Windows Kits",
+              "C:\Program Files\Windows Kits"
+            )
+            foreach ($path in $baseSearchPaths) {
+              if (-not (Test-Path $path)) { continue }
+              $debuggerDir = Get-ChildItem -Path $path -Directory -Filter "Debuggers" -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($debuggerDir) {
+                Write-Host "[LOG] Found Debuggers directory at $($debuggerDir.FullName). Searching inside..."
+                $found = Get-ChildItem -Path $debuggerDir.FullName -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+                if ($found) {
+                  $symChkPath = $found.FullName
+                  break
+                }
+              } else {
+                Write-Host "[LOG] Did NOT find a 'Debuggers' subdirectory in $path."
+              }
             }
           }
 
