@@ -58,22 +58,21 @@ jobs:
             if (Test-Path $path) { $symChkPath = $path; break }
           }
           
-          # 3. Run the symbol checker and handle its exit code
+          # 3. Run the symbol checker and explicitly control the exit code.
           if ($symChkPath) {
             Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
             & $symChkPath /op /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols" | Out-Host
             
-            # Check the exit code. If it's non-zero, issue a warning but don't fail the step.
             Write-Host "symchk.exe finished with exit code: $LASTEXITCODE"
-            if ($LASTEXITCODE -ne 0) {
-              Write-Warning "symchk.exe reported failures for some files, which is expected. Treating as success so cache will be saved."
-            }
+            Write-Warning "Even if symchk reported errors, we will force a success code (0) so the workflow continues and the cache is saved."
+            
+            # Force a 'success' exit code for this step.
+            exit 0
           } else {
             Write-Error "Could not locate symchk.exe even after installing SDK Debugging Tools."
+            # Force a 'failure' exit code for this step.
             exit 1
           }
-          
-          Write-Host "Symbol download complete."
 
       - name: Download and Extract ViVeTool
         shell: powershell
