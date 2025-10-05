@@ -9,15 +9,18 @@ Write-Host ""
 
 # --- System Information Gathering ---
 Write-Host "[LOG] Gathering system information..."
+# Get base OS info from WMI
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-$computerInfo = Get-CimInstance -ClassName Win32_ComputerSystem
+# Get detailed build info from the registry
+$regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+$fullBuildString = "$($osInfo.BuildNumber).$($regInfo.UBR)"
+$productName = $regInfo.ProductName
 
 Write-Host "System Information:"
-Write-Host "  OS Name: $($osInfo.Caption)"
-Write-Host "  OS Version: $($osInfo.Version)"
-Write-Host "  Build Number: $($osInfo.BuildNumber)"
+Write-Host "  Product Name: $productName"
+Write-Host "  Full Build: $fullBuildString"
 Write-Host "  Architecture: $($env:PROCESSOR_ARCHITECTURE)"
-Write-Host "  Computer Name: $($computerInfo.Name)"
+Write-Host "  Computer Name: $($osInfo.Name)"
 Write-Host ""
 
 # --- Create Output Directory Early ---
@@ -51,7 +54,7 @@ if (-not (Test-Path $viveToolPath)) {
     $blockCounter = 0
     $parsedFeatures = foreach ($block in $featureBlocks) {
         $blockCounter++
-        Write-Host "[LOG] Parsing block $blockCounter of $($featureBlocks.Count)..."
+        Write-Host "[LOG] Parsing block $blockCounter of $($featureBlocks.Count)..." -NoNewline
         $id = $null
         $name = $null
         $properties = @{}
@@ -59,9 +62,8 @@ if (-not (Test-Path $viveToolPath)) {
         if ($block -match '\[(\d+)\](?:\s\(([^)]+)\))?') {
             $id = $matches[1]
             $name = if ($matches.Count -gt 2) { $matches[2] } else { '' }
-            Write-Host "  [OK] Extracted ID: $id, Name: '$name'"
         } else {
-            Write-Warning "  [SKIP] Could not parse feature ID from block: $block"
+            Write-Host " - [SKIP] Could not parse feature ID."
             continue
         }
 
@@ -73,7 +75,7 @@ if (-not (Test-Path $viveToolPath)) {
                 $properties[$key] = $value
             }
         }
-        Write-Host "  [OK] Extracted $($properties.Count) properties."
+        Write-Host " - [OK] ID: $id"
 
         [PSCustomObject]@{
             Id          = [uint32]$id
@@ -92,6 +94,7 @@ Write-Host ""
 
 # --- File Generation ---
 Write-Host "[LOG] Starting file generation..."
+$computerInfo = Get-CimInstance -ClassName Win32_ComputerSystem
 
 # Generate output file 1: System info
 $systemInfoFile = Join-Path $outputDir "system-info.txt"
@@ -100,9 +103,9 @@ Windows Feature Scanner Output
 Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
 
 Operating System Information:
-- OS Name: $($osInfo.Caption)
-- OS Version: $($osInfo.Version)
-- Build Number: $($osInfo.BuildNumber)
+- Product Name: $productName
+- Display Version: $($regInfo.DisplayVersion)
+- Full Build: $fullBuildString
 - Architecture: $($env:PROCESSOR_ARCHITECTURE)
 - Install Date: $($osInfo.InstallDate)
 - Last Boot Time: $($osInfo.LastBootUpTime)
@@ -121,6 +124,7 @@ $featureListFile = Join-Path $outputDir "feature-list.txt"
 $featureListHeader = @"
 Windows Feature List
 Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+Full Build: $fullBuildString
 Total Configurations Found: $($parsedFeatures.Count)
 "@
 $featureListHeader | Out-File -FilePath $featureListFile -Encoding UTF8
@@ -153,9 +157,6 @@ $jsonFeatures = @(foreach ($group in $groupedFeatures) {
     @{
         id   = $firstEntry.Id
         name = $firstEntry.Name
-        # **FIX**: Removed the logic that incorrectly stripped properties.
-        # We now just select the properties we want for each configuration.
-        # ConvertTo-Json will correctly omit properties that are null.
         configurations = @(
             $group.Group | ForEach-Object {
                 $_ | Select-Object -Property Priority, State, Type, Variant, PayloadKind, Payload
@@ -165,11 +166,13 @@ $jsonFeatures = @(foreach ($group in $groupedFeatures) {
 })
 
 $jsonData = @{
-    timestamp    = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
-    buildNumber  = $osInfo.BuildNumber
-    osVersion    = $osInfo.Version
-    architecture = $env:PROCESSOR_ARCHITECTURE
-    features     = $jsonFeatures
+    timestamp       = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
+    productName     = $productName
+    displayVersion  = $regInfo.DisplayVersion
+    buildNumber     = $osInfo.BuildNumber
+    fullBuild       = $fullBuildString
+    architecture    = $env:PROCESSOR_ARCHITECTURE
+    features        = $jsonFeatures
 } | ConvertTo-Json -Depth 5
 
 $jsonData | Out-File -FilePath $jsonOutputFile -Encoding UTF8
