@@ -1,0 +1,73 @@
+# windows-scanner.yml
+name: Windows Feature Scanner
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Windows version and build info
+        id: windows-info
+        shell: powershell
+        run: |
+          $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+          $build = $osInfo.BuildNumber
+          $version = $osInfo.Version
+          $architecture = $env:PROCESSOR_ARCHITECTURE
+
+          Write-Host "Windows Version: $version"
+          Write-Host "Build Number: $build"
+          Write-Host "Architecture: $architecture"
+
+          # Set output for later steps
+          echo "build=$build" >> $env:GITHUB_OUTPUT
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
+
+      - name: Download and Extract ViVeTool
+        shell: powershell
+        run: .\download-vivetool.ps1
+
+      - name: Run feature scanner script
+        shell: powershell
+        run: .\scan-features.ps1
+
+      - name: Create output directory based on build version
+        shell: powershell
+        run: |
+          $buildFolder = "output/Windows-Build-${{ steps.windows-info.outputs.build }}-${{ steps.windows-info.outputs.architecture }}"
+          New-Item -ItemType Directory -Force -Path $buildFolder
+          echo "BUILD_FOLDER=$buildFolder" >> $env:GITHUB_ENV
+
+      - name: Copy output files to build-specific folder
+        shell: powershell
+        run: |
+          # Copy any output files from the script to the build-specific folder
+          if (Test-Path "output-temp\*") {
+            Copy-Item -Path "output-temp\*" -Destination $env:BUILD_FOLDER -Recurse -Force
+            Write-Host "Files copied to $env:BUILD_FOLDER"
+            Get-ChildItem -Path $env:BUILD_FOLDER -Recurse
+          } else {
+            Write-Host "No output files found in output-temp directory"
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scanner-output-build-${{ steps.windows-info.outputs.build }}-${{ steps.windows-info.outputs.architecture }}
+          path: output/
+          if-no-files-found: warn
