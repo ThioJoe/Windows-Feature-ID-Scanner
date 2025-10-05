@@ -43,11 +43,24 @@ jobs:
         shell: powershell
         run: |
           Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Downloading symbols..."
-          # Example using symchk.exe to download symbols for system32.
-          # This command may need to be adjusted based on the specific symbols you need.
-          # $sdkPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
-          # & "$sdkPath\symchk.exe" /r C:\Windows\System32 /s SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols
-          Write-Host "Symbol download placeholder. Add your symbol download commands here."
+          
+          # 1. Create the directory for the symbols
+          New-Item -Path "C:\Symbols" -ItemType Directory -Force
+          
+          # 2. Define path to the symchk.exe tool from the pre-installed Windows SDK
+          $sdkDebuggerPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
+          $symChk = Join-Path $sdkDebuggerPath "symchk.exe"
+          
+          # 3. Run the symbol checker to download symbols for core OS files
+          # This command downloads symbols for everything in System32 and stores them in C:\Symbols
+          if (Test-Path $symChk) {
+            & $symChk /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
+          } else {
+            Write-Error "symchk.exe not found at $sdkDebuggerPath. Cannot download symbols."
+            exit 1
+          }
+          
+          Write-Host "Symbol download complete."
 
       - name: Download and Extract ViVeTool
         shell: powershell
