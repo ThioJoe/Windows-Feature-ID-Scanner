@@ -38,6 +38,7 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
+      # UPDATED: This step now dynamically finds symchk.exe instead of using a hardcoded path.
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
@@ -47,16 +48,16 @@ jobs:
           # 1. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           
-          # 2. Define path to the symchk.exe tool from the pre-installed Windows SDK
-          $sdkDebuggerPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
-          $symChk = Join-Path $sdkDebuggerPath "symchk.exe"
+          # 2. Dynamically search for the symchk.exe tool
+          Write-Host "Searching for symchk.exe in C:\Program Files (x86)\Windows Kits..."
+          $symChkPath = (Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).FullName
           
-          # 3. Run the symbol checker to download symbols for core OS files
-          # This command downloads symbols for everything in System32 and stores them in C:\Symbols
-          if (Test-Path $symChk) {
-            & $symChk /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
+          # 3. Run the symbol checker using the discovered path
+          if ($symChkPath) {
+            Write-Host "Found symchk.exe at: $symChkPath"
+            & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
           } else {
-            Write-Error "symchk.exe not found at $sdkDebuggerPath. Cannot download symbols."
+            Write-Error "Could not automatically locate symchk.exe in 'C:\Program Files (x86)\Windows Kits'. Cannot download symbols."
             exit 1
           }
           
