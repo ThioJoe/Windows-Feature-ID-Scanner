@@ -38,57 +38,66 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: Implemented a faster, multi-stage search for symchk.exe
+      # UPDATED: Added much more detailed logging and a final diagnostic step.
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Downloading symbols..."
           
-          # 1. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           $symChkPath = $null
           
-          # 2. Stage 1: Check the most common, specific paths first for speed.
+          # Stage 1: Check the most common, specific paths first.
+          Write-Host "[LOG] Stage 1: Performing fast check for symchk.exe..."
           $directPaths = @(
             "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
             "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe"
           )
-          Write-Host "Performing fast check for symchk.exe in common locations..."
           foreach ($path in $directPaths) {
+            Write-Host "[LOG] Checking path: $path"
             if (Test-Path $path) {
               $symChkPath = $path
               break
             }
           }
           
-          # 3. Stage 2: If not found, perform a more optimized recursive search.
+          # Stage 2: If not found, perform an optimized recursive search.
           if (-not $symChkPath) {
-            Write-Host "Direct path check failed. Performing optimized recursive search..."
+            Write-Host "[LOG] Stage 1 failed. Starting Stage 2: Optimized recursive search..."
             $baseSearchPaths = @(
               "C:\Program Files (x86)\Windows Kits",
               "C:\Program Files\Windows Kits"
             )
             foreach ($path in $baseSearchPaths) {
-              # First, check if a 'Debuggers' subdirectory exists to avoid a slow, pointless search.
+              if (-not (Test-Path $path)) { continue } # Skip if the base 'Windows Kits' folder doesn't exist
+              
               $debuggerDir = Get-ChildItem -Path $path -Directory -Filter "Debuggers" -ErrorAction SilentlyContinue | Select-Object -First 1
               if ($debuggerDir) {
-                Write-Host "Found Debuggers directory, searching within $($debuggerDir.FullName)..."
+                Write-Host "[LOG] Found Debuggers directory at $($debuggerDir.FullName). Searching inside..."
                 $found = Get-ChildItem -Path $debuggerDir.FullName -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
                 if ($found) {
                   $symChkPath = $found.FullName
                   break
                 }
+              } else {
+                Write-Host "[LOG] Did NOT find a 'Debuggers' subdirectory in $path."
               }
             }
           }
 
-          # 4. Run the symbol checker using the discovered path
+          # Stage 3: Run the symbol checker or fail with diagnostics.
           if ($symChkPath) {
-            Write-Host "Found symchk.exe at: $symChkPath"
+            Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
             & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
           } else {
-            Write-Error "Could not automatically locate symchk.exe. Cannot download symbols."
+            Write-Error "Could not automatically locate symchk.exe after all search stages."
+            Write-Host "--- DIAGNOSTIC INFORMATION ---"
+            Write-Host "Listing contents of 'C:\Program Files (x86)\Windows Kits\10'..."
+            Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10" -ErrorAction SilentlyContinue
+            Write-Host "Listing contents of 'C:\Program Files\Windows Kits\10'..."
+            Get-ChildItem -Path "C:\Program Files\Windows Kits\10" -ErrorAction SilentlyContinue
+            Write-Host "--- END DIAGNOSTIC ---"
             exit 1
           }
           
