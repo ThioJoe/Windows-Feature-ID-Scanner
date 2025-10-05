@@ -24,18 +24,22 @@ jobs:
         id: windows-info
         shell: powershell
         run: |
+          # Get base OS info from WMI
           $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+          # Get detailed build info (including revision) from the registry
+          $regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+
           $build = $osInfo.BuildNumber
-          $version = $osInfo.Version
+          $fullBuild = "$($osInfo.BuildNumber).$($regInfo.UBR)"
           $architecture = $env:PROCESSOR_ARCHITECTURE
 
-          Write-Host "Windows Version: $version"
-          Write-Host "Build Number: $build"
+          Write-Host "Base Build: $build"
+          Write-Host "Full Build: $fullBuild"
           Write-Host "Architecture: $architecture"
 
           # Set output for later steps
           echo "build=$build" >> $env:GITHUB_OUTPUT
-          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "full_build=$fullBuild" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
 
       - name: Download and Extract ViVeTool
@@ -49,14 +53,13 @@ jobs:
       - name: Create output directory based on build version
         shell: powershell
         run: |
-          $buildFolder = "output/Windows-Build-${{ steps.windows-info.outputs.build }}-${{ steps.windows-info.outputs.architecture }}"
+          $buildFolder = "output/Windows-Build-${{ steps.windows-info.outputs.full_build }}-${{ steps.windows-info.outputs.architecture }}"
           New-Item -ItemType Directory -Force -Path $buildFolder
           echo "BUILD_FOLDER=$buildFolder" >> $env:GITHUB_ENV
 
       - name: Copy output files to build-specific folder
         shell: powershell
         run: |
-          # Copy any output files from the script to the build-specific folder
           if (Test-Path "output-temp\*") {
             Copy-Item -Path "output-temp\*" -Destination $env:BUILD_FOLDER -Recurse -Force
             Write-Host "Files copied to $env:BUILD_FOLDER"
@@ -68,6 +71,6 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: scanner-output-build-${{ steps.windows-info.outputs.build }}-${{ steps.windows-info.outputs.architecture }}
+          name: scanner-output-build-${{ steps.windows-info.outputs.full_build }}-${{ steps.windows-info.outputs.architecture }}
           path: output/
           if-no-files-found: warn
