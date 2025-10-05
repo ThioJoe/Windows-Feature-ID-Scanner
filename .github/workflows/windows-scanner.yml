@@ -10,12 +10,7 @@ on:
 
 jobs:
   scan:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-      fail-fast: false
-
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,23 +19,35 @@ jobs:
         id: windows-info
         shell: powershell
         run: |
-          # Get base OS info from WMI
           $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-          # Get detailed build info (including revision) from the registry
           $regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
-
           $build = $osInfo.BuildNumber
           $fullBuild = "$($osInfo.BuildNumber).$($regInfo.UBR)"
           $architecture = $env:PROCESSOR_ARCHITECTURE
-
           Write-Host "Base Build: $build"
           Write-Host "Full Build: $fullBuild"
           Write-Host "Architecture: $architecture"
-
-          # Set output for later steps
           echo "build=$build" >> $env:GITHUB_OUTPUT
           echo "full_build=$fullBuild" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
+
+      - name: Cache Windows Symbols
+        id: cache-symbols
+        uses: actions/cache@v4
+        with:
+          path: C:\Symbols
+          key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
+
+      - name: Download Symbols (if cache missed)
+        if: steps.cache-symbols.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          Write-Host "No cache found for build ${{ steps.windows-info.outputs.full_build }}. Downloading symbols..."
+          # Example using symchk.exe to download symbols for system32.
+          # This command may need to be adjusted based on the specific symbols you need.
+          # $sdkPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64"
+          # & "$sdkPath\symchk.exe" /r C:\Windows\System32 /s SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols
+          Write-Host "Symbol download placeholder. Add your symbol download commands here."
 
       - name: Download and Extract ViVeTool
         shell: powershell
