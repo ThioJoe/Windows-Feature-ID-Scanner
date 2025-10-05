@@ -58,11 +58,11 @@ jobs:
             if (Test-Path $path) { $symChkPath = $path; break }
           }
           
-          # 3. Run the symbol checker, ignoring certificate prompts
+          # 3. Run the symbol checker
           if ($symChkPath) {
             Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
-            # Replaced /v with /ia (Ignore CV) to prevent security certificate prompts
-            & $symChkPath /ia /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
+            # Added /op flag to list passing files and piped to Out-Host for real-time output.
+            & $symChkPath /op /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols" | Out-Host
           } else {
             Write-Error "Could not locate symchk.exe even after installing SDK Debugging Tools."
             exit 1
