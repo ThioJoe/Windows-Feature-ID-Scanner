@@ -38,7 +38,7 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: The script now searches both Program Files directories to find symchk.exe
+      # UPDATED: Implemented a faster, multi-stage search for symchk.exe
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
@@ -47,24 +47,43 @@ jobs:
           
           # 1. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
-          
-          # 2. Define possible locations and search for the symchk.exe tool
-          $searchPaths = @(
-            "C:\Program Files (x86)\Windows Kits",
-            "C:\Program Files\Windows Kits"
-          )
           $symChkPath = $null
           
-          foreach ($path in $searchPaths) {
-            Write-Host "Searching for symchk.exe in $path..."
-            $found = Get-ChildItem -Path $path -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-            if ($found) {
-              $symChkPath = $found.FullName
+          # 2. Stage 1: Check the most common, specific paths first for speed.
+          $directPaths = @(
+            "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
+            "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe"
+          )
+          Write-Host "Performing fast check for symchk.exe in common locations..."
+          foreach ($path in $directPaths) {
+            if (Test-Path $path) {
+              $symChkPath = $path
               break
             }
           }
           
-          # 3. Run the symbol checker using the discovered path
+          # 3. Stage 2: If not found, perform a more optimized recursive search.
+          if (-not $symChkPath) {
+            Write-Host "Direct path check failed. Performing optimized recursive search..."
+            $baseSearchPaths = @(
+              "C:\Program Files (x86)\Windows Kits",
+              "C:\Program Files\Windows Kits"
+            )
+            foreach ($path in $baseSearchPaths) {
+              # First, check if a 'Debuggers' subdirectory exists to avoid a slow, pointless search.
+              $debuggerDir = Get-ChildItem -Path $path -Directory -Filter "Debuggers" -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($debuggerDir) {
+                Write-Host "Found Debuggers directory, searching within $($debuggerDir.FullName)..."
+                $found = Get-ChildItem -Path $debuggerDir.FullName -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+                if ($found) {
+                  $symChkPath = $found.FullName
+                  break
+                }
+              }
+            }
+          }
+
+          # 4. Run the symbol checker using the discovered path
           if ($symChkPath) {
             Write-Host "Found symchk.exe at: $symChkPath"
             & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
