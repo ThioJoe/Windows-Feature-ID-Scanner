@@ -38,7 +38,7 @@ jobs:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
 
-      # UPDATED: This step now dynamically finds symchk.exe instead of using a hardcoded path.
+      # UPDATED: The script now searches both Program Files directories to find symchk.exe
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
         shell: powershell
@@ -48,16 +48,28 @@ jobs:
           # 1. Create the directory for the symbols
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           
-          # 2. Dynamically search for the symchk.exe tool
-          Write-Host "Searching for symchk.exe in C:\Program Files (x86)\Windows Kits..."
-          $symChkPath = (Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).FullName
+          # 2. Define possible locations and search for the symchk.exe tool
+          $searchPaths = @(
+            "C:\Program Files (x86)\Windows Kits",
+            "C:\Program Files\Windows Kits"
+          )
+          $symChkPath = $null
+          
+          foreach ($path in $searchPaths) {
+            Write-Host "Searching for symchk.exe in $path..."
+            $found = Get-ChildItem -Path $path -Filter "symchk.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($found) {
+              $symChkPath = $found.FullName
+              break
+            }
+          }
           
           # 3. Run the symbol checker using the discovered path
           if ($symChkPath) {
             Write-Host "Found symchk.exe at: $symChkPath"
             & $symChkPath /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols"
           } else {
-            Write-Error "Could not automatically locate symchk.exe in 'C:\Program Files (x86)\Windows Kits'. Cannot download symbols."
+            Write-Error "Could not automatically locate symchk.exe. Cannot download symbols."
             exit 1
           }
           
