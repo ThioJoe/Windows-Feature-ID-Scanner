@@ -147,6 +147,9 @@ jobs:
       - name: Copy output files to build-specific folder
         shell: powershell
         run: |
+          if (Test-Path "extracted-names.txt") {
+            Copy-Item -Path "extracted-names.txt" -Destination $env:BUILD_FOLDER -Force
+          }
           if (Test-Path "output-temp\*") {
             Copy-Item -Path "output-temp\*" -Destination $env:BUILD_FOLDER -Recurse -Force
             Write-Host "Files copied to $env:BUILD_FOLDER"
