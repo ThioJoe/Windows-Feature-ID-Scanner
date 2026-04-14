@@ -37,6 +37,8 @@ jobs:
         with:
           path: C:\Symbols
           key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
+          restore-keys: |
+            symbols-${{ runner.os }}-
 
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
