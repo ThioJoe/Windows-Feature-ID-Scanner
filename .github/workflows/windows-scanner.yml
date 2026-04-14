@@ -10,12 +10,7 @@ on:
 
 jobs:
   scan:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-      fail-fast: false
-
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,23 +19,60 @@ jobs:
         id: windows-info
         shell: powershell
         run: |
-          # Get base OS info from WMI
           $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-          # Get detailed build info (including revision) from the registry
           $regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
-
           $build = $osInfo.BuildNumber
           $fullBuild = "$($osInfo.BuildNumber).$($regInfo.UBR)"
           $architecture = $env:PROCESSOR_ARCHITECTURE
-
           Write-Host "Base Build: $build"
           Write-Host "Full Build: $fullBuild"
           Write-Host "Architecture: $architecture"
-
-          # Set output for later steps
           echo "build=$build" >> $env:GITHUB_OUTPUT
           echo "full_build=$fullBuild" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
+
+      - name: Cache Windows Symbols
+        id: cache-symbols
+        uses: actions/cache@v4
+        with:
+          path: C:\Symbols
+          key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
+
+      - name: Download Symbols (if cache missed)
+        if: steps.cache-symbols.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          Write-Host "No cache found. Installing SDK Debugging Tools and downloading symbols..."
+          
+          # 1. Download and install the SDK Debugging Tools
+          $sdkInstaller = "winsdksetup.exe"
+          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2335755" -OutFile $sdkInstaller
+          Start-Process -FilePath $sdkInstaller -ArgumentList "/features OptionId.WindowsDesktopDebuggers /q /norestart" -Wait
+          Remove-Item -Path $sdkInstaller
+          
+          # 2. Find symchk.exe
+          New-Item -Path "C:\Symbols" -ItemType Directory -Force
+          $symChkPath = $null
+          $searchPaths = @("C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe", "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe")
+          foreach ($path in $searchPaths) {
+            if (Test-Path $path) { $symChkPath = $path; break }
+          }
+          
+          # 3. Run the symbol checker and explicitly control the exit code.
+          if ($symChkPath) {
+            Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
+            & $symChkPath /op /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols" | Out-Host
+            
+            Write-Host "symchk.exe finished with exit code: $LASTEXITCODE"
+            Write-Warning "Even if symchk reported errors, we will force a success code (0) so the workflow continues and the cache is saved."
+            
+            # Force a 'success' exit code for this step.
+            exit 0
+          } else {
+            Write-Error "Could not locate symchk.exe even after installing SDK Debugging Tools."
+            # Force a 'failure' exit code for this step.
+            exit 1
+          }
 
       - name: Download and Extract ViVeTool
         shell: powershell
