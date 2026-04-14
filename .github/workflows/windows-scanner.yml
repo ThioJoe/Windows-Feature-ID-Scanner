@@ -48,7 +48,10 @@ jobs:
           
           # 1. Download and install the SDK Debugging Tools
           $sdkInstaller = "winsdksetup.exe"
+          $originalProgressPreference = $ProgressPreference
+          $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2335755" -OutFile $sdkInstaller
+          $ProgressPreference = $originalProgressPreference
           Start-Process -FilePath $sdkInstaller -ArgumentList "/features OptionId.WindowsDesktopDebuggers /q /norestart" -Wait
           Remove-Item -Path $sdkInstaller
           
@@ -80,16 +83,55 @@ jobs:
         shell: powershell
         run: .\download-vivetool.ps1
 
-      - name: Download and Extract ViVeTool
-        shell: powershell
-        run: .\download-vivetool.ps1
-
       - name: Download mach2 and extract symbols
         shell: powershell
         run: |
+          Write-Host "[DEBUG] Starting mach2 download..."
+          $originalProgressPreference = $ProgressPreference
+          $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://github.com/riverar/mach2/releases/download/0.7.0.0/mach2_0.7.0.0_x64.zip" -OutFile "mach2.zip"
+          $ProgressPreference = $originalProgressPreference
+          
+          if (Test-Path "mach2.zip") {
+              Write-Host "[DEBUG] mach2.zip downloaded successfully. Size: $((Get-Item 'mach2.zip').Length) bytes."
+          } else {
+              Write-Error "[DEBUG] mach2.zip failed to download."
+          }
+
+          Write-Host "[DEBUG] Extracting mach2.zip..."
           Expand-Archive -Path "mach2.zip" -DestinationPath . -Force
+          
+          if (Test-Path "mach2.exe") {
+              Write-Host "[DEBUG] mach2.exe extracted successfully."
+          } else {
+              Write-Error "[DEBUG] mach2.exe not found! Listing current directory contents:"
+              Get-ChildItem | Select-Object Name | Out-Host
+          }
+
+          Write-Host "[DEBUG] Checking C:\Symbols directory..."
+          if (Test-Path "C:\Symbols") {
+              $symFiles = Get-ChildItem -Path "C:\Symbols" -Recurse -File
+              Write-Host "[DEBUG] Found $($symFiles.Count) files inside C:\Symbols."
+          } else {
+              Write-Error "[DEBUG] C:\Symbols does not exist!"
+          }
+
+          Write-Host "[DEBUG] Running mach2 scan..."
           .\mach2.exe scan C:\Symbols > extracted-names.txt
+          Write-Host "[DEBUG] mach2.exe finished with exit code: $LASTEXITCODE"
+
+          if (Test-Path "extracted-names.txt") {
+              $extractedSize = (Get-Item 'extracted-names.txt').Length
+              Write-Host "[DEBUG] extracted-names.txt created. Size: $extractedSize bytes."
+              if ($extractedSize -gt 0) {
+                  Write-Host "[DEBUG] Preview of the first 5 lines of extracted-names.txt:"
+                  Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host
+              } else {
+                  Write-Host "[DEBUG] extracted-names.txt is empty (0 bytes)."
+              }
+          } else {
+              Write-Error "[DEBUG] extracted-names.txt was not created!"
+          }
 
       - name: Run feature scanner script
         shell: powershell
