@@ -36,9 +36,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: C:\Symbols
-          key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.full_build }}
+          key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-${{ steps.windows-info.outputs.full_build }}
           restore-keys: |
-            symbols-${{ runner.os }}-
+            symbols-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-
 
       - name: Download Symbols (if cache missed)
         if: steps.cache-symbols.outputs.cache-hit != 'true'
@@ -53,12 +53,17 @@ jobs:
           Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2335755" -OutFile $sdkInstaller
           $ProgressPreference = $originalProgressPreference
           Start-Process -FilePath $sdkInstaller -ArgumentList "/features OptionId.WindowsDesktopDebuggers /q /norestart" -Wait
-          Remove-Item -Path $sdkInstaller
+          Remove-Item -Path $sdkInstaller -Force -ErrorAction SilentlyContinue
           
           # 2. Find symchk.exe
           New-Item -Path "C:\Symbols" -ItemType Directory -Force
           $symChkPath = $null
-          $searchPaths = @("C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe", "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe")
+          $searchPaths = @(
+            "C:\Program Files (x86)\Windows Kits\10\Debuggers\arm64\symchk.exe",
+            "C:\Program Files\Windows Kits\10\Debuggers\arm64\symchk.exe",
+            "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
+            "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe"
+          )
           foreach ($path in $searchPaths) {
             if (Test-Path $path) { $symChkPath = $path; break }
           }
