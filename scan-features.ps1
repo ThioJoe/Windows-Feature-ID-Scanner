@@ -34,6 +34,17 @@ if (-not (Test-Path $outputDir)) {
 $viveToolPath = Join-Path $PSScriptRoot "vivetool.exe"
 $parsedFeatures = @()
 
+$mach2Names = @{}
+if (Test-Path "extracted-names.txt") {
+    Write-Host "[LOG] Loading extracted names from mach2..."
+    Get-Content "extracted-names.txt" | ForEach-Object {
+        if ($_ -match '^\s*(\d+)\s+(.+?)\s*$') {
+            $mach2Names[$matches[1]] = $matches[2]
+        }
+    }
+    Write-Host "[LOG] Loaded $($mach2Names.Count) names."
+}
+
 if (-not (Test-Path $viveToolPath)) {
     Write-Error "vivetool.exe was not found. Please place it in the same directory as this script."
 } else {
@@ -65,6 +76,10 @@ if (-not (Test-Path $viveToolPath)) {
         } else {
             Write-Host " - [SKIP] Could not parse feature ID."
             continue
+        }
+
+        if ([string]::IsNullOrEmpty($name) -and $mach2Names.ContainsKey($id)) {
+            $name = $mach2Names[$id]
         }
 
         $propertyLines = $block.Split([System.Environment]::NewLine) | Where-Object { $_ -like '*:*' }

@@ -78,6 +78,17 @@ jobs:
         shell: powershell
         run: .\download-vivetool.ps1
 
+      - name: Download and Extract ViVeTool
+        shell: powershell
+        run: .\download-vivetool.ps1
+
+      - name: Download mach2 and extract symbols
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/riverar/mach2/releases/download/0.7.0.0/mach2_0.7.0.0_x64.zip" -OutFile "mach2.zip"
+          Expand-Archive -Path "mach2.zip" -DestinationPath . -Force
+          .\mach2.exe scan C:\Symbols > extracted-names.txt
+
       - name: Run feature scanner script
         shell: powershell
         run: .\scan-features.ps1
