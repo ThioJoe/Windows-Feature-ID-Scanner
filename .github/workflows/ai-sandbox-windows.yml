@@ -13,6 +13,17 @@ on:
         required: false
         default: '60'
         type: string
+      runner_image:
+        description: 'Which GitHub-hosted runner image to provision'
+        required: false
+        default: 'windows-latest'
+        # A fixed list rather than free text: this value becomes runs-on, and an arbitrary label could select a self-hosted or larger (billed) runner.
+        type: choice
+        options:
+          - windows-latest
+          - windows-2025
+          - windows-2022
+          - windows-11-arm
 
 # The sandbox job needs no repository access at all.
 # Handing it an empty permission set means the GITHUB_TOKEN present in the runner environment cannot act on the repo, which matters because anyone who reaches the SSH session can read that environment.
@@ -20,7 +31,7 @@ permissions: {}
 
 jobs:
   sandbox:
-    runs-on: windows-latest
+    runs-on: ${{ inputs.runner_image }}
     timeout-minutes: 360
     steps:
       - name: Provision Secure SSH Tunnel
