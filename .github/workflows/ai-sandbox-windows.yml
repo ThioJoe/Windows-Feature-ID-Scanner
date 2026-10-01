@@ -57,8 +57,35 @@ jobs:
           # 1. Make sure the OpenSSH server is running.
           # ---------------------------------------------------------------
           if (-not (Get-Service sshd -ErrorAction SilentlyContinue)) {
-              Write-Host "Installing OpenSSH Server..."
-              Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0 | Out-Null
+              # Images without the server built in (the Windows 11 ARM64 one) would have to pull the OpenSSH.Server capability from Windows Update, and Add-WindowsCapability stalled doing that on a hosted runner.
+              # Install Microsoft's standalone Win32-OpenSSH build instead, pinned by version and checked against a known digest for the same reason as age below.
+              $SshVer = '10.0.0.0p2-Preview'
+              # The machine-level value, not the process one: it still reads ARM64 if this shell is itself running emulated.
+              if ([Environment]::GetEnvironmentVariable('PROCESSOR_ARCHITECTURE', 'Machine') -eq 'ARM64') {
+                  $SshArch = 'ARM64'
+                  $SshSha  = '698c6aec31c1dd0fb996206e8741f4531a97355686b5431ef347d531b07fcd42'
+              } else {
+                  $SshArch = 'Win64'
+                  $SshSha  = '23f50f3458c4c5d0b12217c6a5ddfde0137210a30fa870e98b29827f7b43aba5'
+              }
+              Write-Host "Installing OpenSSH Server $SshVer ($SshArch)..."
+              $SshZip = Join-Path $env:TEMP 'openssh.zip'
+              Invoke-WebRequest -Uri "https://github.com/PowerShell/Win32-OpenSSH/releases/download/$SshVer/OpenSSH-$SshArch.zip" -OutFile $SshZip
+              $SshGot = (Get-FileHash $SshZip -Algorithm SHA256).Hash.ToLower()
+              if ($SshGot -ne $SshSha) {
+                  Write-Error "OpenSSH download digest mismatch: expected $SshSha, got $SshGot"
+                  exit 1
+              }
+              # Under Program Files, so only administrators can write to the binaries the service runs.
+              Expand-Archive -Path $SshZip -DestinationPath $env:ProgramFiles -Force
+              $SshInstall = Join-Path $env:ProgramFiles "OpenSSH-$SshArch\install-sshd.ps1"
+              if (-not (Test-Path $SshInstall)) { Write-Error "install-sshd.ps1 not found after extraction."; exit 1 }
+              # Registers the sshd service without starting it. The service creates its config and host keys on first start, which the lines below rely on.
+              & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $SshInstall
+              if ($LASTEXITCODE -ne 0 -or -not (Get-Service sshd -ErrorAction SilentlyContinue)) {
+                  Write-Error "OpenSSH Server install failed (install-sshd.ps1 exit code $LASTEXITCODE)."
+                  exit 1
+              }
           }
           Set-Service -Name sshd -StartupType Automatic
           Start-Service sshd
