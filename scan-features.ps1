@@ -36,7 +36,7 @@ $parsedFeatures = @()
 
 $mach2Names = @{}
 if (Test-Path "extracted-names.txt") {
-    Write-Host "[LOG] Loading extracted names from mach2..."
+    Write-Host "[LOG] Loading extracted names from symbols..."
     Get-Content "extracted-names.txt" | ForEach-Object {
         if ($_ -match '^\s*(\d+)\s+(.+?)\s*$') {
             $mach2Names[$matches[1]] = $matches[2]

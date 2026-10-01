@@ -3,10 +3,6 @@ name: Windows Feature Scanner
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
 
 jobs:
   scan:
@@ -31,112 +27,26 @@ jobs:
           echo "full_build=$fullBuild" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
 
-      - name: Cache Windows Symbols
-        id: cache-symbols
+      - name: Cache symbol scan results
         uses: actions/cache@v4
         with:
-          path: C:\Symbols
-          key: symbols-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-${{ steps.windows-info.outputs.full_build }}
+          path: symbol-cache\results-cache.json
+          key: symbol-results-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-${{ steps.windows-info.outputs.full_build }}
           restore-keys: |
-            symbols-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-
-
-      - name: Download Symbols (if cache missed)
-        if: steps.cache-symbols.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          Write-Host "No cache found. Installing SDK Debugging Tools and downloading symbols..."
-          
-          # 1. Download and install the SDK Debugging Tools
-          $sdkInstaller = "winsdksetup.exe"
-          $originalProgressPreference = $ProgressPreference
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2335755" -OutFile $sdkInstaller
-          $ProgressPreference = $originalProgressPreference
-          Start-Process -FilePath $sdkInstaller -ArgumentList "/features OptionId.WindowsDesktopDebuggers /q /norestart" -Wait
-          Remove-Item -Path $sdkInstaller -Force -ErrorAction SilentlyContinue
-          
-          # 2. Find symchk.exe
-          New-Item -Path "C:\Symbols" -ItemType Directory -Force
-          $symChkPath = $null
-          $searchPaths = @(
-            "C:\Program Files (x86)\Windows Kits\10\Debuggers\arm64\symchk.exe",
-            "C:\Program Files\Windows Kits\10\Debuggers\arm64\symchk.exe",
-            "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symchk.exe",
-            "C:\Program Files\Windows Kits\10\Debuggers\x64\symchk.exe"
-          )
-          foreach ($path in $searchPaths) {
-            if (Test-Path $path) { $symChkPath = $path; break }
-          }
-          
-          # 3. Run the symbol checker and explicitly control the exit code.
-          if ($symChkPath) {
-            Write-Host "[SUCCESS] Found symchk.exe at: $symChkPath"
-            & $symChkPath /op /r "C:\Windows\System32" /s "SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols" | Out-Host
-            
-            Write-Host "symchk.exe finished with exit code: $LASTEXITCODE"
-            Write-Warning "Even if symchk reported errors, we will force a success code (0) so the workflow continues and the cache is saved."
-            
-            # Force a 'success' exit code for this step.
-            exit 0
-          } else {
-            Write-Error "Could not locate symchk.exe even after installing SDK Debugging Tools."
-            # Force a 'failure' exit code for this step.
-            exit 1
-          }
+            symbol-results-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-
 
       - name: Download and Extract ViVeTool
         shell: powershell
         run: .\download-vivetool.ps1
 
-      - name: Download mach2 and extract symbols
+      - name: Extract feature names from symbols
         shell: powershell
         run: |
-          Write-Host "[DEBUG] Starting mach2 download..."
-          $originalProgressPreference = $ProgressPreference
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://github.com/riverar/mach2/releases/download/0.7.0.0/mach2_0.7.0.0_arm64.zip" -OutFile "mach2.zip"
-          $ProgressPreference = $originalProgressPreference
-          
-          if (Test-Path "mach2.zip") {
-              Write-Host "[DEBUG] mach2.zip downloaded successfully. Size: $((Get-Item 'mach2.zip').Length) bytes."
-          } else {
-              Write-Error "[DEBUG] mach2.zip failed to download."
-          }
-
-          Write-Host "[DEBUG] Extracting mach2.zip..."
-          Expand-Archive -Path "mach2.zip" -DestinationPath . -Force
-          
-          if (Test-Path "mach2.exe") {
-              Write-Host "[DEBUG] mach2.exe extracted successfully."
-          } else {
-              Write-Error "[DEBUG] mach2.exe not found! Listing current directory contents:"
-              Get-ChildItem | Select-Object Name | Out-Host
-          }
-
-          Write-Host "[DEBUG] Checking C:\Symbols directory..."
-          if (Test-Path "C:\Symbols") {
-              $symFiles = Get-ChildItem -Path "C:\Symbols" -Recurse -File
-              Write-Host "[DEBUG] Found $($symFiles.Count) files inside C:\Symbols."
-          } else {
-              Write-Error "[DEBUG] C:\Symbols does not exist!"
-          }
-
-          Write-Host "[DEBUG] Running mach2 scan..."
-          .\mach2.exe scan C:\Symbols > extracted-names.txt
-          Write-Host "[DEBUG] mach2.exe finished with exit code: $LASTEXITCODE"
-
-          if (Test-Path "extracted-names.txt") {
-              $extractedSize = (Get-Item 'extracted-names.txt').Length
-              Write-Host "[DEBUG] extracted-names.txt created. Size: $extractedSize bytes."
-              if ($extractedSize -gt 0) {
-                  Write-Host "[DEBUG] Preview of the first 5 lines of extracted-names.txt:"
-                  Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host
-              } else {
-                  Write-Host "[DEBUG] extracted-names.txt is empty (0 bytes)."
-              }
-          } else {
-              Write-Error "[DEBUG] extracted-names.txt was not created!"
-          }
+          python --version
+          python scan-symbols.py --results-cache symbol-cache\results-cache.json --names-out extracted-names.txt --json-out symbol-features.json
+          if ($LASTEXITCODE -ne 0) { Write-Error "scan-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
+          Write-Host "Preview of the first 5 lines of extracted-names.txt:"
+          Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host
 
       - name: Run feature scanner script
         shell: powershell
@@ -154,6 +64,9 @@ jobs:
         run: |
           if (Test-Path "extracted-names.txt") {
             Copy-Item -Path "extracted-names.txt" -Destination $env:BUILD_FOLDER -Force
+          }
+          if (Test-Path "symbol-features.json") {
+            Copy-Item -Path "symbol-features.json" -Destination $env:BUILD_FOLDER -Force
           }
           if (Test-Path "output-temp\*") {
             Copy-Item -Path "output-temp\*" -Destination $env:BUILD_FOLDER -Recurse -Force
