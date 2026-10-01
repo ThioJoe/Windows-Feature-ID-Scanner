@@ -66,6 +66,8 @@ def add_build(data_dir, summary_path, symbols_path):
         if len(f.get('names', [])) > 1 or (f.get('names') and name is None):
             entry['symbolNames'] = f['names']
         entry['modules'] = f.get('modules', [])
+        if f.get('unverified'):
+            entry['unverified'] = True  # Only known from an earlier version of its binary; this build's PDB couldn't be downloaded
         features[f['id']] = entry
 
     for s in summary.get('features', []):

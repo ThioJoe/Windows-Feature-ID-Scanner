@@ -123,7 +123,8 @@ function renderTable(container, rows, columns, defaultSort) {
   draw();
 }
 
-const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</span>');
+const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</span>') +
+  (f.unverified ? ' <span class="unverified" title="This build\'s symbols for its binary couldn\'t be downloaded; known from an earlier version of the binary">unverified</span>' : '');
 const modsText = (f) => (f.modules || []).join(', ');
 
 // ---------------------------------------------------------------------------

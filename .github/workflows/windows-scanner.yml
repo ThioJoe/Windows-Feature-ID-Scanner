@@ -65,14 +65,6 @@ jobs:
           echo "full_build=$fullBuild" >> $env:GITHUB_OUTPUT
           echo "architecture=$architecture" >> $env:GITHUB_OUTPUT
 
-      - name: Cache symbol scan results
-        uses: actions/cache@v4
-        with:
-          path: symbol-cache\results-cache.json
-          key: symbol-results-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-${{ steps.windows-info.outputs.full_build }}
-          restore-keys: |
-            symbol-results-${{ runner.os }}-${{ steps.windows-info.outputs.architecture }}-
-
       - name: Download and Extract ViVeTool
         shell: powershell
         run: .\download-vivetool.ps1
@@ -81,7 +73,7 @@ jobs:
         shell: powershell
         run: |
           python --version
-          python scan-symbols.py --results-cache symbol-cache\results-cache.json --names-out extracted-names.txt --json-out symbol-features.json
+          python scan-symbols.py --results-cache data\symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json
           if ($LASTEXITCODE -ne 0) { Write-Error "scan-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
           Write-Host "Preview of the first 5 lines of extracted-names.txt:"
           Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host

@@ -454,7 +454,10 @@ def main():
     work_dir = tempfile.mkdtemp(prefix='featsym-')
     downloader = Downloader(args.symbol_server)
     results = {}
-    stats = {'cached': 0, 'local': 0, 'downloaded': 0, 'missing': 0, 'error': 0}
+    stats = {'cached': 0, 'local': 0, 'downloaded': 0, 'missing': 0, 'error': 0, 'previousVersion': 0}
+    today = time.strftime('%Y-%m-%d', time.gmtime())
+    # PDBs that 404'd are remembered and only asked for again after this many days, in case Microsoft publishes them later
+    missing_recheck_after = time.strftime('%Y-%m-%d', time.gmtime(time.time() - 14 * 86400))
     stats_lock = threading.Lock()
 
     def process(key):
@@ -465,6 +468,10 @@ def main():
         if cached is not None and cached.get('status') == 'ok':
             with stats_lock:
                 stats['cached'] += 1
+            return cache_key, cached
+        if cached is not None and cached.get('status') == 'missing' and cached.get('checked', '') >= missing_recheck_after:
+            with stats_lock:
+                stats['missing'] += 1
             return cache_key, cached
         real_name = infos[0].pdb_name
         local = os.path.join(args.symbol_cache, real_name, pdb_key, real_name) if args.symbol_cache else None
@@ -483,12 +490,12 @@ def main():
                 if status == 'missing':
                     with stats_lock:
                         stats['missing'] += 1
-                    return cache_key, {'status': 'missing'}
+                    return cache_key, {'status': 'missing', 'checked': today}
                 source = 'downloaded'
             features = extract_features(pdb_path, infos[0])
             with stats_lock:
                 stats[source] += 1
-            return cache_key, {'status': 'ok', 'features': features}
+            return cache_key, {'status': 'ok', 'scanned': today, 'modules': sorted({os.path.basename(i.path) for i in infos}), 'features': features}
         except Exception as e:
             with stats_lock:
                 stats['error'] += 1
@@ -496,6 +503,8 @@ def main():
         finally:
             if temp_path:
                 remove_quietly(temp_path)
+
+    cache_before = dict(cache)
 
     # 3. Download and parse
     done = 0
@@ -519,7 +528,8 @@ def main():
     for retry_round in range(1, 4):
         # The first round also re-checks 404s once, in case msdl answered 404 while overloaded; they're fast to re-check
         retry_statuses = ('error', 'missing') if retry_round == 1 else ('error',)
-        failed = [key for key, result in results.items() if result.get('status') in retry_statuses]
+        failed = [key for key, result in results.items() if result.get('status') in retry_statuses
+                  and not (result.get('status') == 'missing' and result is cache_before.get('%s/%s' % key))]
         if not failed:
             break
         log('[scan] retry round %d: re-checking %d PDBs (%s), 4 workers' % (retry_round, len(failed), ' + '.join(retry_statuses)))
@@ -531,27 +541,51 @@ def main():
                 results[key] = result
                 cache[cache_key] = result
         log('[scan] after retry round %d: downloaded=%d missing=%d error=%d  %.0fs' % (retry_round, stats['downloaded'], stats['missing'], stats['error'], time.time() - start))
-    for key, result in results.items():
-        if result.get('status') == 'error':
-            log('[scan] gave up on %s/%s: %s' % (key[0], key[1], result.get('error')))
     shutil.rmtree(work_dir, ignore_errors=True)
+
+    # 5. A binary whose PDB still couldn't be downloaded falls back to what the most recently scanned earlier version of it contained,
+    #    so its features aren't dropped from this build. Those features are marked unverified. (A 404 is a definite answer, so no fallback.)
+    previous_by_name = {}
+    for cache_key, entry in cache.items():
+        if entry.get('status') == 'ok':
+            name = cache_key.split('/', 1)[0]
+            best = previous_by_name.get(name)
+            if best is None or entry.get('scanned', '') > best[1].get('scanned', ''):
+                previous_by_name[name] = (cache_key, entry)
+    for key, result in list(results.items()):
+        if result.get('status') != 'error':
+            continue
+        previous = previous_by_name.get(key[0])
+        if previous:
+            log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error'), previous[0]))
+            results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features']}
+            stats['error'] -= 1
+            stats['previousVersion'] += 1
+        else:
+            log('[scan] gave up on %s/%s: %s' % (key[0], key[1], result.get('error')))
 
     if args.results_cache:
         cache_dir = os.path.dirname(os.path.abspath(args.results_cache))
         os.makedirs(cache_dir, exist_ok=True)
-        with open(args.results_cache, 'w', encoding='utf-8') as f:
-            # Only keep entries for PDBs on this system, so the file doesn't grow with every build scanned
-            current = {'%s/%s' % key for key in by_pdb}
-            json.dump({'version': RESULTS_CACHE_VERSION, 'pdbs': {k: v for k, v in cache.items() if k in current}}, f)
+        # Successful results are kept for every PDB ever scanned (old builds included), one per line so git diffs stay small.
+        # 404s are kept with the date they were checked; failures aren't kept.
+        ok = {k: v for k, v in cache.items() if v.get('status') in ('ok', 'missing')}
+        with open(args.results_cache, 'w', encoding='utf-8', newline='\n') as f:
+            f.write('{"version": %d, "pdbs": {\n' % RESULTS_CACHE_VERSION)
+            f.write(',\n'.join('%s: %s' % (json.dumps(k), json.dumps(ok[k], separators=(',', ':'))) for k in sorted(ok)))
+            f.write('\n}}\n')
 
-    # 5. Aggregate: id -> name -> set of modules
+    # 6. Aggregate: id -> name -> set of modules. A feature is unverified if it only came from earlier-version fallbacks.
     features = {}
+    verified = set()
     for key, result in results.items():
-        if result.get('status') != 'ok':
+        if result.get('status') not in ('ok', 'previousVersion'):
             continue
         modules = sorted({os.path.basename(i.path) for i in by_pdb[key]})
         for name, feature_id, _source in result['features']:
             features.setdefault(feature_id, {}).setdefault(name, set()).update(modules)
+            if result['status'] == 'ok':
+                verified.add(feature_id)
 
     with open(args.names_out, 'w', encoding='utf-8', newline='\n') as f:
         for feature_id in sorted(features):
@@ -563,12 +597,15 @@ def main():
     json_features = []
     for feature_id in sorted(features):
         names = features[feature_id]
-        json_features.append({
+        entry = {
             'id': feature_id,
             'name': pick_name(names),
             'names': sorted(names),
             'modules': sorted(set().union(*names.values())),
-        })
+        }
+        if feature_id not in verified:
+            entry['unverified'] = True
+        json_features.append(entry)
     with open(args.json_out, 'w', encoding='utf-8') as f:
         json.dump({'imagesScanned': image_count, 'pdbs': len(by_pdb), 'stats': stats, 'features': json_features}, f, indent=1)
 

@@ -13,13 +13,14 @@ The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`)
 
 The workflow runs daily: a small check job reads the runner's Windows build and only starts a full scan when that build isn't in `data/` yet. It can also be started manually from the Actions tab, which always scans.
 
-Scanning downloads several GB of PDBs (each is deleted after reading). What was found in each PDB is cached by the PDB's GUID, so later runs only download PDBs for binaries that changed.
+Scanning downloads several GB of PDBs (each is deleted after reading). What was found in each PDB is stored in `data/symbol-cache.json`, keyed by the PDB's name and GUID, so later scans only download PDBs for binaries that changed. PDBs the symbol server doesn't have (404) are remembered too and re-checked after 14 days. If a changed binary's PDB still can't be downloaded after retries, the scan uses what the most recent earlier version of that binary contained and marks those features `"unverified"`, rather than dropping them.
 
 ## Data
 
 ```
 data/
 ├── index.json                  Every scanned build with summary counts
+├── symbol-cache.json           What each scanned PDB contained (by PDB name and GUID), reused by later scans
 ├── first-seen.json             First tracked build each feature ID appeared in, per architecture
 ├── builds/<build>-<arch>.json  All feature IDs of a build, one per line: id, name (null if unknown), modules, feature store state
 └── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)
