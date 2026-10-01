@@ -3,13 +3,51 @@ name: Windows Feature Scanner
 
 on:
   workflow_dispatch:
+  schedule:
+    # Daily check for a new Windows build on the runner image. Scans only run when the build isn't in data/ yet.
+    - cron: '17 6 * * *'
+
+# Scans commit to data/, so never run two at once
+concurrency:
+  group: windows-scanner
+  cancel-in-progress: false
 
 jobs:
-  scan:
+  check:
     runs-on: windows-11-arm
+    outputs:
+      needed: ${{ steps.check.outputs.needed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Check whether this build has already been scanned
+        id: check
+        shell: powershell
+        run: |
+          $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+          $regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+          $key = "$($osInfo.BuildNumber).$($regInfo.UBR)-$env:PROCESSOR_ARCHITECTURE"
+          if (Test-Path "data\builds\$key.json") {
+            Write-Host "Build $key is already in data/builds."
+            echo "needed=false" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Host "Build $key is new."
+            echo "needed=true" >> $env:GITHUB_OUTPUT
+          }
+
+  scan:
+    needs: check
+    # Manual runs always scan; scheduled runs only when the runner has a build that isn't in data/ yet
+    if: github.event_name == 'workflow_dispatch' || needs.check.outputs.needed == 'true'
+    runs-on: windows-11-arm
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
 
       - name: Get Windows version and build info
         id: windows-info
@@ -82,3 +120,29 @@ jobs:
           name: scanner-output-build-${{ steps.windows-info.outputs.full_build }}-${{ steps.windows-info.outputs.architecture }}
           path: output/
           if-no-files-found: warn
+
+      - name: Add build to data/ and commit
+        shell: powershell
+        run: |
+          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json"
+          if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) { Write-Host "No changes to data/."; exit 0 }
+          git commit -q -m "Add feature data for build ${{ steps.windows-info.outputs.full_build }}-${{ steps.windows-info.outputs.architecture }}"
+          git pull -q --rebase origin "${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Rebase onto ${{ github.ref_name }} failed"; exit 1 }
+          git push -q origin "HEAD:${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Push failed"; exit 1 }
+
+  # A push made with GITHUB_TOKEN doesn't trigger other workflows, so publish the site from here after new data is committed
+  pages:
+    needs: scan
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

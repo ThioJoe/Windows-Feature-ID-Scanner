@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows Feature IDs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Windows Feature IDs</h1>
+  <nav>
+    <a href="#compare" data-view="compare">Compare builds</a>
+    <a href="#build" data-view="build">Browse a build</a>
+  </nav>
+</header>
+
+<main>
+  <section id="view-compare" hidden>
+    <div class="controls">
+      <label>Old build <select id="cmp-old"></select></label>
+      <button id="cmp-swap" type="button" title="Swap old and new">⇄</button>
+      <label>New build <select id="cmp-new"></select></label>
+    </div>
+    <div class="controls">
+      <input id="cmp-search" type="search" placeholder="Filter by ID, name or module">
+      <label class="check"><input id="cmp-named" type="checkbox"> Named only</label>
+    </div>
+    <p id="cmp-status" class="status"></p>
+    <div id="cmp-results"></div>
+  </section>
+
+  <section id="view-build" hidden>
+    <div class="controls">
+      <label>Build <select id="bld-select"></select></label>
+    </div>
+    <div class="controls">
+      <input id="bld-search" type="search" placeholder="Filter by ID, name or module">
+      <label class="check"><input id="bld-named" type="checkbox"> Named only</label>
+      <label class="check"><input id="bld-store" type="checkbox"> In feature store only</label>
+      <label class="check"><input id="bld-new" type="checkbox"> New in this build</label>
+    </div>
+    <p id="bld-status" class="status"></p>
+    <div id="bld-results"></div>
+  </section>
+</main>
+
+<footer>
+  Feature IDs come from the feature store (ViVeTool) and from Microsoft's public symbols for the binaries of each build.
+  Names come from symbols, or from ViVeTool's dictionary when symbols have none.
+  <a href="https://github.com/ThioJoe/Windows-Feature-ID-Scanner">Source and raw data</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
