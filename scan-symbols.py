@@ -14,7 +14,9 @@
 # mach2 (the tool this replaces) is retired and fails on current PDBs with "The operation completed successfully., system:0".
 
 import argparse
+import base64
 import concurrent.futures
+import http.client
 import json
 import mmap
 import os
@@ -26,7 +28,7 @@ import sys
 import tempfile
 import threading
 import time
-import urllib.error
+import urllib.parse
 import urllib.request
 
 DEFAULT_SYMBOL_SERVER = 'https://msdl.microsoft.com/download/symbols'
@@ -342,12 +344,21 @@ def extract_features(pdb_path, info):
 # ---------------------------------------------------------------------------
 
 class Downloader:
-    def __init__(self, server, timeout=20, retries=2):
+    """Downloads PDBs over persistent connections.
+
+    msdl limits how fast new connections can be opened, not how many requests are made: opening a fresh TLS connection per request
+    (msdl, then the blob storage host it redirects to) gets throttled after a few hundred requests, showing up as connection timeouts
+    (WinError 10060) or resets. Each worker thread therefore keeps one connection per host and reuses it, following redirects itself.
+    """
+
+    def __init__(self, server, timeout=20, retries=3):
         self.server = server.rstrip('/')
         self.timeout = timeout
         self.retries = retries
         self.bytes = 0
         self._lock = threading.Lock()
+        self._local = threading.local()
+        self._proxy = urllib.request.getproxies().get('https')  # Honour HTTPS_PROXY when run locally behind a proxy
 
     def fetch(self, pdb_name, pdb_key, dest):
         """Downloads the PDB to dest. Returns 'ok', 'missing', or raises on repeated failure."""
@@ -366,27 +377,79 @@ class Downloader:
                     remove_quietly(cab_dest)
         return result
 
+    def _connection(self, scheme, host, port):
+        conns = getattr(self._local, 'conns', None)
+        if conns is None:
+            conns = self._local.conns = {}
+        key = (scheme, host, port)
+        conn = conns.get(key)
+        if conn is None:
+            if self._proxy and scheme == 'https':
+                proxy = urllib.parse.urlsplit(self._proxy)
+                conn = http.client.HTTPSConnection(proxy.hostname, proxy.port or 8080, timeout=self.timeout)
+                headers = {}
+                if proxy.username:
+                    creds = '%s:%s' % (urllib.parse.unquote(proxy.username), urllib.parse.unquote(proxy.password or ''))
+                    headers['Proxy-Authorization'] = 'Basic ' + base64.b64encode(creds.encode()).decode()
+                conn.set_tunnel(host, port, headers=headers)
+            elif scheme == 'https':
+                conn = http.client.HTTPSConnection(host, port, timeout=self.timeout)
+            else:
+                conn = http.client.HTTPConnection(host, port, timeout=self.timeout)
+            conns[key] = conn
+        return key, conn
+
+    def _drop(self, key):
+        conn = self._local.conns.pop(key, None)
+        if conn is not None:
+            conn.close()
+
+    def _request_once(self, url, dest):
+        for _hop in range(5):
+            parts = urllib.parse.urlsplit(url)
+            port = parts.port or (443 if parts.scheme == 'https' else 80)
+            key, conn = self._connection(parts.scheme, parts.hostname, port)
+            target = parts.path + ('?' + parts.query if parts.query else '')
+            try:
+                conn.request('GET', target, headers={'User-Agent': USER_AGENT})
+                resp = conn.getresponse()
+                if resp.status in (301, 302, 303, 307, 308):
+                    location = resp.getheader('Location')
+                    resp.read()
+                    if not location:
+                        raise RuntimeError('HTTP %d without Location' % resp.status)
+                    url = urllib.parse.urljoin(url, location)
+                    continue
+                if resp.status == 404:
+                    resp.read()
+                    return 'missing'
+                if resp.status != 200:
+                    resp.read()
+                    raise RuntimeError('HTTP %d' % resp.status)
+                with open(dest, 'wb') as out:
+                    shutil.copyfileobj(resp, out, 1 << 20)
+                if resp.will_close:
+                    self._drop(key)
+                with self._lock:
+                    self.bytes += os.path.getsize(dest)
+                return 'ok'
+            except Exception:
+                self._drop(key)  # A broken or half-read connection can't be reused
+                raise
+        raise RuntimeError('too many redirects')
+
     def _get(self, url, dest):
         last_error = None
         for attempt in range(self.retries):
             try:
-                req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
-                with urllib.request.urlopen(req, timeout=self.timeout) as resp, open(dest, 'wb') as out:
-                    shutil.copyfileobj(resp, out, 1 << 20)
-                with self._lock:
-                    self.bytes += os.path.getsize(dest)
-                return 'ok'
-            except urllib.error.HTTPError as e:
-                remove_quietly(dest)
-                if e.code == 404:
-                    return 'missing'
-                last_error = e
+                return self._request_once(url, dest)
             except Exception as e:
                 remove_quietly(dest)
                 last_error = e
-            # msdl intermittently stops answering connections (WinError 10060). Don't hold the worker here with long waits;
-            # anything still failing after a quick second try goes to the retry rounds at the end of the scan.
-            time.sleep(1)
+            # The first retry is immediate, since a reused connection the server had already closed fails right away.
+            # Anything still failing goes to the retry rounds at the end of the scan rather than holding this worker.
+            if attempt:
+                time.sleep(1)
         raise RuntimeError('download failed: %s (%s)' % (url, last_error))
 
 def remove_quietly(path):
