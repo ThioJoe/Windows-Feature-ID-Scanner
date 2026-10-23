@@ -611,14 +611,14 @@ def main():
     previous_by_name = {}
     for cache_key, entry in cache.items():
         if entry.get('status') == 'ok':
-            name = cache_key.split('/', 1)[0]
-            best = previous_by_name.get(name)
-            if best is None or entry.get('scanned', '') > best[1].get('scanned', ''):
-                previous_by_name[name] = (cache_key, entry)
+            previous_by_name.setdefault(cache_key.split('/', 1)[0], []).append((cache_key, entry))
     for key, result in list(results.items()):
         if result.get('status') != 'error':
             continue
-        previous = previous_by_name.get(key[0])
+        # The PDB name alone isn't enough: different binaries can share one (smartscreen.exe and smartscreen.dll both use smartscreen.pdb)
+        modules = {os.path.basename(i.path).lower() for i in by_pdb[key]}
+        candidates = [c for c in previous_by_name.get(key[0], []) if modules & {m.lower() for m in c[1].get('modules', [])}]
+        previous = max(candidates, key=lambda c: c[1].get('scanned', ''), default=None)
         if previous:
             log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error'), previous[0]))
             results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features']}
