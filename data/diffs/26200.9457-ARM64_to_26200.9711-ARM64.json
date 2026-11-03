@@ -245,11 +245,27 @@
    ]
   },
   {
+   "id": 52439772,
+   "name": "Capture_BufferCollectionLeak",
+   "modules": [
+    "marshal.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 53392341,
    "name": "Bugfix53392341",
    "modules": [
     "InputService.dll",
     "Windows.UI.Xaml.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 53715526,
+   "name": "DcompK_MarshalerReleaseFix",
+   "modules": [
+    "marshal.dll"
    ],
    "store": null
   },
@@ -682,7 +698,13 @@
    "modules": [
     "SRH.dll"
    ],
-   "store": null
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
   },
   {
    "id": 59677541,
@@ -3910,7 +3932,13 @@
     "FlightSettings.dll",
     "wosc.dll"
    ],
-   "store": null
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
   },
   {
    "id": 62776273,
@@ -26308,12 +26336,47 @@
  "nameLost": [],
  "storeChanged": [
   {
+   "id": 46151993,
+   "name": "Containment_UUS_Tailored_Download_And_Install_46151993",
+   "old": null,
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 46702346,
    "name": null,
    "old": [
     {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 47557358,
+   "name": "AccountAndRegionalPolicyEnforcement",
+   "old": [
+    {
+     "priority": "Service (4)",
+     "state": "Enabled (2)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
      "type": "Override (0)"
     }
    ],
@@ -26860,6 +26923,18 @@
    ]
   },
   {
+   "id": 60565610,
+   "name": "HotpatchLicense_ClipDLS",
+   "old": null,
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 60709678,
    "name": null,
    "old": [
@@ -27081,6 +27156,18 @@
    "new": null
   },
   {
+   "id": 61798161,
+   "name": "DisableRecalcOverMonitorSleep",
+   "old": null,
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 61839294,
    "name": "ReleaseManaged_Standalone_2609",
    "old": [
@@ -27141,6 +27228,18 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 62222328,
+   "name": "RendererEffectGetNaturalOutputType",
+   "old": null,
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
     }
    ]
   },
