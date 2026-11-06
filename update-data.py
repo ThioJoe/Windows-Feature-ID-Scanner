@@ -36,6 +36,15 @@ def build_key(full_build, arch):
     return '%s-%s' % (full_build, arch)
 
 
+def load_builds(data_dir):
+    builds_dir = os.path.join(data_dir, 'builds')
+    builds = []
+    for fn in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
+        if fn.endswith('.json'):
+            builds.append(load_json(os.path.join(builds_dir, fn)))
+    return builds
+
+
 def write_build_file(path, header, features):
     """Writes the build JSON with one feature per line."""
     lines = ['{']
@@ -81,6 +90,16 @@ def add_build(data_dir, summary_path, symbols_path):
             configs.append({out: c[src] for src, out in STORE_FIELDS if c.get(src) not in (None, '')})
         entry['store'] = configs
 
+    # A feature whose code was removed from every binary can stay in the feature store. Its name is still known from earlier builds.
+    known = {}
+    for b in sorted(load_builds(data_dir), key=lambda b: version_tuple(b['build'])):
+        if b['architecture'] == arch and version_tuple(b['build']) < version_tuple(full_build):
+            known.update((f['id'], f['name']) for f in b['features'] if f['name'])
+    for entry in features.values():
+        if not entry['name'] and entry['id'] in known:
+            entry['name'] = known[entry['id']]
+            entry['nameSource'] = 'earlierBuild'
+
     product = summary.get('productName') or ''
     if product.startswith('Windows 10') and version_tuple(full_build)[0] >= 22000:
         product = 'Windows 11' + product[len('Windows 10'):]  # The registry still says "Windows 10" on Windows 11
@@ -112,7 +131,7 @@ def diff_builds(old, new):
     nf = {f['id']: f for f in new['features']}
     added = [nf[i] for i in sorted(set(nf) - set(of))]
     removed = [of[i] for i in sorted(set(of) - set(nf))]
-    renamed, newly_named, store_changed = [], [], []
+    renamed, newly_named, name_lost, store_changed = [], [], [], []
     for i in sorted(set(of) & set(nf)):
         a, b = of[i], nf[i]
         if a['name'] != b['name']:
@@ -120,15 +139,23 @@ def diff_builds(old, new):
                 newly_named.append({'id': i, 'name': b['name']})
             elif b['name'] is not None:
                 renamed.append({'id': i, 'oldName': a['name'], 'newName': b['name']})
+            else:
+                name_lost.append({'id': i, 'oldName': a['name']})
         if store_signature(a) != store_signature(b):
             store_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': a.get('store'), 'new': b.get('store')})
-    brief = lambda f: {'id': f['id'], 'name': f['name'], 'modules': f.get('modules', []), 'store': f.get('store')}
+
+    def brief(f):
+        out = {'id': f['id'], 'name': f['name'], 'modules': f.get('modules', []), 'store': f.get('store')}
+        if f.get('unverified'):
+            out['unverified'] = True
+        return out
     return {
         'old': old['key'], 'new': new['key'],
         'added': [brief(f) for f in added],
         'removed': [brief(f) for f in removed],
         'renamed': renamed,
         'newlyNamed': newly_named,
+        'nameLost': name_lost,
         'storeChanged': store_changed,
     }
 
@@ -146,6 +173,7 @@ def diff_markdown(d):
              '| Removed | %d | %d |' % (len(d['removed']), len(named(d['removed']))),
              '| Renamed | %d | |' % len(d['renamed']),
              '| Newly named | %d | |' % len(d['newlyNamed']),
+             '| Name lost | %d | |' % len(d['nameLost']),
              '| Feature store changes | %d | |' % len(d['storeChanged']), '']
     mods = lambda r: ', '.join(r.get('modules', [])[:4]) + (' …' if len(r.get('modules', [])) > 4 else '')
     for title, rows in (('Added', d['added']), ('Removed', d['removed'])):
@@ -156,15 +184,13 @@ def diff_markdown(d):
         lines += ['## Renamed', ''] + table(d['renamed'], [('ID', lambda r: r['id']), ('Old name', lambda r: r['oldName']), ('New name', lambda r: r['newName'])]) + ['']
     if d['newlyNamed']:
         lines += ['## Newly named', ''] + table(d['newlyNamed'], [('ID', lambda r: r['id']), ('Name', lambda r: r['name'])]) + ['']
+    if d['nameLost']:
+        lines += ['## Name lost', ''] + table(d['nameLost'], [('ID', lambda r: r['id']), ('Old name', lambda r: r['oldName'])]) + ['']
     return '\n'.join(lines) + '\n'
 
 
 def regenerate(data_dir):
-    builds_dir = os.path.join(data_dir, 'builds')
-    builds = []
-    for fn in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
-        if fn.endswith('.json'):
-            builds.append(load_json(os.path.join(builds_dir, fn)))
+    builds = load_builds(data_dir)
     builds.sort(key=lambda b: (b['architecture'], version_tuple(b['build'])))
 
     # Index
@@ -205,7 +231,7 @@ def regenerate(data_dir):
             f.write(diff_markdown(d))
         index_entry = next(x for x in index['builds'] if x['key'] == cur['key'])
         index_entry['previous'] = prev['key']
-        index_entry['diff'] = {k: len(d[k]) for k in ('added', 'removed', 'renamed', 'newlyNamed', 'storeChanged')}
+        index_entry['diff'] = {k: len(d[k]) for k in ('added', 'removed', 'renamed', 'newlyNamed', 'nameLost', 'storeChanged')}
     for fn in os.listdir(diffs_dir):
         if fn not in wanted:
             os.remove(os.path.join(diffs_dir, fn))  # Stale diff (e.g. a build was inserted between two others)

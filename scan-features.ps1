@@ -181,7 +181,7 @@ $jsonFeatures = @(foreach ($group in $groupedFeatures) {
 })
 
 $jsonData = @{
-    timestamp       = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
+    timestamp       = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
     productName     = $productName
     displayVersion  = $regInfo.DisplayVersion
     buildNumber     = $osInfo.BuildNumber

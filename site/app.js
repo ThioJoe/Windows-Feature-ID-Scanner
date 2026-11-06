@@ -142,13 +142,14 @@ async function renderCompare() {
   out.innerHTML = '';
   const [a, b] = await Promise.all([loadBuild(oldKey), loadBuild(newKey)]);
   const of = new Map(a.features.map((f) => [f.id, f])), nf = new Map(b.features.map((f) => [f.id, f]));
-  const added = [], removed = [], renamed = [], newlyNamed = [], storeChanged = [];
+  const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [];
   for (const [id, f] of nf) {
     const o = of.get(id);
     if (!o) { added.push(f); continue; }
     if (o.name !== f.name) {
       if (!o.name) newlyNamed.push(f);
       else if (f.name) renamed.push({ id, oldName: o.name, newName: f.name, name: f.name, modules: f.modules });
+      else nameLost.push({ id, oldName: o.name, name: o.name, modules: o.modules });
     }
     if (JSON.stringify(o.store || null) !== JSON.stringify(f.store || null)) {
       storeChanged.push({ id, name: f.name || o.name, modules: f.modules, oldStore: o.store, newStore: f.store });
@@ -181,6 +182,11 @@ async function renderCompare() {
       { title: 'First seen', value: (f) => firstSeenText(arch, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
+    ...(nameLost.length ? [['Name lost', 'changed', nameLost, [
+      { title: 'ID', value: (f) => f.id, cls: 'id' },
+      { title: 'Old name', value: (f) => f.oldName, cls: 'name' },
+      { title: 'Old modules', value: modsText, cls: 'mods' },
+    ]]] : []),
     ['Feature store changes', 'changed', storeChanged, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
