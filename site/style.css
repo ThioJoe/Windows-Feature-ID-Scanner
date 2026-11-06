@@ -63,5 +63,21 @@ td.mods, td.store, td.seen { color: var(--muted); font-size: 12px; }
 .unnamed { color: var(--muted); font-style: italic; }
 .unverified { color: var(--changed); font-size: 11px; border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; }
 .more { margin-top: 8px; }
+.muted { color: var(--muted); }
+tr.clickable { cursor: pointer; }
+tr.clickable:hover > td { background: var(--panel); }
+tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
+/* Stays in view while a wide table scrolls sideways (page gutters, borders and cell padding: 58px) */
+.detail-body { position: sticky; left: 12px; max-width: calc(100vw - 58px); }
+.detail p { margin: 4px 0; }
+.detail a { color: var(--accent); }
+.detail h4 { font-size: 13px; margin: 10px 0 4px; overflow-wrap: anywhere; }
+.detail h4 .muted { font-weight: normal; }
+.detail .kv { display: flex; gap: 8px; margin: 2px 0 2px 8px; }
+.detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
+.detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .detail .kv { flex-direction: column; gap: 0; }
+}
 footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); padding-top: 12px; padding-bottom: 24px; }
 footer a { color: var(--accent); }

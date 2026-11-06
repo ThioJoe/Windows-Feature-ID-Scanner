@@ -39,6 +39,7 @@
       <label class="check"><input id="bld-named" type="checkbox"> Named only</label>
       <label class="check"><input id="bld-store" type="checkbox"> In feature store only</label>
       <label class="check"><input id="bld-new" type="checkbox"> New in this build</label>
+      <label class="check" title="Also match the functions, strings and other details found in each feature's code"><input id="bld-details" type="checkbox"> Search code details</label>
     </div>
     <p id="bld-status" class="status"></p>
     <div id="bld-results"></div>
@@ -48,6 +49,7 @@
 <footer>
   Feature IDs come from the feature store (ViVeTool) and from Microsoft's public symbols for the binaries of each build.
   Names come from symbols, or from ViVeTool's dictionary when symbols have none.
+  Modules are the binaries that contain a feature's code; click a feature to see what that code reveals: the functions that check it, its strings, dependencies and default state.
   <a href="https://github.com/ThioJoe/Windows-Feature-ID-Scanner">Source and raw data</a>
 </footer>
 

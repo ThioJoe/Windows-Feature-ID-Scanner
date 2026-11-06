@@ -5,9 +5,16 @@ const DATA = 'data/';
 const PAGE = 500;
 const NUMERIC = /^(?:ID|FI)?\d+$/;
 
+const DETAIL_SHARDS = 64;
+const DEFAULTS = { enabled: 'enabled', disabled: 'disabled', alwaysEnabled: 'always enabled', alwaysDisabled: 'always disabled' };
+const CHANGE_TIMES = { read: 'immediately', moduleReload: 'when the binary is reloaded', session: 'at the next sign-in', reboot: 'after a reboot' };
+const CHANGE_SHORT = { read: 'on read', moduleReload: 'on reload', session: 'on sign-in', reboot: 'on reboot' };
+
 let index = null;
 let firstSeen = null;
 const buildCache = new Map();
+const detailCache = new Map();
+const detailTextCache = new Map();
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -21,6 +28,35 @@ async function getJson(path) {
 function loadBuild(key) {
   if (!buildCache.has(key)) buildCache.set(key, getJson('builds/' + encodeURIComponent(key) + '.json'));
   return buildCache.get(key);
+}
+
+// Usage details (what each binary's code reveals about a feature) are split into shards by ID; a missing shard means no details
+function loadShard(arch, n) {
+  const path = `details/${encodeURIComponent(arch)}/${String(n).padStart(2, '0')}.json`;
+  if (!detailCache.has(path)) detailCache.set(path, getJson(path).catch(() => ({})));
+  return detailCache.get(path);
+}
+
+async function loadDetails(arch, id) {
+  return (await loadShard(arch, id % DETAIL_SHARDS))[String(id)] || null;
+}
+
+// All details of an architecture as searchable text, for "Search code details"
+function loadDetailText(arch) {
+  if (!detailTextCache.has(arch)) {
+    detailTextCache.set(arch, Promise.all([...Array(DETAIL_SHARDS).keys()].map((n) => loadShard(arch, n))).then((shards) => {
+      const text = new Map();
+      for (const shard of shards) {
+        for (const [id, d] of Object.entries(shard)) {
+          const parts = [];
+          for (const u of Object.values(d.usage)) for (const k of ['callers', 'strings', 'sources', 'imports', 'symbols', 'calls', 'tables']) parts.push(...(u[k] || []));
+          text.set(Number(id), parts.join('\n').toLowerCase());
+        }
+      }
+      return text;
+    }));
+  }
+  return detailTextCache.get(arch);
 }
 
 function compareVersions(a, b) {
@@ -75,6 +111,8 @@ function storeText(store) {
   return store.map((c) => [c.state, c.priority, c.type, c.variant ? 'variant ' + c.variant : ''].filter(Boolean).join(', ')).join('; ');
 }
 
+const stateText = (f) => [DEFAULTS[f.default], CHANGE_SHORT[f.changeTime]].filter(Boolean).join(', ');
+
 function matches(f, q, namedOnly) {
   if (namedOnly && !f.name) return false;
   if (!q) return true;
@@ -85,8 +123,8 @@ function matches(f, q, namedOnly) {
   return (f.modules || []).some((m) => m.toLowerCase().includes(q));
 }
 
-// Renders a sortable table with incremental "show more"
-function renderTable(container, rows, columns, defaultSort) {
+// Renders a sortable table with incremental "show more". With detail (an async function returning HTML), clicking a row shows it below the row.
+function renderTable(container, rows, columns, defaultSort, detail) {
   let sort = defaultSort || { col: 0, dir: 1 };
   let shown = PAGE;
   const wrap = document.createElement('div');
@@ -106,9 +144,10 @@ function renderTable(container, rows, columns, defaultSort) {
       html += `<th data-col="${i}">${esc(c.title)}${i === sort.col ? (sort.dir > 0 ? ' ▲' : ' ▼') : ''}</th>`;
     });
     html += '</tr></thead><tbody>';
-    for (const r of sorted.slice(0, shown)) {
-      html += '<tr>' + columns.map((c) => `<td class="${c.cls || ''}">${c.html ? c.html(r) : esc(c.value(r) ?? '')}</td>`).join('') + '</tr>';
-    }
+    sorted.slice(0, shown).forEach((r, i) => {
+      html += (detail ? `<tr class="clickable" data-i="${i}" title="Show details">` : '<tr>') +
+        columns.map((c) => `<td class="${c.cls || ''}">${c.html ? c.html(r) : esc(c.value(r) ?? '')}</td>`).join('') + '</tr>';
+    });
     html += '</tbody></table></div>';
     if (sorted.length > shown) html += `<button class="more" type="button">Show more (${sorted.length - shown} remaining)</button>`;
     wrap.innerHTML = html;
@@ -119,8 +158,74 @@ function renderTable(container, rows, columns, defaultSort) {
     }));
     const more = wrap.querySelector('.more');
     if (more) more.addEventListener('click', () => { shown += PAGE * 4; draw(); });
+    if (detail) wrap.querySelectorAll('tr.clickable').forEach((tr) => tr.addEventListener('click', () => {
+      const next = tr.nextElementSibling;
+      if (next && next.classList.contains('detail')) { next.remove(); return; }
+      const d = document.createElement('tr');
+      d.className = 'detail';
+      d.innerHTML = `<td colspan="${columns.length}"><div class="detail-body">Loading…</div></td>`;
+      tr.after(d);
+      const body = d.querySelector('.detail-body');
+      detail(sorted[Number(tr.dataset.i)]).then((h) => { body.innerHTML = h; }, (e) => { body.textContent = 'Error: ' + e.message; });
+    }));
   };
   draw();
+}
+
+// ---------------------------------------------------------------------------
+// Feature details
+// ---------------------------------------------------------------------------
+
+const USE_TEXT = {
+  checked: (u) => `checked in ${u.callerCount} function${u.callerCount === 1 ? '' : 's'}`,
+  required: () => 'only checked as a requirement of other features',
+  table: (u) => `only listed in a lookup table (${(u.tables || []).join(', ')})`,
+  unreferenced: () => 'has the feature\'s plumbing, but no code using it was found',
+};
+
+function moduleDetail(mod, u) {
+  const list = (title, items, more) => (items && items.length
+    ? `<div class="kv"><span>${title}</span><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}${more ? `<li class="muted">and ${more} more</li>` : ''}</ul></div>` : '');
+  return `<div class="mod"><h4>${esc(mod)} <span class="muted">${esc((USE_TEXT[u.use] || (() => u.use))(u))}</span></h4>` +
+    list('Checked in', u.callers, (u.callerCount || 0) - (u.callers || []).length) +
+    list('Strings', u.strings) + list('Source files', u.sources) + list('Imports used', u.imports) +
+    list('Data referenced', u.symbols) + list('Also calls', u.calls) + '</div>';
+}
+
+// Returns the detail function for rows of one build: default state, dependencies, and per-binary usage details
+function featureDetail(build) {
+  const byId = new Map(build.features.map((f) => [f.id, f]));
+  const requiredBy = new Map();
+  for (const f of build.features) {
+    for (const r of f.requires || []) {
+      if (!requiredBy.has(r)) requiredBy.set(r, []);
+      requiredBy.get(r).push(f.id);
+    }
+  }
+  const link = (id) => {
+    const f = byId.get(id);
+    return `<a href="#" class="feat-link" data-id="${id}" data-build="${esc(build.key)}">${id}</a>${f && f.name ? ' ' + esc(f.name) : ''}`;
+  };
+  return async (row) => {
+    const f = byId.get(row.id) || row;
+    const parts = [];
+    if (f.default || f.changeTime) {
+      const def = f.default ? DEFAULTS[f.default] + (f.default.startsWith('always') ? '' : ' by default') : '';
+      const when = f.changeTime ? 'changes take effect ' + CHANGE_TIMES[f.changeTime] : '';
+      parts.push(`<p><b>Default:</b> ${esc([def, when].filter(Boolean).join('; '))}</p>`);
+    }
+    if ((f.requires || []).length) parts.push(`<p><b>Requires:</b> ${f.requires.map(link).join(', ')}</p>`);
+    if (requiredBy.has(f.id)) parts.push(`<p><b>Required by:</b> ${requiredBy.get(f.id).map(link).join(', ')}</p>`);
+    const det = await loadDetails(build.architecture, f.id);
+    if (det) {
+      parts.push(...Object.entries(det.usage).map(([mod, u]) => moduleDetail(mod, u)));
+      if (det.build !== build.key) parts.push(`<p class="muted">Code details are from build ${esc(det.build)}.</p>`);
+    }
+    if ((f.declaredIn || []).length) {
+      parts.push(`<p class="muted"><b>Declared only</b> (the ID is in the symbols, but the binary has no code for it) in: ${f.declaredIn.map(esc).join(', ')}</p>`);
+    }
+    return parts.join('') || '<p class="muted">Nothing more is known about this feature.</p>';
+  };
 }
 
 const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</span>') +
@@ -142,7 +247,7 @@ async function renderCompare() {
   out.innerHTML = '';
   const [a, b] = await Promise.all([loadBuild(oldKey), loadBuild(newKey)]);
   const of = new Map(a.features.map((f) => [f.id, f])), nf = new Map(b.features.map((f) => [f.id, f]));
-  const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [];
+  const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [], defaultChanged = [];
   for (const [id, f] of nf) {
     const o = of.get(id);
     if (!o) { added.push(f); continue; }
@@ -153,6 +258,12 @@ async function renderCompare() {
     }
     if (JSON.stringify(o.store || null) !== JSON.stringify(f.store || null)) {
       storeChanged.push({ id, name: f.name || o.name, modules: f.modules, oldStore: o.store, newStore: f.store });
+    }
+    // Only where both builds know the value; builds scanned before default states were read don't have them
+    const known = ['default', 'changeTime'].filter((k) => o[k] && f[k]);
+    if (known.some((k) => o[k] !== f[k])) {
+      const pick = (x) => Object.fromEntries(known.map((k) => [k, x[k]]));
+      defaultChanged.push({ id, name: f.name || o.name, modules: f.modules, oldState: pick(o), newState: pick(f) });
     }
   }
   for (const [id, f] of of) if (!nf.has(id)) removed.push(f);
@@ -193,7 +304,14 @@ async function renderCompare() {
       { title: 'Old', value: (f) => storeText(f.oldStore) || '(not configured)', cls: 'store' },
       { title: 'New', value: (f) => storeText(f.newStore) || '(not configured)', cls: 'store' },
     ]],
+    ['Default changed', 'changed', defaultChanged, [
+      { title: 'ID', value: (f) => f.id, cls: 'id' },
+      { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
+      { title: 'Old', value: (f) => stateText(f.oldState), cls: 'store' },
+      { title: 'New', value: (f) => stateText(f.newState), cls: 'store' },
+    ]],
   ];
+  const detailOld = featureDetail(a), detailNew = featureDetail(b);
   const direction = compareVersions(a, b) > 0 ? ' (the "old" build is newer than the "new" one)' : '';
   $('cmp-status').textContent = `${buildLabel(a)} → ${buildLabel(b)}${direction}`;
   for (const [title, cls, rows, cols] of sections) {
@@ -202,7 +320,7 @@ async function renderCompare() {
     h.className = cls;
     h.innerHTML = `${esc(title)} <span class="count">${filtered.length}${filtered.length !== rows.length ? ' of ' + rows.length : ''}</span>`;
     out.appendChild(h);
-    if (filtered.length) renderTable(out, filtered, cols);
+    if (filtered.length) renderTable(out, filtered, cols, undefined, title === 'Removed' ? detailOld : detailNew);
   }
 }
 
@@ -210,19 +328,26 @@ async function renderCompare() {
 // Browse view
 // ---------------------------------------------------------------------------
 
+let buildRender = 0;
+
 async function renderBuild() {
   const key = $('bld-select').value;
   const q = $('bld-search').value.trim().toLowerCase();
   const namedOnly = $('bld-named').checked, storeOnly = $('bld-store').checked, newOnly = $('bld-new').checked;
+  const searchDetails = $('bld-details').checked;
   const out = $('bld-results');
   setHash(`build/${key}`);
   if (!key) return;
-  $('bld-status').textContent = 'Loading…';
+  const render = ++buildRender;  // A slower earlier render must not overwrite a newer one
+  $('bld-status').textContent = searchDetails && q ? 'Loading code details…' : 'Loading…';
   out.innerHTML = '';
   const b = await loadBuild(key);
   const arch = b.architecture;
+  const detailText = searchDetails && q ? await loadDetailText(arch) : null;
+  if (render !== buildRender) return;
   const seen = firstSeen.firstSeen[arch] || {};
-  const rows = b.features.filter((f) => matches(f, q, namedOnly) && (!storeOnly || f.store) && (!newOnly || seen[String(f.id)] === key));
+  const hit = (f) => matches(f, q, namedOnly) || (detailText !== null && (!namedOnly || f.name) && (detailText.get(f.id) || '').includes(q));
+  const rows = b.features.filter((f) => hit(f) && (!storeOnly || f.store) && (!newOnly || seen[String(f.id)] === key));
   const firstTracked = firstSeen.firstTrackedBuild[arch] === key;
   $('bld-status').textContent = `${buildLabel(b)}: ${b.features.length} feature IDs, ${b.features.filter((f) => f.name).length} named, ` +
     `${b.features.filter((f) => f.store).length} in the feature store. Showing ${rows.length}.` +
@@ -230,10 +355,11 @@ async function renderBuild() {
   renderTable(out, rows, [
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
+    { title: 'Default', value: (f) => DEFAULTS[f.default] || '', cls: 'store' },
     { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => seen[String(f.id)] || '', cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
     { title: 'Modules', value: modsText, cls: 'mods' },
-  ]);
+  ], undefined, featureDetail(b));
 }
 
 // ---------------------------------------------------------------------------
@@ -303,7 +429,7 @@ async function init() {
     $('cmp-new').value = o;
     cmp();
   });
-  for (const id of ['bld-select', 'bld-named', 'bld-store', 'bld-new']) $(id).addEventListener('change', bld);
+  for (const id of ['bld-select', 'bld-named', 'bld-store', 'bld-new', 'bld-details']) $(id).addEventListener('change', bld);
   $('bld-search').addEventListener('input', debounce(bld, 250));
   document.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
@@ -311,6 +437,15 @@ async function init() {
     setHash(v === 'build' ? `build/${$('bld-select').value}` : `compare/${$('cmp-old').value}/${$('cmp-new').value}`);
     route();
   }));
+  // Links to other features in the details panels open that feature in its build
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a.feat-link');
+    if (!a) return;
+    e.preventDefault();
+    $('bld-search').value = a.dataset.id;
+    setHash(`build/${a.dataset.build}`);
+    route();
+  });
   window.addEventListener('hashchange', route);
   route();
 }
