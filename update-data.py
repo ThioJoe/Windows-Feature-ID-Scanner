@@ -5,6 +5,7 @@
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build each feature ID appeared in
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture
+#   data/details/<arch>/<nn>.json          What each binary's code reveals about each feature (callers, strings, ...), from the newest build that had it
 #
 # Usage:
 #   python update-data.py --summary summary.json --symbols symbol-features.json   # add/replace a build, then regenerate everything
@@ -21,6 +22,8 @@ import sys
 
 NUMERIC_NAME = re.compile(r'^(?:ID|FI)?\d+$')
 STORE_FIELDS = (('Priority', 'priority'), ('State', 'state'), ('Type', 'type'), ('Variant', 'variant'), ('PayloadKind', 'payloadKind'), ('Payload', 'payload'))
+SYMBOL_FIELDS = ('declaredIn', 'default', 'changeTime', 'requires')  # Copied from scan-symbols.py's output when present
+DETAIL_SHARDS = 64  # Usage details are split by feature ID (ID % 64) so the site only loads the part it needs
 
 
 def load_json(path):
@@ -75,6 +78,9 @@ def add_build(data_dir, summary_path, symbols_path):
         if len(f.get('names', [])) > 1 or (f.get('names') and name is None):
             entry['symbolNames'] = f['names']
         entry['modules'] = f.get('modules', [])
+        for k in SYMBOL_FIELDS:
+            if f.get(k):
+                entry[k] = f[k]
         if f.get('unverified'):
             entry['unverified'] = True  # Only known from an earlier version of its binary; this build's PDB couldn't be downloaded
         features[f['id']] = entry
@@ -119,7 +125,34 @@ def add_build(data_dir, summary_path, symbols_path):
     write_build_file(path, header, ordered)
     print('[data] wrote %s (%d features, %d named, %d in feature store)' % (
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
+    write_details(data_dir, arch, key, {f['id']: f['usage'] for f in symbols.get('features', []) if f.get('usage')})
     return key
+
+
+def write_details(data_dir, arch, key, usage):
+    """Stores each feature's usage details (per binary: how it's used, callers, strings, ...) in data/details/<arch>/<nn>.json, keyed by ID.
+    Each feature keeps the details of the newest build that had them, so a feature missing from a later build keeps its last known details."""
+    details_dir = os.path.join(data_dir, 'details', arch)
+    os.makedirs(details_dir, exist_ok=True)
+    version = lambda k: version_tuple(k.rsplit('-', 1)[0])
+    shards, changed = {}, set()
+    for fid, by_module in usage.items():
+        name = '%02d' % (fid % DETAIL_SHARDS)
+        if name not in shards:
+            path = os.path.join(details_dir, name + '.json')
+            shards[name] = load_json(path) if os.path.exists(path) else {}
+        old = shards[name].get(str(fid))
+        if old and version(old['build']) > version(key):
+            continue  # Details from a newer build win
+        shards[name][str(fid)] = {'build': key, 'usage': by_module}
+        changed.add(name)
+    for name in changed:
+        entries = shards[name]
+        ids = sorted(entries, key=int)
+        lines = ['%s: %s' % (json.dumps(i), json.dumps(entries[i], separators=(',', ':'))) for i in ids]
+        with open(os.path.join(details_dir, name + '.json'), 'w', encoding='utf-8', newline='\n') as f:
+            f.write('{\n' + ',\n'.join(lines) + '\n}\n')  # One feature per line, like the build files
+    print('[data] wrote usage details for %d features to %s' % (len(usage), details_dir))
 
 
 def store_signature(feat):
@@ -131,7 +164,7 @@ def diff_builds(old, new):
     nf = {f['id']: f for f in new['features']}
     added = [nf[i] for i in sorted(set(nf) - set(of))]
     removed = [of[i] for i in sorted(set(of) - set(nf))]
-    renamed, newly_named, name_lost, store_changed = [], [], [], []
+    renamed, newly_named, name_lost, store_changed, default_changed = [], [], [], [], []
     for i in sorted(set(of) & set(nf)):
         a, b = of[i], nf[i]
         if a['name'] != b['name']:
@@ -143,6 +176,11 @@ def diff_builds(old, new):
                 name_lost.append({'id': i, 'oldName': a['name']})
         if store_signature(a) != store_signature(b):
             store_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': a.get('store'), 'new': b.get('store')})
+        # Only where both builds know the value; builds scanned before default states were read don't have them
+        old_default = {k: a[k] for k in ('default', 'changeTime') if a.get(k) and b.get(k)}
+        new_default = {k: b[k] for k in old_default}
+        if old_default != new_default:
+            default_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': old_default, 'new': new_default})
 
     def brief(f):
         out = {'id': f['id'], 'name': f['name'], 'modules': f.get('modules', []), 'store': f.get('store')}
@@ -157,6 +195,7 @@ def diff_builds(old, new):
         'newlyNamed': newly_named,
         'nameLost': name_lost,
         'storeChanged': store_changed,
+        'defaultChanged': default_changed,
     }
 
 
@@ -174,7 +213,8 @@ def diff_markdown(d):
              '| Renamed | %d | |' % len(d['renamed']),
              '| Newly named | %d | |' % len(d['newlyNamed']),
              '| Name lost | %d | |' % len(d['nameLost']),
-             '| Feature store changes | %d | |' % len(d['storeChanged']), '']
+             '| Feature store changes | %d | |' % len(d['storeChanged']),
+             '| Default changed | %d | |' % len(d['defaultChanged']), '']
     mods = lambda r: ', '.join(r.get('modules', [])[:4]) + (' …' if len(r.get('modules', [])) > 4 else '')
     for title, rows in (('Added', d['added']), ('Removed', d['removed'])):
         lines += ['## %s' % title, '']
@@ -186,6 +226,10 @@ def diff_markdown(d):
         lines += ['## Newly named', ''] + table(d['newlyNamed'], [('ID', lambda r: r['id']), ('Name', lambda r: r['name'])]) + ['']
     if d['nameLost']:
         lines += ['## Name lost', ''] + table(d['nameLost'], [('ID', lambda r: r['id']), ('Old name', lambda r: r['oldName'])]) + ['']
+    if d['defaultChanged']:
+        state = lambda x: ', '.join(x[k] for k in ('default', 'changeTime') if k in x)
+        lines += ['## Default changed', ''] + table(d['defaultChanged'], [('ID', lambda r: r['id']), ('Name', lambda r: r['name'] or ''),
+                                                                          ('Old', lambda r: state(r['old'])), ('New', lambda r: state(r['new']))]) + ['']
     return '\n'.join(lines) + '\n'
 
 
@@ -231,7 +275,7 @@ def regenerate(data_dir):
             f.write(diff_markdown(d))
         index_entry = next(x for x in index['builds'] if x['key'] == cur['key'])
         index_entry['previous'] = prev['key']
-        index_entry['diff'] = {k: len(d[k]) for k in ('added', 'removed', 'renamed', 'newlyNamed', 'nameLost', 'storeChanged')}
+        index_entry['diff'] = {k: len(d[k]) for k in ('added', 'removed', 'renamed', 'newlyNamed', 'nameLost', 'storeChanged', 'defaultChanged')}
     for fn in os.listdir(diffs_dir):
         if fn not in wanted:
             os.remove(os.path.join(diffs_dir, fn))  # Stale diff (e.g. a build was inserted between two others)
