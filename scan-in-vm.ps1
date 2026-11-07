@@ -2,12 +2,15 @@
 # Builds a Windows 11 virtual machine at a chosen build, entirely from Microsoft's own servers, and runs the feature scan inside it.
 # Used by the VM scanner workflow on an x64 runner, which can run Hyper-V virtual machines.
 #
-#   1. Base image: the newest Windows 11 image the Media Creation Tool offers (its catalog, products.cab, lists the image files on Microsoft's servers).
-#      It's applied to a virtual disk, and the VM boots from it without the setup screens (unattend.xml).
+#   1. Base image: the newest Windows 11 image from the Media Creation Tool's catalogs (products.cab, which lists the image files on
+#      Microsoft's servers with their hashes) that the target version can be reached from. The tool's link still points to a 24H2
+#      catalog from June 2025; the tool then asks Windows Update's metadata service for the current one, as this script does too.
+#      The image is applied to a virtual disk, and the VM boots from it without the setup screens (unattend.xml).
 #   2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM, the way Microsoft
 #      documents for cumulative updates that come with checkpoint updates. Windows 11 24H2, 25H2 and 26H2 share their code and their
 #      cumulative updates; only the version's enablement package differs.
-#   3. Windows Update installs the enablement package of the target version, chosen with Windows Update's own target release version policy.
+#   3. Unless the image is that version already, Windows Update installs the enablement package of the target version, chosen with
+#      Windows Update's own target release version policy.
 #   4. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, and its output is copied back.
 #
 # Steps can be run one at a time with -Step, which is how it was developed and tested.
@@ -43,24 +46,57 @@ function Save-Url([string]$url, [string]$path) {
     if ($LASTEXITCODE -ne 0) { throw "Download failed ($LASTEXITCODE): $url" }
 }
 
-function Get-BaseImage {
-    # The Media Creation Tool's catalog lists every image file it can download, with its hashes
-    $cab = Join-Path $WorkDir 'products.cab'
+function Get-ProductsCatalogs {
+    # The Media Creation Tool's catalogs, products.cab. Its link (fwlink 2156292) still gives the June 2025 24H2 catalog; the tool then
+    # asks Windows Update's metadata service for the product Windows.Products.Cab.amd64 and uses the newer catalog that comes back
+    # (seen by tracing the tool; the request is the one its SetupMgr.dll and udiapi.dll make). Both are returned, so an older
+    # version can still start from the older image.
+    $cabs = @()
+    $cab = Join-Path $WorkDir 'products-fwlink.cab'
     Save-Url 'https://go.microsoft.com/fwlink/?LinkId=2156292' $cab
-    $xmlDir = Join-Path $WorkDir 'products'
-    New-Item -ItemType Directory -Force $xmlDir | Out-Null
-    & expand.exe $cab -F:products.xml $xmlDir | Out-Null
-    $xmlFile = Get-ChildItem $xmlDir -File | Select-Object -First 1
-    [xml]$catalog = Get-Content $xmlFile.FullName
-    $file = $catalog.MCT.Catalogs.Catalog.PublishedMedia.Files.File |
-        Where-Object { $_.LanguageCode -eq 'en-us' -and $_.Architecture -eq 'x64' -and $_.Edition -eq $Edition } | Select-Object -First 1
-    if (-not $file) { throw "The Media Creation Tool catalog has no en-us x64 image with the $Edition edition" }
+    $cabs += $cab
+    try {
+        $body = @{ Products = 'PN=Windows.Products.Cab.amd64&Branch=ge_release&V=26100.0.0.0'; DeviceAttributes = 'DUScan=1;OSVersion=10.0.26100.1' } | ConvertTo-Json -Compress
+        $found = Invoke-RestMethod -Uri 'https://fe3.delivery.mp.microsoft.com/UpdateMetadataService/updates/search/v1/bydeviceinfo' -Method Post -Body $body -ContentType 'application/json' -TimeoutSec 120
+        $file = @($found)[0].FileLocations | Where-Object { $_.FileName -eq 'products.cab' } | Select-Object -First 1
+        if (-not $file) { throw 'no products.cab in the response' }
+        $cab = Join-Path $WorkDir 'products-wu.cab'
+        Save-Url $file.Url $cab
+        $sha = New-Object Security.Cryptography.SHA256Managed
+        $digest = [Convert]::ToBase64String($sha.ComputeHash([IO.File]::ReadAllBytes($cab)))
+        if ($digest -ne $file.Digest) { throw "SHA-256 mismatch ($digest, expected $($file.Digest))" }
+        $cabs += $cab
+    } catch { Log "Couldn't get the current catalog from Windows Update ($($_.Exception.Message)); using the older one only" }
+    return $cabs
+}
+
+function Get-BaseImage {
+    # Every image file in the catalogs, with its hash; the newest image whose base build isn't past the target version's (an image of
+    # 26H2, base build 26300, can't become 25H2, 26200, while a 24H2 one, 26100, can become either)
+    $images = @()
+    foreach ($cab in Get-ProductsCatalogs) {
+        $xmlDir = Join-Path $WorkDir ([IO.Path]::GetFileNameWithoutExtension($cab))
+        Remove-Item $xmlDir -Recurse -Force -ErrorAction SilentlyContinue
+        New-Item -ItemType Directory -Force $xmlDir | Out-Null
+        & expand.exe $cab -F:products.xml $xmlDir | Out-Null
+        [xml]$catalog = Get-Content (Get-ChildItem $xmlDir -File | Select-Object -First 1).FullName
+        $images += $catalog.MCT.Catalogs.Catalog.PublishedMedia.Files.File |
+            Where-Object { $_.LanguageCode -eq 'en-us' -and $_.Architecture -eq 'x64' -and $_.Edition -eq $Edition -and $_.FileName -match '^(\d+)\.(\d+)\.' } |
+            ForEach-Object { [PSCustomObject]@{ File = $_; Base = [int]($_.FileName -split '\.')[0]; Ubr = [int]($_.FileName -split '\.')[1] } }
+    }
+    $targetBase = if ($ExpectedBuild) { [int]($ExpectedBuild -split '\.')[0] } else { @{ '24H2' = 26100; '25H2' = 26200; '26H2' = 26300 }[$Version] }
+    $pick = $images | Where-Object { -not $targetBase -or $_.Base -le $targetBase } | Sort-Object Base, Ubr | Select-Object -Last 1
+    if (-not $pick) { throw "The Media Creation Tool's catalogs have no en-us x64 image with the $Edition edition for $Version" }
+    Log "Images in the catalogs: $((($images | ForEach-Object { "$($_.Base).$($_.Ubr)" }) | Sort-Object -Unique) -join ', ')"
+    $file = $pick.File
     $esd = Join-Path $WorkDir $file.FileName
-    if (-not (Test-Path $esd) -or (Get-FileHash $esd -Algorithm SHA1).Hash -ne $file.Sha1.ToUpper()) {
+    # Newer catalogs list a SHA-256 hash, older ones SHA-1
+    $algorithm, $expected = if ($file.Sha256) { 'SHA256', $file.Sha256.ToUpper() } elseif ($file.Sha1) { 'SHA1', $file.Sha1.ToUpper() } else { throw "No hash for $($file.FileName) in the catalog" }
+    if (-not (Test-Path $esd) -or (Get-FileHash $esd -Algorithm $algorithm).Hash -ne $expected) {
         Log "Downloading $($file.FileName) ($([math]::Round([double]$file.Size / 1GB, 1)) GB)"
         Save-Url $file.FilePath $esd
-        $hash = (Get-FileHash $esd -Algorithm SHA1).Hash
-        if ($hash -ne $file.Sha1.ToUpper()) { throw "SHA1 mismatch for $esd" }
+        $hash = (Get-FileHash $esd -Algorithm $algorithm).Hash
+        if ($hash -ne $expected) { throw "$algorithm mismatch for $esd" }
     }
     Log "Base image: $($file.FileName)"
     return $esd
@@ -428,7 +464,12 @@ Write-Result $LASTEXITCODE
 }
 
 function Install-TargetVersion {
-    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update
+    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update.
+    # Returns whether the VM needs a restart.
+    if ((Get-VmBuild).Split(' ')[1] -eq $Version) {
+        Log "The VM is $Version already"
+        return $false
+    }
     Invoke-InVM -Retry -arguments $Version {
         param($version)
         $policy = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
@@ -537,10 +578,15 @@ if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
     Log "VM build: $(Get-VmBuild)"
 }
 if ($Step -in 'All', 'Install' -and $updateUrls) {
-    Install-CumulativeUpdate $updateUrls
-    Restart-ScanVM
-    Set-VmNetwork
-    Log "VM build after the cumulative update: $(Get-VmBuild)"
+    $current = (Get-VmBuild).Split(' ')[0]
+    if ($ExpectedBuild -and [version]$current -ge [version]$ExpectedBuild) {
+        Log "The VM is at build $current already"
+    } else {
+        Install-CumulativeUpdate $updateUrls
+        Restart-ScanVM
+        Set-VmNetwork
+        Log "VM build after the cumulative update: $(Get-VmBuild)"
+    }
 }
 if ($Step -in 'All', 'FeatureUpdate') {
     if (Install-TargetVersion) {
