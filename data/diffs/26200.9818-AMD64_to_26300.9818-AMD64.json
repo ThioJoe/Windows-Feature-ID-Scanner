@@ -1,49 +1,8 @@
 {
  "old": "26200.9818-AMD64",
  "new": "26300.9818-AMD64",
- "added": [
-  {
-   "id": 61175593,
-   "name": null,
-   "modules": [
-    "dwmcorei.dll"
-   ],
-   "store": null
-  }
- ],
+ "added": [],
  "removed": [
-  {
-   "id": 20224600,
-   "name": "HvciIncompatibleDrivers",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 20815078,
-   "name": "HvciCancelScan",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 20887957,
-   "name": "HvciIncompatibleApps",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 24652141,
-   "name": "ProtectionHistoryPillar",
-   "modules": [
-    "SecHealthUIDataModel.dll"
-   ],
-   "store": null
-  },
   {
    "id": 42969627,
    "name": "RepairAppRegistration_Preserves_ApplicationData",
@@ -79,14 +38,6 @@
      "type": "Experiment (1)"
     }
    ]
-  },
-  {
-   "id": 48187519,
-   "name": "HideMdagEntrypointInWsa",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
   },
   {
    "id": 49084341,
@@ -149,14 +100,6 @@
    ]
   },
   {
-   "id": 51538523,
-   "name": null,
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 52087985,
    "name": "Servicing_RPCSSFirewallIntegration",
    "modules": [],
@@ -169,6 +112,22 @@
    ]
   },
   {
+   "id": 52439772,
+   "name": "Capture_BufferCollectionLeak",
+   "modules": [
+    "marshal.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 53715526,
+   "name": "DcompK_MarshalerReleaseFix",
+   "modules": [
+    "marshal.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 55199570,
    "name": "Servicing_EnableInspect_55199570",
    "modules": [],
@@ -179,14 +138,6 @@
      "type": "Experiment (1)"
     }
    ]
-  },
-  {
-   "id": 56707490,
-   "name": null,
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null
   }
  ],
  "renamed": [],
@@ -252,13 +203,13 @@
    ]
   },
   {
-   "id": 62775162,
-   "name": "OneSettingsClient_BrokeredRefresh",
+   "id": 57512414,
+   "name": "M365CopilotPinning",
    "old": null,
    "new": [
     {
      "priority": "Service (4)",
-     "state": "Disabled (1)",
+     "state": "Enabled (2)",
      "type": "Experiment (1)"
     }
    ]
