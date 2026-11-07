@@ -65,16 +65,39 @@ def fetch(url, retries=4):
 # ---------------------------------------------------------------------------
 
 def file_list_links(kb):
-    """The KB article's title and the links of its file lists ('file information for cumulative update ...', '... the SSU ...')."""
-    page = fetch(f'https://support.microsoft.com/help/{kb[2:] if kb.upper().startswith("KB") else kb}').decode('utf-8', 'replace')
-    title = html.unescape(re.search(r'<title>([^<]*)', page).group(1)).strip()
-    links = []
-    for m in re.finditer(r'<a\s+href="([^"]+)"[^>]*>(.*?)</a>', page, re.S):
-        url, text = html.unescape(m.group(1)), re.sub(r'<[^>]+>|\s+', ' ', m.group(2))
-        before = page[max(0, m.start() - 200):m.start()]
-        if re.search(r'file information', text + before, re.I) and re.match(r'https://(go\.microsoft\.com/fwlink/|download\.microsoft\.com/)', url):
-            links.append((url, text.strip()))
-    return title, links
+    """The KB article's title and the links of its file lists. The article is at support.microsoft.com/help/<number> (or /kb/<number>,
+    an older address that also leads to it). The lists are the links to go.microsoft.com (which redirects to the list) or
+    download.microsoft.com in its "File information" section, or whose text, or the text just before them, says "file information"
+    ("Download the file information for cumulative update KB...", "... for the SSU ..."). Should the article change so that none
+    are found, these count instead, in this order: links to a .csv file on download.microsoft.com, and go.microsoft.com links whose
+    text names the KB."""
+    number = kb[2:] if kb.upper().startswith('KB') else kb
+    page, errors = None, []
+    for url in (f'https://support.microsoft.com/help/{number}', f'https://support.microsoft.com/kb/{number}'):
+        try:
+            page = fetch(url).decode('utf-8', 'replace')
+            break
+        except Exception as e:
+            errors.append(str(e))
+    if page is None or number not in page:
+        raise RuntimeError(f'KB{number}: no KB article ({"; ".join(errors) or "the page found is not about it"})')
+    title = re.search(r'<title>([^<]*)', page)
+    title = html.unescape(title.group(1)).strip() if title else f'KB{number}'
+    anchors = [(m, html.unescape(m.group(1)), re.sub(r'<[^>]+>|\s+', ' ', m.group(2)).strip())
+               for m in re.finditer(r'<a\s[^>]*?href="([^"]+)"[^>]*>(.*?)</a>', page, re.S)]
+    allowed = lambda url: re.match(r'https://(go\.microsoft\.com/fwlink/|download\.microsoft\.com/)', url)
+    heading = re.search(r'<(h\d|strong)[^>]*>\s*File information\s*</\1>', page, re.I)
+    if heading:  # The section runs to the next heading
+        following = re.compile(r'<h\d[\s>]', re.I).search(page, heading.end())
+        section = (heading.end(), min(following.start() if following else len(page), heading.end() + 4000))
+    for keep in (lambda m, url, text: allowed(url) and (re.search(r'file information', text + page[max(0, m.start() - 200):m.start()], re.I)
+                                                        or (heading and section[0] < m.start() < section[1])),
+                 lambda m, url, text: re.match(r'https://download\.microsoft\.com/\S+\.csv$', url, re.I),
+                 lambda m, url, text: allowed(url) and re.search(rf'\b(KB)?{number}\b', text)):
+        links = [(url, text or url.rsplit('/', 1)[-1]) for m, url, text in anchors if keep(m, url, text)]
+        if links:
+            return title, list(dict.fromkeys(links))
+    return title, []
 
 
 def read_file_list(data):
@@ -131,6 +154,8 @@ def load_updates(kbs, cache_dir, required=True):
             part = read_file_list(data)
             log(f'{kb}: {text}: {len(part):,} x64 files')
             rows += part
+        if not rows and required:
+            raise RuntimeError(f'{kb}: its file lists ({", ".join(u for u, _ in links)}) have no x64 files; is the layout new?')
         updates.append({'kb': kb, 'title': title, 'rows': rows})
     return updates
 
