@@ -17,9 +17,9 @@ param(
     [string]$Kb,                           # Target cumulative update, such as KB5127936
     [string]$ExpectedBuild,                # Fail before scanning unless the VM ends up at this build (such as 26300.9818)
     [string]$Edition = 'Enterprise',       # Edition to install from the image
-    [string]$WorkDir = 'D:\vmscan',        # Needs about 60 GB: the image, the update, and the virtual disk
+    [string]$WorkDir = 'D:\vmscan',        # Needs about 60 GB: the image and the virtual disk
     [string]$VmName = 'FeatureScan',
-    [int]$VmMemoryGB = 12,
+    [int]$VmMemoryGB = 0,                  # 0: what the runner can spare (its free memory less 3 GB), from 4 to 12 GB
     [string]$RepoDir = $PSScriptRoot,      # The scanner's files, copied into the VM
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
     [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Scan')]
@@ -86,21 +86,18 @@ function Get-UpdateCatalogLinks([string]$updateId) {
 }
 
 function Get-CumulativeUpdate {
-    # The same update file serves 24H2, 25H2 and 26H2; take the entry for the target version
+    # The download links of the target cumulative update's files. The same files serve 24H2, 25H2 and 26H2; take the entry for the target version.
     $entry = Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' -and $_.Title -match "version $Version" } | Select-Object -First 1
     if (-not $entry) { throw "No x64 $Version entry for $Kb in the Microsoft Update Catalog" }
     Log "Update: $($entry.Title)"
-    $dir = Join-Path $WorkDir "updates-$Kb"
-    New-Item -ItemType Directory -Force $dir | Out-Null
     # Since 24H2, a cumulative update can come with "checkpoint" updates that have to be installed first; the download dialog lists them all
-    foreach ($url in Get-UpdateCatalogLinks $entry.Id) {
-        $path = Join-Path $dir ([IO.Path]::GetFileName(([uri]$url).AbsolutePath))
-        if (-not (Test-Path $path)) {
-            Log "Downloading $([IO.Path]::GetFileName($path))"
-            Save-Url $url $path
-        }
+    $urls = @(Get-UpdateCatalogLinks $entry.Id)
+    if (-not $urls) { throw "The Microsoft Update Catalog lists no files for $Kb" }
+    foreach ($url in $urls) {
+        if ($url -notmatch '^https?://[A-Za-z0-9./_-]+$') { throw "Unexpected download link: $url" }
+        Log "File: $url"
     }
-    return $dir
+    return $urls
 }
 
 # ---------------------------------------------------------------------------
@@ -134,6 +131,9 @@ function New-ScanDisk([string]$esd) {
     Write-Unattend $winRoot
     $reg = "HKLM\OFFLINE_SOFTWARE"
     & reg.exe load $reg "$($winRoot)Windows\System32\config\SOFTWARE" | Out-Null
+    # Group Policy 'Configure Automatic Updates: Disabled', so Windows Update only installs what this script asks it for (the enablement
+    # package), and doesn't spend the VM's disk on an automatic scan meanwhile
+    & reg.exe add "$reg\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate /t REG_DWORD /d 1 /f | Out-Null
     $build = (& reg.exe query "$reg\Microsoft\Windows NT\CurrentVersion" /v CurrentBuildNumber | Select-String 'REG_SZ\s+(\S+)').Matches.Groups[1].Value
     $ubr = [Convert]::ToInt32((& reg.exe query "$reg\Microsoft\Windows NT\CurrentVersion" /v UBR | Select-String 'REG_DWORD\s+(\S+)').Matches.Groups[1].Value, 16)
     [gc]::Collect()
@@ -226,9 +226,15 @@ function Initialize-NatNetwork {
 function Start-ScanVM {
     $vhd = Join-Path $WorkDir "$VmName.vhdx"
     Initialize-NatNetwork
+    $memoryGB = $VmMemoryGB
+    if (-not $memoryGB) {
+        # Hyper-V needs some memory of its own on top of the VM's, and a 16 GB runner has about 13 GB free
+        $freeGB = (Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB
+        $memoryGB = [int][Math]::Max(4, [Math]::Min(12, [Math]::Floor($freeGB - 3)))
+    }
     if (-not (Get-VM -Name $VmName -ErrorAction SilentlyContinue)) {
-        Log "Creating VM $VmName"
-        New-VM -Name $VmName -Generation 2 -MemoryStartupBytes ($VmMemoryGB * 1GB) -VHDPath $vhd -SwitchName ScanNAT | Out-Null
+        Log "Creating VM $VmName ($memoryGB GB of memory)"
+        New-VM -Name $VmName -Generation 2 -MemoryStartupBytes ($memoryGB * 1GB) -VHDPath $vhd -SwitchName ScanNAT | Out-Null
         Set-VM -Name $VmName -ProcessorCount ([Math]::Max(2, [Environment]::ProcessorCount)) -StaticMemory -AutomaticCheckpointsEnabled $false
         Set-VMFirmware -VMName $VmName -EnableSecureBoot On -SecureBootTemplate MicrosoftWindows
         try {
@@ -237,7 +243,10 @@ function Start-ScanVM {
         } catch { Log "No virtual TPM: $($_.Exception.Message)" }
         Enable-VMIntegrationService -VMName $VmName -Name 'Guest Service Interface'
     }
-    if ((Get-VM -Name $VmName).State -ne 'Running') { Start-VM -Name $VmName }
+    if ((Get-VM -Name $VmName).State -eq 'Off') {
+        Set-VMMemory -VMName $VmName -StartupBytes ($memoryGB * 1GB)
+        Start-VM -Name $VmName
+    }
 }
 
 function Wait-ScanVM([int]$timeoutMinutes = 40) {
@@ -263,8 +272,13 @@ function Set-VmNetwork($session) {
             New-NetIPAddress -InterfaceIndex $adapter.ifIndex -IPAddress "$prefix.10" -PrefixLength 24 -DefaultGateway "$prefix.1" | Out-Null
         }
         Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $dns
-        $ok = Test-NetConnection -ComputerName www.microsoft.com -Port 443 -InformationLevel Quiet -WarningAction SilentlyContinue
-        "VM network: $prefix.10, DNS $($dns -join ', '), internet: $ok"
+        $ok = $false
+        for ($i = 0; $i -lt 24 -and -not $ok; $i++) {  # A new address takes a few seconds to become usable
+            $ok = Test-NetConnection -ComputerName www.microsoft.com -Port 443 -InformationLevel Quiet -WarningAction SilentlyContinue
+            if (-not $ok) { Start-Sleep -Seconds 5 }
+        }
+        if (-not $ok) { throw "The VM can't reach www.microsoft.com through the runner (address $prefix.10, DNS $($dns -join ', '))" }
+        "VM network: $prefix.10, DNS $($dns -join ', ')"
     } | ForEach-Object { Log $_ }
 }
 
@@ -305,7 +319,7 @@ function Write-Log([string]$line) {
 }
 function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 'C:\scan-tasks\__NAME__.result' $value }
 '@.Replace('__NAME__', $name)
-    Invoke-Command -Session $session -ArgumentList $name, ($preamble + $script) -ScriptBlock {
+    Invoke-Command -Session $session -ArgumentList $name, ($preamble + "`r`n" + $script) -ScriptBlock {
         param($name, $script)
         New-Item -ItemType Directory -Force C:\scan-tasks | Out-Null
         Set-Content "C:\scan-tasks\$name.ps1" $script
@@ -320,35 +334,40 @@ function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 
         Start-Sleep -Seconds 30
         $state = Invoke-Command -Session $session -ArgumentList $name -ScriptBlock {
             param($name)
+            $done = Test-Path "C:\scan-tasks\$name.result"
             @{ Log = @(Get-Content "C:\scan-tasks\$name.log" -ErrorAction SilentlyContinue)
-               Result = $(if (Test-Path "C:\scan-tasks\$name.result") { (Get-Content "C:\scan-tasks\$name.result" -Raw).Trim() })
+               Done = $done
+               Result = if ($done) { [string](Get-Content "C:\scan-tasks\$name.result" -Raw) } else { '' }
                Running = (Get-ScheduledTask -TaskName $name).State -eq 'Running' }
         }
         $state.Log | Select-Object -Skip $shown | ForEach-Object { Log "${name}: $_" }
         $shown = [Math]::Max($shown, $state.Log.Count)
-        if ($null -ne $state.Result) { return $state.Result }
+        if ($state.Done) { return $state.Result.Trim() }
         if (-not $state.Running) { throw "$name stopped without a result" }
     }
     throw "$name didn't finish within $timeoutMinutes minutes"
 }
 
-function Install-CumulativeUpdate($session, [string]$updatesDir) {
-    # DISM installs the checkpoint updates in the folder before the update that needs them
-    Log "Copying $updatesDir into the VM"
-    Invoke-Command -Session $session -ScriptBlock { New-Item -ItemType Directory -Force C:\scan-updates | Out-Null }
-    Copy-Item -ToSession $session -Path (Join-Path $updatesDir '*.msu') -Destination C:\scan-updates -Force
-    $result = Invoke-VmTask $session 'ScanLCU' -timeoutMinutes 120 -script @'
+function Install-CumulativeUpdate($session, [string[]]$urls) {
+    # The VM downloads the update's files from Microsoft itself (copying them in through PowerShell Direct is much slower). DISM checks
+    # their signatures, and installs the checkpoint updates in the folder before the update that needs them, the way Microsoft
+    # documents for these updates.
+    $result = Invoke-VmTask $session 'ScanLCU' -timeoutMinutes 150 -script (@'
+New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
+foreach ($url in @(__URLS__)) {
+    $name = [IO.Path]::GetFileName(([uri]$url).AbsolutePath)
+    $path = Join-Path C:\scan-updates $name
+    Write-Log "downloading $name"
+    & curl.exe -fsSL --retry 5 --retry-delay 5 -o $path $url
+    if ($LASTEXITCODE -ne 0) { Write-Result "download failed (curl $LASTEXITCODE): $url"; return }
+}
 Write-Log 'installing the cumulative update with DISM'
 & dism.exe /English /Online /Add-Package /PackagePath:C:\scan-updates /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
 Write-Result $LASTEXITCODE
-'@
-    if ($result -notin '0', '3010') { throw "Installing the cumulative update failed (DISM exit code $result)" }  # 3010: done, restart needed
+'@).Replace('__URLS__', (($urls | ForEach-Object { "'$_'" }) -join ', '))
+    if ($result -notin '0', '3010') { throw "Installing the cumulative update failed: $result" }  # 3010: done, restart needed
     Invoke-Command -Session $session -ScriptBlock { Remove-Item C:\scan-updates -Recurse -Force }
 }
-
-# ---------------------------------------------------------------------------
-# Version: the enablement package, through Windows Update
-# ---------------------------------------------------------------------------
 
 function Install-TargetVersion($session) {
     # Windows Update's target release version policy makes it offer that version's enablement package as the feature update
@@ -422,9 +441,9 @@ try {
 
 # ---------------------------------------------------------------------------
 
-$esd = $null; $updatesDir = $null
+$esd = $null; $updateUrls = $null
 if ($Step -in 'All', 'Image', 'Disk') { $esd = Get-BaseImage }
-if ($Step -in 'All', 'Download', 'Install' -and $Kb) { $updatesDir = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
+if ($Step -in 'All', 'Download', 'Install' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
 if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
     Start-ScanVM
@@ -432,8 +451,8 @@ if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
     Set-VmNetwork $session
     Log "VM build: $(Get-VmBuild $session)"
 }
-if ($Step -in 'All', 'Install' -and $updatesDir) {
-    Install-CumulativeUpdate $session $updatesDir
+if ($Step -in 'All', 'Install' -and $updateUrls) {
+    Install-CumulativeUpdate $session $updateUrls
     $session = Restart-ScanVM $session
     Set-VmNetwork $session
     Log "VM build after the cumulative update: $(Get-VmBuild $session)"
