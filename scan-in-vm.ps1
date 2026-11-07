@@ -384,9 +384,10 @@ function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 
 }
 
 function Install-CumulativeUpdate([string[]]$urls) {
-    # The VM downloads the update's files from Microsoft itself (copying them in through PowerShell Direct is much slower). DISM checks
-    # their signatures, and installs the checkpoint updates in the folder before the update that needs them, the way Microsoft
-    # documents for these updates.
+    # The VM downloads the update's files from Microsoft itself (copying them in through PowerShell Direct is much slower). As Microsoft
+    # documents for updates that come with checkpoint updates, DISM is given the update itself; it finds the checkpoint updates in the
+    # same folder and installs the ones the VM still needs. (Given the whole folder, it tries all of them, and one that is older than
+    # the base image fails to install.) DISM also checks the files' signatures.
     $result = Invoke-VmTask 'ScanLCU' -timeoutMinutes 150 -script (@'
 New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
 foreach ($url in @(__URLS__)) {
@@ -396,10 +397,12 @@ foreach ($url in @(__URLS__)) {
     & curl.exe -fsSL --retry 5 --retry-delay 5 -o $path $url
     if ($LASTEXITCODE -ne 0) { Write-Result "download failed (curl $LASTEXITCODE): $url"; return }
 }
-Write-Log 'installing the cumulative update with DISM'
-& dism.exe /English /Online /Add-Package /PackagePath:C:\scan-updates /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
+$target = Get-ChildItem C:\scan-updates -Filter '*-__KB__-*.msu' | Select-Object -First 1
+if (-not $target) { Write-Result 'none of the downloaded files is __KB__ itself'; return }
+Write-Log "installing $($target.Name) with DISM"
+& dism.exe /English /Online /Add-Package "/PackagePath:$($target.FullName)" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
 Write-Result $LASTEXITCODE
-'@).Replace('__URLS__', (($urls | ForEach-Object { "'$_'" }) -join ', '))
+'@).Replace('__URLS__', (($urls | ForEach-Object { "'$_'" }) -join ', ')).Replace('__KB__', $Kb.ToLower())
     if ($result -notin '0', '3010') { throw "Installing the cumulative update failed: $result" }  # 3010: done, restart needed
     Invoke-InVM -Retry { Remove-Item C:\scan-updates -Recurse -Force -ErrorAction SilentlyContinue }
 }
