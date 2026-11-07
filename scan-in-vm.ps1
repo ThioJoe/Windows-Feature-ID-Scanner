@@ -1,0 +1,453 @@
+# scan-in-vm.ps1
+# Builds a Windows 11 virtual machine at a chosen build, entirely from Microsoft's own servers, and runs the feature scan inside it.
+# Used by the VM scanner workflow on an x64 runner, which can run Hyper-V virtual machines.
+#
+#   1. Base image: the newest Windows 11 image the Media Creation Tool offers (its catalog, products.cab, lists the image files on Microsoft's servers).
+#      It's applied to a virtual disk, and the VM boots from it without the setup screens (unattend.xml).
+#   2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM, the way Microsoft
+#      documents for cumulative updates that come with checkpoint updates. Windows 11 24H2, 25H2 and 26H2 share their code and their
+#      cumulative updates; only the version's enablement package differs.
+#   3. Windows Update installs the enablement package of the target version, chosen with Windows Update's own target release version policy.
+#   4. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, and its output is copied back.
+#
+# Steps can be run one at a time with -Step, which is how it was developed and tested.
+
+param(
+    [string]$Version = '26H2',             # Target Windows 11 version (enablement package)
+    [string]$Kb,                           # Target cumulative update, such as KB5127936
+    [string]$ExpectedBuild,                # Fail before scanning unless the VM ends up at this build (such as 26300.9818)
+    [string]$Edition = 'Enterprise',       # Edition to install from the image
+    [string]$WorkDir = 'D:\vmscan',        # Needs about 60 GB: the image, the update, and the virtual disk
+    [string]$VmName = 'FeatureScan',
+    [int]$VmMemoryGB = 12,
+    [string]$RepoDir = $PSScriptRoot,      # The scanner's files, copied into the VM
+    [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
+    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Scan')]
+    [string]$Step = 'All'
+)
+
+$ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
+if (-not $OutputDir) { $OutputDir = Join-Path $WorkDir 'output' }
+New-Item -ItemType Directory -Force $WorkDir, $OutputDir | Out-Null
+
+function Log([string]$msg) { Write-Host ("[vm {0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $msg) }
+
+# ---------------------------------------------------------------------------
+# Downloads from Microsoft
+# ---------------------------------------------------------------------------
+
+function Save-Url([string]$url, [string]$path) {
+    # BITS isn't available in every session, and Invoke-WebRequest is slow for large files on Windows PowerShell, so use curl.exe (part of Windows)
+    & curl.exe -fsSL --retry 5 --retry-delay 5 -o $path $url
+    if ($LASTEXITCODE -ne 0) { throw "Download failed ($LASTEXITCODE): $url" }
+}
+
+function Get-BaseImage {
+    # The Media Creation Tool's catalog lists every image file it can download, with its hashes
+    $cab = Join-Path $WorkDir 'products.cab'
+    Save-Url 'https://go.microsoft.com/fwlink/?LinkId=2156292' $cab
+    $xmlDir = Join-Path $WorkDir 'products'
+    New-Item -ItemType Directory -Force $xmlDir | Out-Null
+    & expand.exe $cab -F:products.xml $xmlDir | Out-Null
+    $xmlFile = Get-ChildItem $xmlDir -File | Select-Object -First 1
+    [xml]$catalog = Get-Content $xmlFile.FullName
+    $file = $catalog.MCT.Catalogs.Catalog.PublishedMedia.Files.File |
+        Where-Object { $_.LanguageCode -eq 'en-us' -and $_.Architecture -eq 'x64' -and $_.Edition -eq $Edition } | Select-Object -First 1
+    if (-not $file) { throw "The Media Creation Tool catalog has no en-us x64 image with the $Edition edition" }
+    $esd = Join-Path $WorkDir $file.FileName
+    if (-not (Test-Path $esd) -or (Get-FileHash $esd -Algorithm SHA1).Hash -ne $file.Sha1.ToUpper()) {
+        Log "Downloading $($file.FileName) ($([math]::Round([double]$file.Size / 1GB, 1)) GB)"
+        Save-Url $file.FilePath $esd
+        $hash = (Get-FileHash $esd -Algorithm SHA1).Hash
+        if ($hash -ne $file.Sha1.ToUpper()) { throw "SHA1 mismatch for $esd" }
+    }
+    Log "Base image: $($file.FileName)"
+    return $esd
+}
+
+function Search-UpdateCatalog([string]$query) {
+    # The same requests the Microsoft Update Catalog website makes (see Install-Store-Apps.ps1 in ThioJoe/Windows-Sandbox-Tools)
+    $html = (Invoke-WebRequest -Uri "https://www.catalog.update.microsoft.com/Search.aspx?q=$([uri]::EscapeDataString($query))" -UseBasicParsing -Headers @{ 'Accept-Language' = 'en-US' }).Content
+    $table = [regex]::Match($html, '(?s)<table[^>]*id="ctl00_catalogBody_updateMatches"[^>]*>(.*?)</table>').Groups[1].Value
+    foreach ($row in [regex]::Matches($table, '(?s)<tr[^>]*>(.*?)</tr>')) {
+        if ($row.Value -match 'id="headerRow"') { continue }
+        $cells = @([regex]::Matches($row.Groups[1].Value, '(?s)<td[^>]*>(.*?)</td>') | ForEach-Object {
+            ([System.Net.WebUtility]::HtmlDecode(($_.Groups[1].Value -replace '<[^>]+>', ' ')) -replace '\s+', ' ').Trim() })
+        if ($cells.Count -lt 8) { continue }
+        [PSCustomObject]@{ Title = $cells[1]; LastUpdated = $cells[4]; Id = [regex]::Match($row.Groups[1].Value, '<input[^>]*id="([0-9a-fA-F-]{36})"').Groups[1].Value }
+    }
+}
+
+function Get-UpdateCatalogLinks([string]$updateId) {
+    $body = @{ updateIDs = "[{`"size`":0,`"updateID`":`"$updateId`",`"uidInfo`":`"$updateId`"}]" }
+    $dialog = (Invoke-WebRequest -Uri 'https://www.catalog.update.microsoft.com/DownloadDialog.aspx' -Method Post -Body $body -UseBasicParsing).Content
+    [regex]::Matches($dialog, "https?://(?:[a-z0-9.-]+\.)?(?:download\.windowsupdate\.com|delivery\.mp\.microsoft\.com)/[^'`"\s]+") | ForEach-Object { $_.Value } | Select-Object -Unique
+}
+
+function Get-CumulativeUpdate {
+    # The same update file serves 24H2, 25H2 and 26H2; take the entry for the target version
+    $entry = Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' -and $_.Title -match "version $Version" } | Select-Object -First 1
+    if (-not $entry) { throw "No x64 $Version entry for $Kb in the Microsoft Update Catalog" }
+    Log "Update: $($entry.Title)"
+    $dir = Join-Path $WorkDir "updates-$Kb"
+    New-Item -ItemType Directory -Force $dir | Out-Null
+    # Since 24H2, a cumulative update can come with "checkpoint" updates that have to be installed first; the download dialog lists them all
+    foreach ($url in Get-UpdateCatalogLinks $entry.Id) {
+        $path = Join-Path $dir ([IO.Path]::GetFileName(([uri]$url).AbsolutePath))
+        if (-not (Test-Path $path)) {
+            Log "Downloading $([IO.Path]::GetFileName($path))"
+            Save-Url $url $path
+        }
+    }
+    return $dir
+}
+
+# ---------------------------------------------------------------------------
+# Virtual disk
+# ---------------------------------------------------------------------------
+
+function New-ScanDisk([string]$esd) {
+    $vhd = Join-Path $WorkDir "$VmName.vhdx"
+    if (Get-VM -Name $VmName -ErrorAction SilentlyContinue) { Stop-VM -Name $VmName -TurnOff -Force -ErrorAction SilentlyContinue; Remove-VM -Name $VmName -Force }
+    if (Test-Path $vhd) { Dismount-VHD -Path $vhd -ErrorAction SilentlyContinue; Remove-Item $vhd -Force }
+    Log "Creating $vhd"
+    New-VHD -Path $vhd -SizeBytes 127GB -Dynamic | Out-Null
+    $disk = Mount-VHD -Path $vhd -Passthru | Get-Disk
+    Initialize-Disk -Number $disk.Number -PartitionStyle GPT
+    $efi = New-Partition -DiskNumber $disk.Number -Size 260MB -GptType '{c12a7328-f81f-11d2-ba4b-00a0c93ec93b}' -AssignDriveLetter
+    Format-Volume -Partition $efi -FileSystem FAT32 -NewFileSystemLabel 'System' -Confirm:$false | Out-Null
+    New-Partition -DiskNumber $disk.Number -Size 16MB -GptType '{e3c9e316-0b5c-4db8-817d-f92df00215ae}' | Out-Null
+    $win = New-Partition -DiskNumber $disk.Number -UseMaximumSize -AssignDriveLetter
+    Format-Volume -Partition $win -FileSystem NTFS -NewFileSystemLabel 'Windows' -Confirm:$false | Out-Null
+    $efiRoot = "$($efi.DriveLetter):\"
+    $winRoot = "$($win.DriveLetter):\"
+
+    $index = (Get-WindowsImage -ImagePath $esd | Where-Object { $_.ImageName -eq "Windows 11 $Edition" }).ImageIndex
+    if (-not $index) { throw "No 'Windows 11 $Edition' image in $esd" }
+    Log "Applying image index $index to $winRoot"
+    & dism.exe /English /Apply-Image "/ImageFile:$esd" "/Index:$index" "/ApplyDir:$winRoot" | Select-Object -Last 2
+    if ($LASTEXITCODE -ne 0) { throw "DISM /Apply-Image failed ($LASTEXITCODE)" }
+
+    & bcdboot.exe "$($winRoot)Windows" /s $efiRoot /f UEFI | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "bcdboot failed ($LASTEXITCODE)" }
+    Write-Unattend $winRoot
+    $reg = "HKLM\OFFLINE_SOFTWARE"
+    & reg.exe load $reg "$($winRoot)Windows\System32\config\SOFTWARE" | Out-Null
+    $build = (& reg.exe query "$reg\Microsoft\Windows NT\CurrentVersion" /v CurrentBuildNumber | Select-String 'REG_SZ\s+(\S+)').Matches.Groups[1].Value
+    $ubr = [Convert]::ToInt32((& reg.exe query "$reg\Microsoft\Windows NT\CurrentVersion" /v UBR | Select-String 'REG_DWORD\s+(\S+)').Matches.Groups[1].Value, 16)
+    [gc]::Collect()
+    & reg.exe unload $reg | Out-Null
+    Log "Base image build: $build.$ubr"
+    Dismount-VHD -Path $vhd
+    return $vhd
+}
+
+function Get-VmPassword {
+    # A random password for the VM's local account, kept in the work folder so separate steps can sign in. The VM is thrown away with the runner.
+    $file = Join-Path $WorkDir 'vm-password.txt'
+    if (-not (Test-Path $file)) {
+        $chars = [char[]]'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+        $bytes = New-Object byte[] 20
+        [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
+        Set-Content $file (-join ($bytes | ForEach-Object { $chars[$_ % $chars.Length] }) + '#9a')
+    }
+    return (Get-Content $file -Raw).Trim()
+}
+
+function Get-VmCredential {
+    New-Object System.Management.Automation.PSCredential('scan', (ConvertTo-SecureString (Get-VmPassword) -AsPlainText -Force))
+}
+
+function Write-Unattend([string]$winRoot) {
+    # Skips the setup screens on first boot: a local administrator account 'scan' that signs in automatically, English (US), UTC
+    $password = [Security.SecurityElement]::Escape((Get-VmPassword))
+    $intl = '<component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"><InputLocale>en-US</InputLocale><SystemLocale>en-US</SystemLocale><UILanguage>en-US</UILanguage><UserLocale>en-US</UserLocale></component>'
+    $xml = @"
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+  <settings pass="specialize">
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <ComputerName>FEATURESCAN</ComputerName>
+      <TimeZone>UTC</TimeZone>
+    </component>
+  </settings>
+  <settings pass="oobeSystem">
+    $intl
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <ProtectYourPC>3</ProtectYourPC>
+      </OOBE>
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Name>scan</Name>
+            <Group>Administrators</Group>
+            <Password><Value>$password</Value><PlainText>true</PlainText></Password>
+          </LocalAccount>
+        </LocalAccounts>
+      </UserAccounts>
+      <AutoLogon>
+        <Enabled>true</Enabled>
+        <Username>scan</Username>
+        <Password><Value>$password</Value><PlainText>true</PlainText></Password>
+        <LogonCount>9999</LogonCount>
+      </AutoLogon>
+    </component>
+  </settings>
+</unattend>
+"@
+    $panther = Join-Path $winRoot 'Windows\Panther'
+    New-Item -ItemType Directory -Force $panther | Out-Null
+    Set-Content -Path (Join-Path $panther 'unattend.xml') -Value $xml -Encoding UTF8
+}
+
+# ---------------------------------------------------------------------------
+# Virtual machine
+# ---------------------------------------------------------------------------
+
+$NatPrefix = '192.168.77'
+
+function Initialize-NatNetwork {
+    # An internal switch with NAT gives the VM internet access through the runner, without a DHCP server: the VM gets a fixed address
+    if (-not (Get-VMSwitch -Name ScanNAT -ErrorAction SilentlyContinue)) { New-VMSwitch -Name ScanNAT -SwitchType Internal | Out-Null }
+    $adapter = Get-NetAdapter -Name 'vEthernet (ScanNAT)'
+    if (-not (Get-NetIPAddress -IPAddress "$NatPrefix.1" -ErrorAction SilentlyContinue)) {
+        New-NetIPAddress -IPAddress "$NatPrefix.1" -PrefixLength 24 -InterfaceIndex $adapter.ifIndex | Out-Null
+    }
+    if (-not (Get-NetNat -Name ScanNAT -ErrorAction SilentlyContinue)) { New-NetNat -Name ScanNAT -InternalIPInterfaceAddressPrefix "$NatPrefix.0/24" | Out-Null }
+}
+
+function Start-ScanVM {
+    $vhd = Join-Path $WorkDir "$VmName.vhdx"
+    Initialize-NatNetwork
+    if (-not (Get-VM -Name $VmName -ErrorAction SilentlyContinue)) {
+        Log "Creating VM $VmName"
+        New-VM -Name $VmName -Generation 2 -MemoryStartupBytes ($VmMemoryGB * 1GB) -VHDPath $vhd -SwitchName ScanNAT | Out-Null
+        Set-VM -Name $VmName -ProcessorCount ([Math]::Max(2, [Environment]::ProcessorCount)) -StaticMemory -AutomaticCheckpointsEnabled $false
+        Set-VMFirmware -VMName $VmName -EnableSecureBoot On -SecureBootTemplate MicrosoftWindows
+        try {
+            Set-VMKeyProtector -VMName $VmName -NewLocalKeyProtector
+            Enable-VMTPM -VMName $VmName
+        } catch { Log "No virtual TPM: $($_.Exception.Message)" }
+        Enable-VMIntegrationService -VMName $VmName -Name 'Guest Service Interface'
+    }
+    if ((Get-VM -Name $VmName).State -ne 'Running') { Start-VM -Name $VmName }
+}
+
+function Wait-ScanVM([int]$timeoutMinutes = 40) {
+    # PowerShell Direct talks to the VM over the virtual machine bus, so it works before the VM has a network
+    $deadline = (Get-Date).AddMinutes($timeoutMinutes)
+    $cred = Get-VmCredential
+    while ((Get-Date) -lt $deadline) {
+        try {
+            $s = New-PSSession -VMName $VmName -Credential $cred -ErrorAction Stop
+            Log 'VM is up (PowerShell Direct connected)'
+            return $s
+        } catch { Start-Sleep -Seconds 15 }
+    }
+    throw "The VM didn't come up within $timeoutMinutes minutes"
+}
+
+function Set-VmNetwork($session) {
+    $dns = @((Get-DnsClientServerAddress -AddressFamily IPv4 | Where-Object { $_.InterfaceAlias -notlike '*ScanNAT*' -and $_.ServerAddresses }).ServerAddresses | Select-Object -Unique) + '1.1.1.1'
+    Invoke-Command -Session $session -ArgumentList $NatPrefix, $dns -ScriptBlock {
+        param($prefix, $dns)
+        $adapter = Get-NetAdapter | Where-Object Status -eq 'Up' | Select-Object -First 1
+        if (-not (Get-NetIPAddress -IPAddress "$prefix.10" -ErrorAction SilentlyContinue)) {
+            New-NetIPAddress -InterfaceIndex $adapter.ifIndex -IPAddress "$prefix.10" -PrefixLength 24 -DefaultGateway "$prefix.1" | Out-Null
+        }
+        Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $dns
+        $ok = Test-NetConnection -ComputerName www.microsoft.com -Port 443 -InformationLevel Quiet -WarningAction SilentlyContinue
+        "VM network: $prefix.10, DNS $($dns -join ', '), internet: $ok"
+    } | ForEach-Object { Log $_ }
+}
+
+function Get-VmBuild($session) {
+    Invoke-Command -Session $session -ScriptBlock {
+        $r = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+        "$($r.CurrentBuildNumber).$($r.UBR) $($r.DisplayVersion) $($r.EditionID)"
+    }
+}
+
+function Restart-ScanVM($session) {
+    # Restarted from inside, so Windows finishes installing updates the way it does on any PC; returns a session to the restarted VM
+    Log 'Restarting the VM'
+    $before = Invoke-Command -Session $session -ScriptBlock { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
+    try { Invoke-Command -Session $session -ScriptBlock { Restart-Computer -Force } } catch { }
+    Remove-PSSession $session -ErrorAction SilentlyContinue
+    $deadline = (Get-Date).AddMinutes(60)
+    while ((Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds 30
+        $s = Wait-ScanVM 60
+        try {
+            $boot = Invoke-Command -Session $s -ScriptBlock { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
+            if ($boot -gt $before) { return $s }
+        } catch { }
+        Remove-PSSession $s -ErrorAction SilentlyContinue
+    }
+    throw "The VM didn't restart within 60 minutes"
+}
+
+function Invoke-VmTask($session, [string]$name, [string]$script, [int]$timeoutMinutes = 60) {
+    # Runs a script inside the VM as a SYSTEM scheduled task, shows its log as it grows, and returns what it passed to Write-Result.
+    # Windows Update refuses to download or install from a remote session (PowerShell Direct is one), and long installs and the scan
+    # are better off not depending on one either. The script gets two functions: Write-Log (a line in its log) and Write-Result.
+    $preamble = @'
+$log = 'C:\scan-tasks\__NAME__.log'
+function Write-Log([string]$line) {
+    for ($i = 0; $i -lt 50; $i++) { try { [IO.File]::AppendAllText($log, $line + "`r`n"); return } catch { Start-Sleep -Milliseconds 200 } }
+}
+function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 'C:\scan-tasks\__NAME__.result' $value }
+'@.Replace('__NAME__', $name)
+    Invoke-Command -Session $session -ArgumentList $name, ($preamble + $script) -ScriptBlock {
+        param($name, $script)
+        New-Item -ItemType Directory -Force C:\scan-tasks | Out-Null
+        Set-Content "C:\scan-tasks\$name.ps1" $script
+        Remove-Item "C:\scan-tasks\$name.log", "C:\scan-tasks\$name.result" -ErrorAction SilentlyContinue
+        $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -ExecutionPolicy Bypass -File C:\scan-tasks\$name.ps1"
+        Register-ScheduledTask -TaskName $name -Action $action -User 'NT AUTHORITY\SYSTEM' -RunLevel Highest -Force | Out-Null
+        Start-ScheduledTask -TaskName $name
+    }
+    $deadline = (Get-Date).AddMinutes($timeoutMinutes)
+    $shown = 0
+    while ((Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds 30
+        $state = Invoke-Command -Session $session -ArgumentList $name -ScriptBlock {
+            param($name)
+            @{ Log = @(Get-Content "C:\scan-tasks\$name.log" -ErrorAction SilentlyContinue)
+               Result = $(if (Test-Path "C:\scan-tasks\$name.result") { (Get-Content "C:\scan-tasks\$name.result" -Raw).Trim() })
+               Running = (Get-ScheduledTask -TaskName $name).State -eq 'Running' }
+        }
+        $state.Log | Select-Object -Skip $shown | ForEach-Object { Log "${name}: $_" }
+        $shown = [Math]::Max($shown, $state.Log.Count)
+        if ($null -ne $state.Result) { return $state.Result }
+        if (-not $state.Running) { throw "$name stopped without a result" }
+    }
+    throw "$name didn't finish within $timeoutMinutes minutes"
+}
+
+function Install-CumulativeUpdate($session, [string]$updatesDir) {
+    # DISM installs the checkpoint updates in the folder before the update that needs them
+    Log "Copying $updatesDir into the VM"
+    Invoke-Command -Session $session -ScriptBlock { New-Item -ItemType Directory -Force C:\scan-updates | Out-Null }
+    Copy-Item -ToSession $session -Path (Join-Path $updatesDir '*.msu') -Destination C:\scan-updates -Force
+    $result = Invoke-VmTask $session 'ScanLCU' -timeoutMinutes 120 -script @'
+Write-Log 'installing the cumulative update with DISM'
+& dism.exe /English /Online /Add-Package /PackagePath:C:\scan-updates /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
+Write-Result $LASTEXITCODE
+'@
+    if ($result -notin '0', '3010') { throw "Installing the cumulative update failed (DISM exit code $result)" }  # 3010: done, restart needed
+    Invoke-Command -Session $session -ScriptBlock { Remove-Item C:\scan-updates -Recurse -Force }
+}
+
+# ---------------------------------------------------------------------------
+# Version: the enablement package, through Windows Update
+# ---------------------------------------------------------------------------
+
+function Install-TargetVersion($session) {
+    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update
+    Invoke-Command -Session $session -ArgumentList $Version -ScriptBlock {
+        param($version)
+        $policy = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
+        New-Item -Path $policy -Force | Out-Null
+        Set-ItemProperty $policy -Name ProductVersion -Value 'Windows 11'
+        Set-ItemProperty $policy -Name TargetReleaseVersion -Value 1 -Type DWord
+        Set-ItemProperty $policy -Name TargetReleaseVersionInfo -Value $version
+    }
+    $result = Invoke-VmTask $session 'ScanWU' -timeoutMinutes 60 -script (@'
+Write-Log 'searching Windows Update'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($u in $found) {
+        Write-Log "offered: $($u.Title)"
+        if ($u.Title -match 'Feature update to Windows 11, version __VERSION__|__VERSION__.*Enablement') {
+            if (-not $u.EulaAccepted) { $u.AcceptEula() }
+            [void]$wanted.Add($u)
+        }
+    }
+    if ($wanted.Count -eq 0) { Write-Result 'nothing to install'; return }
+    $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
+    Write-Log "download result: $($d.ResultCode)"
+    $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
+    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired)"
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@).Replace('__VERSION__', $Version)
+    if ($result -notmatch '^installed 2') { throw "Windows Update didn't install the $Version enablement package: $result" }  # 2 = succeeded
+    return ($result -match 'reboot required: True')
+}
+
+# ---------------------------------------------------------------------------
+# Scan inside the VM
+# ---------------------------------------------------------------------------
+
+function Invoke-ScanInVM($session, [string]$resultsCache) {
+    # The VM gets the runner's Python and the scanner's files; the scan then runs the way the regular workflow runs it on the runner
+    $python = Split-Path -Parent (Get-Command python.exe).Source
+    Log "Copying Python ($python) and the scanner into the VM"
+    Invoke-Command -Session $session -ScriptBlock { New-Item -ItemType Directory -Force C:\scan, C:\scan\python | Out-Null }
+    Copy-Item -ToSession $session -Path "$python\*" -Destination C:\scan\python -Recurse -Force
+    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1') {
+        Copy-Item -ToSession $session -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
+    }
+    if ($resultsCache -and (Test-Path $resultsCache)) { Copy-Item -ToSession $session -Path $resultsCache -Destination C:\scan\symbol-cache.json -Force }
+
+    Log 'Running the scan inside the VM'
+    $result = Invoke-VmTask $session 'ScanFeatures' -timeoutMinutes 240 -script @'
+try {
+    Set-Location C:\scan
+    $env:PATH = "C:\scan\python;C:\scan\python\Scripts;$env:PATH"
+    & .\download-vivetool.ps1 *>&1 | Select-Object -Last 2 | ForEach-Object { Write-Log "$_" }
+    & python.exe scan-symbols.py --results-cache symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json 2>&1 | ForEach-Object { Write-Log "$_" }
+    if ($LASTEXITCODE -ne 0) { throw "scan-symbols.py failed ($LASTEXITCODE)" }
+    & .\scan-features.ps1 *>&1 | Select-Object -Last 5 | ForEach-Object { Write-Log "$_" }
+    if (-not (Test-Path C:\scan\output-temp\summary.json)) { throw 'scan-features.ps1 wrote no summary.json' }
+    Write-Result 'ok'
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@
+    if ($result -ne 'ok') { throw "The scan inside the VM failed: $result" }
+
+    Log "Copying the results to $OutputDir"
+    Copy-Item -FromSession $session -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
+    foreach ($f in 'symbol-features.json', 'extracted-names.txt') { Copy-Item -FromSession $session -Path "C:\scan\$f" -Destination $OutputDir -Force }
+    if ($resultsCache) { Copy-Item -FromSession $session -Path C:\scan\symbol-cache.json -Destination $resultsCache -Force }
+}
+
+# ---------------------------------------------------------------------------
+
+$esd = $null; $updatesDir = $null
+if ($Step -in 'All', 'Image', 'Disk') { $esd = Get-BaseImage }
+if ($Step -in 'All', 'Download', 'Install' -and $Kb) { $updatesDir = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
+if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
+if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
+    Start-ScanVM
+    $session = Wait-ScanVM
+    Set-VmNetwork $session
+    Log "VM build: $(Get-VmBuild $session)"
+}
+if ($Step -in 'All', 'Install' -and $updatesDir) {
+    Install-CumulativeUpdate $session $updatesDir
+    $session = Restart-ScanVM $session
+    Set-VmNetwork $session
+    Log "VM build after the cumulative update: $(Get-VmBuild $session)"
+}
+if ($Step -in 'All', 'FeatureUpdate') {
+    if (Install-TargetVersion $session) {
+        $session = Restart-ScanVM $session
+        Set-VmNetwork $session
+    }
+    Log "VM build after the feature update: $(Get-VmBuild $session)"
+}
+if ($Step -in 'All', 'Scan') {
+    $build = (Get-VmBuild $session).Split(' ')[0]
+    if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
+    Invoke-ScanInVM $session (Join-Path $RepoDir 'data\symbol-cache-AMD64.json')
+}
+Log "Done: $Step"

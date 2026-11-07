@@ -8,8 +8,9 @@
 #        Feature_<Name>__descriptor           C++ wil::Feature descriptor: { state*, UINT32 id, lastUsedTickCount* }
 #        Feature_<Name>__private_descriptor   C-style descriptor: { featureState*, reporting*, traits*, UINT32 id, ... }
 #        __WilFeatureTraits_Feature_<Name>::id  S_CONSTANT, only present in PDBs that include more than publics
-#   4. For descriptor symbols, reads the feature ID out of the image file at the symbol's RVA.
-#   5. For binaries with features, decodes their ARM64 code to find the functions that check each feature, plus dependencies,
+#   4. For descriptor symbols, reads the feature ID out of the image file at the symbol's RVA. C++ features without a descriptor (older
+#      WIL) get their ID from the code of their GetCurrentFeatureEnabledState, which passes it to GetFeatureEnabledState.
+#   5. For binaries with features, decodes their ARM64 or x64 code to find the functions that check each feature, plus dependencies,
 #      default states and hints about what the feature does (see "Usage analysis" below).
 #
 # Only the Python standard library is used, so it runs on any GitHub-hosted Windows runner (x64 or ARM64) without installing anything.
@@ -36,7 +37,7 @@ import urllib.request
 
 DEFAULT_SYMBOL_SERVER = 'https://msdl.microsoft.com/download/symbols'
 USER_AGENT = 'Microsoft-Symbol-Server/10.0.0.0'
-RESULTS_CACHE_VERSION = 2
+RESULTS_CACHE_VERSION = 3
 
 IMAGE_EXTENSIONS = {'.dll', '.exe', '.sys', '.cpl', '.ocx', '.scr', '.ax', '.drv', '.tsp', '.ime', '.efi', '.acm'}
 
@@ -210,6 +211,7 @@ NUMERIC_LEAF_FORMATS = {0x8000: '<b', 0x8001: '<h', 0x8002: '<H', 0x8003: '<i', 
 RE_CPP_DESCRIPTOR = re.compile(r'^Feature_(\w+?)__descriptor$')
 RE_C_DESCRIPTOR = re.compile(r'^Feature_(\w+?)__private_descriptor$')
 RE_TRAITS_ID = re.compile(r'__WilFeatureTraits_Feature_(\w+?)>?::id$')
+RE_CPP_STATE_FUNCTION = re.compile(r'^\?GetCurrent(?:FeatureEnabled|Variant)State@\?\$FeatureImpl@U__Wil(?:External)?FeatureTraits_Feature_(\w+?)@@@')
 
 class Pdb:
     def __init__(self, path):
@@ -255,7 +257,8 @@ class Pdb:
         return b''.join(mm[b * bs:(b + 1) * bs] for b in blocks)[:size]
 
     def feature_symbols(self):
-        """Yields (kind, name, rva_or_value): kind is 'cpp', 'c' (descriptor RVAs) or 'const' (ID value)."""
+        """Yields (kind, name, rva_or_value): kind is 'cpp', 'c' (descriptor RVAs), 'code' (the RVA of a C++ feature's
+        GetCurrentFeatureEnabledState or GetCurrentVariantState) or 'const' (ID value)."""
         dbi = self.stream(3)
         if len(dbi) < 64:
             return
@@ -306,6 +309,9 @@ class Pdb:
                     if not m:
                         m = RE_C_DESCRIPTOR.match(name)
                         kind_name = 'c'
+                    if not m and kind == S_PUB32:
+                        m = RE_CPP_STATE_FUNCTION.match(name)
+                        kind_name = 'code'
                     if m and 1 <= segment <= len(section_vas):
                         yield (kind_name, m.group(1), section_vas[segment - 1] + offset)
             pos = end
@@ -340,6 +346,24 @@ def extract_features(pdb_path, info):
             feature_id = struct.unpack_from('<I', raw, id_offset)[0]
             if feature_id:
                 found.add((name, feature_id, k))
+    # C++ features without a descriptor (binaries built with older WIL, such as some x64 builds): the ID is the first argument their
+    # GetCurrentFeatureEnabledState passes to GetFeatureEnabledState, with the change time as the second
+    named = {name for name, _, k in found if k != 'const'}
+    code = [(name, rva) for k, name, rva in symbols if k == 'code' and name not in named]
+    if code and info.ptr_size == 8:
+        img = CodeImage(info.path)
+        for name, rva in code:
+            if name in named:
+                continue  # One feature has several of these functions (ARM64 and ARM64EC copies, the variant state)
+            if img.in_x64(rva):
+                first, second = x64_first_call_args(img, rva)
+            elif any(start <= rva < end for start, end in img.code_ranges):
+                first, second = arm64_first_call_args(img, rva)
+            else:
+                continue
+            if first and second is not None and not second & ~0x63:
+                found.add((name, first, 'code'))
+                named.add(name)
     return sorted([list(x) for x in found])
 
 # ---------------------------------------------------------------------------
@@ -348,9 +372,9 @@ def extract_features(pdb_path, info):
 #
 # Every feature a binary uses comes with WIL plumbing inside it: a descriptor, state variables and small per-feature functions
 # (wil::details::FeatureImpl<T>::__private_IsEnabled, Feature_<Name>__private_IsEnabledDeviceUsageNoInline, ...). Code that checks the
-# feature calls one of those functions or forms the address of one of those variables, so decoding the binary's ARM64 code for calls
-# (BL/B) and address computations (ADRP + ADD/LDR/STR, ADR) that land on them finds the functions that check it. The PDB's public
-# symbols name those functions. The same pass also gives:
+# feature calls one of those functions or forms the address of one of those variables, so decoding the binary's code for calls and
+# address computations that land on them finds the functions that check it: on ARM64, BL/B and ADRP + ADD/LDR/STR or ADR; on x64,
+# CALL/JMP and RIP-relative operands. The PDB's public symbols name those functions. The same pass also gives:
 #   - dependencies: one feature's plumbing checking another feature is how C++ features implement "requires"
 #     (C-style descriptors list the features they require instead),
 #   - lookup tables: a function referencing many different features (KernelBase's GetFeatureDescriptor) is a table, not a check,
@@ -358,9 +382,10 @@ def extract_features(pdb_path, info):
 #   - the default state and when a change takes effect: C-style descriptors hold both; for C++ features they're read from the code of
 #     GetCurrentFeatureEnabledState (tested against the feature store's ImageDefault entries: all 1,301 features that had one agreed). Features a binary uses
 #     but another one defines ("external" features) get neither from it, since the defining binary decides.
-# Only ARM64 code is decoded (including the ARM64 and ARM64EC parts of ARM64X/ARM64EC binaries); other binaries get no usage data.
+# ARM64 and x64 code is decoded (ARM64X and ARM64EC binaries have both); binaries for other architectures (x86) get no usage data.
 
 IMAGE_FILE_MACHINE_ARM64 = 0xAA64
+IMAGE_FILE_MACHINE_AMD64 = 0x8664
 IMAGE_SCN_MEM_EXECUTE = 0x20000000
 
 RE_PLUMBING_CPP = re.compile(r'^\?(impl@\?1\?\?)?(\w+)@\?\$(?:Feature|FeatureImpl)@U__Wil(?:External)?FeatureTraits_Feature_(\w+?)@@@')  # Members of wil::Feature<T> and wil::details::FeatureImpl<T>, and GetImpl's static `impl` object
@@ -446,7 +471,7 @@ def read_public_symbols(pdb_path):
 
 
 class CodeImage:
-    """A whole PE image, with the RVA ranges that hold ARM64 code and the function bounds from its exception table."""
+    """A whole PE image, with the RVA ranges that hold ARM64 code and x64 code, and the function bounds from its exception table."""
 
     def __init__(self, path):
         with open(path, 'rb') as f:
@@ -469,8 +494,18 @@ class CodeImage:
             o = opt + opt_size + i * 40
             vsize, va, raw_size, raw_ptr = struct.unpack_from('<IIII', d, o + 8)
             self.sections.append((va, vsize, raw_size, raw_ptr, struct.unpack_from('<I', d, o + 36)[0]))
+        self.x64_ranges = []
+        self.roots = {}  # x64: start of each later part of a function split into parts -> start of its first part
         self.code_ranges = self._code_ranges(lc_rva)
-        self.functions = self._functions(exc_rva, exc_size) if self.machine == IMAGE_FILE_MACHINE_ARM64 else []
+        if self.machine == IMAGE_FILE_MACHINE_ARM64:
+            self.functions = self._functions(exc_rva, exc_size)
+        elif self.machine == IMAGE_FILE_MACHINE_AMD64 and not self.code_ranges:
+            self.x64_ranges = [(va, va + min(vsize, raw_size)) for va, vsize, raw_size, _, chars in self.sections if chars & IMAGE_SCN_MEM_EXECUTE]
+            self.functions = self._functions_x64(exc_rva, exc_size)
+        else:
+            self.functions = []
+        self.x64_ranges.sort()
+        self._x64_starts = [s for s, _ in self.x64_ranges]
 
     def _section(self, rva):
         for s in self.sections:
@@ -503,6 +538,8 @@ class CodeImage:
                     start, length = struct.unpack_from('<II', entries, i * 8)
                     if start & 3 in (0, 1):  # 0 = ARM64, 1 = ARM64EC, 2 = x64
                         ranges.append((start & ~3, (start & ~3) + length))
+                    elif start & 3 == 2:
+                        self.x64_ranges.append((start & ~3, (start & ~3) + length))
                 return ranges
         if self.machine == IMAGE_FILE_MACHINE_ARM64:
             return [(va, va + min(vsize, raw_size)) for va, vsize, raw_size, _, chars in self.sections if chars & IMAGE_SCN_MEM_EXECUTE]
@@ -528,6 +565,36 @@ class CodeImage:
                 out.append((begin, begin + length * 4))
         out.sort()
         return out
+
+    def _functions_x64(self, exc_rva, exc_size):
+        """Sorted (begin, end) RVAs from the x64 .pdata table. The compiler can split a function into parts (cold code moved away, for
+        example); a later part's unwind information chains to the part before it, which is how self.roots is filled in."""
+        raw = self.read(exc_rva, exc_size) if exc_size else b''
+        entries = [struct.unpack_from('<III', raw, i * 12) for i in range(len(raw) // 12)]
+        parent = {}
+        for begin, end, unwind in entries:
+            if unwind & 1:  # The RVA of another function's entry, whose unwind information this part shares
+                ref = self.read(unwind & ~1, 4)
+                if len(ref) == 4:
+                    parent[begin] = struct.unpack('<I', ref)[0]
+                continue
+            u = self.read(unwind, 4)
+            if len(u) == 4 and (u[0] >> 3) & 4:  # UNW_FLAG_CHAININFO: the entry of the previous part follows the unwind codes
+                chained = self.read(unwind + 4 + 2 * ((u[2] + 1) & ~1), 4)
+                if len(chained) == 4:
+                    parent[begin] = struct.unpack('<I', chained)[0]
+        for begin in parent:
+            root = begin
+            for _ in range(16):
+                if root not in parent or parent[root] == root:
+                    break
+                root = parent[root]
+            self.roots[begin] = root
+        return sorted((b, e) for b, e, _ in entries if e > b)
+
+    def in_x64(self, rva):
+        i = bisect.bisect_right(self._x64_starts, rva) - 1
+        return i >= 0 and rva < self.x64_ranges[i][1]
 
     def read_string(self, rva):
         """A UTF-16 or ASCII string at the RVA, or None if what's there doesn't look like text."""
@@ -582,11 +649,8 @@ def sweep_arm64(img, start, end, on_ref):
                 pages[w & 31] = None
 
 
-def cpp_change_time(img, rva, feature_id):
-    """The change time a C++ feature's GetCurrentFeatureEnabledState passes to GetFeatureEnabledState(id, changeTime), or None.
-    The function starts by loading the ID into w0 and the change time into w1 before its first call; the ID must match.
-    Newer binaries add flags to the second argument: 0x40 for a feature defined in another binary (which has no change time of its
-    own here) and 0x20 (meaning unknown). The low two bits are the change time either way."""
+def arm64_first_call_args(img, rva):
+    """(w0, w1) at an ARM64 function's first call (BL), each None unless it was loaded with a constant."""
     code = img.read(rva, 96)
     w0 = w1 = None
     for i in range(len(code) // 4):
@@ -604,16 +668,27 @@ def cpp_change_time(img, rva, feature_id):
             w0 = (w0 & ~(0xFFFF << shift)) | (((w >> 5) & 0xFFFF) << shift)
         elif (w & 0xFF80001F) == 0x52800001:  # MOVZ w1, #imm
             w1 = (w >> 5) & 0xFFFF
-    if w0 != feature_id or w1 is None or w1 & ~0x23:
+    return w0, w1
+
+
+def cpp_change_time(img, rva, feature_id):
+    """The change time a C++ feature's GetCurrentFeatureEnabledState passes to GetFeatureEnabledState(id, changeTime), or None.
+    The function starts by loading the ID into the first argument (w0 on ARM64, ecx on x64) and the change time into the second (w1, edx)
+    before its first call; the ID must match. Newer binaries add flags to the second argument: 0x40 for a feature defined in another
+    binary (which has no change time of its own here) and 0x20 (meaning unknown). The low two bits are the change time either way."""
+    first, second = (x64_first_call_args if img.in_x64(rva) else arm64_first_call_args)(img, rva)
+    if first != feature_id or second is None or second & ~0x23:
         return None
-    return w1 & 3
+    return second & 3
 
 
 def cpp_default(img, rva):
     """The default stage of a C++ feature (1 = disabled, 2 = enabled) from its GetCurrentFeatureEnabledState, or None.
     After GetFeatureEnabledState returns, the function masks out the configured state (AND wS, w0, #0xffffff3f; 0 means not configured)
     and branches on it. An unconfigured feature counts as enabled if the 'enabled' bit (#0x40) is loaded before a CBZ on that state,
-    or set right after a CBNZ on it; otherwise as disabled."""
+    or set right after a CBNZ on it; otherwise as disabled. (x64 code: see cpp_default_x64.)"""
+    if img.in_x64(rva):
+        return cpp_default_x64(img, rva)
     code = img.read(rva, 200)
     state_reg = None
     flag_loaded = False
@@ -631,6 +706,500 @@ def cpp_default(img, rva):
             nxt = struct.unpack_from('<I', code, (i + 1) * 4)[0] if (i + 2) * 4 <= len(code) else 0
             return 2 if (nxt & 0xFFFFFC00) == 0x321A0000 else 1  # ORR wD, wN, #0x40
         elif (w & 0x7C000000) == 0x14000000 or w == 0xD65F03C0:  # B, BL or RET before the decision: not the expected shape
+            return None
+    return None
+
+
+# x64 instructions have variable lengths, so finding the references takes decoding every instruction's length: its prefixes, opcode,
+# ModRM/SIB bytes, displacement and immediate. Each opcode table entry says whether a ModRM byte follows (X64_MODRM) and which immediate.
+X64_MODRM = 0x80
+(X64_NONE, X64_I8, X64_I16, X64_IZ, X64_IV, X64_MOFFS, X64_I24, X64_TEST8, X64_TESTZ, X64_REL8, X64_REL32,
+ X64_PREFIX, X64_REX, X64_ESCAPE, X64_VEX, X64_EVEX) = range(16)
+
+
+def _x64_opcode_maps():
+    """The one-byte and 0F opcode maps (64-bit mode). IZ is 4 bytes (2 with a 66 prefix), IV is IZ or 8 with REX.W (MOV reg, imm),
+    TEST8/TESTZ are the immediates of TEST in the F6/F7 groups, which the group's other instructions don't have."""
+    m = X64_MODRM
+    one = [X64_NONE] * 256
+    for base in range(0, 0x40, 8):  # ADD, OR, ADC, SBB, AND, SUB, XOR, CMP: four ModRM forms, then AL and eAX with an immediate
+        one[base:base + 4] = [m] * 4
+        one[base + 4], one[base + 5] = X64_I8, X64_IZ
+    for b in (0x26, 0x2E, 0x36, 0x3E, 0x64, 0x65, 0x66, 0x67, 0xF0, 0xF2, 0xF3):
+        one[b] = X64_PREFIX
+    one[0x40:0x50] = [X64_REX] * 16
+    one[0x0F], one[0x62], one[0xC4], one[0xC5] = X64_ESCAPE, X64_EVEX, X64_VEX, X64_VEX
+    one[0x63] = m
+    one[0x68], one[0x69], one[0x6A], one[0x6B] = X64_IZ, m | X64_IZ, X64_I8, m | X64_I8
+    one[0x70:0x80] = [X64_REL8] * 16
+    one[0x80], one[0x81], one[0x83] = m | X64_I8, m | X64_IZ, m | X64_I8
+    one[0x84:0x90] = [m] * 12
+    one[0xA0:0xA4] = [X64_MOFFS] * 4
+    one[0xA8], one[0xA9] = X64_I8, X64_IZ
+    one[0xB0:0xB8] = [X64_I8] * 8
+    one[0xB8:0xC0] = [X64_IV] * 8
+    one[0xC0], one[0xC1], one[0xC2], one[0xC6], one[0xC7], one[0xC8] = m | X64_I8, m | X64_I8, X64_I16, m | X64_I8, m | X64_IZ, X64_I24
+    one[0xCA], one[0xCD] = X64_I16, X64_I8
+    one[0xD0:0xD4] = [m] * 4
+    one[0xD8:0xE0] = [m] * 8
+    one[0xE0:0xE4] = [X64_REL8] * 4
+    one[0xE4:0xE8] = [X64_I8] * 4
+    one[0xE8], one[0xE9], one[0xEB] = X64_REL32, X64_REL32, X64_REL8
+    one[0xF6], one[0xF7], one[0xFE], one[0xFF] = m | X64_TEST8, m | X64_TESTZ, m, m
+    two = [m] * 256
+    for b in (0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0E, 0x77, 0xA0, 0xA1, 0xA2, 0xA8, 0xA9, 0xAA, *range(0x30, 0x38), *range(0xC8, 0xD0)):
+        two[b] = X64_NONE
+    for b in (0x0F, 0x70, 0x71, 0x72, 0x73, 0xA4, 0xAC, 0xBA, 0xC2, 0xC4, 0xC5, 0xC6):
+        two[b] = m | X64_I8
+    two[0x80:0x90] = [X64_REL32] * 16
+    return bytes(one), bytes(two)
+
+
+X64_ONE_BYTE, X64_TWO_BYTE = _x64_opcode_maps()
+X64_VEX_IMM8 = frozenset((0x70, 0x71, 0x72, 0x73, 0xC2, 0xC4, 0xC5, 0xC6))  # VEX/EVEX opcodes of the 0F map with an imm8 (the 0F3A map always has one)
+_unpack_i32 = struct.Struct('<i').unpack_from
+
+
+def x64_decode(code, i):
+    """Decodes the x64 instruction at code[i]: (length, opcode map, opcode, ModRM, REX, immediate offset, immediate size, RIP-relative
+    displacement offset, opcode offset), or None if the code ends first. The map is 0 for one-byte opcodes, 1 for 0F, 2 for 0F38 and 3 for
+    0F3A; ModRM is -1 when there's none; offsets are from i, and the displacement offset is -1 when there's no RIP-relative operand."""
+    n = len(code)
+    p = i
+    opsize = addrsize = False
+    rex = 0
+    while True:
+        if p >= n:
+            return None
+        b = code[p]
+        kind = X64_ONE_BYTE[b]
+        p += 1
+        if kind == X64_PREFIX:
+            if b == 0x66:
+                opsize = True
+            elif b == 0x67:
+                addrsize = True
+            rex = 0  # REX only counts right before the opcode
+        elif kind == X64_REX:
+            rex = b
+        else:
+            break
+    mp = 0
+    if X64_ESCAPE <= kind <= X64_EVEX:
+        if kind == X64_ESCAPE:
+            if p >= n:
+                return None
+            b = code[p]
+            p += 1
+            if b == 0x38 or b == 0x3A:
+                mp = 2 if b == 0x38 else 3
+                kind = X64_MODRM | (X64_I8 if mp == 3 else X64_NONE)
+                if p >= n:
+                    return None
+                b = code[p]
+                p += 1
+            else:
+                mp = 1
+                kind = X64_TWO_BYTE[b]
+        else:
+            if p + 1 >= n:
+                return None
+            if kind == X64_EVEX:
+                mp = code[p] & 7
+                p += 3
+            elif b == 0xC4:
+                mp = code[p] & 0x1F
+                p += 2
+            else:
+                mp = 1
+                p += 1
+            if p >= n:
+                return None
+            b = code[p]
+            p += 1
+            kind = X64_MODRM | (X64_I8 if mp == 3 or (mp == 1 and b in X64_VEX_IMM8) else X64_NONE)
+            if mp == 1 and b == 0x77:  # VZEROUPPER, VZEROALL
+                kind = X64_NONE
+    op_at = p - 1 - i
+    modrm = rip = -1
+    if kind & X64_MODRM:
+        if p >= n:
+            return None
+        modrm = code[p]
+        p += 1
+        mod = modrm >> 6
+        if mod != 3:
+            rm = modrm & 7
+            if rm == 4:
+                if p >= n:
+                    return None
+                if mod == 0 and code[p] & 7 == 5:  # SIB without a base register: disp32
+                    p += 4
+                p += 1
+            elif mod == 0 and rm == 5:
+                rip = p - i
+                p += 4
+            if mod == 1:
+                p += 1
+            elif mod == 2:
+                p += 4
+        kind &= 0x7F
+    if kind == X64_NONE:
+        size = 0
+    elif kind == X64_I8 or kind == X64_REL8:
+        size = 1
+    elif kind == X64_IZ:
+        size = 2 if opsize else 4
+    elif kind == X64_REL32:
+        size = 4
+    elif kind == X64_TEST8:
+        size = 1 if (modrm >> 3) & 7 < 2 else 0
+    elif kind == X64_TESTZ:
+        size = (2 if opsize else 4) if (modrm >> 3) & 7 < 2 else 0
+    elif kind == X64_IV:
+        size = 8 if rex & 8 else 2 if opsize else 4
+    elif kind == X64_I16:
+        size = 2
+    elif kind == X64_MOFFS:
+        size = 4 if addrsize else 8
+    elif kind == X64_I24:
+        size = 3
+    else:
+        size = 0
+    if p + size > n:
+        return None
+    return (p + size - i, mp, b, modrm, rex, p - i, size, rip, op_at)
+
+
+def sweep_x64(img, start, end, on_ref, starts=()):
+    """Decodes the x64 code in [start, end) and calls on_ref(pc, target, kind) for every CALL ('call') and JMP/Jcc ('jump') with a 32-bit
+    displacement, and for every RIP-relative memory operand ('addr'), which is how x64 code forms the addresses of data and imports.
+    starts holds the sorted RVAs of known function starts: decoding restarts at each, so data between functions can't throw it off."""
+    code = img.read(start, end - start)
+    n = len(code)
+    k = bisect.bisect_left(starts, start)
+    nxt = starts[k] - start if k < len(starts) and starts[k] < end else n
+    i = 0
+    while i < n:
+        if i >= nxt:
+            while k < len(starts) and starts[k] - start <= i:
+                k += 1
+            nxt = starts[k] - start if k < len(starts) and starts[k] < end else n
+        d = x64_decode(code, i)
+        if d is None:
+            break
+        length = d[0]
+        if i + length > nxt:  # Runs into a known function start, so this wasn't really an instruction
+            i = nxt
+            continue
+        if d[7] >= 0:
+            pc = start + i
+            on_ref(pc, pc + length + _unpack_i32(code, i + d[7])[0], 'addr')
+        elif d[6] == 4 and ((d[1] == 0 and (d[2] == 0xE8 or d[2] == 0xE9)) or (d[1] == 1 and 0x80 <= d[2] <= 0x8F)):
+            pc = start + i
+            on_ref(pc, pc + length + _unpack_i32(code, i + d[5])[0], 'call' if d[1] == 0 and d[2] == 0xE8 else 'jump')
+        i += length
+
+
+M32 = 0xFFFFFFFF
+M64 = 0xFFFFFFFFFFFFFFFF
+X64_VOLATILE = (0, 1, 2, 8, 9, 10, 11)                    # rax, rcx, rdx, r8-r11: a call doesn't preserve them
+X64_ARGS = (('rcx', 1), ('rdx', 2), ('r8', 8), ('r9', 9))  # The first four arguments of a call
+X64_GROUPS = frozenset((0x80, 0x81, 0x82, 0x83, 0x8F, 0xC0, 0xC1, 0xC6, 0xC7, 0xD0, 0xD1, 0xD2, 0xD3, 0xF6, 0xF7, 0xFE, 0xFF))
+X64_GROUPS_0F = frozenset((0x00, 0x01, 0x0D, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x71, 0x72, 0x73, 0xAE, 0xBA, 0xC7))
+# One-byte opcodes whose operands are bytes (for most opcodes the low bit picks bytes or the full operand size)
+X64_BYTE_OPS = frozenset([b + f for b in range(0, 0x40, 8) for f in (0, 2, 4)] + [0x80, 0x82, 0x84, 0x86, 0x88, 0x8A, 0xA8, 0xC0, 0xC6, 0xD0, 0xD2, 0xF6, 0xFE]
+                         + list(range(0xB0, 0xB8)))
+X64_FULL = {8: 0xFF, 16: 0xFFFF, 32: M32, 64: M64}
+
+
+def _kb_and(a, b):
+    m = (a[0] & b[0]) | (a[0] & ~a[1]) | (b[0] & ~b[1])
+    return (m & M64, a[1] & b[1] & m)
+
+
+def _kb_or(a, b):
+    m = (a[0] & b[0]) | (a[0] & a[1]) | (b[0] & b[1])
+    return (m & M64, (a[1] | b[1]) & m)
+
+
+def _kb_zf(r, full):
+    """The zero flag for a result: True or False when the known bits settle it, None otherwise."""
+    if r[0] & r[1] & full:
+        return False
+    return True if (r[0] & full) == full else None
+
+
+def _x64_condition(cc, zf, cf):
+    """Whether condition code cc (the low nibble of Jcc/SETcc/CMOVcc) holds, or None if the flags it needs aren't known."""
+    if cc in (2, 3):
+        return None if cf is None else cf == (cc == 2)
+    if cc in (4, 5):
+        return None if zf is None else zf == (cc == 4)
+    if cc in (6, 7):
+        if cf is True or zf is True:
+            return cc == 6
+        return None if cf is None or zf is None else cc == 7
+    return None
+
+
+def x64_trace(img, rva, state=None, limit=200):
+    """Follows the code of a small x64 function from its start, keeping track of which bits of each register are known, and returns the
+    events on its path: (pc, slot, value) for the first four arguments of each call (slots 'rcx', 'rdx', 'r8', 'r9'), each store to memory
+    ('store') and the return ('ret', rax). Values are (mask, bits): only the bits set in mask are known. A conditional jump is followed when
+    its condition is known; the path ends at one that isn't, at a return, or after `limit` instructions. The first call returns `state`
+    (for a feature's GetCurrentFeatureEnabledState: the state from GetFeatureEnabledState), or an unknown value if it's None.
+    Only the instructions that compute such values are modeled; the registers any other instruction could write become unknown."""
+    U = (0, 0)
+    regs = [U] * 16
+    mem = {}  # (base register, displacement) or ('rip', address) -> the 8 bytes there
+    zf = cf = None
+    events = []
+    calls = 0
+    pc = rva
+    for _ in range(limit):
+        code = img.read(pc, 16)
+        d = x64_decode(code, 0)
+        if d is None:
+            return events
+        length, mp, op, modrm, rex, imm_at, imm_size, rip, op_at = d
+        nxt = pc + length
+        imm = int.from_bytes(code[imm_at:imm_at + imm_size], 'little', signed=True) if imm_size else 0
+        if (mp == 0 and op in X64_BYTE_OPS) or (mp == 1 and (0x90 <= op <= 0x9F or op == 0xB0)):
+            w = 8
+        else:
+            w = 16 if 0x66 in code[:op_at] else 64 if rex & 8 else 32
+        full = X64_FULL[w]
+        sub = (modrm >> 3) & 7 if modrm >= 0 else 0
+        reg = ((rex & 4) << 1) | sub
+        direct = modrm >= 0 and modrm >> 6 == 3
+        rm = ((rex & 1) << 3) | (modrm & 7) if direct else -1
+        key = None
+        if modrm >= 0 and not direct:
+            if rip >= 0:
+                key = ('rip', nxt + _unpack_i32(code, rip)[0])
+            else:
+                mod, low = modrm >> 6, modrm & 7
+                at = op_at + 2
+                base = ((rex & 1) << 3) | low
+                if low == 4:
+                    sib = code[at]
+                    at += 1
+                    base = ((rex & 1) << 3) | (sib & 7)
+                    if (((rex & 2) << 2) | ((sib >> 3) & 7)) != 4 or (mod == 0 and sib & 7 == 5):
+                        base = None  # Indexed, or no base register
+                disp = (code[at] ^ 0x80) - 0x80 if mod == 1 else _unpack_i32(code, at)[0] if mod == 2 else 0
+                if base is not None:
+                    key = (base, disp)
+
+        def high_byte(r):  # Without a REX prefix, byte registers 4-7 are AH, CH, DH and BH
+            return w == 8 and not rex and 4 <= r < 8
+
+        def value(r):
+            if high_byte(r):
+                return U
+            return (regs[r][0] & full, regs[r][1] & full)
+
+        def merged(old, v):  # A write of w bits: the bits above them stay as they were
+            keep = M64 ^ full
+            return ((old[0] & keep) | (v[0] & full), (old[1] & keep) | (v[1] & full))
+
+        def put(r, v):
+            if high_byte(r):
+                regs[r - 4] = U
+            elif w == 32:  # 32-bit results are zero-extended
+                regs[r] = ((v[0] & M32) | (M64 ^ M32), v[1] & M32)
+            else:
+                regs[r] = merged(regs[r], v)
+            for k in [k for k in mem if k[0] == r]:
+                del mem[k]
+
+        def rm_value():
+            if direct:
+                return value(rm)
+            v = mem.get(key, U)
+            return (v[0] & full, v[1] & full)
+
+        def rm_put(v, store=True):
+            if direct:
+                put(rm, v)
+                return
+            if key is not None:
+                v = mem[key] = merged(mem.get(key, U), v)
+            if store:
+                events.append((pc, 'store', v))
+
+        def alu(n, a, b, same=False):
+            """Applies ALU operation n (0 add, 1 or, 2 adc, 3 sbb, 4 and, 5 sub, 6 xor, 7 cmp) and sets the flags;
+            returns the result, or None for CMP."""
+            nonlocal zf, cf
+            if n == 1:
+                r, cf = _kb_or(a, b), False
+            elif n == 4:
+                r, cf = _kb_and(a, b), False
+            elif n == 6 or (n == 5 and same):
+                r, cf = ((full, 0) if same else (a[0] & b[0], (a[1] ^ b[1]) & a[0] & b[0])), False
+            elif n == 3 and same:  # SBB reg, reg: 0 or all ones, from the carry flag
+                r = (full, -cf & full) if cf is not None else U
+            elif a[0] == full and b[0] == full and n in (0, 5, 7):
+                r = (full, (a[1] + b[1] if n == 0 else a[1] - b[1]) & full)
+                cf = a[1] + b[1] > full if n == 0 else a[1] < b[1]
+            else:
+                differs = n in (5, 7) and a[0] & b[0] & (a[1] ^ b[1])
+                zf, cf = (False if differs else None), None
+                return None if n == 7 else U
+            zf = _kb_zf(r, full)
+            return None if n == 7 else r
+
+        if mp == 0 and op < 0x40 and op & 7 < 6:  # ADD, OR, ADC, SBB, AND, SUB, XOR, CMP
+            n, form = op >> 3, op & 6
+            if form == 4:
+                r = alu(n, value(0), (full, imm & full))
+                if r is not None:
+                    put(0, r)
+            elif form == 0:
+                r = alu(n, rm_value(), value(reg), same=direct and rm == reg)
+                if r is not None:
+                    rm_put(r)
+            else:
+                r = alu(n, value(reg), rm_value(), same=direct and rm == reg)
+                if r is not None:
+                    put(reg, r)
+        elif mp == 0 and op in (0x80, 0x81, 0x83):
+            r = alu(sub, rm_value(), (full, imm & full))
+            if r is not None:
+                rm_put(r)
+        elif mp == 0 and op in (0x84, 0x85):  # TEST
+            zf, cf = _kb_zf(_kb_and(rm_value(), value(reg)), full), False
+        elif mp == 0 and op in (0xA8, 0xA9):
+            zf, cf = _kb_zf(_kb_and(value(0), (full, imm & full)), full), False
+        elif mp == 0 and op in (0xF6, 0xF7) and sub < 2:
+            zf, cf = _kb_zf(_kb_and(rm_value(), (full, imm & full)), full), False
+        elif mp == 0 and op in (0xF6, 0xF7) and sub == 3:  # NEG
+            a = rm_value()
+            r = (full, -a[1] & full) if a[0] == full else U
+            cf = (a[1] != 0) if a[0] == full else (True if a[0] & a[1] else None)
+            zf = _kb_zf(r, full)
+            rm_put(r)
+        elif mp == 0 and op in (0xF6, 0xF7) and sub == 2:  # NOT
+            a = rm_value()
+            rm_put((a[0], ~a[1] & a[0] & full))
+        elif mp == 0 and op in (0x88, 0x89):
+            rm_put(value(reg))
+        elif mp == 0 and op in (0x8A, 0x8B):
+            put(reg, rm_value())
+        elif mp == 0 and op in (0xC6, 0xC7) and sub == 0:
+            rm_put((full, imm & full))
+        elif mp == 0 and 0xB0 <= op <= 0xBF:
+            put(((rex & 1) << 3) | (op & 7), (full, imm & full))
+        elif mp == 0 and op == 0x8D:  # LEA reg, [base + disp]
+            known = key and key[0] != 'rip' and regs[key[0]][0] == M64
+            put(reg, (full, (regs[key[0]][1] + key[1]) & full) if known else U)
+        elif mp == 0 and op in (0xC0, 0xC1, 0xD0, 0xD1) and sub in (4, 5):  # SHL, SHR by a constant
+            a, count = rm_value(), (imm if op in (0xC0, 0xC1) else 1) & (63 if w == 64 else 31)
+            if sub == 4:
+                r = (((a[0] << count) | ((1 << count) - 1)) & full, (a[1] << count) & full)
+            else:
+                r = ((a[0] >> count) | (full ^ (full >> count)), a[1] >> count)
+            if count:
+                zf, cf = _kb_zf(r, full), None
+            rm_put(r)
+        elif mp == 1 and 0x40 <= op <= 0x4F:  # CMOVcc
+            taken = _x64_condition(op & 0xF, zf, cf)
+            put(reg, U if taken is None else rm_value() if taken else value(reg))  # A 32-bit CMOV zero-extends its destination either way
+        elif mp == 1 and 0x90 <= op <= 0x9F:  # SETcc
+            taken = _x64_condition(op & 0xF, zf, cf)
+            rm_put(U if taken is None else (0xFF, int(taken)), store=False)
+        elif mp == 1 and op in (0xB6, 0xB7):  # MOVZX
+            w = 8 if op == 0xB6 else 16
+            full = X64_FULL[w]
+            v = rm_value()
+            w, full = 64, M64
+            put(reg, (v[0] | (M64 ^ (0xFF if op == 0xB6 else 0xFFFF)), v[1]))
+        elif mp == 1 and op == 0xBA and sub >= 4:  # BT, BTS, BTR, BTC with a constant
+            a, bit = rm_value(), 1 << (imm & (63 if w == 64 else 31))
+            cf = bool(a[1] & bit) if a[0] & bit else None
+            if sub == 5:
+                rm_put((a[0] | bit, a[1] | bit))
+            elif sub == 6:
+                rm_put((a[0] | bit, a[1] & ~bit))
+            elif sub == 7:
+                rm_put(U)
+        elif (mp == 0 and (0x70 <= op <= 0x7F or op in (0xE9, 0xEB))) or (mp == 1 and 0x80 <= op <= 0x8F):
+            taken = True if mp == 0 and op in (0xE9, 0xEB) else _x64_condition(op & 0xF, zf, cf)
+            if taken is None:
+                return events
+            pc = nxt + imm if taken else nxt
+            continue
+        elif mp == 0 and (op == 0xE8 or (op == 0xFF and sub == 2)):  # CALL
+            for slot, r in X64_ARGS:
+                events.append((pc, slot, regs[r]))
+            for r in X64_VOLATILE:
+                regs[r] = U
+            calls += 1
+            if calls == 1 and state is not None:
+                regs[0] = (M64, state)
+            mem.clear()
+            zf = cf = None
+        elif mp == 0 and op in (0xC2, 0xC3):  # RET
+            events.append((pc, 'ret', regs[0]))
+            return events
+        elif mp == 0 and (op == 0xCC or (op == 0xFF and sub in (3, 4, 5))):  # INT3, an indirect jump
+            return events
+        elif (mp == 0 and (op == 0x90 or 0x50 <= op <= 0x57 or (op == 0xFF and sub == 6))) or (mp == 1 and op == 0x1F):  # NOP, PUSH
+            pass
+        elif mp == 1 and op == 0xB1:  # CMPXCHG: stores the register when the comparison succeeds, which isn't known here
+            events.append((pc, 'store', value(reg)))
+            if key is not None:
+                mem.pop(key, None)
+            regs[0] = U
+            zf = cf = None
+        else:
+            # Anything else: the registers it could write become unknown, and so do the flags
+            if mp == 0 and 0x58 <= op <= 0x5F:
+                regs[((rex & 1) << 3) | (op & 7)] = U
+            elif mp == 0 and op in (0x98, 0x99, 0x6C, 0x6D, 0xA4, 0xA5, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF):
+                regs[0] = regs[1] = regs[2] = regs[6] = regs[7] = U
+            elif modrm >= 0:
+                if not ((mp == 0 and op in X64_GROUPS) or (mp == 1 and op in X64_GROUPS_0F)):  # In these the reg field is part of the opcode
+                    regs[reg] = U
+                if direct:
+                    regs[rm] = U
+                elif key is not None:
+                    mem.pop(key, None)
+                if mp == 0 and op in (0xF6, 0xF7):
+                    regs[0] = regs[2] = U
+            else:
+                regs[0] = regs[2] = U
+            zf = cf = None
+        pc = nxt
+    return events
+
+
+def x64_first_call_args(img, rva):
+    """(ecx, edx) at a function's first call, each None unless fully known."""
+    for pc, slot, (mask, bits) in x64_trace(img, rva, limit=40):
+        if slot == 'rcx':
+            ecx = bits & M32 if mask & M32 == M32 else None
+        elif slot == 'rdx':
+            return ecx, bits & M32 if mask & M32 == M32 else None
+    return None, None
+
+
+def cpp_default_x64(img, rva):
+    """The default stage of a C++ feature (1 = disabled, 2 = enabled) from its x64 GetCurrentFeatureEnabledState, or None.
+    The function puts 'enabled' (0x40) in the state it returns according to the configured state from GetFeatureEnabledState: set when
+    the feature is configured enabled (2), clear when configured disabled (1), and the default when it isn't configured (0). Where the
+    compiler put that decision varies, so the function is traced once with each of the three states: the first value (a store, a call
+    argument or the return value) whose 0x40 bit follows the configured state is the result, and its bit in the unconfigured run is the default."""
+    runs = {s: x64_trace(img, rva, state=s) for s in (0, 1, 2)}
+    at = [{(pc, slot): v for pc, slot, v in reversed(runs[s])} for s in (0, 1, 2)]  # First occurrence of each
+    for pc, slot, on in runs[2]:
+        off = at[1].get((pc, slot))
+        if off and on[0] & off[0] & 0x40 and on[1] & 0x40 and not off[1] & 0x40:
+            unset = at[0].get((pc, slot))
+            if unset and unset[0] & 0x40:
+                return 2 if unset[1] & 0x40 else 1
             return None
     return None
 
@@ -726,13 +1295,13 @@ class Demangler:
 
 
 def analyze_usage(pdb_path, info, found, demangler):
-    """What one binary reveals about the features in it: {feature ID as a string: details}, or None if it holds no ARM64 code.
+    """What one binary reveals about the features in it: {feature ID as a string: details}, or None if it holds no ARM64 or x64 code.
     found is extract_features' result for the binary; features it only declares (an ID constant in a full PDB) have no plumbing to analyze."""
     ids = {name: feature_id for name, feature_id, source in found if source != 'const'}
     if not ids:
         return {}
     img = CodeImage(info.path)
-    if not img.code_ranges:
+    if not img.code_ranges and not img.x64_ranges:
         return None
     publics = read_public_symbols(pdb_path)
 
@@ -761,11 +1330,18 @@ def analyze_usage(pdb_path, info, found, demangler):
     funcs = img.functions
     func_starts = [b for b, _ in funcs]
     func_end = dict(funcs)
+    known_starts = sorted(set(func_starts) | set(func_rvas))  # Where x64 decoding restarts
+
+    def sweep(start, end, fn):
+        if img.in_x64(start):
+            sweep_x64(img, start, end, fn, known_starts)
+        else:
+            sweep_arm64(img, start, end, fn)
 
     def enclosing(pc):
         i = bisect.bisect_right(func_starts, pc) - 1
         if i >= 0 and funcs[i][0] <= pc < funcs[i][1]:
-            return funcs[i][0]
+            return img.roots.get(funcs[i][0], funcs[i][0])
         j = bisect.bisect_right(func_rvas, pc) - 1
         return func_rvas[j] if j >= 0 else None
 
@@ -814,8 +1390,8 @@ def analyze_usage(pdb_path, info, found, demangler):
         refs = func_refs.setdefault(fstart, {})
         refs[t[0]] = refs.get(t[0], 0) + 1
 
-    for start, end in img.code_ranges:
-        sweep_arm64(img, start, end, on_ref)
+    for start, end in img.code_ranges + img.x64_ranges:
+        sweep(start, end, on_ref)
 
     tables = {f for f, refs in func_refs.items() if len(refs) > TABLE_MIN_FEATURES}
     callers = {}       # feature ID -> [(references, function RVA)]
@@ -875,7 +1451,7 @@ def analyze_usage(pdb_path, info, found, demangler):
             s = img.read_string(target)
             if s and not RE_WIL_PATH.search(s):
                 add('sources' if RE_SOURCE_FILE.search(s) else 'strings', s)
-        sweep_arm64(img, fstart, fend, collect)
+        sweep(fstart, fend, collect)
         context[fstart] = found_ctx
         return found_ctx
 
@@ -1373,16 +1949,16 @@ def main():
             entry.update(feature_level_usage(by_module))
             entry['usage'] = {m: {k: v for k, v in d.items() if k not in FEATURE_LEVEL_FIELDS} for m, d in sorted(by_module.items())}
         json_features.append(entry)
-    # Binaries with feature plumbing: analyzed, not ARM64 (no usage data), or failed
-    usage_stats = {'analyzed': 0, 'notArm64': 0, 'failed': 0}
+    # Binaries with feature plumbing: analyzed, another architecture (no usage data), or failed
+    usage_stats = {'analyzed': 0, 'otherArchitecture': 0, 'failed': 0}
     for result in results.values():
         if result.get('status') in ('ok', 'previousVersion') and any(src != 'const' for _, _, src in result['features']):
-            usage_stats['failed' if result.get('usageError') else 'notArm64' if result.get('usage') is None else 'analyzed'] += 1
+            usage_stats['failed' if result.get('usageError') else 'otherArchitecture' if result.get('usage') is None else 'analyzed'] += 1
     with open(args.json_out, 'w', encoding='utf-8') as f:
         json.dump({'imagesScanned': image_count, 'pdbs': len(by_pdb), 'stats': stats, 'usageStats': usage_stats, 'features': json_features}, f, indent=1)
 
     log('[scan] found %d feature IDs (%d names) in %.0fs' % (len(features), sum(len(v) for v in features.values()), time.time() - start))
-    log('[scan] usage analysis: %d binaries analyzed, %d not ARM64, %d failed' % (usage_stats['analyzed'], usage_stats['notArm64'], usage_stats['failed']))
+    log('[scan] usage analysis: %d binaries analyzed, %d of another architecture, %d failed' % (usage_stats['analyzed'], usage_stats['otherArchitecture'], usage_stats['failed']))
     log('[scan] wrote %s and %s' % (args.names_out, args.json_out))
     return 0
 

@@ -1,0 +1,114 @@
+# windows-vm-scanner.yml
+# Scans x64 Windows 11 builds inside a Hyper-V virtual machine on an x64 runner, so the build scanned doesn't depend on what the
+# runner image has. The VM is built entirely from Microsoft's servers (see scan-in-vm.ps1). A daily check reads Microsoft's release
+# information page for the newest build of each version; a scan only runs for a build that isn't in data/ yet.
+name: Windows VM Feature Scanner
+
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: 'Windows 11 versions to scan, separated by spaces'
+        default: '26H2 25H2'
+      force:
+        description: 'Scan the newest builds even if they are in data/ already'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '41 8 * * *'
+
+# Scans commit to data/, so never run at the same time as each other or the ARM64 scanner
+concurrency:
+  group: windows-scanner
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      builds: ${{ steps.check.outputs.builds }}
+      needed: ${{ steps.check.outputs.needed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find the newest released builds
+        id: check
+        env:
+          VERSIONS: ${{ inputs.versions || '26H2 25H2' }}
+          FORCE: ${{ inputs.force && '--all' || '' }}
+        run: python3 check-windows-builds.py --versions $VERSIONS --arch AMD64 --github-output $FORCE
+
+  scan:
+    needs: check
+    if: needs.check.outputs.needed == 'true'
+    runs-on: windows-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        build: ${{ fromJSON(needs.check.outputs.builds) }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}  # The branch tip, so a later build in the matrix starts from the data (and symbol cache) of the one before
+          fetch-depth: 0          # Full history so the data commit can be rebased onto the branch tip
+
+      - name: Build the VM and scan inside it
+        shell: powershell
+        env:
+          VERSION: ${{ matrix.build.version }}
+          KB: ${{ matrix.build.kb }}
+          BUILD: ${{ matrix.build.build }}
+        run: |
+          python --version
+          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -OutputDir "$env:GITHUB_WORKSPACE\vm-output"
+
+      - name: Collect the output
+        shell: powershell
+        run: |
+          $summary = Get-Content vm-output\summary.json -Raw | ConvertFrom-Json
+          $key = "$($summary.fullBuild)-$($summary.architecture)"
+          $buildFolder = "output/Windows-Build-$key"
+          New-Item -ItemType Directory -Force -Path $buildFolder | Out-Null
+          Copy-Item -Path vm-output\* -Destination $buildFolder -Recurse -Force
+          Get-ChildItem -Path $buildFolder -Recurse
+          echo "BUILD_FOLDER=$buildFolder" >> $env:GITHUB_ENV
+          echo "BUILD_KEY=$key" >> $env:GITHUB_ENV
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scanner-output-build-${{ env.BUILD_KEY }}
+          path: output/
+          if-no-files-found: warn
+
+      - name: Add build to data/ and commit
+        shell: powershell
+        run: |
+          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json"
+          if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) { Write-Host "No changes to data/."; exit 0 }
+          git commit -q -m "Add feature data for build $env:BUILD_KEY"
+          git pull -q --rebase origin "${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Rebase onto ${{ github.ref_name }} failed"; exit 1 }
+          git push -q origin "HEAD:${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Push failed"; exit 1 }
+
+  # A push made with GITHUB_TOKEN doesn't trigger other workflows, so publish the site from here after new data is committed
+  pages:
+    needs: scan
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && needs.scan.result != 'skipped' }}
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
