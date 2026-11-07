@@ -325,22 +325,42 @@ function Get-VmBuild {
 }
 
 function Restart-ScanVM {
-    # Restarted from inside, so Windows finishes installing updates the way it does on any PC
+    # Restarted from inside, so Windows finishes installing updates the way it does on any PC. Installing a cumulative update can take
+    # more than one restart (Windows' servicing restarts the VM again by itself, even after it has signed in), so this waits until the
+    # VM has stayed up for a couple of minutes with no restart pending.
     Log 'Restarting the VM'
     $before = Invoke-InVM -Retry { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
     try { Invoke-InVM { Restart-Computer -Force } } catch { }
     Close-VmSession
-    $deadline = (Get-Date).AddMinutes(60)
+    $deadline = (Get-Date).AddMinutes(90)
+    $lastBoot = $before
+    $stable = 0
     while ((Get-Date) -lt $deadline) {
         Start-Sleep -Seconds 30
         try {
-            # Until the VM has shut down, this can still reach the instance from before the restart
-            $boot = Invoke-InVM { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
-            if ($boot -gt $before) { return }
-        } catch { }
-        Close-VmSession
+            $state = Invoke-InVM {
+                $cbs = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing'
+                @{ Boot = (Get-CimInstance Win32_OperatingSystem -ErrorAction Stop).LastBootUpTime
+                   Pending = (Test-Path "$cbs\RebootPending") -or (Test-Path "$cbs\RebootInProgress") -or (Test-Path "$cbs\PackagesPending") }
+            }
+        } catch {
+            # Shutting down, or not up yet. Until the VM has shut down, this can still reach the instance from before the restart.
+            Close-VmSession
+            $stable = 0
+            continue
+        }
+        if ($state.Boot -le $before -or $state.Boot -ne $lastBoot -or $state.Pending) {
+            $lastBoot = $state.Boot
+            $stable = 0
+            continue
+        }
+        $stable++
+        if ($stable -ge 4) {
+            Log "The VM is up again (since $($state.Boot))"
+            return
+        }
     }
-    throw "The VM didn't restart within 60 minutes"
+    throw "The VM didn't finish restarting within 90 minutes"
 }
 
 function Invoke-VmTask([string]$name, [string]$script, [int]$timeoutMinutes = 60) {
@@ -373,7 +393,7 @@ function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 
             @{ Log = @(Get-Content "C:\scan-tasks\$name.log" -ErrorAction SilentlyContinue)
                Done = $done
                Result = if ($done) { [string](Get-Content "C:\scan-tasks\$name.result" -Raw) } else { '' }
-               Running = (Get-ScheduledTask -TaskName $name).State -eq 'Running' }
+               Running = try { (Get-ScheduledTask -TaskName $name -ErrorAction Stop).State -eq 'Running' } catch { $true } }  # Unknown while the task service is unavailable
         }
         $state.Log | Select-Object -Skip $shown | ForEach-Object { Log "${name}: $_" }
         $shown = [Math]::Max($shown, $state.Log.Count)
