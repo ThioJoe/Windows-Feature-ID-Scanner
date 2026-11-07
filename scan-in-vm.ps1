@@ -445,7 +445,8 @@ try {
     $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
     foreach ($u in $found) {
         Write-Log "offered: $($u.Title)"
-        if ($u.Title -match 'Feature update to Windows 11, version __VERSION__|__VERSION__.*Enablement') {
+        # Offered as "Windows 11, version 26H2" (or "Feature update to Windows 11, version 26H2", or as an enablement package)
+        if ($u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') {
             if (-not $u.EulaAccepted) { $u.AcceptEula() }
             [void]$wanted.Add($u)
         }
