@@ -34,7 +34,7 @@ jobs:
       needed: ${{ steps.check.outputs.needed }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find the newest released builds
         id: check
@@ -57,7 +57,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}  # The branch tip, so a later build in the matrix starts from the data (and symbol cache) of the one before
           fetch-depth: 0          # Full history so the data commit can be rebased onto the branch tip
