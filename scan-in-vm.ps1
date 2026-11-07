@@ -579,7 +579,10 @@ try {
 function Update-StoreApps {
     # The apps that come with Windows (Windows Security, the Windows App Runtime, Photos and so on) are updated by the Microsoft Store,
     # not by Windows Update, so an image keeps the versions it was made with. The Store's own update search, the one a PC runs
-    # by itself, brings them to the versions a PC gets today. Done when a search finds nothing more.
+    # by itself, brings them to the versions a PC gets today. On a PC some of these updates wait for a convenient time, and one for an
+    # app that's running waits until it's closed. Here they're started right away; once the others are done, each one that failed
+    # because something was in use is tried again after closing what the deployment log names. Every change is logged as it
+    # happens. Done when a search finds nothing more.
     $r = (Invoke-VmTask 'ScanApps' -timeoutMinutes 150 -script @'
 try {
     Add-Type -AssemblyName System.Runtime.WindowsRuntime
@@ -588,27 +591,84 @@ try {
     [void][Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager, Windows.ApplicationModel.Store.Preview, ContentType = WindowsRuntime]
     $listType = [System.Collections.Generic.IReadOnlyList[Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallItem]]
     $manager = New-Object Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager
+
+    $seen = @{}; $changed = @{}
+    function Watch-Queue([string]$only) {
+        # Waits until the queue's updates (or only the one for the app $only) have finished or failed, logging every change and
+        # starting background updates that sit waiting. Returns $false if nothing changed for 10 minutes.
+        $lastChange = Get-Date
+        while ($true) {
+            Start-Sleep -Seconds 15
+            $active = 0
+            foreach ($item in @($manager.AppInstallItems)) {
+                $name = $item.PackageFamilyName
+                $status = $item.GetCurrentStatus()
+                $state = "$($status.InstallState)"
+                $key = "$state $([int]($status.PercentComplete / 25))"
+                if ($seen[$name] -ne $key) {
+                    $seen[$name] = $key; $changed[$name] = Get-Date; $lastChange = Get-Date
+                    Write-Log "  ${name}: $state$(if ($state -eq 'Error') { " - $($status.ErrorCode)" } elseif ($status.PercentComplete) { " $([int]$status.PercentComplete)%" })"
+                }
+                if ($state -in 'Completed', 'Canceled', 'Error' -or ($only -and $name -ne $only)) { continue }
+                $active++
+                if ($state -in 'ReadyToDownload', 'Paused' -and ((Get-Date) - $changed[$name]).TotalSeconds -ge 60) {
+                    $item.Restart()
+                    $changed[$name] = Get-Date
+                    Write-Log "  ${name}: started ($state)"
+                }
+            }
+            if (-not $active) { return $true }
+            if (((Get-Date) - $lastChange).TotalMinutes -ge 10) {
+                Write-Log "no progress for 10 minutes: $((@($manager.AppInstallItems) | ForEach-Object { "$($_.PackageFamilyName) ($($_.GetCurrentStatus().InstallState))" }) -join ', ')"
+                return $false
+            }
+        }
+    }
+
+    function Close-AppsInTheWay([string]$family, [datetime]$since) {
+        # For error 0x80073D02, the deployment log (event 404) names what has to be closed: "AppX Deployment operation failed for
+        # package <package> with error 0x80073D02. ... Unable to install because the following apps need to be closed <packages>."
+        $familyOf = { param($fullName) $parts = $fullName -split '_'; "$($parts[0])_$($parts[-1])" }  # Name_Version_Arch_Resource_Publisher
+        $names = @(Get-WinEvent -FilterHashtable @{ LogName = 'Microsoft-Windows-AppXDeploymentServer/Operational'; Id = 404; StartTime = $since } -ErrorAction SilentlyContinue |
+            ForEach-Object {
+                $message = $_.Message -replace '\s+', ' '
+                if ($message -match 'failed for package (\S+) with error 0x80073D02.*need to be closed (.+?)\.?\s*$' -and (& $familyOf $Matches[1]) -eq $family) { $Matches[2] -split '[,\s]+' }
+            } | Where-Object { $_ } | Select-Object -Unique)
+        if (-not $names) { Write-Log "  ${family}: the deployment log names nothing to close"; return }
+        foreach ($name in $names) {
+            $location = (Get-AppxPackage -AllUsers | Where-Object { $_.PackageFullName -eq $name } | Select-Object -First 1).InstallLocation
+            $processes = @(Get-Process | Where-Object { $_.Path -and $location -and $_.Path.StartsWith($location + '\', [StringComparison]::OrdinalIgnoreCase) })
+            Write-Log "  ${family}: closing $name ($(if ($processes) { ($processes | ForEach-Object { "$($_.ProcessName) $($_.Id)" }) -join ', ' } else { 'none of its processes is running' }))"
+            $processes | Stop-Process -Force -ErrorAction SilentlyContinue
+        }
+    }
+
     $before = @{}
     Get-AppxPackage -AllUsers | ForEach-Object { $before[$_.PackageFullName] = $true }
-    $errors = @()
     for ($round = 1; $round -le 4; $round++) {
+        $since = Get-Date
         $items = @(Wait-Async ($manager.SearchForAllUpdatesAsync()) $listType)
         Write-Log "search ${round}: $($items.Count) updates"
         if (-not $items.Count) { break }
         $items | ForEach-Object { Write-Log "  $($_.PackageFamilyName)" }
-        $deadline = (Get-Date).AddMinutes(40)
-        do {
-            Start-Sleep -Seconds 15
-            $states = @($manager.AppInstallItems | ForEach-Object { $s = $_.GetCurrentStatus(); [PSCustomObject]@{ Name = $_.PackageFamilyName; State = "$($s.InstallState)"; Error = $s.ErrorCode } })
-            $busy = @($states | Where-Object { $_.State -notin 'Completed', 'Canceled', 'Error' })
-        } while ($busy.Count -and (Get-Date) -lt $deadline)
-        $states | Where-Object { $_.State -eq 'Error' } | ForEach-Object { $errors += "$($_.Name): $($_.Error)"; Write-Log "error: $($_.Name) $($_.Error)" }
-        if ($busy.Count) { $errors += "still installing after 40 minutes: $(($busy | ForEach-Object { "$($_.Name) ($($_.State))" }) -join ', ')"; break }
+        [void](Watch-Queue)
+        # Then the ones that failed, one at a time, once nothing else is installing
+        foreach ($item in @($manager.AppInstallItems | Where-Object { "$($_.GetCurrentStatus().InstallState)" -eq 'Error' })) {
+            $family = $item.PackageFamilyName
+            for ($try = 1; $try -le 3 -and "$($item.GetCurrentStatus().InstallState)" -eq 'Error'; $try++) {
+                if ("$($item.GetCurrentStatus().ErrorCode)" -match '80073D02') { Close-AppsInTheWay $family $since }
+                Write-Log "  ${family}: trying again ($try)"
+                $item.Restart()
+                [void](Watch-Queue $family)
+            }
+        }
     }
+    # The final state: what a new search still finds, and what's still failing
     $left = @(Wait-Async ($manager.SearchForAllUpdatesAsync()) $listType | ForEach-Object { $_.PackageFamilyName })
+    $failed = @(@($manager.AppInstallItems) | Where-Object { "$($_.GetCurrentStatus().InstallState)" -eq 'Error' } | ForEach-Object { "$($_.PackageFamilyName): $($_.GetCurrentStatus().ErrorCode)" })
     $new = @(Get-AppxPackage -AllUsers | Where-Object { -not $before[$_.PackageFullName] } | ForEach-Object { $_.PackageFullName })
     $new | ForEach-Object { Write-Log "installed: $_" }
-    Write-Result (@{ installed = $new; left = $left; errors = $errors } | ConvertTo-Json -Compress)
+    Write-Result (@{ installed = $new; left = $left; errors = $failed } | ConvertTo-Json -Compress)
 } catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
 '@) | ConvertFrom-Json
     if ($r.error) { throw "Updating the Store apps failed: $($r.error)" }
