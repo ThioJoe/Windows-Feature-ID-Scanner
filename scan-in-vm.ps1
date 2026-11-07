@@ -407,16 +407,41 @@ try {
 # Scan inside the VM
 # ---------------------------------------------------------------------------
 
+function Copy-ToVM($session, [string]$path, [string]$destination) {
+    # Copy-VMFile goes through the VM's guest service interface, which is much faster than a PowerShell Direct session (about 3 MB/s)
+    try {
+        Copy-VMFile -Name $VmName -SourcePath $path -DestinationPath $destination -CreateFullPath -FileSource Host -Force
+    } catch {
+        Log "Copy-VMFile failed ($($_.Exception.Message)); copying through PowerShell Direct instead"
+        Copy-Item -ToSession $session -Path $path -Destination $destination -Force
+    }
+}
+
 function Invoke-ScanInVM($session, [string]$resultsCache) {
-    # The VM gets the runner's Python and the scanner's files; the scan then runs the way the regular workflow runs it on the runner
+    # The VM gets the runner's Python and the scanner's files; the scan then runs the way the regular workflow runs it on the runner.
+    # Python goes in as one zip with what the scanner needs: the interpreter and the standard library, without tests, Tcl/Tk, IDLE,
+    # installed packages and the like (6,000 files otherwise).
     $python = Split-Path -Parent (Get-Command python.exe).Source
-    Log "Copying Python ($python) and the scanner into the VM"
-    Invoke-Command -Session $session -ScriptBlock { New-Item -ItemType Directory -Force C:\scan, C:\scan\python | Out-Null }
-    Copy-Item -ToSession $session -Path "$python\*" -Destination C:\scan\python -Recurse -Force
+    $stage = Join-Path $WorkDir 'python-stage'
+    $zip = Join-Path $WorkDir 'python.zip'
+    Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item $zip -Force -ErrorAction SilentlyContinue
+    & robocopy.exe $python $stage /E /NFL /NDL /NJH /NJS /NP /XD test tests idlelib tkinter turtledemo tcl site-packages ensurepip __pycache__ Doc include libs Scripts | Out-Null
+    if ($LASTEXITCODE -ge 8) { throw "Copying Python failed (robocopy exit code $LASTEXITCODE)" }
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    [IO.Compression.ZipFile]::CreateFromDirectory($stage, $zip)
+    Log ("Copying Python ({0} from {1}, {2:N0} MB zipped) and the scanner into the VM" -f (& "$python\python.exe" --version), $python, ((Get-Item $zip).Length / 1MB))
+    Invoke-Command -Session $session -ScriptBlock { Remove-Item C:\scan -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force C:\scan | Out-Null }
+    Copy-ToVM $session $zip 'C:\scan\python.zip'
+    Invoke-Command -Session $session -ScriptBlock {
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [IO.Compression.ZipFile]::ExtractToDirectory('C:\scan\python.zip', 'C:\scan\python')
+        Remove-Item C:\scan\python.zip
+    }
     foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1') {
         Copy-Item -ToSession $session -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
     }
-    if ($resultsCache -and (Test-Path $resultsCache)) { Copy-Item -ToSession $session -Path $resultsCache -Destination C:\scan\symbol-cache.json -Force }
+    if ($resultsCache -and (Test-Path $resultsCache)) { Copy-ToVM $session $resultsCache 'C:\scan\symbol-cache.json' }
 
     Log 'Running the scan inside the VM'
     $result = Invoke-VmTask $session 'ScanFeatures' -timeoutMinutes 240 -script @'
