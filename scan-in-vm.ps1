@@ -568,7 +568,9 @@ try {
         }
         $installed += @($r.installed)
         $kbs += @($r.kbs)
-        if ($r.reboot) {
+        if ($r.reboot -or $r.failed) {
+            # Also after a failure: a restart can clear what was in its way, and the next round tries again
+            if ($r.failed) { Log "Failed: $($r.failed -join '; '); restarting the VM before trying again" }
             Restart-ScanVM
             Set-VmNetwork
         }
@@ -582,8 +584,9 @@ function Update-StoreApps {
     # by itself, brings them to the versions a PC gets today. On a PC some of these updates wait for a convenient time, and one for an
     # app that's running waits until it's closed. Here they're started right away; once the others are done, each one that failed
     # because something was in use is tried again after closing what the deployment log names. Every change is logged as it
-    # happens. Done when a search finds nothing more.
-    $r = (Invoke-VmTask 'ScanApps' -timeoutMinutes 150 -script @'
+    # happens. Done when a search finds nothing more; if one still does, or an update still fails, the VM is restarted and it all
+    # runs once more.
+    $script = @'
 try {
     Add-Type -AssemblyName System.Runtime.WindowsRuntime
     $asTask = [System.WindowsRuntimeSystemExtensions].GetMethods() | Where-Object { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncOperation`1' } | Select-Object -First 1
@@ -670,11 +673,24 @@ try {
     $new | ForEach-Object { Write-Log "installed: $_" }
     Write-Result (@{ installed = $new; left = $left; errors = $failed } | ConvertTo-Json -Compress)
 } catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
-'@) | ConvertFrom-Json
-    if ($r.error) { throw "Updating the Store apps failed: $($r.error)" }
-    Save-Report 'store-apps.json' @{ installed = @($r.installed); left = @($r.left); errors = @($r.errors) }
-    if ($r.left -or $r.errors) { throw "The Store apps aren't all up to date: $((@($r.left) + @($r.errors)) -join '; ')" }
-    Log "The Store has no app updates left ($(@($r.installed).Count) packages installed)"
+'@
+    $installed = @()
+    for ($pass = 1; $pass -le 2; $pass++) {
+        $r = (Invoke-VmTask 'ScanApps' -timeoutMinutes 150 -script $script) | ConvertFrom-Json
+        if ($r.error) { throw "Updating the Store apps failed: $($r.error)" }
+        $installed += @($r.installed)
+        Save-Report 'store-apps.json' @{ installed = $installed; left = @($r.left); errors = @($r.errors); passes = $pass }
+        if (-not $r.left -and -not $r.errors) {
+            Log "The Store has no app updates left ($($installed.Count) packages installed)"
+            return
+        }
+        if ($pass -eq 1) {
+            Log "Store apps not all up to date ($((@($r.left) + @($r.errors)) -join '; ')); restarting the VM and trying again"
+            Restart-ScanVM
+            Set-VmNetwork
+        }
+    }
+    throw "The Store apps aren't all up to date, even after a restart: $((@($r.left) + @($r.errors)) -join '; ')"
 }
 
 function Test-VmInstallation([string[]]$kbs) {
@@ -874,6 +890,10 @@ if ($Step -in 'All', 'FeatureUpdate') {
 if ($Step -in 'All', 'Updates') { Install-OtherUpdates }
 if ($Step -in 'All', 'Apps') { Update-StoreApps }
 if ($Step -in 'All', 'Verify') {
+    # A last restart after all the updates, as a PC gets, so the checks and then the scan see Windows as it starts from now on
+    # (restarting after the checks could change what they checked)
+    Restart-ScanVM
+    Set-VmNetwork
     # The target update first, then the checkpoint updates the Microsoft Update Catalog lists with it
     $kbs = @(@(if ($Kb) { $Kb.ToUpper() }) + @($updateUrls | ForEach-Object { if ($_ -match '-(kb\d+)-') { $Matches[1].ToUpper() } }) | Where-Object { $_ } | Select-Object -Unique)
     Test-VmInstallation $kbs
