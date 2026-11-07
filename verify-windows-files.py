@@ -4,14 +4,16 @@
 # right after applying it; `check` runs inside the VM before the scan.
 #
 # Every Windows update's KB article on support.microsoft.com links a file list (CSV) with the name, version and size of every file
-# the update carries; since 2025 the lists also give each file's SHA-256. A file the update doesn't carry is one that hasn't changed:
-# a component's version can go up while some of its files stay exactly as they were, and those aren't in the list.
+# the update carries; since 2025 the lists also give each file's SHA-256 (.NET Framework's lists still don't, so for those a file
+# has to match a listed name and size). A file the update doesn't carry is one that hasn't changed: a component's version can go
+# up while some of its files stay exactly as they were, and those aren't in the list.
 #
 # Windows keeps every component's files in its component store (C:\Windows\WinSxS), and the files in System32 and elsewhere are
 # hard links to the installed versions' copies there. For every file installed from the component store, `check` requires that it
-# either has a SHA-256 that one of the updates lists (the target update, its checkpoint update, or another update installed in
-# the VM), or is the same file as in Microsoft's image the VM started from (whose own hash the Media Creation Tool's catalog
-# gives). Anything else is a problem. Other files (apps, logs, files Windows generates) are only counted.
+# either is a file one of the updates lists (the target update, its checkpoint update, or another update installed in the VM,
+# such as .NET Framework's), or is the same file as in Microsoft's image the VM started from (whose own hash the Media Creation
+# Tool's catalog gives). Anything else is a problem. Other files (apps, logs, files Windows generates, .NET's precompiled native
+# images) are only counted.
 #
 # Whether an update installed every component that applies to the system is up to Windows' servicing, which scan-in-vm.ps1 checks
 # separately. As a cross-check, the report lists file names the target update carries in the same version family whose installed
@@ -76,16 +78,21 @@ def file_list_links(kb):
 
 
 def read_file_list(data):
-    """The x64 rows of a file list: (name, version, size, sha256 or None)."""
+    """The x64 rows of a file list: (name, version, size, sha256 or None). Windows' lists have sections such as "Windows 10 LCU
+    x64-based" and SHA-256 hashes; .NET's have sections such as "x64 Windows11" and only sizes."""
     rows, section, header = [], None, None
     for line in io.StringIO(data.decode('utf-8-sig', 'replace')):
         line = line.strip()
         if not line:
             continue
-        if not line.startswith('"'):
-            section = line  # Such as "Windows 10 LCU x64-based"
-            continue
         cells = next(csv.reader([line]))
+        while cells and not cells[-1]:
+            cells.pop()  # Trailing commas
+        if len(cells) <= 1:
+            if line.startswith('Additional file information'):
+                break  # Details per component manifest follow
+            section, header = line.strip('"'), None
+            continue
         if cells[0] == 'File name':
             header = cells
             continue
@@ -244,7 +251,9 @@ def check(files, updates, image, windir):
     installed_by_name = {}
     for f in files:
         name = os.path.basename(f['path']).lower()
-        if f['sha256'] in target_hashes:
+        if '\\assembly\\nativeimages_' in f['path'].lower():
+            category = 'dotnetNativeImage'  # .NET's precompiled code, which each PC regenerates; no list covers it
+        elif f['sha256'] in target_hashes:
             category = 'listedByTargetUpdate'
         elif f['sha256'] in other_hashes or (name, f['size']) in other_sizes:
             category = 'listedByOtherUpdate'
@@ -256,7 +265,7 @@ def check(files, updates, image, windir):
             category = 'changed' if relative(f['path']) in image else 'new'
         kind = 'installed' if f['component'] else 'other'
         counts[kind][category] = counts[kind].get(category, 0) + 1
-        if f['component']:
+        if f['component'] and category != 'dotnetNativeImage':
             installed_by_name.setdefault(name, []).append((f, category))
             if category in ('changed', 'new'):
                 problems.append({'path': f['path'], 'component': f['component'], 'sha256': f['sha256'], 'issue': f'{category}, and no update lists it'})

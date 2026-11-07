@@ -773,11 +773,13 @@ try {
     $files = $null
     if ($kbs) {
         Copy-ScannerToVM
-        # The other updates installed in the VM (the enablement package, .NET and so on) may replace files too
-        $others = @(foreach ($report in 'enablement-package.json', 'windows-update.json') {
+        # The other updates installed in the VM replace files too: the .NET Framework update that comes with the enablement package,
+        # what the Windows Update pass installed, and what the image came with. Windows lists them all as installed updates.
+        $installed = @(Invoke-InVM -Retry { Get-HotFix | ForEach-Object { $_.HotFixID } })
+        $others = @(@($installed) + @(foreach ($report in 'enablement-package.json', 'windows-update.json') {
             $path = Join-Path $OutputDir $report
             if (Test-Path $path) { @((Get-Content $path -Raw | ConvertFrom-Json).kbs) }
-        }) | Where-Object { $_ -and $_ -notin $kbs } | Select-Object -Unique
+        }) | Where-Object { $_ -match '^KB\d+$' -and $_ -notin $kbs } | Select-Object -Unique)
         $arguments = @($kbs | ForEach-Object { "--kb $_" }) + @($others | ForEach-Object { "--other-kb $_" })
         $image = Join-Path $WorkDir 'image-files.csv.gz'
         if (Test-Path $image) {
