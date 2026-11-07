@@ -4,7 +4,7 @@
 #   data/builds/<build>-<arch>.json        One file per scanned build: every feature ID found (named or not), from symbols and/or the feature store
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build each feature ID appeared in
-#   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture
+#   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
 #   data/details/<arch>/<nn>.json          What each binary's code reveals about each feature (callers, strings, ...), from the newest build that had it
 #
 # Usage:
@@ -259,13 +259,23 @@ def regenerate(data_dir):
     with open(os.path.join(data_dir, 'first-seen.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump({'firstTrackedBuild': first_tracked, 'firstSeen': first_seen}, f, separators=(',', ':'), sort_keys=True)
 
-    # Consecutive diffs, per architecture
+    # Diffs with the previous build of the same architecture and version (base build number), since builds of 25H2 and 26H2 come
+    # out side by side. A version's first build is compared with the other version's build at the same update instead (the same
+    # binaries, so what differs is the enablement package), or the newest one before it.
     diffs_dir = os.path.join(data_dir, 'diffs')
     os.makedirs(diffs_dir, exist_ok=True)
     wanted = set()
-    for prev, cur in zip(builds, builds[1:]):
-        if prev['architecture'] != cur['architecture']:
-            continue
+    for i, cur in enumerate(builds):
+        earlier = [b for b in builds[:i] if b['architecture'] == cur['architecture']]
+        same_version = [b for b in earlier if b['build'].split('.')[0] == cur['build'].split('.')[0]]
+        if same_version:
+            prev = same_version[-1]
+        else:
+            ubr = version_tuple(cur['build'])[1]
+            others = [b for b in earlier if version_tuple(b['build'])[1] <= ubr]
+            if not others:
+                continue
+            prev = max(others, key=lambda b: (version_tuple(b['build'])[1], version_tuple(b['build'])))
         d = diff_builds(prev, cur)
         name = '%s_to_%s' % (prev['key'], cur['key'])
         wanted.update({name + '.json', name + '.md'})
