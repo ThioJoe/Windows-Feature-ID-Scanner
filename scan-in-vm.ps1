@@ -614,13 +614,21 @@ function Test-VmInstallation([string[]]$kbs) {
     $build = (Get-VmBuild).Split(' ')[0]
     if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
     $ubr = [int]$build.Split('.')[1]
-    $servicing = Invoke-InVM -Retry {
+    $query = {
         $packages = @(Get-WindowsPackage -Online)
         $cbs = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing'
         @{ Rollups = @($packages | Where-Object { $_.PackageName -like 'Package_for_RollupFix~*' -and "$($_.PackageState)" -eq 'Installed' } | ForEach-Object { $_.PackageName })
            Unfinished = @($packages | Where-Object { "$($_.PackageState)" -in 'InstallPending', 'UninstallPending', 'PartiallyInstalled' } | ForEach-Object { "$($_.PackageName) ($($_.PackageState))" })
            RestartPending = (Test-Path "$cbs\RebootPending") -or (Test-Path "$cbs\PackagesPending") -or (Test-Path "$cbs\RebootInProgress")
            Packages = $packages.Count }
+    }
+    $servicing = Invoke-InVM -Retry $query
+    if ($servicing.RestartPending -or $servicing.Unfinished) {
+        # Windows' setup leaves servicing work for the first restart, as on a new PC; a restart has to finish it
+        Log 'Windows has servicing work pending until a restart; restarting the VM first'
+        Restart-ScanVM
+        Set-VmNetwork
+        $servicing = Invoke-InVM -Retry $query
     }
     # The cumulative update's package is named after the build it brings, in the shared base build (26100.9818 for 26300.9818)
     $rollup = @($servicing.Rollups | Where-Object { $_ -match "~~\d+\.$ubr\." })
