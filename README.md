@@ -26,7 +26,7 @@ The `Windows VM Feature Scanner` workflow (`.github/workflows/windows-vm-scanner
 5. Before the scan, the VM is checked against what the build is supposed to be:
    - Windows' servicing lists the build's cumulative update as installed, with no update half installed or waiting for a restart.
    - `DISM /ScanHealth` and `sfc /verifyonly` find no file that differs from the component manifests Microsoft signs.
-   - `verify-windows-files.py` checks the installed files against Microsoft's own list of the update's files. Each update's KB article links a file list with the name, version and SHA-256 of every file in the update. Every installed file of a component the update changed has to have one of those hashes, and no file name the update lists may be installed only in an older version.
+   - `verify-windows-files.py` checks the installed files against Microsoft's own lists. Each update's KB article links a file list with the name, version and SHA-256 of every file the update carries. Every file installed from Windows' component store has to be either a file one of the installed updates lists (by SHA-256) or exactly the file in Microsoft's image the VM started from, listed right after the image is applied. Which of an update's components apply to a system is decided by Windows' servicing, which the first check covers.
 
    If a check fails, nothing is recorded. The reports (`verification.json` and the others, plus a list of every file with its SHA-256) are kept with the run's artifacts either way.
 6. The same scan as on the ARM64 runner runs inside the VM. If the VM didn't end up at the expected build, nothing is recorded.

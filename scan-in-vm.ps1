@@ -163,6 +163,11 @@ function New-ScanDisk([string]$esd) {
     & dism.exe /English /Apply-Image "/ImageFile:$esd" "/Index:$index" "/ApplyDir:$winRoot" | Select-Object -Last 2
     if ($LASTEXITCODE -ne 0) { throw "DISM /Apply-Image failed ($LASTEXITCODE)" }
 
+    # The image's files before Windows first starts, for the file check before the scan (files no update lists must be the image's)
+    Log 'Listing the files of the image'
+    & python.exe (Join-Path $RepoDir 'verify-windows-files.py') image --root $winRoot --out (Join-Path $WorkDir 'image-files.csv.gz')
+    if ($LASTEXITCODE -ne 0) { throw "Listing the image's files failed ($LASTEXITCODE)" }
+
     & bcdboot.exe "$($winRoot)Windows" /s $efiRoot /f UEFI | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "bcdboot failed ($LASTEXITCODE)" }
     Write-Unattend $winRoot
@@ -497,10 +502,12 @@ try {
     $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
     Write-Log "download result: $($d.ResultCode)"
     $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
-    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired)"
+    $kbs = @($wanted | ForEach-Object { $_.KBArticleIDs | ForEach-Object { "KB$_" } }) -join ' '
+    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), KB: $kbs"
 } catch { Write-Result "error $($_.Exception.Message)" }
 '@).Replace('__VERSION__', $Version)
     if ($result -notmatch '^installed 2') { throw "Windows Update didn't install the $Version enablement package: $result" }  # 2 = succeeded
+    Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
     return ($result -match 'reboot required: True')
 }
 
@@ -514,7 +521,7 @@ function Install-OtherUpdates {
     # change the build (cumulative and feature updates), optional ones (a PC only gets those when someone asks for them), drivers and
     # Defender's definition updates (several a day). Repeats, restarting the VM when an update asks for it, until Windows Update has
     # nothing left to offer.
-    $installed = @()
+    $installed = @(); $kbs = @()
     for ($round = 1; $round -le 5; $round++) {
         $r = (Invoke-VmTask 'ScanUpdates' -timeoutMinutes 120 -script @'
 try {
@@ -535,27 +542,31 @@ try {
         Write-Log "to install: $($u.Title)"
     }
     $leftOut | ForEach-Object { Write-Log "left out: $_" }
-    $ok = @(); $failed = @(); $reboot = $false
+    $ok = @(); $failed = @(); $kbs = @(); $reboot = $false
     if ($wanted.Count) {
         $downloader = $session.CreateUpdateDownloader(); $downloader.Updates = $wanted; [void]$downloader.Download()
         $installer = $session.CreateUpdateInstaller(); $installer.Updates = $wanted; $result = $installer.Install()
         for ($i = 0; $i -lt $wanted.Count; $i++) {
             $one = $result.GetUpdateResult($i)
             Write-Log ("{0}: result {1}, 0x{2:X8}" -f $wanted.Item($i).Title, $one.ResultCode, $one.HResult)
-            if ($one.ResultCode -in 2, 3) { $ok += $wanted.Item($i).Title } else { $failed += $wanted.Item($i).Title }  # 2 = succeeded, 3 = with errors
+            if ($one.ResultCode -in 2, 3) {  # 2 = succeeded, 3 = with errors
+                $ok += $wanted.Item($i).Title
+                $kbs += @($wanted.Item($i).KBArticleIDs | ForEach-Object { "KB$_" })
+            } else { $failed += $wanted.Item($i).Title }
         }
         $reboot = $result.RebootRequired
     }
-    Write-Result (@{ installed = $ok; failed = $failed; reboot = $reboot; leftOut = $leftOut } | ConvertTo-Json -Compress)
+    Write-Result (@{ installed = $ok; kbs = $kbs; failed = $failed; reboot = $reboot; leftOut = $leftOut } | ConvertTo-Json -Compress)
 } catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
 '@) | ConvertFrom-Json
         if ($r.error) { throw "Windows Update failed: $($r.error)" }
         if (-not $r.installed -and -not $r.failed) {
-            Save-Report 'windows-update.json' @{ installed = $installed; leftOut = @($r.leftOut) }
+            Save-Report 'windows-update.json' @{ installed = $installed; kbs = $kbs; leftOut = @($r.leftOut) }
             Log "Windows Update has nothing left to install ($($installed.Count) updates installed)"
             return
         }
         $installed += @($r.installed)
+        $kbs += @($r.kbs)
         if ($r.reboot) {
             Restart-ScanVM
             Set-VmNetwork
@@ -653,6 +664,19 @@ try {
     $files = $null
     if ($kbs) {
         Copy-ScannerToVM
+        # The other updates installed in the VM (the enablement package, .NET and so on) may replace files too
+        $others = @(foreach ($report in 'enablement-package.json', 'windows-update.json') {
+            $path = Join-Path $OutputDir $report
+            if (Test-Path $path) { @((Get-Content $path -Raw | ConvertFrom-Json).kbs) }
+        }) | Where-Object { $_ -and $_ -notin $kbs } | Select-Object -Unique
+        $arguments = @($kbs | ForEach-Object { "--kb $_" }) + @($others | ForEach-Object { "--other-kb $_" })
+        $image = Join-Path $WorkDir 'image-files.csv.gz'
+        if (Test-Path $image) {
+            Copy-ToVM $image 'C:\scan\image-files.csv.gz'
+            $arguments += '--image C:\scan\image-files.csv.gz'
+        } else {
+            Log "No list of the image's files ($image); files no update lists can't be checked"
+        }
         $code = Invoke-VmTask 'ScanFiles' -timeoutMinutes 180 -script (@'
 try {
     Set-Location C:\scan
@@ -661,10 +685,10 @@ try {
     foreach ($url in 'https://support.microsoft.com/', 'https://go.microsoft.com/', 'https://download.microsoft.com/') {
         try { Invoke-WebRequest $url -UseBasicParsing -Method Head -TimeoutSec 60 | Out-Null } catch { }
     }
-    & C:\scan\python\python.exe verify-windows-files.py __KBS__ --cache-dir C:\scan\kb --out C:\scan\verification-files.json --inventory C:\scan\files.csv.gz 2>&1 | ForEach-Object { Write-Log "$_" }
+    & C:\scan\python\python.exe verify-windows-files.py check __ARGUMENTS__ --cache-dir C:\scan\kb --out C:\scan\verification-files.json --inventory C:\scan\files.csv.gz 2>&1 | ForEach-Object { Write-Log "$_" }
     Write-Result $LASTEXITCODE
 } catch { Write-Result "error $($_.Exception.Message)" }
-'@).Replace('__KBS__', (($kbs | ForEach-Object { "--kb $_" }) -join ' '))
+'@).Replace('__ARGUMENTS__', ($arguments -join ' '))
         $s = Get-VmSession
         foreach ($f in 'verification-files.json', 'files.csv.gz') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force -ErrorAction SilentlyContinue }
         $files = @{ exitCode = $code; report = 'verification-files.json' }

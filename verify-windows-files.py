@@ -1,22 +1,24 @@
 # verify-windows-files.py
-# Checks the files of the running Windows installation against what Microsoft publishes about its updates, so a scan only runs
-# on a system whose files are what its build is supposed to have. Used inside the VM by scan-in-vm.ps1.
+# Checks the files of the running Windows installation against what Microsoft publishes, so a scan only runs on a system whose
+# files are the ones its build is supposed to have. Used by scan-in-vm.ps1: `image` lists the files of the image it starts from,
+# right after applying it; `check` runs inside the VM before the scan.
 #
 # Every Windows update's KB article on support.microsoft.com links a file list (CSV) with the name, version and size of every file
-# in the update; since 2025 the lists also give each file's SHA-256. Since 24H2, a cumulative update contains every file that changed
-# since its checkpoint update (KB5043080, 26100.1742), so the target update's list covers almost everything serviced since then.
+# the update carries; since 2025 the lists also give each file's SHA-256. A file the update doesn't carry is one that hasn't changed:
+# a component's version can go up while some of its files stay exactly as they were, and those aren't in the list.
 #
-# Windows keeps every component's files in its component store (C:\Windows\WinSxS\<component>_<version>_...), and the files in
-# System32 and elsewhere are hard links to the installed version's copies there. That gives each installed file its component and
-# version, and the checks are:
-#   1. Every installed file of a component newer than the checkpoint has a SHA-256 the target update lists.
-#   2. Every file name the target update lists that is installed has at least one installed copy with a SHA-256 the update lists.
-#      (Names repeat across components and languages, so this asks for one match, not all.) This catches a component left at an
-#      older version, including one older than the checkpoint, which the first check can't see.
-#   3. Where the component store has several versions of a component, the installed files are from the newest one.
-# Files that aren't installed from the component store (apps, logs, generated files) are only counted.
+# Windows keeps every component's files in its component store (C:\Windows\WinSxS), and the files in System32 and elsewhere are
+# hard links to the installed versions' copies there. For every file installed from the component store, `check` requires that it
+# either has a SHA-256 that one of the updates lists (the target update, its checkpoint update, or another update installed in
+# the VM), or is the same file as in Microsoft's image the VM started from (whose own hash the Media Creation Tool's catalog
+# gives). Anything else is a problem. Other files (apps, logs, files Windows generates) are only counted.
 #
-#   python verify-windows-files.py --kb KB5127936 --kb KB5043080 --out verification-files.json --inventory files.csv.gz
+# Whether an update installed every component that applies to the system is up to Windows' servicing, which scan-in-vm.ps1 checks
+# separately. As a cross-check, the report lists file names the target update carries in the same version family whose installed
+# copies all stayed as they were in the image. Names repeat across components, so these aren't necessarily problems.
+#
+#   python verify-windows-files.py image --root F:\ --out image-files.csv.gz
+#   python verify-windows-files.py check --kb KB5127936 --kb KB5043080 --image image-files.csv.gz --out verification-files.json --inventory files.csv.gz
 
 import argparse
 import csv
@@ -94,13 +96,21 @@ def read_file_list(data):
     return rows
 
 
-def load_updates(kbs, cache_dir):
+def load_updates(kbs, cache_dir, required=True):
     updates = []
     for kb in kbs:
-        title, links = file_list_links(kb)
-        builds = re.findall(r'\b(\d{5})\.(\d+)\b', title)
+        try:
+            title, links = file_list_links(kb)
+        except Exception as e:
+            if required:
+                raise
+            log(f'{kb}: no KB article ({e})')
+            continue
         if not links:
-            raise RuntimeError(f'{kb}: no file lists linked from its KB article ({title})')
+            if required:
+                raise RuntimeError(f'{kb}: no file lists linked from its KB article ({title})')
+            log(f'{kb}: its KB article links no file lists ({title})')
+            continue
         rows = []
         for url, text in links:
             path = os.path.join(cache_dir, re.sub(r'[^A-Za-z0-9]+', '_', f'{kb}_{text}')[:80] + '.csv') if cache_dir else None
@@ -114,12 +124,12 @@ def load_updates(kbs, cache_dir):
             part = read_file_list(data)
             log(f'{kb}: {text}: {len(part):,} x64 files')
             rows += part
-        updates.append({'kb': kb, 'title': title, 'builds': ['.'.join(b) for b in builds], 'rows': rows})
+        updates.append({'kb': kb, 'title': title, 'rows': rows})
     return updates
 
 
 # ---------------------------------------------------------------------------
-# Installed files
+# Files
 # ---------------------------------------------------------------------------
 
 def walk(root, skip_dirs=SKIP_DIRS):
@@ -151,38 +161,27 @@ def sha256(path):
     return h.hexdigest().upper()
 
 
-def parse_version(v):
-    try:
-        return tuple(int(p) for p in v.split('.'))
-    except ValueError:
-        return None
+def relative(path):
+    """The path without its drive, such as Windows\\System32\\kernel32.dll, lowercased, to compare an image with the installed system."""
+    return re.sub(r'^[A-Za-z]:[\\/]', '', path).lower()
 
 
-def inventory(windir, extra_roots):
-    """Component store folders by file ID, and every other file with its size, SHA-256 and, for an installed file, its component."""
-    winsxs = os.path.join(windir, 'WinSxS')
-    by_id, components = {}, {}
-    for e in os.scandir(winsxs):
-        m = COMPONENT_FOLDER.match(e.name)
-        if not m or not e.is_dir(follow_symlinks=False):
-            continue
-        arch, name, token, version, culture, _ = m.groups()
-        has_files = False
-        for path in walk(e.path, set()):
-            has_files = True
-            try:
-                by_id[os.stat(path).st_ino] = e.name
-            except OSError:
-                pass
-        if has_files:
-            components.setdefault((arch.lower(), name.lower(), token.lower(), culture.lower()), []).append((parse_version(version), e.name))
-    log(f'Component store: {len(components):,} components, {len(by_id):,} files')
+def list_files(roots, winsxs=None):
+    """Every file under the roots (outside the component store) with its size, SHA-256 and, for one installed from the component
+    store (a hard link to a file in it), the component's folder name."""
+    by_id = {}
+    if winsxs:
+        for e in os.scandir(winsxs):
+            if e.is_dir(follow_symlinks=False) and COMPONENT_FOLDER.match(e.name):
+                for path in walk(e.path, set()):
+                    try:
+                        by_id[os.stat(path).st_ino] = e.name
+                    except OSError:
+                        pass
+        log(f'Component store: {len(by_id):,} files')
     files, errors = [], 0
-    roots = [windir] + extra_roots
     for root in roots:
-        for path in walk(root):
-            if path.lower().startswith(winsxs.lower() + os.sep):
-                continue
+        for path in walk(root, SKIP_DIRS | {'winsxs'}):
             try:
                 st = os.stat(path)
                 digest = sha256(path)
@@ -190,110 +189,135 @@ def inventory(windir, extra_roots):
                 errors += 1
                 continue
             files.append({'path': path, 'size': st.st_size, 'sha256': digest, 'component': by_id.get(st.st_ino) if st.st_nlink > 1 else None})
-    log(f'Files outside the component store: {len(files):,} ({errors:,} unreadable)')
-    return files, components, errors
+    log(f'Files: {len(files):,} ({errors:,} unreadable)')
+    return files, errors
+
+
+def write_files(path, files):
+    with gzip.open(path, 'wt', encoding='utf-8', newline='') as f:
+        w = csv.writer(f)
+        w.writerow(['path', 'size', 'sha256', 'component'])
+        for x in files:
+            w.writerow([x['path'], x['size'], x['sha256'], x['component'] or ''])
+
+
+def read_files(path):
+    with gzip.open(path, 'rt', encoding='utf-8', newline='') as f:
+        return {relative(r['path']): r['sha256'] for r in csv.DictReader(f)}
 
 
 # ---------------------------------------------------------------------------
 # Checks
 # ---------------------------------------------------------------------------
 
-def component_parts(folder):
-    m = COMPONENT_FOLDER.match(folder)
-    arch, name, token, version, culture, _ = m.groups()
-    return (arch.lower(), name.lower(), token.lower(), culture.lower()), parse_version(version)
-
-
 def base_name(name):
     # A few names in the lists include a folder, such as Amd64\UNIDRV.DLL
     return re.split(r'[\\/]', name)[-1].lower()
 
 
+def version_family(version):
+    parts = version.split('.')
+    return '.'.join(parts[:3]) if len(parts) == 4 and all(p.isdigit() for p in parts) else None
+
+
 SCAN_IMAGE = re.compile(r'\.(dll|exe|sys|cpl|ocx|scr|ax|drv|tsp|ime|efi|acm)$', re.I)
 
 
-def check(files, components, updates, windir):
-    target, older = updates[0], updates[1:]
+def check(files, updates, image, windir):
+    target, others = updates[0], updates[1:]
     target_hashes = {r[3] for r in target['rows'] if r[3]}
-    by_name = {}
+    other_hashes = {r[3] for u in others for r in u['rows'] if r[3]}
+    other_sizes = {(base_name(r[0]), r[2]) for u in others for r in u['rows'] if not r[3]}  # Older lists have no hashes
+    target_by_name = {}
     for name, version, size, digest in target['rows']:
         if digest:
-            by_name.setdefault(base_name(name), set()).add(digest)
-    older_rows = {(base_name(r[0]), r[2]) for u in older for r in u['rows']}
-    # Components newer than the newest checkpoint must be in the target update; its builds share the checkpoint's base build (26100)
-    cutoff = max((parse_version(b) for u in older for b in u['builds']), default=None)
+            entry = target_by_name.setdefault(base_name(name), {'hashes': set(), 'families': set()})
+            entry['hashes'].add(digest)
+            entry['families'].add(version_family(version))
     # The folders scan-symbols.py reads by default
     scan_roots = [os.path.join(windir, d).lower() + os.sep for d in ('System32', 'SystemApps', 'ImmersiveControlPanel', 'ShellComponents', 'ShellExperiences', 'PrintDialog', 'UUS')]
     scan_roots.append(os.path.join(os.environ.get('ProgramFiles', r'C:\Program Files'), 'WindowsApps').lower() + os.sep)
 
-    problems = {'notListed': [], 'notUpdated': [], 'olderVersionInstalled': []}
-    counts, scan_counts = {}, {}
+    problems = []
+    counts = {'installed': {}, 'other': {}}
+    scan_counts = {}
     installed_by_name = {}
     for f in files:
         name = os.path.basename(f['path']).lower()
-        if not f['component']:
-            category = 'notFromComponentStore'
+        if f['sha256'] in target_hashes:
+            category = 'listedByTargetUpdate'
+        elif f['sha256'] in other_hashes or (name, f['size']) in other_sizes:
+            category = 'listedByOtherUpdate'
+        elif image is None:
+            category = 'unverified'
+        elif image.get(relative(f['path'])) == f['sha256']:
+            category = 'unchangedFromImage'
         else:
-            key, version = component_parts(f['component'])
-            installed_by_name.setdefault(name, []).append(f)
-            if f['sha256'] in target_hashes:
-                category = 'listedByTargetUpdate'
-            elif cutoff and len(version) == 4 and version[2] == cutoff[0] and version[3] > cutoff[1]:
-                category = 'notListed'
-                problems['notListed'].append({'path': f['path'], 'component': f['component'], 'sha256': f['sha256']})
-            elif (name, f['size']) in older_rows:
-                category = 'listedByCheckpointUpdate'
-            elif cutoff and len(version) == 4 and version[2] == cutoff[0]:
-                category = 'unchangedSinceCheckpoint'
-            else:
-                category = 'otherVersioning'
-            newest = max(components.get(key, [(version, f['component'])]))
-            if newest[0] > version:
-                problems['olderVersionInstalled'].append({'path': f['path'], 'component': f['component'], 'newestInStore': newest[1]})
-        counts[category] = counts.get(category, 0) + 1
+            category = 'changed' if relative(f['path']) in image else 'new'
+        kind = 'installed' if f['component'] else 'other'
+        counts[kind][category] = counts[kind].get(category, 0) + 1
+        if f['component']:
+            installed_by_name.setdefault(name, []).append((f, category))
+            if category in ('changed', 'new'):
+                problems.append({'path': f['path'], 'component': f['component'], 'sha256': f['sha256'], 'issue': f'{category}, and no update lists it'})
         lower = f['path'].lower()
         if SCAN_IMAGE.search(lower) and (os.path.dirname(lower) == windir.lower() or any(lower.startswith(r) for r in scan_roots)):
-            scan_counts[category] = scan_counts.get(category, 0) + 1
-    for name, hashes in by_name.items():
+            key = f'{kind}: {category}'
+            scan_counts[key] = scan_counts.get(key, 0) + 1
+
+    unchanged_names = []
+    for name, entry in target_by_name.items():
         copies = installed_by_name.get(name)
-        if copies and not any(c['sha256'] in hashes for c in copies):
-            problems['notUpdated'].append({'name': name, 'installed': [{'path': c['path'], 'component': c['component']} for c in copies]})
-    return counts, scan_counts, problems
+        if not copies or any(f['sha256'] in entry['hashes'] for f, _ in copies):
+            continue
+        families = {version_family(COMPONENT_FOLDER.match(f['component']).group(4)) for f, _ in copies}
+        if families & entry['families'] and all(c in ('unchangedFromImage', 'unverified') for _, c in copies):
+            unchanged_names.append({'name': name, 'installed': [{'path': f['path'], 'component': f['component']} for f, _ in copies]})
+    return counts, scan_counts, problems, unchanged_names
 
 
 def main():
     parser = argparse.ArgumentParser(description="Check this Windows installation's files against Microsoft's published file lists.")
-    parser.add_argument('--kb', action='append', required=True, help='The target update first (such as KB5127936), then its checkpoint updates')
-    parser.add_argument('--windir', default=os.environ.get('SystemRoot', r'C:\Windows'))
-    parser.add_argument('--root', action='append', default=None, help='More folders to list (default: Program Files and Program Files (x86))')
-    parser.add_argument('--cache-dir', help='Keep the downloaded file lists here')
-    parser.add_argument('--out', required=True, help='JSON report')
-    parser.add_argument('--inventory', help='Also write every file found (path, size, SHA-256, component) as a gzipped CSV')
+    sub = parser.add_subparsers(dest='command', required=True)
+    p = sub.add_parser('image', help='List the files of an applied image, before it first starts')
+    p.add_argument('--root', required=True, help='The drive the image was applied to, such as F:\\')
+    p.add_argument('--out', required=True)
+    p = sub.add_parser('check', help='Check the running installation')
+    p.add_argument('--kb', action='append', required=True, help='The target update first (such as KB5127936), then its checkpoint updates')
+    p.add_argument('--other-kb', action='append', default=[], help='Another update installed in the VM (its files are allowed too)')
+    p.add_argument('--image', help="The image's file list (from the image command)")
+    p.add_argument('--windir', default=os.environ.get('SystemRoot', r'C:\Windows'))
+    p.add_argument('--cache-dir', help='Keep the downloaded file lists here')
+    p.add_argument('--out', required=True, help='JSON report')
+    p.add_argument('--inventory', help='Also write every file found (path, size, SHA-256, component) as a gzipped CSV')
     args = parser.parse_args()
 
-    updates = load_updates(args.kb, args.cache_dir)
-    extra = args.root if args.root is not None else [p for p in (os.environ.get('ProgramFiles'), os.environ.get('ProgramFiles(x86)')) if p]
-    files, components, errors = inventory(args.windir, extra)
-    counts, scan_counts, problems = check(files, components, updates, args.windir)
-    counts['unreadable'] = errors
+    program_files = lambda drive: [os.path.join(drive, d) for d in ('Program Files', 'Program Files (x86)')]
+    if args.command == 'image':
+        files, errors = list_files([os.path.join(args.root, 'Windows')] + program_files(args.root))
+        write_files(args.out, files)
+        return
 
+    updates = load_updates(args.kb, args.cache_dir) + load_updates(args.other_kb, args.cache_dir, required=False)
+    image = read_files(args.image) if args.image else None
+    drive = os.path.splitdrive(args.windir)[0] + os.sep
+    files, errors = list_files([args.windir] + program_files(drive), os.path.join(args.windir, 'WinSxS'))
+    counts, scan_counts, problems, unchanged_names = check(files, updates, image, args.windir)
     report = {'updates': [{'kb': u['kb'], 'title': u['title'], 'x64Files': len(u['rows'])} for u in updates],
-              'files': counts, 'scannedBinaries': scan_counts, 'problems': problems}
+              'imageFiles': len(image) if image is not None else None, 'unreadable': errors,
+              'files': counts, 'scannedBinaries': scan_counts, 'problems': problems, 'unchangedNamesTheUpdateCarries': unchanged_names}
     with open(args.out, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=1)
     if args.inventory:
-        with gzip.open(args.inventory, 'wt', encoding='utf-8', newline='') as f:
-            w = csv.writer(f)
-            w.writerow(['path', 'size', 'sha256', 'component'])
-            for x in files:
-                w.writerow([x['path'], x['size'], x['sha256'], x['component'] or ''])
-    log('Files: ' + ', '.join(f'{k} {v:,}' for k, v in counts.items()))
+        write_files(args.inventory, files)
+    for kind, c in counts.items():
+        log(f'Files {kind}: ' + ', '.join(f'{k} {v:,}' for k, v in c.items()))
     log('Binaries the scan reads: ' + ', '.join(f'{k} {v:,}' for k, v in scan_counts.items()))
-    for k, v in problems.items():
-        log(f'{k}: {len(v)}')
-        for p in v[:10]:
-            log(f'  {json.dumps(p)[:400]}')
-    sys.exit(1 if any(problems.values()) else 0)
+    log(f'Names the target update carries that stayed as in the image: {len(unchanged_names)}')
+    log(f'Problems: {len(problems)}')
+    for p in problems[:20]:
+        log(f'  {json.dumps(p)[:400]}')
+    sys.exit(1 if problems else 0)
 
 
 if __name__ == '__main__':
