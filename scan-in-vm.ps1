@@ -11,7 +11,12 @@
 #      cumulative updates; only the version's enablement package differs.
 #   3. Unless the image is that version already, Windows Update installs the enablement package of the target version, chosen with
 #      Windows Update's own target release version policy.
-#   4. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, and its output is copied back.
+#   4. Windows Update installs whatever else it offers that doesn't change the build, and the Microsoft Store updates the apps that
+#      come with Windows (cumulative updates don't). What still can't be installed after retries is noted in the build's data.
+#   5. After a last restart, the VM is checked against what the build is supposed to be (Test-VmInstallation): Windows' servicing,
+#      DISM /ScanHealth, sfc /verifyonly and the installed files against Microsoft's file lists (verify-windows-files.py). If a check
+#      fails, the run stops before the scan.
+#   6. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, and its output is copied back.
 #
 # Steps can be run one at a time with -Step, which is how it was developed and tested.
 
