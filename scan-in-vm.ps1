@@ -659,15 +659,20 @@ try {
         }
     }
 
-    function Close-AppsInTheWay([string]$family, [datetime]$since) {
+    function Close-AppsInTheWay([string]$family) {
         # For error 0x80073D02, the deployment log (event 404) names what has to be closed: "AppX Deployment operation failed for
         # package <package> with error 0x80073D02. ... Unable to install because the following apps need to be closed <packages>."
+        # The newest such event for the app since the VM started counts; the Store may have tried it by itself before this task.
         $familyOf = { param($fullName) $parts = $fullName -split '_'; "$($parts[0])_$($parts[-1])" }  # Name_Version_Arch_Resource_Publisher
-        $names = @(Get-WinEvent -FilterHashtable @{ LogName = 'Microsoft-Windows-AppXDeploymentServer/Operational'; Id = 404; StartTime = $since } -ErrorAction SilentlyContinue |
-            ForEach-Object {
-                $message = $_.Message -replace '\s+', ' '
-                if ($message -match 'failed for package (\S+) with error 0x80073D02.*need to be closed (.+?)\.?\s*$' -and (& $familyOf $Matches[1]) -eq $family) { $Matches[2] -split '[,\s]+' }
-            } | Where-Object { $_ } | Select-Object -Unique)
+        $boot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+        $names = @()
+        foreach ($event in @(Get-WinEvent -FilterHashtable @{ LogName = 'Microsoft-Windows-AppXDeploymentServer/Operational'; Id = 404; StartTime = $boot } -ErrorAction SilentlyContinue)) {
+            $message = $event.Message -replace '\s+', ' '  # Newest first
+            if ($message -match 'failed for package (\S+) with error 0x80073D02.*need to be closed (.+?)\.?\s*$' -and (& $familyOf $Matches[1]) -eq $family) {
+                $names = @($Matches[2] -split '[,\s]+' | Where-Object { $_ })
+                break
+            }
+        }
         if (-not $names) { Write-Log "  ${family}: the deployment log names nothing to close"; return }
         foreach ($name in $names) {
             $location = (Get-AppxPackage -AllUsers | Where-Object { $_.PackageFullName -eq $name } | Select-Object -First 1).InstallLocation
@@ -680,7 +685,6 @@ try {
     $before = @{}
     Get-AppxPackage -AllUsers | ForEach-Object { $before[$_.PackageFullName] = $true }
     for ($round = 1; $round -le 4; $round++) {
-        $since = Get-Date
         $items = @(Wait-Async ($manager.SearchForAllUpdatesAsync()) $listType)
         Write-Log "search ${round}: $($items.Count) updates"
         if (-not $items.Count) { break }
@@ -690,7 +694,7 @@ try {
         foreach ($item in @($manager.AppInstallItems | Where-Object { "$($_.GetCurrentStatus().InstallState)" -eq 'Error' })) {
             $family = $item.PackageFamilyName
             for ($try = 1; $try -le 3 -and "$($item.GetCurrentStatus().InstallState)" -eq 'Error'; $try++) {
-                if ("$($item.GetCurrentStatus().ErrorCode)" -match '80073D02') { Close-AppsInTheWay $family $since }
+                if ("$($item.GetCurrentStatus().ErrorCode)" -match '80073D02') { Close-AppsInTheWay $family }
                 Write-Log "  ${family}: trying again ($try)"
                 $item.Restart()
                 [void](Watch-Queue $family)
