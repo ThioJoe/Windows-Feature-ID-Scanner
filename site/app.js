@@ -412,9 +412,10 @@ async function init() {
     return;
   }
   const latest = latestBuild();
-  const prevKey = latest.previous || latest.key;
-  fillBuildSelect($('cmp-old'), prevKey);
-  fillBuildSelect($('cmp-new'), latest.key);
+  // Compare the newest build that has an earlier one to compare with (a first build of an architecture has none)
+  const compared = [...index.builds].filter((b) => b.previous).sort(compareVersions).pop() || latest;
+  fillBuildSelect($('cmp-old'), compared.previous || compared.key);
+  fillBuildSelect($('cmp-new'), compared.key);
   fillBuildSelect($('bld-select'), latest.key);
 
   const cmp = () => renderCompare().catch(showError('cmp-status'));
