@@ -13,6 +13,38 @@
  ],
  "removed": [
   {
+   "id": 20224600,
+   "name": "HvciIncompatibleDrivers",
+   "modules": [
+    "SecHealthUIViewModels.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 20815078,
+   "name": "HvciCancelScan",
+   "modules": [
+    "SecHealthUIViewModels.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 20887957,
+   "name": "HvciIncompatibleApps",
+   "modules": [
+    "SecHealthUIViewModels.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 24652141,
+   "name": "ProtectionHistoryPillar",
+   "modules": [
+    "SecHealthUIDataModel.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 42969627,
    "name": "RepairAppRegistration_Preserves_ApplicationData",
    "modules": [],
@@ -47,6 +79,14 @@
      "type": "Experiment (1)"
     }
    ]
+  },
+  {
+   "id": 48187519,
+   "name": "HideMdagEntrypointInWsa",
+   "modules": [
+    "SecHealthUIViewModels.dll"
+   ],
+   "store": null
   },
   {
    "id": 49084341,
@@ -224,18 +264,5 @@
    ]
   }
  ],
- "defaultChanged": [
-  {
-   "id": 41540309,
-   "name": "SAC_TwoWaySwitch",
-   "old": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "disabled",
-    "changeTime": "reboot"
-   }
-  }
- ]
+ "defaultChanged": []
 }
