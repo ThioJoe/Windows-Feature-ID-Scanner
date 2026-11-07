@@ -16,6 +16,10 @@ on:
         default: false
   schedule:
     - cron: '41 8 * * *'
+  # TEMPORARY, for testing before this workflow is on the default branch (until then it can't be started manually): remove before merging
+  push:
+    branches: [claude/vm-iso-scan]
+    paths: ['.github/workflows/windows-vm-scanner.yml']
 
 # Scans commit to data/, so never run at the same time as each other or the ARM64 scanner
 concurrency:
@@ -36,7 +40,7 @@ jobs:
         id: check
         env:
           VERSIONS: ${{ inputs.versions || '26H2 25H2' }}
-          FORCE: ${{ inputs.force && '--all' || '' }}
+          FORCE: ${{ (inputs.force || github.event_name == 'push') && '--all' || '' }}  # TEMPORARY (the push test run rescans): back to inputs.force alone before merging
         run: python3 check-windows-builds.py --versions $VERSIONS --arch AMD64 --github-output $FORCE
 
   scan:
