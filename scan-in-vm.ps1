@@ -533,7 +533,8 @@ try {
     $leftOut = @()
     foreach ($u in $found) {
         $categories = @($u.Categories | ForEach-Object { $_.Name }) -join ', '
-        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Upgrade' -or $categories -match 'Definition Updates') {
+        # (The Windows Security platform update is filed under Definition Updates too, so only the definitions themselves are left out)
+        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Upgrade|Security Intelligence Update') {
             $leftOut += "$($u.Title) [$categories$(if ($u.BrowseOnly) { ', optional' })]"
             continue
         }
