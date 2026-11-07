@@ -55,7 +55,8 @@ def fetch(url, retries=4):
             with urllib.request.urlopen(req, timeout=120) as r:
                 return r.read()
         except Exception as e:
-            if attempt == retries - 1:
+            # A page that doesn't exist won't appear by trying again (servicing stack updates have no KB articles of their own)
+            if attempt == retries - 1 or getattr(e, 'code', None) == 404:
                 raise RuntimeError(f'{url}: {e}')
             time.sleep(5 * (attempt + 1))
 
