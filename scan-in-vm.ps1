@@ -25,7 +25,8 @@ param(
     [int]$VmMemoryGB = 0,                  # 0: what the runner can spare (its free memory less 3 GB), from 4 to 12 GB
     [string]$RepoDir = $PSScriptRoot,      # The scanner's files, copied into the VM
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
-    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Scan')]
+    [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
+    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan')]
     [string]$Step = 'All'
 )
 
@@ -85,7 +86,7 @@ function Get-BaseImage {
             ForEach-Object { [PSCustomObject]@{ File = $_; Base = [int]($_.FileName -split '\.')[0]; Ubr = [int]($_.FileName -split '\.')[1] } }
     }
     $targetBase = if ($ExpectedBuild) { [int]($ExpectedBuild -split '\.')[0] } else { @{ '24H2' = 26100; '25H2' = 26200; '26H2' = 26300 }[$Version] }
-    $pick = $images | Where-Object { -not $targetBase -or $_.Base -le $targetBase } | Sort-Object Base, Ubr | Select-Object -Last 1
+    $pick = $images | Where-Object { if ($BaseImage) { "$($_.Base).$($_.Ubr)" -eq $BaseImage } else { -not $targetBase -or $_.Base -le $targetBase } } | Sort-Object Base, Ubr | Select-Object -Last 1
     if (-not $pick) { throw "The Media Creation Tool's catalogs have no en-us x64 image with the $Edition edition for $Version" }
     Log "Images in the catalogs: $((($images | ForEach-Object { "$($_.Base).$($_.Ubr)" }) | Sort-Object -Unique) -join ', ')"
     $file = $pick.File
@@ -503,6 +504,181 @@ try {
     return ($result -match 'reboot required: True')
 }
 
+function Save-Report([string]$name, $data) {
+    $data | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $OutputDir $name) -Encoding UTF8
+}
+
+function Install-OtherUpdates {
+    # Everything else Windows Update offers the VM, as it would to any PC at this build: Defender and Windows Security platform updates,
+    # .NET, the Malicious Software Removal Tool and the like, some of which replace files the scan reads. Left out: updates that would
+    # change the build (cumulative and feature updates), optional ones (a PC only gets those when someone asks for them), drivers and
+    # Defender's definition updates (several a day). Repeats, restarting the VM when an update asks for it, until Windows Update has
+    # nothing left to offer.
+    $installed = @()
+    for ($round = 1; $round -le 5; $round++) {
+        $r = (Invoke-VmTask 'ScanUpdates' -timeoutMinutes 120 -script @'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $session.ClientApplicationID = 'FeatureScan'
+    Write-Log 'searching Windows Update'
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0 and Type='Software'").Updates
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    $leftOut = @()
+    foreach ($u in $found) {
+        $categories = @($u.Categories | ForEach-Object { $_.Name }) -join ', '
+        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Upgrade' -or $categories -match 'Definition Updates') {
+            $leftOut += "$($u.Title) [$categories$(if ($u.BrowseOnly) { ', optional' })]"
+            continue
+        }
+        if (-not $u.EulaAccepted) { $u.AcceptEula() }
+        [void]$wanted.Add($u)
+        Write-Log "to install: $($u.Title)"
+    }
+    $leftOut | ForEach-Object { Write-Log "left out: $_" }
+    $ok = @(); $failed = @(); $reboot = $false
+    if ($wanted.Count) {
+        $downloader = $session.CreateUpdateDownloader(); $downloader.Updates = $wanted; [void]$downloader.Download()
+        $installer = $session.CreateUpdateInstaller(); $installer.Updates = $wanted; $result = $installer.Install()
+        for ($i = 0; $i -lt $wanted.Count; $i++) {
+            $one = $result.GetUpdateResult($i)
+            Write-Log ("{0}: result {1}, 0x{2:X8}" -f $wanted.Item($i).Title, $one.ResultCode, $one.HResult)
+            if ($one.ResultCode -in 2, 3) { $ok += $wanted.Item($i).Title } else { $failed += $wanted.Item($i).Title }  # 2 = succeeded, 3 = with errors
+        }
+        $reboot = $result.RebootRequired
+    }
+    Write-Result (@{ installed = $ok; failed = $failed; reboot = $reboot; leftOut = $leftOut } | ConvertTo-Json -Compress)
+} catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
+'@) | ConvertFrom-Json
+        if ($r.error) { throw "Windows Update failed: $($r.error)" }
+        if (-not $r.installed -and -not $r.failed) {
+            Save-Report 'windows-update.json' @{ installed = $installed; leftOut = @($r.leftOut) }
+            Log "Windows Update has nothing left to install ($($installed.Count) updates installed)"
+            return
+        }
+        $installed += @($r.installed)
+        if ($r.reboot) {
+            Restart-ScanVM
+            Set-VmNetwork
+        }
+    }
+    throw "Windows Update still has updates to install after 5 rounds: $((@($r.installed) + @($r.failed)) -join '; ')"
+}
+
+function Update-StoreApps {
+    # The apps that come with Windows (Windows Security, the Windows App Runtime, Photos and so on) are updated by the Microsoft Store,
+    # not by Windows Update, so an image keeps the versions it was made with. The Store's own update search, the one a PC runs
+    # by itself, brings them to the versions a PC gets today. Done when a search finds nothing more.
+    $r = (Invoke-VmTask 'ScanApps' -timeoutMinutes 150 -script @'
+try {
+    Add-Type -AssemblyName System.Runtime.WindowsRuntime
+    $asTask = [System.WindowsRuntimeSystemExtensions].GetMethods() | Where-Object { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncOperation`1' } | Select-Object -First 1
+    function Wait-Async($operation, [Type]$type) { $task = $asTask.MakeGenericMethod($type).Invoke($null, @($operation)); [void]$task.Wait(-1); $task.Result }
+    [void][Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager, Windows.ApplicationModel.Store.Preview, ContentType = WindowsRuntime]
+    $listType = [System.Collections.Generic.IReadOnlyList[Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallItem]]
+    $manager = New-Object Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager
+    $before = @{}
+    Get-AppxPackage -AllUsers | ForEach-Object { $before[$_.PackageFullName] = $true }
+    $errors = @()
+    for ($round = 1; $round -le 4; $round++) {
+        $items = @(Wait-Async ($manager.SearchForAllUpdatesAsync()) $listType)
+        Write-Log "search ${round}: $($items.Count) updates"
+        if (-not $items.Count) { break }
+        $items | ForEach-Object { Write-Log "  $($_.PackageFamilyName)" }
+        $deadline = (Get-Date).AddMinutes(40)
+        do {
+            Start-Sleep -Seconds 15
+            $states = @($manager.AppInstallItems | ForEach-Object { $s = $_.GetCurrentStatus(); [PSCustomObject]@{ Name = $_.PackageFamilyName; State = "$($s.InstallState)"; Error = $s.ErrorCode } })
+            $busy = @($states | Where-Object { $_.State -notin 'Completed', 'Canceled', 'Error' })
+        } while ($busy.Count -and (Get-Date) -lt $deadline)
+        $states | Where-Object { $_.State -eq 'Error' } | ForEach-Object { $errors += "$($_.Name): $($_.Error)"; Write-Log "error: $($_.Name) $($_.Error)" }
+        if ($busy.Count) { $errors += "still installing after 40 minutes: $(($busy | ForEach-Object { "$($_.Name) ($($_.State))" }) -join ', ')"; break }
+    }
+    $left = @(Wait-Async ($manager.SearchForAllUpdatesAsync()) $listType | ForEach-Object { $_.PackageFamilyName })
+    $new = @(Get-AppxPackage -AllUsers | Where-Object { -not $before[$_.PackageFullName] } | ForEach-Object { $_.PackageFullName })
+    $new | ForEach-Object { Write-Log "installed: $_" }
+    Write-Result (@{ installed = $new; left = $left; errors = $errors } | ConvertTo-Json -Compress)
+} catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
+'@) | ConvertFrom-Json
+    if ($r.error) { throw "Updating the Store apps failed: $($r.error)" }
+    Save-Report 'store-apps.json' @{ installed = @($r.installed); left = @($r.left); errors = @($r.errors) }
+    if ($r.left -or $r.errors) { throw "The Store apps aren't all up to date: $((@($r.left) + @($r.errors)) -join '; ')" }
+    Log "The Store has no app updates left ($(@($r.installed).Count) packages installed)"
+}
+
+function Test-VmInstallation([string[]]$kbs) {
+    # Checks, before the scan, that the VM's Windows is complete for its build. Any failure stops the run, so nothing is recorded.
+    #   1. Windows' servicing: the build's cumulative update is installed, and no update is half installed or waiting for a restart
+    #   2. DISM /ScanHealth: the files in the component store match their manifests, which Microsoft signs
+    #   3. sfc /verifyonly: so do the installed system files
+    #   4. verify-windows-files.py: the installed files against the SHA-256 hashes in Microsoft's file lists for the update (see there)
+    $build = (Get-VmBuild).Split(' ')[0]
+    if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
+    $ubr = [int]$build.Split('.')[1]
+    $servicing = Invoke-InVM -Retry {
+        $packages = @(Get-WindowsPackage -Online)
+        $cbs = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing'
+        @{ Rollups = @($packages | Where-Object { $_.PackageName -like 'Package_for_RollupFix~*' -and "$($_.PackageState)" -eq 'Installed' } | ForEach-Object { $_.PackageName })
+           Unfinished = @($packages | Where-Object { "$($_.PackageState)" -in 'InstallPending', 'UninstallPending', 'PartiallyInstalled' } | ForEach-Object { "$($_.PackageName) ($($_.PackageState))" })
+           RestartPending = (Test-Path "$cbs\RebootPending") -or (Test-Path "$cbs\PackagesPending") -or (Test-Path "$cbs\RebootInProgress")
+           Packages = $packages.Count }
+    }
+    # The cumulative update's package is named after the build it brings, in the shared base build (26100.9818 for 26300.9818)
+    $rollup = @($servicing.Rollups | Where-Object { $_ -match "~~\d+\.$ubr\." })
+    Log "Servicing: $($servicing.Packages) packages; cumulative update package $(if ($rollup) { $rollup[0] } else { 'missing' }); $($servicing.Unfinished.Count) unfinished; restart pending: $($servicing.RestartPending)"
+
+    $health = (Invoke-VmTask 'ScanHealth' -timeoutMinutes 150 -script @'
+try {
+    Write-Log 'DISM /Cleanup-Image /ScanHealth'
+    $dism = @(& dism.exe /English /Online /Cleanup-Image /ScanHealth)
+    $dismCode = $LASTEXITCODE
+    $dism | Where-Object { $_.Trim() } | Select-Object -Last 2 | ForEach-Object { Write-Log $_.Trim() }
+    Write-Log 'sfc /verifyonly'
+    $sfc = ((& sfc.exe /verifyonly) -join "`n") -replace "`0", ''  # sfc writes UTF-16
+    $sfcCode = $LASTEXITCODE
+    $sfc -split "`n" | Where-Object { $_.Trim() } | Select-Object -Last 2 | ForEach-Object { Write-Log $_.Trim() }
+    $sfcOk = $sfc -match 'did not find any integrity violations'
+    $details = if ($sfcOk) { @() } else { @(Select-String -Path C:\Windows\Logs\CBS\CBS.log -Pattern '\[SR\]' | Select-Object -Last 50 | ForEach-Object { $_.Line }) }
+    Write-Result (@{ dism = (($dism -join "`n") -match 'No component store corruption detected'); dismCode = $dismCode; sfc = $sfcOk; sfcCode = $sfcCode; sfcDetails = $details } | ConvertTo-Json -Compress)
+} catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
+'@) | ConvertFrom-Json
+
+    $files = $null
+    if ($kbs) {
+        Copy-ScannerToVM
+        $code = Invoke-VmTask 'ScanFiles' -timeoutMinutes 180 -script (@'
+try {
+    Set-Location C:\scan
+    # Python checks certificates against the Windows certificate store, which fetches the root certificates it lacks only when
+    # Windows itself connects, so connect once from PowerShell
+    foreach ($url in 'https://support.microsoft.com/', 'https://go.microsoft.com/', 'https://download.microsoft.com/') {
+        try { Invoke-WebRequest $url -UseBasicParsing -Method Head -TimeoutSec 60 | Out-Null } catch { }
+    }
+    & C:\scan\python\python.exe verify-windows-files.py __KBS__ --cache-dir C:\scan\kb --out C:\scan\verification-files.json --inventory C:\scan\files.csv.gz 2>&1 | ForEach-Object { Write-Log "$_" }
+    Write-Result $LASTEXITCODE
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@).Replace('__KBS__', (($kbs | ForEach-Object { "--kb $_" }) -join ' '))
+        $s = Get-VmSession
+        foreach ($f in 'verification-files.json', 'files.csv.gz') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force -ErrorAction SilentlyContinue }
+        $files = @{ exitCode = $code; report = 'verification-files.json' }
+    } else {
+        Log 'No update to check the files against (the build has no cumulative update of its own)'
+    }
+
+    Save-Report 'verification.json' @{ build = $build; servicing = $servicing; cumulativeUpdatePackage = $rollup; health = $health; files = $files }
+    $failures = @()
+    if (-not $rollup) { $failures += "no installed cumulative update package for build $build" }
+    if ($servicing.Unfinished) { $failures += "unfinished packages: $($servicing.Unfinished -join ', ')" }
+    if ($servicing.RestartPending) { $failures += 'a restart is pending' }
+    if ($health.error) { $failures += "health checks failed: $($health.error)" }
+    else {
+        if (-not $health.dism) { $failures += "DISM /ScanHealth found problems (exit code $($health.dismCode))" }
+        if (-not $health.sfc) { $failures += "sfc /verifyonly found integrity violations: $($health.sfcDetails -join ' | ')" }
+    }
+    if ($files -and $files.exitCode -ne '0') { $failures += "the file check found problems or failed ($($files.exitCode)); see verification-files.json" }
+    if ($failures) { throw "The VM's Windows isn't what build $build should be: $($failures -join '; ')" }
+    Log "Verified build $build"
+}
+
 # ---------------------------------------------------------------------------
 # Scan inside the VM
 # ---------------------------------------------------------------------------
@@ -517,30 +693,37 @@ function Copy-ToVM([string]$path, [string]$destination) {
     }
 }
 
-function Invoke-ScanInVM([string]$resultsCache) {
-    # The VM gets the runner's Python and the scanner's files; the scan then runs the way the regular workflow runs it on the runner.
-    # Python goes in as one zip with what the scanner needs: the interpreter and the standard library, without tests, Tcl/Tk, IDLE,
-    # installed packages and the like (6,000 files otherwise).
-    $python = Split-Path -Parent (Get-Command python.exe).Source
-    $stage = Join-Path $WorkDir 'python-stage'
-    $zip = Join-Path $WorkDir 'python.zip'
-    Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item $zip -Force -ErrorAction SilentlyContinue
-    & robocopy.exe $python $stage /E /NFL /NDL /NJH /NJS /NP /XD test tests idlelib tkinter turtledemo tcl site-packages ensurepip __pycache__ Doc include libs Scripts | Out-Null
-    if ($LASTEXITCODE -ge 8) { throw "Copying Python failed (robocopy exit code $LASTEXITCODE)" }
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    [IO.Compression.ZipFile]::CreateFromDirectory($stage, $zip)
-    Log ("Copying Python ({0} from {1}, {2:N0} MB zipped) and the scanner into the VM" -f (& "$python\python.exe" --version), $python, ((Get-Item $zip).Length / 1MB))
-    Invoke-InVM -Retry { Remove-Item C:\scan -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force C:\scan | Out-Null }
-    Copy-ToVM $zip 'C:\scan\python.zip'
-    Invoke-InVM {
+function Copy-ScannerToVM {
+    # The VM gets the runner's Python and the scanner's files, for the checks and the scan. Python goes in as one zip with what the
+    # scanner needs: the interpreter and the standard library, without tests, Tcl/Tk, IDLE, installed packages and the like (6,000
+    # files otherwise).
+    if (-not (Invoke-InVM -Retry { Test-Path C:\scan\python\python.exe })) {
+        $python = Split-Path -Parent (Get-Command python.exe).Source
+        $stage = Join-Path $WorkDir 'python-stage'
+        $zip = Join-Path $WorkDir 'python.zip'
+        Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item $zip -Force -ErrorAction SilentlyContinue
+        & robocopy.exe $python $stage /E /NFL /NDL /NJH /NJS /NP /XD test tests idlelib tkinter turtledemo tcl site-packages ensurepip __pycache__ Doc include libs Scripts | Out-Null
+        if ($LASTEXITCODE -ge 8) { throw "Copying Python failed (robocopy exit code $LASTEXITCODE)" }
         Add-Type -AssemblyName System.IO.Compression.FileSystem
-        [IO.Compression.ZipFile]::ExtractToDirectory('C:\scan\python.zip', 'C:\scan\python')
-        Remove-Item C:\scan\python.zip
+        [IO.Compression.ZipFile]::CreateFromDirectory($stage, $zip)
+        Log ("Copying Python ({0} from {1}, {2:N0} MB zipped) into the VM" -f (& "$python\python.exe" --version), $python, ((Get-Item $zip).Length / 1MB))
+        Invoke-InVM -Retry { Remove-Item C:\scan -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force C:\scan | Out-Null }
+        Copy-ToVM $zip 'C:\scan\python.zip'
+        Invoke-InVM {
+            Add-Type -AssemblyName System.IO.Compression.FileSystem
+            [IO.Compression.ZipFile]::ExtractToDirectory('C:\scan\python.zip', 'C:\scan\python')
+            Remove-Item C:\scan\python.zip
+        }
     }
-    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1') {
+    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py') {
         Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
     }
+}
+
+function Invoke-ScanInVM([string]$resultsCache) {
+    # The scan runs the way the regular workflow runs it on the runner
+    Copy-ScannerToVM
     if ($resultsCache -and (Test-Path $resultsCache)) { Copy-ToVM $resultsCache 'C:\scan\symbol-cache.json' }
 
     Log 'Running the scan inside the VM'
@@ -569,9 +752,9 @@ try {
 
 $esd = $null; $updateUrls = $null
 if ($Step -in 'All', 'Image', 'Disk') { $esd = Get-BaseImage }
-if ($Step -in 'All', 'Download', 'Install' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
+if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
-if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
+if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan') {
     Start-ScanVM
     $script:VmSession = Wait-ScanVM
     Set-VmNetwork
@@ -594,6 +777,13 @@ if ($Step -in 'All', 'FeatureUpdate') {
         Set-VmNetwork
     }
     Log "VM build after the feature update: $(Get-VmBuild)"
+}
+if ($Step -in 'All', 'Updates') { Install-OtherUpdates }
+if ($Step -in 'All', 'Apps') { Update-StoreApps }
+if ($Step -in 'All', 'Verify') {
+    # The target update first, then the checkpoint updates the Microsoft Update Catalog lists with it
+    $kbs = @(@(if ($Kb) { $Kb.ToUpper() }) + @($updateUrls | ForEach-Object { if ($_ -match '-(kb\d+)-') { $Matches[1].ToUpper() } }) | Where-Object { $_ } | Select-Object -Unique)
+    Test-VmInstallation $kbs
 }
 if ($Step -in 'All', 'Scan') {
     $build = (Get-VmBuild).Split(' ')[0]

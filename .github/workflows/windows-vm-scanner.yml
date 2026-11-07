@@ -68,6 +68,15 @@ jobs:
           python --version
           .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -OutputDir "$env:GITHUB_WORKSPACE\vm-output"
 
+      # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
+      - name: Upload the reports of the VM's checks
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vm-checks-${{ matrix.build.key }}
+          path: vm-output/
+          if-no-files-found: ignore
+
       - name: Collect the output
         shell: powershell
         run: |
