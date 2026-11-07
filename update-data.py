@@ -119,6 +119,8 @@ def add_build(data_dir, summary_path, symbols_path):
         'scannedAt': summary.get('timestamp'),
         'symbolStats': symbols.get('stats'),
     }
+    if summary.get('notes'):
+        header['notes'] = summary['notes']  # Anything about the scan worth knowing, such as Store apps the VM couldn't update
     ordered = [features[k] for k in sorted(features)]
     os.makedirs(os.path.join(data_dir, 'builds'), exist_ok=True)
     path = os.path.join(data_dir, 'builds', key + '.json')
@@ -246,6 +248,8 @@ def regenerate(data_dir):
             'productName': b.get('productName'), 'displayVersion': b.get('displayVersion'), 'scannedAt': b.get('scannedAt'),
             'features': len(feats), 'named': sum(1 for f in feats if f['name']), 'inStore': sum(1 for f in feats if 'store' in f),
         })
+        if b.get('notes'):
+            index['builds'][-1]['notes'] = b['notes']
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
     first_seen = {}

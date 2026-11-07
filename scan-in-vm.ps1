@@ -521,7 +521,7 @@ function Install-OtherUpdates {
     # change the build (cumulative and feature updates), optional ones (a PC only gets those when someone asks for them), drivers and
     # Defender's definition updates (several a day). Repeats, restarting the VM when an update asks for it, until Windows Update has
     # nothing left to offer.
-    $installed = @(); $kbs = @()
+    $installed = @(); $kbs = @(); $failedTitles = @()
     for ($round = 1; $round -le 5; $round++) {
         $r = (Invoke-VmTask 'ScanUpdates' -timeoutMinutes 120 -script @'
 try {
@@ -562,12 +562,13 @@ try {
 '@) | ConvertFrom-Json
         if ($r.error) { throw "Windows Update failed: $($r.error)" }
         if (-not $r.installed -and -not $r.failed) {
-            Save-Report 'windows-update.json' @{ installed = $installed; kbs = $kbs; leftOut = @($r.leftOut) }
+            Save-Report 'windows-update.json' @{ installed = $installed; kbs = $kbs; leftOut = @($r.leftOut); notInstalled = @() }
             Log "Windows Update has nothing left to install ($($installed.Count) updates installed)"
             return
         }
         $installed += @($r.installed)
         $kbs += @($r.kbs)
+        $failedTitles = @($r.failed)
         if ($r.reboot -or $r.failed) {
             # Also after a failure: a restart can clear what was in its way, and the next round tries again
             if ($r.failed) { Log "Failed: $($r.failed -join '; '); restarting the VM before trying again" }
@@ -575,7 +576,32 @@ try {
             Set-VmNetwork
         }
     }
-    throw "Windows Update still has updates to install after 5 rounds: $((@($r.installed) + @($r.failed)) -join '; ')"
+    # These updates don't decide the build (the cumulative update and the enablement package do, and the checks look at those), so
+    # this doesn't stop the scan; the build's data notes it (Add-ScanNotes)
+    Save-Report 'windows-update.json' @{ installed = $installed; kbs = $kbs; leftOut = @($r.leftOut); notInstalled = $failedTitles }
+    Log "WARNING: Windows Update still has updates it couldn't install after 5 rounds: $($failedTitles -join '; ')"
+}
+
+function Add-ScanNotes {
+    # Notes for the build's data (update-data.py copies them from summary.json): updates the VM couldn't install
+    $notes = @()
+    $store = Join-Path $OutputDir 'store-apps.json'
+    if (Test-Path $store) {
+        $r = Get-Content $store -Raw | ConvertFrom-Json
+        $left = @(@($r.left) + @($r.errors) | Where-Object { $_ })
+        if ($left) { $notes += "Store apps that couldn't be updated, so the scan saw an older version: $($left -join '; ')" }
+    }
+    $wu = Join-Path $OutputDir 'windows-update.json'
+    if (Test-Path $wu) {
+        $r = Get-Content $wu -Raw | ConvertFrom-Json
+        $left = @(@($r.notInstalled) | Where-Object { $_ })
+        if ($left) { $notes += "Updates Windows Update offered that couldn't be installed: $($left -join '; ')" }
+    }
+    if (-not $notes) { return }
+    $summary = Join-Path $OutputDir 'summary.json'
+    $text = (Get-Content $summary -Raw -Encoding UTF8) -replace '^\s*\{', ('{"notes": ' + (ConvertTo-Json @($notes) -Compress).Replace('$', '$$') + ', ')
+    Set-Content $summary $text -Encoding UTF8
+    $notes | ForEach-Object { Log "Note for the build's data: $_" }
 }
 
 function Update-StoreApps {
@@ -690,7 +716,8 @@ try {
             Set-VmNetwork
         }
     }
-    throw "The Store apps aren't all up to date, even after a restart: $((@($r.left) + @($r.errors)) -join '; ')"
+    # Apps don't decide the build, so this doesn't stop the scan; the build's data notes it (Add-ScanNotes)
+    Log "WARNING: the Store apps aren't all up to date, even after a restart: $((@($r.left) + @($r.errors)) -join '; ')"
 }
 
 function Test-VmInstallation([string[]]$kbs) {
@@ -855,6 +882,7 @@ try {
     Copy-Item -FromSession $s -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
     foreach ($f in 'symbol-features.json', 'extracted-names.txt') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force }
     if ($resultsCache) { Copy-Item -FromSession $s -Path C:\scan\symbol-cache.json -Destination $resultsCache -Force }
+    Add-ScanNotes
 }
 
 # ---------------------------------------------------------------------------
