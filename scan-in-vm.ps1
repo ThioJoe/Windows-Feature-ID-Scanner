@@ -263,9 +263,44 @@ function Wait-ScanVM([int]$timeoutMinutes = 40) {
     throw "The VM didn't come up within $timeoutMinutes minutes"
 }
 
-function Set-VmNetwork($session) {
+$script:VmSession = $null
+
+function Get-VmSession {
+    # The PowerShell Direct session to the VM, reconnected when it broke: installing an update can restart the VM's side of
+    # PowerShell Direct (one of its integration services), which ends the session
+    $s = $script:VmSession
+    if ($s -and $s.State -eq 'Opened') { return $s }
+    if ($s) {
+        Log "Reconnecting to the VM (the session is $($s.State))"
+        Remove-PSSession $s -ErrorAction SilentlyContinue
+    }
+    $script:VmSession = Wait-ScanVM 30
+    return $script:VmSession
+}
+
+function Close-VmSession {
+    if ($script:VmSession) { Remove-PSSession $script:VmSession -ErrorAction SilentlyContinue }
+    $script:VmSession = $null
+}
+
+function Invoke-InVM([scriptblock]$block, [object[]]$arguments = @(), [switch]$Retry) {
+    # Runs a script block in the VM. With -Retry, for blocks that can safely run twice, a session that breaks meanwhile is reconnected
+    # and the block run again; an error from the block itself is never retried.
+    for ($attempt = 1; ; $attempt++) {
+        $s = Get-VmSession
+        try {
+            return Invoke-Command -Session $s -ScriptBlock $block -ArgumentList $arguments -ErrorAction Stop
+        } catch {
+            if (-not $Retry -or $s.State -eq 'Opened' -or $attempt -ge 6) { throw }
+            Log "Lost the PowerShell Direct session ($($_.Exception.Message.Trim())); trying again"
+            Start-Sleep -Seconds 20
+        }
+    }
+}
+
+function Set-VmNetwork {
     $dns = @((Get-DnsClientServerAddress -AddressFamily IPv4 | Where-Object { $_.InterfaceAlias -notlike '*ScanNAT*' -and $_.ServerAddresses }).ServerAddresses | Select-Object -Unique) + '1.1.1.1'
-    Invoke-Command -Session $session -ArgumentList $NatPrefix, $dns -ScriptBlock {
+    Invoke-InVM -Retry -arguments $NatPrefix, $dns {
         param($prefix, $dns)
         $adapter = Get-NetAdapter | Where-Object Status -eq 'Up' | Select-Object -First 1
         if (-not (Get-NetIPAddress -IPAddress "$prefix.10" -ErrorAction SilentlyContinue)) {
@@ -282,33 +317,33 @@ function Set-VmNetwork($session) {
     } | ForEach-Object { Log $_ }
 }
 
-function Get-VmBuild($session) {
-    Invoke-Command -Session $session -ScriptBlock {
+function Get-VmBuild {
+    Invoke-InVM -Retry {
         $r = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
         "$($r.CurrentBuildNumber).$($r.UBR) $($r.DisplayVersion) $($r.EditionID)"
     }
 }
 
-function Restart-ScanVM($session) {
-    # Restarted from inside, so Windows finishes installing updates the way it does on any PC; returns a session to the restarted VM
+function Restart-ScanVM {
+    # Restarted from inside, so Windows finishes installing updates the way it does on any PC
     Log 'Restarting the VM'
-    $before = Invoke-Command -Session $session -ScriptBlock { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
-    try { Invoke-Command -Session $session -ScriptBlock { Restart-Computer -Force } } catch { }
-    Remove-PSSession $session -ErrorAction SilentlyContinue
+    $before = Invoke-InVM -Retry { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
+    try { Invoke-InVM { Restart-Computer -Force } } catch { }
+    Close-VmSession
     $deadline = (Get-Date).AddMinutes(60)
     while ((Get-Date) -lt $deadline) {
         Start-Sleep -Seconds 30
-        $s = Wait-ScanVM 60
         try {
-            $boot = Invoke-Command -Session $s -ScriptBlock { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
-            if ($boot -gt $before) { return $s }
+            # Until the VM has shut down, this can still reach the instance from before the restart
+            $boot = Invoke-InVM { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
+            if ($boot -gt $before) { return }
         } catch { }
-        Remove-PSSession $s -ErrorAction SilentlyContinue
+        Close-VmSession
     }
     throw "The VM didn't restart within 60 minutes"
 }
 
-function Invoke-VmTask($session, [string]$name, [string]$script, [int]$timeoutMinutes = 60) {
+function Invoke-VmTask([string]$name, [string]$script, [int]$timeoutMinutes = 60) {
     # Runs a script inside the VM as a SYSTEM scheduled task, shows its log as it grows, and returns what it passed to Write-Result.
     # Windows Update refuses to download or install from a remote session (PowerShell Direct is one), and long installs and the scan
     # are better off not depending on one either. The script gets two functions: Write-Log (a line in its log) and Write-Result.
@@ -319,7 +354,7 @@ function Write-Log([string]$line) {
 }
 function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 'C:\scan-tasks\__NAME__.result' $value }
 '@.Replace('__NAME__', $name)
-    Invoke-Command -Session $session -ArgumentList $name, ($preamble + "`r`n" + $script) -ScriptBlock {
+    Invoke-InVM -arguments $name, ($preamble + "`r`n" + $script) {
         param($name, $script)
         New-Item -ItemType Directory -Force C:\scan-tasks | Out-Null
         Set-Content "C:\scan-tasks\$name.ps1" $script
@@ -332,7 +367,7 @@ function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 
     $shown = 0
     while ((Get-Date) -lt $deadline) {
         Start-Sleep -Seconds 30
-        $state = Invoke-Command -Session $session -ArgumentList $name -ScriptBlock {
+        $state = Invoke-InVM -Retry -arguments $name {
             param($name)
             $done = Test-Path "C:\scan-tasks\$name.result"
             @{ Log = @(Get-Content "C:\scan-tasks\$name.log" -ErrorAction SilentlyContinue)
@@ -348,11 +383,11 @@ function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 
     throw "$name didn't finish within $timeoutMinutes minutes"
 }
 
-function Install-CumulativeUpdate($session, [string[]]$urls) {
+function Install-CumulativeUpdate([string[]]$urls) {
     # The VM downloads the update's files from Microsoft itself (copying them in through PowerShell Direct is much slower). DISM checks
     # their signatures, and installs the checkpoint updates in the folder before the update that needs them, the way Microsoft
     # documents for these updates.
-    $result = Invoke-VmTask $session 'ScanLCU' -timeoutMinutes 150 -script (@'
+    $result = Invoke-VmTask 'ScanLCU' -timeoutMinutes 150 -script (@'
 New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
 foreach ($url in @(__URLS__)) {
     $name = [IO.Path]::GetFileName(([uri]$url).AbsolutePath)
@@ -366,12 +401,12 @@ Write-Log 'installing the cumulative update with DISM'
 Write-Result $LASTEXITCODE
 '@).Replace('__URLS__', (($urls | ForEach-Object { "'$_'" }) -join ', '))
     if ($result -notin '0', '3010') { throw "Installing the cumulative update failed: $result" }  # 3010: done, restart needed
-    Invoke-Command -Session $session -ScriptBlock { Remove-Item C:\scan-updates -Recurse -Force }
+    Invoke-InVM -Retry { Remove-Item C:\scan-updates -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
-function Install-TargetVersion($session) {
+function Install-TargetVersion {
     # Windows Update's target release version policy makes it offer that version's enablement package as the feature update
-    Invoke-Command -Session $session -ArgumentList $Version -ScriptBlock {
+    Invoke-InVM -Retry -arguments $Version {
         param($version)
         $policy = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
         New-Item -Path $policy -Force | Out-Null
@@ -379,7 +414,7 @@ function Install-TargetVersion($session) {
         Set-ItemProperty $policy -Name TargetReleaseVersion -Value 1 -Type DWord
         Set-ItemProperty $policy -Name TargetReleaseVersionInfo -Value $version
     }
-    $result = Invoke-VmTask $session 'ScanWU' -timeoutMinutes 60 -script (@'
+    $result = Invoke-VmTask 'ScanWU' -timeoutMinutes 60 -script (@'
 Write-Log 'searching Windows Update'
 try {
     $session = New-Object -ComObject Microsoft.Update.Session
@@ -407,17 +442,17 @@ try {
 # Scan inside the VM
 # ---------------------------------------------------------------------------
 
-function Copy-ToVM($session, [string]$path, [string]$destination) {
+function Copy-ToVM([string]$path, [string]$destination) {
     # Copy-VMFile goes through the VM's guest service interface, which is much faster than a PowerShell Direct session (about 3 MB/s)
     try {
         Copy-VMFile -Name $VmName -SourcePath $path -DestinationPath $destination -CreateFullPath -FileSource Host -Force
     } catch {
         Log "Copy-VMFile failed ($($_.Exception.Message)); copying through PowerShell Direct instead"
-        Copy-Item -ToSession $session -Path $path -Destination $destination -Force
+        Copy-Item -ToSession (Get-VmSession) -Path $path -Destination $destination -Force
     }
 }
 
-function Invoke-ScanInVM($session, [string]$resultsCache) {
+function Invoke-ScanInVM([string]$resultsCache) {
     # The VM gets the runner's Python and the scanner's files; the scan then runs the way the regular workflow runs it on the runner.
     # Python goes in as one zip with what the scanner needs: the interpreter and the standard library, without tests, Tcl/Tk, IDLE,
     # installed packages and the like (6,000 files otherwise).
@@ -431,20 +466,20 @@ function Invoke-ScanInVM($session, [string]$resultsCache) {
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     [IO.Compression.ZipFile]::CreateFromDirectory($stage, $zip)
     Log ("Copying Python ({0} from {1}, {2:N0} MB zipped) and the scanner into the VM" -f (& "$python\python.exe" --version), $python, ((Get-Item $zip).Length / 1MB))
-    Invoke-Command -Session $session -ScriptBlock { Remove-Item C:\scan -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force C:\scan | Out-Null }
-    Copy-ToVM $session $zip 'C:\scan\python.zip'
-    Invoke-Command -Session $session -ScriptBlock {
+    Invoke-InVM -Retry { Remove-Item C:\scan -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force C:\scan | Out-Null }
+    Copy-ToVM $zip 'C:\scan\python.zip'
+    Invoke-InVM {
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         [IO.Compression.ZipFile]::ExtractToDirectory('C:\scan\python.zip', 'C:\scan\python')
         Remove-Item C:\scan\python.zip
     }
     foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1') {
-        Copy-Item -ToSession $session -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
+        Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
     }
-    if ($resultsCache -and (Test-Path $resultsCache)) { Copy-ToVM $session $resultsCache 'C:\scan\symbol-cache.json' }
+    if ($resultsCache -and (Test-Path $resultsCache)) { Copy-ToVM $resultsCache 'C:\scan\symbol-cache.json' }
 
     Log 'Running the scan inside the VM'
-    $result = Invoke-VmTask $session 'ScanFeatures' -timeoutMinutes 240 -script @'
+    $result = Invoke-VmTask 'ScanFeatures' -timeoutMinutes 240 -script @'
 try {
     Set-Location C:\scan
     $env:PATH = "C:\scan\python;C:\scan\python\Scripts;$env:PATH"
@@ -459,9 +494,10 @@ try {
     if ($result -ne 'ok') { throw "The scan inside the VM failed: $result" }
 
     Log "Copying the results to $OutputDir"
-    Copy-Item -FromSession $session -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
-    foreach ($f in 'symbol-features.json', 'extracted-names.txt') { Copy-Item -FromSession $session -Path "C:\scan\$f" -Destination $OutputDir -Force }
-    if ($resultsCache) { Copy-Item -FromSession $session -Path C:\scan\symbol-cache.json -Destination $resultsCache -Force }
+    $s = Get-VmSession
+    Copy-Item -FromSession $s -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
+    foreach ($f in 'symbol-features.json', 'extracted-names.txt') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force }
+    if ($resultsCache) { Copy-Item -FromSession $s -Path C:\scan\symbol-cache.json -Destination $resultsCache -Force }
 }
 
 # ---------------------------------------------------------------------------
@@ -472,26 +508,26 @@ if ($Step -in 'All', 'Download', 'Install' -and $Kb) { $updateUrls = Get-Cumulat
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
 if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Scan') {
     Start-ScanVM
-    $session = Wait-ScanVM
-    Set-VmNetwork $session
-    Log "VM build: $(Get-VmBuild $session)"
+    $script:VmSession = Wait-ScanVM
+    Set-VmNetwork
+    Log "VM build: $(Get-VmBuild)"
 }
 if ($Step -in 'All', 'Install' -and $updateUrls) {
-    Install-CumulativeUpdate $session $updateUrls
-    $session = Restart-ScanVM $session
-    Set-VmNetwork $session
-    Log "VM build after the cumulative update: $(Get-VmBuild $session)"
+    Install-CumulativeUpdate $updateUrls
+    Restart-ScanVM
+    Set-VmNetwork
+    Log "VM build after the cumulative update: $(Get-VmBuild)"
 }
 if ($Step -in 'All', 'FeatureUpdate') {
-    if (Install-TargetVersion $session) {
-        $session = Restart-ScanVM $session
-        Set-VmNetwork $session
+    if (Install-TargetVersion) {
+        Restart-ScanVM
+        Set-VmNetwork
     }
-    Log "VM build after the feature update: $(Get-VmBuild $session)"
+    Log "VM build after the feature update: $(Get-VmBuild)"
 }
 if ($Step -in 'All', 'Scan') {
-    $build = (Get-VmBuild $session).Split(' ')[0]
+    $build = (Get-VmBuild).Split(' ')[0]
     if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
-    Invoke-ScanInVM $session (Join-Path $RepoDir 'data\symbol-cache-AMD64.json')
+    Invoke-ScanInVM (Join-Path $RepoDir 'data\symbol-cache-AMD64.json')
 }
 Log "Done: $Step"
