@@ -9,7 +9,9 @@
 #   <out>/super-god-mode.json        The builds that have Super God Mode statistics (their super-god-mode/ folder), with the version,
 #                                    user and any error from its run.json.
 #   <out>/super-god-mode/<build>.json The statistics of each of those builds: the columns and rows of each of its CSV files, so that
-#                                    comparing two builds loads two files.
+#                                    comparing two builds loads two files. Also the entries of the Settings app's search index
+#                                    (Settings_XML_Resolved.xml) as a table, Settings_Index: what each entry says, where it leads,
+#                                    and the feature that shows or hides it.
 #
 #   python build-site-data.py --data data --out _site/derived
 
@@ -18,12 +20,37 @@ import csv
 import json
 import os
 import sys
+import xml.etree.ElementTree as ET
 
 SHARDS = 64
 
 
 def version_tuple(build):
     return tuple(int(p) for p in build.split('.'))
+
+
+SETTINGS_COLUMNS = ['Entry', 'Description', 'Page', 'Group', 'Setting', 'Shown with feature', 'Hidden with feature', 'Condition',
+                    'Deep link', 'Host', 'Policy IDs', 'High keywords', 'Keywords']
+
+
+def settings_index(path):
+    # One row per SearchableContent element. An entry can have several paths (pages, groups, settings); their values are joined.
+    def joined(el, xpath):
+        values = []
+        for e in el.findall(xpath):
+            for v in (e.text or '').split(';'):
+                if v.strip() and v.strip() not in values:
+                    values.append(v.strip())
+        return '; '.join(values)
+    rows = []
+    for el in ET.parse(path).getroot().iter('SearchableContent'):
+        rows.append([el.findtext('Filename') or '', el.findtext('SettingInformation/Description') or '',
+                     joined(el, 'SettingIdentity//PageID'), joined(el, 'SettingIdentity//GroupID'), joined(el, 'SettingIdentity//SettingID'),
+                     el.get('IncludeWithFeature', ''), el.get('ExcludeWithFeature', ''), joined(el, 'SettingIdentity/Condition'),
+                     el.findtext('ApplicationInformation/DeepLink') or '', el.findtext('SettingIdentity/HostID') or '',
+                     joined(el, 'SettingIdentity//PolicyIds'), el.findtext('SettingInformation/HighKeywords') or '',
+                     el.findtext('SettingInformation/Keywords') or ''])
+    return {'columns': SETTINGS_COLUMNS, 'rows': rows}
 
 
 def super_god_mode(builds_dir, out):
@@ -41,6 +68,8 @@ def super_god_mode(builds_dir, out):
                     rows = [r for r in csv.reader(f) if any(r)]
                 if rows:
                     tables[name[:-4]] = {'columns': [c.strip() for c in rows[0]], 'rows': rows[1:]}
+        if tables and os.path.exists(os.path.join(folder, 'Settings_XML_Resolved.xml')):
+            tables['Settings_Index'] = settings_index(os.path.join(folder, 'Settings_XML_Resolved.xml'))
         found[key] = {k: run[k] for k in ('version', 'user', 'error') if run.get(k)}
         if tables:
             os.makedirs(os.path.join(out, 'super-god-mode'), exist_ok=True)

@@ -306,7 +306,14 @@ function firstSeenText(arch, id) {
 
 function storeText(store) {
   if (!store) return '';
-  return store.map((c) => [c.state, c.priority, c.type, c.variant ? 'variant ' + c.variant : ''].filter(Boolean).join(', ')).join('; ');
+  return store.map((c) => [c.state, c.priority, c.type, c.variant ? 'variant ' + c.variant : '', c.payload ? payloadText(c) : ''].filter(Boolean).join(', ')).join('; ');
+}
+
+// A variant's payload (a value configured with it), also in decimal; its kind only when it isn't the usual Resident (stored in the
+// configuration itself)
+function payloadText(c) {
+  const n = parseInt(c.payload, 16);
+  return `payload ${c.payload}${n >= 10 ? ' (' + fmt(n) + ')' : ''}${c.payloadKind && !/^Resident\b/.test(c.payloadKind) ? ', ' + c.payloadKind : ''}`;
 }
 
 const stateText = (f) => [DEFAULTS[f.default], CHANGE_SHORT[f.changeTime]].filter(Boolean).join(', ');
@@ -357,7 +364,8 @@ function renderTable(container, rows, columns, defaultSort, detail) {
     }));
     const more = wrap.querySelector('.more');
     if (more) more.addEventListener('click', () => { shown += PAGE * 4; draw(); });
-    if (detail) wrap.querySelectorAll('tr.clickable').forEach((tr) => tr.addEventListener('click', () => {
+    if (detail) wrap.querySelectorAll('tr.clickable').forEach((tr) => tr.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;  // A link in the row (a feature) goes where it leads instead
       const next = tr.nextElementSibling;
       if (next && next.classList.contains('detail')) { next.remove(); return; }
       const d = document.createElement('tr');
@@ -408,6 +416,7 @@ function featureDetail(build) {
   return async (row) => {
     const f = byId.get(row.id) || row;
     const parts = [];
+    if (NAME_SOURCES[f.nameSource]) parts.push(`<p class="muted">${esc(NAME_SOURCES[f.nameSource][1])}.</p>`);
     if (f.default || f.changeTime) {
       const def = f.default ? DEFAULTS[f.default] + (f.default.startsWith('always') ? '' : ' by default') : '';
       const when = f.changeTime ? 'changes take effect ' + CHANGE_TIMES[f.changeTime] : '';
@@ -427,7 +436,14 @@ function featureDetail(build) {
   };
 }
 
+// Names that don't come from the build's own symbols: [label, explanation]
+const NAME_SOURCES = {
+  vivetool: ['name from ViVeTool', "This build's symbols don't name this feature; the name is from ViVeTool's dictionary"],
+  earlierBuild: ['name from an earlier build', "This build's symbols don't name this feature; the name is from an earlier build's symbols"],
+};
+
 const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</span>') +
+  (NAME_SOURCES[f.nameSource] ? ` <span class="src" title="${esc(NAME_SOURCES[f.nameSource][1])}">${esc(NAME_SOURCES[f.nameSource][0])}</span>` : '') +
   (f.viveToolName ? ` <span class="muted" title="ViVeTool's dictionary names this feature differently from the symbols">(ViVeTool: ${esc(f.viveToolName)})</span>` : '') +
   (f.unverified ? ' <span class="unverified" title="This build\'s symbols for its binary couldn\'t be downloaded; known from an earlier version of the binary">unverified</span>' : '');
 const modsText = (f) => (f.modules || []).join(', ');
@@ -436,13 +452,30 @@ const modsText = (f) => (f.modules || []).join(', ');
 // Super God Mode
 // ---------------------------------------------------------------------------
 
+// The feature that shows or hides an entry of the Settings app's search index, linked to that feature when the build has one with its
+// ID or name. A column computed from the columns in from.
+const SETTINGS_GATE = {
+  title: 'Feature',
+  from: ['Shown with feature', 'Hidden with feature'],
+  text: (e) => (e['Shown with feature'] ? 'shown with ' + e['Shown with feature'] : e['Hidden with feature'] ? 'hidden with ' + e['Hidden with feature'] : ''),
+  html: (e, build) => {
+    const name = e['Shown with feature'] || e['Hidden with feature'];
+    if (!name) return '';
+    const id = findFeature(build, name);
+    return (e['Shown with feature'] ? 'shown with ' : 'hidden with ') + (id === undefined ? esc(name)
+      : `<a href="#" class="feat-link" data-id="${id}" data-build="${esc(build.key)}" title="Feature ${id} in ${esc(build.key)}">${esc(name)}</a>`);
+  },
+};
+
 // The statistics files of Super God Mode (https://github.com/ThioJoe/Windows-Super-God-Mode), with the columns that identify an entry
-// (key) and the columns its table shows (show). A difference in any of an entry's columns counts as a change.
+// (key) and the columns its table shows (show: column names, or computed columns). A difference in any column counts as a change.
+// Settings_Index is the Settings app's search index (Settings_XML_Resolved.xml), which build-site-data.py turns into a table.
 const SGM_TABLES = [
   { file: 'CLSID_Shell_Folders', title: 'Shell folders (CLSIDs)', key: ['CLSID'], show: ['CLSID', 'Name', 'NameSource'] },
   { file: 'Named_Shell_Folders', title: 'Named special folders', key: ['Name'], show: ['Name', 'RelativePath', 'ParentFolder'] },
   { file: 'Task_Links', title: 'Control Panel tasks', key: ['XMLTaskId'], show: ['Name', 'ApplicationName', 'Command'] },
   { file: 'MS_Settings', title: 'Settings pages', key: ['Full Setting Command'], show: ['Full Setting Command'] },
+  { file: 'Settings_Index', title: 'Settings search entries', key: ['Entry'], show: ['Description', 'Page', SETTINGS_GATE] },
   { file: 'Deep_Links', title: 'Deep links', key: ['Description', 'Full Command'], show: ['Description', 'Full Command'] },
   { file: 'URL_Protocols', title: 'URL protocols', key: ['Protocol'], show: ['Protocol', 'Name', 'Package AppName'] },
   { file: 'Hidden_App_Links', title: 'Hidden app links', key: ['Full URL'], show: ['Full URL', 'Found in File'] },
@@ -455,6 +488,20 @@ const comparable = (s) => s.replace(/_\d+(?:\.\d+)+_(?:x64|x86|arm64|arm|neutral
 
 let sgmIndex = null;  // derived/super-god-mode.json: the builds that have statistics
 const sgmCache = new Map();
+const featureNames = new WeakMap();
+
+// The ID of the feature of a build with this ID or name (or ViVeTool name), if it has one
+function findFeature(build, name) {
+  if (!featureNames.has(build)) {
+    const m = new Map();
+    for (const f of build.features) {
+      m.set(String(f.id), f.id);
+      for (const n of [f.name, f.viveToolName]) if (n && !m.has(n.toLowerCase())) m.set(n.toLowerCase(), f.id);
+    }
+    featureNames.set(build, m);
+  }
+  return featureNames.get(build).get(name.toLowerCase());
+}
 
 function loadSgm(key) {
   if (!sgmCache.has(key)) sgmCache.set(key, getJson('super-god-mode/' + encodeURIComponent(key) + '.json', DERIVED));
@@ -483,10 +530,14 @@ function sgmDiff(t, oldTable, newTable) {
   return { rows, count: n.size };
 }
 
+// A changed value: what it was, and what it is
+const NONE = '<span class="muted">(none)</span>';
+const changeHtml = (before, after) => `${before ? `<del>${before}</del>` : NONE} → ${after || NONE}`;
+
 // A column's value in an entry; a changed value shows what it was
 function sgmValue(r, c) {
   const v = r.row[c] || '';
-  return r.change === 'changed' && r.cols.includes(c) ? `<del>${esc(r.old[c] || '')}</del> → ${esc(v)}` : esc(v);
+  return r.change === 'changed' && r.cols.includes(c) ? changeHtml(esc(r.old[c] || ''), esc(v)) : esc(v);
 }
 
 const sgmDetail = async (r) => '<div class="sgm-entry">' + Object.keys(r.row).map((c) =>
@@ -521,9 +572,24 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
     'in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
     'app updates.' + (runs[0].user !== runs[1].user ? ` These two runs were on different PCs (as ${esc(runs[0].user)} and ${esc(runs[1].user)}), ` +
     'which have different apps.' : ''));
-  const same = [];
+  const same = [], absent = [];
+  // A column of a statistics file, or a computed one (SETTINGS_GATE), whose links lead into the build the entry is from
+  const column = (c, i) => (typeof c === 'string'
+    ? { title: c, value: (r) => r.row[c], html: (r) => sgmValue(r, c), cls: i ? 'sgm' : 'name' }
+    : {
+      title: c.title, value: (r) => c.text(r.row), cls: 'sgm',
+      html: (r) => {
+        const now = c.html(r.row, r.change === 'removed' ? a : b);
+        return r.change === 'changed' && c.from.some((x) => r.cols.includes(x)) ? changeHtml(esc(c.text(r.old)), now) : now;
+      },
+    });
   for (const t of SGM_TABLES) {
-    const { rows, count } = sgmDiff(t, data[0].tables[t.file], data[1].tables[t.file]);
+    const tables = [data[0].tables[t.file], data[1].tables[t.file]];
+    if (!tables[0] || !tables[1]) {
+      if (tables[0] || tables[1]) absent.push(esc(t.title));
+      continue;
+    }
+    const { rows, count } = sgmDiff(t, tables[0], tables[1]);
     if (!rows.length) { same.push(`${esc(t.title)} (${fmt(count)})`); continue; }
     const filtered = rows.filter((r) => !q || [r.row, r.old || {}].some((e) => Object.values(e).some((v) => v.toLowerCase().includes(q))));
     const counts = Object.keys(SGM_ORDER).map((c) => [c, filtered.filter((r) => r.change === c).length]).filter(([, n]) => n)
@@ -534,11 +600,12 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
     if (filtered.length) {
       renderTable(sec, filtered, [
         { title: 'Change', value: (r) => r.change, sortKey: (r) => SGM_ORDER[r.change], html: (r) => `<span class="chg ${r.change}">${r.change}</span>` },
-        ...t.show.map((c, i) => ({ title: c, value: (r) => r.row[c], html: (r) => sgmValue(r, c), cls: i ? 'sgm' : 'name' })),
+        ...t.show.map(column),
       ], undefined, sgmDetail);
     }
   }
   if (same.length) note('No differences in ' + same.join(', ') + '.');
+  if (absent.length) note(`Only one of the two builds' statistics has ${absent.join(', ')}.`);
 }
 
 // ---------------------------------------------------------------------------
