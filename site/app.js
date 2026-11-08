@@ -19,6 +19,39 @@ const detailTextCache = new Map();
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmt = (n) => Number(n).toLocaleString('en-US');
+
+// What the site calls the architectures of the data (PROCESSOR_ARCHITECTURE values)
+const ARCH_NAMES = { AMD64: 'x64' };
+const archName = (a) => ARCH_NAMES[a] || a;
+
+// Sections the user collapsed, kept in the browser so they stay collapsed after a reload (where storage works)
+const collapsed = new Set((() => {
+  try { return JSON.parse(localStorage.getItem('collapsed') || '[]'); } catch (e) { return []; }
+})());
+function setCollapsed(id, value) {
+  if (value) collapsed.add(id); else collapsed.delete(id);
+  try { localStorage.setItem('collapsed', JSON.stringify([...collapsed])); } catch (e) { /* storage blocked */ }
+}
+
+// A heading whose content can be collapsed (a <details>); returns the element to put the content in. Without content, only the heading.
+function section(container, id, level, cls, headingHtml, hasContent = true) {
+  const heading = `<${level} class="${cls}">${headingHtml}</${level}>`;
+  if (!hasContent) {
+    const h = document.createElement('div');
+    h.className = 'section-head';
+    h.innerHTML = heading;
+    container.appendChild(h);
+    return h;
+  }
+  const d = document.createElement('details');
+  d.className = 'section';
+  d.open = !collapsed.has(id);
+  d.innerHTML = `<summary class="section-head">${heading}</summary>`;
+  d.addEventListener('toggle', () => setCollapsed(id, !d.open));
+  container.appendChild(d);
+  return d;
+}
 
 async function getJson(path, root = DATA) {
   const res = await fetch(root + path, { cache: 'no-cache' });
@@ -74,30 +107,190 @@ function compareVersions(a, b) {
 const versionText = (b) => (b.insiderChannel ? `Insider ${b.insiderChannel}` : b.displayVersion);
 
 function buildLabel(b) {
-  return `${b.build} ${b.architecture}${versionText(b) ? ' (' + versionText(b) + ')' : ''}`;
+  return `${b.build} ${archName(b.architecture)}${versionText(b) ? ' (' + versionText(b) + ')' : ''}`;
 }
 
-// Builds grouped by architecture and display version (e.g. 25H2) or Insider channel, newest first
-function fillBuildSelect(select, selectedKey) {
-  const groups = new Map();
-  [...index.builds].sort((a, b) => compareVersions(b, a)).forEach((b) => {
-    const g = `${b.architecture} — ${versionText(b) || 'unknown version'}`;
+// ---------------------------------------------------------------------------
+// Build picker
+// ---------------------------------------------------------------------------
+
+// Used like a <select> (a value, and a change event when the user picks something), but its list can have sections within sections,
+// which a select can't: setSections([{ label, note, groups: [{ label, items: [{ value, text, tag, meta, label }] }] }]), where text is
+// what typing jumps to and label the HTML the button shows. The list works like a listbox: arrow keys, Home/End, Page Up/Down, Enter or
+// Space to pick, Escape to close, and typing the start of a build number.
+class BuildPicker extends HTMLElement {
+  connectedCallback() {
+    if (this.button) return;
+    this.items = [];
+    this.current = '';
+    this.typed = '';
+    this.innerHTML = `<button type="button" class="picker-button" aria-haspopup="listbox" aria-expanded="false" aria-controls="${this.id}-list">` +
+      `<span class="picker-value" id="${this.id}-value"></span><span class="picker-chevron" aria-hidden="true"></span></button>` +
+      `<div class="picker-list" id="${this.id}-list" role="listbox" tabindex="-1" hidden></div>`;
+    this.button = this.firstElementChild;
+    this.list = this.lastElementChild;
+    if (this.dataset.label) {
+      this.button.setAttribute('aria-labelledby', `${this.dataset.label} ${this.id}-value`);
+      this.list.setAttribute('aria-labelledby', this.dataset.label);
+    }
+    this.button.addEventListener('click', () => (this.list.hidden ? this.open() : this.close(true)));
+    this.button.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); this.open(); }
+    });
+    this.list.addEventListener('keydown', (e) => this.onKey(e));
+    this.list.addEventListener('click', (e) => {
+      const o = e.target.closest('[role=option]');
+      if (o) this.pick(o.dataset.value);
+    });
+    this.list.addEventListener('mousemove', (e) => {
+      const o = e.target.closest('[role=option]');
+      if (o && o !== this.active) this.setActive(o, 'none');
+    });
+    // Closes when focus moves elsewhere (Tab, a click outside), or on a tap outside, which doesn't move focus on every phone
+    this.addEventListener('focusout', (e) => { if (!this.contains(e.relatedTarget)) this.close(false); });
+    document.addEventListener('pointerdown', (e) => { if (!this.contains(e.target)) this.close(false); });
+  }
+
+  get value() { return this.current; }
+
+  set value(v) {
+    const item = this.items.find((x) => x.value === v);
+    this.current = item ? v : '';
+    this.button.querySelector('.picker-value').innerHTML = item ? item.label : '';
+    for (const o of this.list.querySelectorAll('[role=option]')) o.setAttribute('aria-selected', String(o.dataset.value === this.current));
+  }
+
+  setSections(sections) {
+    this.items = [];
+    let html = '';
+    for (const s of sections) {
+      html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
+      for (const g of s.groups) {
+        html += `<div role="group" aria-label="${esc(s.label + ' ' + g.label)}"><div class="picker-group-label" aria-hidden="true">${esc(g.label)}</div>`;
+        for (const it of g.items) {
+          html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
+            `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
+            `${it.tag ? `<span class="picker-tag">${esc(it.tag)}</span>` : ''}<span class="picker-meta">${esc(it.meta || '')}</span></div>`;
+          this.items.push(it);
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    this.list.innerHTML = html;
+    this.active = null;
+    this.value = this.items.some((x) => x.value === this.current) ? this.current : (this.items.length ? this.items[0].value : '');
+  }
+
+  option(value) {
+    return [...this.list.querySelectorAll('[role=option]')].find((o) => o.dataset.value === value);
+  }
+
+  open() {
+    if (!this.list.hidden || !this.items.length) return;
+    this.list.hidden = false;
+    this.button.setAttribute('aria-expanded', 'true');
+    // The list can be wider than the button: keep it inside the window
+    this.list.style.left = '0px';
+    const room = document.documentElement.clientWidth - 8, left = this.getBoundingClientRect().left, width = this.list.offsetWidth;
+    if (left + width > room) this.list.style.left = Math.max(8 - left, room - width - left) + 'px';
+    this.setActive(this.option(this.current) || this.list.querySelector('[role=option]'), 'center');
+    this.list.focus({ preventScroll: true });
+  }
+
+  close(focusButton) {
+    if (this.list.hidden) return;
+    this.list.hidden = true;
+    this.button.setAttribute('aria-expanded', 'false');
+    if (focusButton) this.button.focus();
+  }
+
+  pick(value) {
+    this.close(true);
+    if (value === this.current) return;
+    this.value = value;
+    this.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  // scroll: 'center' (on opening), 'nearest' (keys) or 'none' (the mouse)
+  setActive(o, scroll = 'nearest') {
+    if (!o) return;
+    if (this.active) this.active.classList.remove('active');
+    this.active = o;
+    o.classList.add('active');
+    this.list.setAttribute('aria-activedescendant', o.id);
+    if (scroll === 'center') this.list.scrollTop = o.offsetTop - (this.list.clientHeight - o.offsetHeight) / 2;
+    else if (scroll === 'nearest') o.scrollIntoView({ block: 'nearest' });
+  }
+
+  onKey(e) {
+    const opts = [...this.list.querySelectorAll('[role=option]')];
+    const i = opts.indexOf(this.active);
+    const go = (n) => { e.preventDefault(); this.setActive(opts[Math.max(0, Math.min(opts.length - 1, n))]); };
+    switch (e.key) {
+      case 'ArrowDown': return go(i + 1);
+      case 'ArrowUp': return go(i - 1);
+      case 'Home': return go(0);
+      case 'End': return go(opts.length - 1);
+      case 'PageDown': return go(i + 10);
+      case 'PageUp': return go(i - 10);
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        if (this.active) this.pick(this.active.dataset.value);
+        return;
+      case 'Escape':
+        e.preventDefault();
+        this.close(true);
+        return;
+    }
+    // Typing jumps to the first build that starts with what was typed
+    if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      clearTimeout(this.typedTimer);
+      this.typed += e.key.toLowerCase();
+      this.typedTimer = setTimeout(() => { this.typed = ''; }, 800);
+      const hit = opts.find((o) => o.dataset.text.startsWith(this.typed));
+      if (hit) { e.preventDefault(); this.setActive(hit); }
+    }
+  }
+}
+customElements.define('build-picker', BuildPicker);
+
+// What the list of released builds says about a build, shown in the build picker: its update (e.g. 2026-10 B), or its Insider release date
+function releaseTag(b) {
+  if (!releases) return '';
+  for (const v of releases.windows11) for (const r of v.releases) if (r.build === b.build) return r.type || '';
+  for (const c of releases.insider) for (const r of c.releases) if ((r.builds || [r.build]).includes(b.build)) return r.date || '';
+  return '';
+}
+
+// Builds by architecture (x64 first), then by Windows version, newest first (Insider channels after the released versions)
+function fillBuildPicker(picker, selectedKey) {
+  const archs = new Map();
+  for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
+    if (!archs.has(b.architecture)) archs.set(b.architecture, new Map());
+    const groups = archs.get(b.architecture), g = versionText(b) || 'Other';
     if (!groups.has(g)) groups.set(g, []);
     groups.get(g).push(b);
-  });
-  select.innerHTML = '';
-  for (const [g, builds] of groups) {
-    const og = document.createElement('optgroup');
-    og.label = g;
-    for (const b of builds) {
-      const o = document.createElement('option');
-      o.value = b.key;
-      o.textContent = `${buildLabel(b)} — ${b.features} IDs, ${b.named} named`;
-      og.appendChild(o);
-    }
-    select.appendChild(og);
   }
-  if (selectedKey) select.value = selectedKey;
+  const archOrder = (a) => (a === 'AMD64' ? 0 : 1);
+  const insider = (builds) => (builds[0].insiderChannel ? 1 : 0);
+  picker.setSections([...archs].sort(([x], [y]) => archOrder(x) - archOrder(y) || x.localeCompare(y)).map(([arch, groups]) => ({
+    label: archName(arch),
+    note: archName(arch) !== arch ? arch : '',
+    groups: [...groups].sort(([, x], [, y]) => insider(x) - insider(y)).map(([label, builds]) => ({
+      label,
+      items: builds.map((b) => ({
+        value: b.key,
+        text: b.build,
+        tag: releaseTag(b),
+        meta: `${fmt(b.features)} IDs · ${fmt(b.named)} named`,
+        label: `<span class="picker-main">${esc(b.build)}</span>` +
+          `<span class="picker-sub">${esc([archName(b.architecture), versionText(b)].filter(Boolean).join(' · '))}</span>`,
+      })),
+    })),
+  })));
+  if (selectedKey) picker.value = selectedKey;
 }
 
 function latestBuild(arch) {
@@ -240,8 +433,119 @@ const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</
 const modsText = (f) => (f.modules || []).join(', ');
 
 // ---------------------------------------------------------------------------
+// Super God Mode
+// ---------------------------------------------------------------------------
+
+// The statistics files of Super God Mode (https://github.com/ThioJoe/Windows-Super-God-Mode), with the columns that identify an entry
+// (key) and the columns its table shows (show). A difference in any of an entry's columns counts as a change.
+const SGM_TABLES = [
+  { file: 'CLSID_Shell_Folders', title: 'Shell folders (CLSIDs)', key: ['CLSID'], show: ['CLSID', 'Name', 'NameSource'] },
+  { file: 'Named_Shell_Folders', title: 'Named special folders', key: ['Name'], show: ['Name', 'RelativePath', 'ParentFolder'] },
+  { file: 'Task_Links', title: 'Control Panel tasks', key: ['XMLTaskId'], show: ['Name', 'ApplicationName', 'Command'] },
+  { file: 'MS_Settings', title: 'Settings pages', key: ['Full Setting Command'], show: ['Full Setting Command'] },
+  { file: 'Deep_Links', title: 'Deep links', key: ['Description', 'Full Command'], show: ['Description', 'Full Command'] },
+  { file: 'URL_Protocols', title: 'URL protocols', key: ['Protocol'], show: ['Protocol', 'Name', 'Package AppName'] },
+  { file: 'Hidden_App_Links', title: 'Hidden app links', key: ['Full URL'], show: ['Full URL', 'Found in File'] },
+];
+const SGM_ORDER = { added: 0, removed: 1, changed: 2 };
+
+// Paths into app packages and user profiles change with every app update and differ between PCs, so entries are compared without
+// the package version and architecture, and the user name
+const comparable = (s) => s.replace(/_\d+(?:\.\d+)+_(?:x64|x86|arm64|arm|neutral)__/gi, '__').replace(/\\Users\\[^\\]+\\/gi, '\\Users\\*\\');
+
+let sgmIndex = null;  // derived/super-god-mode.json: the builds that have statistics
+const sgmCache = new Map();
+
+function loadSgm(key) {
+  if (!sgmCache.has(key)) sgmCache.set(key, getJson('super-god-mode/' + encodeURIComponent(key) + '.json', DERIVED));
+  return sgmCache.get(key);
+}
+
+// One statistics table of two builds: the entries added, removed and changed, sorted by key
+function sgmDiff(t, oldTable, newTable) {
+  const entries = (tb) => {
+    const m = new Map();
+    for (const r of (tb ? tb.rows : [])) {
+      const e = Object.fromEntries(tb.columns.map((c, i) => [c, r[i] || '']));
+      m.set(t.key.map((k) => e[k]).join('\n'), e);
+    }
+    return m;
+  };
+  const o = entries(oldTable), n = entries(newTable), rows = [];
+  for (const [k, e] of n) {
+    const before = o.get(k);
+    if (!before) { rows.push({ k, change: 'added', row: e }); continue; }
+    const cols = Object.keys(e).filter((c) => comparable(e[c]) !== comparable(before[c] || ''));
+    if (cols.length) rows.push({ k, change: 'changed', row: e, old: before, cols });
+  }
+  for (const [k, e] of o) if (!n.has(k)) rows.push({ k, change: 'removed', row: e });
+  rows.sort((x, y) => (x.k < y.k ? -1 : x.k > y.k ? 1 : 0)).forEach((r, i) => { r.id = i; });
+  return { rows, count: n.size };
+}
+
+// A column's value in an entry; a changed value shows what it was
+function sgmValue(r, c) {
+  const v = r.row[c] || '';
+  return r.change === 'changed' && r.cols.includes(c) ? `<del>${esc(r.old[c] || '')}</del> → ${esc(v)}` : esc(v);
+}
+
+const sgmDetail = async (r) => '<div class="sgm-entry">' + Object.keys(r.row).map((c) =>
+  `<div class="kv"><span>${esc(c)}</span><div class="val">${sgmValue(r, c) || '<span class="muted">(empty)</span>'}</div></div>`).join('') + '</div>';
+
+// What Super God Mode found in one of two builds and not the other, and what changed. Adds nothing once isCurrent() says a newer
+// render has started.
+async function renderSgmCompare(out, a, b, q, isCurrent) {
+  if (!sgmIndex) sgmIndex = await getJson('super-god-mode.json', DERIVED).catch(() => ({}));
+  const runs = [sgmIndex[a.key], sgmIndex[b.key]];
+  let notes = [], data = null;
+  const missing = [a, b].filter((x, i) => !runs[i] || runs[i].empty);
+  if (missing.length) {
+    notes = missing.map((x) => {
+      const run = sgmIndex[x.key];
+      return run && run.error ? `Super God Mode failed on ${esc(buildLabel(x))}: ${esc(run.error)}`
+        : `${esc(buildLabel(x))} has no Super God Mode statistics: it was scanned before they were collected.`;
+    });
+  } else {
+    try {
+      data = await Promise.all([loadSgm(a.key), loadSgm(b.key)]);
+    } catch (e) {
+      notes = ['Could not load the Super God Mode statistics: ' + esc(e.message)];
+    }
+  }
+  if (!isCurrent()) return;
+  const box = section(out, 'compare:sgm', 'h2', '', 'Super God Mode');
+  const note = (html) => box.insertAdjacentHTML('beforeend', `<p class="muted">${html}</p>`);
+  if (!data) { notes.forEach(note); return; }
+  const versions = [...new Set(runs.map((r) => r.version))].join(' and ');
+  note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a> ${esc(versions)} found ` +
+    'in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
+    'app updates.' + (runs[0].user !== runs[1].user ? ` These two runs were on different PCs (as ${esc(runs[0].user)} and ${esc(runs[1].user)}), ` +
+    'which have different apps.' : ''));
+  const same = [];
+  for (const t of SGM_TABLES) {
+    const { rows, count } = sgmDiff(t, data[0].tables[t.file], data[1].tables[t.file]);
+    if (!rows.length) { same.push(`${esc(t.title)} (${fmt(count)})`); continue; }
+    const filtered = rows.filter((r) => !q || [r.row, r.old || {}].some((e) => Object.values(e).some((v) => v.toLowerCase().includes(q))));
+    const counts = Object.keys(SGM_ORDER).map((c) => [c, filtered.filter((r) => r.change === c).length]).filter(([, n]) => n)
+      .map(([c, n]) => `<span class="${c}">${n} ${c}</span>`).join(', ');
+    const sec = section(box, 'compare:sgm:' + t.file, 'h3', '',
+      `${esc(t.title)} <span class="count">${counts || '0'}${filtered.length !== rows.length ? ` of ${rows.length} differences` : ''}</span>`,
+      filtered.length > 0);
+    if (filtered.length) {
+      renderTable(sec, filtered, [
+        { title: 'Change', value: (r) => r.change, sortKey: (r) => SGM_ORDER[r.change], html: (r) => `<span class="chg ${r.change}">${r.change}</span>` },
+        ...t.show.map((c, i) => ({ title: c, value: (r) => r.row[c], html: (r) => sgmValue(r, c), cls: i ? 'sgm' : 'name' })),
+      ], undefined, sgmDetail);
+    }
+  }
+  if (same.length) note('No differences in ' + same.join(', ') + '.');
+}
+
+// ---------------------------------------------------------------------------
 // Compare view
 // ---------------------------------------------------------------------------
+
+let compareRender = 0;
 
 async function renderCompare() {
   const oldKey = $('cmp-old').value, newKey = $('cmp-new').value;
@@ -250,9 +554,11 @@ async function renderCompare() {
   const out = $('cmp-results');
   setHash(`compare/${oldKey}/${newKey}`);
   if (!oldKey || !newKey) return;
+  const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';
   out.innerHTML = '';
   const [a, b] = await Promise.all([loadBuild(oldKey), loadBuild(newKey)]);
+  if (render !== compareRender) return;
   const of = new Map(a.features.map((f) => [f.id, f])), nf = new Map(b.features.map((f) => [f.id, f]));
   const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [], defaultChanged = [];
   for (const [id, f] of nf) {
@@ -323,12 +629,11 @@ async function renderCompare() {
   $('cmp-status').textContent = `${buildLabel(a)} → ${buildLabel(b)}${direction}`;
   for (const [title, cls, rows, cols] of sections) {
     const filtered = rows.filter((f) => matches(f, q, namedOnly));
-    const h = document.createElement('h2');
-    h.className = cls;
-    h.innerHTML = `${esc(title)} <span class="count">${filtered.length}${filtered.length !== rows.length ? ' of ' + rows.length : ''}</span>`;
-    out.appendChild(h);
-    if (filtered.length) renderTable(out, filtered, cols, undefined, title === 'Removed' ? detailOld : detailNew);
+    const sec = section(out, 'compare:' + title, 'h2', cls,
+      `${esc(title)} <span class="count">${filtered.length}${filtered.length !== rows.length ? ' of ' + rows.length : ''}</span>`, filtered.length > 0);
+    if (filtered.length) renderTable(sec, filtered, cols, undefined, title === 'Removed' ? detailOld : detailNew);
   }
+  await renderSgmCompare(out, a, b, q, () => render === compareRender);
 }
 
 // ---------------------------------------------------------------------------
@@ -469,7 +774,7 @@ function debounce(fn, ms) {
 
 async function init() {
   try {
-    [index, firstSeen] = await Promise.all([getJson('index.json'), getJson('first-seen.json')]);
+    [index, firstSeen, releases] = await Promise.all([getJson('index.json'), getJson('first-seen.json'), getJson('releases.json').catch(() => null)]);
   } catch (e) {
     $('cmp-status').textContent = 'Could not load data: ' + e.message;
     showView('compare');
@@ -483,9 +788,9 @@ async function init() {
   const latest = latestBuild();
   // Compare the newest build that has an earlier one to compare with (a first build of an architecture has none)
   const compared = [...index.builds].filter((b) => b.previous).sort(compareVersions).pop() || latest;
-  fillBuildSelect($('cmp-old'), compared.previous || compared.key);
-  fillBuildSelect($('cmp-new'), compared.key);
-  fillBuildSelect($('bld-select'), latest.key);
+  fillBuildPicker($('cmp-old'), compared.previous || compared.key);
+  fillBuildPicker($('cmp-new'), compared.key);
+  fillBuildPicker($('bld-select'), latest.key);
 
   const cmp = () => renderCompare().catch(showError('cmp-status'));
   const bld = () => renderBuild().catch(showError('bld-status'));

@@ -1,7 +1,7 @@
 # Windows-Feature-ID-Scanner
 A modern take on mach2's feature scanning: GitHub Actions scans Windows 11 for feature IDs and their names (ARM64 on a GitHub runner, x64 in a virtual machine built from Microsoft's servers), stores the results per build, and tracks what changes between builds.
 
-**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, the features it requires and its default state. It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned.
+**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes, and the shell folders, settings pages, URL protocols and other links Super God Mode found in each) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, the features it requires and its default state. It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned.
 
 ## How it works
 
@@ -78,7 +78,7 @@ Every feature ID found is listed, named or not. Many features only have a number
 
 `modules` lists the binaries that contain a feature's code. Some binaries ship full PDBs whose type information declares the IDs of hundreds of features they never use (the PDB of Windows.UI.Xaml.dll declares 1,878 feature IDs; the binary uses 55); those are listed separately in `declaredIn`. Where known, a feature also has `default` (`enabled`, `disabled`, `alwaysEnabled` or `alwaysDisabled`), `changeTime` (`read`, `moduleReload`, `session` or `reboot`) and `requires` (feature IDs). The bulkier details are in each build's `details.json`.
 
-The site doesn't load the `details.json` files themselves. When it's published, `build-site-data.py` derives the files it loads: each feature's details from the newest build that has them, split into 64 files by feature ID so that a feature's panel downloads one small file instead of a build's whole details. Those derived files only exist on the published site, not in the repository.
+The site doesn't load the `details.json` files or the `super-god-mode/` folders themselves. When it's published, `build-site-data.py` derives the files it loads: each feature's details from the newest build that has them, split into 64 files by feature ID so that a feature's panel downloads one small file instead of a build's whole details, and each build's Super God Mode CSV files in one JSON file, so that comparing two builds loads two files. Those derived files only exist on the published site, not in the repository.
 
 ## Running locally
 

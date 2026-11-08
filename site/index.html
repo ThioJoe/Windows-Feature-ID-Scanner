@@ -19,9 +19,9 @@
 <main>
   <section id="view-compare" hidden>
     <div class="controls">
-      <label>Old build <select id="cmp-old"></select></label>
-      <button id="cmp-swap" type="button" title="Swap old and new">⇄</button>
-      <label>New build <select id="cmp-new"></select></label>
+      <div class="field"><span id="cmp-old-label">Old build</span> <build-picker id="cmp-old" data-label="cmp-old-label"></build-picker></div>
+      <button id="cmp-swap" type="button" title="Swap old and new" aria-label="Swap old and new">⇄</button>
+      <div class="field"><span id="cmp-new-label">New build</span> <build-picker id="cmp-new" data-label="cmp-new-label"></build-picker></div>
     </div>
     <div class="controls">
       <input id="cmp-search" type="search" placeholder="Filter by ID, name or module">
@@ -33,7 +33,7 @@
 
   <section id="view-build" hidden>
     <div class="controls">
-      <label>Build <select id="bld-select"></select></label>
+      <div class="field"><span id="bld-select-label">Build</span> <build-picker id="bld-select" data-label="bld-select-label"></build-picker></div>
     </div>
     <div class="controls">
       <input id="bld-search" type="search" placeholder="Filter by ID, name or module">
@@ -56,6 +56,7 @@
   Feature IDs come from the feature store (ViVeTool) and from Microsoft's public symbols for the binaries of each build.
   Names come from symbols, or from ViVeTool's dictionary when symbols have none.
   Modules are the binaries that contain a feature's code; click a feature to see what that code reveals: the functions that check it, its strings, dependencies and default state.
+  The shortcuts and links compared under Super God Mode come from running <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a> on each build.
   <a href="https://github.com/ThioJoe/Windows-Feature-ID-Scanner">Source and raw data</a>
 </footer>
 

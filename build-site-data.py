@@ -6,9 +6,15 @@
 #                                    architecture that has them, with that build's key. Split by feature ID (ID % 64), so that showing a
 #                                    feature only downloads the file it's in rather than all of a build's details.
 #
+#   <out>/super-god-mode.json        The builds that have Super God Mode statistics (their super-god-mode/ folder), with the version,
+#                                    user and any error from its run.json.
+#   <out>/super-god-mode/<build>.json The statistics of each of those builds: the columns and rows of each of its CSV files, so that
+#                                    comparing two builds loads two files.
+#
 #   python build-site-data.py --data data --out _site/derived
 
 import argparse
+import csv
 import json
 import os
 import sys
@@ -18,6 +24,33 @@ SHARDS = 64
 
 def version_tuple(build):
     return tuple(int(p) for p in build.split('.'))
+
+
+def super_god_mode(builds_dir, out):
+    found = {}
+    for key in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
+        folder = os.path.join(builds_dir, key, 'super-god-mode')
+        if not os.path.exists(os.path.join(folder, 'run.json')):
+            continue
+        with open(os.path.join(folder, 'run.json'), encoding='utf-8-sig') as f:
+            run = json.load(f)
+        tables = {}
+        for name in sorted(os.listdir(folder)):
+            if name.lower().endswith('.csv'):
+                with open(os.path.join(folder, name), encoding='utf-8-sig', newline='') as f:
+                    rows = [r for r in csv.reader(f) if any(r)]
+                if rows:
+                    tables[name[:-4]] = {'columns': [c.strip() for c in rows[0]], 'rows': rows[1:]}
+        found[key] = {k: run[k] for k in ('version', 'user', 'error') if run.get(k)}
+        if tables:
+            os.makedirs(os.path.join(out, 'super-god-mode'), exist_ok=True)
+            with open(os.path.join(out, 'super-god-mode', key + '.json'), 'w', encoding='utf-8', newline='\n') as f:
+                json.dump({'build': key, 'tables': tables}, f, ensure_ascii=False, separators=(',', ':'))
+        else:
+            found[key]['empty'] = True
+    with open(os.path.join(out, 'super-god-mode.json'), 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(found, f, indent=1)
+    print('[site] Super God Mode statistics of %d builds: %s' % (len(found), ', '.join(found) or 'none'))
 
 
 def main():
@@ -45,6 +78,8 @@ def main():
                 f.write('{\n' + ',\n'.join(lines) + '\n}\n' if lines else '{}\n')
         builds = sorted({key for key, _ in features.values()})
         print('[site] %s: code details of %d features, from %s' % (arch, len(features), ', '.join(builds)))
+    os.makedirs(args.out, exist_ok=True)
+    super_god_mode(builds_dir, args.out)
     return 0
 
 

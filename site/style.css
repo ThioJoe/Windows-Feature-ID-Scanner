@@ -36,22 +36,73 @@ nav { display: flex; gap: 16px; }
 nav a { color: var(--muted); text-decoration: none; padding-bottom: 10px; border-bottom: 2px solid transparent; }
 nav a.active { color: var(--fg); border-bottom-color: var(--accent); }
 main { padding-top: 16px; padding-bottom: 32px; }
+main a { color: var(--accent); }
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 12px; }
 select, input[type=search], button {
   font: inherit; color: var(--fg); background: var(--panel);
   border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px;
 }
-select { min-width: 0; max-width: 100%; flex: 1 1 auto; }
-.controls > label:not(.check) { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
+.controls > .field { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
+
+/* Build picker: a button, and the list of builds it opens, by architecture, then version */
+build-picker { position: relative; display: block; min-width: 0; }
+.picker-button { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 16em; text-align: left; }
+.picker-value { display: flex; align-items: baseline; gap: 8px; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
+.picker-main { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.picker-sub { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+.picker-chevron { flex: none; width: 7px; height: 7px; margin: -4px 2px 0; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); }
+.picker-button[aria-expanded=true] .picker-chevron { margin-top: 4px; transform: rotate(-135deg); }
+.picker-list {
+  position: absolute; z-index: 20; top: calc(100% + 4px); left: 0;
+  min-width: 100%; width: max-content; max-width: calc(100vw - 16px); max-height: min(70vh, 520px); overflow-y: auto;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+  padding-bottom: 6px; outline: none; scroll-padding-top: 36px;
+}
+.picker-section + .picker-section { margin-top: 6px; border-top: 1px solid var(--border); }
+.picker-section-label { position: sticky; top: 0; z-index: 1; padding: 6px 12px; background: var(--panel); border-bottom: 1px solid var(--border); font-weight: 600; }
+.picker-section-label span { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: normal; }
+.picker-group-label { padding: 8px 12px 2px 26px; color: var(--muted); font-size: 12px; font-weight: 600; }
+.picker-option { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 4px 14px 4px 40px; cursor: pointer; }
+.picker-option > span { white-space: nowrap; }
+.picker-option.active { background: var(--panel); }
+.picker-option[aria-selected=true] { box-shadow: inset 3px 0 0 var(--accent); }
+.picker-option[aria-selected=true] .picker-main { color: var(--accent); font-weight: 600; }
+.picker-tag { padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-size: 11px; }
+.picker-meta { margin-left: auto; padding-left: 20px; color: var(--muted); font-size: 12px; }
 input[type=search] { flex: 1 1 260px; min-width: 0; }
 button { cursor: pointer; }
 label.check { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .status { color: var(--muted); margin: 4px 0 12px; }
 h2 { font-size: 16px; margin: 24px 0 8px; }
-h2 .count { color: var(--muted); font-weight: normal; }
-h2.added { color: var(--added); }
-h2.removed { color: var(--removed); }
-h2.changed { color: var(--changed); }
+h3 { font-size: 14px; }
+h2 .count, h3 .count { color: var(--muted); font-weight: normal; }
+h2.added, .count .added { color: var(--added); }
+h2.removed, .count .removed { color: var(--removed); }
+h2.changed, .count .changed { color: var(--changed); }
+
+/* Sections that collapse when their heading is clicked; one without content has no arrow, but lines up with those that do */
+/* (Spacing only above headings: a collapsed section's bottom margin wouldn't collapse with the next heading's) */
+.section-head { display: flex; align-items: center; gap: 8px; margin: 24px 0 0; }
+.section-head > h2, .section-head > h3 { margin: 0; }
+details.section > .section-head + * { margin-top: 8px; }
+.section-head::before {
+  content: ''; flex: none; width: 6px; height: 6px; margin: 0 3px;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform .15s;
+}
+details[open] > .section-head::before { transform: rotate(45deg); }
+div.section-head::before { visibility: hidden; }
+summary.section-head { width: fit-content; list-style: none; cursor: pointer; user-select: none; border-radius: 4px; }
+summary.section-head::-webkit-details-marker { display: none; }
+summary.section-head:hover::before { border-color: var(--fg); }
+details.section details.section > .section-head, details.section > div.section-head { margin-top: 16px; }
+
+/* Super God Mode differences */
+.chg { padding: 0 5px; border: 1px solid currentColor; border-radius: 4px; font-size: 11px; text-transform: capitalize; white-space: nowrap; }
+.chg.added { color: var(--added); }
+.chg.removed { color: var(--removed); }
+.chg.changed { color: var(--changed); }
+td.sgm { font-size: 12px; overflow-wrap: anywhere; }
+del { color: var(--removed); }
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; }
 table { border-collapse: collapse; width: 100%; min-width: 680px; }
 th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
@@ -78,6 +129,8 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .detail .kv { display: flex; gap: 8px; margin: 2px 0 2px 8px; }
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+.detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+.sgm-entry .kv > span { width: 170px; }
 @media (max-width: 600px) {
   .detail .kv { flex-direction: column; gap: 0; }
 }
