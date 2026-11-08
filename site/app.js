@@ -570,11 +570,11 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
   const note = (html) => box.insertAdjacentHTML('beforeend', `<p class="muted">${html}</p>`);
   if (!data) { notes.forEach(note); return; }
   const sameVersion = runs[0].version === runs[1].version;
-  note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a>${sameVersion ? ' ' + esc(runs[0].version) : ''} ` +
-    'found in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
+  note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a> ` +
+    (sameVersion ? esc(runs[0].version) : `(${esc(runs[0].version)} on the old build, ${esc(runs[1].version)} on the new one)`) +
+    ' found in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
     'app updates.' + (runs[0].user !== runs[1].user ? ` These two runs were on different PCs (as ${esc(runs[0].user)} and ${esc(runs[1].user)}), ` +
-    'which have different apps.' : '') + (sameVersion ? '' : ` The two runs used different versions of Super God Mode (${esc(runs[0].version)} ` +
-    `on the old build, ${esc(runs[1].version)} on the new one), which can find different things.`));
+    'which have different apps.' : ''));
   const same = [], absent = [];
   // A column of a statistics file, or a computed one (SETTINGS_GATE), whose links lead into the build the entry is from
   const column = (c, i) => (typeof c === 'string'
