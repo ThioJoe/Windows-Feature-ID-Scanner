@@ -797,7 +797,7 @@ try {
     Set-Location C:\scan
     # Python checks certificates against the Windows certificate store, which fetches the root certificates it lacks only when
     # Windows itself connects, so connect once from PowerShell
-    foreach ($url in 'https://support.microsoft.com/', 'https://go.microsoft.com/', 'https://download.microsoft.com/') {
+    foreach ($url in 'https://learn.microsoft.com/', 'https://support.microsoft.com/', 'https://go.microsoft.com/', 'https://download.microsoft.com/') {
         try { Invoke-WebRequest $url -UseBasicParsing -Method Head -TimeoutSec 60 | Out-Null } catch { }
     }
     & C:\scan\python\python.exe verify-windows-files.py check __ARGUMENTS__ --cache-dir C:\scan\kb --out C:\scan\verification-files.json --inventory C:\scan\files.csv.gz 2>&1 | ForEach-Object { Write-Log "$_" }
@@ -863,7 +863,7 @@ function Copy-ScannerToVM {
             Remove-Item C:\scan\python.zip
         }
     }
-    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py') {
+    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py') {
         Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
     }
 }

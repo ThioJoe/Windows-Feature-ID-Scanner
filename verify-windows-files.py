@@ -6,7 +6,8 @@
 # Every Windows update's KB article on support.microsoft.com links a file list (CSV) with the name, version and size of every file
 # the update carries; since 2025 the lists also give each file's SHA-256 (.NET Framework's lists still don't, so for those a file
 # has to match a listed name and size). A file the update doesn't carry is one that hasn't changed: a component's version can go
-# up while some of its files stay exactly as they were, and those aren't in the list.
+# up while some of its files stay exactly as they were, and those aren't in the list. The articles are read through the Microsoft
+# Learn API (microsoft_learn.py), which gives them as Markdown; an article's HTML is only read when that fails.
 #
 # Windows keeps every component's files in its component store (C:\Windows\WinSxS), and the files in System32 and elsewhere are
 # hard links to the installed versions' copies there. For every file installed from the component store, `check` requires that it
@@ -35,7 +36,11 @@ import sys
 import time
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import microsoft_learn  # noqa: E402
+
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+LEARN = microsoft_learn.LearnApi(USER_AGENT)
 
 # Folders with machine-specific or generated content, not installed files
 SKIP_DIRS = {'softwaredistribution', 'logs', 'temp', 'prefetch', 'installer', 'serviceprofiles', 'panther', 'livekernelreports',
@@ -66,14 +71,38 @@ def fetch(url, retries=4):
 # ---------------------------------------------------------------------------
 
 def file_list_links(kb):
-    """The KB article's title and the links of its file lists. The article is at support.microsoft.com/help/<number> (or /kb/<number>,
-    an older address that also leads to it). The lists are the links to go.microsoft.com (which redirects to the list) or
-    download.microsoft.com in its "File information" section, or whose text, or the text just before them, says "file information"
-    ("Download the file information for cumulative update KB...", "... for the SSU ..."). Should the article change so that none
-    are found, these count instead, in this order: links to a .csv file on download.microsoft.com, and go.microsoft.com links whose
-    text names the KB."""
+    """The KB article's title, the links of its file lists, and how the article was read. The article is at
+    support.microsoft.com/help/<number>, read through the Learn API as Markdown; the lists are the links to go.microsoft.com (which
+    redirects to the list) or download.microsoft.com in its "File information" section, or in a line that mentions the file
+    information ("For a list of the files provided in this update, download the file information for cumulative update KB...").
+    The article's HTML is only read when the API fails or finds no such links (file_list_links_html)."""
     number = kb[2:] if kb.upper().startswith('KB') else kb
-    page, errors = None, []
+    try:
+        markdown = LEARN.fetch(f'https://support.microsoft.com/help/{number}')
+        if markdown and number in markdown:
+            allowed = lambda url: re.match(r'https://(go\.microsoft\.com/fwlink/|download\.microsoft\.com/)', url, re.I)
+            mentions = '\n'.join(line for line in markdown.splitlines() if re.search(r'file information|list of the files', line, re.I))
+            for text in (microsoft_learn.section(markdown, 'File information'), mentions):
+                links = [(url, label or url.rsplit('/', 1)[-1]) for label, url in microsoft_learn.links(text or '') if allowed(url)]
+                if links:
+                    return microsoft_learn.title(markdown) or f'KB{number}', list(dict.fromkeys(links)), 'Learn API'
+            problem = 'the Learn API gave the article but no file lists in it'
+        else:
+            problem = 'the Learn API has no such article'
+    except Exception as e:
+        problem = str(e)
+    title, links = file_list_links_html(number, problem)
+    if links:
+        log(f'KB{number}: {problem}; took the links from the article page instead')
+    return title, links, 'article page'
+
+
+def file_list_links_html(number, problem):
+    """The same from the article's HTML, at support.microsoft.com/help/<number> (or /kb/<number>, an older address that also leads to
+    it): links to go.microsoft.com or download.microsoft.com in its "File information" section, or whose text, or the text just
+    before them, says "file information". Should the article change so that none are found, these count instead, in this order:
+    links to a .csv file on download.microsoft.com, and go.microsoft.com links whose text names the KB."""
+    page, errors = None, [problem]
     for url in (f'https://support.microsoft.com/help/{number}', f'https://support.microsoft.com/kb/{number}'):
         try:
             page = fetch(url).decode('utf-8', 'replace')
@@ -81,7 +110,7 @@ def file_list_links(kb):
         except Exception as e:
             errors.append(str(e))
     if page is None or number not in page:
-        raise RuntimeError(f'KB{number}: no KB article ({"; ".join(errors) or "the page found is not about it"})')
+        raise RuntimeError(f'KB{number}: no KB article ({"; ".join(errors) if page is None else "the page found is not about it"})')
     title = re.search(r'<title>([^<]*)', page)
     title = html.unescape(title.group(1)).strip() if title else f'KB{number}'
     anchors = [(m, html.unescape(m.group(1)), re.sub(r'<[^>]+>|\s+', ' ', m.group(2)).strip())
@@ -131,7 +160,7 @@ def load_updates(kbs, cache_dir, required=True):
     updates = []
     for kb in kbs:
         try:
-            title, links = file_list_links(kb)
+            title, links, source = file_list_links(kb)
         except Exception as e:
             if required:
                 raise
@@ -157,7 +186,7 @@ def load_updates(kbs, cache_dir, required=True):
             rows += part
         if not rows and required:
             raise RuntimeError(f'{kb}: its file lists ({", ".join(u for u, _ in links)}) have no x64 files; is the layout new?')
-        updates.append({'kb': kb, 'title': title, 'rows': rows})
+        updates.append({'kb': kb, 'title': title, 'rows': rows, 'source': source})
     return updates
 
 
@@ -338,7 +367,7 @@ def main():
     drive = os.path.splitdrive(args.windir)[0] + os.sep
     files, errors = list_files([args.windir] + program_files(drive), os.path.join(args.windir, 'WinSxS'))
     counts, scan_counts, problems, unchanged_names = check(files, updates, image, args.windir)
-    report = {'updates': [{'kb': u['kb'], 'title': u['title'], 'x64Files': len(u['rows'])} for u in updates],
+    report = {'updates': [{'kb': u['kb'], 'title': u['title'], 'x64Files': len(u['rows']), 'articleReadFrom': u['source']} for u in updates],
               'imageFiles': len(image) if image is not None else None, 'unreadable': errors,
               'files': counts, 'scannedBinaries': scan_counts, 'problems': problems, 'unchangedNamesTheUpdateCarries': unchanged_names}
     with open(args.out, 'w', encoding='utf-8') as f:

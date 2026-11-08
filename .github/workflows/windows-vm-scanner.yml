@@ -1,15 +1,19 @@
 # windows-vm-scanner.yml
 # Scans x64 Windows 11 builds inside a Hyper-V virtual machine on an x64 runner, so the build scanned doesn't depend on what the
-# runner image has. The VM is built entirely from Microsoft's servers (see scan-in-vm.ps1). A daily check reads Microsoft's release
-# information page for the newest build of each version; a scan only runs for a build that isn't in data/ yet.
+# runner image has. The VM is built entirely from Microsoft's servers (see scan-in-vm.ps1). A daily check (check-windows-builds.py)
+# finds the builds Microsoft has released for every Windows 11 version and Windows Insider channel, records them in
+# data/releases.json for the site, and starts a scan for every build of the versions the VM can be built for that isn't in data/ yet.
 name: Windows VM Feature Scanner
 
 on:
   workflow_dispatch:
     inputs:
       versions:
-        description: 'Windows 11 versions to scan, separated by spaces'
-        default: '26H2 25H2'
+        description: 'Windows 11 versions to scan, separated by spaces (empty: every version the VM can be built for)'
+        default: ''
+      builds:
+        description: 'Specific builds to scan instead, separated by spaces, such as 26300.9725 (scanned even if they are in data/ already)'
+        default: ''
       force:
         description: 'Scan the newest builds even if they are in data/ already'
         type: boolean
@@ -25,19 +29,38 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       builds: ${{ steps.check.outputs.builds }}
       needed: ${{ steps.check.outputs.needed }}
+      releases: ${{ steps.releases.outputs.changed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # Full history so the commit can be rebased onto the branch tip
 
-      - name: Find the newest released builds
+      - name: Find the released builds and those to scan
         id: check
         env:
-          VERSIONS: ${{ inputs.versions || '26H2 25H2' }}
+          VERSIONS: ${{ inputs.versions }}
+          BUILDS: ${{ inputs.builds }}
           FORCE: ${{ inputs.force && '--all' || '' }}
-        run: python3 check-windows-builds.py --versions $VERSIONS --arch AMD64 --github-output $FORCE
+        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
+
+      # The list only changes when Microsoft releases something
+      - name: Commit the list of released builds
+        id: releases
+        run: |
+          git add data/releases.json
+          if git diff --cached --quiet; then echo "No change to data/releases.json"; echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Update the list of released Windows builds"
+          git pull -q --rebase origin "$GITHUB_REF_NAME"
+          git push -q origin "HEAD:$GITHUB_REF_NAME"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
   scan:
     needs: check
@@ -114,8 +137,8 @@ jobs:
 
   # A push made with GITHUB_TOKEN doesn't trigger other workflows, so publish the site from here after new data is committed
   pages:
-    needs: scan
-    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && needs.scan.result != 'skipped' }}
+    needs: [check, scan]
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.scan.result != 'skipped' || needs.check.outputs.releases == 'true') }}
     uses: ./.github/workflows/pages.yml
     permissions:
       contents: read

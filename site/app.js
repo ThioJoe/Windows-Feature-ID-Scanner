@@ -363,6 +363,59 @@ async function renderBuild() {
 }
 
 // ---------------------------------------------------------------------------
+// Released builds
+// ---------------------------------------------------------------------------
+
+let releases = null;
+
+async function renderReleases() {
+  if (!releases) releases = await getJson('releases.json');
+  const keys = new Set(index.builds.map((b) => b.key));
+  const none = '<span class="muted">—</span>';
+  const scanLink = (build, arch) => (keys.has(`${build}-${arch}`)
+    ? `<a href="#build/${encodeURIComponent(`${build}-${arch}`)}">scanned</a>` : '');
+  const vm = releases.windows11.filter((v) => v.scannedInVm).map((v) => v.version);
+  let html = '<p class="muted">The newest builds of each Windows 11 version that is still serviced, and of each Windows Insider channel, ' +
+    "from Microsoft's update history and Insider release notes, checked daily. " +
+    `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
+    "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
+    'Insider builds are not scanned: Microsoft only provides them to devices enrolled in the Windows Insider Program.</p>';
+
+  html += '<h2>Windows 11</h2><div class="table-wrap"><table><thead><tr><th>Version</th><th>Build</th><th>KB</th><th>Released</th>' +
+    '<th>Update</th><th>x64</th><th>ARM64</th></tr></thead><tbody>';
+  // The first cell of a group spans its rows, so the last group's has to drop the bottom border the table's last row doesn't have
+  const groupCell = (text, rows, last) => `<td rowspan="${rows}"${last ? ' class="last"' : ''}>${esc(text)}</td>`;
+  releases.windows11.forEach((v, n) => {
+    // The VM scans every build newer than the newest one scanned, or a version's newest build when none is
+    const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && b.build.split('.')[0] === String(v.base))
+      .sort(compareVersions).pop();
+    v.releases.forEach((r, i) => {
+      const due = v.scannedInVm && (scanned ? compareVersions(r, scanned) > 0 : i === 0);
+      html += '<tr>' + (i === 0 ? groupCell(v.version, v.releases.length, n === releases.windows11.length - 1) : '') +
+        `<td class="id">${esc(r.build)}</td>` +
+        `<td><a href="https://support.microsoft.com/help/${esc(r.kb.replace(/^KB/, ''))}">${esc(r.kb)}</a></td>` +
+        `<td>${esc(r.date)}</td><td>${esc(r.type)}</td>` +
+        `<td>${scanLink(r.build, 'AMD64') || (due ? '<span class="muted">not yet</span>' : none)}</td>` +
+        `<td>${scanLink(r.build, 'ARM64') || none}</td></tr>`;
+    });
+  });
+  html += '</tbody></table></div>';
+
+  html += '<h2>Windows Insider</h2><div class="table-wrap"><table><thead><tr><th>Channel</th><th>Build</th><th>Released</th>' +
+    '<th>Release notes</th></tr></thead><tbody>';
+  releases.insider.forEach((c, n) => {
+    c.releases.forEach((r, i) => {
+      html += '<tr>' + (i === 0 ? groupCell(c.channel, c.releases.length, n === releases.insider.length - 1) : '') +
+        `<td class="id">${esc(r.builds.join(' / '))}</td><td>${esc(r.date || '')}</td>` +
+        `<td><a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a></td></tr>`;
+    });
+  });
+  html += '</tbody></table></div>';
+  $('rel-status').textContent = '';
+  $('rel-results').innerHTML = html;
+}
+
+// ---------------------------------------------------------------------------
 // Routing
 // ---------------------------------------------------------------------------
 
@@ -372,16 +425,18 @@ function setHash(h) {
 }
 
 function showView(view) {
-  for (const v of ['compare', 'build']) $('view-' + v).hidden = v !== view;
+  for (const v of ['compare', 'build', 'releases']) $('view-' + v).hidden = v !== view;
   document.querySelectorAll('nav a').forEach((a) => a.classList.toggle('active', a.dataset.view === view));
 }
 
 function route() {
   const parts = location.hash.slice(1).split('/').map(decodeURIComponent);
-  const view = parts[0] === 'build' ? 'build' : 'compare';
+  const view = ['build', 'releases'].includes(parts[0]) ? parts[0] : 'compare';
   showView(view);
   const known = (k) => index.builds.some((b) => b.key === k);
-  if (view === 'build') {
+  if (view === 'releases') {
+    renderReleases().catch(showError('rel-status'));
+  } else if (view === 'build') {
     if (known(parts[1])) $('bld-select').value = parts[1];
     renderBuild().catch(showError('bld-status'));
   } else {
@@ -435,7 +490,7 @@ async function init() {
   document.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
     const v = a.dataset.view;
-    setHash(v === 'build' ? `build/${$('bld-select').value}` : `compare/${$('cmp-old').value}/${$('cmp-new').value}`);
+    setHash(v === 'build' ? `build/${$('bld-select').value}` : v === 'releases' ? 'releases' : `compare/${$('cmp-old').value}/${$('cmp-new').value}`);
     route();
   }));
   // Links to other features in the details panels open that feature in its build
