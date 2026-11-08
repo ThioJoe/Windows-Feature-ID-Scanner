@@ -510,13 +510,14 @@ function loadSgm(key) {
   return sgmCache.get(key);
 }
 
-// One statistics table of two builds: the entries added, removed and changed, sorted by key
+// One statistics table of two builds: the entries added, removed and changed, sorted by key. Keys (URLs, GUIDs, names) are matched
+// regardless of case, as Windows does: the same link can turn up with different capitals.
 function sgmDiff(t, oldTable, newTable) {
   const entries = (tb) => {
     const m = new Map();
     for (const r of (tb ? tb.rows : [])) {
       const e = Object.fromEntries(tb.columns.map((c, i) => [c, r[i] || '']));
-      m.set(t.key.map((k) => e[k]).join('\n'), e);
+      m.set(t.key.map((k) => e[k]).join('\n').toLowerCase(), e);
     }
     return m;
   };
