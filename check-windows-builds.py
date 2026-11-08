@@ -486,7 +486,7 @@ def summary_markdown(scan, versions, channels, have, scan_versions, sources, ins
     for c in channels:
         r = c['releases'][0]
         lines.append(f"| {c['channel']} | {' / '.join(r['builds'])} | {r['date'] or '?'} | {in_data(r['build'])} |")
-        lines += ['', 'Insider scan scheduling is enabled, but VM-side Insider build support is not yet implemented.' if insider else
+    lines += ['', 'Insider scan scheduling is enabled, but VM-side Insider build support is not yet implemented.' if insider else
               "Insider builds aren't scanned yet because the VM-side setup is unfinished. "
               'Scan scheduling is currently disabled.']
     lines += ['', '### Sources', ''] + [f'- {s}' for s in sources]
