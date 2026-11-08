@@ -20,9 +20,6 @@ on:
         default: false
   schedule:
     - cron: '41 8 * * *'
-  push:  # TEMPORARY: starts a test run of this branch's version; removed again once the run has started
-    branches:
-      - claude/vm-iso-scan
 
 # Scans commit to data/, so never run at the same time as each other or the ARM64 scanner
 concurrency:
