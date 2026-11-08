@@ -121,6 +121,8 @@ def add_build(data_dir, summary_path, symbols_path):
     }
     if summary.get('notes'):
         header['notes'] = summary['notes']  # Anything about the scan worth knowing, such as Store apps the VM couldn't update
+    if summary.get('insiderChannel'):
+        header['insiderChannel'] = summary['insiderChannel']  # A Windows Insider build, from this channel
     ordered = [features[k] for k in sorted(features)]
     os.makedirs(os.path.join(data_dir, 'builds'), exist_ok=True)
     path = os.path.join(data_dir, 'builds', key + '.json')
@@ -250,6 +252,8 @@ def regenerate(data_dir):
         })
         if b.get('notes'):
             index['builds'][-1]['notes'] = b['notes']
+        if b.get('insiderChannel'):
+            index['builds'][-1]['insiderChannel'] = b['insiderChannel']
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
     first_seen = {}

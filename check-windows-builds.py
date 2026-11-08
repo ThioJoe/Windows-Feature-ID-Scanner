@@ -18,6 +18,8 @@
 #     --summary "$GITHUB_STEP_SUMMARY"     writes all of it as Markdown
 #     --all                                scans each version's newest build even if data/ has it
 #     --builds 26300.9725 26200.9711       scans these builds (even if data/ has them) instead
+#     --insider                            also schedules the Insider channels' builds; requires the VM-side Insider setup in
+#                                          Register-InsiderDevice (scan-in-vm.ps1), which isn't implemented yet
 #
 # A version's builds come with its monthly security update (B, the second week), the optional preview (D, the fourth week) and
 # out-of-band releases (OOB); each is a different build, so each is scanned. Every build newer than the version's newest one in
@@ -394,57 +396,85 @@ def scanned_keys(data_dir):
     return {fn[:-5] for fn in (os.listdir(builds_dir) if os.path.isdir(builds_dir) else []) if fn.endswith('.json')}
 
 
-def builds_to_scan(versions, scan_versions, arch, have, rescan, wanted):
-    """The builds to scan, each with its version, KB and so on, ordered by update so builds that share their binaries follow each other."""
+def scannable(channel):
+    """Whether an Insider channel's builds are scanned (when Insider scans are on). Release Preview's are the next preview updates of
+    the released versions, which are scanned as those when they come out."""
+    return not channel['folder'].startswith('release-preview')
+
+
+def insider_row(channel, build, date):
+    """An Insider build as a build to scan. It has no KB: Windows Update installs it once the VM is configured for the channel."""
+    return {'version': 'Insider', 'channel': channel['channel'], 'type': 'Insider', 'date': date or '', 'build': build, 'kb': ''}
+
+
+def new_builds(name, rows, done, rescan):
+    """Of the builds of a version or Insider channel (newest first), the ones to scan: those newer than its newest one in data/, or
+    its newest when data/ has none of them yet (or with rescan). Only its own builds count, since an Insider channel's builds can
+    share a base build with a version's."""
+    scanned = [r['build'] for r in rows if r['build'] in done]
+    if rescan or not scanned:
+        return rows[:1]
+    latest = max(scanned, key=version_tuple)
+    new = [r for r in rows if version_tuple(r['build']) > version_tuple(latest)]
+    if len(new) > MAX_NEW:
+        warn(f"{name}: {len(new)} builds since {latest}, the newest in data/; scanning the newest {MAX_NEW}, the others "
+             f"({', '.join(r['build'] for r in new[MAX_NEW:])}) can be scanned by starting the workflow with them")
+        new = new[:MAX_NEW]
+    return new
+
+
+def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted, insider):
+    """The builds to scan, each with its version (or Insider channel), KB and so on, ordered by update so builds that share their
+    binaries follow each other."""
     done = {k.rsplit('-', 1)[0] for k in have if k.endswith('-' + arch)}
     picks = []
     if wanted:
         for build in wanted:
             row = next((r for v in versions.values() for r in v['releases'] if r['build'] == build), None)
             if not row:
-                raise RuntimeError(f"build {build} isn't in the update history of any Windows 11 version")
+                channel, r = next(((c, r) for c in channels for r in c['releases'] if build in r['builds']), (None, None))
+                if not channel:
+                    raise RuntimeError(f"build {build} isn't in the update history of any Windows 11 version or Insider channel")
+                if not scannable(channel):
+                    raise RuntimeError(f"build {build} is a Release Preview build, which is scanned as the update it becomes")
+                if not insider:
+                    raise RuntimeError(f"build {build} is a Windows Insider build ({channel['channel']}), and Insider scans are off")
+                row = insider_row(channel, build, r['date'])
             picks.append(row)
     else:
         for version in scan_versions:
             info = versions.get(version)
             if not info:
                 raise RuntimeError(f'no source lists the updates of Windows 11, version {version}')
-            rows = info['releases']
-            scanned = [b for b in done if b.split('.')[0] == str(info['base'])]
-            if rescan or not scanned:
-                new = [rows[0]]
-            else:
-                latest = max(scanned, key=version_tuple)
-                new = [r for r in rows if version_tuple(r['build']) > version_tuple(latest)]
-                if len(new) > MAX_NEW:
-                    warn(f"{version}: {len(new)} builds since {latest}, the newest in data/; scanning the newest {MAX_NEW}, the others "
-                         f"({', '.join(r['build'] for r in new[MAX_NEW:])}) can be scanned by starting the workflow with them")
-                    new = new[:MAX_NEW]
-            picks += new
+            picks += new_builds(version, info['releases'], done, rescan)
+        if insider:
+            for channel in filter(scannable, channels):
+                picks += [insider_row(channel, r['build'], r['date']) for r in new_builds('Insider ' + channel['channel'], channel['releases'], done, rescan)]
     return [dict(r, key=f"{r['build']}-{arch}", scanned=r['build'] in done)
             for r in sorted(picks, key=lambda r: (version_tuple(r['build'])[1], version_tuple(r['build'])[0]))]
 
 
-def releases_document(versions, channels, previous):
+def releases_document(versions, channels, previous, insider):
     """What data/releases.json holds: the newest builds of every serviced version and of every Insider channel. Nothing in it changes
     from one check to the next unless Microsoft releases something (whether data/ has a build is looked up from data/index.json)."""
     doc = {'windows11': [{'version': v, 'base': info['base'], 'scannedInVm': v in VM_VERSIONS,
                           'releases': [{k: r[k] for k in ('build', 'kb', 'date', 'type')} for r in info['releases'][:LISTED]]}
                          for v, info in sorted(versions.items(), reverse=True) if info['active'] or v in VM_VERSIONS]}
     if channels:
-        doc['insider'] = [{'channel': c['channel'], 'releases': [{k: r[k] for k in ('build', 'builds', 'date', 'notes')} for r in c['releases'][:LISTED]]}
+        doc['insider'] = [{'channel': c['channel'], 'scannedInVm': insider and scannable(c),
+                           'releases': [{k: r[k] for k in ('build', 'builds', 'date', 'notes')} for r in c['releases'][:LISTED]]}
                           for c in channels]
     else:
         doc['insider'] = (previous or {}).get('insider', [])  # Keep the last list rather than lose it when the sources fail
     return doc
 
 
-def summary_markdown(scan, versions, channels, have, scan_versions, sources):
+def summary_markdown(scan, versions, channels, have, scan_versions, sources, insider):
     in_data = lambda build: ', '.join(a for a in ('AMD64', 'ARM64') if f'{build}-{a}' in have) or 'no'
     lines = ['## Windows builds', '']
     if scan:
         lines += ['Builds to scan:', '', '| Version | Build | KB | Released | Update |', '|---|---|---|---|---|']
-        lines += [f"| {r['version']} | {r['build']} | {r['kb']} | {r['date']} | {r['type']} |" for r in scan]
+        lines += [f"| {'Insider ' + r['channel'] if r.get('channel') else r['version']} | {r['build']} | {r['kb']} | {r['date']} | {r['type']} |" for r in scan]
     else:
         lines += ['Nothing to scan: data/ has the newest builds of ' + ', '.join(scan_versions) + '.']
     lines += ['', '### Windows 11', '', '| Version | Newest build | KB | Released | Update | In data/ |', '|---|---|---|---|---|---|']
@@ -456,6 +486,9 @@ def summary_markdown(scan, versions, channels, have, scan_versions, sources):
     for c in channels:
         r = c['releases'][0]
         lines.append(f"| {c['channel']} | {' / '.join(r['builds'])} | {r['date'] or '?'} | {in_data(r['build'])} |")
+        lines += ['', 'Insider scan scheduling is enabled, but VM-side Insider build support is not yet implemented.' if insider else
+              "Insider builds aren't scanned yet because the VM-side setup is unfinished. "
+              'Scan scheduling is currently disabled.']
     lines += ['', '### Sources', ''] + [f'- {s}' for s in sources]
     if warnings:
         lines += ['', '### Warnings', ''] + [f'- {w}' for w in warnings]
@@ -469,6 +502,7 @@ def main():
     parser.add_argument('--data-dir', default='data')
     parser.add_argument('--builds', nargs='*', default=[], help='Scan these builds instead, even if data/ has them')
     parser.add_argument('--all', action='store_true', help="Scan each version's newest build even if data/ has it (to scan it again)")
+    parser.add_argument('--insider', action='store_true', help="Also schedule scans of Insider channel builds (VM-side setup not yet implemented)")
     parser.add_argument('--releases', help='Write the newest builds of every version and Insider channel to this file')
     parser.add_argument('--summary', help='Add a Markdown summary to this file')
     parser.add_argument('--page-file', help='Read the release information page (HTML) from this file instead of downloading it')
@@ -484,7 +518,7 @@ def main():
     sources += insider_sources
     have = scanned_keys(args.data_dir)
     try:
-        scan = builds_to_scan(versions, args.versions, args.arch, have, args.all, args.builds)
+        scan = builds_to_scan(versions, channels, args.versions, args.arch, have, args.all, args.builds, args.insider)
     except RuntimeError as e:
         log(str(e))
         return 1
@@ -497,7 +531,9 @@ def main():
         r = c['releases'][0]
         log(f"Insider {c['channel']}: newest build {' / '.join(r['builds'])} ({r['date'] or 'no date'})")
     for r in scan:
-        log(f"To scan: {r['key']} ({r['version']}, {r['kb']}){' again' if r['scanned'] else ''}")
+        log(f"To scan: {r['key']} ({'Insider ' + r['channel'] if r.get('channel') else r['version'] + ', ' + r['kb']}){' again' if r['scanned'] else ''}")
+    if not args.insider:
+            log('Insider scans are off (VM-side Insider build support is not yet implemented)')
     if not scan:
         log('Nothing to scan')
 
@@ -507,11 +543,11 @@ def main():
             with open(args.releases, encoding='utf-8') as f:
                 previous = json.load(f)
         with open(args.releases, 'w', encoding='utf-8', newline='\n') as f:
-            json.dump(releases_document(versions, channels, previous), f, indent=1)
+            json.dump(releases_document(versions, channels, previous, args.insider), f, indent=1)
             f.write('\n')
     if args.summary:
         with open(args.summary, 'a', encoding='utf-8') as f:
-            f.write(summary_markdown(scan, versions, channels, have, args.versions, sources))
+            f.write(summary_markdown(scan, versions, channels, have, args.versions, sources, args.insider))
     print(json.dumps(scan, indent=1))
     if args.github_output:
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:

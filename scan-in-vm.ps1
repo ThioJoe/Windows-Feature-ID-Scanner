@@ -11,6 +11,9 @@
 #      cumulative updates; only the version's enablement package differs.
 #   3. Unless the image is that version already, Windows Update installs the enablement package of the target version, chosen with
 #      Windows Update's own target release version policy.
+#      A Windows Insider build (-InsiderChannel) has no cumulative update or enablement package in the catalog: Windows Update installs
+#      it instead once the VM is configured to receive that channel's updates (Install-InsiderBuild). The setup function,
+#      Register-InsiderDevice, is unfinished, so Insider scans aren't enabled yet.
 #   4. Windows Update installs whatever else it offers that doesn't change the build, and the Microsoft Store updates the apps that
 #      come with Windows (cumulative updates don't). What still can't be installed after retries is noted in the build's data.
 #   5. After a last restart, the VM is checked against what the build is supposed to be (Test-VmInstallation): Windows' servicing,
@@ -31,6 +34,8 @@ param(
     [string]$RepoDir = $PSScriptRoot,      # The scanner's files, copied into the VM
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
     [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
+    [string]$InsiderChannel,               # Install the newest build of this Windows Insider channel (such as Beta) instead of -Kb and -Version
+    [string]$InsiderDevice = $env:INSIDER_DEVICE,  # Placeholder for device/account information if the chosen Insider setup approach needs it (empty for now)
     [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan')]
     [string]$Step = 'All'
 )
@@ -516,6 +521,54 @@ try {
     return ($result -match 'reboot required: True')
 }
 
+function Register-InsiderDevice {
+    # Unfinished. Currently the daily check doesn't start Insider scans, and this stops one that's started anyway.
+    # Insider build requests typically come after registering device in the Settings GUI. 
+    # This function is where we'd enroll if that's the approach we end up going with. Might see if there's a way to just fetch it directly or automate enrollment.
+    # $InsiderChannel for which channel. $InsiderDevice for the enrolled device or account. (the WINDOWS_INSIDER_DEVICE secret in the workflow)
+    # Apparently they don't actually check if a machine is enrolled.
+    if (-not $InsiderDevice) {
+        throw "Insider build support not yet implemented (determined because the WINDOWS_INSIDER_DEVICE secret is empty)"
+    }
+    throw "Windows Insider builds support isn't written yet (Register-InsiderDevice in scan-in-vm.ps1)"
+}
+
+function Install-InsiderBuild {
+    # Once the VM is configured to receive updates for the requested Insider channel, Windows Update can offer that channel's build
+    # as a feature update, followed by its cumulative update. Installs what it offers until the VM reaches the expected build.
+    Register-InsiderDevice
+    for ($round = 1; $round -le 4; $round++) {
+        $build = (Get-VmBuild).Split(' ')[0]
+        if ($ExpectedBuild -and $build -eq $ExpectedBuild) { break }
+        $result = Invoke-VmTask 'InsiderBuild' -timeoutMinutes 240 -script @'
+Write-Log 'searching Windows Update'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($u in $found) {
+        Write-Log "offered: $($u.Title)"
+        if ($u.Title -match 'Insider Preview') {
+            if (-not $u.EulaAccepted) { $u.AcceptEula() }
+            [void]$wanted.Add($u)
+        }
+    }
+    if ($wanted.Count -eq 0) { Write-Result 'nothing to install'; return }
+    $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
+    Write-Log "download result: $($d.ResultCode)"
+    $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
+    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), titles: $(@($wanted | ForEach-Object { $_.Title }) -join '; ')"
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@
+        Log "Windows Update, round ${round}: $result"
+        if ($result -notmatch '^installed [23]') { throw "Windows Update didn't install the $InsiderChannel channel's build: $result" }  # 2 = succeeded, 3 = with errors
+        Restart-ScanVM
+        Set-VmNetwork
+        Log "VM build: $(Get-VmBuild)"
+    }
+    Save-Report 'insider-build.json' @{ channel = $InsiderChannel; build = (Get-VmBuild) }
+}
+
 function Save-Report([string]$name, $data) {
     $data | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $OutputDir $name) -Encoding UTF8
 }
@@ -539,7 +592,7 @@ try {
     foreach ($u in $found) {
         $categories = @($u.Categories | ForEach-Object { $_.Name }) -join ', '
         # (The Windows Security platform update is filed under Definition Updates too, so only the definitions themselves are left out)
-        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Upgrade|Security Intelligence Update') {
+        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Insider Preview|Upgrade|Security Intelligence Update') {
             $leftOut += "$($u.Title) [$categories$(if ($u.BrowseOnly) { ', optional' })]"
             continue
         }
@@ -588,7 +641,8 @@ try {
 }
 
 function Add-ScanNotes {
-    # Notes for the build's data (update-data.py copies them from summary.json): updates the VM couldn't install
+    # Notes for the build's data (update-data.py copies them from summary.json): updates the VM couldn't install, and the Insider
+    # channel of an Insider build
     $notes = @()
     $store = Join-Path $OutputDir 'store-apps.json'
     if (Test-Path $store) {
@@ -602,9 +656,12 @@ function Add-ScanNotes {
         $left = @(@($r.notInstalled) | Where-Object { $_ })
         if ($left) { $notes += "Updates Windows Update offered that couldn't be installed: $($left -join '; ')" }
     }
-    if (-not $notes) { return }
+    $fields = @()
+    if ($InsiderChannel) { $fields += '"insiderChannel": ' + (ConvertTo-Json $InsiderChannel -Compress) }
+    if ($notes) { $fields += '"notes": ' + (ConvertTo-Json @($notes) -Compress) }
+    if (-not $fields) { return }
     $summary = Join-Path $OutputDir 'summary.json'
-    $text = (Get-Content $summary -Raw -Encoding UTF8) -replace '^\s*\{', ('{"notes": ' + (ConvertTo-Json @($notes) -Compress).Replace('$', '$$') + ', ')
+    $text = (Get-Content $summary -Raw -Encoding UTF8) -replace '^\s*\{', ('{' + ($fields -join ', ').Replace('$', '$$') + ', ')
     Set-Content $summary $text -Encoding UTF8
     $notes | ForEach-Object { Log "Note for the build's data: $_" }
 }
@@ -813,7 +870,8 @@ try {
 
     Save-Report 'verification.json' @{ build = $build; servicing = $servicing; cumulativeUpdatePackage = $rollup; health = $health; files = $files }
     $failures = @()
-    if (-not $rollup) { $failures += "no installed cumulative update package for build $build" }
+    # (An Insider build installed as a feature update can be all in its base packages, with no cumulative update of its own)
+    if (-not $rollup -and -not $InsiderChannel) { $failures += "no installed cumulative update package for build $build" }
     if ($servicing.Unfinished) { $failures += "unfinished packages: $($servicing.Unfinished -join ', ')" }
     if ($servicing.RestartPending) { $failures += 'a restart is pending' }
     if ($health.error) { $failures += "health checks failed: $($health.error)" }
@@ -920,7 +978,9 @@ if ($Step -in 'All', 'Install' -and $updateUrls) {
     }
 }
 if ($Step -in 'All', 'FeatureUpdate') {
-    if (Install-TargetVersion) {
+    if ($InsiderChannel) {
+        Install-InsiderBuild
+    } elseif (Install-TargetVersion) {
         Restart-ScanVM
         Set-VmNetwork
     }

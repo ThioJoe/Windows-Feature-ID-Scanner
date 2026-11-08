@@ -26,6 +26,11 @@ concurrency:
   group: windows-scanner
   cancel-in-progress: false
 
+# Placeholder for device/account information if the Insider setup ends up needing it (see Register-InsiderDevice in scan-in-vm.ps1).
+# While WINDOWS_INSIDER_DEVICE is empty, Insider builds are listed but not scheduled.
+env:
+  INSIDER_DEVICE: ${{ secrets.WINDOWS_INSIDER_DEVICE }}
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -47,7 +52,7 @@ jobs:
           VERSIONS: ${{ inputs.versions }}
           BUILDS: ${{ inputs.builds }}
           FORCE: ${{ inputs.force && '--all' || '' }}
-        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
+        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE ${INSIDER_DEVICE:+--insider} --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
 
       # The list only changes when Microsoft releases something
       - name: Commit the list of released builds
@@ -87,9 +92,10 @@ jobs:
           VERSION: ${{ matrix.build.version }}
           KB: ${{ matrix.build.kb }}
           BUILD: ${{ matrix.build.build }}
+          CHANNEL: ${{ matrix.build.channel }}  # An Insider build's channel (empty for the released versions' builds)
         run: |
           python --version
-          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -OutputDir "$env:GITHUB_WORKSPACE\vm-output"
+          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output"
 
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks

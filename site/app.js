@@ -68,15 +68,18 @@ function compareVersions(a, b) {
   return 0;
 }
 
+// What a build is a build of: its display version (e.g. 25H2), or its Windows Insider channel
+const versionText = (b) => (b.insiderChannel ? `Insider ${b.insiderChannel}` : b.displayVersion);
+
 function buildLabel(b) {
-  return `${b.build} ${b.architecture}${b.displayVersion ? ' (' + b.displayVersion + ')' : ''}`;
+  return `${b.build} ${b.architecture}${versionText(b) ? ' (' + versionText(b) + ')' : ''}`;
 }
 
-// Builds grouped by architecture and display version (e.g. 25H2), newest first
+// Builds grouped by architecture and display version (e.g. 25H2) or Insider channel, newest first
 function fillBuildSelect(select, selectedKey) {
   const groups = new Map();
   [...index.builds].sort((a, b) => compareVersions(b, a)).forEach((b) => {
-    const g = `${b.architecture} — ${b.displayVersion || 'unknown version'}`;
+    const g = `${b.architecture} — ${versionText(b) || 'unknown version'}`;
     if (!groups.has(g)) groups.set(g, []);
     groups.get(g).push(b);
   });
@@ -379,7 +382,9 @@ async function renderReleases() {
     "from Microsoft's update history and Insider release notes, checked daily. " +
     `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
     "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
-    'Insider builds are not scanned: Microsoft only provides them to devices enrolled in the Windows Insider Program.</p>';
+    (releases.insider.some((c) => c.scannedInVm)
+      ? "Insider builds are scanned in a virtual machine enrolled in the Windows Insider Program, except Release Preview's, which are scanned as the updates they become.</p>"
+      : 'Insider builds are not scanned yet: Microsoft only provides them to devices enrolled in the Windows Insider Program, and the scanner has no enrolled device yet.</p>');
 
   html += '<h2>Windows 11</h2><div class="table-wrap"><table><thead><tr><th>Version</th><th>Build</th><th>KB</th><th>Released</th>' +
     '<th>Update</th><th>x64</th><th>ARM64</th></tr></thead><tbody>';
@@ -387,7 +392,7 @@ async function renderReleases() {
   const groupCell = (text, rows, last) => `<td rowspan="${rows}"${last ? ' class="last"' : ''}>${esc(text)}</td>`;
   releases.windows11.forEach((v, n) => {
     // The VM scans every build newer than the newest one scanned, or a version's newest build when none is
-    const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && b.build.split('.')[0] === String(v.base))
+    const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && !b.insiderChannel && b.build.split('.')[0] === String(v.base))
       .sort(compareVersions).pop();
     v.releases.forEach((r, i) => {
       const due = v.scannedInVm && (scanned ? compareVersions(r, scanned) > 0 : i === 0);
@@ -402,12 +407,17 @@ async function renderReleases() {
   html += '</tbody></table></div>';
 
   html += '<h2>Windows Insider</h2><div class="table-wrap"><table><thead><tr><th>Channel</th><th>Build</th><th>Released</th>' +
-    '<th>Release notes</th></tr></thead><tbody>';
+    '<th>Release notes</th><th>x64</th><th>ARM64</th></tr></thead><tbody>';
   releases.insider.forEach((c, n) => {
+    const listed = new Set(c.releases.map((r) => r.build));
+    const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && listed.has(b.build)).sort(compareVersions).pop();
     c.releases.forEach((r, i) => {
+      const due = c.scannedInVm && (scanned ? compareVersions(r, scanned) > 0 : i === 0);
       html += '<tr>' + (i === 0 ? groupCell(c.channel, c.releases.length, n === releases.insider.length - 1) : '') +
         `<td class="id">${esc(r.builds.join(' / '))}</td><td>${esc(r.date || '')}</td>` +
-        `<td><a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a></td></tr>`;
+        `<td><a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a></td>` +
+        `<td>${scanLink(r.build, 'AMD64') || (due ? '<span class="muted">not yet</span>' : none)}</td>` +
+        `<td>${scanLink(r.build, 'ARM64') || none}</td></tr>`;
     });
   });
   html += '</tbody></table></div>';
