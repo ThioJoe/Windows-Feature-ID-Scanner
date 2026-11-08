@@ -123,6 +123,7 @@ function matches(f, q, namedOnly) {
   if (!q) return true;
   if (String(f.id).includes(q)) return true;
   if (f.name && f.name.toLowerCase().includes(q)) return true;
+  if (f.viveToolName && f.viveToolName.toLowerCase().includes(q)) return true;
   if (f.oldName && f.oldName.toLowerCase().includes(q)) return true;
   if (f.newName && f.newName.toLowerCase().includes(q)) return true;
   return (f.modules || []).some((m) => m.toLowerCase().includes(q));
@@ -234,6 +235,7 @@ function featureDetail(build) {
 }
 
 const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</span>') +
+  (f.viveToolName ? ` <span class="muted" title="ViVeTool's dictionary names this feature differently from the symbols">(ViVeTool: ${esc(f.viveToolName)})</span>` : '') +
   (f.unverified ? ' <span class="unverified" title="This build\'s symbols for its binary couldn\'t be downloaded; known from an earlier version of the binary">unverified</span>' : '');
 const modsText = (f) => (f.modules || []).join(', ');
 

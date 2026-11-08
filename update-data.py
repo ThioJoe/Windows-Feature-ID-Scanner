@@ -91,6 +91,8 @@ def add_build(data_dir, summary_path, symbols_path):
         if not entry['name'] and s.get('name') and not NUMERIC_NAME.match(s['name']):
             entry['name'] = s['name']  # Name from ViVeTool's dictionary, when symbols had none
             entry['nameSource'] = 'vivetool'
+        elif s.get('name') and not NUMERIC_NAME.match(s['name']) and s['name'] != entry['name'] and s['name'] not in entry.get('symbolNames', []):
+            entry['viveToolName'] = s['name']  # ViVeTool's dictionary names it differently from the symbols
         configs = []
         for c in s.get('configurations', []):
             configs.append({out: c[src] for src, out in STORE_FIELDS if c.get(src) not in (None, '')})
