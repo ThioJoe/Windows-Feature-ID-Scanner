@@ -1,5 +1,5 @@
 # pages.yml
-# Publishes site/ together with data/ to GitHub Pages.
+# Publishes site/ together with data/ to GitHub Pages, and the files build-site-data.py derives from data/ for the site.
 # Requires Settings > Pages > Build and deployment > Source: "GitHub Actions".
 name: Publish Site
 
@@ -35,11 +35,14 @@ jobs:
           # When called from the scanner, check out the branch tip so the data it just committed is included
           ref: ${{ github.ref_name }}
 
+      # The site gets the data except each build's code details (data/details), which it loads from files derived from them instead
       - name: Assemble site
         run: |
           mkdir -p _site
           cp -r site/. _site/
           cp -r data _site/data
+          rm -r _site/data/details
+          python3 build-site-data.py --data data --out _site/derived
 
       - uses: actions/upload-pages-artifact@v3
         with:

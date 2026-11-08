@@ -5,13 +5,14 @@
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build each feature ID appeared in
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
-#   data/details/<arch>/<nn>.json          What each binary's code reveals about each feature (callers, strings, ...), from the newest build that had it
+#   data/details/<build>-<arch>.json       One file per scanned build: what each binary's code reveals about each feature (callers, strings, ...)
 #
 # Usage:
 #   python update-data.py --summary summary.json --symbols symbol-features.json   # add/replace a build, then regenerate everything
 #   python update-data.py                                                         # only regenerate index, first-seen and diffs
 #
-# Build files are written with one feature per line so git diffs between commits stay small and readable.
+# Build files and details files are written with one feature per line so git diffs between commits stay small and readable. The site
+# doesn't load the details files themselves: build-site-data.py derives the files it loads when the site is published.
 
 import argparse
 import datetime
@@ -23,7 +24,6 @@ import sys
 NUMERIC_NAME = re.compile(r'^(?:ID|FI)?\d+$')
 STORE_FIELDS = (('Priority', 'priority'), ('State', 'state'), ('Type', 'type'), ('Variant', 'variant'), ('PayloadKind', 'payloadKind'), ('Payload', 'payload'))
 SYMBOL_FIELDS = ('declaredIn', 'default', 'changeTime', 'requires')  # Copied from scan-symbols.py's output when present
-DETAIL_SHARDS = 64  # Usage details are split by feature ID (ID % 64) so the site only loads the part it needs
 
 
 def load_json(path):
@@ -129,34 +129,22 @@ def add_build(data_dir, summary_path, symbols_path):
     write_build_file(path, header, ordered)
     print('[data] wrote %s (%d features, %d named, %d in feature store)' % (
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
-    write_details(data_dir, arch, key, {f['id']: f['usage'] for f in symbols.get('features', []) if f.get('usage')})
+    write_details(data_dir, key, {f['id']: f['usage'] for f in symbols.get('features', []) if f.get('usage')})
     return key
 
 
-def write_details(data_dir, arch, key, usage):
-    """Stores each feature's usage details (per binary: how it's used, callers, strings, ...) in data/details/<arch>/<nn>.json, keyed by ID.
-    Each feature keeps the details of the newest build that had them, so a feature missing from a later build keeps its last known details."""
-    details_dir = os.path.join(data_dir, 'details', arch)
+def write_details(data_dir, key, usage):
+    """Stores a build's usage details in data/details/<build>-<arch>.json: for each feature ID, what each binary's code reveals about it
+    (how it's used, callers, strings, ...). Scanning a build again replaces its file."""
+    if not usage:
+        return  # A scan without code analysis
+    details_dir = os.path.join(data_dir, 'details')
     os.makedirs(details_dir, exist_ok=True)
-    version = lambda k: version_tuple(k.rsplit('-', 1)[0])
-    shards, changed = {}, set()
-    for fid, by_module in usage.items():
-        name = '%02d' % (fid % DETAIL_SHARDS)
-        if name not in shards:
-            path = os.path.join(details_dir, name + '.json')
-            shards[name] = load_json(path) if os.path.exists(path) else {}
-        old = shards[name].get(str(fid))
-        if old and version(old['build']) > version(key):
-            continue  # Details from a newer build win
-        shards[name][str(fid)] = {'build': key, 'usage': by_module}
-        changed.add(name)
-    for name in changed:
-        entries = shards[name]
-        ids = sorted(entries, key=int)
-        lines = ['%s: %s' % (json.dumps(i), json.dumps(entries[i], separators=(',', ':'))) for i in ids]
-        with open(os.path.join(details_dir, name + '.json'), 'w', encoding='utf-8', newline='\n') as f:
-            f.write('{\n' + ',\n'.join(lines) + '\n}\n')  # One feature per line, like the build files
-    print('[data] wrote usage details for %d features to %s' % (len(usage), details_dir))
+    path = os.path.join(details_dir, key + '.json')
+    lines = ['%s: %s' % (json.dumps(str(fid)), json.dumps(usage[fid], separators=(',', ':'))) for fid in sorted(usage, key=int)]
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write('{\n' + ',\n'.join(lines) + '\n}\n')  # One feature per line, like the build files
+    print('[data] wrote usage details for %d features to %s' % (len(usage), path))
 
 
 def store_signature(feat):

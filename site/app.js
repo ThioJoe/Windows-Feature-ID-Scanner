@@ -2,6 +2,7 @@
 'use strict';
 
 const DATA = 'data/';
+const DERIVED = 'derived/';  // Files build-site-data.py derives from data/ when the site is published
 const PAGE = 500;
 const NUMERIC = /^(?:ID|FI)?\d+$/;
 
@@ -19,8 +20,8 @@ const detailTextCache = new Map();
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-async function getJson(path) {
-  const res = await fetch(DATA + path, { cache: 'no-cache' });
+async function getJson(path, root = DATA) {
+  const res = await fetch(root + path, { cache: 'no-cache' });
   if (!res.ok) throw new Error(path + ': HTTP ' + res.status);
   return res.json();
 }
@@ -30,10 +31,11 @@ function loadBuild(key) {
   return buildCache.get(key);
 }
 
-// Usage details (what each binary's code reveals about a feature) are split into shards by ID; a missing shard means no details
+// Usage details (what each binary's code reveals about a feature), from the newest build that has them, split into shards by ID
+// when the site is published (data/ has a file per build); a missing shard means no details
 function loadShard(arch, n) {
   const path = `details/${encodeURIComponent(arch)}/${String(n).padStart(2, '0')}.json`;
-  if (!detailCache.has(path)) detailCache.set(path, getJson(path).catch(() => ({})));
+  if (!detailCache.has(path)) detailCache.set(path, getJson(path, DERIVED).catch(() => ({})));
   return detailCache.get(path);
 }
 

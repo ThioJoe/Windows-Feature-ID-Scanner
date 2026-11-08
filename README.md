@@ -67,14 +67,18 @@ data/
 ├── first-seen.json             First tracked build each feature ID appeared in, per architecture
 ├── releases.json               The newest builds Microsoft has released for each Windows 11 version and Insider channel
 ├── builds/<build>-<arch>.json  All feature IDs of a build, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
-├── details/<arch>/<nn>.json    What each binary's code reveals about each feature (callers, strings, ...), split by ID (ID % 64)
+├── details/<build>-<arch>.json What each binary's code reveals about each feature of a build, one per line (callers, strings, ...)
 └── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)
 ```
 
 Every feature ID found is listed, named or not. Many features only have a number for a name in the symbols (the ID itself, or an obfuscated hash); those have `"name": null` and keep the raw symbol names in `symbolNames`. A feature whose code has been removed from every binary can still be configured in the feature store; it keeps the name an earlier build found for it (`"nameSource": "earlierBuild"`). "First seen" for the first tracked build only means the feature existed at least that early. A build scanned in the VM can have `notes`, such as Store apps the VM couldn't update, and an Insider build has its `insiderChannel`.
 
-`modules` lists the binaries that contain a feature's code. Some binaries ship full PDBs whose type information declares the IDs of hundreds of features they never use (the PDB of Windows.UI.Xaml.dll declares 1,878 feature IDs; the binary uses 55); those are listed separately in `declaredIn`. Where known, a feature also has `default` (`enabled`, `disabled`, `alwaysEnabled` or `alwaysDisabled`), `changeTime` (`read`, `moduleReload`, `session` or `reboot`) and `requires` (feature IDs). The bulkier details are in `data/details/`, keyed by feature ID, from the newest build that had them.
+`modules` lists the binaries that contain a feature's code. Some binaries ship full PDBs whose type information declares the IDs of hundreds of features they never use (the PDB of Windows.UI.Xaml.dll declares 1,878 feature IDs; the binary uses 55); those are listed separately in `declaredIn`. Where known, a feature also has `default` (`enabled`, `disabled`, `alwaysEnabled` or `alwaysDisabled`), `changeTime` (`read`, `moduleReload`, `session` or `reboot`) and `requires` (feature IDs). The bulkier details are in `data/details/`, a file per build like the build files.
+
+The site doesn't load the details files themselves. When it's published, `build-site-data.py` derives the files it loads: each feature's details from the newest build that has them, split into 64 files by feature ID so that a feature's panel downloads one small file instead of a build's whole details. Those derived files only exist on the published site, not in the repository.
 
 ## Running locally
 
 `python scan-symbols.py` works on any Windows machine with Python 3 (no packages needed). It writes `extracted-names.txt` (`ID Name`) and `symbol-features.json`. See `--help` for options such as `--root`, `--symbol-cache` and `--keep-pdbs`.
+
+To view the site locally, put the contents of `site/` and a copy of `data/` in a folder, run `python build-site-data.py --out <folder>/derived`, and serve the folder with any web server (`python -m http.server`).
