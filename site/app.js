@@ -483,8 +483,10 @@ const SGM_TABLES = [
 const SGM_ORDER = { added: 0, removed: 1, changed: 2 };
 
 // Paths into app packages and user profiles change with every app update and differ between PCs, so entries are compared without
-// the package version and architecture, and the user name
-const comparable = (s) => s.replace(/_\d+(?:\.\d+)+_(?:x64|x86|arm64|arm|neutral)__/gi, '__').replace(/\\Users\\[^\\]+\\/gi, '\\Users\\*\\');
+// the package version and architecture, and the user name. A value can also list several things (the apps that handle a protocol)
+// in whatever order they were registered in, so the order of its parts doesn't count either.
+const comparable = (s) => s.replace(/_\d+(?:\.\d+)+_(?:x64|x86|arm64|arm|neutral)__/gi, '__').replace(/\\Users\\[^\\]+\\/gi, '\\Users\\*\\')
+  .split(/[\s;]+/).filter(Boolean).sort().join(' ');
 
 let sgmIndex = null;  // derived/super-god-mode.json: the builds that have statistics
 const sgmCache = new Map();
@@ -567,11 +569,12 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
   const box = section(out, 'compare:sgm', 'h2', '', 'Super God Mode');
   const note = (html) => box.insertAdjacentHTML('beforeend', `<p class="muted">${html}</p>`);
   if (!data) { notes.forEach(note); return; }
-  const versions = [...new Set(runs.map((r) => r.version))].join(' and ');
-  note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a> ${esc(versions)} found ` +
-    'in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
+  const sameVersion = runs[0].version === runs[1].version;
+  note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a>${sameVersion ? ' ' + esc(runs[0].version) : ''} ` +
+    'found in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
     'app updates.' + (runs[0].user !== runs[1].user ? ` These two runs were on different PCs (as ${esc(runs[0].user)} and ${esc(runs[1].user)}), ` +
-    'which have different apps.' : ''));
+    'which have different apps.' : '') + (sameVersion ? '' : ` The two runs used different versions of Super God Mode (${esc(runs[0].version)} ` +
+    `on the old build, ${esc(runs[1].version)} on the new one), which can find different things.`));
   const same = [], absent = [];
   // A column of a statistics file, or a computed one (SETTINGS_GATE), whose links lead into the build the entry is from
   const column = (c, i) => (typeof c === 'string'
@@ -594,12 +597,16 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
     const filtered = rows.filter((r) => !q || [r.row, r.old || {}].some((e) => Object.values(e).some((v) => v.toLowerCase().includes(q))));
     const counts = Object.keys(SGM_ORDER).map((c) => [c, filtered.filter((r) => r.change === c).length]).filter(([, n]) => n)
       .map(([c, n]) => `<span class="${c}">${n} ${c}</span>`).join(', ');
+    // A changed entry names the columns that changed when the table doesn't show them
+    const shown = new Set(t.show.flatMap((c) => (typeof c === 'string' ? [c] : c.from)));
+    const changeCell = (r) => `<span class="chg ${r.change}">${r.change}</span>` +
+      (r.change === 'changed' && r.cols.some((c) => !shown.has(c)) ? `<div class="chg-cols">${r.cols.filter((c) => !shown.has(c)).map(esc).join(', ')}</div>` : '');
     const sec = section(box, 'compare:sgm:' + t.file, 'h3', '',
       `${esc(t.title)} <span class="count">${counts || '0'}${filtered.length !== rows.length ? ` of ${rows.length} differences` : ''}</span>`,
       filtered.length > 0);
     if (filtered.length) {
       renderTable(sec, filtered, [
-        { title: 'Change', value: (r) => r.change, sortKey: (r) => SGM_ORDER[r.change], html: (r) => `<span class="chg ${r.change}">${r.change}</span>` },
+        { title: 'Change', value: (r) => r.change, sortKey: (r) => SGM_ORDER[r.change], html: changeCell },
         ...t.show.map(column),
       ], undefined, sgmDetail);
     }
