@@ -393,7 +393,8 @@ def insider_channels(learn):
 
 def scanned_keys(data_dir):
     builds_dir = os.path.join(data_dir, 'builds')
-    return {fn[:-5] for fn in (os.listdir(builds_dir) if os.path.isdir(builds_dir) else []) if fn.endswith('.json')}
+    return {name for name in (os.listdir(builds_dir) if os.path.isdir(builds_dir) else [])
+            if os.path.exists(os.path.join(builds_dir, name, 'features.json'))}
 
 
 def scannable(channel):

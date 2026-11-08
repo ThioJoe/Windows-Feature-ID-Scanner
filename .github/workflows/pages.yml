@@ -35,13 +35,14 @@ jobs:
           # When called from the scanner, check out the branch tip so the data it just committed is included
           ref: ${{ github.ref_name }}
 
-      # The site gets the data except each build's code details (data/details), which it loads from files derived from them instead
+      # The site gets the data except each build's details.json, which it loads from files derived from them instead, and its Super God
+      # Mode statistics, which it doesn't show
       - name: Assemble site
         run: |
           mkdir -p _site
           cp -r site/. _site/
           cp -r data _site/data
-          rm -rf _site/data/details
+          rm -rf _site/data/builds/*/details.json _site/data/builds/*/super-god-mode
           python3 build-site-data.py --data data --out _site/derived
 
       - uses: actions/upload-pages-artifact@v3

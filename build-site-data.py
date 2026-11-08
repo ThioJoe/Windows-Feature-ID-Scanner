@@ -1,10 +1,10 @@
 # build-site-data.py
 # Derives the files the site loads from data/, when the site is published (pages.yml). They aren't kept in the repository: data/ holds
-# each build's data in its own files, and these only rearrange it so the site can load what it shows quickly.
+# each build's data in its own folder, and these only rearrange it so the site can load what it shows quickly.
 #
-#   <out>/details/<arch>/<nn>.json   For each feature ID, its code details (from data/details/) from the newest build of the architecture
-#                                    that has them, with that build's key. Split by feature ID (ID % 64), so that showing a feature only
-#                                    downloads the file it's in rather than all of a build's details.
+#   <out>/details/<arch>/<nn>.json   For each feature ID, its code details (from the builds' details.json) from the newest build of the
+#                                    architecture that has them, with that build's key. Split by feature ID (ID % 64), so that showing a
+#                                    feature only downloads the file it's in rather than all of a build's details.
 #
 #   python build-site-data.py --data data --out _site/derived
 
@@ -26,12 +26,12 @@ def main():
     parser.add_argument('--out', required=True, help='Folder for the derived files, which the site loads from derived/')
     args = parser.parse_args()
 
-    details_dir = os.path.join(args.data, 'details')
-    keys = [fn[:-5] for fn in os.listdir(details_dir) if fn.endswith('.json')] if os.path.isdir(details_dir) else []
+    builds_dir = os.path.join(args.data, 'builds')
+    keys = [name for name in os.listdir(builds_dir) if os.path.exists(os.path.join(builds_dir, name, 'details.json'))] if os.path.isdir(builds_dir) else []
     newest = {}  # arch -> feature ID -> (build key, details)
     for key in sorted(keys, key=lambda k: version_tuple(k.rsplit('-', 1)[0])):  # Newer builds replace older ones
         arch = key.rsplit('-', 1)[1]
-        with open(os.path.join(details_dir, key + '.json'), encoding='utf-8') as f:
+        with open(os.path.join(builds_dir, key, 'details.json'), encoding='utf-8') as f:
             for fid, usage in json.load(f).items():
                 newest.setdefault(arch, {})[int(fid)] = (key, usage)
 

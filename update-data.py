@@ -1,24 +1,28 @@
 # update-data.py
 # Maintains the feature database in data/:
 #
-#   data/builds/<build>-<arch>.json        One file per scanned build: every feature ID found (named or not), from symbols and/or the feature store
+#   data/builds/<build>-<arch>/            A folder per scanned build:
+#       features.json                      every feature ID found (named or not), from symbols and/or the feature store
+#       details.json                       what each binary's code reveals about each feature (callers, strings, ...)
+#       super-god-mode/                    Super God Mode's statistics for the build, its CSV and XML files as it writes them
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build each feature ID appeared in
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
-#   data/details/<build>-<arch>.json       One file per scanned build: what each binary's code reveals about each feature (callers, strings, ...)
 #
 # Usage:
-#   python update-data.py --summary summary.json --symbols symbol-features.json   # add/replace a build, then regenerate everything
-#   python update-data.py                                                         # only regenerate index, first-seen and diffs
+#   python update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>]
+#                                          # add/replace a build, then regenerate everything
+#   python update-data.py                  # only regenerate index, first-seen and diffs
 #
-# Build files and details files are written with one feature per line so git diffs between commits stay small and readable. The site
-# doesn't load the details files themselves: build-site-data.py derives the files it loads when the site is published.
+# features.json and details.json are written with one feature per line so git diffs between commits stay small and readable. The site
+# doesn't load details.json itself: build-site-data.py derives the files it loads when the site is published.
 
 import argparse
 import datetime
 import json
 import os
 import re
+import shutil
 import sys
 
 NUMERIC_NAME = re.compile(r'^(?:ID|FI)?\d+$')
@@ -39,12 +43,18 @@ def build_key(full_build, arch):
     return '%s-%s' % (full_build, arch)
 
 
+def build_dir(data_dir, key):
+    """The build's folder, data/builds/<build>-<arch>/."""
+    return os.path.join(data_dir, 'builds', key)
+
+
 def load_builds(data_dir):
     builds_dir = os.path.join(data_dir, 'builds')
     builds = []
-    for fn in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
-        if fn.endswith('.json'):
-            builds.append(load_json(os.path.join(builds_dir, fn)))
+    for name in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
+        path = os.path.join(builds_dir, name, 'features.json')
+        if os.path.exists(path):
+            builds.append(load_json(path))
     return builds
 
 
@@ -126,8 +136,8 @@ def add_build(data_dir, summary_path, symbols_path):
     if summary.get('insiderChannel'):
         header['insiderChannel'] = summary['insiderChannel']  # A Windows Insider build, from this channel
     ordered = [features[k] for k in sorted(features)]
-    os.makedirs(os.path.join(data_dir, 'builds'), exist_ok=True)
-    path = os.path.join(data_dir, 'builds', key + '.json')
+    os.makedirs(build_dir(data_dir, key), exist_ok=True)
+    path = os.path.join(build_dir(data_dir, key), 'features.json')
     write_build_file(path, header, ordered)
     print('[data] wrote %s (%d features, %d named, %d in feature store)' % (
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
@@ -136,17 +146,28 @@ def add_build(data_dir, summary_path, symbols_path):
 
 
 def write_details(data_dir, key, usage):
-    """Stores a build's usage details in data/details/<build>-<arch>.json: for each feature ID, what each binary's code reveals about it
-    (how it's used, callers, strings, ...). Scanning a build again replaces its file."""
+    """Stores a build's usage details in data/builds/<build>-<arch>/details.json: for each feature ID, what each binary's code reveals
+    about it (how it's used, callers, strings, ...). Scanning a build again replaces the file."""
     if not usage:
         return  # A scan without code analysis
-    details_dir = os.path.join(data_dir, 'details')
-    os.makedirs(details_dir, exist_ok=True)
-    path = os.path.join(details_dir, key + '.json')
+    path = os.path.join(build_dir(data_dir, key), 'details.json')
     lines = ['%s: %s' % (json.dumps(str(fid)), json.dumps(usage[fid], separators=(',', ':'))) for fid in sorted(usage, key=int)]
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('{\n' + ',\n'.join(lines) + '\n}\n')  # One feature per line, like the build files
+        f.write('{\n' + ',\n'.join(lines) + '\n}\n')  # One feature per line, like features.json
     print('[data] wrote usage details for %d features to %s' % (len(usage), path))
+
+
+def store_super_god_mode(data_dir, key, folder):
+    """Copies Super God Mode's statistics for a build (the CSV and XML files run-super-god-mode.ps1 keeps, as they are, and its
+    run.json) to data/builds/<build>-<arch>/super-god-mode/, replacing what an earlier scan of the build stored there."""
+    if not folder or not os.path.isdir(folder) or not os.listdir(folder):
+        print('[data] no Super God Mode statistics for %s' % key)
+        return
+    dest = os.path.join(build_dir(data_dir, key), 'super-god-mode')
+    if os.path.isdir(dest):
+        shutil.rmtree(dest)
+    shutil.copytree(folder, dest)
+    print('[data] stored Super God Mode statistics in %s: %s' % (dest, ', '.join(sorted(os.listdir(dest)))))
 
 
 def store_signature(feat):
@@ -298,9 +319,12 @@ def main():
     parser.add_argument('--data-dir', default='data')
     parser.add_argument('--summary', help='summary.json from scan-features.ps1')
     parser.add_argument('--symbols', help='symbol-features.json from scan-symbols.py')
+    parser.add_argument('--super-god-mode', help="Folder with Super God Mode's statistics for the build (from run-super-god-mode.ps1)")
     args = parser.parse_args()
     if args.summary:
-        add_build(args.data_dir, args.summary, args.symbols)
+        key = add_build(args.data_dir, args.summary, args.symbols)
+        if args.super_god_mode:
+            store_super_god_mode(args.data_dir, key, args.super_god_mode)
     regenerate(args.data_dir)
     return 0
 

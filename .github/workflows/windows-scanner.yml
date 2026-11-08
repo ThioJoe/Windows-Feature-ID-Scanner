@@ -28,7 +28,7 @@ jobs:
           $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
           $regInfo = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
           $key = "$($osInfo.BuildNumber).$($regInfo.UBR)-$env:PROCESSOR_ARCHITECTURE"
-          if (Test-Path "data\builds\$key.json") {
+          if (Test-Path "data\builds\$key\features.json") {
             Write-Host "Build $key is already in data/builds."
             echo "needed=false" >> $env:GITHUB_OUTPUT
           } else {
@@ -82,6 +82,14 @@ jobs:
         shell: powershell
         run: .\scan-features.ps1
 
+      # Super God Mode's statistics (see run-super-god-mode.ps1). They come in addition to the scan, so a failure only means the build's
+      # data has none
+      - name: Run Super God Mode
+        shell: powershell
+        timeout-minutes: 30
+        continue-on-error: true
+        run: .\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
+
       - name: Create output directory based on build version
         shell: powershell
         run: |
@@ -116,7 +124,7 @@ jobs:
       - name: Add build to data/ and commit
         shell: powershell
         run: |
-          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json"
+          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode"
           if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

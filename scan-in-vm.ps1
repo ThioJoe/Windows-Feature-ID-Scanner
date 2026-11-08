@@ -19,7 +19,8 @@
 #   5. After a last restart, the VM is checked against what the build is supposed to be (Test-VmInstallation): Windows' servicing,
 #      DISM /ScanHealth, sfc /verifyonly and the installed files against Microsoft's file lists (verify-windows-files.py). If a check
 #      fails, the run stops before the scan.
-#   6. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, and its output is copied back.
+#   6. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, then Super God Mode
+#      (run-super-god-mode.ps1) as the VM's own user, and their output is copied back.
 #
 # Steps can be run one at a time with -Step, which is how it was developed and tested.
 
@@ -415,10 +416,11 @@ function Restart-ScanVM {
     throw "The VM didn't finish restarting within 90 minutes"
 }
 
-function Invoke-VmTask([string]$name, [string]$script, [int]$timeoutMinutes = 60) {
+function Invoke-VmTask([string]$name, [string]$script, [int]$timeoutMinutes = 60, [switch]$AsUser) {
     # Runs a script inside the VM as a SYSTEM scheduled task, shows its log as it grows, and returns what it passed to Write-Result.
     # Windows Update refuses to download or install from a remote session (PowerShell Direct is one), and long installs and the scan
     # are better off not depending on one either. The script gets two functions: Write-Log (a line in its log) and Write-Result.
+    # With -AsUser, the task runs as the VM's own user instead (scan, an administrator, elevated), with that user's apps and settings.
     $preamble = @'
 $log = 'C:\scan-tasks\__NAME__.log'
 function Write-Log([string]$line) {
@@ -426,13 +428,17 @@ function Write-Log([string]$line) {
 }
 function Write-Result([string]$value) { Write-Log "result: $value"; Set-Content 'C:\scan-tasks\__NAME__.result' $value }
 '@.Replace('__NAME__', $name)
-    Invoke-InVM -arguments $name, ($preamble + "`r`n" + $script) {
-        param($name, $script)
+    Invoke-InVM -arguments $name, ($preamble + "`r`n" + $script), $(if ($AsUser) { Get-VmPassword } else { '' }) {
+        param($name, $script, $password)
         New-Item -ItemType Directory -Force C:\scan-tasks | Out-Null
         Set-Content "C:\scan-tasks\$name.ps1" $script
         Remove-Item "C:\scan-tasks\$name.log", "C:\scan-tasks\$name.result" -ErrorAction SilentlyContinue
         $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -ExecutionPolicy Bypass -File C:\scan-tasks\$name.ps1"
-        Register-ScheduledTask -TaskName $name -Action $action -User 'NT AUTHORITY\SYSTEM' -RunLevel Highest -Force | Out-Null
+        if ($password) {
+            Register-ScheduledTask -TaskName $name -Action $action -User 'scan' -Password $password -RunLevel Highest -Force | Out-Null
+        } else {
+            Register-ScheduledTask -TaskName $name -Action $action -User 'NT AUTHORITY\SYSTEM' -RunLevel Highest -Force | Out-Null
+        }
         Start-ScheduledTask -TaskName $name
     }
     $deadline = (Get-Date).AddMinutes($timeoutMinutes)
@@ -921,7 +927,7 @@ function Copy-ScannerToVM {
             Remove-Item C:\scan\python.zip
         }
     }
-    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py') {
+    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py', 'run-super-god-mode.ps1') {
         Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
     }
 }
@@ -945,6 +951,20 @@ try {
 } catch { Write-Result "error $($_.Exception.Message)" }
 '@
     if ($result -ne 'ok') { throw "The scan inside the VM failed: $result" }
+
+    # Super God Mode's statistics, as the VM's user would get them. They come in addition to the scan, so a failure only means the
+    # build's data has none (run-super-god-mode.ps1 reports its own failures in run.json and still succeeds).
+    try {
+        $godMode = Invoke-VmTask 'SuperGodMode' -AsUser -timeoutMinutes 60 -script @'
+try {
+    & C:\scan\run-super-god-mode.ps1 -OutputDir C:\scan\output-temp\super-god-mode *>&1 | ForEach-Object { Write-Log "$_" }
+    Write-Result 'ok'
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@
+        if ($godMode -ne 'ok') { Log "Super God Mode didn't run: $godMode" }
+    } catch {
+        Log "Super God Mode didn't run: $($_.Exception.Message)"
+    }
 
     Log "Copying the results to $OutputDir"
     $s = Get-VmSession

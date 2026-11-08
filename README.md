@@ -9,7 +9,8 @@ The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`)
 
 1. **`scan-symbols.py`** finds feature names and IDs in Microsoft's public symbols. For every binary under the Windows directories it downloads the matching PDB from the Microsoft symbol server and reads the symbols that WIL feature staging emits (`Feature_<Name>__descriptor`, `Feature_<Name>__private_descriptor`, `__WilFeatureTraits_Feature_<Name>::id`), then reads each feature's ID from the binary. C++ features in binaries built with older WIL have no descriptor; their ID comes from the code of their `GetCurrentFeatureEnabledState`, which passes it to Windows. This replaces mach2, which is retired and fails on current PDBs. For binaries that contain features, it also analyzes their code (see below).
 2. **`scan-features.ps1`** runs ViVeTool to dump the feature store (the IDs actually configured on the machine) and fills in names from step 1.
-3. **`update-data.py`** merges both into `data/builds/<build>-<arch>.json` and regenerates the index, first-seen table and diffs. The workflow commits the result and republishes the site.
+3. **`run-super-god-mode.ps1`** runs the latest release of [Super God Mode](https://github.com/ThioJoe/Windows-Super-God-Mode) and keeps its statistics: CSV files listing the build's CLSID shell folders, named special folders, task links, `ms-settings:` pages, deep links, URL protocols and hidden app links, and the XML data the task links and deep links come from. The shortcuts it creates aren't kept. If it fails, the scan carries on without its statistics.
+4. **`update-data.py`** puts all of it in the build's folder, `data/builds/<build>-<arch>/`, and regenerates the index, first-seen table and diffs. The workflow commits the result and republishes the site.
 
 The workflow runs daily: a small check job reads the runner's Windows build and only starts a full scan when that build isn't in `data/` yet. It can also be started manually from the Actions tab, which always scans.
 
@@ -29,7 +30,7 @@ The `Windows VM Feature Scanner` workflow (`.github/workflows/windows-vm-scanner
    - `verify-windows-files.py` checks the installed files against Microsoft's own lists. Each update's KB article (read through the Microsoft Learn API, see below) links a file list with the name, version and SHA-256 of every file the update carries. Every file installed from Windows' component store has to be either a file one of the installed updates lists (by SHA-256) or exactly the file in Microsoft's image the VM started from, listed right after the image is applied. Which of an update's components apply to a system is decided by Windows' servicing, which the first check covers.
 
    If a check fails, nothing is recorded. The reports (`verification.json` and the others, plus a list of every file with its SHA-256) are kept with the run's artifacts either way.
-6. The same scan as on the ARM64 runner runs inside the VM. If the VM didn't end up at the expected build, nothing is recorded.
+6. The same scan as on the ARM64 runner runs inside the VM, with Super God Mode run as the VM's own user, as it would be by someone using that PC. If the VM didn't end up at the expected build, nothing is recorded.
 
 Starting from an older image and updating it gives the same Windows as Microsoft's own image of that build: built both ways (from Microsoft's 26300.9711 image as it is, and from the June 2025 24H2 image plus the October update and the 26H2 enablement package), every file installed from the component store was byte-identical between the two VMs, and neither had one the other lacked, apart from three of .NET's precompiled native images. The differences were in apps (the Store apps and Edge an image comes with), the update history, and files Windows generates on each PC.
 
@@ -66,16 +67,18 @@ data/
 ├── symbol-cache-AMD64.json     The same for the x64 scans
 ├── first-seen.json             First tracked build each feature ID appeared in, per architecture
 ├── releases.json               The newest builds Microsoft has released for each Windows 11 version and Insider channel
-├── builds/<build>-<arch>.json  All feature IDs of a build, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
-├── details/<build>-<arch>.json What each binary's code reveals about each feature of a build, one per line (callers, strings, ...)
+├── builds/<build>-<arch>/      A folder per scanned build:
+│   ├── features.json           All feature IDs of the build, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
+│   ├── details.json            What each binary's code reveals about each feature, one per line (callers, strings, ...)
+│   └── super-god-mode/         Super God Mode's statistics for the build: its CSV and XML files as it writes them, and run.json
 └── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)
 ```
 
 Every feature ID found is listed, named or not. Many features only have a number for a name in the symbols (the ID itself, or an obfuscated hash); those have `"name": null` and keep the raw symbol names in `symbolNames`. A feature whose code has been removed from every binary can still be configured in the feature store; it keeps the name an earlier build found for it (`"nameSource": "earlierBuild"`). A feature that ViVeTool's dictionary names differently from the symbols also has that name, as `viveToolName`. "First seen" for the first tracked build only means the feature existed at least that early. A build scanned in the VM can have `notes`, such as Store apps the VM couldn't update, and an Insider build has its `insiderChannel`.
 
-`modules` lists the binaries that contain a feature's code. Some binaries ship full PDBs whose type information declares the IDs of hundreds of features they never use (the PDB of Windows.UI.Xaml.dll declares 1,878 feature IDs; the binary uses 55); those are listed separately in `declaredIn`. Where known, a feature also has `default` (`enabled`, `disabled`, `alwaysEnabled` or `alwaysDisabled`), `changeTime` (`read`, `moduleReload`, `session` or `reboot`) and `requires` (feature IDs). The bulkier details are in `data/details/`, a file per build like the build files.
+`modules` lists the binaries that contain a feature's code. Some binaries ship full PDBs whose type information declares the IDs of hundreds of features they never use (the PDB of Windows.UI.Xaml.dll declares 1,878 feature IDs; the binary uses 55); those are listed separately in `declaredIn`. Where known, a feature also has `default` (`enabled`, `disabled`, `alwaysEnabled` or `alwaysDisabled`), `changeTime` (`read`, `moduleReload`, `session` or `reboot`) and `requires` (feature IDs). The bulkier details are in each build's `details.json`.
 
-The site doesn't load the details files themselves. When it's published, `build-site-data.py` derives the files it loads: each feature's details from the newest build that has them, split into 64 files by feature ID so that a feature's panel downloads one small file instead of a build's whole details. Those derived files only exist on the published site, not in the repository.
+The site doesn't load the `details.json` files themselves. When it's published, `build-site-data.py` derives the files it loads: each feature's details from the newest build that has them, split into 64 files by feature ID so that a feature's panel downloads one small file instead of a build's whole details. Those derived files only exist on the published site, not in the repository.
 
 ## Running locally
 

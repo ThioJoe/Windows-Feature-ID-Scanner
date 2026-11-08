@@ -27,7 +27,7 @@ async function getJson(path, root = DATA) {
 }
 
 function loadBuild(key) {
-  if (!buildCache.has(key)) buildCache.set(key, getJson('builds/' + encodeURIComponent(key) + '.json'));
+  if (!buildCache.has(key)) buildCache.set(key, getJson('builds/' + encodeURIComponent(key) + '/features.json'));
   return buildCache.get(key);
 }
 

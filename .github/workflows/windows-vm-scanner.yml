@@ -128,7 +128,7 @@ jobs:
       - name: Add build to data/ and commit
         shell: powershell
         run: |
-          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json"
+          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode"
           if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
