@@ -71,6 +71,7 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-meta { margin-left: auto; padding-left: 20px; color: var(--muted); font-size: 12px; }
 input[type=search] { flex: 1 1 260px; min-width: 0; }
 button { cursor: pointer; }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 label.check { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .status { color: var(--muted); margin: 4px 0 12px; }
 h2 { font-size: 16px; margin: 24px 0 8px; }
