@@ -570,11 +570,14 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
   const note = (html) => box.insertAdjacentHTML('beforeend', `<p class="muted">${html}</p>`);
   if (!data) { notes.forEach(note); return; }
   const sameVersion = runs[0].version === runs[1].version;
+  // Patch releases (1.2.x) don't change what Super God Mode finds; a new minor or major version (1.3) can
+  const minor = (v) => String(v).split('.').slice(0, 2).join('.');
   note(`The shortcuts and links <a href="https://github.com/ThioJoe/Windows-Super-God-Mode">Super God Mode</a> ` +
     (sameVersion ? esc(runs[0].version) : `(${esc(runs[0].version)} on the old build, ${esc(runs[1].version)} on the new one)`) +
     ' found in each build, run as the PC\'s user. URL protocols and hidden app links come from the installed apps, so they also change with ' +
     'app updates.' + (runs[0].user !== runs[1].user ? ` These two runs were on different PCs (as ${esc(runs[0].user)} and ${esc(runs[1].user)}), ` +
-    'which have different apps.' : ''));
+    'which have different apps.' : '') + (minor(runs[0].version) !== minor(runs[1].version)
+    ? ` ${esc(runs[0].version)} and ${esc(runs[1].version)} are different minor versions of Super God Mode, which can find different things.` : ''));
   const same = [], absent = [];
   // A column of a statistics file, or a computed one (SETTINGS_GATE), whose links lead into the build the entry is from
   const column = (c, i) => (typeof c === 'string'
