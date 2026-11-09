@@ -512,7 +512,10 @@ try {
     [void]$wanted.Add($offer)
     $downloader = $session.CreateUpdateDownloader(); $downloader.Updates = $wanted
     Write-Log "downloaded $($offer.Title): result $($downloader.Download().ResultCode)"
-    $files = @(Get-ChildItem C:\Windows\SoftwareDistribution\Download -Recurse -File -Include *.cab, *.msu -ErrorAction SilentlyContinue)
+    $all = @(Get-ChildItem C:\Windows\SoftwareDistribution\Download -Recurse -File -Include *.cab, *.msu -ErrorAction SilentlyContinue)
+    # Packages only, not Windows Update's metadata about them, whose names can have the KB too (Metadata\EKBUpdateCompDB_KB5054156.xml.cab)
+    $files = @($all | Where-Object { $_.FullName -notmatch '\\Metadata\\' -and $_.Name -notmatch '\.xml\.cab$|AggregatedMetadata' })
+    Write-Log "downloaded packages ($($all.Count - $files.Count) metadata files left out):"
     $files | ForEach-Object { Write-Log ("  {0} ({1:N0} bytes)" -f $_.FullName.Replace('C:\Windows\SoftwareDistribution\Download\', ''), $_.Length) }
     $package = $files | Where-Object { $_.Name -match '(?i)__PACKAGEKB__' } | Sort-Object Length | Select-Object -First 1
     if (-not $package) {
