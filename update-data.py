@@ -72,6 +72,33 @@ def write_build_file(path, header, features):
         f.write('\n'.join(lines) + '\n')
 
 
+def warn_renamed(data_dir, key, features):
+    """Warns about each feature ID whose name in this build's symbols differs from its name in another build's symbols. Feature IDs
+    aren't known to be reused (no ID had two names in the builds scanned up to November 2026), and the names filled in from earlier
+    builds (nameSource earlierBuild) depend on that, so a change is worth a look: a feature renamed, or an ID given to another one."""
+    names = {e['id']: e['name'] for e in features.values() if e.get('name') and not e.get('nameSource')}
+    changed = {}
+    for b in load_builds(data_dir):
+        if b.get('key') == key:
+            continue
+        for f in b.get('features', []):
+            if f.get('name') and not f.get('nameSource') and f['id'] in names and f['name'] != names[f['id']]:
+                changed.setdefault(f['id'], {}).setdefault(f['name'], []).append(b.get('key'))
+    lines = ['Feature %s is %s in %s, but %s' % (fid, names[fid], key, '; '.join(
+        '%s in %s' % (name, ', '.join(keys)) for name, keys in sorted(changed[fid].items()))) for fid in sorted(changed)]
+    # The run's page shows 10 warnings per step; past that, the 10th says how many there are. The log and the run's summary list them all.
+    shown = 10 if len(lines) <= 10 else 9
+    for n, line in enumerate(lines):
+        print(('::warning title=Feature name changed::' if n < shown else '[data] WARNING: ') + line)
+    if len(lines) > 10:
+        print('::warning title=Feature names changed::%d feature IDs of %s have another name in other builds; the run summary lists them all' % (len(lines), key))
+    summary = os.environ.get('GITHUB_STEP_SUMMARY')
+    if lines and summary:
+        with open(summary, 'a', encoding='utf-8') as f:
+            f.write('### Feature names that differ from other builds (%s)\n\n%s\n' % (key, ''.join('- %s\n' % line for line in lines)))
+    return len(changed)
+
+
 def add_build(data_dir, summary_path, symbols_path):
     summary = load_json(summary_path)
     symbols = load_json(symbols_path) if symbols_path and os.path.exists(symbols_path) else {'features': []}
@@ -117,6 +144,7 @@ def add_build(data_dir, summary_path, symbols_path):
         if not entry['name'] and entry['id'] in known:
             entry['name'] = known[entry['id']]
             entry['nameSource'] = 'earlierBuild'
+    warn_renamed(data_dir, key, features)
 
     product = summary.get('productName') or ''
     if product.startswith('Windows 10') and version_tuple(full_build)[0] >= 22000:
