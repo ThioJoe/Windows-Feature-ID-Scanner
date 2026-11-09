@@ -9,8 +9,10 @@
 #   2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM, the way Microsoft
 #      documents for cumulative updates that come with checkpoint updates. Windows 11 24H2, 25H2 and 26H2 share their code and their
 #      cumulative updates; only the version's enablement package differs.
-#   3. Unless the image is that version already, Windows Update installs the enablement package of the target version, chosen with
-#      Windows Update's own target release version policy.
+#   3. Unless the image is that version already, the enablement package of the target version is installed. Windows Update offers it
+#      (with its target release version policy) together with the newest cumulative update, which would move a VM at an older one past
+#      its target build, so only the package's own file is taken from the offer and installed with DISM. (Microsoft doesn't publish
+#      enablement packages in the Update Catalog.)
 #      A Windows Insider build (-InsiderChannel) has no cumulative update or enablement package in the catalog: Windows Update installs
 #      it instead once the VM is configured to receive that channel's updates (Install-InsiderBuild). The setup function,
 #      Register-InsiderDevice, is unfinished, so Insider scans aren't enabled yet.
@@ -84,7 +86,8 @@ function Get-ProductsCatalogs {
 
 function Get-BaseImage {
     # Every image file in the catalogs, with its hash; the newest image whose base build isn't past the target version's (an image of
-    # 26H2, base build 26300, can't become 25H2, 26200, while a 24H2 one, 26100, can become either)
+    # 26H2, base build 26300, can't become 25H2, 26200, while a 24H2 one, 26100, can become either), and whose revision isn't past the
+    # target build's either: 24H2, 25H2 and 26H2 share their cumulative updates, and an update can't be taken back to reach an older one
     $images = @()
     foreach ($cab in Get-ProductsCatalogs) {
         $xmlDir = Join-Path $WorkDir ([IO.Path]::GetFileNameWithoutExtension($cab))
@@ -97,7 +100,8 @@ function Get-BaseImage {
             ForEach-Object { [PSCustomObject]@{ File = $_; Base = [int]($_.FileName -split '\.')[0]; Ubr = [int]($_.FileName -split '\.')[1] } }
     }
     $targetBase = if ($ExpectedBuild) { [int]($ExpectedBuild -split '\.')[0] } else { @{ '24H2' = 26100; '25H2' = 26200; '26H2' = 26300 }[$Version] }
-    $pick = $images | Where-Object { if ($BaseImage) { "$($_.Base).$($_.Ubr)" -eq $BaseImage } else { -not $targetBase -or $_.Base -le $targetBase } } | Sort-Object Base, Ubr | Select-Object -Last 1
+    $targetUbr = if ($ExpectedBuild) { [int]($ExpectedBuild -split '\.')[1] } else { [int]::MaxValue }
+    $pick = $images | Where-Object { if ($BaseImage) { "$($_.Base).$($_.Ubr)" -eq $BaseImage } else { (-not $targetBase -or $_.Base -le $targetBase) -and $_.Ubr -le $targetUbr } } | Sort-Object Base, Ubr | Select-Object -Last 1
     if (-not $pick) { throw "The Media Creation Tool's catalogs have no en-us x64 image with the $Edition edition for $Version" }
     Log "Images in the catalogs: $((($images | ForEach-Object { "$($_.Base).$($_.Ubr)" }) | Sort-Object -Unique) -join ', ')"
     $file = $pick.File
@@ -486,8 +490,12 @@ Write-Result $LASTEXITCODE
 }
 
 function Install-TargetVersion {
-    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update.
+    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update. The offer
+    # brings the newest cumulative update along, so only the enablement package's own file is installed, with DISM: the file named after
+    # its KB, or the file of a bundled update called an enablement package. Without such a file the whole offer is installed, as
+    # Windows Update would, which only keeps the build when the VM has the newest cumulative update already (the checks catch the rest).
     # Returns whether the VM needs a restart.
+    $packageKb = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }[$Version]  # Their KB articles; they're on Windows Update and WSUS only
     if ((Get-VmBuild).Split(' ')[1] -eq $Version) {
         Log "The VM is $Version already"
         return $false
@@ -505,24 +513,58 @@ Write-Log 'searching Windows Update'
 try {
     $session = New-Object -ComObject Microsoft.Update.Session
     $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
-    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    $offer = $null
     foreach ($u in $found) {
         Write-Log "offered: $($u.Title)"
         # Offered as "Windows 11, version 26H2" (or "Feature update to Windows 11, version 26H2", or as an enablement package)
-        if ($u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') {
-            if (-not $u.EulaAccepted) { $u.AcceptEula() }
-            [void]$wanted.Add($u)
-        }
+        if (-not $offer -and $u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') { $offer = $u }
     }
-    if ($wanted.Count -eq 0) { Write-Result 'nothing to install'; return }
+    if (-not $offer) { Write-Result 'nothing to install'; return }
+    if (-not $offer.EulaAccepted) { $offer.AcceptEula() }
+    # What the offer is made of: its updates (with their bundled ones) and their files
+    $package = $null; $kb = $null
+    $pending = New-Object System.Collections.Queue
+    $pending.Enqueue(@($offer, ''))
+    while ($pending.Count) {
+        $u, $indent = $pending.Dequeue()
+        $ids = @($u.KBArticleIDs | ForEach-Object { "KB$_" })
+        Write-Log "$indent$($u.Title) ($($ids -join ', '))"
+        foreach ($c in $u.DownloadContents) {
+            Write-Log "$indent  file: $($c.DownloadUrl)"
+            # (By title only for a bundled update: the offer itself is called a feature update and has the cumulative update's files)
+            if (-not $package -and ($c.DownloadUrl -match '(?i)__PACKAGEKB__' -or ($indent -and $u.Title -match '(?i)enablement'))) {
+                $package = $c.DownloadUrl
+                $kb = if ('__PACKAGEKB__' -match '^KB') { '__PACKAGEKB__' } else { $ids | Select-Object -First 1 }
+            }
+        }
+        foreach ($b in $u.BundledUpdates) { $pending.Enqueue(@($b, "$indent  ")) }
+    }
+    if ($package -and $package -match '^https?://[A-Za-z0-9.-]*(windowsupdate\.com|delivery\.mp\.microsoft\.com)/[A-Za-z0-9./_-]+$') {
+        New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
+        $file = Join-Path C:\scan-updates ([IO.Path]::GetFileName(([uri]$package).AbsolutePath))
+        Write-Log "downloading $package"
+        (New-Object Net.WebClient).DownloadFile($package, $file)
+        # DISM checks the package's signature before it installs it
+        Write-Log "installing $([IO.Path]::GetFileName($file)) with DISM"
+        & dism.exe /English /Online /Add-Package "/PackagePath:$file" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
+        Write-Result "dism $LASTEXITCODE, KB: $kb"
+        return
+    }
+    Write-Log 'the offer has no separate enablement package file: installing all of it'
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    [void]$wanted.Add($offer)
     $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
     Write-Log "download result: $($d.ResultCode)"
     $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
     $kbs = @($wanted | ForEach-Object { $_.KBArticleIDs | ForEach-Object { "KB$_" } }) -join ' '
     Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), KB: $kbs"
 } catch { Write-Result "error $($_.Exception.Message)" }
-'@).Replace('__VERSION__', $Version)
-    if ($result -notmatch '^installed 2') { throw "Windows Update didn't install the $Version enablement package: $result" }  # 2 = succeeded
+'@).Replace('__VERSION__', $Version).Replace('__PACKAGEKB__', $(if ($packageKb) { $packageKb } else { 'no known KB' }))
+    if ($result -match '^dism (0|3010),') {  # 3010: done, restart needed
+        Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
+        return $true  # The package takes effect with a restart
+    }
+    if ($result -notmatch '^installed 2') { throw "The $Version enablement package wasn't installed: $result" }  # 2 = succeeded
     Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
     return ($result -match 'reboot required: True')
 }
@@ -597,8 +639,10 @@ try {
     $leftOut = @()
     foreach ($u in $found) {
         $categories = @($u.Categories | ForEach-Object { $_.Name }) -join ', '
-        # (The Windows Security platform update is filed under Definition Updates too, so only the definitions themselves are left out)
-        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Insider Preview|Upgrade|Security Intelligence Update') {
+        # (The Windows Security platform update is filed under Definition Updates too, so only the definitions themselves are left out.)
+        # An update whose title names an OS build changes the build, whichever way it's titled: "Cumulative Update for Windows 11, version
+        # 25H2 ... (26200.9711)", or Windows Update's shorter "2026-10 Security Update (KB5127648) (26200.9711)".
+        if ($u.BrowseOnly -or $u.Title -match 'Cumulative Update (Preview )?for Windows|Feature update|Windows 11, version|Insider Preview|Upgrade|Security Intelligence Update|\(\d{5}\.\d+\)') {
             $leftOut += "$($u.Title) [$categories$(if ($u.BrowseOnly) { ', optional' })]"
             continue
         }
