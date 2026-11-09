@@ -479,7 +479,13 @@ foreach ($url in @(__URLS__)) {
     $name = [IO.Path]::GetFileName(([uri]$url).AbsolutePath)
     $path = Join-Path C:\scan-updates $name
     Write-Log "downloading $name"
-    & curl.exe -fsSL --retry 5 --retry-delay 5 -o $path $url
+    for ($attempt = 1; $attempt -le 5; $attempt++) {
+        # curl's own retries don't cover a transfer cut off partway (error 18), so that resumes the partial file (-C -) here
+        & curl.exe -fsSL --retry 5 --retry-delay 5 -C - -o $path $url
+        if ($LASTEXITCODE -eq 0) { break }
+        Write-Log "the download stopped (curl $LASTEXITCODE); resuming it"
+        Start-Sleep -Seconds 10
+    }
     if ($LASTEXITCODE -ne 0) { Write-Result "download failed (curl $LASTEXITCODE): $url"; return }
 }
 $target = Get-ChildItem C:\scan-updates -Filter '*-__KB__-*.msu' | Select-Object -First 1
