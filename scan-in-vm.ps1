@@ -11,8 +11,9 @@
 #      cumulative updates; only the version's enablement package differs.
 #   3. Unless the image is that version already, the enablement package of the target version is installed. Windows Update offers it
 #      (with its target release version policy) together with the newest cumulative update, which would move a VM at an older one past
-#      its target build, so only the package's own file is taken from the offer and installed with DISM. (Microsoft doesn't publish
-#      enablement packages in the Update Catalog.)
+#      its target build, so the offer is only downloaded, and the package's own file from Windows Update's download folder is installed
+#      with DISM. At some cumulative updates Windows Update doesn't offer the version at all; the file then comes from the VM brought up
+#      to date, and the VM goes back to a checkpoint taken before. (Microsoft doesn't publish enablement packages in the Update Catalog.)
 #      A Windows Insider build (-InsiderChannel) has no cumulative update or enablement package in the catalog: Windows Update installs
 #      it instead once the VM is configured to receive that channel's updates (Install-InsiderBuild). The setup function,
 #      Register-InsiderDevice, is unfinished, so Insider scans aren't enabled yet.
@@ -489,13 +490,131 @@ Write-Result $LASTEXITCODE
     Invoke-InVM -Retry { Remove-Item C:\scan-updates -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
+function Get-EnablementPackage([string]$packageKb) {
+    # Asks Windows Update for the target version (the target release version policy is set) and downloads its offer without installing
+    # it. The offer's payloads keep their names in Windows Update's download folder, the enablement package's file among them (named
+    # after its KB). Returns that file's path in the VM (a copy in C:\scan-updates), or why there's none: 'not offered' (at some
+    # cumulative updates Windows Update offers the newest one instead of the version), 'no package file', or an error.
+    Invoke-VmTask 'ScanEnablementDownload' -timeoutMinutes 60 -script (@'
+Write-Log 'searching Windows Update'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
+    $offer = $null
+    foreach ($u in $found) {
+        Write-Log "offered: $($u.Title)"
+        # Offered as "Windows 11, version 26H2" (or "Feature update to Windows 11, version 26H2", or as an enablement package)
+        if (-not $offer -and $u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') { $offer = $u }
+    }
+    if (-not $offer) { Write-Result 'not offered'; return }
+    if (-not $offer.EulaAccepted) { $offer.AcceptEula() }
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    [void]$wanted.Add($offer)
+    $downloader = $session.CreateUpdateDownloader(); $downloader.Updates = $wanted
+    Write-Log "downloaded $($offer.Title): result $($downloader.Download().ResultCode)"
+    $files = @(Get-ChildItem C:\Windows\SoftwareDistribution\Download -Recurse -File -Include *.cab, *.msu -ErrorAction SilentlyContinue)
+    $files | ForEach-Object { Write-Log ("  {0} ({1:N0} bytes)" -f $_.FullName.Replace('C:\Windows\SoftwareDistribution\Download\', ''), $_.Length) }
+    $package = $files | Where-Object { $_.Name -match '(?i)__PACKAGEKB__' } | Sort-Object Length | Select-Object -First 1
+    if (-not $package) {
+        # A file named otherwise: a small cab with an enablement package in it (such as Microsoft-Windows-23H2Enablement-Package~...mum)
+        $package = $files | Where-Object { $_.Extension -eq '.cab' -and $_.Length -lt 5MB -and ((& expand.exe -D $_.FullName) -match 'Enablement-Package|-EKB-') } | Select-Object -First 1
+    }
+    if (-not $package) { Write-Result 'no package file'; return }
+    New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
+    Copy-Item $package.FullName C:\scan-updates -Force
+    Write-Result "C:\scan-updates\$($package.Name)"
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@).Replace('__VERSION__', $Version).Replace('__PACKAGEKB__', $packageKb)
+}
+
+function Install-NewestCumulativeUpdate {
+    # What Windows Update offers that changes the build: the newest cumulative update (its title names the build it brings, as in
+    # "2026-10 Security Update (KB5127648) (26100.9711)")
+    $result = Invoke-VmTask 'ScanNewestUpdate' -timeoutMinutes 120 -script @'
+Write-Log 'searching Windows Update'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($u in $found) {
+        if (-not $u.BrowseOnly -and $u.Title -match '\(\d{5}\.\d+\)') {
+            Write-Log "installing: $($u.Title)"
+            if (-not $u.EulaAccepted) { $u.AcceptEula() }
+            [void]$wanted.Add($u)
+        }
+    }
+    if ($wanted.Count -eq 0) { Write-Result 'nothing to install'; return }
+    $downloader = $session.CreateUpdateDownloader(); $downloader.Updates = $wanted; [void]$downloader.Download()
+    $installer = $session.CreateUpdateInstaller(); $installer.Updates = $wanted
+    Write-Result "installed $($installer.Install().ResultCode)"
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@
+    if ($result -notmatch '^installed 2') { throw "Installing the newest cumulative update failed: $result" }  # 2 = succeeded
+    Restart-ScanVM
+    Set-VmNetwork
+    Log "VM build with the newest cumulative update: $(Get-VmBuild)"
+}
+
+function Get-EnablementPackageFromNewestBuild([string]$packageKb) {
+    # Windows Update reliably offers the version once the VM has the newest cumulative update, which would take it past its target build.
+    # So the package comes from the VM brought up to date, and the VM then goes back to a checkpoint taken before.
+    Log "Windows Update doesn't offer $Version at this build: getting its enablement package from the VM brought up to date"
+    $checkpoint = 'before-enablement-package'
+    Log ("Free space for the checkpoint's changes: {0:N1} GB" -f ((Get-Item $WorkDir).PSDrive.Free / 1GB))
+    Close-VmSession
+    Checkpoint-VM -Name $VmName -SnapshotName $checkpoint
+    Install-NewestCumulativeUpdate
+    $file = Get-EnablementPackage $packageKb
+    if ($file -notmatch '^C:\\') { throw "Windows Update has no $Version enablement package even with the newest cumulative update: $file" }
+    $copy = Join-Path $WorkDir (Split-Path $file -Leaf)
+    Copy-Item -FromSession (Get-VmSession) -Path $file -Destination $copy -Force
+    Log "Going back to the checkpoint taken before the newest cumulative update"
+    Close-VmSession
+    Stop-VM -Name $VmName -TurnOff -Force
+    Restore-VMSnapshot -VMName $VmName -Name $checkpoint -Confirm:$false
+    Remove-VMSnapshot -VMName $VmName -Name $checkpoint
+    if ((Get-VM -Name $VmName).State -ne 'Running') { Start-VM -Name $VmName }
+    $script:VmSession = Wait-ScanVM
+    Set-VmNetwork
+    Log "VM build: $(Get-VmBuild)"
+    Copy-ToVM $copy $file
+    return $file
+}
+
+function Install-VersionOffer {
+    # Windows Update's whole offer for the version, installed as Windows Update would. It brings the newest cumulative update along, so
+    # it only keeps the build when the VM has that update already (the checks after the updates catch a build that moved).
+    $result = Invoke-VmTask 'ScanWU' -timeoutMinutes 60 -script (@'
+Write-Log 'searching Windows Update'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
+    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($u in $found) {
+        Write-Log "offered: $($u.Title)"
+        if ($wanted.Count -eq 0 -and $u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') {
+            if (-not $u.EulaAccepted) { $u.AcceptEula() }
+            [void]$wanted.Add($u)
+        }
+    }
+    if ($wanted.Count -eq 0) { Write-Result 'nothing to install'; return }
+    $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
+    Write-Log "download result: $($d.ResultCode)"
+    $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
+    $kbs = @($wanted | ForEach-Object { $_.KBArticleIDs | ForEach-Object { "KB$_" } }) -join ' '
+    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), KB: $kbs"
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@).Replace('__VERSION__', $Version)
+    if ($result -notmatch '^installed 2') { throw "Windows Update didn't install the $Version enablement package: $result" }  # 2 = succeeded
+    Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
+    return ($result -match 'reboot required: True')
+}
+
 function Install-TargetVersion {
-    # Windows Update's target release version policy makes it offer that version's enablement package as the feature update. The offer
-    # brings the newest cumulative update along, so only the enablement package's own file is installed, with DISM: the file named after
-    # its KB, or the file of a bundled update called an enablement package. Without such a file the whole offer is installed, as
-    # Windows Update would, which only keeps the build when the VM has the newest cumulative update already (the checks catch the rest).
+    # The target version's enablement package, from Windows Update (Microsoft doesn't publish enablement packages in the Update
+    # Catalog), installed with DISM on its own: Windows Update's offer of the version brings the newest cumulative update along, which
+    # would move a VM at an older one past its target build. Windows Update's target release version policy makes it offer the version.
     # Returns whether the VM needs a restart.
-    $packageKb = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }[$Version]  # Their KB articles; they're on Windows Update and WSUS only
     if ((Get-VmBuild).Split(' ')[1] -eq $Version) {
         Log "The VM is $Version already"
         return $false
@@ -508,68 +627,24 @@ function Install-TargetVersion {
         Set-ItemProperty $policy -Name TargetReleaseVersion -Value 1 -Type DWord
         Set-ItemProperty $policy -Name TargetReleaseVersionInfo -Value $version
     }
-    $result = Invoke-VmTask 'ScanWU' -timeoutMinutes 60 -script (@'
-Write-Log 'searching Windows Update'
-try {
-    $session = New-Object -ComObject Microsoft.Update.Session
-    $found = $session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software'").Updates
-    $offer = $null
-    foreach ($u in $found) {
-        Write-Log "offered: $($u.Title)"
-        # Offered as "Windows 11, version 26H2" (or "Feature update to Windows 11, version 26H2", or as an enablement package)
-        if (-not $offer -and $u.Title -match '^(Feature update to )?Windows 11, version __VERSION__\b|__VERSION__.*Enablement') { $offer = $u }
+    $packageKb = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }[$Version]  # Their KB articles
+    if (-not $packageKb) { return (Install-VersionOffer) }  # A version whose enablement package isn't known here yet
+    $file = Get-EnablementPackage $packageKb
+    if ($file -eq 'not offered') { $file = Get-EnablementPackageFromNewestBuild $packageKb }
+    if ($file -eq 'no package file') {
+        Log "Windows Update's offer of $Version has no file named after ${packageKb}: installing all of it"
+        return (Install-VersionOffer)
     }
-    if (-not $offer) { Write-Result 'nothing to install'; return }
-    if (-not $offer.EulaAccepted) { $offer.AcceptEula() }
-    # What the offer is made of: its updates (with their bundled ones) and their files
-    $package = $null; $kb = $null
-    $pending = New-Object System.Collections.Queue
-    $pending.Enqueue(@($offer, ''))
-    while ($pending.Count) {
-        $u, $indent = $pending.Dequeue()
-        $ids = @($u.KBArticleIDs | ForEach-Object { "KB$_" })
-        Write-Log "$indent$($u.Title) ($($ids -join ', '))"
-        foreach ($c in $u.DownloadContents) {
-            Write-Log "$indent  file: $($c.DownloadUrl)"
-            # (By title only for a bundled update: the offer itself is called a feature update and has the cumulative update's files)
-            if (-not $package -and ($c.DownloadUrl -match '(?i)__PACKAGEKB__' -or ($indent -and $u.Title -match '(?i)enablement'))) {
-                $package = $c.DownloadUrl
-                $kb = if ('__PACKAGEKB__' -match '^KB') { '__PACKAGEKB__' } else { $ids | Select-Object -First 1 }
-            }
-        }
-        foreach ($b in $u.BundledUpdates) { $pending.Enqueue(@($b, "$indent  ")) }
-    }
-    if ($package -and $package -match '^https?://[A-Za-z0-9.-]*(windowsupdate\.com|delivery\.mp\.microsoft\.com)/[A-Za-z0-9./_-]+$') {
-        New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
-        $file = Join-Path C:\scan-updates ([IO.Path]::GetFileName(([uri]$package).AbsolutePath))
-        Write-Log "downloading $package"
-        (New-Object Net.WebClient).DownloadFile($package, $file)
-        # DISM checks the package's signature before it installs it
-        Write-Log "installing $([IO.Path]::GetFileName($file)) with DISM"
-        & dism.exe /English /Online /Add-Package "/PackagePath:$file" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
-        Write-Result "dism $LASTEXITCODE, KB: $kb"
-        return
-    }
-    Write-Log 'the offer has no separate enablement package file: installing all of it'
-    $wanted = New-Object -ComObject Microsoft.Update.UpdateColl
-    [void]$wanted.Add($offer)
-    $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
-    Write-Log "download result: $($d.ResultCode)"
-    # What Windows Update downloaded for the offer (the files it doesn't name above)
-    Get-ChildItem C:\Windows\SoftwareDistribution\Download -Recurse -File -ErrorAction SilentlyContinue | Sort-Object Length -Descending |
-        Select-Object -First 40 | ForEach-Object { Write-Log ("  downloaded: {0} ({1:N0} bytes)" -f $_.FullName.Replace('C:\Windows\SoftwareDistribution\Download\', ''), $_.Length) }
-    $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
-    $kbs = @($wanted | ForEach-Object { $_.KBArticleIDs | ForEach-Object { "KB$_" } }) -join ' '
-    Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), KB: $kbs"
-} catch { Write-Result "error $($_.Exception.Message)" }
-'@).Replace('__VERSION__', $Version).Replace('__PACKAGEKB__', $(if ($packageKb) { $packageKb } else { 'no known KB' }))
-    if ($result -match '^dism (0|3010),') {  # 3010: done, restart needed
-        Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
-        return $true  # The package takes effect with a restart
-    }
-    if ($result -notmatch '^installed 2') { throw "The $Version enablement package wasn't installed: $result" }  # 2 = succeeded
-    Save-Report 'enablement-package.json' @{ result = $result; kbs = @([regex]::Matches($result, 'KB\d+') | ForEach-Object { $_.Value }) }
-    return ($result -match 'reboot required: True')
+    if ($file -notmatch '^C:\\') { throw "Couldn't get the $Version enablement package from Windows Update: $file" }
+    $result = Invoke-VmTask 'ScanEnablement' -timeoutMinutes 60 -script (@'
+# DISM checks the package's signature before it installs it
+Write-Log 'installing __FILE__ with DISM'
+& dism.exe /English /Online /Add-Package "/PackagePath:__FILE__" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
+Write-Result $LASTEXITCODE
+'@).Replace('__FILE__', $file)
+    if ($result -notin '0', '3010') { throw "Installing the $Version enablement package ($file) failed: $result" }  # 3010: restart needed
+    Save-Report 'enablement-package.json' @{ result = "installed $(Split-Path $file -Leaf) with DISM"; kbs = @($packageKb) }
+    return $true  # The package takes effect with a restart
 }
 
 function Register-InsiderDevice {
