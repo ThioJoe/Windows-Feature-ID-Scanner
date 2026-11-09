@@ -141,7 +141,7 @@ def read_file_list(data):
         cells = next(csv.reader([line]))
         while cells and not cells[-1]:
             cells.pop()  # Trailing commas
-        if len(cells) <= 1:
+        if len(cells) <= 2:  # A section's name, which can have a comma in it ("Windows 11, version 24H2 LCU x64-based")
             if line.startswith('Additional file information'):
                 break  # Details per component manifest follow
             section, header = line.strip('"'), None
