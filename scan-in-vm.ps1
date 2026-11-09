@@ -629,8 +629,8 @@ function Start-WsusLookup([string]$packageKb) {
     # Catalog, and WSUS has them whatever Windows Update offers a PC. Installing the role and its first synchronization take a while,
     # so this runs in the background while the VM is built, and Get-EnablementPackageFromWsus collects the result.
     Log "Setting up WSUS in the background, to look up $packageKb"
-    $script:WsusJob = Start-Job -ArgumentList (Join-Path $WorkDir 'wsus'), $packageKb.Substring(2) -ScriptBlock {
-        param($contentDir, $kbNumber)
+    $script:WsusJob = Start-Job -ArgumentList (Join-Path $WorkDir 'wsus'), $packageKb.Substring(2), $Version, $(if ($Kb) { $Kb.Substring(2) } else { '' }) -ScriptBlock {
+        param($contentDir, $kbNumber, $version, $monthKbNumber)
         $ErrorActionPreference = 'Stop'
         $ProgressPreference = 'SilentlyContinue'
         $log = New-Object System.Collections.Generic.List[string]
@@ -680,17 +680,23 @@ function Start-WsusLookup([string]$packageKb) {
             $subscription.Save()
             $subscription.StartSynchronization()
             Wait-Sync $subscription 'synchronization of Windows 11 upgrades' 120
-            $updates = @(foreach ($u in $wsus.SearchUpdates($kbNumber)) {
+            # WSUS has the version as a feature update for each month ("Windows 11, version 25H2 x64 2026-09"), filed under that month's
+            # cumulative update (KB5124008), not under the enablement package, whose file is one of the entry's: the target month's
+            # entry, or else the newest one
+            $entries = @($wsus.SearchUpdates($version) | Where-Object { $_.Title -match "^Windows 11, version $version x64\b" })
+            $month = @($entries | Where-Object { $monthKbNumber -and @($_.KnowledgebaseArticles) -contains $monthKbNumber })
+            $chosen = @(@($(if ($month) { $month } else { $entries })) | Sort-Object @{ e = { $_.IsSuperseded } }, @{ e = { $_.CreationDate }; Descending = $true } | Select-Object -First 1)
+            Note "WSUS entries for ${version} x64: $($entries.Count); taking: $(@($chosen | ForEach-Object Title))$(if (-not $month) { ' (none for the target month)' })"
+            $updates = @(foreach ($u in $chosen) {
                 $files = @(foreach ($item in $u.GetInstallableItems()) { foreach ($f in $item.Files) { $f } })
-                # The files named after the KB (the package, for each architecture), and a sample of the others, which shows whether the
-                # entry is the package alone or a whole feature update with the newest cumulative update in it
+                # The files named after the package's KB, and a sample of the others, which shows what else the entry brings
                 $named = @($files | Where-Object { $_.Name -match $kbNumber })
                 [pscustomobject]@{ Title = $u.Title; Kbs = @($u.KnowledgebaseArticles); Classification = $u.UpdateClassificationTitle
                                    Created = "$($u.CreationDate)"; Superseded = $u.IsSuperseded; Declined = $u.IsDeclined; FileCount = $files.Count
                                    Files = @($named | ForEach-Object { [pscustomobject]@{ Name = $_.Name; Size = [long]$_.TotalBytes; Uri = "$($_.OriginUri)"; WsusUri = "$($_.FileUri)" } })
                                    OtherFiles = @($files | Where-Object { $_.Name -notmatch $kbNumber } | Select-Object -First 20 | ForEach-Object { '{0} ({1:N0} bytes)' -f $_.Name, $_.TotalBytes }) }
             })
-            Note "updates WSUS has for KB${kbNumber}: $($updates.Count)"
+            Note "files named after KB${kbNumber}: $(@($updates | ForEach-Object { $_.Files }).Count)"
             [pscustomobject]@{ Log = $log; Updates = $updates; Error = $null } | ConvertTo-Json -Depth 6 -Compress
         } catch {
             [pscustomobject]@{ Log = $log; Updates = @(); Error = $_.Exception.Message } | ConvertTo-Json -Depth 6 -Compress
@@ -700,9 +706,9 @@ function Start-WsusLookup([string]$packageKb) {
 
 function Get-EnablementPackageFromWsus([string]$packageKb) {
     # The enablement package's own file, as WSUS lists it (Start-WsusLookup), downloaded from Microsoft's servers and copied into the VM.
-    # Returns its path in the VM, or nothing when WSUS didn't get that far (then Windows Update's offer is tried instead). What WSUS has
-    # for the KB is saved in wsus.json: whether its entry is the package alone or comes with the newest cumulative update, as Windows
-    # Update's offer does, decides whether the VM could install it from WSUS itself.
+    # Returns its path in the VM, or nothing when WSUS didn't get that far (then Windows Update's offer is tried instead). WSUS's entry
+    # is the month's whole feature update (the cumulative update, the package and the files for new installations, 55 GB in all for
+    # 2026-09), so only the package's own file is taken. What WSUS had is saved in wsus.json.
     if (-not $script:WsusJob) { Start-WsusLookup $packageKb }
     Log 'Waiting for the WSUS lookup'
     if (-not (Wait-Job $script:WsusJob -Timeout 2700)) {
@@ -723,7 +729,7 @@ function Get-EnablementPackageFromWsus([string]$packageKb) {
     # The package itself, for the VM's architecture, not Windows Update's metadata about it (names like EKBUpdateCompDB_KB5054156.xml.cab)
     $file = @($wsus.Updates | ForEach-Object { @($_.Files) }) | Where-Object {
         $_.Name -match "(?i)$packageKb" -and $_.Name -match '(?i)-x64[-_.]' -and $_.Name -match '(?i)\.(cab|msu)$' -and
-        $_.Name -notmatch '(?i)\.xml\.cab$|CompDB|AggregatedMetadata' -and $_.Uri -match '^https?://[a-z0-9.-]*(windowsupdate\.com|microsoft\.com)/' } |
+        $_.Name -notmatch '(?i)\.xml\.cab$|CompDB|AggregatedMetadata|baseless' -and $_.Uri -match '^https?://[a-z0-9.-]*(windowsupdate\.com|microsoft\.com)/' } |
         Sort-Object Size | Select-Object -First 1
     if (-not $file) { Log "WSUS lists no x64 file of $packageKb; trying Windows Update instead"; return }
     $local = Join-Path $WorkDir $file.Name
