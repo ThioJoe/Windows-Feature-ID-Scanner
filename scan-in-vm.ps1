@@ -9,11 +9,13 @@
 #   2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM, the way Microsoft
 #      documents for cumulative updates that come with checkpoint updates. Windows 11 24H2, 25H2 and 26H2 share their code and their
 #      cumulative updates; only the version's enablement package differs.
-#   3. Unless the image is that version already, the enablement package of the target version is installed. Windows Update offers it
-#      (with its target release version policy) together with the newest cumulative update, which would move a VM at an older one past
-#      its target build, so the offer is only downloaded, and the package's own file from Windows Update's download folder is installed
-#      with DISM. At some cumulative updates Windows Update doesn't offer the version at all; the file then comes from the VM brought up
-#      to date, and the VM goes back to a checkpoint taken before. (Microsoft doesn't publish enablement packages in the Update Catalog.)
+#   3. Unless the image is that version already, the enablement package of the target version is installed with DISM, on its own.
+#      Microsoft doesn't publish enablement packages in the Update Catalog, but WSUS has them: the runner (a Windows Server) sets up
+#      the WSUS role in the background and synchronizes Windows 11's upgrades, which gives the package's file on Microsoft's servers.
+#      Failing that, Windows Update: it offers the package (with its target release version policy) together with the newest cumulative
+#      update, which would move a VM at an older one past its target build, so the offer is only downloaded, and the package's own file
+#      is taken from Windows Update's download folder. Windows Update doesn't offer the version every time; the file then comes from the
+#      VM brought up to date, and the VM goes back to a checkpoint taken before.
 #      A Windows Insider build (-InsiderChannel) has no cumulative update or enablement package in the catalog: Windows Update installs
 #      it instead once the VM is configured to receive that channel's updates (Install-InsiderBuild). The setup function,
 #      Register-InsiderDevice, is unfinished, so Insider scans aren't enabled yet.
@@ -613,11 +615,125 @@ try {
     return ($result -match 'reboot required: True')
 }
 
+$EnablementPackageKbs = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }  # Their KB articles
+
+function Start-WsusLookup([string]$packageKb) {
+    # WSUS, a Windows Server role, gets update metadata from Microsoft Update, including where each update's files are on Microsoft's
+    # servers. Enablement packages are on WSUS (their KB articles: product Windows 11, classification Upgrades), unlike the Update
+    # Catalog, and WSUS has them whatever Windows Update offers a PC. Installing the role and its first synchronization take a while,
+    # so this runs in the background while the VM is built, and Get-EnablementPackageFromWsus collects the result.
+    Log "Setting up WSUS in the background, to look up $packageKb"
+    $script:WsusJob = Start-Job -ArgumentList (Join-Path $WorkDir 'wsus'), $packageKb.Substring(2) -ScriptBlock {
+        param($contentDir, $kbNumber)
+        $ErrorActionPreference = 'Stop'
+        $ProgressPreference = 'SilentlyContinue'
+        $log = New-Object System.Collections.Generic.List[string]
+        function Note([string]$m) { $log.Add(('{0} {1}' -f (Get-Date -Format 'HH:mm:ss'), $m)) }
+        function Wait-Sync($subscription, [string]$what, [int]$minutes) {
+            $deadline = (Get-Date).AddMinutes($minutes)
+            while ("$($subscription.GetSynchronizationStatus())" -ne 'NotProcessing') {
+                if ((Get-Date) -gt $deadline) { throw "the $what didn't finish within $minutes minutes" }
+                Start-Sleep -Seconds 15
+            }
+            $info = $subscription.GetLastSynchronizationInfo()
+            Note "${what}: $($info.Result), $([int]($info.EndTime - $info.StartTime).TotalMinutes) min"
+            if ("$($info.Result)" -ne 'Succeeded') { throw "the $what failed: $($info.Error) $($info.ErrorText)" }
+        }
+        try {
+            $role = Install-WindowsFeature -Name UpdateServices -IncludeManagementTools
+            Note "WSUS role installed: $($role.Success), restart needed: $($role.RestartNeeded)"
+            New-Item -ItemType Directory -Force $contentDir | Out-Null
+            $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
+            $out = & "$env:ProgramFiles\Update Services\Tools\WsusUtil.exe" postinstall "CONTENT_DIR=$contentDir" 2>&1
+            $code = $LASTEXITCODE
+            $ErrorActionPreference = 'Stop'
+            if ($code) { throw "WsusUtil postinstall failed ($code): $($out -join ' ')" }
+            Note 'WSUS post-installation done'
+            Import-Module UpdateServices
+            $wsus = Get-WsusServer
+            try {  # English only, which makes the synchronization smaller
+                $config = $wsus.GetConfiguration()
+                $config.AllUpdateLanguagesEnabled = $false
+                $languages = New-Object System.Collections.Specialized.StringCollection
+                [void]$languages.Add('en')
+                $config.SetEnabledUpdateLanguages($languages)
+                $config.Save()
+            } catch { Note "couldn't limit the languages: $($_.Exception.Message)" }
+            $subscription = $wsus.GetSubscription()
+            $subscription.StartSynchronizationForCategoryOnly()
+            Wait-Sync $subscription 'category synchronization' 30
+            $categories = @($wsus.GetUpdateCategories())
+            Note "Windows 11 products: $(@($categories | Where-Object { $_.Title -like 'Windows 11*' } | ForEach-Object { $_.Title }) -join '; ')"
+            $products = New-Object Microsoft.UpdateServices.Administration.UpdateCategoryCollection
+            $categories | Where-Object { $_.Title -eq 'Windows 11' } | ForEach-Object { [void]$products.Add($_) }
+            $classifications = New-Object Microsoft.UpdateServices.Administration.UpdateClassificationCollection
+            $wsus.GetUpdateClassifications() | Where-Object { $_.Title -eq 'Upgrades' } | ForEach-Object { [void]$classifications.Add($_) }
+            if (-not $products.Count -or -not $classifications.Count) { throw 'WSUS has no Windows 11 product or Upgrades classification' }
+            $subscription.SetUpdateCategories($products)
+            $subscription.SetUpdateClassifications($classifications)
+            $subscription.Save()
+            $subscription.StartSynchronization()
+            Wait-Sync $subscription 'synchronization of Windows 11 upgrades' 120
+            $updates = @(foreach ($u in $wsus.SearchUpdates($kbNumber)) {
+                $files = @(foreach ($item in $u.GetInstallableItems()) { foreach ($f in $item.Files) { $f } })
+                # The files named after the KB (the package, for each architecture), and a sample of the others, which shows whether the
+                # entry is the package alone or a whole feature update with the newest cumulative update in it
+                $named = @($files | Where-Object { $_.Name -match $kbNumber })
+                [pscustomobject]@{ Title = $u.Title; Kbs = @($u.KnowledgebaseArticles); Classification = $u.UpdateClassificationTitle
+                                   Created = "$($u.CreationDate)"; Superseded = $u.IsSuperseded; Declined = $u.IsDeclined; FileCount = $files.Count
+                                   Files = @($named | ForEach-Object { [pscustomobject]@{ Name = $_.Name; Size = [long]$_.TotalBytes; Uri = "$($_.OriginUri)"; WsusUri = "$($_.FileUri)" } })
+                                   OtherFiles = @($files | Where-Object { $_.Name -notmatch $kbNumber } | Select-Object -First 20 | ForEach-Object { '{0} ({1:N0} bytes)' -f $_.Name, $_.TotalBytes }) }
+            })
+            Note "updates WSUS has for KB${kbNumber}: $($updates.Count)"
+            [pscustomobject]@{ Log = $log; Updates = $updates; Error = $null } | ConvertTo-Json -Depth 6 -Compress
+        } catch {
+            [pscustomobject]@{ Log = $log; Updates = @(); Error = $_.Exception.Message } | ConvertTo-Json -Depth 6 -Compress
+        }
+    }
+}
+
+function Get-EnablementPackageFromWsus([string]$packageKb) {
+    # The enablement package's own file, as WSUS lists it (Start-WsusLookup), downloaded from Microsoft's servers and copied into the VM.
+    # Returns its path in the VM, or nothing when WSUS didn't get that far (then Windows Update's offer is tried instead). What WSUS has
+    # for the KB is saved in wsus.json: whether its entry is the package alone or comes with the newest cumulative update, as Windows
+    # Update's offer does, decides whether the VM could install it from WSUS itself.
+    if (-not $script:WsusJob) { Start-WsusLookup $packageKb }
+    Log 'Waiting for the WSUS lookup'
+    if (-not (Wait-Job $script:WsusJob -Timeout 2700)) {
+        Log 'WSUS still isn''t done after 45 more minutes; trying Windows Update instead'
+        return
+    }
+    $text = @(Receive-Job $script:WsusJob -ErrorAction SilentlyContinue) | Where-Object { $_ -is [string] -and $_.StartsWith('{') } | Select-Object -Last 1
+    if (-not $text) { Log 'The WSUS lookup ended without a result; trying Windows Update instead'; return }
+    try { $wsus = $text | ConvertFrom-Json } catch { Log "The WSUS lookup's result can't be read ($($_.Exception.Message)); trying Windows Update instead"; return }
+    $wsus.Log | ForEach-Object { Log "WSUS: $_" }
+    Save-Report 'wsus.json' $wsus
+    if ($wsus.Error) { Log "WSUS failed: $($wsus.Error); trying Windows Update instead"; return }
+    foreach ($u in @($wsus.Updates)) {
+        Log "WSUS has: $($u.Title) [$($u.Classification), $($u.Created)$(if ($u.Superseded) { ', superseded' })$(if ($u.Declined) { ', declined' })], $($u.FileCount) files"
+        @($u.Files) | ForEach-Object { Log ("    {0} ({1:N0} bytes) {2}" -f $_.Name, $_.Size, $_.Uri) }
+        @($u.OtherFiles) | ForEach-Object { Log "    other: $_" }
+    }
+    # The package itself, for the VM's architecture, not Windows Update's metadata about it (names like EKBUpdateCompDB_KB5054156.xml.cab)
+    $file = @($wsus.Updates | ForEach-Object { @($_.Files) }) | Where-Object {
+        $_.Name -match "(?i)$packageKb" -and $_.Name -match '(?i)-x64[-_.]' -and $_.Name -match '(?i)\.(cab|msu)$' -and
+        $_.Name -notmatch '(?i)\.xml\.cab$|CompDB|AggregatedMetadata' -and $_.Uri -match '^https?://[a-z0-9.-]*(windowsupdate\.com|microsoft\.com)/' } |
+        Sort-Object Size | Select-Object -First 1
+    if (-not $file) { Log "WSUS lists no x64 file of $packageKb; trying Windows Update instead"; return }
+    $local = Join-Path $WorkDir $file.Name
+    Log "Downloading $($file.Name) ($('{0:N0}' -f $file.Size) bytes) from $($file.Uri)"
+    try { Invoke-WebRequest -Uri $file.Uri -OutFile $local -UseBasicParsing } catch { Log "The download failed ($($_.Exception.Message)); trying Windows Update instead"; return }
+    if ((Get-Item $local).Length -ne $file.Size) { Log "The download is $((Get-Item $local).Length) bytes, not $($file.Size); trying Windows Update instead"; return }
+    $inVm = "C:\scan-updates\$($file.Name)"
+    Copy-ToVM $local $inVm
+    return $inVm
+}
+
 function Install-TargetVersion {
-    # The target version's enablement package, from Windows Update (Microsoft doesn't publish enablement packages in the Update
-    # Catalog), installed with DISM on its own: Windows Update's offer of the version brings the newest cumulative update along, which
-    # would move a VM at an older one past its target build. Windows Update's target release version policy makes it offer the version.
-    # Returns whether the VM needs a restart.
+    # The target version's enablement package, from WSUS or else from Windows Update (Microsoft doesn't publish enablement packages in
+    # the Update Catalog), installed with DISM on its own: Windows Update's offer of the version brings the newest cumulative update
+    # along, which would move a VM at an older one past its target build. Windows Update's target release version policy makes it offer
+    # the version, though not every time. Returns whether the VM needs a restart.
     if ((Get-VmBuild).Split(' ')[1] -eq $Version) {
         Log "The VM is $Version already"
         return $false
@@ -630,13 +746,18 @@ function Install-TargetVersion {
         Set-ItemProperty $policy -Name TargetReleaseVersion -Value 1 -Type DWord
         Set-ItemProperty $policy -Name TargetReleaseVersionInfo -Value $version
     }
-    $packageKb = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }[$Version]  # Their KB articles
+    $packageKb = $EnablementPackageKbs[$Version]
     if (-not $packageKb) { return (Install-VersionOffer) }  # A version whose enablement package isn't known here yet
-    $file = Get-EnablementPackage $packageKb
-    if ($file -eq 'not offered') { $file = Get-EnablementPackageFromNewestBuild $packageKb }
-    if ($file -eq 'no package file') {
-        Log "Windows Update's offer of $Version has no file named after ${packageKb}: installing all of it"
-        return (Install-VersionOffer)
+    $file = Get-EnablementPackageFromWsus $packageKb
+    $source = 'WSUS'
+    if (-not $file) {
+        $source = 'Windows Update'
+        $file = Get-EnablementPackage $packageKb
+        if ($file -eq 'not offered') { $file = Get-EnablementPackageFromNewestBuild $packageKb }
+        if ($file -eq 'no package file') {
+            Log "Windows Update's offer of $Version has no file named after ${packageKb}: installing all of it"
+            return (Install-VersionOffer)
+        }
     }
     if ($file -notmatch '^C:\\') { throw "Couldn't get the $Version enablement package from Windows Update: $file" }
     $result = Invoke-VmTask 'ScanEnablement' -timeoutMinutes 60 -script (@'
@@ -646,7 +767,7 @@ Write-Log 'installing __FILE__ with DISM'
 Write-Result $LASTEXITCODE
 '@).Replace('__FILE__', $file)
     if ($result -notin '0', '3010') { throw "Installing the $Version enablement package ($file) failed: $result" }  # 3010: restart needed
-    Save-Report 'enablement-package.json' @{ result = "installed $(Split-Path $file -Leaf) with DISM"; kbs = @($packageKb) }
+    Save-Report 'enablement-package.json' @{ result = "installed $(Split-Path $file -Leaf) with DISM"; source = $source; kbs = @($packageKb) }
     return $true  # The package takes effect with a restart
 }
 
@@ -1103,6 +1224,10 @@ try {
 
 $esd = $null; $updateUrls = $null
 if ($Step -in 'All', 'Image', 'Disk') { $esd = Get-BaseImage }
+if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageKbs[$Version] -and
+    (-not $ExpectedBuild -or ($ExpectedBuild -split '\.')[0] -ne ((Split-Path $esd -Leaf) -split '\.')[0])) {
+    Start-WsusLookup $EnablementPackageKbs[$Version]  # The image isn't the target version, so the VM will need the enablement package
+}
 if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
 if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan') {
