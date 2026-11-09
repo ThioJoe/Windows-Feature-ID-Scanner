@@ -80,6 +80,13 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-option[aria-selected=true] { box-shadow: inset 3px 0 0 var(--accent); }
 .picker-option[aria-selected=true] .picker-main { color: var(--accent); font-weight: 600; }
 .picker-tag { padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-size: 11px; }
+.picker-footer {
+  position: sticky; bottom: -6px; margin: 6px 0 -6px; padding: 6px 12px;
+  background: var(--panel); border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; white-space: normal;
+}
+.picker-footer b { color: var(--fg); font-weight: 600; }
+.legend { margin: 0 0 8px; }
+.legend b { color: var(--fg); }
 .picker-meta { margin-left: auto; padding-left: 20px; color: var(--muted); font-size: 12px; }
 input[type=search] { flex: 1 1 260px; min-width: 0; }
 button { cursor: pointer; }

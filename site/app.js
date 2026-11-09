@@ -160,7 +160,7 @@ class BuildPicker extends HTMLElement {
     for (const o of this.list.querySelectorAll('[role=option]')) o.setAttribute('aria-selected', String(o.dataset.value === this.current));
   }
 
-  setSections(sections) {
+  setSections(sections, footer = '') {
     this.items = [];
     let html = '';
     for (const s of sections) {
@@ -170,13 +170,14 @@ class BuildPicker extends HTMLElement {
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
-            `${it.tag ? `<span class="picker-tag">${esc(it.tag)}</span>` : ''}<span class="picker-meta">${esc(it.meta || '')}</span></div>`;
+            `${it.tag ? `<span class="picker-tag"${it.tagTitle ? ` title="${esc(it.tagTitle)}"` : ''}>${esc(it.tag)}</span>` : ''}<span class="picker-meta">${esc(it.meta || '')}</span></div>`;
           this.items.push(it);
         }
         html += '</div>';
       }
       html += '</div>';
     }
+    if (footer) html += `<div class="picker-footer" aria-hidden="true">${footer}</div>`;
     this.list.innerHTML = html;
     this.active = null;
     this.value = this.items.some((x) => x.value === this.current) ? this.current : (this.items.length ? this.items[0].value : '');
@@ -256,6 +257,16 @@ class BuildPicker extends HTMLElement {
 }
 customElements.define('build-picker', BuildPicker);
 
+// Microsoft's labels for its updates: the year and month of the release, then which kind it is
+// (https://learn.microsoft.com/windows/deployment/update/release-cycle)
+const UPDATE_TYPES = {
+  B: 'Monthly security update, released the second Tuesday of the month',
+  D: 'Optional non-security preview, released the fourth week of the month',
+  OOB: "Out-of-band update, released when a fix can't wait for the next monthly update",
+};
+const updateTypeTitle = (type) => UPDATE_TYPES[String(type || '').split(' ').pop()] || '';
+const UPDATE_TYPES_LEGEND = '<b>B</b> monthly security update (second Tuesday) · <b>D</b> optional preview (fourth week) · <b>OOB</b> out-of-band';
+
 // What the list of released builds says about a build, shown in the build picker: its update (e.g. 2026-10 B), or its Insider release date
 function releaseTag(b) {
   if (!releases) return '';
@@ -284,12 +295,13 @@ function fillBuildPicker(picker, selectedKey) {
         value: b.key,
         text: b.build,
         tag: releaseTag(b),
+        tagTitle: updateTypeTitle(releaseTag(b)),
         meta: `${fmt(b.features)} IDs · ${fmt(b.named)} named`,
         label: `<span class="picker-main">${esc(b.build)}</span>` +
           `<span class="picker-sub">${esc([archName(b.architecture), versionText(b)].filter(Boolean).join(' · '))}</span>`,
       })),
     })),
-  })));
+  })), index.builds.some((b) => updateTypeTitle(releaseTag(b))) ? UPDATE_TYPES_LEGEND : '');
   if (selectedKey) picker.value = selectedKey;
 }
 
@@ -773,7 +785,11 @@ async function renderReleases() {
       ? "Insider builds are scanned in a virtual machine enrolled in the Windows Insider Program, except Release Preview's, which are scanned as the updates they become.</p>"
       : 'Insider builds are not scanned yet: Microsoft only provides them to devices enrolled in the Windows Insider Program, and the scanner has no enrolled device yet.</p>');
 
-  html += '<h2>Windows 11</h2><div class="table-wrap"><table><thead><tr><th>Version</th><th>Build</th><th>KB</th><th>Released</th>' +
+  html += '<h2>Windows 11</h2><p class="muted legend">Update is Microsoft\'s label for the release: the year and month, then ' +
+    '<b>B</b> for the monthly security update (the second Tuesday of the month), <b>D</b> for the optional non-security preview ' +
+    '(the fourth week of the month) or <b>OOB</b> for an out-of-band update, released when a fix can\'t wait for the next monthly ' +
+    'update. <a href="https://learn.microsoft.com/windows/deployment/update/release-cycle">Microsoft\'s description of each</a>.</p>';
+  html += '<div class="table-wrap"><table><thead><tr><th>Version</th><th>Build</th><th>KB</th><th>Released</th>' +
     '<th>Update</th><th>x64</th><th>ARM64</th></tr></thead><tbody>';
   // The first cell of a group spans its rows, so the last group's has to drop the bottom border the table's last row doesn't have
   const groupCell = (text, rows, last) => `<td rowspan="${rows}"${last ? ' class="last"' : ''}>${esc(text)}</td>`;
@@ -786,7 +802,7 @@ async function renderReleases() {
       html += '<tr>' + (i === 0 ? groupCell(v.version, v.releases.length, n === releases.windows11.length - 1) : '') +
         `<td class="id">${esc(r.build)}</td>` +
         `<td><a href="https://support.microsoft.com/help/${esc(r.kb.replace(/^KB/, ''))}">${esc(r.kb)}</a></td>` +
-        `<td>${esc(r.date)}</td><td>${esc(r.type)}</td>` +
+        `<td>${esc(r.date)}</td><td${updateTypeTitle(r.type) ? ` title="${esc(updateTypeTitle(r.type))}"` : ''}>${esc(r.type)}</td>` +
         `<td>${scanLink(r.build, 'AMD64') || (due ? '<span class="muted">not yet</span>' : none)}</td>` +
         `<td>${scanLink(r.build, 'ARM64') || none}</td></tr>`;
     });
