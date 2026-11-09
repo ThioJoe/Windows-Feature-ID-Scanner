@@ -555,6 +555,9 @@ try {
     [void]$wanted.Add($offer)
     $dl = $session.CreateUpdateDownloader(); $dl.Updates = $wanted; $d = $dl.Download()
     Write-Log "download result: $($d.ResultCode)"
+    # What Windows Update downloaded for the offer (the files it doesn't name above)
+    Get-ChildItem C:\Windows\SoftwareDistribution\Download -Recurse -File -ErrorAction SilentlyContinue | Sort-Object Length -Descending |
+        Select-Object -First 40 | ForEach-Object { Write-Log ("  downloaded: {0} ({1:N0} bytes)" -f $_.FullName.Replace('C:\Windows\SoftwareDistribution\Download\', ''), $_.Length) }
     $inst = $session.CreateUpdateInstaller(); $inst.Updates = $wanted; $i = $inst.Install()
     $kbs = @($wanted | ForEach-Object { $_.KBArticleIDs | ForEach-Object { "KB$_" } }) -join ' '
     Write-Result "installed $($i.ResultCode), reboot required: $($i.RebootRequired), KB: $kbs"
