@@ -72,19 +72,19 @@ jobs:
     if: needs.check.outputs.needed == 'true'
     runs-on: windows-latest
     timeout-minutes: 340
+    # The builds are scanned at the same time, each on its own runner; the commit job adds them all to data/ afterwards
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 6
       matrix:
         build: ${{ fromJSON(needs.check.outputs.builds) }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.ref }}  # The branch tip, so a later build in the matrix starts from the data (and symbol cache) of the one before
-          fetch-depth: 0          # Full history so the data commit can be rebased onto the branch tip
+          ref: ${{ github.ref }}  # The branch tip: the symbol cache the scan starts from
 
       - name: Build the VM and scan inside it
         shell: powershell
@@ -125,26 +125,72 @@ jobs:
           path: output/
           if-no-files-found: warn
 
-      - name: Add build to data/ and commit
-        shell: powershell
+      # The scan added what it found to its copy of the symbol cache (the PDBs it scanned); the commit job merges the copies
+      - name: Upload the symbol cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbol-cache-${{ env.BUILD_KEY }}
+          path: data/symbol-cache-AMD64.json
+          if-no-files-found: error
+
+  # Once every scan has finished or failed: the builds that were scanned go into data/ in one commit
+  commit:
+    needs: scan
+    if: ${{ !cancelled() && needs.scan.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      committed: ${{ steps.commit.outputs.committed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
+
+      - name: Download the scans' output
+        uses: actions/download-artifact@v4
+        with:
+          pattern: scanner-output-build-*
+          path: output
+          merge-multiple: true
+
+      - name: Download the scans' symbol caches
+        uses: actions/download-artifact@v4
+        with:
+          pattern: symbol-cache-*
+          path: symbol-caches
+
+      # Oldest build first: update-data.py fills in a build's missing feature names from the earlier builds in data/
+      - name: Add the builds to data/ and commit
+        id: commit
         run: |
-          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode"
-          if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
+          set -euo pipefail
+          keys=()
+          while read -r folder; do
+            key="${folder#output/Windows-Build-}"
+            echo "Adding $key"
+            python3 update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode"
+            keys+=("$key")
+          done < <(find output -mindepth 1 -maxdepth 1 -type d -name 'Windows-Build-*' 2>/dev/null | sort -t- -k3,3V)
+          if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          caches=(symbol-caches/*/symbol-cache-AMD64.json)
+          if [ -e "${caches[0]}" ]; then python3 merge-symbol-caches.py --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
-          git diff --cached --quiet
-          if ($LASTEXITCODE -eq 0) { Write-Host "No changes to data/."; exit 0 }
-          git commit -q -m "Add feature data for build $env:BUILD_KEY"
-          git pull -q --rebase origin "${{ github.ref_name }}"
-          if ($LASTEXITCODE -ne 0) { Write-Error "Rebase onto ${{ github.ref_name }} failed"; exit 1 }
-          git push -q origin "HEAD:${{ github.ref_name }}"
-          if ($LASTEXITCODE -ne 0) { Write-Error "Push failed"; exit 1 }
+          if git diff --cached --quiet; then echo "No changes to data/."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ ${#keys[@]} -eq 1 ]; then message="Add feature data for build ${keys[0]}"; else message="Add feature data for builds $(IFS=,; echo "${keys[*]}" | sed 's/,/, /g')"; fi
+          git commit -q -m "$message"
+          git pull -q --rebase origin "$GITHUB_REF_NAME"
+          git push -q origin "HEAD:$GITHUB_REF_NAME"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
 
   # A push made with GITHUB_TOKEN doesn't trigger other workflows, so publish the site from here after new data is committed
   pages:
-    needs: [check, scan]
-    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.scan.result != 'skipped' || needs.check.outputs.releases == 'true') }}
+    needs: [check, commit]
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.commit.outputs.committed == 'true' || needs.check.outputs.releases == 'true') }}
     uses: ./.github/workflows/pages.yml
     permissions:
       contents: read
