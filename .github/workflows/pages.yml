@@ -30,7 +30,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # When called from the scanner, check out the branch tip so the data it just committed is included
           ref: ${{ github.ref_name }}
@@ -45,10 +45,10 @@ jobs:
           rm -rf _site/data/builds/*/details.json _site/data/builds/*/super-god-mode _site/data/symbol-cache*.json
           python3 build-site-data.py --data data --out _site/derived
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
