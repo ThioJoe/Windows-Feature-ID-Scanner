@@ -42,7 +42,7 @@ jobs:
       releases: ${{ steps.releases.outputs.changed }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0  # Full history so the commit can be rebased onto the branch tip
 
@@ -82,7 +82,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}  # The branch tip: the symbol cache the scan starts from
 
@@ -100,7 +100,7 @@ jobs:
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vm-checks-${{ matrix.build.key }}
           path: vm-output/
@@ -119,7 +119,7 @@ jobs:
           echo "BUILD_KEY=$key" >> $env:GITHUB_ENV
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: scanner-output-build-${{ env.BUILD_KEY }}
           path: output/
@@ -127,7 +127,7 @@ jobs:
 
       # The scan added what it found to its copy of the symbol cache (the PDBs it scanned); the commit job merges the copies
       - name: Upload the symbol cache
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: symbol-cache-${{ env.BUILD_KEY }}
           path: data/symbol-cache-AMD64.json
@@ -144,20 +144,20 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
 
       - name: Download the scans' output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: scanner-output-build-*
           path: output
           merge-multiple: true
 
       - name: Download the scans' symbol caches
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: symbol-cache-*
           path: symbol-caches
@@ -175,8 +175,9 @@ jobs:
             keys+=("$key")
           done < <(find output -mindepth 1 -maxdepth 1 -type d -name 'Windows-Build-*' 2>/dev/null | sort -t- -k3,3V)
           if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
-          caches=(symbol-caches/*/symbol-cache-AMD64.json)
-          if [ -e "${caches[0]}" ]; then python3 merge-symbol-caches.py --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
+          # (A folder per scan's cache, though download-artifact can put a lone one straight in symbol-caches/)
+          mapfile -t caches < <(find symbol-caches -type f -name symbol-cache-AMD64.json 2>/dev/null | sort)
+          if [ ${#caches[@]} -gt 0 ]; then python3 merge-symbol-caches.py --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
