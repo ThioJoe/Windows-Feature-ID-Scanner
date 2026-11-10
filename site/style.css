@@ -182,7 +182,7 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 /* (Its width doesn't count toward the table's, which would otherwise widen to fit the tree) */
 .req-tree {
   display: grid; row-gap: 7px; align-items: center; justify-items: start;
-  flex: 1 1 0; min-width: 0; overflow-x: auto; padding: 2px 0; contain: inline-size;
+  flex: 1 1 0; min-width: 0; overflow-x: auto; padding: 2px 0 8px; contain: inline-size;  /* (Room above the scroll bar when it has one) */
 }
 .detail a.req-box {
   display: flex; flex-direction: column; padding: 1px 6px; background: var(--bg); text-decoration: none; white-space: nowrap;
