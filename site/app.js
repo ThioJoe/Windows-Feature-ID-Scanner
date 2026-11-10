@@ -8,6 +8,8 @@ const NUMERIC = /^(?:ID|FI)?\d+$/;
 
 const DETAIL_SHARDS = 64;
 const DEFAULTS = { enabled: 'enabled', disabled: 'disabled', alwaysEnabled: 'always enabled', alwaysDisabled: 'always disabled' };
+// The order the tables sort default states in, instead of alphabetical (which put always enabled below disabled)
+const DEFAULT_ORDER = { alwaysDisabled: 1, disabled: 2, enabled: 3, alwaysEnabled: 4 };
 const CHANGE_TIMES = { read: 'the next time it is checked', moduleReload: 'when the binary is reloaded', session: 'at the next sign-in', reboot: 'after a reboot' };
 const CHANGE_SHORT = { read: 'on read', moduleReload: 'on reload', session: 'on sign-in', reboot: 'on reboot' };
 
@@ -354,6 +356,8 @@ function payloadText(c) {
 }
 
 const stateText = (f) => [DEFAULTS[f.default], CHANGE_SHORT[f.changeTime]].filter(Boolean).join(', ');
+// Sorts by the default (DEFAULT_ORDER), then by the text; a state without a known default goes last, as a blank does
+const stateSortKey = (f) => (DEFAULT_ORDER[f.default] ? `${DEFAULT_ORDER[f.default]} ${stateText(f)}` : '');
 // The same in green when it's enabled, red when it's disabled
 const stateHtml = (f) => {
   const d = (f || {}).default || '', cls = /enabled/i.test(d) ? 'enabled' : /disabled/i.test(d) ? 'disabled' : '';
@@ -895,8 +899,8 @@ async function renderCompare() {
     ['Default changed', 'changed', defaultChanged, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-      { title: 'Old', value: (f) => stateText(f.oldState), cls: 'store' },
-      { title: 'New', value: (f) => stateText(f.newState), html: (f) => stateHtml(f.newState), cls: 'store' },
+      { title: 'Old', value: (f) => stateText(f.oldState), sortKey: (f) => stateSortKey(f.oldState), cls: 'store' },
+      { title: 'New', value: (f) => stateText(f.newState), sortKey: (f) => stateSortKey(f.newState), html: (f) => stateHtml(f.newState), cls: 'store' },
     ]],
   ];
   const detailOld = featureDetail(a), detailNew = featureDetail(b);
@@ -942,7 +946,7 @@ async function renderBuild() {
   renderTable(out, rows, [
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-    { title: 'Default', value: (f) => DEFAULTS[f.default] || '', cls: 'store' },
+    { title: 'Default', value: (f) => DEFAULTS[f.default] || '', sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
     { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => seen[String(f.id)] || '', cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
     { title: 'Modules', value: modsText, cls: 'mods' },
