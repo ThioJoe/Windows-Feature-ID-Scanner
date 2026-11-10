@@ -118,8 +118,9 @@ function buildLabel(b) {
 
 // Used like a <select> (a value, and a change event when the user picks something), but its list can have sections within sections,
 // which a select can't: setSections([{ label, note, groups: [{ label, items: [{ value, text, tag, meta, label }] }] }]), where text is
-// what typing jumps to and label the HTML the button shows. The list works like a listbox: arrow keys, Home/End, Page Up/Down, Enter or
-// Space to pick, Escape to close, and typing the start of a build number.
+// what typing jumps to and label the HTML the button shows. The sections are side by side, a column each (stacked on a narrow screen).
+// The list works like a listbox: arrow keys (left and right to the next column), Home/End, Page Up/Down, Enter or Space to pick,
+// Escape to close, and typing the start of a build number.
 class BuildPicker extends HTMLElement {
   connectedCallback() {
     if (this.button) return;
@@ -164,7 +165,7 @@ class BuildPicker extends HTMLElement {
 
   setSections(sections, footer = '') {
     this.items = [];
-    let html = '';
+    let html = '<div class="picker-columns">';
     for (const s of sections) {
       html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
       for (const g of s.groups) {
@@ -172,13 +173,15 @@ class BuildPicker extends HTMLElement {
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
-            `${it.tag ? `<span class="picker-tag"${it.tagTitle ? ` title="${esc(it.tagTitle)}"` : ''}>${esc(it.tag)}</span>` : ''}<span class="picker-meta">${esc(it.meta || '')}</span></div>`;
+            `${it.tag ? `<span class="picker-tag"${it.tagTitle ? ` title="${esc(it.tagTitle)}"` : ''}>${esc(it.tag)}</span>` : ''}` +
+            `${it.meta ? `<span class="picker-meta">${esc(it.meta)}</span>` : ''}</div>`;
           this.items.push(it);
         }
         html += '</div>';
       }
       html += '</div>';
     }
+    html += '</div>';
     if (footer) html += `<div class="picker-footer" aria-hidden="true">${footer}</div>`;
     this.list.innerHTML = html;
     this.active = null;
@@ -237,6 +240,18 @@ class BuildPicker extends HTMLElement {
       case 'End': return go(opts.length - 1);
       case 'PageDown': return go(i + 10);
       case 'PageUp': return go(i - 10);
+      case 'ArrowLeft':
+      case 'ArrowRight': {
+        // The option nearest the same height in the column to the left or right
+        if (!this.active) return;
+        const columns = [...this.list.querySelectorAll('.picker-section')];
+        const next = columns[columns.indexOf(this.active.closest('.picker-section')) + (e.key === 'ArrowRight' ? 1 : -1)];
+        if (!next) return;
+        e.preventDefault();
+        const y = this.active.getBoundingClientRect().top, dy = (o) => Math.abs(o.getBoundingClientRect().top - y);
+        this.setActive([...next.querySelectorAll('[role=option]')].reduce((a, b) => (dy(b) < dy(a) ? b : a)));
+        return;
+      }
       case 'Enter':
       case ' ':
         e.preventDefault();
@@ -277,7 +292,7 @@ function releaseTag(b) {
   return '';
 }
 
-// Builds by architecture (x64 first), then by Windows version, newest first (Insider channels after the released versions)
+// Builds by architecture (x64 first, a column each), then by Windows version, newest first (Insider channels after the released versions)
 function fillBuildPicker(picker, selectedKey) {
   const archs = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
@@ -298,7 +313,6 @@ function fillBuildPicker(picker, selectedKey) {
         text: b.build,
         tag: releaseTag(b),
         tagTitle: updateTypeTitle(releaseTag(b)),
-        meta: `${fmt(b.features)} IDs · ${fmt(b.named)} named`,
         label: `<span class="picker-main">${esc(b.build)}</span>` +
           `<span class="picker-sub">${esc([archName(b.architecture), versionText(b)].filter(Boolean).join(' · '))}</span>`,
       })),

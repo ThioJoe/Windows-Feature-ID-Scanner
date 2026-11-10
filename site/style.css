@@ -56,7 +56,7 @@ select, input[type=search], button {
 }
 .controls > .field { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
 
-/* Build picker: a button, and the list of builds it opens, by architecture, then version */
+/* Build picker: a button, and the list of builds it opens, by architecture (a column each), then version */
 build-picker { position: relative; display: block; min-width: 0; }
 .picker-button { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 16em; text-align: left; }
 .picker-value { display: flex; align-items: baseline; gap: 8px; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
@@ -70,7 +70,14 @@ build-picker { position: relative; display: block; min-width: 0; }
   background: var(--bg); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
   padding-bottom: 6px; outline: none; scroll-padding-top: 36px;
 }
-.picker-section + .picker-section { margin-top: 6px; border-top: 1px solid var(--border); }
+.picker-columns { display: flex; }
+.picker-columns > .picker-section { flex: 1 1 auto; }
+.picker-section + .picker-section { border-left: 1px solid var(--border); }
+/* Stacked where two columns don't fit */
+@media (max-width: 520px) {
+  .picker-columns { flex-direction: column; }
+  .picker-section + .picker-section { margin-top: 6px; border-left: 0; border-top: 1px solid var(--border); }
+}
 .picker-section-label { position: sticky; top: 0; z-index: 1; padding: 6px 12px; background: var(--panel); border-bottom: 1px solid var(--border); font-weight: 600; }
 .picker-section-label span { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: normal; }
 .picker-group-label { padding: 8px 12px 2px 26px; color: var(--muted); font-size: 12px; font-weight: 600; }
@@ -83,6 +90,7 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-footer {
   position: sticky; bottom: -6px; margin: 6px 0 -6px; padding: 6px 12px;
   background: var(--panel); border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; white-space: normal;
+  contain: inline-size;  /* Wraps to the columns' width instead of widening the list */
 }
 .picker-footer b { color: var(--fg); font-weight: 600; }
 .legend { margin: 0 0 8px; }
@@ -149,6 +157,7 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .detail h4 { font-size: 13px; margin: 10px 0 4px; overflow-wrap: anywhere; }
 .detail h4 .muted { font-weight: normal; }
 .detail .kv { display: flex; gap: 8px; margin: 2px 0 2px 8px; }
+.detail .kv + .kv { margin-top: 9px; }  /* Half a line between one list and the next */
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
