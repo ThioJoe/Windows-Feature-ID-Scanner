@@ -162,6 +162,13 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 /* A binary's code details: each list a band, half a line from the next, every other one shaded */
 .detail .mod > .kv { margin: 0 0 0 8px; padding: 5px 8px; border-radius: 4px; }
 .detail .mod > .kv:nth-of-type(odd) { background: var(--stripe); }
+/* A list of features (Required by) in columns to the right of its label: app.js (fitCells) makes each item a whole number of columns
+   wide, so they all start on one */
+.req-by { display: flex; align-items: flex-start; gap: 6px; margin: 4px 0; }
+.req-by > b { flex: none; }
+.cells { --cell: 240px; --cell-gap: 12px; display: flex; flex-wrap: wrap; column-gap: var(--cell-gap); row-gap: 2px; flex: 1 1 0; min-width: 0; }
+.cells > .cell { flex: none; max-width: 100%; overflow-wrap: anywhere; }
+.cells:not(.fitted) > .cell { white-space: nowrap; }  /* (While their widths are measured) */
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
@@ -195,6 +202,7 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
   .detail .kv { flex-direction: column; gap: 0; }
   .detail p.req-line { flex-direction: column; align-items: stretch; }
   .req-tree { flex: none; }
+  .req-by { flex-direction: column; align-items: stretch; gap: 0; }
 }
 footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); padding-top: 12px; padding-bottom: 24px; }
 footer a { color: var(--accent); }

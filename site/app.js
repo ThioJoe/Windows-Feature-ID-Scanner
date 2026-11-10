@@ -371,6 +371,19 @@ function matches(f, q, namedOnly) {
   return (f.modules || []).some((m) => m.toLowerCase().includes(q));
 }
 
+// Lays out each list of .cells in columns (--cell wide, --cell-gap apart, from the CSS): every item is made as wide as a whole number of
+// columns, so they all start on one, and a long item takes as many as it needs, the next one starting after it. Measured once shown.
+function fitCells(root) {
+  for (const cells of root.querySelectorAll('.cells')) {
+    const style = getComputedStyle(cells), width = parseFloat(style.getPropertyValue('--cell')), gap = parseFloat(style.getPropertyValue('--cell-gap'));
+    for (const cell of cells.children) {
+      const n = Math.max(1, Math.ceil((cell.scrollWidth + gap) / (width + gap)));
+      cell.style.width = `${n * (width + gap) - gap}px`;
+    }
+    cells.classList.add('fitted');
+  }
+}
+
 // Renders a sortable table with incremental "show more". With detail (an async function returning HTML), clicking a row shows it below the row.
 function renderTable(container, rows, columns, defaultSort, detail) {
   let sort = defaultSort || { col: 0, dir: 1 };
@@ -415,7 +428,7 @@ function renderTable(container, rows, columns, defaultSort, detail) {
       d.innerHTML = `<td colspan="${columns.length}"><div class="detail-body">Loading…</div></td>`;
       tr.after(d);
       const body = d.querySelector('.detail-body');
-      detail(sorted[Number(tr.dataset.i)]).then((h) => { body.innerHTML = h; }, (e) => { body.textContent = 'Error: ' + e.message; });
+      detail(sorted[Number(tr.dataset.i)]).then((h) => { body.innerHTML = h; fitCells(body); }, (e) => { body.textContent = 'Error: ' + e.message; });
     }));
   };
   draw();
@@ -598,7 +611,9 @@ function featureDetail(build) {
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
     if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`);
-    if (requiredBy.has(f.id)) parts.push(`<p><b>Required by:</b> ${requiredBy.get(f.id).map(link).join(', ')}</p>`);
+    if (requiredBy.has(f.id)) {
+      parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${requiredBy.get(f.id).map((id) => `<span class="cell">${link(id)}</span>`).join('')}</div></div>`);
+    }
     const det = await loadDetails(build.architecture, f.id);
     if (det) {
       parts.push(...Object.entries(det.usage).map(([mod, u]) => moduleDetail(mod, u)));
