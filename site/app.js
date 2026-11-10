@@ -612,7 +612,10 @@ function featureDetail(build) {
     }
     if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`);
     if (requiredBy.has(f.id)) {
-      parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${requiredBy.get(f.id).map((id) => `<span class="cell">${link(id)}</span>`).join('')}</div></div>`);
+      // Shortest names first (then by ID), so items of about the same width share rows
+      const nameLength = (id) => ((byId.get(id) || {}).name || '').length;
+      const ids = [...requiredBy.get(f.id)].sort((a, b) => nameLength(a) - nameLength(b) || a - b);
+      parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${ids.map((id) => `<span class="cell">${link(id)}</span>`).join('')}</div></div>`);
     }
     const det = await loadDetails(build.architecture, f.id);
     if (det) {
