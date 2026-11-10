@@ -40,7 +40,7 @@ A daily check (`check-windows-builds.py`) finds the builds Microsoft has release
 - **Insider builds:** the index of the [Windows Insider release notes](https://learn.microsoft.com/en-us/windows-insider/) (JSON), with each build's release date from [Flight Hub](https://learn.microsoft.com/en-us/windows-insider/flight-hub/), which also stands in for the index.
 - **Pages:** KB articles, the release information page and Flight Hub are read through the [Microsoft Learn API](https://learn.microsoft.com/api/mcp) (`microsoft_learn.py`), which gives a page as Markdown. A page's HTML is only read when that fails.
 
-The builds a run scans are scanned at the same time, each on its own runner. Once they've all finished or failed, one job adds the ones that were scanned to `data/` in a single commit, oldest first (a build's missing feature names are filled in from earlier builds), and merges their symbol caches (`merge-symbol-caches.py`).
+The builds a run scans are scanned at the same time, each on its own runner. Once they've all finished or failed, one job adds the ones that were scanned to `data/` in a single commit, oldest first (a build's missing feature names are filled in from earlier builds, including in builds already in `data/` when an earlier build is added after them), and merges their symbol caches (`merge-symbol-caches.py`).
 
 A source that fails, or two that disagree, show up as warnings on the run. The run's summary lists the newest builds of every version and channel; the list is kept in `data/releases.json` and shown on the site. 26H1 isn't scanned: it's a separate branch for new devices, and the Media Creation Tool's catalogs have no image of it.
 

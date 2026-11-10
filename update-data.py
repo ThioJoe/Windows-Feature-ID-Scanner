@@ -12,7 +12,7 @@
 # Usage:
 #   python update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>]
 #                                          # add/replace a build, then regenerate everything
-#   python update-data.py                  # only regenerate index, first-seen and diffs
+#   python update-data.py                  # only regenerate index, first-seen and diffs (and fill in what builds already here lack)
 #
 # features.json and details.json are written with one feature per line so git diffs between commits stay small and readable. The site
 # doesn't load details.json itself: build-site-data.py derives the files it loads when the site is published.
@@ -300,6 +300,23 @@ def regenerate(data_dir):
             b['release'] = releases[b['build']]
             write_build_file(os.path.join(build_dir(data_dir, b['key']), 'features.json'), {k: v for k, v in b.items() if k != 'features'}, b['features'])
             print('[data] stored the release of %s: %s, %s, %s' % (b['key'], b['release'].get('type'), b['release'].get('date'), b['release'].get('kb')))
+
+    # A feature the symbols don't name gets its name from the earlier builds of the architecture when a build is added (add_build). Builds
+    # aren't always added in order (older ones scanned later), so a build already here gets the names an earlier one added since has.
+    known, arch = {}, None
+    for b in builds:  # By architecture, then version
+        if b['architecture'] != arch:
+            known, arch = {}, b['architecture']
+        filled = 0
+        for f in b['features']:
+            if not f['name'] and f['id'] in known:
+                f['name'] = known[f['id']]
+                f['nameSource'] = 'earlierBuild'
+                filled += 1
+        known.update((f['id'], f['name']) for f in b['features'] if f['name'])
+        if filled:
+            write_build_file(os.path.join(build_dir(data_dir, b['key']), 'features.json'), {k: v for k, v in b.items() if k != 'features'}, b['features'])
+            print('[data] filled in %d names of %s from earlier builds' % (filled, b['key']))
 
     # Index
     index = {'generated': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'builds': []}
