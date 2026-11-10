@@ -1,7 +1,7 @@
 # Windows-Feature-ID-Scanner
 A modern take on mach2's feature scanning: GitHub Actions scans Windows 11 for feature IDs and their names (ARM64 on a GitHub runner, x64 in a virtual machine built from Microsoft's servers), stores the results per build, and tracks what changes between builds.
 
-**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes, and the shell folders, settings pages, Settings search entries, URL protocols and other links Super God Mode found in each) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, the features it requires and its default state. It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned.
+**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes, and the shell folders, settings pages, Settings search entries, URL protocols and other links Super God Mode found in each) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, its default state, and the chain of features it requires with their default states (a feature that's on by default stays off if one of them is off). It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned.
 
 ## How it works
 

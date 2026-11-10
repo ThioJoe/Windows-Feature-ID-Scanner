@@ -20,6 +20,8 @@ const detailTextCache = new Map();
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = (n) => Number(n).toLocaleString('en-US');
+// A feature's address: its build's view, searched for the feature's ID (so a link to it also works in a new tab)
+const featureHref = (buildKey, id) => `#build/${encodeURIComponent(buildKey)}/${id}`;
 
 // What the site calls the architectures of the data (PROCESSOR_ARCHITECTURE values)
 const ARCH_NAMES = { AMD64: 'x64' };
@@ -423,7 +425,53 @@ function featureDetail(build) {
   }
   const link = (id) => {
     const f = byId.get(id);
-    return `<a href="#" class="feat-link" data-id="${id}" data-build="${esc(build.key)}">${id}</a>${f && f.name ? ' ' + esc(f.name) : ''}`;
+    return `<a href="${featureHref(build.key, id)}" class="feat-link">${id}</a>${f && f.name ? ' ' + esc(f.name) : ''}`;
+  };
+  // A feature only works when the features it requires are on too, so it's only on by default if they are as well: its effective
+  // default. causes() finds the nearest required features that make it so (off, or with no known default), past those that are on.
+  const own = (id) => {
+    const d = (byId.get(id) || {}).default;
+    return d === 'enabled' || d === 'alwaysEnabled' ? 'enabled' : d === 'disabled' || d === 'alwaysDisabled' ? 'disabled' : 'unknown';
+  };
+  const effective = new Map();
+  const effectiveDefault = (id) => {
+    if (effective.has(id)) return effective.get(id);
+    effective.set(id, 'unknown');  // Until its requirements are worked out, in case they ever loop back to it
+    const reqs = ((byId.get(id) || {}).requires || []).map(effectiveDefault);
+    const e = own(id) === 'disabled' || reqs.includes('disabled') ? 'disabled'
+      : own(id) === 'enabled' && reqs.every((s) => s === 'enabled') ? 'enabled' : 'unknown';
+    effective.set(id, e);
+    return e;
+  };
+  const causes = (ids, state, found = [], seen = new Set()) => {
+    for (const id of ids) {
+      if (seen.has(id)) continue;
+      seen.add(id);
+      if (own(id) === state) found.push(id);
+      else if (effectiveDefault(id) === state) causes((byId.get(id) || {}).requires || [], state, found, seen);
+    }
+    return found;
+  };
+  const listOf = (ids) => {
+    const items = ids.slice(0, 5).map(link).concat(ids.length > 5 ? [`${ids.length - 5} more`] : []);
+    return items.length > 1 ? items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1] : items[0];
+  };
+  // The features a feature requires, left to right: each in a box outlined by its default state, followed by the ones it requires in
+  // turn. Several requirements are stacked. A feature already in the chain isn't followed again (…).
+  const STATE_MARKS = { enabled: '✓', disabled: '✕', unknown: '?' };
+  const box = (id) => {
+    const r = byId.get(id);
+    const state = r && r.default ? DEFAULTS[r.default] + (r.default.startsWith('always') ? '' : ' by default') : 'default not known';
+    return `<a href="${featureHref(build.key, id)}" class="feat-link req-box ${own(id)}" title="${esc(state[0].toUpperCase() + state.slice(1))}">` +
+      `<span class="req-mark">${STATE_MARKS[own(id)]}</span>${id}${r && r.name ? ` <span class="req-name">${esc(r.name)}</span>` : ''}</a>`;
+  };
+  const chain = (ids, shown) => {
+    if (ids.length > 1) return `<span class="req-branches">${ids.map((id) => `<span class="req-run">${chain([id], shown)}</span>`).join('')}</span>`;
+    const id = ids[0], next = (byId.get(id) || {}).requires || [];
+    const again = shown.has(id);
+    shown.add(id);
+    return box(id) + (!next.length ? '' : '<span class="req-arrow">→</span>' +
+      (again ? '<span class="muted" title="What it requires is shown earlier in the chain">…</span>' : chain(next, shown)));
   };
   return async (row) => {
     const f = byId.get(row.id) || row;
@@ -434,7 +482,17 @@ function featureDetail(build) {
       const when = f.changeTime ? 'changes take effect ' + CHANGE_TIMES[f.changeTime] : '';
       parts.push(`<p><b>Default:</b> ${esc([def, when].filter(Boolean).join('; '))}</p>`);
     }
-    if ((f.requires || []).length) parts.push(`<p><b>Requires:</b> ${f.requires.map(link).join(', ')}</p>`);
+    // Shown when the features it requires decide it: not for a feature that's off by default anyway, or one with no known default
+    // that nothing it requires turns off
+    const e = effectiveDefault(f.id);
+    if ((f.requires || []).length && own(f.id) !== 'disabled' && (e !== 'unknown' || own(f.id) === 'enabled')) {
+      const causedBy = e === 'enabled' ? [] : causes(f.requires, e);
+      const why = e === 'enabled' ? ', as are all the features it requires'
+        : causedBy.length ? `, since it requires ${listOf(causedBy)}, ` + (e === 'disabled'
+          ? `which ${causedBy.length > 1 ? 'are' : 'is'} disabled by default` : `whose default${causedBy.length > 1 ? 's aren\'t' : ' isn\'t'} known`) : '';
+      parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
+    }
+    if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> <span class="req-tree">${chain(f.requires, new Set([f.id]))}</span></p>`);
     if (requiredBy.has(f.id)) parts.push(`<p><b>Required by:</b> ${requiredBy.get(f.id).map(link).join(', ')}</p>`);
     const det = await loadDetails(build.architecture, f.id);
     if (det) {
@@ -475,7 +533,7 @@ const SETTINGS_GATE = {
     if (!name) return '';
     const id = findFeature(build, name);
     return (e['Shown with feature'] ? 'shown with ' : 'hidden with ') + (id === undefined ? esc(name)
-      : `<a href="#" class="feat-link" data-id="${id}" data-build="${esc(build.key)}" title="Feature ${id} in ${esc(build.key)}">${esc(name)}</a>`);
+      : `<a href="${featureHref(build.key, id)}" class="feat-link" title="Feature ${id} in ${esc(build.key)}">${esc(name)}</a>`);
   },
 };
 
@@ -738,7 +796,7 @@ async function renderBuild() {
   const namedOnly = $('bld-named').checked, storeOnly = $('bld-store').checked, newOnly = $('bld-new').checked;
   const searchDetails = $('bld-details').checked;
   const out = $('bld-results');
-  setHash(`build/${key}`);
+  setHash(buildHash());
   if (!key) return;
   const render = ++buildRender;  // A slower earlier render must not overwrite a newer one
   $('bld-status').textContent = searchDetails && q ? 'Loading code details…' : 'Loading…';
@@ -837,6 +895,12 @@ function setHash(h) {
   if (location.hash.slice(1) !== h) history.replaceState(null, '', '#' + h);
 }
 
+// The build view's address: the build, and the search when there is one, so the back button and links to features bring it back
+function buildHash() {
+  const q = $('bld-search').value.trim();
+  return `build/${$('bld-select').value}${q ? '/' + encodeURIComponent(q) : ''}`;
+}
+
 function showView(view) {
   for (const v of ['compare', 'build', 'releases']) $('view-' + v).hidden = v !== view;
   document.querySelectorAll('nav a').forEach((a) => a.classList.toggle('active', a.dataset.view === view));
@@ -851,6 +915,7 @@ function route() {
     renderReleases().catch(showError('rel-status'));
   } else if (view === 'build') {
     if (known(parts[1])) $('bld-select').value = parts[1];
+    $('bld-search').value = parts[2] || '';
     renderBuild().catch(showError('bld-status'));
   } else {
     if (known(parts[1])) $('cmp-old').value = parts[1];
@@ -903,18 +968,10 @@ async function init() {
   document.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
     const v = a.dataset.view;
-    setHash(v === 'build' ? `build/${$('bld-select').value}` : v === 'releases' ? 'releases' : `compare/${$('cmp-old').value}/${$('cmp-new').value}`);
+    setHash(v === 'build' ? buildHash() : v === 'releases' ? 'releases' : `compare/${$('cmp-old').value}/${$('cmp-new').value}`);
     route();
   }));
-  // Links to other features in the details panels open that feature in its build
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a.feat-link');
-    if (!a) return;
-    e.preventDefault();
-    $('bld-search').value = a.dataset.id;
-    setHash(`build/${a.dataset.build}`);
-    route();
-  });
+  // Links to features (featureHref) are ordinary links: the browser adds them to the history, and route() opens them
   window.addEventListener('hashchange', route);
   route();
 }
