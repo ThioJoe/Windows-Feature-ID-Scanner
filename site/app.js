@@ -465,26 +465,90 @@ function featureDetail(build) {
     }
     return lengths.get(id);
   };
-  // The features a feature requires, left to right: each in a box outlined by its default state, followed by the ones it requires in
-  // turn. Several requirements are stacked, the longest chain first, and a feature is on the row of the first one it requires, so every
-  // box is on a row. A feature already in the chain isn't followed again (…).
-  const STATE_MARKS = { enabled: '✓', disabled: '✕', unknown: '?' };
-  const box = (id) => {
-    const r = byId.get(id);
-    const state = r && r.default ? DEFAULTS[r.default] + (r.default.startsWith('always') ? '' : ' by default') : 'default not known';
-    return `<a href="${featureHref(build.key, id)}" class="feat-link req-box ${own(id)}" title="${esc(state[0].toUpperCase() + state.slice(1))}">` +
-      `<span class="req-mark">${STATE_MARKS[own(id)]}</span>${id}${r && r.name ? ` <span class="req-name">${esc(r.name)}</span>` : ''}</a>`;
-  };
-  const chain = (ids, shown) => {
-    if (ids.length > 1) {
-      const longestFirst = [...ids].sort((a, b) => chainLength(b) - chainLength(a));
-      return `<span class="req-branches">${longestFirst.map((id) => `<span class="req-run">${chain([id], shown)}</span>`).join('')}</span>`;
+  // The features a feature requires, on a grid: a column for each step along a chain and a row for each line. A feature's first
+  // requirement is on its row and each next one in the highest row below that where it fits among what's placed already, so a short
+  // branch can sit under a long one. place() returns the cells of a tree with its root at row 0, column 0, given its subtrees' cells,
+  // and notes each subtree's row; the bar joining several subtrees keeps the cells it passes, so nothing else is placed next to it.
+  const place = (kids) => {
+    const cells = [[0, 0]], taken = new Set(['0,0']);
+    let row = -1;
+    for (const k of kids) {
+      row++;
+      while (k.cells.some(([r, c]) => taken.has(`${r + row},${c + 1}`))) row++;
+      k.row = row;
+      for (const [r, c] of k.cells) { cells.push([r + row, c + 1]); taken.add(`${r + row},${c + 1}`); }
     }
-    const id = ids[0], next = (byId.get(id) || {}).requires || [];
+    for (let r = kids.length > 1 ? kids[0].row + 1 : 0; kids.length > 1 && r < kids[kids.length - 1].row; r++) {
+      if (!taken.has(`${r},1`)) { cells.push([r, 1]); taken.add(`${r},1`); }
+    }
+    return cells;
+  };
+  // Where a feature requires several, they're in the order that takes the fewest rows; between orders that take as many, the one
+  // closest to longest chain first. (Rows are counted with every path followed, before features shown earlier are left out.)
+  const fullCells = new Map(), ordered = new Map();
+  const fullTree = (id) => {
+    if (!fullCells.has(id)) {
+      fullCells.set(id, [[0, 0]]);  // Until its requirements are worked out, in case they ever loop back to it
+      fullCells.set(id, place(requiresOf(id).map((k) => ({ cells: fullTree(k) }))));
+    }
+    return fullCells.get(id);
+  };
+  const rowsOf = (cells) => 1 + Math.max(...cells.map(([r]) => r));
+  const permutations = (a) => (a.length < 2 ? [a] : a.flatMap((x, i) => permutations(a.filter((_, j) => j !== i)).map((p) => [x, ...p])));
+  const requiresOf = (id) => {
+    if (!ordered.has(id)) {
+      const ids = [...((byId.get(id) || {}).requires || [])].sort((a, b) => chainLength(b) - chainLength(a));
+      ordered.set(id, ids);  // Until the best order is worked out, in case requirements ever loop back to it
+      if (ids.length > 1 && ids.length <= 6) {
+        let best = ids, fewest = Infinity;
+        for (const p of permutations(ids)) {
+          const rows = rowsOf(place(p.map((k) => ({ cells: fullTree(k) }))));
+          if (rows < fewest) { best = p; fewest = rows; }
+        }
+        ordered.set(id, best);
+      }
+    }
+    return ordered.get(id);
+  };
+  // The tree as shown: a feature already in it isn't followed again (…)
+  const grow = (ids, shown) => ids.map((id) => {
+    const next = requiresOf(id);
     const again = shown.has(id);
     shown.add(id);
-    return box(id) + (!next.length ? '' : '<span class="req-arrow">→</span>' +
-      (again ? '<span class="muted" title="What it requires is shown earlier in the chain">…</span>' : chain(next, shown)));
+    return { id, kids: again ? (next.length ? [{ more: true, kids: [] }] : []) : grow(next, shown) };
+  });
+  const layout = (node) => { node.kids.forEach(layout); node.cells = place(node.kids); return node; };
+  // Each feature in a box outlined by its default state, with its name under its ID; an arrow to the first feature it requires, and a
+  // bar joining them when it requires several
+  const STATE_MARKS = { enabled: '✓', disabled: '✕', unknown: '?' };
+  const box = (id, style) => {
+    const r = byId.get(id);
+    const state = r && r.default ? DEFAULTS[r.default] + (r.default.startsWith('always') ? '' : ' by default') : 'default not known';
+    return `<a href="${featureHref(build.key, id)}" class="feat-link req-box ${own(id)}" title="${esc(state[0].toUpperCase() + state.slice(1))}" style="${style}">` +
+      `<span class="req-id"><span class="req-mark">${STATE_MARKS[own(id)]}</span>${id}</span>${r && r.name ? `<span class="req-name">${esc(r.name)}</span>` : ''}</a>`;
+  };
+  // Grid columns: the bar joining the top level's features, then a column for each step with a gutter after it for arrows and bars
+  const tree = (ids, shown) => {
+    const root = layout({ kids: grow(ids, shown) });
+    const items = [];
+    let columns = 1;
+    const pos = (row, column, lastRow = row) => `grid-row: ${row + 1} / ${lastRow + 2}; grid-column: ${column}`;
+    const bar = (kids, row, column) => {
+      if (kids.length > 1) items.push(`<span class="req-bar" style="${pos(row + kids[0].row, column, row + kids[kids.length - 1].row)}"></span>`);
+    };
+    const draw = (node, row, col) => {
+      columns = Math.max(columns, col + 1);
+      items.push(node.more ? `<span class="muted" title="What it requires is shown earlier" style="${pos(row, 2 + 2 * col)}">…</span>`
+        : box(node.id, pos(row, 2 + 2 * col)));
+      if (!node.kids.length) return;
+      items.push(`<span class="req-arrow" style="${pos(row, 3 + 2 * col)}">→</span>`);
+      bar(node.kids, row, 3 + 2 * col);
+      node.kids.forEach((k) => draw(k, row + k.row, col + 1));
+    };
+    root.kids.forEach((k) => draw(k, k.row, 0));
+    bar(root.kids, 0, 1);
+    const template = `${root.kids.length > 1 ? 10 : 0}px ` + Array(columns).fill('max-content').join(' 30px ');
+    return `<span class="req-tree" style="grid-template-columns: ${template}">${items.join('')}</span>`;
   };
   return async (row) => {
     const f = byId.get(row.id) || row;
@@ -505,7 +569,7 @@ function featureDetail(build) {
           ? `which ${causedBy.length > 1 ? 'are' : 'is'} disabled by default` : `whose default${causedBy.length > 1 ? 's aren\'t' : ' isn\'t'} known`) : '';
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
-    if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> <span class="req-tree">${chain(f.requires, new Set([f.id]))}</span></p>`);
+    if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`);
     if (requiredBy.has(f.id)) parts.push(`<p><b>Required by:</b> ${requiredBy.get(f.id).map(link).join(', ')}</p>`);
     const det = await loadDetails(build.architecture, f.id);
     if (det) {
