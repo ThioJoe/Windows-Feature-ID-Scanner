@@ -10,7 +10,7 @@ The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`)
 1. **`scan-symbols.py`** finds feature names and IDs in Microsoft's public symbols. For every binary under the Windows directories it downloads the matching PDB from the Microsoft symbol server and reads the symbols that WIL feature staging emits (`Feature_<Name>__descriptor`, `Feature_<Name>__private_descriptor`, `__WilFeatureTraits_Feature_<Name>::id`), then reads each feature's ID from the binary. C++ features in binaries built with older WIL have no descriptor; their ID comes from the code of their `GetCurrentFeatureEnabledState`, which passes it to Windows. This replaces mach2, which is retired and fails on current PDBs. For binaries that contain features, it also analyzes their code (see below).
 2. **`scan-features.ps1`** runs ViVeTool to dump the feature store (the IDs actually configured on the machine) and fills in names from step 1.
 3. **`run-super-god-mode.ps1`** runs the latest release of [Super God Mode](https://github.com/ThioJoe/Windows-Super-God-Mode) and keeps its statistics: CSV files listing the build's CLSID shell folders, named special folders, task links, `ms-settings:` pages, deep links, URL protocols and hidden app links, and the XML data the task links and deep links come from. The shortcuts it creates aren't kept. If it fails, the scan carries on without its statistics.
-4. **`update-data.py`** puts all of it in the build's folder, `data/builds/<build>-<arch>/`, and regenerates the index, first-seen table and diffs. The workflow commits the result and republishes the site.
+4. **`update-data.py`** puts all of it in the build's folder, `data/builds/<build>-<arch>/`, with the update the build came in (e.g. 2026-08 B), its release date and KB article from the list of released builds, and regenerates the index, first-seen table and diffs. The workflow commits the result and republishes the site.
 
 The workflow runs daily: a small check job reads the runner's Windows build and only starts a full scan when that build isn't in `data/` yet. It can also be started manually from the Actions tab, which always scans.
 
@@ -68,9 +68,9 @@ data/
 ├── symbol-cache.json           What each scanned PDB contained (by PDB name and GUID), reused by later scans
 ├── symbol-cache-AMD64.json     The same for the x64 scans
 ├── first-seen.json             First tracked build each feature ID appeared in, per architecture
-├── releases.json               The newest builds Microsoft has released for each Windows 11 version and Insider channel
+├── releases.json               Every build Microsoft has released for each serviced Windows 11 version (the site lists the newest six), and the newest of each Insider channel
 ├── builds/<build>-<arch>/      A folder per scanned build:
-│   ├── features.json           All feature IDs of the build, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
+│   ├── features.json           The build's update, release date and KB, then all its feature IDs, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
 │   ├── details.json            What each binary's code reveals about each feature, one per line (callers, strings, ...)
 │   └── super-god-mode/         Super God Mode's statistics for the build: its CSV and XML files as it writes them, and run.json
 └── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)

@@ -186,8 +186,8 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .detail a.req-box.enabled { border-color: var(--added); }
 .detail a.req-box.disabled { border-color: var(--removed); }
 .req-mark { margin-right: 5px; font-weight: 700; color: var(--muted); }
-.req-box.enabled .req-mark, .eff.enabled { color: var(--added); }
-.req-box.disabled .req-mark, .eff.disabled { color: var(--removed); }
+.req-box.enabled .req-mark, .eff.enabled, .state.enabled { color: var(--added); }
+.req-box.disabled .req-mark, .eff.disabled, .state.disabled { color: var(--removed); }
 .req-arrow { padding-left: 7px; color: var(--muted); }
 .req-bar { justify-self: end; align-self: stretch; width: 2px; margin-right: 5px; background: var(--border); }
 .req-tree > .muted { padding-left: 2px; }

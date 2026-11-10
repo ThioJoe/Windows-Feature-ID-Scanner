@@ -58,6 +58,16 @@ def load_builds(data_dir):
     return builds
 
 
+def release_lookup(data_dir):
+    """{build: {'type', 'date', 'kb'}} for every Windows 11 build in data/releases.json (from check-windows-builds.py): the update a
+    build came in (e.g. 2026-08 B), its release date and KB article. A build stores its own, so they stay known after the list moves on."""
+    path = os.path.join(data_dir, 'releases.json')
+    if not os.path.exists(path):
+        return {}
+    return {r['build']: {k: r[k] for k in ('type', 'date', 'kb') if r.get(k)}
+            for v in load_json(path).get('windows11', []) for r in v.get('releases', [])}
+
+
 def write_build_file(path, header, features):
     """Writes the build JSON with one feature per line."""
     lines = ['{']
@@ -163,6 +173,9 @@ def add_build(data_dir, summary_path, symbols_path):
         header['notes'] = summary['notes']  # Anything about the scan worth knowing, such as Store apps the VM couldn't update
     if summary.get('insiderChannel'):
         header['insiderChannel'] = summary['insiderChannel']  # A Windows Insider build, from this channel
+    release = release_lookup(data_dir).get(full_build)
+    if release:
+        header['release'] = release  # Its update, release date and KB article
     ordered = [features[k] for k in sorted(features)]
     os.makedirs(build_dir(data_dir, key), exist_ok=True)
     path = os.path.join(build_dir(data_dir, key), 'features.json')
@@ -280,6 +293,14 @@ def regenerate(data_dir):
     builds = load_builds(data_dir)
     builds.sort(key=lambda b: (b['architecture'], version_tuple(b['build'])))
 
+    # A build without its update, release date and KB (scanned before they were stored, or before data/releases.json had it) gets them
+    releases = release_lookup(data_dir)
+    for b in builds:
+        if not b.get('release') and b['build'] in releases:
+            b['release'] = releases[b['build']]
+            write_build_file(os.path.join(build_dir(data_dir, b['key']), 'features.json'), {k: v for k, v in b.items() if k != 'features'}, b['features'])
+            print('[data] stored the release of %s: %s, %s, %s' % (b['key'], b['release'].get('type'), b['release'].get('date'), b['release'].get('kb')))
+
     # Index
     index = {'generated': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'builds': []}
     for b in builds:
@@ -293,6 +314,8 @@ def regenerate(data_dir):
             index['builds'][-1]['notes'] = b['notes']
         if b.get('insiderChannel'):
             index['builds'][-1]['insiderChannel'] = b['insiderChannel']
+        if b.get('release'):
+            index['builds'][-1]['release'] = b['release']
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
     first_seen = {}

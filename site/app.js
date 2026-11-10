@@ -284,8 +284,10 @@ const UPDATE_TYPES = {
 const updateTypeTitle = (type) => UPDATE_TYPES[String(type || '').split(' ').pop()] || '';
 const UPDATE_TYPES_LEGEND = '<b>B</b> monthly security update (second Tuesday) · <b>D</b> optional preview (fourth week) · <b>OOB</b> out-of-band';
 
-// What the list of released builds says about a build, shown in the build picker: its update (e.g. 2026-10 B), or its Insider release date
+// A build's update (e.g. 2026-10 B), shown in the build picker: stored with the build (data/index.json), else from the list of released
+// builds, which has Insider builds' release dates instead
 function releaseTag(b) {
+  if (b.release && b.release.type) return b.release.type;
   if (!releases) return '';
   for (const v of releases.windows11) for (const r of v.releases) if (r.build === b.build) return r.type || '';
   for (const c of releases.insider) for (const r of c.releases) if ((r.builds || [r.build]).includes(b.build)) return r.date || '';
@@ -312,7 +314,7 @@ function fillBuildPicker(picker, selectedKey) {
         value: b.key,
         text: b.build,
         tag: releaseTag(b),
-        tagTitle: updateTypeTitle(releaseTag(b)),
+        tagTitle: [b.release && [b.release.date, b.release.kb].filter(Boolean).join(' · '), updateTypeTitle(releaseTag(b))].filter(Boolean).join('\n'),
         label: `<span class="picker-main">${esc(b.build)}</span>` +
           `<span class="picker-sub">${esc([archName(b.architecture), versionText(b)].filter(Boolean).join(' · '))}</span>`,
       })),
@@ -337,6 +339,13 @@ function storeText(store) {
   return store.map((c) => [c.state, c.priority, c.type, c.variant ? 'variant ' + c.variant : '', c.payload ? payloadText(c) : ''].filter(Boolean).join(', ')).join('; ');
 }
 
+// The same as HTML, with each part that says enabled in green and each that says disabled in red
+function storeHtml(store) {
+  if (!store) return '';
+  const part = (s) => (/disabled/i.test(s) ? `<span class="state disabled">${esc(s)}</span>` : /enabled/i.test(s) ? `<span class="state enabled">${esc(s)}</span>` : esc(s));
+  return store.map((c) => [c.state, c.priority, c.type, c.variant ? 'variant ' + c.variant : '', c.payload ? payloadText(c) : ''].filter(Boolean).map(part).join(', ')).join('; ');
+}
+
 // A variant's payload (a value configured with it), also in decimal; its kind only when it isn't the usual Resident (stored in the
 // configuration itself)
 function payloadText(c) {
@@ -345,6 +354,11 @@ function payloadText(c) {
 }
 
 const stateText = (f) => [DEFAULTS[f.default], CHANGE_SHORT[f.changeTime]].filter(Boolean).join(', ');
+// The same in green when it's enabled, red when it's disabled
+const stateHtml = (f) => {
+  const d = (f || {}).default || '', cls = /enabled/i.test(d) ? 'enabled' : /disabled/i.test(d) ? 'disabled' : '';
+  return cls ? `<span class="state ${cls}">${esc(stateText(f))}</span>` : esc(stateText(f || {}));
+};
 
 function matches(f, q, namedOnly) {
   if (namedOnly && !f.name) return false;
@@ -728,7 +742,7 @@ async function renderSgmCompare(out, a, b, q, isCurrent) {
     }
   }
   if (!isCurrent()) return;
-  const box = section(out, 'compare:sgm', 'h2', '', 'Super God Mode');
+  const box = section(out, 'compare:sgm', 'h2', '', 'Super God Mode Analysis');
   const note = (html) => box.insertAdjacentHTML('beforeend', `<p class="muted">${html}</p>`);
   if (!data) { notes.forEach(note); return; }
   const sameVersion = runs[0].version === runs[1].version;
@@ -854,13 +868,13 @@ async function renderCompare() {
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
       { title: 'Old', value: (f) => storeText(f.oldStore) || '(not configured)', cls: 'store' },
-      { title: 'New', value: (f) => storeText(f.newStore) || '(not configured)', cls: 'store' },
+      { title: 'New', value: (f) => storeText(f.newStore) || '(not configured)', html: (f) => storeHtml(f.newStore) || '(not configured)', cls: 'store' },
     ]],
     ['Default changed', 'changed', defaultChanged, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
       { title: 'Old', value: (f) => stateText(f.oldState), cls: 'store' },
-      { title: 'New', value: (f) => stateText(f.newState), cls: 'store' },
+      { title: 'New', value: (f) => stateText(f.newState), html: (f) => stateHtml(f.newState), cls: 'store' },
     ]],
   ];
   const detailOld = featureDetail(a), detailNew = featureDetail(b);
@@ -918,6 +932,7 @@ async function renderBuild() {
 // ---------------------------------------------------------------------------
 
 let releases = null;
+const RELEASES_SHOWN = 6;  // Newest builds shown per version (data/releases.json has every one, for the tags of older scanned builds)
 
 async function renderReleases() {
   if (!releases) releases = await getJson('releases.json');
@@ -946,9 +961,10 @@ async function renderReleases() {
     // The VM scans every build newer than the newest one scanned, or a version's newest build when none is
     const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && !b.insiderChannel && b.build.split('.')[0] === String(v.base))
       .sort(compareVersions).pop();
-    v.releases.forEach((r, i) => {
+    const shown = v.releases.slice(0, RELEASES_SHOWN);
+    shown.forEach((r, i) => {
       const due = v.scannedInVm && (scanned ? compareVersions(r, scanned) > 0 : i === 0);
-      html += '<tr>' + (i === 0 ? groupCell(v.version, v.releases.length, n === releases.windows11.length - 1) : '') +
+      html += '<tr>' + (i === 0 ? groupCell(v.version, shown.length, n === releases.windows11.length - 1) : '') +
         `<td class="id">${esc(r.build)}</td>` +
         `<td><a href="https://support.microsoft.com/help/${esc(r.kb.replace(/^KB/, ''))}">${esc(r.kb)}</a></td>` +
         `<td>${esc(r.date)}</td><td${updateTypeTitle(r.type) ? ` title="${esc(updateTypeTitle(r.type))}"` : ''}>${esc(r.type)}</td>` +

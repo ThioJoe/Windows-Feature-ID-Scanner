@@ -51,7 +51,7 @@ USER_AGENT = 'Windows-Feature-ID-Scanner'
 # which 25H2 starts from). 26H1 is a separate branch for new devices, with no image there.
 VM_VERSIONS = ('26H2', '25H2', '24H2')
 ACTIVE_DAYS = 183        # A version whose newest update is older than this isn't serviced any more, and isn't listed
-LISTED = 6               # Newest builds listed per version and Insider channel in --releases
+LISTED = 6               # Newest builds listed per Insider channel in --releases (and shown per version on the site, which gets them all)
 MAX_NEW = 3              # Most builds of one version scanned in one run
 
 warnings = []
@@ -456,10 +456,11 @@ def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted
 
 
 def releases_document(versions, channels, previous, insider):
-    """What data/releases.json holds: the newest builds of every serviced version and of every Insider channel. Nothing in it changes
+    """What data/releases.json holds: every build of every serviced version, so that a scanned build's update, release date and KB
+    stay known (update-data.py stores them with the build), and the newest builds of every Insider channel. Nothing in it changes
     from one check to the next unless Microsoft releases something (whether data/ has a build is looked up from data/index.json)."""
     doc = {'windows11': [{'version': v, 'base': info['base'], 'scannedInVm': v in VM_VERSIONS,
-                          'releases': [{k: r[k] for k in ('build', 'kb', 'date', 'type')} for r in info['releases'][:LISTED]]}
+                          'releases': [{k: r[k] for k in ('build', 'kb', 'date', 'type')} for r in info['releases']]}
                          for v, info in sorted(versions.items(), reverse=True) if info['active'] or v in VM_VERSIONS]}
     if channels:
         doc['insider'] = [{'channel': c['channel'], 'scannedInVm': insider and scannable(c),
