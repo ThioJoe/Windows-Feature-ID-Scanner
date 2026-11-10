@@ -4,6 +4,7 @@
   --muted: #656d76;
   --border: #d0d7de;
   --panel: #f6f8fa;
+  --stripe: #fbfcfd;  /* Between --panel and --bg: every other list in a panel */
   --accent: #0969da;
   --added: #1a7f37;
   --removed: #cf222e;
@@ -16,6 +17,7 @@
     --muted: #8d96a0;
     --border: #30363d;
     --panel: #161b22;
+    --stripe: #12161c;
     --accent: #4493f8;
     --added: #3fb950;
     --removed: #f85149;
@@ -157,7 +159,9 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .detail h4 { font-size: 13px; margin: 10px 0 4px; overflow-wrap: anywhere; }
 .detail h4 .muted { font-weight: normal; }
 .detail .kv { display: flex; gap: 8px; margin: 2px 0 2px 8px; }
-.detail .kv + .kv { margin-top: 9px; }  /* Half a line between one list and the next */
+/* A binary's code details: each list a band, half a line from the next, every other one shaded */
+.detail .mod > .kv { margin: 0 0 0 8px; padding: 5px 8px; border-radius: 4px; }
+.detail .mod > .kv:nth-of-type(odd) { background: var(--stripe); }
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
