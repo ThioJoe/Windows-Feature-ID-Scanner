@@ -372,13 +372,18 @@ function matches(f, q, namedOnly) {
 }
 
 // Lays out each list of .cells in columns (--cell wide, --cell-gap apart, from the CSS): every item is made as wide as a whole number of
-// columns, so they all start on one, and a long item takes as many as it needs, the next one starting after it. Measured once shown.
+// columns, so they all start on one, and a long item takes as many as it needs, the next one starting after it. The items go in order of
+// how many columns they take, then alphabetically by data-name (then data-id). Measured once shown, all of them before any is changed.
 function fitCells(root) {
   for (const cells of root.querySelectorAll('.cells')) {
     const style = getComputedStyle(cells), width = parseFloat(style.getPropertyValue('--cell')), gap = parseFloat(style.getPropertyValue('--cell-gap'));
-    for (const cell of cells.children) {
-      const n = Math.max(1, Math.ceil((cell.scrollWidth + gap) / (width + gap)));
+    // (The exact width, with half a pixel to spare: a whole-pixel one can be a fraction short, and the text then wraps)
+    const items = [...cells.children].map((cell) => ({ cell, n: Math.max(1, Math.ceil((cell.getBoundingClientRect().width + 0.5 + gap) / (width + gap))) }));
+    items.sort((a, b) => a.n - b.n || (a.cell.dataset.name || '').localeCompare(b.cell.dataset.name || '', 'en', { sensitivity: 'base' }) ||
+      Number(a.cell.dataset.id) - Number(b.cell.dataset.id));
+    for (const { cell, n } of items) {
       cell.style.width = `${n * (width + gap) - gap}px`;
+      cells.appendChild(cell);
     }
     cells.classList.add('fitted');
   }
@@ -466,7 +471,7 @@ function featureDetail(build) {
   }
   const link = (id) => {
     const f = byId.get(id);
-    return `<a href="${featureHref(build.key, id)}" class="feat-link">${id}</a>${f && f.name ? ' ' + esc(f.name) : ''}`;
+    return `<a href="${featureHref(build.key, id)}" class="feat-link fid">${id}</a>${f && f.name ? ' ' + esc(f.name) : ''}`;
   };
   // A feature only works when the features it requires are on too, so it's only on by default if they are as well: its effective
   // default. causes() finds the nearest required features that make it so (off, or with no known default), past those that are on.
@@ -612,10 +617,9 @@ function featureDetail(build) {
     }
     if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`);
     if (requiredBy.has(f.id)) {
-      // Shortest names first (then by ID), so items of about the same width share rows
-      const nameLength = (id) => ((byId.get(id) || {}).name || '').length;
-      const ids = [...requiredBy.get(f.id)].sort((a, b) => nameLength(a) - nameLength(b) || a - b);
-      parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${ids.map((id) => `<span class="cell">${link(id)}</span>`).join('')}</div></div>`);
+      // Grouped by how many columns each takes, then alphabetical (fitCells puts them in that order once it has measured them)
+      const cell = (id) => `<span class="cell" data-name="${esc((byId.get(id) || {}).name || '')}" data-id="${id}">${link(id)}</span>`;
+      parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${requiredBy.get(f.id).map(cell).join('')}</div></div>`);
     }
     const det = await loadDetails(build.architecture, f.id);
     if (det) {

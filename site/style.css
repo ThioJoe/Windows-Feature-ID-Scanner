@@ -169,6 +169,7 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .cells { --cell: 240px; --cell-gap: 12px; display: flex; flex-wrap: wrap; column-gap: var(--cell-gap); row-gap: 2px; flex: 1 1 0; min-width: 0; }
 .cells > .cell { flex: none; max-width: 100%; overflow-wrap: anywhere; }
 .cells:not(.fitted) > .cell { white-space: nowrap; }  /* (While their widths are measured) */
+.detail a.fid { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }  /* A feature's ID in a panel's text, as in the table */
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
