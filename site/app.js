@@ -456,8 +456,18 @@ function featureDetail(build) {
     const items = ids.slice(0, 5).map(link).concat(ids.length > 5 ? [`${ids.length - 5} more`] : []);
     return items.length > 1 ? items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1] : items[0];
   };
+  // How many features long a feature's chain of requirements is at most (itself included)
+  const lengths = new Map();
+  const chainLength = (id) => {
+    if (!lengths.has(id)) {
+      lengths.set(id, 1);  // Until its requirements are worked out, in case they ever loop back to it
+      lengths.set(id, 1 + Math.max(0, ...((byId.get(id) || {}).requires || []).map(chainLength)));
+    }
+    return lengths.get(id);
+  };
   // The features a feature requires, left to right: each in a box outlined by its default state, followed by the ones it requires in
-  // turn. Several requirements are stacked. A feature already in the chain isn't followed again (…).
+  // turn. Several requirements are stacked, the longest chain first, and a feature is on the row of the first one it requires, so every
+  // box is on a row. A feature already in the chain isn't followed again (…).
   const STATE_MARKS = { enabled: '✓', disabled: '✕', unknown: '?' };
   const box = (id) => {
     const r = byId.get(id);
@@ -466,7 +476,10 @@ function featureDetail(build) {
       `<span class="req-mark">${STATE_MARKS[own(id)]}</span>${id}${r && r.name ? ` <span class="req-name">${esc(r.name)}</span>` : ''}</a>`;
   };
   const chain = (ids, shown) => {
-    if (ids.length > 1) return `<span class="req-branches">${ids.map((id) => `<span class="req-run">${chain([id], shown)}</span>`).join('')}</span>`;
+    if (ids.length > 1) {
+      const longestFirst = [...ids].sort((a, b) => chainLength(b) - chainLength(a));
+      return `<span class="req-branches">${longestFirst.map((id) => `<span class="req-run">${chain([id], shown)}</span>`).join('')}</span>`;
+    }
     const id = ids[0], next = (byId.get(id) || {}).requires || [];
     const again = shown.has(id);
     shown.add(id);
