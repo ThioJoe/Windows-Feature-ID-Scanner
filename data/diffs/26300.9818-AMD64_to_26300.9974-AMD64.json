@@ -3,368 +3,6 @@
  "new": "26300.9974-AMD64",
  "added": [
   {
-   "id": 11741813,
-   "name": "HcsSecurityMitigation",
-   "modules": [
-    "vmcompute.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 11906105,
-   "name": "CurrentVmVersionIsDefault",
-   "modules": [
-    "vmcompute.exe",
-    "vmms.exe",
-    "vmwp.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 14163398,
-   "name": "GpupLiveMigration",
-   "modules": [
-    "gpupvdev.dll",
-    "vmcompute.exe",
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 20224600,
-   "name": "HvciIncompatibleDrivers",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 20815078,
-   "name": "HvciCancelScan",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 20887957,
-   "name": "HvciIncompatibleApps",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 21026262,
-   "name": "KryptonSoftLargePages",
-   "modules": [
-    "CmService.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 23232883,
-   "name": "WritePackageStateUsingTransactions",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 23356523,
-   "name": "SevSnp",
-   "modules": [
-    "vmcompute.exe",
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 23636350,
-   "name": "HnsWcosLoopback",
-   "modules": [
-    "CmService.dll",
-    "HostNetSvc.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 24652141,
-   "name": "ProtectionHistoryPillar",
-   "modules": [
-    "SecHealthUIDataModel.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 30143519,
-   "name": "Tdx",
-   "modules": [
-    "vmcompute.exe",
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 31577186,
-   "name": "CimBoot",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 35063734,
-   "name": "CompDBFodEnumeration",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 37715110,
-   "name": "HcsRelaxRpcAccess",
-   "modules": [
-    "vmcompute.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 38297786,
-   "name": "Servicing_AzureVMFirstBootLogonDelay_38297786",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 38569094,
-   "name": "Vmms_RawGuestStateSpecialization",
-   "modules": [
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 38746023,
-   "name": "Professional_BaseImage",
-   "modules": [
-    "CmService.dll",
-    "cmdiag.exe",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 39382998,
-   "name": "Servicing_39382998",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 39662810,
-   "name": "ParallelizeInspect",
-   "modules": [
-    "CbsCore.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 40560708,
-   "name": "HnsRecreateMirroredICSResumeContainer",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 41515636,
-   "name": "PreloadWinners",
-   "modules": [
-    "CbsCore.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 42077418,
-   "name": "HnsExplicitAccessCheck",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 43669571,
-   "name": "Utf8_Fasterxml",
-   "modules": [
-    "CbsCore.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 43678621,
-   "name": "TurbostackFallbackToBaselineHydration",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 43857512,
-   "name": "NumaSpanningForUnderhill",
-   "modules": [
-    "vmwp.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 45034969,
-   "name": "DriverUpdateOsVersionChange",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 46785559,
-   "name": "AV_VfpSendNetBufferListsCallout_Fix",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 48187519,
-   "name": "HideMdagEntrypointInWsa",
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 49142546,
-   "name": "HnsInternalVLAN",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 49754531,
-   "name": "Servicing_ScavengeBaselineEditionPackages",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 49926703,
-   "name": "Servicing_FodRemovalDeadlock",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 50062843,
-   "name": "Servicing_StagingRaceConditionFix",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 50866313,
-   "name": "Servicing_UninstallInstallGroup",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 50916384,
-   "name": "Servicing_Containers_MapHostCatalogs",
-   "modules": [
-    "CmAgent.dll",
-    "CmService.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 51222603,
-   "name": null,
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 51439934,
-   "name": "Servicing_CurrentBuildNumberString",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 51538523,
-   "name": null,
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 51576482,
-   "name": "Servicing_EditionQueryForContainers",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 51721202,
-   "name": "Servicing_Containers_DisableChpeForHotPatching",
-   "modules": [
-    "CmService.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 51918029,
-   "name": "Servicing_MktmeVmRestoreCrash",
-   "modules": [
-    "vmwp.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 51977489,
-   "name": "HotPatchingImprovements",
-   "modules": [
-    "CmAgent.dll",
-    "CmService.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 52439772,
    "name": "Capture_BufferCollectionLeak",
    "modules": [
@@ -373,420 +11,10 @@
    "store": null
   },
   {
-   "id": 53334762,
-   "name": "Servicing_RebaseDeltaLoopIssue",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 53715526,
    "name": "DcompK_MarshalerReleaseFix",
    "modules": [
     "marshal.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 54132762,
-   "name": "Servicing_FixACRZeroDeltaHashFiles",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 54162663,
-   "name": "Servicing_CBSScavengeCorruption",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 54241973,
-   "name": "Servicing_MFL_Resolved_Package_Fix",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 55390665,
-   "name": "ContainerNetBugFixes2503",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 55465894,
-   "name": "Servicing_InternalL2LayerMissing",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 55950615,
-   "name": "Servicing_EnableInspect",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 56079615,
-   "name": "Servicing_EnforcementInHotpatchAI",
-   "modules": [
-    "hotpatchai.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 56610566,
-   "name": "Servicing_RebaseUsePHHydratedFilesAndPrestageZeroDeltaFiles",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 56679391,
-   "name": null,
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 56682395,
-   "name": "ComputeSystemOperationLogging",
-   "modules": [
-    "CmAgent.dll",
-    "CmService.dll",
-    "cmdiag.exe",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 56707490,
-   "name": null,
-   "modules": [
-    "SecHealthUIViewModels.dll"
-   ],
-   "store": null,
-   "unverified": true
-  },
-  {
-   "id": 56735680,
-   "name": "Servicing_FodSynchronization",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 56878536,
-   "name": "NumaSpanningBugFix",
-   "modules": [
-    "vmcompute.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 56971654,
-   "name": "EdgeInstallFix",
-   "modules": [
-    "CmService.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57054388,
-   "name": "Servicing_CBSDetachedFOD_SSUFix",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57479096,
-   "name": "Servicing_PBRPS",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57512403,
-   "name": "ContainerNetBugFixes2511",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57512508,
-   "name": "HnsACIBugFixBundle",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57610019,
-   "name": "Servicing_FeatureStateTelemetry",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57641160,
-   "name": "Servicing_ServicingDiagnostics",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57689841,
-   "name": "Servicing_ErrorCodeGranularizationTurbostack",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57732430,
-   "name": "HNSImprovementsForCilium",
-   "modules": [
-    "HostNetSvc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 57916798,
-   "name": "Servicing_RegQueryHandling",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58048061,
-   "name": "Servicing_IIS_MSRC98806",
-   "modules": [
-    "infocomm.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58124513,
-   "name": "Servicing_EnableRCUInServicingStack",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58301402,
-   "name": "Servicing_CbsIPUFix",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58440305,
-   "name": "Servicing_FilesInfoMapRaceConditionFix",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58761800,
-   "name": "Servicing_NonFatalUnhandledExceptionsCrash",
-   "modules": [
-    "TiFileFetcher.exe",
-    "TiWorker.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 58989938,
-   "name": "CompositeCheckpoint",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 58993693,
-   "name": "Servicing_MSRC101022",
-   "modules": [
-    "admwprox.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59008544,
-   "name": "Servicing_CBSOCRMPP",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59154284,
-   "name": "Servicing_ResilientCorruptionList",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59180211,
-   "name": "Servicing_CBSMergeFix_CBSScavengeCorruption",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59283297,
-   "name": "Servicing_DrainDelayedSupersedenceAfterReservicing",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59291529,
-   "name": "Servicing_CBSPlan2",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59358274,
-   "name": "Servicing_CBSACRNoStagedFODRemoval",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59403608,
-   "name": "Servicing_CBSMediaPlayer",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59681020,
-   "name": "Servicing_MultipleDiskSlowHyperVUILoad",
-   "modules": [
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 59681333,
-   "name": "Servicing_Vmms_NullDeref_FindVM_Fix",
-   "modules": [
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 59686077,
-   "name": "Servicing_FixPossibleCorruptionListStashingFailure",
-   "modules": [
-    "turbostack.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59691375,
-   "name": "EnableTestConfigViaFilterPort",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 59698118,
-   "name": "Servicing_CBSEnableRDXRefreshedFOD",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59730077,
-   "name": "Servicing_ACRNotTriggeredDuringSingleHopforMissingFiles",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59821318,
-   "name": "Servicing_Wsl1TtyFixes",
-   "modules": [
-    "lxcore.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 59834446,
-   "name": "Servicing_CBSCDS",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 59946973,
-   "name": "L1VHMana",
-   "modules": [
-    "VmSynthNic.dll",
-    "l1vhlwf.sys",
-    "vmsif.dll",
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 59969382,
-   "name": "AV_VfpDeviceIoControl_Fix",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 60064811,
-   "name": "Servicing_NtdsUtil_PageSize",
-   "modules": [
-    "dsdbutil.exe",
-    "ntdsai.dll"
    ],
    "store": null
   },
@@ -805,441 +33,10 @@
    ]
   },
   {
-   "id": 60089979,
-   "name": "ContainerNetBugFixes2602",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 60102436,
-   "name": "EnhanceSessionsXmlServicingMode",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60176665,
-   "name": "MFLInitializationLoggingTiming",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60182707,
-   "name": "Servicing_PreventActiveDriverUninstall",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60256417,
-   "name": "Servicing_ACRMCRRepairingBackupManifests",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60259797,
-   "name": "ReboundSafeMode",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60470031,
-   "name": "Servicing_CBSLogCleanupPsfxHydration",
-   "modules": [
-    "turbostack.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60482844,
-   "name": "Servicing_vmchipset_kek_update",
-   "modules": [
-    "vmchipset.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60506264,
-   "name": "Servicing_ACRIncorrectlyReportsCorruption",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60523154,
-   "name": "Servicing_MFLRace",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60681393,
-   "name": "Netsec_WSL_OpenVPN_Fix",
-   "modules": [
-    "HostNetSvc.dll",
-    "fse.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 60682485,
-   "name": "Servicing_ForceCancel",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60694763,
-   "name": "CBSWinPESSU",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60698832,
-   "name": "Servicing_HandlingCorruptHydration",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60700182,
-   "name": "CBSWinPEDNR",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60733127,
-   "name": "MumXContainerDoNotWriteMumToDisk",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60737879,
-   "name": "Servicing_ACRTriggeringForComponentImplicationCorruption",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60918390,
-   "name": "Servicing_IgnoreErrorNotFoundDuringDriverQuery",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60940178,
-   "name": "Servicing_CBSPendCorruption",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60975759,
-   "name": "EnablingACRRepairPayloadRegistryCorruption",
-   "modules": [
-    "CbsCore.dll",
-    "turbostack.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61022713,
-   "name": "Servicing_NmscrubCleanVmSwitchBindFix",
-   "modules": [
-    "NetMgmtIF.dll",
-    "nmscrub.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 61065792,
-   "name": "ContainerNetBugFixesK2",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61068206,
-   "name": "Servicing_CBSMumServicingRestage",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61098186,
-   "name": "Servicing_FreeDrUpdateLogToken",
-   "modules": [
-    "drupdate.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61119332,
-   "name": "SaferCancellation",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61124921,
-   "name": "Servicing_CBSPlanGDR",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61129581,
-   "name": "Servicing_CBSBLR",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61141127,
-   "name": "Servicing_InconsistentStatePostScavenge",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61150601,
-   "name": "DerivedDataOrphanCleanup",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61186915,
-   "name": "Servicing_FailureForBadSSU",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61212707,
-   "name": "Servicing_InlineMissingIdentityRepairDuringInstallation",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61230202,
-   "name": "Servicing_CBSBLRLPR",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61329991,
-   "name": "Netsec_FSE_PartialUnbindFix",
-   "modules": [
-    "HostNetSvc.dll",
-    "fse.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61342640,
-   "name": "Servicing_MSRC109658",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61375436,
-   "name": "Servicing_ACRErrorCodes",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61385924,
-   "name": "EnablingRepairCSIStoreDuringNoPayloadAvailable",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61488428,
-   "name": "Servicing_PrjfltCommandTableLockStarvation",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61504729,
-   "name": "Servicing_ImproveInboxDriverNeedingReconfig",
-   "modules": [
-    "drupdate.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61590265,
-   "name": "VmsPlanCpuTableOobFix",
-   "modules": [
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61590499,
-   "name": "AddTurbocontainerLogging",
-   "modules": [
-    "turbocontainer.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61649379,
-   "name": "VFP_UnprocessContextGuard",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 61681607,
-   "name": "TurbostackMaxParallelization",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61697855,
-   "name": "Servicing_PassMetadataContainerPathOnCombinedInstall",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61716583,
-   "name": "Servicing_CBS_Query_PassedPolicy_Without_Reserve",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61718590,
-   "name": "Servicing_AMDCompatMode_Fix",
-   "modules": [
-    "vmms.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 61753812,
-   "name": "VmsFixVPortNameOverflow",
-   "modules": [
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
    "id": 61812512,
    "name": "Servicing_AsyncMFTWrapper_merge_fix",
    "modules": [
     "mfcore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61823122,
-   "name": "Servicing_CbsQueryStatusNotFoundRecovery",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61876857,
-   "name": "Servicing_TSISIF",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 61938653,
-   "name": "Servicing_TSCSSync",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62056081,
-   "name": "TurbocontainerBareReturnsForNotFound",
-   "modules": [
-    "turbocontainer.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62069783,
-   "name": "Servicing_DeferrableMaintenanceThrottling",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62149203,
-   "name": "Servicing_AzureCheckG5RootCerts",
-   "modules": [
-    "ExtendedSecurityUpdatesAI.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62221971,
-   "name": "Servicing_SettingCorruptionDispositionForAllDetectedCorruptions",
-   "modules": [
-    "CbsCore.dll",
-    "wcp.dll"
    ],
    "store": null
   },
@@ -1261,41 +58,11 @@
    ]
   },
   {
-   "id": 62251068,
-   "name": "Servicing_CBSReofferOnPend",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62299511,
-   "name": "Servicing_PoQCommitTxR",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62364562,
-   "name": "Servicing_MicrosoftG2XS_PKI_Migration",
-   "modules": [
-    "hotpatchai.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62394364,
-   "name": "RepairHydrationLogicResilientToHistoryCixRevertLoops",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 62395812,
    "name": null,
-   "modules": [],
+   "modules": [
+    "bthpan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1303,27 +70,14 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62421936,
-   "name": "Telnet_WriteCharBufferOverflow",
-   "modules": [
-    "telnet.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 62422630,
-   "name": "Servicing_MSRC118517",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
   },
   {
    "id": 62435262,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1331,181 +85,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62455812,
-   "name": "Servicing_AD_AtqOthers_Underflow_fix",
-   "modules": [
-    "ntdsatq.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62518582,
-   "name": "Servicing_MSRC119810",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62604973,
-   "name": "Servicing_MSRC120896",
-   "modules": [
-    "prjflt.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62632084,
-   "name": "Servicing_CSIDVR",
-   "modules": [
-    "CbsCore.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62641479,
-   "name": "StashAndRepairCorruptReverseDeltasViaEnhancedPCL",
-   "modules": [
-    "turbostack.dll",
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62678416,
-   "name": "Servicing_CBS_DeferStoreCleanupOnPending",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62703252,
-   "name": "Servicing_MSRC122068",
-   "modules": [
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62733113,
-   "name": "Servicing_SkipOlderLCUChildFamily",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62778935,
-   "name": "ContainersIncludeEdgeWebView",
-   "modules": [
-    "CmService.dll",
-    "cmsofflineservicing.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62818047,
-   "name": "Servicing_SysmonNullDerefGuards",
-   "modules": [
-    "sysmondrv.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62818586,
-   "name": "Servicing_SysmonArchiveHandleGuard",
-   "modules": [
-    "sysmondrv.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62819105,
-   "name": "Servicing_SysmonTamperingFalsePositive",
-   "modules": [
-    "sysmondrv.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62819204,
-   "name": "Servicing_SysmonShortReadHeaders",
-   "modules": [
-    "sysmondrv.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 62834088,
-   "name": "Servicing_CBSSatelliteWrapperApplicability",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62854867,
-   "name": "Servicing_CBSNoPayloadCsiRepairLockFix",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62906010,
-   "name": "Servicing_SecureBootAIManifestUpdateMask",
-   "modules": [
-    "securebootai.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 62961321,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 63029495,
-   "name": "Servicing_ScavengeCRFullFileFalseCorruption",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 63036210,
-   "name": "Servicing_MSRC126315",
-   "modules": [
-    "vmchipset.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 63057303,
-   "name": "RITP_TestFailure_CGetDsmsIssuersTest",
-   "modules": [
-    "hotpatchai.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 63073421,
-   "name": "Servicing_OmitPrunedMatchingVersionsV2",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
   },
   {
    "id": 63094619,
@@ -1550,14 +129,6 @@
    ]
   },
   {
-   "id": 63107904,
-   "name": "Servicing_CBSDeferInstallOnBugcheck",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63115785,
    "name": null,
    "modules": [
@@ -1574,38 +145,6 @@
    ]
   },
   {
-   "id": 63115917,
-   "name": "Servicing_MSRC127449",
-   "modules": [
-    "vmwp.exe"
-   ],
-   "store": null
-  },
-  {
-   "id": 63152460,
-   "name": "Servicing_TeamNicNameUnderflowFix",
-   "modules": [
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
-   "id": 63153648,
-   "name": "Servicing_MSRC127985",
-   "modules": [
-    "vmchipset.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 63158767,
-   "name": "Servicing_RepairIdleMaintDeadlockFix",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63177113,
    "name": null,
    "modules": [
@@ -1618,14 +157,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63259335,
-   "name": "ContainerNetBugFixes2610",
-   "modules": [
-    "vfpext.sys"
-   ],
-   "store": null
   },
   {
    "id": 63284861,
@@ -2018,6 +549,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -2094,7 +626,9 @@
   {
    "id": 63363024,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2158,14 +692,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63366703,
-   "name": "Servicing_MFLUseWinnerAndHighestStagedVersion",
-   "modules": [
-    "turbostack.dll"
-   ],
-   "store": null
   },
   {
    "id": 63368210,
@@ -2240,7 +766,9 @@
   {
    "id": 63369853,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2413,7 +941,9 @@
   {
    "id": 63387052,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WSDScDrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2425,7 +955,9 @@
   {
    "id": 63389174,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaps.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2664,7 +1196,8 @@
    "id": 63397091,
    "name": null,
    "modules": [
-    "usb8023.sys"
+    "usb8023.sys",
+    "usb80236.sys"
    ],
    "store": [
     {
@@ -3643,7 +2176,9 @@
   {
    "id": 63497009,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbscan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4034,7 +2569,9 @@
   {
    "id": 63508916,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4042,14 +2579,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63509151,
-   "name": "Servicing_CBSRepairStagedComponentOwner",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
   },
   {
    "id": 63509535,
@@ -4141,7 +2670,9 @@
   {
    "id": 63514955,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4238,7 +2769,9 @@
   {
    "id": 63523308,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4547,7 +3080,9 @@
   {
    "id": 63541730,
    "name": null,
-   "modules": [],
+   "modules": [
+    "VirtualSmartcardReader.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5021,14 +3556,6 @@
    ]
   },
   {
-   "id": 63569329,
-   "name": "Servicing_MFLInvalidPostponedReserveFix",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63570845,
    "name": null,
    "modules": [
@@ -5308,14 +3835,6 @@
    ]
   },
   {
-   "id": 63589975,
-   "name": "Servicing_RoutingTimerTeardownOrder",
-   "modules": [
-    "vmswitch.sys"
-   ],
-   "store": null
-  },
-  {
    "id": 63593504,
    "name": null,
    "modules": [
@@ -5342,14 +3861,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63594140,
-   "name": "Servicing_CBSBLWP",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
   },
   {
    "id": 63597380,
@@ -6058,7 +4569,10 @@
   {
    "id": 63623065,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6084,7 +4598,9 @@
   {
    "id": 63629774,
    "name": null,
-   "modules": [],
+   "modules": [
+    "USBMidi2.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6253,6 +4769,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -6273,7 +4790,9 @@
   {
    "id": 63643450,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbscan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6604,14 +5123,6 @@
    ]
   },
   {
-   "id": 63665037,
-   "name": "Servicing_CBSSessionArgCompat",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63666877,
    "name": null,
    "modules": [
@@ -6737,14 +5248,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63677996,
-   "name": "Servicing_CBS_BLSVC",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
   },
   {
    "id": 63678266,
@@ -6890,7 +5393,9 @@
   {
    "id": 63692602,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mstape.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7539,14 +6044,6 @@
    ]
   },
   {
-   "id": 63736907,
-   "name": "MumXContainerPhase3FixCatalogFalsePositive",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63737132,
    "name": null,
    "modules": [
@@ -8161,7 +6658,10 @@
   {
    "id": 63822561,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8173,7 +6673,9 @@
   {
    "id": 63832348,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8214,7 +6716,10 @@
   {
    "id": 63847818,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8336,14 +6841,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63947713,
-   "name": "Servicing_VmHostedContainer_IoDrainGuard_Fix",
-   "modules": [
-    "VmComputeAgent.exe"
-   ],
-   "store": null
   },
   {
    "id": 63964658,
@@ -8474,14 +6971,6 @@
    ]
   },
   {
-   "id": 64018823,
-   "name": "Servicing_AIRebootRequestLogging",
-   "modules": [
-    "wcp.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 64046845,
    "name": null,
    "modules": [
@@ -8508,14 +6997,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 64065308,
-   "name": "Servicing_Plan9NativeCreateParameters",
-   "modules": [
-    "vp9fs.dll"
-   ],
-   "store": null
   },
   {
    "id": 64073916,
@@ -8915,7 +7396,9 @@
   {
    "id": 64267445,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9178,14 +7661,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 64409909,
-   "name": "Servicing_AD_DRS_HashPerf",
-   "modules": [
-    "ntdsai.dll"
-   ],
-   "store": null
   },
   {
    "id": 64415494,
@@ -9534,14 +8009,6 @@
    ]
   },
   {
-   "id": 64666372,
-   "name": null,
-   "modules": [
-    "Microsoft.Windows.AI.MachineLearning.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 64667201,
    "name": null,
    "modules": [
@@ -9671,14 +8138,6 @@
    "store": null
   },
   {
-   "id": 64762536,
-   "name": "Servicing_MissingEsdSipOnNXT",
-   "modules": [
-    "CbsCore.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 64769706,
    "name": null,
    "modules": [
@@ -9786,6 +8245,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -9814,12 +8274,120 @@
  ],
  "removed": [
   {
+   "id": 42969627,
+   "name": "RepairAppRegistration_Preserves_ApplicationData",
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 43283184,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 45825686,
+   "name": "PackagedServiceUpdateCheck",
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 46460265,
    "name": "SeparateOOMDCompKBatchFailures",
    "modules": [
     "dcompi.dll"
    ],
    "store": null
+  },
+  {
+   "id": 49084341,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 49666144,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 49918560,
+   "name": "UseOpenProcessForOLEACC",
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 50219409,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 50219413,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
+   "id": 52087985,
+   "name": "Servicing_RPCSSFirewallIntegration",
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
   },
   {
    "id": 52707834,
@@ -9836,6 +8404,18 @@
     "dcompi.dll"
    ],
    "store": null
+  },
+  {
+   "id": 55199570,
+   "name": "Servicing_EnableInspect_55199570",
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
   },
   {
    "id": 57042241,
@@ -9981,14 +8561,60 @@
  "nameLost": [],
  "storeChanged": [
   {
-   "id": 61951993,
-   "name": "Cplat_SFI_NTLM_Removal",
-   "old": null,
+   "id": 50564196,
+   "name": "SettingsDel",
+   "old": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    },
+    {
+     "priority": "Service (4)",
+     "state": "Enabled (2)",
+     "type": "Experiment (1)"
+    }
+   ],
    "new": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 51578581,
+   "name": "AppExAliasAbsPath",
+   "old": [
     {
      "priority": "Service (4)",
      "state": "Disabled (1)",
      "type": "Experiment (1)"
+    }
+   ],
+   "new": null
+  },
+  {
+   "id": 55090619,
+   "name": null,
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Enabled (2)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
     }
    ]
   },
@@ -10734,6 +9360,18 @@
    "new": {
     "default": "disabled",
     "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 63594140,
+   "name": "Servicing_CBSBLWP",
+   "old": {
+    "default": "enabled",
+    "changeTime": "moduleReload"
+   },
+   "new": {
+    "default": "disabled",
+    "changeTime": "moduleReload"
    }
   }
  ]

@@ -44,7 +44,9 @@
   {
    "id": 62395812,
    "name": null,
-   "modules": [],
+   "modules": [
+    "bthpan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -56,24 +58,15 @@
   {
    "id": 62435262,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 62961321,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -425,7 +418,8 @@
    "name": null,
    "modules": [
     "UpdateCompression.dll",
-    "dpx.dll"
+    "dpx.dll",
+    "turbocontainer.dll"
    ],
    "store": [
     {
@@ -539,6 +533,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -559,7 +554,9 @@
   {
    "id": 63361245,
    "name": null,
-   "modules": [],
+   "modules": [
+    "l2bridge.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -613,7 +610,9 @@
   {
    "id": 63363024,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -751,7 +750,9 @@
   {
    "id": 63369853,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -896,7 +897,9 @@
   {
    "id": 63382700,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -922,7 +925,9 @@
   {
    "id": 63387052,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WSDScDrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -934,7 +939,9 @@
   {
    "id": 63389174,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaps.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1115,7 +1122,9 @@
   {
    "id": 63395207,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1171,7 +1180,8 @@
    "id": 63397091,
    "name": null,
    "modules": [
-    "usb8023.sys"
+    "usb8023.sys",
+    "usb80236.sys"
    ],
    "store": [
     {
@@ -1310,7 +1320,9 @@
   {
    "id": 63401364,
    "name": null,
-   "modules": [],
+   "modules": [
+    "rpcxdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1443,7 +1455,9 @@
   {
    "id": 63427781,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1455,7 +1469,9 @@
   {
    "id": 63431576,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1668,7 +1684,9 @@
   {
    "id": 63439022,
    "name": null,
-   "modules": [],
+   "modules": [
+    "CmService.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1775,7 +1793,9 @@
   {
    "id": 63450316,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1886,7 +1906,9 @@
   {
    "id": 63463206,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqac.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1926,7 +1948,9 @@
   {
    "id": 63468231,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1938,7 +1962,9 @@
   {
    "id": 63468360,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmchipset.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1950,7 +1976,9 @@
   {
    "id": 63470061,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqac.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1976,7 +2004,9 @@
   {
    "id": 63471762,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2074,7 +2104,9 @@
   {
    "id": 63486493,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2128,7 +2160,9 @@
   {
    "id": 63497009,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbscan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2238,7 +2272,9 @@
   {
    "id": 63499074,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2517,7 +2553,9 @@
   {
    "id": 63508916,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2616,7 +2654,9 @@
   {
    "id": 63514955,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2642,7 +2682,9 @@
   {
    "id": 63515078,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vfpext.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2711,7 +2753,9 @@
   {
    "id": 63523308,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2810,7 +2854,9 @@
   {
    "id": 63529778,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqac.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2920,7 +2966,9 @@
   {
    "id": 63537237,
    "name": null,
-   "modules": [],
+   "modules": [
+    "lxcore.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3016,7 +3064,9 @@
   {
    "id": 63541730,
    "name": null,
-   "modules": [],
+   "modules": [
+    "VirtualSmartcardReader.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3303,7 +3353,9 @@
   {
    "id": 63558837,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3433,7 +3485,9 @@
   {
    "id": 63565588,
    "name": null,
-   "modules": [],
+   "modules": [
+    "lxcore.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3516,7 +3570,9 @@
   {
    "id": 63571537,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3739,7 +3795,9 @@
   {
    "id": 63589067,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmprox.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3805,7 +3863,9 @@
   {
    "id": 63597937,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ftphost.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3944,7 +4004,8 @@
    "id": 63605228,
    "name": null,
    "modules": [
-    "icsvc.dll"
+    "icsvc.dll",
+    "vmicvdev.dll"
    ],
    "store": [
     {
@@ -4337,7 +4398,9 @@
   {
    "id": 63618139,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4391,7 +4454,9 @@
   {
    "id": 63618614,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4418,6 +4483,7 @@
    "id": 63620112,
    "name": null,
    "modules": [
+    "fse.sys",
     "tcpip.sys"
    ],
    "store": [
@@ -4487,7 +4553,10 @@
   {
    "id": 63623065,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4513,7 +4582,9 @@
   {
    "id": 63629774,
    "name": null,
-   "modules": [],
+   "modules": [
+    "USBMidi2.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4682,6 +4753,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -4702,7 +4774,9 @@
   {
    "id": 63643450,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbscan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5092,7 +5166,9 @@
   {
    "id": 63671738,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfscprop.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5301,7 +5377,9 @@
   {
    "id": 63692602,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mstape.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5355,7 +5433,9 @@
   {
    "id": 63696888,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5513,7 +5593,9 @@
   {
    "id": 63720536,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5751,7 +5833,9 @@
   {
    "id": 63728544,
    "name": null,
-   "modules": [],
+   "modules": [
+    "lsadb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5833,7 +5917,10 @@
   {
    "id": 63730927,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav.dll",
+    "webdav_simple_lock.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6423,7 +6510,9 @@
   {
    "id": 63770137,
    "name": null,
-   "modules": [],
+   "modules": [
+    "compdyn.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6553,7 +6642,10 @@
   {
    "id": 63822561,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6565,7 +6657,9 @@
   {
    "id": 63832348,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6606,7 +6700,10 @@
   {
    "id": 63847818,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6790,7 +6887,9 @@
   {
    "id": 63985919,
    "name": null,
-   "modules": [],
+   "modules": [
+    "CbsCore.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6928,7 +7027,9 @@
   {
    "id": 64099888,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmvirtio.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6940,7 +7041,9 @@
   {
    "id": 64105340,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmicvdev.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6952,7 +7055,9 @@
   {
    "id": 64111471,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdskcc.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6978,7 +7083,9 @@
   {
    "id": 64142334,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7175,7 +7282,9 @@
    "id": 64236649,
    "name": null,
    "modules": [
-    "lxutil.dll"
+    "lxcore.sys",
+    "lxutil.dll",
+    "vp9fs.dll"
    ],
    "store": [
     {
@@ -7271,7 +7380,9 @@
   {
    "id": 64267445,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7311,7 +7422,9 @@
   {
    "id": 64292943,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7437,7 +7550,9 @@
   {
    "id": 64373851,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7463,7 +7578,9 @@
   {
    "id": 64378434,
    "name": null,
-   "modules": [],
+   "modules": [
+    "VmEmulatedStorage.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7475,7 +7592,9 @@
   {
    "id": 64398802,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7558,7 +7677,9 @@
   {
    "id": 64437737,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmbusr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7584,7 +7705,11 @@
   {
    "id": 64453345,
    "name": null,
-   "modules": [],
+   "modules": [
+    "diprestr.dll",
+    "ftpsvc.dll",
+    "w3logsvc.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7624,7 +7749,9 @@
   {
    "id": 64483847,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqsec.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7650,7 +7777,9 @@
   {
    "id": 64493123,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqsec.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7695,7 +7824,9 @@
   {
    "id": 64526818,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7779,7 +7910,9 @@
   {
    "id": 64559189,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7860,17 +7993,11 @@
    ]
   },
   {
-   "id": 64666372,
-   "name": null,
-   "modules": [
-    "Microsoft.Windows.AI.MachineLearning.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 64667201,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7896,7 +8023,9 @@
   {
    "id": 64729421,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7909,6 +8038,7 @@
    "id": 64731195,
    "name": null,
    "modules": [
+    "ntdsai.dll",
     "samsrv.dll"
    ],
    "store": [
@@ -8008,7 +8138,9 @@
   {
    "id": 64789470,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8097,6 +8229,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -8279,18 +8412,6 @@
     }
    ],
    "new": null
-  },
-  {
-   "id": 61951993,
-   "name": "Cplat_SFI_NTLM_Removal",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 62220199,
@@ -9046,6 +9167,18 @@
    "new": {
     "default": "disabled",
     "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 63594140,
+   "name": "Servicing_CBSBLWP",
+   "old": {
+    "default": "enabled",
+    "changeTime": "moduleReload"
+   },
+   "new": {
+    "default": "disabled",
+    "changeTime": "moduleReload"
    }
   }
  ]

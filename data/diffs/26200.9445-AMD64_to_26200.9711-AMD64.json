@@ -410,7 +410,8 @@
    "name": "ImprovedWinREServicing",
    "modules": [
     "ResetEngine.dll",
-    "UpdateAgent.dll"
+    "UpdateAgent.dll",
+    "updateagent.dll"
    ],
    "store": null
   },
@@ -680,7 +681,10 @@
    "id": 59939857,
    "name": null,
    "modules": [
-    "computecore.dll"
+    "VmDataStore.dll",
+    "computecore.dll",
+    "vmcompute.exe",
+    "vmwp.exe"
    ],
    "store": [
     {
@@ -848,6 +852,14 @@
    ]
   },
   {
+   "id": 60733127,
+   "name": "MumXContainerDoNotWriteMumToDisk",
+   "modules": [
+    "CbsCore.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 60743662,
    "name": "ThemeHelper_SkipShutdownDestruction",
    "modules": [
@@ -958,7 +970,8 @@
    "id": 61083369,
    "name": "Servicing_PendedSSUInstall",
    "modules": [
-    "UpdateAgent.dll"
+    "UpdateAgent.dll",
+    "updateagent.dll"
    ],
    "store": null
   },
@@ -1111,6 +1124,15 @@
    "name": "FixParallelDeploymentDeadlock",
    "modules": [
     "wuauengcore.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 61329991,
+   "name": "Netsec_FSE_PartialUnbindFix",
+   "modules": [
+    "HostNetSvc.dll",
+    "fse.sys"
    ],
    "store": null
   },
@@ -1503,6 +1525,14 @@
    ]
   },
   {
+   "id": 62019779,
+   "name": "FixTipSkinsResourceHandleLifetime",
+   "modules": [
+    "tipskins.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62039392,
    "name": null,
    "modules": [
@@ -1641,6 +1671,14 @@
    "name": "NFCCF",
    "modules": [
     "SRH.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 62149203,
+   "name": "Servicing_AzureCheckG5RootCerts",
+   "modules": [
+    "ExtendedSecurityUpdatesAI.dll"
    ],
    "store": null
   },
@@ -1805,7 +1843,9 @@
   {
    "id": 62319970,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -1989,6 +2029,14 @@
    "store": null
   },
   {
+   "id": 62389610,
+   "name": "TabTipShellHandwritingInitExceptionHandling",
+   "modules": [
+    "TabTip.exe"
+   ],
+   "store": null
+  },
+  {
    "id": 62393567,
    "name": "Servicing_WinAppSdkPopupReplayUseAfterFree20",
    "modules": [
@@ -2070,6 +2118,14 @@
    "store": null
   },
   {
+   "id": 62421936,
+   "name": "Telnet_WriteCharBufferOverflow",
+   "modules": [
+    "telnet.exe"
+   ],
+   "store": null
+  },
+  {
    "id": 62422195,
    "name": "Servicing_WinAppSdkPegPeerRemoveTemplateChild20",
    "modules": [
@@ -2093,12 +2149,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2118,12 +2178,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2143,12 +2207,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2168,12 +2236,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2207,12 +2279,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2232,12 +2308,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2257,12 +2337,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2282,12 +2366,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2361,12 +2449,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2386,12 +2478,16 @@
     "bcd.dll",
     "bcdboot.exe",
     "bcdedit.exe",
+    "bfsvc.dll",
     "bootsvc.dll",
     "computestorage.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
     "poqexec.exe",
+    "securebootai.dll",
     "spbcd.dll",
+    "vmcompute.dll",
+    "wcp.dll",
     "wininit.exe",
     "wof.sys"
    ],
@@ -2533,6 +2629,7 @@
    "name": "Servicing_SBUpdateTaskRefireAndFreezeGuard",
    "modules": [
     "TpmTasks.dll",
+    "securebootai.dll",
     "wininit.exe"
    ],
    "store": null
@@ -2648,7 +2745,9 @@
   {
    "id": 62572143,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2682,7 +2781,9 @@
   {
    "id": 62579032,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2710,7 +2811,9 @@
   {
    "id": 62581572,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2747,7 +2850,9 @@
   {
    "id": 62591815,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -2842,7 +2947,9 @@
   {
    "id": 62597727,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -3416,6 +3523,14 @@
    ]
   },
   {
+   "id": 62741122,
+   "name": "Servicing_CAMERA_SECURE_BUFFER_INFO",
+   "modules": [
+    "usbvideo.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 62741423,
    "name": "NTHF",
    "modules": [
@@ -3820,7 +3935,8 @@
    "id": 62789440,
    "name": "CancelMFLGenerationOnCancellationRequest",
    "modules": [
-    "UpdateAgent.dll"
+    "UpdateAgent.dll",
+    "updateagent.dll"
    ],
    "store": null
   },
@@ -4071,14 +4187,6 @@
    "store": null
   },
   {
-   "id": 62843791,
-   "name": "Servicing_MiraDispPowerManager",
-   "modules": [
-    "MiracastPowerManager.exe"
-   ],
-   "store": null
-  },
-  {
    "id": 62847209,
    "name": "Servicing_WinAppSdkXamlDelayApplyStylesAfterCreationComplete",
    "modules": [
@@ -4143,6 +4251,17 @@
    ]
   },
   {
+   "id": 62857393,
+   "name": "MumXContainerPhase4",
+   "modules": [
+    "CbsCore.dll",
+    "turbocontainer.dll",
+    "turbostack.dll",
+    "wcp.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62858906,
    "name": "UQIJobOrchestrator",
    "modules": [
@@ -4161,7 +4280,9 @@
   {
    "id": 62864776,
    "name": null,
-   "modules": [],
+   "modules": [
+    "coadmin.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -4857,6 +4978,18 @@
    "store": null
   },
   {
+   "id": 62961321,
+   "name": null,
+   "modules": [],
+   "store": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 62961444,
    "name": null,
    "modules": [
@@ -5231,6 +5364,7 @@
    "id": 62989857,
    "name": null,
    "modules": [
+    "fse.sys",
     "tcpip.sys"
    ],
    "store": [
@@ -5356,7 +5490,9 @@
   {
    "id": 63008272,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5396,7 +5532,9 @@
   {
    "id": 63009457,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsclnt.exe"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5572,7 +5710,9 @@
   {
    "id": 63026714,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5586,6 +5726,8 @@
    "name": null,
    "modules": [
     "ProvProvider.dll",
+    "TiFileFetcher.exe",
+    "turbocontainer.dll",
     "wimgapi.dll",
     "wimserv.exe"
    ],
@@ -5600,7 +5742,9 @@
   {
    "id": 63027797,
    "name": null,
-   "modules": [],
+   "modules": [
+    "RemotePosDrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5612,7 +5756,10 @@
   {
    "id": 63027833,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbccidDriver.dll",
+    "WUDFUsbccidDriver.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5652,7 +5799,9 @@
   {
    "id": 63028297,
    "name": null,
-   "modules": [],
+   "modules": [
+    "SensorsHid.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5665,6 +5814,7 @@
    "id": 63028468,
    "name": null,
    "modules": [
+    "AcxHdAudio.sys",
     "HdAudio.sys"
    ],
    "store": [
@@ -5752,7 +5902,10 @@
   {
    "id": 63035072,
    "name": null,
-   "modules": [],
+   "modules": [
+    "dcdiag.exe",
+    "dsrolesrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5861,7 +6014,10 @@
   {
    "id": 63041279,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll",
+    "mqsec.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5887,7 +6043,9 @@
   {
    "id": 63041492,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5899,7 +6057,9 @@
   {
    "id": 63041665,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5911,7 +6071,9 @@
   {
    "id": 63041738,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -5923,7 +6085,9 @@
   {
    "id": 63041972,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6114,7 +6278,9 @@
   {
    "id": 63050166,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6235,7 +6401,9 @@
   {
    "id": 63063982,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6427,7 +6595,10 @@
   {
    "id": 63072259,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WpdFs.dll",
+    "WpdMtpDr.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6439,7 +6610,9 @@
   {
    "id": 63072420,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -6537,7 +6710,9 @@
    "name": null,
    "modules": [
     "UpdateCompression.dll",
-    "dpx.dll"
+    "dpx.dll",
+    "turbocontainer.dll",
+    "turbostack.dll"
    ],
    "store": [
     {
@@ -6606,7 +6781,9 @@
   {
    "id": 63075931,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WpdFs.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7050,7 +7227,9 @@
   {
    "id": 63095725,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7134,7 +7313,9 @@
   {
    "id": 63097483,
    "name": null,
-   "modules": [],
+   "modules": [
+    "4mmdat.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -7541,6 +7722,14 @@
    ]
   },
   {
+   "id": 63115917,
+   "name": "Servicing_MSRC127449",
+   "modules": [
+    "vmwp.exe"
+   ],
+   "store": null
+  },
+  {
    "id": 63116241,
    "name": null,
    "modules": [
@@ -7878,6 +8067,8 @@
    "name": null,
    "modules": [
     "ProvProvider.dll",
+    "TiFileFetcher.exe",
+    "turbocontainer.dll",
     "wimgapi.dll",
     "wimserv.exe"
    ],
@@ -8036,7 +8227,9 @@
   {
    "id": 63135944,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hgclientservice.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8153,7 +8346,9 @@
   {
    "id": 63138516,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vfpext.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8194,7 +8389,9 @@
   {
    "id": 63139307,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8251,7 +8448,9 @@
   {
    "id": 63143008,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8449,7 +8648,9 @@
   {
    "id": 63149582,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmswitch.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8498,7 +8699,9 @@
   {
    "id": 63151918,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hgclientservice.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -8526,7 +8729,8 @@
    "name": null,
    "modules": [
     "PktMon.sys",
-    "netvsc.sys"
+    "netvsc.sys",
+    "vmswitch.sys"
    ],
    "store": [
     {
@@ -9164,7 +9368,9 @@
   {
    "id": 63169326,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vfpext.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9370,7 +9576,9 @@
   {
    "id": 63172583,
    "name": null,
-   "modules": [],
+   "modules": [
+    "TabTip.exe"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9454,7 +9662,9 @@
   {
    "id": 63172907,
    "name": null,
-   "modules": [],
+   "modules": [
+    "BTHPRINT.SYS"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9651,7 +9861,9 @@
   {
    "id": 63175183,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbscan.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9710,7 +9922,10 @@
   {
    "id": 63176870,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbNcm.sys",
+    "UsbNcmUm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9736,7 +9951,9 @@
   {
    "id": 63177040,
    "name": null,
-   "modules": [],
+   "modules": [
+    "BTHPRINT.SYS"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9748,7 +9965,9 @@
   {
    "id": 63177341,
    "name": null,
-   "modules": [],
+   "modules": [
+    "comctl32.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9917,7 +10136,9 @@
   {
    "id": 63178878,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9929,7 +10150,9 @@
   {
    "id": 63179062,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -9978,7 +10201,9 @@
   {
    "id": 63180489,
    "name": null,
-   "modules": [],
+   "modules": [
+    "webdav_simple_prop.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10098,7 +10323,8 @@
    "id": 63186750,
    "name": null,
    "modules": [
-    "RNDISMP.sys"
+    "RNDISMP.sys",
+    "rndismp6.sys"
    ],
    "store": [
     {
@@ -10152,6 +10378,7 @@
    "id": 63190595,
    "name": "Servicing_WMPL_Accessibility_Bug_Fix",
    "modules": [
+    "setup_wm.exe",
     "shell32.dll"
    ],
    "store": null
@@ -10190,7 +10417,10 @@
   {
    "id": 63192171,
    "name": null,
-   "modules": [],
+   "modules": [
+    "RemotePosDrv.dll",
+    "hidscanner.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10218,7 +10448,9 @@
   {
    "id": 63193088,
    "name": null,
-   "modules": [],
+   "modules": [
+    "usbvideo.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10283,7 +10515,9 @@
   {
    "id": 63194856,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hidscanner.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10295,7 +10529,9 @@
   {
    "id": 63195132,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10367,6 +10603,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -10583,7 +10820,10 @@
   {
    "id": 63206343,
    "name": null,
-   "modules": [],
+   "modules": [
+    "UsbNcm.sys",
+    "UsbNcmUm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10681,7 +10921,9 @@
   {
    "id": 63214306,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WpdMtpUS.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10855,7 +11097,9 @@
   {
    "id": 63216127,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hidscanner.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -10881,7 +11125,9 @@
   {
    "id": 63216423,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hidscanner.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -11169,7 +11415,11 @@
   {
    "id": 63233999,
    "name": null,
-   "modules": [],
+   "modules": [
+    "hidscanner.dll",
+    "idtsec.dll",
+    "mgtdyn.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -11209,7 +11459,9 @@
   {
    "id": 63234658,
    "name": null,
-   "modules": [],
+   "modules": [
+    "RdpIdd.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -11317,6 +11569,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -11342,6 +11595,7 @@
     "SecConfig.efi",
     "SettingsHandlers_Storage.dll",
     "generaltel.dll",
+    "memtest.efi",
     "mispace.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe",
@@ -11640,7 +11894,9 @@
   {
    "id": 63253272,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12016,7 +12272,9 @@
   {
    "id": 63263530,
    "name": null,
-   "modules": [],
+   "modules": [
+    "CbsCore.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12029,7 +12287,8 @@
    "id": 63263544,
    "name": null,
    "modules": [
-    "UpdateAgent.dll"
+    "UpdateAgent.dll",
+    "updateagent.dll"
    ],
    "store": [
     {
@@ -12119,7 +12378,9 @@
   {
    "id": 63264724,
    "name": null,
-   "modules": [],
+   "modules": [
+    "BthMtpEnum.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12214,7 +12475,9 @@
   {
    "id": 63266577,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaps.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12283,7 +12546,9 @@
   {
    "id": 63273640,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12552,7 +12817,9 @@
   {
    "id": 63280692,
    "name": null,
-   "modules": [],
+   "modules": [
+    "prjflt.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12653,7 +12920,9 @@
   {
    "id": 63284006,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12738,6 +13007,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -12860,7 +13130,8 @@
    "modules": [
     "UpdateCompression.dll",
     "dpx.dll",
-    "msdelta.dll"
+    "msdelta.dll",
+    "turbocontainer.dll"
    ],
    "store": [
     {
@@ -12873,7 +13144,9 @@
   {
    "id": 63285682,
    "name": null,
-   "modules": [],
+   "modules": [
+    "nfsrdr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -12899,7 +13172,9 @@
   {
    "id": 63285727,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -13192,10 +13467,12 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
     "spaceutil.exe",
+    "uwfvol.sys",
     "winload.efi",
     "winload.exe",
     "winresume.efi",
@@ -13284,7 +13561,8 @@
    "name": null,
    "modules": [
     "UpdateCompression.dll",
-    "dpx.dll"
+    "dpx.dll",
+    "turbocontainer.dll"
    ],
    "store": [
     {
@@ -13427,6 +13705,7 @@
    "name": null,
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -13591,7 +13870,9 @@
   {
    "id": 63296914,
    "name": null,
-   "modules": [],
+   "modules": [
+    "storvsp.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -13763,6 +14044,7 @@
     "sti_ci.dll",
     "wiaaut.dll",
     "wiadss.dll",
+    "wiafbdrv.dll",
     "wiarpc.dll",
     "wiaservc.dll"
    ],
@@ -13847,7 +14129,9 @@
   {
    "id": 63306634,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -14008,6 +14292,14 @@
    "name": "FconHeartbeatChunking",
    "modules": [
     "fcon.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 63315677,
+   "name": "RdpIddIoctlQueueRace",
+   "modules": [
+    "RdpIdd.dll"
    ],
    "store": null
   },
@@ -14248,7 +14540,9 @@
   {
    "id": 63325574,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msadce.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -14355,7 +14649,9 @@
   {
    "id": 63328876,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msadce.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -14482,7 +14778,9 @@
   {
    "id": 63331426,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msadce.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -14596,7 +14894,9 @@
   {
    "id": 63342161,
    "name": null,
-   "modules": [],
+   "modules": [
+    "dcdiag.exe"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -14662,6 +14962,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 63347463,
+   "name": "Servicing_UsbPlatDetDuo",
+   "modules": [
+    "usb-platformdetection.sys"
+   ],
+   "store": null
   },
   {
    "id": 63348111,
@@ -14750,7 +15058,9 @@
   {
    "id": 63350756,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaprst.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -15144,7 +15454,9 @@
   {
    "id": 63389160,
    "name": null,
-   "modules": [],
+   "modules": [
+    "msdaps.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -15382,6 +15694,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 63400180,
+   "name": "Servicing_XUsbLeakyToken",
+   "modules": [
+    "xusb22.sys"
+   ],
+   "store": null
   },
   {
    "id": 63400216,
@@ -16410,7 +16730,9 @@
   {
    "id": 63500042,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqac.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -16551,6 +16873,14 @@
    "name": null,
    "modules": [
     "ExplorerFrame.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 63509151,
+   "name": "Servicing_CBSRepairStagedComponentOwner",
+   "modules": [
+    "CbsCore.dll"
    ],
    "store": null
   },
@@ -16821,7 +17151,9 @@
   {
    "id": 63538762,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17207,7 +17539,9 @@
   {
    "id": 63571773,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17277,7 +17611,9 @@
   {
    "id": 63585608,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17404,14 +17740,17 @@
    "id": 63602373,
    "name": "Servicing_IcKvpFormatUnsigned",
    "modules": [
-    "icsvc.dll"
+    "icsvc.dll",
+    "vmicvdev.dll"
    ],
    "store": null
   },
   {
    "id": 63602521,
    "name": null,
-   "modules": [],
+   "modules": [
+    "WpdMtpDr.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17586,7 +17925,9 @@
   {
    "id": 63623051,
    "name": null,
-   "modules": [],
+   "modules": [
+    "BasicRender.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17752,7 +18093,9 @@
   {
    "id": 63645624,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -17764,7 +18107,9 @@
   {
    "id": 63645639,
    "name": null,
-   "modules": [],
+   "modules": [
+    "sqloledb.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -18372,6 +18717,14 @@
    "store": null
   },
   {
+   "id": 63666132,
+   "name": "Servicing_MptfCoreD0EntrySpeedup",
+   "modules": [
+    "MptfCore.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 63666176,
    "name": "WuSettings_DisableAHForMW",
    "modules": [
@@ -18741,7 +19094,9 @@
   {
    "id": 63740186,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -18877,7 +19232,9 @@
   {
    "id": 63777811,
    "name": null,
-   "modules": [],
+   "modules": [
+    "ntdsai.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -18889,7 +19246,9 @@
   {
    "id": 63778865,
    "name": null,
-   "modules": [],
+   "modules": [
+    "storvsp.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19065,7 +19424,8 @@
    "id": 63830125,
    "name": null,
    "modules": [
-    "vmbkmcl.sys"
+    "vmbkmcl.sys",
+    "vmbkmclr.sys"
    ],
    "store": [
     {
@@ -19244,7 +19604,9 @@
   {
    "id": 63914057,
    "name": null,
-   "modules": [],
+   "modules": [
+    "psp.exe"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19319,7 +19681,9 @@
   {
    "id": 63945552,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19403,7 +19767,9 @@
   {
    "id": 63971777,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmusrv.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19597,6 +19963,14 @@
    "store": null
   },
   {
+   "id": 64053227,
+   "name": "Servicing_Plan9NativeCreateParameters",
+   "modules": [
+    "vp9fs.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 64055968,
    "name": null,
    "modules": [
@@ -19613,7 +19987,9 @@
   {
    "id": 64056302,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmdynmem.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19639,7 +20015,9 @@
   {
    "id": 64073136,
    "name": null,
-   "modules": [],
+   "modules": [
+    "vmbusr.sys"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19663,7 +20041,9 @@
   {
    "id": 64088791,
    "name": null,
-   "modules": [],
+   "modules": [
+    "mqqm.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -19946,7 +20326,9 @@
   {
    "id": 64160554,
    "name": null,
-   "modules": [],
+   "modules": [
+    "iiscore.dll"
+   ],
    "store": [
     {
      "priority": "Security (9)",
@@ -20340,6 +20722,7 @@
    "name": "Servicing_NumberOfColumnsCheck",
    "modules": [
     "SecConfig.efi",
+    "memtest.efi",
     "mispace.dll",
     "spacedump.sys",
     "spaceport.sys",
@@ -20367,7 +20750,8 @@
    "id": 64387823,
    "name": "Servicing_NoShutdownTelemetryForDBX",
    "modules": [
-    "TpmTasks.dll"
+    "TpmTasks.dll",
+    "securebootai.dll"
    ],
    "store": null
   },
@@ -20391,8 +20775,10 @@
    "modules": [
     "TpmTasks.dll",
     "bcdboot.exe",
+    "bfsvc.dll",
     "bfsvc.exe",
     "bootsvc.dll",
+    "securebootai.dll",
     "windlp.dll"
    ],
    "store": null
@@ -20410,6 +20796,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 64409909,
+   "name": "Servicing_AD_DRS_HashPerf",
+   "modules": [
+    "ntdsai.dll"
+   ],
+   "store": null
   },
   {
    "id": 64417200,
@@ -20759,6 +21153,7 @@
     "Setup.exe",
     "SetupCleanupTask.dll",
     "SetupPlatformProvider.dll",
+    "TiFileFetcher.exe",
     "TpmTasks.dll",
     "TransmogProvider.dll",
     "UpdateAgent.dll",
@@ -20766,17 +21161,21 @@
     "WinREAgent.dll",
     "audit.exe",
     "bcdboot.exe",
+    "bfsvc.dll",
     "bfsvc.exe",
     "bootsvc.dll",
     "cmisetup.dll",
     "migapp.dll",
     "oobeldr.exe",
     "policymanager.dll",
+    "securebootai.dll",
     "setupcln.dll",
     "setupugc.exe",
     "spopk.dll",
     "sysprep.exe",
+    "turbocontainer.dll",
     "unattend.dll",
+    "updateagent.dll",
     "wimgapi.dll",
     "wimserv.exe",
     "windeploy.exe",
@@ -20839,6 +21238,14 @@
    "modules": [
     "SettingsEnvironment.Desktop.dll",
     "SystemSettings.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 47988920,
+   "name": "RouterDeferFD0",
+   "modules": [
+    "Usb4DeviceRouter.sys"
    ],
    "store": null
   },
@@ -21225,6 +21632,14 @@
    "name": null,
    "modules": [
     "psr.exe"
+   ],
+   "store": null
+  },
+  {
+   "id": 54446809,
+   "name": "WinIoT_FixMTPStackCorruption_K2",
+   "modules": [
+    "WpdMtpUS.dll"
    ],
    "store": null
   },
@@ -21750,6 +22165,14 @@
    "store": null
   },
   {
+   "id": 56456568,
+   "name": "Servicing_MSRC85035",
+   "modules": [
+    "vmms.exe"
+   ],
+   "store": null
+  },
+  {
    "id": 56631575,
    "name": null,
    "modules": [
@@ -21804,6 +22227,15 @@
    "store": null
   },
   {
+   "id": 56789494,
+   "name": "PlutonStatusReporting",
+   "modules": [
+    "PlutonHsp2.sys",
+    "pluton-heci.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 56807341,
    "name": "CallPLMOnFirstLogonForCentennialPackages",
    "modules": [],
@@ -21833,6 +22265,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 56890322,
+   "name": "Test0514",
+   "modules": [
+    "mshwstaging.dll"
+   ],
+   "store": null
   },
   {
    "id": 56906634,
@@ -22007,8 +22447,10 @@
    "modules": [
     "TpmTasks.dll",
     "bcdboot.exe",
+    "bfsvc.dll",
     "bfsvc.exe",
     "bootsvc.dll",
+    "securebootai.dll",
     "windlp.dll"
    ],
    "store": null
@@ -22315,6 +22757,14 @@
    "store": null
   },
   {
+   "id": 58950549,
+   "name": "Servicing_BfsvcReboot",
+   "modules": [
+    "bfsvc.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 58964371,
    "name": "OobeHelloNarrationFixOnConfirmation",
    "modules": [
@@ -22575,6 +23025,18 @@
    "store": null
   },
   {
+   "id": 59707597,
+   "name": "MPTFBugBundle_2601",
+   "modules": [
+    "MPTFCustomizeIOSignalClient.sys",
+    "MPTFPowerTrackerCore.sys",
+    "MPTFThermalPolicy.sys",
+    "MptfCore.sys",
+    "MptfPowerLimitClient.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 59737913,
    "name": "WinIoTUpdateLaunchToForCompatWithSharedPC",
    "modules": [
@@ -22734,6 +23196,15 @@
    "store": null
   },
   {
+   "id": 60149280,
+   "name": "U4FLSD",
+   "modules": [
+    "Usb4DeviceRouter.sys",
+    "Usb4HostRouter.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 60178146,
    "name": "PpmParkExNuma_GnrOnly",
    "modules": [
@@ -22806,6 +23277,14 @@
    "store": null
   },
   {
+   "id": 60260095,
+   "name": "Servicing_AD_MdiNtdsaiEtwTrace",
+   "modules": [
+    "ntdsai.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 60286563,
    "name": null,
    "modules": [
@@ -22858,16 +23337,6 @@
    "name": null,
    "modules": [
     "StructuredQuery.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 60429200,
-   "name": "UDERI",
-   "modules": [
-    "energy.dll",
-    "ntkrla57.exe",
-    "ntoskrnl.exe"
    ],
    "store": null
   },
@@ -22960,6 +23429,18 @@
     "dnsrslvr.dll",
     "nshdnsclient.dll",
     "zthelper.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 60554748,
+   "name": "MPTFEnsureMultipleTargetDmfObjectValid",
+   "modules": [
+    "MPTFCustomizeIOSignalClient.sys",
+    "MPTFPowerTrackerCore.sys",
+    "MPTFThermalPolicy.sys",
+    "MptfCore.sys",
+    "MptfPowerLimitClient.sys"
    ],
    "store": null
   },
@@ -23257,6 +23738,14 @@
    "name": "VoiceFocusString",
    "modules": [
     "ControlCenter.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 60782943,
+   "name": "Servicing_BfsvcAlwaysReboot",
+   "modules": [
+    "bfsvc.dll"
    ],
    "store": null
   },
@@ -23589,6 +24078,7 @@
    "id": 60983988,
    "name": "SenBfCd2",
    "modules": [
+    "FusionV2.dll",
     "Microsoft.Graphics.Display.DisplayEnhancementService.dll",
     "SensorService.dll",
     "SensorsNativeApi.V2.dll",
@@ -23866,6 +24356,7 @@
    "id": 61151837,
    "name": "NU4MP",
    "modules": [
+    "Usb4DeviceRouter.sys",
     "energy.dll",
     "ntkrla57.exe",
     "ntoskrnl.exe"
@@ -23968,10 +24459,19 @@
    ]
   },
   {
+   "id": 61256169,
+   "name": "Servicing_MSRC108728",
+   "modules": [
+    "vmuidevices.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 61259464,
    "name": "Servicing_Supported_Updates",
    "modules": [
-    "TpmTasks.dll"
+    "TpmTasks.dll",
+    "securebootai.dll"
    ],
    "store": null
   },
@@ -24125,6 +24625,15 @@
    "name": "K2NgcBioFirst",
    "modules": [
     "ngcsvc.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 61363601,
+   "name": "USB4BusesAssertIntegration",
+   "modules": [
+    "Usb4DeviceRouter.sys",
+    "Usb4HostRouter.sys"
    ],
    "store": null
   },
@@ -24614,6 +25123,15 @@
    ]
   },
   {
+   "id": 61771560,
+   "name": "Servicing_MSRC112672",
+   "modules": [
+    "vmchipset.dll",
+    "vmserial.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 61772946,
    "name": "Containment_UUS_WuProvider_InstallFailureBackoff",
    "modules": [
@@ -24654,6 +25172,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 61810970,
+   "name": "Servicing_HttpAI_IgnoreInitFailure",
+   "modules": [
+    "httpai.dll"
+   ],
+   "store": null
   },
   {
    "id": 61824920,
@@ -25123,6 +25649,7 @@
    "name": "Servicing_SBUpdateTaskRefireAndFreezeGuard",
    "modules": [
     "TpmTasks.dll",
+    "securebootai.dll",
     "wininit.exe"
    ],
    "store": null
@@ -25151,6 +25678,29 @@
    ]
   },
   {
+   "id": 48525682,
+   "name": "SystrayPBDT",
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 49780915,
    "name": null,
    "old": [
@@ -25165,6 +25715,29 @@
      "priority": "ImageOverride (15)",
      "state": "Disabled (1)",
      "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 50564196,
+   "name": "SettingsDel",
+   "old": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    },
+    {
+     "priority": "Service (4)",
+     "state": "Enabled (2)",
+     "type": "Experiment (1)"
     }
    ]
   },
@@ -25559,6 +26132,29 @@
    "new": null
   },
   {
+   "id": 58349635,
+   "name": null,
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 58437911,
    "name": null,
    "old": [
@@ -25649,6 +26245,54 @@
    ]
   },
   {
+   "id": 59867315,
+   "name": null,
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 59872186,
+   "name": "InkingWinMLReplat",
+   "old": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Disabled (1)",
+     "type": "Override (0)",
+     "variant": "2"
+    }
+   ],
+   "new": [
+    {
+     "priority": "ImageOverride (15)",
+     "state": "Disabled (1)",
+     "type": "Override (0)",
+     "variant": "2"
+    },
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    }
+   ]
+  },
+  {
    "id": 59979530,
    "name": "SoftLandingBatching",
    "old": [
@@ -25662,6 +26306,29 @@
     {
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 60192063,
+   "name": "Servicing_CPDUsabilityCheck",
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
      "type": "Override (0)"
     }
    ]
@@ -25734,6 +26401,29 @@
     {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 60918128,
+   "name": null,
+   "old": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ],
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
+    },
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
      "type": "Override (0)"
     }
    ]
@@ -25851,11 +26541,6 @@
    "name": "EssFprPeripherals",
    "old": [
     {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
      "type": "Override (0)"
@@ -25924,6 +26609,18 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
+    }
+   ]
+  },
+  {
+   "id": 61951993,
+   "name": "Cplat_SFI_NTLM_Removal",
+   "old": null,
+   "new": [
+    {
+     "priority": "Service (4)",
+     "state": "Disabled (1)",
+     "type": "Experiment (1)"
     }
    ]
   },
@@ -26508,6 +27205,18 @@
   {
    "id": 60712647,
    "name": "6071_2647",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 60724476,
+   "name": "U4EQDRT",
    "old": {
     "default": "disabled",
     "changeTime": "reboot"
