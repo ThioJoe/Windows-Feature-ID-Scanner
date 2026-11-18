@@ -20,6 +20,7 @@ import argparse
 import base64
 import bisect
 import concurrent.futures
+import hashlib
 import http.client
 import json
 import mmap
@@ -65,7 +66,7 @@ SKIP_DIR_NAMES = {'driverstore', 'winsxs', 'catroot', 'catroot2', 'logfiles', 's
 # ---------------------------------------------------------------------------
 
 class PeInfo:
-    __slots__ = ('path', 'ptr_size', 'image_base', 'image_size', 'sections', 'pdb_name', 'pdb_key')
+    __slots__ = ('path', 'ptr_size', 'image_base', 'image_size', 'sections', 'pdb_name', 'pdb_key', 'timestamp')
 
 def read_pe_info(path):
     """Returns a PeInfo with the CodeView (RSDS) PDB reference, or None if the file isn't a PE with one."""
@@ -136,10 +137,30 @@ def read_pe_info(path):
                 info.sections = sections
                 info.pdb_name = pdb_name
                 info.pdb_key = '%08X%04X%04X%s%X' % (d1, d2, d3, cv[12:20].hex().upper(), age)
+                info.timestamp = struct.unpack_from('<I', head, pe_off + 8)[0]  # With the image size, where the symbol server keeps the binary
                 return info
     except OSError:
         return None
     return None
+
+def binary_files(infos):
+    """What's needed to download a PDB's binaries from the symbol server later (it keeps them by file name, PE timestamp and image
+    size), and to check that the download is the same file: one entry per distinct file."""
+    files = {}
+    for info in infos:
+        try:
+            digest = sha256_file(info.path)
+        except OSError:
+            continue
+        files.setdefault(digest, {'name': os.path.basename(info.path), 'timestamp': info.timestamp, 'imageSize': info.image_size, 'sha256': digest})
+    return sorted(files.values(), key=lambda f: (f['name'].lower(), f['sha256']))
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for block in iter(lambda: f.read(1 << 20), b''):
+            h.update(block)
+    return h.hexdigest()
 
 def rva_to_offset(sections, rva):
     for va, vsize, raw_size, raw_ptr in sections:
@@ -1730,26 +1751,46 @@ def main():
     parser.add_argument('--workers', type=int, default=12)
     parser.add_argument('--names-out', default='extracted-names.txt', help='"ID Name" lines, one per feature ID.')
     parser.add_argument('--json-out', default='symbol-features.json', help='Every feature found, with all names and the modules that contain it.')
+    parser.add_argument('--manifest', default=None, help="A build's list of PDBs (data/builds/<build>/symbols.json) to scan instead of this machine's binaries: "
+                        'what the results cache has for them, and those its scan had no verified data for, with their binaries downloaded from the symbol server.')
     args = parser.parse_args()
 
     if args.keep_pdbs and not args.symbol_cache:
         parser.error('--keep-pdbs requires --symbol-cache')
 
     start = time.time()
-    roots = [(r, True) for r in args.root] if args.root else default_roots()
-    for root, recursive in roots:
-        log('[scan] root: %s%s%s' % (root, '' if recursive else ' (top level only)', '' if os.path.isdir(root) else ' (not found, skipped)'))
+    manifest = None
+    if args.manifest:
+        with open(args.manifest, 'r', encoding='utf-8') as f:
+            manifest = json.load(f)
+        if manifest.get('cacheVersion') != RESULTS_CACHE_VERSION:
+            log('[scan] %s was written with results cache version %s, not %d' % (args.manifest, manifest.get('cacheVersion'), RESULTS_CACHE_VERSION))
+            return 1
+    else:
+        roots = [(r, True) for r in args.root] if args.root else default_roots()
+        for root, recursive in roots:
+            log('[scan] root: %s%s%s' % (root, '' if recursive else ' (top level only)', '' if os.path.isdir(root) else ' (not found, skipped)'))
 
     # 1. Enumerate images and group them by PDB identity
     by_pdb = {}
     image_count = 0
-    for path in enumerate_images(roots):
-        info = read_pe_info(path)
-        if info is None:
-            continue
-        image_count += 1
-        by_pdb.setdefault((info.pdb_name.lower(), info.pdb_key), []).append(info)
-    log('[scan] %d images with a PDB reference, %d unique PDBs (%.0fs)' % (image_count, len(by_pdb), time.time() - start))
+    if manifest:
+        # Stand-ins named after the build's binaries: a binary is only downloaded (in process) when its PDB is read
+        for cache_key, entry in manifest['pdbs'].items():
+            pdb_name, pdb_key = cache_key.split('/', 1)
+            for module in entry['modules']:
+                info = PeInfo()
+                info.path, info.pdb_name, info.pdb_key = module, entry.get('pdbName', pdb_name), pdb_key
+                by_pdb.setdefault((pdb_name, pdb_key), []).append(info)
+        log('[scan] %s: %d PDBs, %d without verified data' % (args.manifest, len(by_pdb), sum(1 for e in manifest['pdbs'].values() if e.get('pending'))))
+    else:
+        for path in enumerate_images(roots):
+            info = read_pe_info(path)
+            if info is None:
+                continue
+            image_count += 1
+            by_pdb.setdefault((info.pdb_name.lower(), info.pdb_key), []).append(info)
+        log('[scan] %d images with a PDB reference, %d unique PDBs (%.0fs)' % (image_count, len(by_pdb), time.time() - start))
 
     # 2. Results cache
     cache = {}
@@ -1778,19 +1819,26 @@ def main():
         infos = by_pdb[key]
         cache_key = '%s/%s' % (pdb_name, pdb_key)
         cached = cache.get(cache_key)
+        if manifest and not manifest['pdbs'][cache_key].get('pending'):
+            # A PDB the build's scan read: the cache has what it contained (the binary isn't here to be read again)
+            found = cached is not None and cached.get('status') == 'ok'
+            with stats_lock:
+                stats['cached' if found else 'error'] += 1
+            return cache_key, cached if found else {'status': 'error', 'error': 'not in the results cache'}
         # Usage details are only kept for the PDBs of the latest scan, so an older version showing up again is analyzed again
         has_usage = cached is not None and ('usage' in cached or all(src == 'const' for _, _, src in cached.get('features', [])))
         if cached is not None and cached.get('status') == 'ok' and has_usage:
             with stats_lock:
                 stats['cached'] += 1
             return cache_key, cached
-        if cached is not None and cached.get('status') == 'missing' and cached.get('checked', '') >= missing_recheck_after:
+        # (With a manifest, its PDBs without verified data are what's being checked again)
+        if cached is not None and cached.get('status') == 'missing' and cached.get('checked', '') >= missing_recheck_after and not manifest:
             with stats_lock:
                 stats['missing'] += 1
             return cache_key, cached
         real_name = infos[0].pdb_name
         local = os.path.join(args.symbol_cache, real_name, pdb_key, real_name) if args.symbol_cache else None
-        temp_path = None
+        temp_path = binary_path = None
         try:
             if local and os.path.exists(local):
                 pdb_path = local
@@ -1807,10 +1855,22 @@ def main():
                         stats['missing'] += 1
                     return cache_key, {'status': 'missing', 'checked': today}
                 source = 'downloaded'
-            features = extract_features(pdb_path, infos[0])
+            image = infos[0]
+            if manifest:
+                # The binary from the symbol server, which has to be the very file the build's scan found
+                binary_path = os.path.join(work_dir, '%s.%s.bin' % (pdb_key, threading.get_ident()))
+                image = None
+                for file in manifest['pdbs'][cache_key].get('files', []):
+                    if (downloader.fetch(file['name'], '%08X%x' % (file['timestamp'], file['imageSize']), binary_path) == 'ok'
+                            and sha256_file(binary_path) == file['sha256']):
+                        image = read_pe_info(binary_path)
+                        break
+                if image is None or image.pdb_key != pdb_key:
+                    raise RuntimeError("the symbol server doesn't have the binary the build's scan found")
+            features = extract_features(pdb_path, image)
             entry = {'status': 'ok', 'scanned': today, 'modules': sorted({os.path.basename(i.path) for i in infos}), 'features': features}
             try:
-                entry['usage'] = analyze_usage(pdb_path, infos[0], features, demangler)
+                entry['usage'] = analyze_usage(pdb_path, image, features, demangler)
             except Exception as e:  # A binary the analysis can't handle still keeps its features
                 entry['usage'] = None
                 entry['usageError'] = '%s: %s' % (type(e).__name__, e)
@@ -1824,6 +1884,8 @@ def main():
         finally:
             if temp_path:
                 remove_quietly(temp_path)
+            if binary_path:
+                remove_quietly(binary_path)
 
     cache_before = dict(cache)
 
@@ -1870,6 +1932,7 @@ def main():
     #    days after the update), keeps what's already known about it, so its features aren't dropped from this build. If this exact PDB was
     #    read before, the cache has its features (only the usage details the cache didn't keep are missing), and the cache keeps them too.
     #    Otherwise it falls back to what the most recently scanned earlier version of the binary contained, marked unverified.
+    restored = set()
     for key, result in list(results.items()):
         earlier = cache_before.get('%s/%s' % key)
         if result.get('status') in ('error', 'missing') and earlier is not None and earlier.get('status') == 'ok':
@@ -1877,6 +1940,7 @@ def main():
             results[key] = cache['%s/%s' % key] = earlier
             stats[result['status']] -= 1
             stats['cached'] += 1
+            restored.add(key)
     previous_by_name = {}
     for cache_key, entry in cache.items():
         if entry.get('status') == 'ok':
@@ -1890,7 +1954,7 @@ def main():
         previous = max(candidates, key=lambda c: c[1].get('scanned', ''), default=None)
         if previous:
             log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error') or 'not on the symbol server', previous[0]))
-            results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features'], 'usage': previous[1].get('usage')}
+            results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features'], 'usage': previous[1].get('usage'), 'reason': result['status']}
             stats[result['status']] -= 1
             stats['previousVersion'] += 1
         elif result['status'] == 'error':
@@ -1900,9 +1964,10 @@ def main():
         cache_dir = os.path.dirname(os.path.abspath(args.results_cache))
         os.makedirs(cache_dir, exist_ok=True)
         # Successful results are kept for every PDB ever scanned (old builds included), one per line so git diffs stay small.
-        # 404s are kept with the date they were checked; failures aren't kept. Usage details are only kept for the PDBs of this scan.
+        # 404s are kept with the date they were checked; failures aren't kept. Usage details are only kept for the PDBs of this scan
+        # (completing an earlier build with --manifest doesn't change what's kept for the others).
         current = {'%s/%s' % key for key in by_pdb}
-        ok = {k: v if k in current else {x: y for x, y in v.items() if x not in ('usage', 'usageError')}
+        ok = {k: v if k in current or manifest else {x: y for x, y in v.items() if x not in ('usage', 'usageError')}
               for k, v in cache.items() if v.get('status') in ('ok', 'missing')}
         with open(args.results_cache, 'w', encoding='utf-8', newline='\n') as f:
             f.write('{"version": %d, "pdbs": {\n' % RESULTS_CACHE_VERSION)
@@ -1963,8 +2028,31 @@ def main():
     for result in results.values():
         if result.get('status') in ('ok', 'previousVersion') and any(src != 'const' for _, _, src in result['features']):
             usage_stats['failed' if result.get('usageError') else 'otherArchitecture' if result.get('usage') is None else 'analyzed'] += 1
+
+    # 7. The build's PDBs, so that it can be completed later without this machine (catch-up-symbols.py runs this script with --manifest):
+    #    the ones that contributed features, and the ones with no verified data (pending: not on the symbol server, failed, or only in the
+    #    cache without their usage details), with what's needed to download their binaries
+    build_pdbs = {}
+    for key, result in results.items():
+        cache_key = '%s/%s' % key
+        modules = sorted({os.path.basename(i.path) for i in by_pdb[key]})
+        status = result.get('status')
+        if status == 'ok' and not (key in restored and result.get('usage') is None and any(src != 'const' for _, _, src in result['features'])):
+            if result['features']:
+                build_pdbs[cache_key] = {'modules': modules}
+            continue
+        entry = {'modules': modules, 'pending': 'details' if status == 'ok' else result.get('reason', status), 'pdbName': by_pdb[key][0].pdb_name}
+        if status == 'previousVersion':
+            entry['fallback'] = result['from']
+            entry['fallbackFeatures'] = len(result['features'])
+        entry['files'] = manifest['pdbs'][cache_key].get('files', []) if manifest else binary_files(by_pdb[key])
+        build_pdbs[cache_key] = entry
+    pending = sum(1 for e in build_pdbs.values() if e.get('pending'))
+    log('[scan] %d PDBs without verified data, %d of them for binaries whose earlier versions had features' % (pending, sum(1 for e in build_pdbs.values() if e.get('fallbackFeatures'))))
+
     with open(args.json_out, 'w', encoding='utf-8') as f:
-        json.dump({'imagesScanned': image_count, 'pdbs': len(by_pdb), 'stats': stats, 'usageStats': usage_stats, 'features': json_features}, f, indent=1)
+        json.dump({'imagesScanned': image_count, 'pdbs': len(by_pdb), 'stats': stats, 'usageStats': usage_stats, 'features': json_features,
+                   'manifest': {'cacheVersion': RESULTS_CACHE_VERSION, 'pdbs': build_pdbs}}, f, indent=1)
 
     log('[scan] found %d feature IDs (%d names) in %.0fs' % (len(features), sum(len(v) for v in features.values()), time.time() - start))
     log('[scan] usage analysis: %d binaries analyzed, %d of another architecture, %d failed' % (usage_stats['analyzed'], usage_stats['otherArchitecture'], usage_stats['failed']))

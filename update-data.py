@@ -28,6 +28,9 @@ import sys
 NUMERIC_NAME = re.compile(r'^(?:ID|FI)?\d+$')
 STORE_FIELDS = (('Priority', 'priority'), ('State', 'state'), ('Type', 'type'), ('Variant', 'variant'), ('PayloadKind', 'payloadKind'), ('Payload', 'payload'))
 SYMBOL_FIELDS = ('declaredIn', 'default', 'changeTime', 'requires')  # Copied from scan-symbols.py's output when present
+CHECK_DAYS = 60     # How long after a build's release catch-up-symbols.py keeps asking the symbol server for the PDBs its scan didn't get
+WARN_PENDING = 25   # Binaries with features whose symbols a scan didn't get, above which the run gets a warning. A scan normally has a few;
+                    # one that runs before Microsoft has published an update's symbols has hundreds.
 
 
 def load_json(path):
@@ -194,13 +197,45 @@ def add_build(data_dir, summary_path, symbols_path):
     if release:
         header['release'] = release  # Its update, release date and KB article
     ordered = [features[k] for k in sorted(features)]
+    # PDBs the scan got no verified data for, which catch-up-symbols.py asks the symbol server for every day until CHECK_DAYS after the
+    # release. Those of binaries that had features in earlier versions mean features are only known from those versions (unverified).
+    manifest = symbols.get('manifest')
+    start = (release or {}).get('date') or (summary.get('timestamp') or '')[:10]
+    until = (datetime.date.fromisoformat(start) + datetime.timedelta(days=CHECK_DAYS)).isoformat() if start else None
+    pending = [p for p in (manifest or {}).get('pdbs', {}).values() if p.get('fallbackFeatures')]
+    if pending:
+        header['symbolsPending'] = {'binaries': len(pending), 'unverified': sum(1 for f in ordered if f.get('unverified')), 'until': until}
+    if symbols.get('symbolsUpdated'):
+        header['symbolsUpdated'] = symbols['symbolsUpdated']  # When catch-up-symbols.py last added PDBs the scan didn't get
     os.makedirs(build_dir(data_dir, key), exist_ok=True)
     path = os.path.join(build_dir(data_dir, key), 'features.json')
     write_build_file(path, header, ordered)
     print('[data] wrote %s (%d features, %d named, %d in feature store)' % (
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
     write_details(data_dir, key, {f['id']: f['usage'] for f in symbols.get('features', []) if f.get('usage')})
+    write_symbol_list(data_dir, key, manifest, until)
+    if len(pending) >= WARN_PENDING:
+        message = ("%s: the symbol server didn't have the symbols of %d binaries whose earlier versions had features, so %d of the build's "
+                   'features are only known from those earlier versions (marked unverified). The daily symbol catch-up completes the build '
+                   'when Microsoft publishes them.' % (key, len(pending), header['symbolsPending']['unverified']))
+        print('::warning title=Symbols not published yet::' + message)
+        if os.environ.get('GITHUB_STEP_SUMMARY'):
+            with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+                f.write('> [!WARNING]\n> **Symbols not published yet.** %s\n\n' % message)
     return key
+
+
+def write_symbol_list(data_dir, key, manifest, until):
+    """Stores the build's PDBs in data/builds/<build>-<arch>/symbols.json, one per line, for catch-up-symbols.py: the ones its features
+    came from, and those it got no verified data for, with what's needed to download their binaries. Scanning a build again replaces it."""
+    path = os.path.join(build_dir(data_dir, key), 'symbols.json')
+    if not manifest:
+        if os.path.exists(path):
+            os.remove(path)  # From an earlier scan of the build; this one didn't list its PDBs
+        return
+    lines = ['%s: %s' % (json.dumps(k), json.dumps(v, separators=(',', ':'))) for k, v in sorted(manifest['pdbs'].items())]
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write('{"cacheVersion": %d, "checkUntil": %s, "pdbs": {\n' % (manifest['cacheVersion'], json.dumps(until)) + ',\n'.join(lines) + '\n}}\n')
 
 
 def write_details(data_dir, key, usage):

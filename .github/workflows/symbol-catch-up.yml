@@ -1,0 +1,80 @@
+# symbol-catch-up.yml
+# Completes builds whose scan didn't get every binary's symbols (see catch-up-symbols.py): Microsoft can publish an update's symbols
+# days after the update. A daily check asks the symbol server for the PDBs the scans didn't get; when it has some of them now, a Windows
+# runner scans them without a VM (their binaries come from the symbol server too) and adds them to the builds' data.
+name: Symbol Catch-up
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 13 * * *'
+
+# Commits to data/, so never at the same time as the scanners
+concurrency:
+  group: windows-scanner
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      builds: ${{ steps.check.outputs.builds }}
+      needed: ${{ steps.check.outputs.needed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Ask the symbol server for the PDBs the scans didn't get
+        id: check
+        run: python3 catch-up-symbols.py check --github-output --summary "$GITHUB_STEP_SUMMARY"
+
+  complete:
+    needs: check
+    if: needs.check.outputs.needed == 'true'
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    outputs:
+      committed: ${{ steps.commit.outputs.committed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
+
+      - name: Scan those PDBs and add them to the builds
+        id: run
+        shell: powershell
+        env:
+          BUILDS: ${{ needs.check.outputs.builds }}
+        run: |
+          python --version
+          $builds = $env:BUILDS -split ' '
+          python catch-up-symbols.py run --builds @builds --github-output --summary $env:GITHUB_STEP_SUMMARY
+          if ($LASTEXITCODE -ne 0) { Write-Error "catch-up-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
+
+      - name: Commit
+        id: commit
+        shell: powershell
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) { Write-Host "No changes to data/."; echo "committed=false" >> $env:GITHUB_OUTPUT; exit 0 }
+          git commit -q -m "${{ steps.run.outputs.message }}"
+          git pull -q --rebase origin "${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Rebase onto ${{ github.ref_name }} failed"; exit 1 }
+          git push -q origin "HEAD:${{ github.ref_name }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "Push failed"; exit 1 }
+          echo "committed=true" >> $env:GITHUB_OUTPUT
+
+  # A push made with GITHUB_TOKEN doesn't trigger other workflows, so publish the site from here after new data is committed
+  pages:
+    needs: complete
+    if: ${{ github.ref == 'refs/heads/main' && needs.complete.outputs.committed == 'true' }}
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

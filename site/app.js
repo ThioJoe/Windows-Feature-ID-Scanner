@@ -114,6 +114,21 @@ function buildLabel(b) {
   return `${b.build} ${archName(b.architecture)}${versionText(b) ? ' (' + versionText(b) + ')' : ''}`;
 }
 
+// A build whose scan didn't get the symbols of binaries that had features in earlier versions, because Microsoft hadn't published them
+// yet: until the daily symbol catch-up completes it, those features are only known from the earlier versions
+function pendingNote(b) {
+  const p = b.symbolsPending;
+  if (!p) return '';
+  const n = (count, one, many) => `${count} ${count === 1 ? one : many}`;
+  const checking = !p.until || new Date().toISOString().slice(0, 10) <= p.until;
+  const known = `${n(p.unverified, 'feature is', 'features are')} known only from earlier versions of their binaries (marked unverified)`;
+  return `<p class="notice"><b>${esc(buildLabel(b))}:</b> ` + (checking
+    ? `Microsoft's symbol server didn't have the symbols of ${n(p.binaries, 'binary', 'binaries')} with features yet when this build was scanned, ` +
+      `so ${known}, and features new in them aren't listed. The symbol server is checked daily${p.until ? ` until <time>${esc(p.until)}</time>` : ''}, ` +
+      'and the build is completed when the symbols are published.'
+    : `Microsoft hasn't published the symbols of ${n(p.binaries, 'binary', 'binaries')} with features in this build, so ${known}.`) + '</p>';
+}
+
 // ---------------------------------------------------------------------------
 // Build picker
 // ---------------------------------------------------------------------------
@@ -906,6 +921,7 @@ async function renderCompare() {
   const detailOld = featureDetail(a), detailNew = featureDetail(b);
   const direction = compareVersions(a, b) > 0 ? ' (the "old" build is newer than the "new" one)' : '';
   $('cmp-status').textContent = `${buildLabel(a)} → ${buildLabel(b)}${direction}`;
+  out.insertAdjacentHTML('beforeend', pendingNote(a) + pendingNote(b));
   for (const [title, cls, rows, cols] of sections) {
     const filtered = rows.filter((f) => matches(f, q, namedOnly));
     const sec = section(out, 'compare:' + title, 'h2', cls,
@@ -943,6 +959,7 @@ async function renderBuild() {
   $('bld-status').textContent = `${buildLabel(b)}: ${b.features.length} feature IDs, ${b.features.filter((f) => f.name).length} named, ` +
     `${b.features.filter((f) => f.store).length} in the feature store. Showing ${rows.length}.` +
     (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '');
+  out.insertAdjacentHTML('beforeend', pendingNote(b));
   renderTable(out, rows, [
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },

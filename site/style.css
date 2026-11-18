@@ -146,6 +146,8 @@ td a { color: var(--accent); }
 td.last { border-bottom: none; }
 .unnamed { color: var(--muted); font-style: italic; }
 .unverified { color: var(--changed); font-size: 11px; border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; }
+.notice { margin: 0 0 12px; padding: 8px 12px; border-left: 3px solid var(--changed); background: var(--panel); border-radius: 0 4px 4px 0; }
+.notice time { white-space: nowrap; }
 .src { color: var(--muted); font-size: 11px; border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
 .more { margin-top: 8px; }
 .muted { color: var(--muted); }
