@@ -73,7 +73,7 @@ jobs:
         shell: powershell
         run: |
           python --version
-          python scan-symbols.py --results-cache data\symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json
+          python scan-symbols.py --component-store --results-cache data\symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json
           if ($LASTEXITCODE -ne 0) { Write-Error "scan-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
           Write-Host "Preview of the first 5 lines of extracted-names.txt:"
           Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host

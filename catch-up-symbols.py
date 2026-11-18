@@ -189,6 +189,7 @@ def run(args):
                     stats['downloaded'] = stats.get('downloaded', 0) + 1
             symbols['stats'] = stats
             symbols['symbolsUpdated'] = today
+            symbols['componentStore'] = before.get('componentStore')  # (Only a scan on the machine finds those)
             with open(out, 'w', encoding='utf-8') as f:
                 json.dump(symbols, f)
             summary = os.path.join(tmp, 'summary.json')

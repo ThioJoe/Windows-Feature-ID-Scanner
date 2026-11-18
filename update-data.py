@@ -207,6 +207,8 @@ def add_build(data_dir, summary_path, symbols_path):
         header['symbolsPending'] = {'binaries': len(pending), 'unverified': sum(1 for f in ordered if f.get('unverified')), 'until': until}
     if symbols.get('symbolsUpdated'):
         header['symbolsUpdated'] = symbols['symbolsUpdated']  # When catch-up-symbols.py last added PDBs the scan didn't get
+    if symbols.get('componentStore'):
+        header['componentStore'] = symbols['componentStore']  # Modules only the component store has (not installed), and their component
     os.makedirs(build_dir(data_dir, key), exist_ok=True)
     path = os.path.join(build_dir(data_dir, key), 'features.json')
     write_build_file(path, header, ordered)

@@ -216,6 +216,115 @@ def enumerate_images(roots):
             except OSError:
                 pass
 
+def component_store_images(out_dir):
+    """The binaries of the component store (WinSxS) that aren't installed anywhere else, such as those of optional features that aren't
+    turned on (Hyper-V, Windows Subsystem for Linux, ...): the newest version of each of the machine's own architecture's components,
+    and in it the files no other folder has a hard link to (installed ones are scanned where they're installed). Their files are kept
+    compressed, so they're expanded into out_dir with Windows' own decompressors. Yields (path, component folder name)."""
+    store = os.path.join(os.environ.get('SystemRoot', r'C:\Windows'), 'WinSxS')
+    arch = {'AMD64': 'amd64_', 'ARM64': 'arm64_'}.get(os.environ.get('PROCESSOR_ARCHITECTURE', '').upper())
+    if os.name != 'nt' or not arch or not os.path.isdir(store):
+        return
+    # Folder names are <architecture>_<name>_<public key token>_<version>_<culture>_<hash>; the newest version of each component counts
+    newest = {}
+    with os.scandir(store) as it:
+        for entry in it:
+            parts = entry.name.split('_')
+            if not entry.name.lower().startswith(arch) or len(parts) < 6 or not entry.is_dir(follow_symlinks=False):
+                continue
+            try:
+                version = tuple(int(p) for p in parts[-3].split('.'))
+            except ValueError:
+                continue
+            identity = ('_'.join(parts[:-3]) + '_' + parts[-2]).lower()
+            if identity not in newest or version > newest[identity][0]:
+                newest[identity] = (version, entry.path)
+    counts = {}
+    for _, folder in newest.values():
+        try:
+            names = [e.name for e in os.scandir(folder) if e.is_file(follow_symlinks=False) and os.path.splitext(e.name)[1].lower() in IMAGE_EXTENSIONS]
+        except OSError:
+            continue
+        for name in names:
+            path = os.path.join(folder, name)
+            try:
+                if os.stat(path).st_nlink > 1:
+                    continue  # Installed: a hard link elsewhere is the same file
+                with open(path, 'rb') as f:
+                    data = f.read()
+                kind = data[:4] if data[:2] != b'MZ' else b'MZ'
+                if kind == b'MZ':
+                    expanded = path
+                elif kind in (b'DCS\x01', b'DCN\x01'):
+                    target = os.path.join(out_dir, os.path.basename(folder))
+                    os.makedirs(target, exist_ok=True)
+                    expanded = os.path.join(target, name)
+                    with open(expanded, 'wb') as f:
+                        f.write(expand_lzms_blocks(data) if kind == b'DCS\x01' else apply_null_delta(data[4:]))
+                else:
+                    kind = b'other'  # A delta against another version of the file (DCD), which isn't here
+                    expanded = None
+            except OSError:
+                kind, expanded = b'error', None
+            counts[kind] = counts.get(kind, 0) + 1
+            if expanded:
+                yield expanded, os.path.basename(folder)
+    log('[scan] component store: %d components, binaries not installed elsewhere: %s' % (
+        len(newest), ', '.join('%d %s' % (n, {b'MZ': 'as is', b'DCS\x01': 'LZMS-compressed', b'DCN\x01': 'delta-compressed'}.get(k, k.decode()))
+                               for k, n in sorted(counts.items(), key=lambda kv: -kv[1]))))
+
+def expand_lzms_blocks(data):
+    """A DCS\x01 file: a 12-byte header (signature, number of blocks, size), then blocks of LZMS data, each after its size (counting the
+    size field that follows) and the size it expands to. Expanded with the Compression API (cabinet.dll)."""
+    import ctypes
+    from ctypes import wintypes
+    cabinet = ctypes.WinDLL('cabinet.dll')
+    cabinet.CreateDecompressor.argtypes = [wintypes.DWORD, ctypes.c_void_p, ctypes.POINTER(wintypes.HANDLE)]
+    cabinet.Decompress.argtypes = [wintypes.HANDLE, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p, ctypes.c_size_t, ctypes.POINTER(ctypes.c_size_t)]
+    cabinet.CloseDecompressor.argtypes = [wintypes.HANDLE]
+    handle = wintypes.HANDLE()
+    if not cabinet.CreateDecompressor(5 | 0x20000000, None, ctypes.byref(handle)):  # COMPRESS_ALGORITHM_LZMS | COMPRESS_RAW
+        raise OSError('CreateDecompressor failed')
+    try:
+        blocks, size = struct.unpack_from('<II', data, 4)
+        out, pos = bytearray(), 12
+        for _ in range(blocks):
+            block_size, expanded_size = struct.unpack_from('<II', data, pos)
+            buffer = ctypes.create_string_buffer(expanded_size)
+            got = ctypes.c_size_t()
+            if not cabinet.Decompress(handle, data[pos + 8:pos + 4 + block_size], block_size - 4, buffer, expanded_size, ctypes.byref(got)):
+                raise OSError('Decompress failed')
+            out += buffer.raw[:got.value]
+            pos += 4 + block_size
+        if len(out) != size:
+            raise OSError('expanded to %d bytes, not %d' % (len(out), size))
+        return bytes(out)
+    finally:
+        cabinet.CloseDecompressor(handle)
+
+def apply_null_delta(delta):
+    """A delta that builds the whole file from nothing (DCN\x01 files, after their signature), applied with msdelta.dll."""
+    import ctypes
+    from ctypes import wintypes
+
+    class DELTA_INPUT(ctypes.Structure):
+        _fields_ = [('lpStart', ctypes.c_void_p), ('uSize', ctypes.c_size_t), ('Editable', wintypes.BOOL)]
+
+    class DELTA_OUTPUT(ctypes.Structure):
+        _fields_ = [('lpStart', ctypes.c_void_p), ('uSize', ctypes.c_size_t)]
+    msdelta = ctypes.WinDLL('msdelta.dll')
+    msdelta.ApplyDeltaB.argtypes = [ctypes.c_uint64, DELTA_INPUT, DELTA_INPUT, ctypes.POINTER(DELTA_OUTPUT)]
+    msdelta.ApplyDeltaB.restype = wintypes.BOOL
+    msdelta.DeltaFree.argtypes = [ctypes.c_void_p]
+    buffer = ctypes.create_string_buffer(delta, len(delta))
+    out = DELTA_OUTPUT()
+    if not msdelta.ApplyDeltaB(0, DELTA_INPUT(None, 0, False), DELTA_INPUT(ctypes.cast(buffer, ctypes.c_void_p), len(delta), False), ctypes.byref(out)):
+        raise OSError('ApplyDeltaB failed')
+    try:
+        return ctypes.string_at(out.lpStart, out.uSize)
+    finally:
+        msdelta.DeltaFree(out.lpStart)
+
 # ---------------------------------------------------------------------------
 # PDB (MSF 7.0) reading - only what's needed to walk the global symbol records
 # ---------------------------------------------------------------------------
@@ -1753,6 +1862,8 @@ def main():
     parser.add_argument('--json-out', default='symbol-features.json', help='Every feature found, with all names and the modules that contain it.')
     parser.add_argument('--manifest', default=None, help="A build's list of PDBs (data/builds/<build>/symbols.json) to scan instead of this machine's binaries: "
                         'what the results cache has for them, and those its scan had no verified data for, with their binaries downloaded from the symbol server.')
+    parser.add_argument('--component-store', action='store_true', help="Also scan the binaries of the component store (WinSxS) that aren't installed, "
+                        "such as those of optional features that aren't turned on (Windows only).")
     args = parser.parse_args()
 
     if args.keep_pdbs and not args.symbol_cache:
@@ -1791,6 +1902,20 @@ def main():
             image_count += 1
             by_pdb.setdefault((info.pdb_name.lower(), info.pdb_key), []).append(info)
         log('[scan] %d images with a PDB reference, %d unique PDBs (%.0fs)' % (image_count, len(by_pdb), time.time() - start))
+    # Binaries only the component store has, and the modules (file names) that are only there
+    store_dir = tempfile.mkdtemp(prefix='featsxs-') if args.component_store else None
+    store_modules = {}
+    if store_dir:
+        installed = {os.path.basename(i.path).lower() for infos in by_pdb.values() for i in infos}
+        for path, component in component_store_images(store_dir):
+            info = read_pe_info(path)
+            if info is None:
+                continue
+            image_count += 1
+            by_pdb.setdefault((info.pdb_name.lower(), info.pdb_key), []).append(info)
+            if os.path.basename(path).lower() not in installed:
+                store_modules[os.path.basename(path)] = component
+        log('[scan] %d modules only in the component store, %d unique PDBs in all (%.0fs)' % (len(store_modules), len(by_pdb), time.time() - start))
 
     # 2. Results cache
     cache = {}
@@ -1927,6 +2052,8 @@ def main():
                 cache[cache_key] = result
         log('[scan] after retry round %d: downloaded=%d missing=%d error=%d  %.0fs' % (retry_round, stats['downloaded'], stats['missing'], stats['error'], time.time() - start))
     shutil.rmtree(work_dir, ignore_errors=True)
+    if store_dir:
+        shutil.rmtree(store_dir, ignore_errors=True)
 
     # 5. A binary whose PDB still couldn't be downloaded, or that the symbol server doesn't have (Microsoft can publish an update's symbols
     #    days after the update), keeps what's already known about it, so its features aren't dropped from this build. If this exact PDB was
@@ -2052,7 +2179,8 @@ def main():
 
     with open(args.json_out, 'w', encoding='utf-8') as f:
         json.dump({'imagesScanned': image_count, 'pdbs': len(by_pdb), 'stats': stats, 'usageStats': usage_stats, 'features': json_features,
-                   'manifest': {'cacheVersion': RESULTS_CACHE_VERSION, 'pdbs': build_pdbs}}, f, indent=1)
+                   'manifest': {'cacheVersion': RESULTS_CACHE_VERSION, 'pdbs': build_pdbs},
+                   'componentStore': dict(sorted(store_modules.items(), key=lambda kv: kv[0].lower()))}, f, indent=1)
 
     log('[scan] found %d feature IDs (%d names) in %.0fs' % (len(features), sum(len(v) for v in features.values()), time.time() - start))
     log('[scan] usage analysis: %d binaries analyzed, %d of another architecture, %d failed' % (usage_stats['analyzed'], usage_stats['otherArchitecture'], usage_stats['failed']))

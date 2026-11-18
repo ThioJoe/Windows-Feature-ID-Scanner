@@ -1201,7 +1201,7 @@ try {
     Set-Location C:\scan
     $env:PATH = "C:\scan\python;C:\scan\python\Scripts;$env:PATH"
     & .\download-vivetool.ps1 *>&1 | Select-Object -Last 2 | ForEach-Object { Write-Log "$_" }
-    & python.exe scan-symbols.py --results-cache symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json 2>&1 | ForEach-Object { Write-Log "$_" }
+    & python.exe scan-symbols.py --component-store --results-cache symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json 2>&1 | ForEach-Object { Write-Log "$_" }
     if ($LASTEXITCODE -ne 0) { throw "scan-symbols.py failed ($LASTEXITCODE)" }
     & .\scan-features.ps1 *>&1 | Select-Object -Last 5 | ForEach-Object { Write-Log "$_" }
     if (-not (Test-Path C:\scan\output-temp\summary.json)) { throw 'scan-features.ps1 wrote no summary.json' }

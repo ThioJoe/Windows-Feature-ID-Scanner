@@ -648,6 +648,11 @@ function featureDetail(build) {
     if ((f.declaredIn || []).length) {
       parts.push(`<p class="muted"><b>Declared only</b> (the ID is in the symbols, but the binary has no code for it) in: ${f.declaredIn.map(esc).join(', ')}</p>`);
     }
+    const stored = (f.modules || []).filter((m) => (build.componentStore || {})[m]);
+    if (stored.length) {
+      parts.push(`<p class="muted"><b>Only in the component store</b> (WinSxS, not in the Windows folders: for example part of an optional feature that isn't turned on): ` +
+        `${stored.map((m) => `<span title="${esc(build.componentStore[m])}">${esc(m)}</span>`).join(', ')}</p>`);
+    }
     return parts.join('') || '<p class="muted">Nothing more is known about this feature.</p>';
   };
 }
