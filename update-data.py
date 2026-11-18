@@ -120,12 +120,12 @@ def add_build(data_dir, summary_path, symbols_path):
     arch = summary['architecture']
     key = build_key(full_build, arch)
 
-    # Scanning a build again keeps what its earlier scan found that this one couldn't: the code details of a binary whose PDB was read
-    # then but not this time (the symbol cache only keeps them for the latest scan's PDBs), and what they said about the feature
+    # The build's data from its earlier scans, which scanning it again adds to (merge_earlier_scan)
     details_path = os.path.join(build_dir(data_dir, key), 'details.json')
     earlier_details = load_json(details_path) if os.path.exists(details_path) else {}
     features_path = os.path.join(build_dir(data_dir, key), 'features.json')
-    earlier_features = {f['id']: f for f in load_json(features_path)['features']} if os.path.exists(features_path) else {}
+    earlier_build = load_json(features_path) if os.path.exists(features_path) else {}
+    earlier_features = {f['id']: f for f in earlier_build.get('features', [])}
 
     features = {}
     for f in symbols.get('features', []):
@@ -135,19 +135,9 @@ def add_build(data_dir, summary_path, symbols_path):
         if len(f.get('names', [])) > 1 or (f.get('names') and name is None):
             entry['symbolNames'] = f['names']
         entry['modules'] = f.get('modules', [])
-        values = {k: f.get(k) for k in SYMBOL_FIELDS}
-        earlier = earlier_details.get(str(f['id']), {})
-        kept = {m: earlier[m] for m in entry['modules'] if m in earlier and m not in (f.get('usage') or {})}
-        if kept:
-            f['usage'] = dict(sorted(dict(f.get('usage') or {}, **kept).items()))
-            before = earlier_features.get(f['id'], {})
-            for k in ('default', 'changeTime'):
-                values[k] = values[k] or before.get(k)
-            if before.get('requires'):
-                values['requires'] = sorted(set(values['requires'] or []) | set(before['requires']))
         for k in SYMBOL_FIELDS:
-            if values[k]:
-                entry[k] = values[k]
+            if f.get(k):
+                entry[k] = f[k]
         if f.get('unverified'):
             entry['unverified'] = True  # Only known from an earlier version of its binary; this build's PDB couldn't be downloaded
         features[f['id']] = entry
@@ -164,6 +154,9 @@ def add_build(data_dir, summary_path, symbols_path):
         for c in s.get('configurations', []):
             configs.append({out: c[src] for src, out in STORE_FIELDS if c.get(src) not in (None, '')})
         entry['store'] = configs
+
+    details = {f['id']: dict(f['usage']) for f in symbols.get('features', []) if f.get('usage')}
+    merge_earlier_scan(features, details, earlier_features, earlier_details, symbols.get('manifest'))
 
     # A feature whose code was removed from every binary can stay in the feature store. Its name is still known from earlier builds.
     known = {}
@@ -207,14 +200,17 @@ def add_build(data_dir, summary_path, symbols_path):
         header['symbolsPending'] = {'binaries': len(pending), 'unverified': sum(1 for f in ordered if f.get('unverified')), 'until': until}
     if symbols.get('symbolsUpdated'):
         header['symbolsUpdated'] = symbols['symbolsUpdated']  # When catch-up-symbols.py last added PDBs the scan didn't get
-    if symbols.get('componentStore'):
-        header['componentStore'] = symbols['componentStore']  # Modules only the component store has (not installed), and their component
+    # Modules only the component store has (not installed in the folders the scan covers), and their component
+    seen = {m for e in (symbols.get('manifest') or {}).get('pdbs', {}).values() for m in e['modules']}
+    component_store = dict({m: c for m, c in (earlier_build.get('componentStore') or {}).items() if m not in seen}, **(symbols.get('componentStore') or {}))
+    if component_store:
+        header['componentStore'] = dict(sorted(component_store.items(), key=lambda kv: kv[0].lower()))
     os.makedirs(build_dir(data_dir, key), exist_ok=True)
     path = os.path.join(build_dir(data_dir, key), 'features.json')
     write_build_file(path, header, ordered)
     print('[data] wrote %s (%d features, %d named, %d in feature store)' % (
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
-    write_details(data_dir, key, {f['id']: f['usage'] for f in symbols.get('features', []) if f.get('usage')})
+    write_details(data_dir, key, details)
     write_symbol_list(data_dir, key, manifest, until)
     if len(pending) >= WARN_PENDING:
         message = ("%s: the symbol server didn't have the symbols of %d binaries whose earlier versions had features, so %d of the build's "
@@ -227,9 +223,63 @@ def add_build(data_dir, summary_path, symbols_path):
     return key
 
 
+def merge_earlier_scan(features, details, earlier, earlier_details, manifest):
+    """Scanning a build again adds to what its earlier scans found and never removes any of it: symbols that can't be downloaded any
+    more, a binary the new VM doesn't have (such as an older version of a Store app) or a feature store entry that isn't there today
+    take nothing away. A feature, its names, module links, code details, default state, change time, requirements and feature store
+    configurations that only the earlier data has are kept; where both have one, this scan's wins. Placeholders are what's replaced:
+    a feature marked unverified was only known from an earlier version of a binary, and its links to binaries whose own symbols this
+    scan read are dropped (with what they said about the feature)."""
+    read = {m for e in (manifest or {}).get('pdbs', {}).values() if e.get('pending') in (None, 'details') for m in e['modules']}
+    for fid, old in earlier.items():
+        stale = set(old.get('modules', [])) & read if old.get('unverified') else set()
+        modules = [m for m in old.get('modules', []) if m not in stale]
+        entry = features.get(fid)
+        if entry is None:
+            if stale and not modules and not old.get('declaredIn') and 'store' not in old:
+                continue  # Only a placeholder for binaries this scan read, which don't have it
+            entry = features[fid] = dict(old, modules=modules)
+            if stale:
+                for k in ('default', 'changeTime', 'requires'):
+                    entry.pop(k, None)
+        else:
+            # A name from the symbols over one from ViVeTool's dictionary or an earlier build
+            if old.get('name') and (entry['name'] is None or (entry.get('nameSource') and not old.get('nameSource'))):
+                if entry.get('nameSource') == 'vivetool' and entry['name'] != old['name']:
+                    entry['viveToolName'] = entry['name']
+                entry['name'] = old['name']
+                entry.pop('nameSource', None)
+                if old.get('nameSource'):
+                    entry['nameSource'] = old['nameSource']
+            if old.get('symbolNames'):
+                entry['symbolNames'] = sorted(set(entry.get('symbolNames', [])) | set(old['symbolNames']))
+            entry['modules'] = sorted(set(entry['modules']) | set(modules))
+            declared = (set(entry.get('declaredIn', [])) | set(old.get('declaredIn', []))) - set(entry['modules'])
+            if declared:
+                entry['declaredIn'] = sorted(declared)
+            else:
+                entry.pop('declaredIn', None)
+            if not stale:
+                for k in ('default', 'changeTime'):
+                    if not entry.get(k) and old.get(k):
+                        entry[k] = old[k]
+                if old.get('requires'):
+                    entry['requires'] = sorted(set(entry.get('requires', [])) | set(old['requires']))
+            if entry.get('unverified') and not old.get('unverified') and (modules or old.get('declaredIn')):
+                del entry['unverified']  # The earlier scan had this build's own symbols for it
+            if 'store' not in entry and 'store' in old:
+                entry['store'] = old['store']
+            if not entry.get('viveToolName') and old.get('viveToolName') and old['viveToolName'] != entry['name']:
+                entry['viveToolName'] = old['viveToolName']
+        # Code details: this scan's for the binaries it has them for, the earlier ones for the others it still links the feature to
+        kept = {m: u for m, u in earlier_details.get(str(fid), {}).items() if m in entry['modules'] and m not in stale and m not in details.get(fid, {})}
+        if kept:
+            details[fid] = dict(sorted(dict(details.get(fid, {}), **kept).items()))
+
+
 def write_symbol_list(data_dir, key, manifest, until):
-    """Stores the build's PDBs in data/builds/<build>-<arch>/symbols.json, one per line, for catch-up-symbols.py: the ones its features
-    came from, and those it got no verified data for, with what's needed to download their binaries. Scanning a build again replaces it."""
+    """Stores the build's PDBs in data/builds/<build>-<arch>/symbols.json, one per line, for catch-up-symbols.py: each with its binaries
+    and what's needed to download them, and whether the scan got no verified data for it. It describes the latest scan of the build."""
     path = os.path.join(build_dir(data_dir, key), 'symbols.json')
     if not manifest:
         if os.path.exists(path):
@@ -242,7 +292,7 @@ def write_symbol_list(data_dir, key, manifest, until):
 
 def write_details(data_dir, key, usage):
     """Stores a build's usage details in data/builds/<build>-<arch>/details.json: for each feature ID, what each binary's code reveals
-    about it (how it's used, callers, strings, ...). Scanning a build again replaces the file."""
+    about it (how it's used, callers, strings, ...). Scanning a build again adds to it (merge_earlier_scan)."""
     if not usage:
         return  # A scan without code analysis
     path = os.path.join(build_dir(data_dir, key), 'details.json')
@@ -254,11 +304,16 @@ def write_details(data_dir, key, usage):
 
 def store_super_god_mode(data_dir, key, folder):
     """Copies Super God Mode's statistics for a build (the CSV and XML files run-super-god-mode.ps1 keeps, as they are, and its
-    run.json) to data/builds/<build>-<arch>/super-god-mode/, replacing what an earlier scan of the build stored there."""
+    run.json) to data/builds/<build>-<arch>/super-god-mode/, replacing what an earlier scan of the build stored there unless this run
+    produced none."""
     if not folder or not os.path.isdir(folder) or not os.listdir(folder):
         print('[data] no Super God Mode statistics for %s' % key)
         return
     dest = os.path.join(build_dir(data_dir, key), 'super-god-mode')
+    tables = lambda d: any(n.lower().endswith('.csv') for n in os.listdir(d))
+    if not tables(folder) and os.path.isdir(dest) and tables(dest):
+        print('[data] Super God Mode produced no statistics for %s this time; keeping those of the earlier scan' % key)
+        return
     if os.path.isdir(dest):
         shutil.rmtree(dest)
     shutil.copytree(folder, dest)

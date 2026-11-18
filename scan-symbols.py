@@ -146,14 +146,18 @@ def read_pe_info(path):
 def binary_files(infos):
     """What's needed to download a PDB's binaries from the symbol server later (it keeps them by file name, PE timestamp and image
     size), and to check that the download is the same file: one entry per distinct file."""
-    files = {}
+    files, seen = [], set()
     for info in infos:
+        identity = (os.path.basename(info.path).lower(), info.timestamp, info.image_size)
+        if identity in seen:
+            continue  # Another copy of the same binary
         try:
             digest = sha256_file(info.path)
         except OSError:
             continue
-        files.setdefault(digest, {'name': os.path.basename(info.path), 'timestamp': info.timestamp, 'imageSize': info.image_size, 'sha256': digest})
-    return sorted(files.values(), key=lambda f: (f['name'].lower(), f['sha256']))
+        seen.add(identity)
+        files.append({'name': os.path.basename(info.path), 'timestamp': info.timestamp, 'imageSize': info.image_size, 'sha256': digest})
+    return sorted(files, key=lambda f: (f['name'].lower(), f['sha256']))
 
 def sha256_file(path):
     h = hashlib.sha256()
@@ -217,10 +221,12 @@ def enumerate_images(roots):
                 pass
 
 def component_store_images(out_dir):
-    """The binaries of the component store (WinSxS) that aren't installed anywhere else, such as those of optional features that aren't
-    turned on (Hyper-V, Windows Subsystem for Linux, ...): the newest version of each of the machine's own architecture's components,
-    and in it the files no other folder has a hard link to (installed ones are scanned where they're installed). Their files are kept
-    compressed, so they're expanded into out_dir with Windows' own decompressors. Yields (path, component folder name)."""
+    """The binaries of the component store (WinSxS): the newest version of each of the machine's own architecture's components. That
+    covers those of optional features that aren't turned on (Hyper-V, Windows Subsystem for Linux, ...), components that only live there
+    (the servicing stack), and installed ones outside the folders the scan covers (drivers in the driver store for hardware the machine
+    doesn't have, the servicing folder, ...); binaries installed in those folders are the same files, so their PDBs are only read once.
+    Files of components that aren't installed are kept compressed, so they're expanded into out_dir with Windows' own decompressors.
+    Yields (path, component folder name)."""
     store = os.path.join(os.environ.get('SystemRoot', r'C:\Windows'), 'WinSxS')
     arch = {'AMD64': 'amd64_', 'ARM64': 'arm64_'}.get(os.environ.get('PROCESSOR_ARCHITECTURE', '').upper())
     if os.name != 'nt' or not arch or not os.path.isdir(store):
@@ -248,28 +254,25 @@ def component_store_images(out_dir):
         for name in names:
             path = os.path.join(folder, name)
             try:
-                if os.stat(path).st_nlink > 1:
-                    continue  # Installed: a hard link elsewhere is the same file
                 with open(path, 'rb') as f:
-                    data = f.read()
-                kind = data[:4] if data[:2] != b'MZ' else b'MZ'
-                if kind == b'MZ':
-                    expanded = path
-                elif kind in (b'DCS\x01', b'DCN\x01'):
-                    target = os.path.join(out_dir, os.path.basename(folder))
-                    os.makedirs(target, exist_ok=True)
-                    expanded = os.path.join(target, name)
-                    with open(expanded, 'wb') as f:
-                        f.write(expand_lzms_blocks(data) if kind == b'DCS\x01' else apply_null_delta(data[4:]))
-                else:
-                    kind = b'other'  # A delta against another version of the file (DCD), which isn't here
-                    expanded = None
+                    kind = f.read(4)
+                    if kind[:2] == b'MZ':
+                        kind, expanded = b'MZ', path
+                    elif kind in (b'DCS\x01', b'DCN\x01'):
+                        data = kind + f.read()
+                        target = os.path.join(out_dir, os.path.basename(folder))
+                        os.makedirs(target, exist_ok=True)
+                        expanded = os.path.join(target, name)
+                        with open(expanded, 'wb') as out:
+                            out.write(expand_lzms_blocks(data) if kind == b'DCS\x01' else apply_null_delta(data[4:]))
+                    else:
+                        kind, expanded = b'other', None  # A delta against another version of the file (DCD), which isn't here
             except OSError:
                 kind, expanded = b'error', None
             counts[kind] = counts.get(kind, 0) + 1
             if expanded:
                 yield expanded, os.path.basename(folder)
-    log('[scan] component store: %d components, binaries not installed elsewhere: %s' % (
+    log('[scan] component store: %d components, binaries: %s' % (
         len(newest), ', '.join('%d %s' % (n, {b'MZ': 'as is', b'DCS\x01': 'LZMS-compressed', b'DCN\x01': 'delta-compressed'}.get(k, k.decode()))
                                for k, n in sorted(counts.items(), key=lambda kv: -kv[1]))))
 
@@ -2156,23 +2159,23 @@ def main():
         if result.get('status') in ('ok', 'previousVersion') and any(src != 'const' for _, _, src in result['features']):
             usage_stats['failed' if result.get('usageError') else 'otherArchitecture' if result.get('usage') is None else 'analyzed'] += 1
 
-    # 7. The build's PDBs, so that it can be completed later without this machine (catch-up-symbols.py runs this script with --manifest):
-    #    the ones that contributed features, and the ones with no verified data (pending: not on the symbol server, failed, or only in the
-    #    cache without their usage details), with what's needed to download their binaries
+    # 7. The build's PDBs, with what's needed to download each one's binaries from the symbol server, so that the build's symbol data can
+    #    be completed or made again later without this machine (catch-up-symbols.py runs this script with --manifest). The ones with no
+    #    verified data are pending: not on the symbol server, failed, or only in the cache without their usage details.
     build_pdbs = {}
     for key, result in results.items():
         cache_key = '%s/%s' % key
         modules = sorted({os.path.basename(i.path) for i in by_pdb[key]})
         status = result.get('status')
+        files = manifest['pdbs'][cache_key].get('files', []) if manifest else binary_files(by_pdb[key])
         if status == 'ok' and not (key in restored and result.get('usage') is None and any(src != 'const' for _, _, src in result['features'])):
-            if result['features']:
-                build_pdbs[cache_key] = {'modules': modules}
+            build_pdbs[cache_key] = {'modules': modules, 'files': files}
             continue
         entry = {'modules': modules, 'pending': 'details' if status == 'ok' else result.get('reason', status), 'pdbName': by_pdb[key][0].pdb_name}
         if status == 'previousVersion':
             entry['fallback'] = result['from']
             entry['fallbackFeatures'] = len(result['features'])
-        entry['files'] = manifest['pdbs'][cache_key].get('files', []) if manifest else binary_files(by_pdb[key])
+        entry['files'] = files
         build_pdbs[cache_key] = entry
     pending = sum(1 for e in build_pdbs.values() if e.get('pending'))
     log('[scan] %d PDBs without verified data, %d of them for binaries whose earlier versions had features' % (pending, sum(1 for e in build_pdbs.values() if e.get('fallbackFeatures'))))
