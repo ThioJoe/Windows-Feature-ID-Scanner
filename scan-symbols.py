@@ -1866,25 +1866,34 @@ def main():
         log('[scan] after retry round %d: downloaded=%d missing=%d error=%d  %.0fs' % (retry_round, stats['downloaded'], stats['missing'], stats['error'], time.time() - start))
     shutil.rmtree(work_dir, ignore_errors=True)
 
-    # 5. A binary whose PDB still couldn't be downloaded falls back to what the most recently scanned earlier version of it contained,
-    #    so its features aren't dropped from this build. Those features are marked unverified. (A 404 is a definite answer, so no fallback.)
+    # 5. A binary whose PDB still couldn't be downloaded, or that the symbol server doesn't have (Microsoft can publish an update's symbols
+    #    days after the update), keeps what's already known about it, so its features aren't dropped from this build. If this exact PDB was
+    #    read before, the cache has its features (only the usage details the cache didn't keep are missing), and the cache keeps them too.
+    #    Otherwise it falls back to what the most recently scanned earlier version of the binary contained, marked unverified.
+    for key, result in list(results.items()):
+        earlier = cache_before.get('%s/%s' % key)
+        if result.get('status') in ('error', 'missing') and earlier is not None and earlier.get('status') == 'ok':
+            log('[scan] %s/%s: %s; using its features from the cache' % (key[0], key[1], result.get('error') or 'not on the symbol server'))
+            results[key] = cache['%s/%s' % key] = earlier
+            stats[result['status']] -= 1
+            stats['cached'] += 1
     previous_by_name = {}
     for cache_key, entry in cache.items():
         if entry.get('status') == 'ok':
             previous_by_name.setdefault(cache_key.split('/', 1)[0], []).append((cache_key, entry))
     for key, result in list(results.items()):
-        if result.get('status') != 'error':
+        if result.get('status') not in ('error', 'missing'):
             continue
         # The PDB name alone isn't enough: different binaries can share one (smartscreen.exe and smartscreen.dll both use smartscreen.pdb)
         modules = {os.path.basename(i.path).lower() for i in by_pdb[key]}
         candidates = [c for c in previous_by_name.get(key[0], []) if modules & {m.lower() for m in c[1].get('modules', [])}]
         previous = max(candidates, key=lambda c: c[1].get('scanned', ''), default=None)
         if previous:
-            log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error'), previous[0]))
+            log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error') or 'not on the symbol server', previous[0]))
             results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features'], 'usage': previous[1].get('usage')}
-            stats['error'] -= 1
+            stats[result['status']] -= 1
             stats['previousVersion'] += 1
-        else:
+        elif result['status'] == 'error':
             log('[scan] gave up on %s/%s: %s' % (key[0], key[1], result.get('error')))
 
     if args.results_cache:

@@ -117,6 +117,13 @@ def add_build(data_dir, summary_path, symbols_path):
     arch = summary['architecture']
     key = build_key(full_build, arch)
 
+    # Scanning a build again keeps what its earlier scan found that this one couldn't: the code details of a binary whose PDB was read
+    # then but not this time (the symbol cache only keeps them for the latest scan's PDBs), and what they said about the feature
+    details_path = os.path.join(build_dir(data_dir, key), 'details.json')
+    earlier_details = load_json(details_path) if os.path.exists(details_path) else {}
+    features_path = os.path.join(build_dir(data_dir, key), 'features.json')
+    earlier_features = {f['id']: f for f in load_json(features_path)['features']} if os.path.exists(features_path) else {}
+
     features = {}
     for f in symbols.get('features', []):
         real = [n for n in f.get('names', []) if not NUMERIC_NAME.match(n)]
@@ -125,9 +132,19 @@ def add_build(data_dir, summary_path, symbols_path):
         if len(f.get('names', [])) > 1 or (f.get('names') and name is None):
             entry['symbolNames'] = f['names']
         entry['modules'] = f.get('modules', [])
+        values = {k: f.get(k) for k in SYMBOL_FIELDS}
+        earlier = earlier_details.get(str(f['id']), {})
+        kept = {m: earlier[m] for m in entry['modules'] if m in earlier and m not in (f.get('usage') or {})}
+        if kept:
+            f['usage'] = dict(sorted(dict(f.get('usage') or {}, **kept).items()))
+            before = earlier_features.get(f['id'], {})
+            for k in ('default', 'changeTime'):
+                values[k] = values[k] or before.get(k)
+            if before.get('requires'):
+                values['requires'] = sorted(set(values['requires'] or []) | set(before['requires']))
         for k in SYMBOL_FIELDS:
-            if f.get(k):
-                entry[k] = f[k]
+            if values[k]:
+                entry[k] = values[k]
         if f.get('unverified'):
             entry['unverified'] = True  # Only known from an earlier version of its binary; this build's PDB couldn't be downloaded
         features[f['id']] = entry
