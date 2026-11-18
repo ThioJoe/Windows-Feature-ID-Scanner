@@ -196,7 +196,7 @@ def add_build(data_dir, summary_path, symbols_path):
     start = (release or {}).get('date') or (summary.get('timestamp') or '')[:10]
     until = (datetime.date.fromisoformat(start) + datetime.timedelta(days=CHECK_DAYS)).isoformat() if start else None
     pending = [p for p in (manifest or {}).get('pdbs', {}).values() if p.get('fallbackFeatures')]
-    if pending:
+    if len(pending) >= WARN_PENDING:  # (The few of a normal scan, such as Store apps updated past their published symbols, only get their features marked)
         header['symbolsPending'] = {'binaries': len(pending), 'unverified': sum(1 for f in ordered if f.get('unverified')), 'until': until}
     if symbols.get('symbolsUpdated'):
         header['symbolsUpdated'] = symbols['symbolsUpdated']  # When catch-up-symbols.py last added PDBs the scan didn't get
