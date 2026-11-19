@@ -26,8 +26,8 @@ concurrency:
   group: windows-scanner
   cancel-in-progress: false
 
-# Placeholder for device/account information if the Insider setup ends up needing it (see Register-InsiderDevice in scan-in-vm.ps1).
-# While WINDOWS_INSIDER_DEVICE is empty, Insider builds are listed but not scheduled.
+# Insider scans aren't enabled yet: while the WINDOWS_INSIDER_DEVICE secret (a placeholder) is empty, Insider builds are listed but
+# not scheduled.
 env:
   INSIDER_DEVICE: ${{ secrets.WINDOWS_INSIDER_DEVICE }}
 

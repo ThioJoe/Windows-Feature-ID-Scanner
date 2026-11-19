@@ -994,8 +994,8 @@ async function renderReleases() {
     `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
     "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
     (releases.insider.some((c) => c.scannedInVm)
-      ? "Insider builds are scanned in a virtual machine enrolled in the Windows Insider Program, except Release Preview's, which are scanned as the updates they become.</p>"
-      : 'Insider builds are not scanned yet: Microsoft only provides them to devices enrolled in the Windows Insider Program, and the scanner has no enrolled device yet.</p>');
+      ? "Insider builds are scanned in a virtual machine that gets each build's packages from Windows Update, except Release Preview's, which are scanned as the updates they become.</p>"
+      : 'Insider builds are not scanned yet.</p>');
 
   html += '<h2>Windows 11</h2><p class="muted legend">Update is Microsoft\'s label for the release: the year and month, then ' +
     '<b>B</b> for the monthly security update (the second Tuesday of the month), <b>D</b> for the optional non-security preview ' +
