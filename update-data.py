@@ -63,12 +63,23 @@ def load_builds(data_dir):
 
 def release_lookup(data_dir):
     """{build: {'type', 'date', 'kb'}} for every Windows 11 build in data/releases.json (from check-windows-builds.py): the update a
-    build came in (e.g. 2026-08 B), its release date and KB article. A build stores its own, so they stay known after the list moves on."""
+    build came in (e.g. 2026-08 B), its release date and KB article. A build stores its own, so they stay known after the list moves on.
+    An Insider build has its release date only (its channel is stored with it); a build that's in both lists is a released build."""
     path = os.path.join(data_dir, 'releases.json')
     if not os.path.exists(path):
         return {}
-    return {r['build']: {k: r[k] for k in ('type', 'date', 'kb') if r.get(k)}
-            for v in load_json(path).get('windows11', []) for r in v.get('releases', [])}
+    doc = load_json(path)
+    found = {build: {'date': r['date']} for c in doc.get('insider', []) for r in c.get('releases', []) if r.get('date')
+             for build in r.get('builds') or [r['build']]}
+    found.update({r['build']: {k: r[k] for k in ('type', 'date', 'kb') if r.get(k)}
+                  for v in doc.get('windows11', []) for r in v.get('releases', [])})
+    return found
+
+
+def release_order(b):
+    """Where a build is in the order builds came out: its release date, then its build number (a security update's builds of 24H2, 25H2
+    and 26H2 come out the same day). A build with no known release date counts from the day it was scanned."""
+    return ((b.get('release') or {}).get('date') or (b.get('scannedAt') or '')[:10] or '9999-12-31', version_tuple(b['build']))
 
 
 def write_build_file(path, header, features):
@@ -444,9 +455,11 @@ def regenerate(data_dir):
             index['builds'][-1]['release'] = b['release']
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
+    # Builds count in the order they came out, so a feature an Insider build had before a released build with a lower number counts in the
+    # Insider build, and one a 25H2 build had in July doesn't count in a 24H2 build scanned from October.
     first_seen = {}
     first_tracked = {}
-    for b in builds:
+    for b in sorted(builds, key=release_order):
         arch = b['architecture']
         first_tracked.setdefault(arch, b['key'])
         seen = first_seen.setdefault(arch, {})

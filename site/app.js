@@ -305,27 +305,30 @@ const UPDATE_TYPES_LEGEND = '<b>B</b> monthly security update (second Tuesday) �
 // builds, which has Insider builds' release dates instead
 function releaseTag(b) {
   if (b.release && b.release.type) return b.release.type;
+  if (b.insiderChannel && b.release && b.release.date) return b.release.date;
   if (!releases) return '';
   for (const v of releases.windows11) for (const r of v.releases) if (r.build === b.build) return r.type || '';
   for (const c of releases.insider) for (const r of c.releases) if ((r.builds || [r.build]).includes(b.build)) return r.date || '';
   return '';
 }
 
-// Builds by architecture (x64 first, a column each), then by Windows version, newest first (Insider channels after the released versions)
+// Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
+// own, by channel
 function fillBuildPicker(picker, selectedKey) {
-  const archs = new Map();
+  const columns = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
-    if (!archs.has(b.architecture)) archs.set(b.architecture, new Map());
-    const groups = archs.get(b.architecture), g = versionText(b) || 'Other';
+    const column = b.insiderChannel ? 'Insider' : b.architecture;
+    if (!columns.has(column)) columns.set(column, new Map());
+    const groups = columns.get(column), g = b.insiderChannel || versionText(b) || 'Other';
     if (!groups.has(g)) groups.set(g, []);
     groups.get(g).push(b);
   }
-  const archOrder = (a) => (a === 'AMD64' ? 0 : 1);
-  const insider = (builds) => (builds[0].insiderChannel ? 1 : 0);
-  picker.setSections([...archs].sort(([x], [y]) => archOrder(x) - archOrder(y) || x.localeCompare(y)).map(([arch, groups]) => ({
-    label: archName(arch),
-    note: archName(arch) !== arch ? arch : '',
-    groups: [...groups].sort(([, x], [, y]) => insider(x) - insider(y)).map(([label, builds]) => ({
+  const columnOrder = (c) => (c === 'AMD64' ? 0 : c === 'Insider' ? 2 : 1);
+  const insiderArchs = [...new Set(index.builds.filter((b) => b.insiderChannel).map((b) => archName(b.architecture)))].join(', ');
+  picker.setSections([...columns].sort(([x], [y]) => columnOrder(x) - columnOrder(y) || x.localeCompare(y)).map(([column, groups]) => ({
+    label: column === 'Insider' ? 'Insider' : archName(column),
+    note: column === 'Insider' ? insiderArchs : archName(column) !== column ? column : '',
+    groups: [...groups].map(([label, builds]) => ({
       label,
       items: builds.map((b) => ({
         value: b.key,
@@ -340,15 +343,40 @@ function fillBuildPicker(picker, selectedKey) {
   if (selectedKey) picker.value = selectedKey;
 }
 
+// The newest build (of an architecture): a released one when there is one, since the site opens on it
 function latestBuild(arch) {
   const list = index.builds.filter((b) => !arch || b.architecture === arch).sort(compareVersions);
-  return list[list.length - 1];
+  return list.filter((b) => !b.insiderChannel).pop() || list[list.length - 1];
 }
 
+// The builds by key, and each build's place in the order builds came out (its release date, then its build number), which is the order
+// first-seen.json counts them in (update-data.py)
+let buildsByKey = null, releaseRank = null;
+function buildOrder() {
+  if (!buildsByKey) {
+    buildsByKey = new Map(index.builds.map((b) => [b.key, b]));
+    const date = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
+    const ordered = [...index.builds].sort((x, y) => (date(x) < date(y) ? -1 : date(x) > date(y) ? 1 : compareVersions(x, y)));
+    releaseRank = new Map(ordered.map((b, i) => [b.key, i]));
+  }
+}
+
+// The build a feature was first seen in, with its Insider channel if it's an Insider build
 function firstSeenText(arch, id) {
   const key = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
   if (!key) return '';
-  return key === firstSeen.firstTrackedBuild[arch] ? `≤ ${key}` : key;
+  buildOrder();
+  const b = buildsByKey.get(key);
+  const text = b && b.insiderChannel ? `${key} (${versionText(b)})` : key;
+  return key === firstSeen.firstTrackedBuild[arch] ? `≤ ${text}` : text;
+}
+
+// For sorting by first seen: the order the builds came out
+function firstSeenRank(arch, id) {
+  const key = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
+  if (!key) return '';
+  buildOrder();
+  return releaseRank.has(key) ? releaseRank.get(key) : '';
 }
 
 function storeText(store) {
@@ -891,7 +919,7 @@ async function renderCompare() {
     ['Removed', 'removed', removed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ['Renamed', 'changed', renamed, [
@@ -902,7 +930,7 @@ async function renderCompare() {
     ['Newly named', 'changed', newlyNamed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(arch, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ...(nameLost.length ? [['Name lost', 'changed', nameLost, [
@@ -969,7 +997,7 @@ async function renderBuild() {
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
     { title: 'Default', value: (f) => DEFAULTS[f.default] || '', sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
-    { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => seen[String(f.id)] || '', cls: 'seen' },
+    { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
     { title: 'Modules', value: modsText, cls: 'mods' },
   ], undefined, featureDetail(b));
@@ -1100,8 +1128,8 @@ async function init() {
     return;
   }
   const latest = latestBuild();
-  // Compare the newest build that has an earlier one to compare with (a first build of an architecture has none)
-  const compared = [...index.builds].filter((b) => b.previous).sort(compareVersions).pop() || latest;
+  // Compare the newest released build that has an earlier one to compare with (a first build of an architecture has none)
+  const compared = [...index.builds].filter((b) => b.previous && !b.insiderChannel).sort(compareVersions).pop() || latest;
   fillBuildPicker($('cmp-old'), compared.previous || compared.key);
   fillBuildPicker($('cmp-new'), compared.key);
   fillBuildPicker($('bld-select'), latest.key);

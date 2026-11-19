@@ -58,7 +58,7 @@ select, input[type=search], button {
 }
 .controls > .field { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
 
-/* Build picker: a button, and the list of builds it opens, by architecture (a column each), then version */
+/* Build picker: a button, and the list of builds it opens, by architecture (a column each, and one for Insider builds), then version */
 build-picker { position: relative; display: block; min-width: 0; }
 .picker-button { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 16em; text-align: left; }
 .picker-value { display: flex; align-items: baseline; gap: 8px; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
