@@ -994,7 +994,7 @@ async function renderReleases() {
     `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
     "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
     (releases.insider.some((c) => c.scannedInVm)
-      ? "Insider builds are scanned in a virtual machine that gets each build's packages from Windows Update, except Release Preview's, which are scanned as the updates they become.</p>"
+      ? "Insider builds are scanned in a virtual machine made from each build's own files from Windows Update, except Release Preview's, which are scanned as the updates they become.</p>"
       : 'Insider builds are not scanned yet.</p>');
 
   html += '<h2>Windows 11</h2><p class="muted legend">Update is Microsoft\'s label for the release: the year and month, then ' +

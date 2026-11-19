@@ -17,6 +17,7 @@
 #     --json-out offer.json                     also writes it to this file
 #   python windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
 #   python windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
+#   python windows_update.py image --channel Experimental --out <folder>              # and a new installation's files (Windows only)
 #
 # The download links last from 10 minutes (small files) to several hours (the cumulative update), so they're asked for right before
 # the downloads. They're plain HTTP, as Windows Update's are; each file is checked against the SHA-256 in the update's metadata, which
@@ -31,6 +32,7 @@ import os
 import re
 import ssl
 import struct
+import subprocess
 import sys
 import time
 import urllib.error
@@ -48,17 +50,18 @@ ROOT_CA_URL = 'https://www.microsoft.com/pki/certs/MicRooCerAut2011_2011_03_22.c
 ROOT_CA_SHA256 = '847df6a78497943f27fc72eb93f9a637320a02b561d0a91b09e87a7807ed7c61'
 
 # The Insider channels, by their names in the release notes index (as check-windows-builds.py lists them): the branch name a device in
-# the channel reports (FlightingBranchName; Microsoft's business docs call Experimental "formerly the Dev Channel"), and the branch of
-# the Windows core the channel's builds are on. 26H1 and Future Platforms are cores a device picks within Beta or Experimental; a
-# device described as on that core is offered its newest build.
+# the channel reports (FlightingBranchName; Microsoft's business docs call Experimental "formerly the Dev Channel"), the branch of the
+# Windows core the channel's builds are on, and a build on that core for a request to describe when there's no device to describe.
+# 26H1 and Future Platforms are cores a device picks within Beta or Experimental; a device described as on that core is offered its
+# newest build.
 CHANNELS = {
-    'Beta': ('Beta', 'ge_release'),
-    'Experimental': ('Dev', 'ge_release'),
-    'Beta (26H1)': ('Beta', 'br_release'),
-    'Experimental (26H1)': ('Dev', 'br_release'),
-    'Experimental (Future Platforms)': ('Dev', 'rs_prerelease'),
-    'Release Preview 24H2/25H2/26H2': ('ReleasePreview', 'ge_release'),
-    'Release Preview 26H1': ('ReleasePreview', 'br_release'),
+    'Beta': ('Beta', 'ge_release', '26100.1'),
+    'Experimental': ('Dev', 'ge_release', '26100.1'),
+    'Beta (26H1)': ('Beta', 'br_release', '28000.1'),
+    'Experimental (26H1)': ('Dev', 'br_release', '28000.1'),
+    'Experimental (Future Platforms)': ('Dev', 'rs_prerelease', '29500.1000'),
+    'Release Preview 24H2/25H2/26H2': ('ReleasePreview', 'ge_release', '26100.1'),
+    'Release Preview 26H1': ('ReleasePreview', 'br_release', '28000.1'),
 }
 
 EDITION_SKUS = {'Enterprise': 4, 'Professional': 48, 'Education': 121, 'Core': 101}  # OSSkuId (PRODUCT_* in GetProductInfo)
@@ -88,7 +91,7 @@ def timestamp(minutes=0):
 
 def device_attributes(channel, os_build, edition='Enterprise', architecture='AMD64'):
     """The attributes a Windows 11 device in the channel (None: not in any) sends with its requests, for a device at os_build."""
-    branch_name, branch = CHANNELS[channel] if channel else ('', None)
+    branch_name, branch, _ = CHANNELS[channel] if channel else ('', None, None)
     version = '10.0.' + os_build
     attributes = {
         'App': 'WU_OS', 'AppVer': version, 'AttrDataVer': '331', 'BranchReadinessLevel': 'CB', 'CurrentBranch': branch or 'ge_release',
@@ -250,11 +253,8 @@ def cab_names(data):
     return names
 
 
-def package_roles(client, update):
-    """{KB: role} of the update's packages, from the names of the component databases in its AggregatedMetadata.cab, which say what
-    each package is: EKBUpdateCompDB_<KB> (an enablement package), outer.AggregatedMetadata_<KB> (the cumulative update, or a
-    checkpoint cumulative update it builds on), SafeOSDUCompDB_<KB> and SetupDUCompDB_<KB> (the Safe OS and Setup dynamic updates).
-    DotNetServicingCompDB is the .NET Framework update, under the key 'dotnet'."""
+def metadata_cab(client, update):
+    """The update's AggregatedMetadata.cab (a few MB): the component databases that describe its packages and editions."""
     name = update['updateId'].lower() + '.aggregatedmetadata.cab'
     meta = next((f for f in update['files'] if f['name'].lower() == name), None)
     if not meta:
@@ -275,8 +275,16 @@ def package_roles(client, update):
         time.sleep(10 * (attempt + 1))
     if data is None:
         raise RuntimeError(f"couldn't download {meta['name']}")
+    return data
+
+
+def package_roles(client, update):
+    """{KB: role} of the update's packages, from the names of the component databases in its AggregatedMetadata.cab, which say what
+    each package is: EKBUpdateCompDB_<KB> (an enablement package), outer.AggregatedMetadata_<KB> (the cumulative update, or a
+    checkpoint cumulative update it builds on), SafeOSDUCompDB_<KB> and SetupDUCompDB_<KB> (the Safe OS and Setup dynamic updates).
+    DotNetServicingCompDB is the .NET Framework update, under the key 'dotnet'."""
     roles = {}
-    for n in cab_names(data):
+    for n in cab_names(metadata_cab(client, update)):
         m = re.match(r'(?i)(EKBUpdateCompDB|outer\.AggregatedMetadata|SafeOSDUCompDB|SetupDUCompDB)_(KB\d+)\.', n)
         if m:
             kind = m.group(1).lower()
@@ -313,6 +321,55 @@ def packages(client, update, architecture='x64'):
         picked.append(dict(f, role=role, kb=kb if kb != 'dotnet' else re.search(r'(?i)-(kb\d+)-', f['name']).group(1).upper()))
     order = ['checkpoint', 'cumulative', 'enablement', 'dotnet']
     return sorted(picked, key=lambda p: (order.index(p['role']), p['name'].lower()))
+
+
+def expand_member(cab, member, folder):
+    """Extracts one file from a cabinet with Windows' own expand.exe (cabinet.dll), and returns its path. Windows only: the metadata's
+    cabinets aren't in a compression Python's standard library reads."""
+    os.makedirs(folder, exist_ok=True)
+    r = subprocess.run(['expand.exe', '-F:' + member, cab, folder], capture_output=True, text=True)
+    found = [n for n in os.listdir(folder) if n.lower() == member.lower()]
+    if r.returncode or not found:
+        raise RuntimeError(f"expand.exe couldn't extract {member} from {cab} ({r.returncode}): {(r.stdout + r.stderr).strip()[-300:]}")
+    return os.path.join(folder, found[0])
+
+
+def image_files(client, update, folder, edition='professional', language='en-us'):
+    """What a new installation of the update's build in one edition and language is made of, from that edition's component database
+    (DesktopTargetCompDB_<edition>_<language> in AggregatedMetadata.cab): the edition's image (<edition>_<language>.esd, whose last
+    image is the installation's), the package ESDs and WIMs that hold the files the image refers to but doesn't contain, and the
+    packages that come as cabs (the Features on Demand an installation has, and the like), whose files the image refers to as well.
+    Each payload is matched to the update's files by the SHA-256 the database gives it."""
+    os.makedirs(folder, exist_ok=True)
+    data = metadata_cab(client, update)
+    meta = os.path.join(folder, 'AggregatedMetadata.cab')
+    with open(meta, 'wb') as f:
+        f.write(data)
+    wanted = f'desktoptargetcompdb_{edition}_{language}.xml.cab'.lower()
+    member = next((n for n in cab_names(data) if n.lower() == wanted), None)
+    if not member:
+        raise RuntimeError(f'the update has no component database for {edition} {language}')
+    # The database is a cabinet inside the metadata cabinet; the file in it has the same name
+    inner = expand_member(meta, member, os.path.join(folder, 'compdb-cab'))
+    xml_path = expand_member(inner, member, os.path.join(folder, 'compdb'))
+    by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
+    ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
+    files, missing = {}, []
+    for item in ET.parse(xml_path).getroot().iterfind('.//c:Packages/c:Package/c:Payload/c:PayloadItem', ns):
+        f = by_sha256.get(base64.b64decode(item.get('PayloadHash')).hex())
+        if f:
+            files[f['sha1']] = f
+        else:
+            missing.append(item.get('Path'))
+    if missing:
+        raise RuntimeError(f"the update has no file for {len(missing)} of the {edition} {language} payloads: {', '.join(missing[:5])}")
+    files = sorted(files.values(), key=lambda f: f['name'].lower())
+    image = [f for f in files if f['name'].lower() == f'{edition}_{language}.esd']
+    if len(image) != 1:
+        raise RuntimeError(f'the {edition} {language} payloads have {len(image)} files named {edition}_{language}.esd')
+    return {'edition': edition, 'language': language, 'image': image[0]['name'],
+            'references': [f['name'] for f in files if re.search(r'(?i)\.(esd|wim)$', f['name'])],
+            'cabs': [f['name'] for f in files if f['name'].lower().endswith('.cab')], 'files': files}
 
 
 def with_links(client, update, files):
@@ -379,20 +436,29 @@ def sha256_of(path):
 
 def main():
     parser = argparse.ArgumentParser(description="Ask Windows Update what it offers a device in a Windows Insider channel, and get the files.")
-    parser.add_argument('action', choices=['offer', 'links', 'download'])
+    parser.add_argument('action', choices=['offer', 'links', 'download', 'image'],
+                        help="image (Windows only): download a new installation's files and the packages that bring it to the build")
     parser.add_argument('--channel', required=True, help='An Insider channel, by its name in the release notes: ' + ', '.join(CHANNELS) + "; or 'retail'")
-    parser.add_argument('--os-build', required=True, help='The build of the device asking, such as 26300.9711')
+    parser.add_argument('--os-build', help="The build of the device asking, such as 26300.9711 (default: the start of the channel's Windows core)")
     parser.add_argument('--os-branch', help="The device's branch (from its BuildLabEx, such as ge_release): an error if the channel's builds are on another core")
     parser.add_argument('--edition', default='Enterprise', choices=sorted(EDITION_SKUS))
+    parser.add_argument('--image-edition', default='professional', help='image: the edition of the installation image (its ESD is <edition>_<language>.esd)')
+    parser.add_argument('--language', default='en-us', help='image: the installation\'s language')
     parser.add_argument('--expected-build', help='An error unless Windows Update offers this build')
-    parser.add_argument('--out', help='download: the folder the packages go in')
+    parser.add_argument('--out', help='download, image: the folder the files go in')
     parser.add_argument('--json-out', help='Also write the JSON to this file')
     args = parser.parse_args()
 
     channel = None if args.channel.lower() == 'retail' else args.channel
     if channel and channel not in CHANNELS:
         parser.error(f'unknown channel {channel!r}')
-    if channel and args.os_branch and args.os_branch != CHANNELS[channel][1]:
+    if args.action in ('download', 'image') and not args.out:
+        parser.error(f'{args.action} needs --out')
+    if not args.os_build:
+        if not channel:
+            parser.error("the retail channel needs --os-build")
+        args.os_build = CHANNELS[channel][2]
+    if channel and args.os_branch and not args.os_branch.startswith(CHANNELS[channel][1]):  # ge_release_flt: the flights of ge_release
         log(f"The {channel} channel's builds are on another Windows core ({CHANNELS[channel][1]}) than a device on {args.os_branch}")
         return 2
     client = WindowsUpdate()
@@ -403,16 +469,21 @@ def main():
         return 3
     result = {k: update[k] for k in ('channel', 'osBuild', 'title', 'build', 'kb', 'updateId', 'revision')}
     result['fileCount'] = len(update['files'])
-    if args.action in ('links', 'download'):
-        if args.action == 'download' and not args.out:
-            parser.error('download needs --out')
+    if args.action in ('links', 'download', 'image'):
         picked = packages(client, update)
         for p in picked:
             log(f"  {p['role']}: {p['name']} ({p['size']:,} bytes)")
         if args.action == 'links':
             picked = with_links(client, update, picked)
-        else:
+        elif args.action == 'download':
             download(client, update, picked, args.out)
+        else:
+            image = image_files(client, update, args.out, args.image_edition.lower(), args.language.lower())
+            log(f"installation image: {image['image']}, with {len(image['references']) - 1} ESDs and WIMs and {len(image['cabs'])} cabs "
+                f"({sum(f['size'] for f in image['files']) / 1e9:.1f} GB)")
+            download(client, update, image['files'] + picked, args.out)
+            result['image'] = {k: image[k] for k in ('edition', 'language', 'image', 'references', 'cabs')}
+            result['folder'] = os.path.abspath(args.out)
         result['packages'] = picked
     text = json.dumps(result, indent=1)
     if args.json_out:

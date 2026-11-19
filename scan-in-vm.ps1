@@ -16,10 +16,11 @@
 #      update, which would move a VM at an older one past its target build, so the offer is only downloaded, and the package's own file
 #      is taken from Windows Update's download folder. Windows Update doesn't offer the version every time; the file then comes from the
 #      VM brought up to date, and the VM goes back to a checkpoint taken before.
-#      A Windows Insider build (-InsiderChannel) has no cumulative update or enablement package in the catalog. Windows Update gives
-#      them to a request that describes a device in the channel, which windows_update.py makes the way Windows does, so the VM isn't
-#      enrolled: it downloads the packages and installs them with DISM (Install-InsiderBuild). That works for the channels on the
-#      image's Windows core (Beta and Experimental); 26H1 and Future Platforms are other cores, which would need images of their own.
+#      A Windows Insider build (-InsiderChannel) is in neither catalog. Windows Update gives a channel's build to a request that
+#      describes a device in the channel, which windows_update.py makes the way Windows does, so nothing is enrolled. Its cumulative
+#      updates are built on the channels' own baseline, not a released build's, so the VM is made from the build's own installation
+#      image instead of the Media Creation Tool's (Get-InsiderImage), and installs the build's cumulative update and enablement package
+#      with DISM (Install-InsiderBuild), with flight signing on, as on any Insider PC.
 #   4. Windows Update installs whatever else it offers that doesn't change the build, and the Microsoft Store updates the apps that
 #      come with Windows (cumulative updates don't). What still can't be installed after retries is noted in the build's data.
 #   5. After a last restart, the VM is checked against what the build is supposed to be (Test-VmInstallation): Windows' servicing,
@@ -159,7 +160,8 @@ function Get-CumulativeUpdate {
 # Virtual disk
 # ---------------------------------------------------------------------------
 
-function New-ScanDisk([string]$esd) {
+function New-ScanDisk([string]$esd, $insider) {
+    # $insider: an Insider build's own image instead (Get-InsiderImage)
     $vhd = Join-Path $WorkDir "$VmName.vhdx"
     if (Get-VM -Name $VmName -ErrorAction SilentlyContinue) { Stop-VM -Name $VmName -TurnOff -Force -ErrorAction SilentlyContinue; Remove-VM -Name $VmName -Force }
     if (Test-Path $vhd) { Dismount-VHD -Path $vhd -ErrorAction SilentlyContinue; Remove-Item $vhd -Force }
@@ -175,10 +177,18 @@ function New-ScanDisk([string]$esd) {
     $efiRoot = "$($efi.DriveLetter):\"
     $winRoot = "$($win.DriveLetter):\"
 
-    $index = (Get-WindowsImage -ImagePath $esd | Where-Object { $_.ImageName -eq "Windows 11 $Edition" }).ImageIndex
-    if (-not $index) { throw "No 'Windows 11 $Edition' image in $esd" }
+    $imageName = "Windows 11 $Edition"
+    $references = @()
+    if ($insider) {
+        # The Insider build's Pro installation image, with the files it refers to (Get-InsiderReferences); it's made the target edition next
+        $esd, $folder = Get-InsiderReferences $insider
+        $imageName = 'Windows 11 Pro'
+        $references = @("/SWMFile:$folder\*")
+    }
+    $index = (Get-WindowsImage -ImagePath $esd | Where-Object { $_.ImageName -eq $imageName }).ImageIndex
+    if (-not $index) { throw "No '$imageName' image in $esd" }
     Log "Applying image index $index to $winRoot"
-    & dism.exe /English /Apply-Image "/ImageFile:$esd" "/Index:$index" "/ApplyDir:$winRoot" | Select-Object -Last 2
+    & dism.exe /English /Apply-Image "/ImageFile:$esd" "/Index:$index" "/ApplyDir:$winRoot" @references | Select-Object -Last 2
     if ($LASTEXITCODE -ne 0) { throw "DISM /Apply-Image failed ($LASTEXITCODE)" }
 
     # The image's files before Windows first starts, for the file check before the scan (files no update lists must be the image's)
@@ -188,6 +198,7 @@ function New-ScanDisk([string]$esd) {
 
     & bcdboot.exe "$($winRoot)Windows" /s $efiRoot /f UEFI | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "bcdboot failed ($LASTEXITCODE)" }
+    if ($insider) { Set-InsiderImage $insider $winRoot $efiRoot }
     Write-Unattend $winRoot
     $reg = "HKLM\OFFLINE_SOFTWARE"
     & reg.exe load $reg "$($winRoot)Windows\System32\config\SOFTWARE" | Out-Null
@@ -783,112 +794,105 @@ Write-Result $LASTEXITCODE
     return $true  # The package takes effect with a restart
 }
 
-function Get-InsiderPackages([string]$build, [string]$branch) {
-    # What Windows Update offers the VM as a device in the channel, and the packages of it the VM installs, with their download links,
-    # asked for now (they expire). windows_update.py makes the requests as Windows does; it writes its JSON to a file and logs to stderr.
-    $file = Join-Path $WorkDir 'insider-offer.json'
-    Remove-Item $file -ErrorAction SilentlyContinue
-    $arguments = @('links', '--channel', $InsiderChannel, '--os-build', $build, '--os-branch', $branch, '--edition', $Edition, '--json-out', $file)
-    if ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild) }
+function Invoke-WindowsUpdatePy([string[]]$arguments) {
+    # windows_update.py on the runner: its progress (stderr) is logged, its JSON goes to the file its arguments name
     $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
     & python.exe (Join-Path $RepoDir 'windows_update.py') @arguments 2>&1 | ForEach-Object { if ($_ -is [System.Management.Automation.ErrorRecord]) { Log "$_" } }
-    $code = $LASTEXITCODE
-    $ErrorActionPreference = 'Stop'
-    if ($code -eq 2) { throw "The $InsiderChannel channel's builds are on another Windows core than the VM's image ($branch); they'd need an image of their own" }
+    return $LASTEXITCODE
+}
+
+function Get-InsiderImage {
+    # The Insider build's own files, from Windows Update (windows_update.py image): a new installation's (the Pro edition image, the
+    # package ESDs and WIMs that hold the files it refers to, and the cabs of the features it has), and the packages that bring it to the
+    # build (the cumulative update with the checkpoint cumulative update it builds on, the enablement package and the .NET Framework
+    # update). The VM can't be made from a released build's image instead: the channels' cumulative updates are built on the channels'
+    # own baseline (ge_release_flt 26100.6, not 26100.1), which is why Microsoft's docs say a device joins a channel by an in-place
+    # upgrade. Returns what image.json in the download folder says.
+    $folder = Join-Path $WorkDir 'insider'
+    $file = Join-Path $folder 'image.json'
+    $arguments = @('image', '--channel', $InsiderChannel, '--out', $folder, '--json-out', $file)
+    if ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild) }
+    Remove-Item $file -ErrorAction SilentlyContinue
+    $code = Invoke-WindowsUpdatePy $arguments
     if ($code -eq 3) { throw "Windows Update doesn't offer build $ExpectedBuild to a device in the $InsiderChannel channel (see above for what it offers)" }
-    if ($code -ne 0 -or -not (Test-Path $file)) { throw "Asking Windows Update for the $InsiderChannel channel's build failed ($code)" }
-    return (Get-Content $file -Raw | ConvertFrom-Json)
+    if ($code -ne 0 -or -not (Test-Path $file)) { throw "Getting the $InsiderChannel channel's build from Windows Update failed ($code)" }
+    $image = Get-Content $file -Raw | ConvertFrom-Json
+    Log "The $InsiderChannel channel's build: $($image.title) ($(if ($image.kb) { $image.kb } else { 'no KB' }), update $($image.updateId) revision $($image.revision))"
+    return $image
+}
+
+function Get-InsiderReferences($image) {
+    # The installation image refers to files it doesn't hold itself: those in the package ESDs and WIMs, and those in the cabs of the
+    # features an installation has. DISM finds them by their hashes in the files /SWMFile names, so the ESDs and WIMs go in one folder
+    # (as hard links), with a WIM of the cabs' files, unpacked by expand.exe (they're whole files, not deltas). Returns the installation
+    # ESD's path in that folder, and the folder.
+    $refs = Join-Path $WorkDir 'insider-references'
+    $cabs = Join-Path $WorkDir 'insider-cabs'
+    Remove-Item $refs, $cabs -Recurse -Force -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Force $refs, $cabs | Out-Null
+    foreach ($name in @($image.image.references)) { New-Item -ItemType HardLink -Path (Join-Path $refs $name) -Target (Join-Path $image.folder $name) | Out-Null }
+    Log "Unpacking the $(@($image.image.cabs).Count) cabs of the installation's features"
+    foreach ($name in @($image.image.cabs)) {
+        $dir = Join-Path $cabs ([IO.Path]::GetFileNameWithoutExtension($name))
+        New-Item -ItemType Directory -Force $dir | Out-Null
+        & expand.exe -F:* (Join-Path $image.folder $name) $dir | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "expand.exe couldn't unpack $name ($LASTEXITCODE)" }
+    }
+    & dism.exe /English /Capture-Image "/ImageFile:$(Join-Path $refs 'unpacked-cabs.wim')" "/CaptureDir:$cabs" /Name:cabs /Compress:fast | Select-Object -Last 1 | ForEach-Object { Log $_ }
+    if ($LASTEXITCODE -ne 0) { throw "DISM couldn't capture the cabs' files ($LASTEXITCODE)" }
+    Remove-Item $cabs -Recurse -Force
+    return (Join-Path $refs $image.image.image), $refs
+}
+
+function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
+    # The rest of an Insider build's disk, once its image is applied: the target edition, flight signing, and the packages the VM installs
+    # once it's up (Install-InsiderBuild)
+    $current = (Get-WindowsEdition -Path $winRoot).Edition
+    if ($current -ne $Edition) {
+        # As Microsoft's business images are made from the Pro image: Enterprise is one of its target editions (DISM /Get-TargetEditions)
+        Log "Changing the edition from $current to $Edition"
+        & dism.exe /English "/Image:$winRoot" "/Set-Edition:$Edition" | Select-Object -Last 1 | ForEach-Object { Log $_ }
+        if ($LASTEXITCODE -ne 0) { throw "DISM couldn't change the edition to $Edition ($LASTEXITCODE)" }
+    }
+    # Insider builds are signed with Microsoft's development certificates (Microsoft Development PCA 2014), which Windows only trusts with
+    # flight signing on: Microsoft documents `bcdedit /set {bootmgr} flightsigning on` and `bcdedit /set flightsigning on` "to trust
+    # Windows Insider Preview builds that are signed with certificates that are not trusted by default", and Insider PCs have it on.
+    # Their boot manager has Microsoft's production signature, so Secure Boot starts it, and it then starts the build's own boot loader.
+    $sig = Get-AuthenticodeSignature "$($winRoot)Windows\System32\winload.efi"
+    $chain = New-Object Security.Cryptography.X509Certificates.X509Chain
+    $chain.ChainPolicy.RevocationMode = 'NoCheck'
+    [void]$chain.Build($sig.SignerCertificate)
+    $root = $chain.ChainElements[$chain.ChainElements.Count - 1].Certificate.Subject
+    if ($root -match 'CN=Microsoft Development Root Certificate Authority') {
+        Log 'Turning on flight signing: the build is signed for it'
+        $store = "$($efiRoot)EFI\Microsoft\Boot\BCD"
+        foreach ($entry in '{bootmgr}', '{default}') {
+            & bcdedit.exe /store $store /set $entry flightsigning on | Out-Null
+            if ($LASTEXITCODE -ne 0) { throw "bcdedit couldn't turn on flight signing for $entry ($LASTEXITCODE)" }
+        }
+    }
+    $updates = "$($winRoot)scan-updates"
+    New-Item -ItemType Directory -Force $updates | Out-Null
+    foreach ($p in @($image.packages)) { Copy-Item (Join-Path $image.folder $p.name) $updates -Force }
+    Log "The VM's disk has the build's packages: $((@($image.packages) | ForEach-Object { "$($_.role) $($_.kb)" }) -join ', ')"
 }
 
 function Install-InsiderBuild {
-    # Windows Update gives a channel's builds to a request that describes a device in that channel (windows_update.py asks it the way
-    # Windows' own client does), so the VM isn't enrolled in anything. Its Windows gets the build's packages from Microsoft and
-    # installs them with DISM, like a released build's: the cumulative update, with the checkpoint cumulative update it builds on in
-    # the same folder, then after a restart the enablement package that gives the build the channel's build number, and the build's
-    # .NET Framework update. Flight signing is turned on first if the packages are signed for it, as on any Insider PC. This works for
-    # the channels on the image's Windows core (Beta and Experimental, on 26H2's); the others (26H1, Future Platforms) would need an
-    # image of their own core.
-    $vm = Invoke-InVM -Retry {
-        $r = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
-        @{ Build = "$($r.CurrentBuildNumber).$($r.UBR)"; Branch = ($r.BuildLabEx -split '\.')[3] }  # 26100.1.amd64fre.ge_release.240331-1435
-    }
-    if ($ExpectedBuild -and $vm.Build -eq $ExpectedBuild) {
-        Log "The VM is at build $ExpectedBuild already"
+    # The VM was made from the Insider build's own image (Get-InsiderImage, New-ScanDisk), with the build's packages on its disk. They're
+    # installed with DISM, as a released build's are: the cumulative update, with the checkpoint cumulative update it builds on in the
+    # same folder, then after a restart the enablement package that gives the build the channel's build number, and the build's .NET
+    # Framework update. The VM isn't enrolled in the Insider program; flight signing, which the build is signed for, is on (Set-InsiderImage).
+    $file = Join-Path $WorkDir 'insider\image.json'
+    if (-not (Test-Path $file)) { throw "No ${file}: the VM has to be made from the Insider build's own image (-Step Disk with -InsiderChannel)" }
+    $image = Get-Content $file -Raw | ConvertFrom-Json
+    $build = (Get-VmBuild).Split(' ')[0]
+    if ($build -eq $image.build) {
+        Log "The VM is at build $build already"
         return
     }
-    $offer = Get-InsiderPackages $vm.Build $vm.Branch
-    Log "Windows Update offers the $InsiderChannel channel: $($offer.title) ($($offer.kb), update $($offer.updateId) revision $($offer.revision))"
-    $packages = @($offer.packages)
+    $packages = @($image.packages)
     $cumulative = $packages | Where-Object role -eq 'cumulative' | Select-Object -First 1
-    if (-not $cumulative) { throw "The $InsiderChannel channel's update has no cumulative update for the VM" }
-
-    # The VM downloads the files from Microsoft itself (as Install-CumulativeUpdate does) and checks each one's SHA-256. A link can
-    # expire while the others download, so a file that fails gets a new link and another try.
-    for ($attempt = 1; ; $attempt++) {
-        $list = ConvertTo-Json -Compress -InputObject @($packages | ForEach-Object { @{ name = $_.name; url = $_.url; sha256 = $_.sha256; size = $_.size } })
-        $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($list))
-        $result = Invoke-VmTask 'ScanInsiderDownload' -timeoutMinutes 90 -script (@'
-$packages = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('__PACKAGES__')) | ConvertFrom-Json
-New-Item -ItemType Directory -Force C:\scan-updates | Out-Null
-$failed = @()
-foreach ($p in @($packages | Sort-Object size)) {  # Smallest first: their links expire soonest
-    $path = Join-Path C:\scan-updates $p.name
-    if ((Test-Path $path) -and (Get-FileHash $path -Algorithm SHA256).Hash -eq $p.sha256) { Write-Log "$($p.name): downloaded already"; continue }
-    Write-Log "downloading $($p.name) ($($p.size) bytes)"
-    for ($try = 1; $try -le 3; $try++) {
-        # curl's own retries don't cover a transfer cut off partway (error 18), so that resumes the partial file (-C -) here
-        & curl.exe -fsSL --retry 5 --retry-delay 5 -C - -o $path $p.url
-        if ($LASTEXITCODE -eq 0) { break }
-        Write-Log "the download stopped (curl $LASTEXITCODE); resuming it"
-        Start-Sleep -Seconds 10
-    }
-    $hash = if (Test-Path $path) { (Get-FileHash $path -Algorithm SHA256).Hash } else { 'none' }
-    if ($hash -ne $p.sha256) {
-        Write-Log "$($p.name) doesn't match its SHA-256 (got $hash)"
-        Remove-Item $path -Force -ErrorAction SilentlyContinue
-        $failed += $p.name
-    }
-}
-Write-Result $(if ($failed) { "failed: $($failed -join ', ')" } else { 'ok' })
-'@).Replace('__PACKAGES__', $encoded)
-        if ($result -eq 'ok') { break }
-        if ($attempt -ge 3) { throw "Downloading the $InsiderChannel channel's packages failed: $result" }
-        Log "Downloading the packages failed ($result); asking Windows Update for new links"
-        $packages = @((Get-InsiderPackages $vm.Build $vm.Branch).packages)
-    }
-
-    # Insider builds are signed with Microsoft's development certificates (Microsoft Development PCA 2014), which Windows only trusts
-    # with flight signing on. Microsoft documents `bcdedit /set flightsigning on` "to trust Windows Insider Preview builds that are
-    # signed with certificates that are not trusted by default", and Insider PCs have it on; without it, DISM refuses the packages
-    # (0x80096004). It takes effect at the next start.
-    $signatures = @(Invoke-InVM -Retry -arguments (($packages | ForEach-Object { $_.name }) -join '|') {
-        param($names)
-        foreach ($name in $names -split '\|') {
-            $sig = Get-AuthenticodeSignature "C:\scan-updates\$name"
-            $root = 'no certificate'
-            if ($sig.SignerCertificate) {
-                $chain = New-Object Security.Cryptography.X509Certificates.X509Chain
-                $chain.ChainPolicy.RevocationMode = 'NoCheck'
-                [void]$chain.Build($sig.SignerCertificate)
-                $root = $chain.ChainElements[$chain.ChainElements.Count - 1].Certificate.Subject
-            }
-            "${name}: $($sig.Status), root $root"
-        }
-    })
-    $signatures | ForEach-Object { Log "Signature of $_" }
-    $flightSigned = [bool]($signatures -match 'CN=Microsoft Development Root Certificate Authority')
-    if ($flightSigned -and -not (Invoke-InVM -Retry { [bool](& bcdedit.exe /enum '{current}' | Select-String '^flightsigning\s+Yes') })) {
-        Log 'Turning on flight signing, which the build is signed for'
-        $codes = Invoke-InVM -Retry {
-            & bcdedit.exe /set '{bootmgr}' flightsigning on | Out-Null; $a = $LASTEXITCODE
-            & bcdedit.exe /set flightsigning on | Out-Null; "$a $LASTEXITCODE"
-        }
-        if ($codes -ne '0 0') { throw "bcdedit couldn't turn on flight signing ($codes)" }
-        Restart-ScanVM
-        Set-VmNetwork
-    }
-
-    # The cumulative update. DISM installs the checkpoint cumulative updates it needs from the same folder, and checks the files' signatures.
+    if (-not $cumulative) { throw "The $InsiderChannel channel's update has no cumulative update" }
     $result = Invoke-VmTask 'ScanInsiderLCU' -timeoutMinutes 150 -script (@'
 Write-Log 'installing __FILE__ with DISM'
 & dism.exe /English /Online /Add-Package "/PackagePath:C:\scan-updates\__FILE__" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
@@ -921,9 +925,9 @@ Write-Result ($results -join '; ')
     Invoke-InVM -Retry { Remove-Item C:\scan-updates -Recurse -Force -ErrorAction SilentlyContinue }
     $build = (Get-VmBuild).Split(' ')[0]
     Log "VM build: $build"
-    if ($build -ne $offer.build) { throw "The VM is at build $build after installing the $InsiderChannel channel's packages, not $($offer.build)" }
-    Save-Report 'insider-build.json' @{ channel = $InsiderChannel; build = $build; title = $offer.title; kb = $offer.kb; updateId = $offer.updateId
-                                        revision = $offer.revision; flightSigning = $flightSigned
+    if ($build -ne $image.build) { throw "The VM is at build $build after installing the $InsiderChannel channel's packages, not $($image.build)" }
+    Save-Report 'insider-build.json' @{ channel = $InsiderChannel; build = $build; title = $image.title; kb = $image.kb; updateId = $image.updateId
+                                        revision = $image.revision; image = $image.image.image
                                         packages = @($packages | ForEach-Object { @{ name = $_.name; role = $_.role; kb = $_.kb; sha256 = $_.sha256 } }) }
 }
 
@@ -1225,7 +1229,7 @@ try {
         foreach ($f in 'verification-files.json', 'files.csv.gz') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force -ErrorAction SilentlyContinue }
         $files = @{ exitCode = $code; report = 'verification-files.json' }
     } else {
-        Log 'No update to check the files against (the build has no cumulative update of its own)'
+        Log $(if ($InsiderChannel) { "No file lists to check the files against (Microsoft doesn't publish them for Insider builds)" } else { 'No update to check the files against (the build has no cumulative update of its own)' })
     }
 
     Save-Report 'verification.json' @{ build = $build; servicing = $servicing; cumulativeUpdatePackage = $rollup; health = $health; files = $files }
@@ -1330,14 +1334,14 @@ try {
 
 # ---------------------------------------------------------------------------
 
-$esd = $null; $updateUrls = $null
-if ($Step -in 'All', 'Image', 'Disk') { $esd = Get-BaseImage }
+$esd = $null; $updateUrls = $null; $insiderImage = $null
+if ($Step -in 'All', 'Image', 'Disk') { if ($InsiderChannel) { $insiderImage = Get-InsiderImage } else { $esd = Get-BaseImage } }
 if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageKbs[$Version] -and
     (-not $ExpectedBuild -or ($ExpectedBuild -split '\.')[0] -ne ((Split-Path $esd -Leaf) -split '\.')[0])) {
     Start-WsusLookup $EnablementPackageKbs[$Version]  # The image isn't the target version, so the VM will need the enablement package
 }
 if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
-if ($Step -in 'All', 'Disk') { New-ScanDisk $esd | Out-Null }
+if ($Step -in 'All', 'Disk') { New-ScanDisk $esd $insiderImage | Out-Null }
 if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan') {
     Start-ScanVM
     $script:VmSession = Wait-ScanVM
