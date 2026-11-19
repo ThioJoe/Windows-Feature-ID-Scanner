@@ -881,8 +881,9 @@ function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
 
 function Add-InsiderApps($image, [string]$winRoot) {
     # The apps a new installation has, which Microsoft's images come with but the update has as separate packages (Get-InsiderImage):
-    # each provisioned with DISM, with the frameworks it requires and its license, from the download folder, where a bundle's packages
-    # are next to it. One that can't be provisioned is noted in the build's data (Add-ScanNotes), as a Store update that fails is.
+    # each provisioned with DISM, with the frameworks it requires and its license, from its folder in the download folder, where its
+    # files are as its database places them (a bundle's packages next to it). One that can't be provisioned is noted in the build's
+    # data (Add-ScanNotes), as a Store update that fails is.
     $licenses = Join-Path $WorkDir 'insider-licenses'
     New-Item -ItemType Directory -Force $licenses | Out-Null
     $apps = @($image.apps.apps)
@@ -917,26 +918,29 @@ function Install-InsiderBuild {
     # installed with DISM, as a released build's are: the cumulative update, with the checkpoint cumulative update it builds on in the
     # same folder, then after a restart the enablement package that gives the build the channel's build number, and the build's .NET
     # Framework update. The VM isn't enrolled in the Insider program; flight signing, which the build is signed for, is on (Set-InsiderImage).
+    # A build whose update has no cumulative update (Future Platforms' builds are whole builds) is its image already, so only the .NET
+    # Framework update is installed.
     $file = Join-Path $WorkDir 'insider\image.json'
     if (-not (Test-Path $file)) { throw "No ${file}: the VM has to be made from the Insider build's own image (-Step Disk with -InsiderChannel)" }
     $image = Get-Content $file -Raw | ConvertFrom-Json
+    $packages = @($image.packages)
+    $cumulative = $packages | Where-Object role -eq 'cumulative' | Select-Object -First 1
     $build = (Get-VmBuild).Split(' ')[0]
-    if ($build -eq $image.build) {
+    if ($cumulative -and $build -eq $image.build) {
         Log "The VM is at build $build already"
         return
     }
-    $packages = @($image.packages)
-    $cumulative = $packages | Where-Object role -eq 'cumulative' | Select-Object -First 1
-    if (-not $cumulative) { throw "The $InsiderChannel channel's update has no cumulative update" }
-    $result = Invoke-VmTask 'ScanInsiderLCU' -timeoutMinutes 150 -script (@'
+    if ($cumulative) {
+        $result = Invoke-VmTask 'ScanInsiderLCU' -timeoutMinutes 150 -script (@'
 Write-Log 'installing __FILE__ with DISM'
 & dism.exe /English /Online /Add-Package "/PackagePath:C:\scan-updates\__FILE__" /NoRestart | Select-Object -Last 4 | ForEach-Object { Write-Log $_ }
 Write-Result $LASTEXITCODE
 '@).Replace('__FILE__', $cumulative.name)
-    if ($result -notin '0', '3010') { throw "Installing the cumulative update $($cumulative.name) failed: $result" }  # 3010: done, restart needed
-    Restart-ScanVM
-    Set-VmNetwork
-    Log "VM build after the cumulative update: $(Get-VmBuild)"
+        if ($result -notin '0', '3010') { throw "Installing the cumulative update $($cumulative.name) failed: $result" }  # 3010: done, restart needed
+        Restart-ScanVM
+        Set-VmNetwork
+        Log "VM build after the cumulative update: $(Get-VmBuild)"
+    }
 
     # Then the enablement package and the .NET Framework update, which take effect with a restart
     $others = @($packages | Where-Object { $_.role -in 'enablement', 'dotnet' } | ForEach-Object { $_.name })
@@ -1226,12 +1230,31 @@ try {
     $dismCode = $LASTEXITCODE
     $dism | Where-Object { $_.Trim() } | Select-Object -Last 2 | ForEach-Object { Write-Log $_.Trim() }
     Write-Log 'sfc /verifyonly'
+    $cbsLog = 'C:\Windows\Logs\CBS\CBS.log'
+    $start = @(Get-Content $cbsLog -ErrorAction SilentlyContinue).Count
     $sfc = ((& sfc.exe /verifyonly) -join "`n") -replace "`0", ''  # sfc writes UTF-16
     $sfcCode = $LASTEXITCODE
     $sfc -split "`n" | Where-Object { $_.Trim() } | Select-Object -Last 2 | ForEach-Object { Write-Log $_.Trim() }
     $sfcOk = $sfc -match 'did not find any integrity violations'
-    $details = if ($sfcOk) { @() } else { @(Select-String -Path C:\Windows\Logs\CBS\CBS.log -Pattern '\[SR\]' | Select-Object -Last 50 | ForEach-Object { $_.Line }) }
-    Write-Result (@{ dism = (($dism -join "`n") -match 'No component store corruption detected'); dismCode = $dismCode; sfc = $sfcOk; sfcCode = $sfcCode; sfcDetails = $details } | ConvertTo-Json -Compress)
+    $details = @(); $variants = @()
+    if (-not $sfcOk) {
+        # What sfc found, from its lines in the CBS log (all of it if the log was started anew meanwhile)
+        $log = @(Get-Content $cbsLog)
+        if ($log.Count -gt $start) { $log = @($log | Select-Object -Skip $start) }
+        $details = @($log | Where-Object { $_ -match '\[SR\] (Repairing file|Cannot repair)|Hashes for file member|^\s+(Expected|Actual):' })
+        $flagged = @($details | ForEach-Object { if ($_ -match '\[SR\] Repairing file \\\?\?\\(.+?) from store') { $Matches[1] -replace '\\\\', '\' } } | Select-Object -Unique)
+        # Windows can run a file as a variant of it that the build has next to it: after its first start, a Future Platforms build
+        # runs eBPF's <name>_preview files as <name> (System32\ebpfapi.dll is then ebpfapi_preview.dll), while the component store
+        # has <name> as it was. A file that's the same as its _preview variant, which sfc doesn't flag, isn't a violation.
+        $variants = @($flagged | Where-Object {
+            $variant = Join-Path (Split-Path $_) ([IO.Path]::GetFileNameWithoutExtension($_) + '_preview' + [IO.Path]::GetExtension($_))
+            (Test-Path $variant) -and $variant -notin $flagged -and (Get-FileHash $_).Hash -eq (Get-FileHash $variant).Hash
+        })
+        if ($flagged -and $variants.Count -eq $flagged.Count -and -not ($details -match 'Cannot repair')) { $sfcOk = $true }
+        if (-not $details) { $details = @(Select-String -Path $cbsLog -Pattern '\[SR\]' | Select-Object -Last 50 | ForEach-Object { $_.Line }) }
+        $details = @($details | Select-Object -First 50)
+    }
+    Write-Result (@{ dism = (($dism -join "`n") -match 'No component store corruption detected'); dismCode = $dismCode; sfc = $sfcOk; sfcCode = $sfcCode; sfcDetails = $details; sfcVariants = $variants } | ConvertTo-Json -Compress)
 } catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
 '@) | ConvertFrom-Json
 
@@ -1282,6 +1305,7 @@ try {
     else {
         if (-not $health.dism) { $failures += "DISM /ScanHealth found problems (exit code $($health.dismCode))" }
         if (-not $health.sfc) { $failures += "sfc /verifyonly found integrity violations: $($health.sfcDetails -join ' | ')" }
+        elseif ($health.sfcVariants) { Log "sfc: these files are the _preview variants the build has next to them, as Windows runs them: $($health.sfcVariants -join ', ')" }
     }
     if ($files -and $files.exitCode -ne '0') { $failures += "the file check found problems or failed ($($files.exitCode)); see verification-files.json" }
     if ($failures) { throw "The VM's Windows isn't what build $build should be: $($failures -join '; ')" }

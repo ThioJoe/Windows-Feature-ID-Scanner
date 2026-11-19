@@ -19,7 +19,7 @@
 #     --all                                scans each version's newest build even if data/ has it
 #     --builds 26300.9725 26200.9711       scans these builds (even if data/ has them) instead
 #     --insider                            also schedules the Insider channels' builds (not used yet: scan-in-vm.ps1 can install the
-#                                          Beta and Experimental channels' builds, not yet the other channels')
+#                                          builds of Beta and Experimental, and of their 26H1 and Future Platforms cores)
 #
 # A version's builds come with its monthly security update (B, the second week), the optional preview (D, the fourth week) and
 # out-of-band releases (OOB); each is a different build, so each is scanned. Every build newer than the version's newest one in
@@ -488,7 +488,7 @@ def summary_markdown(scan, versions, channels, have, scan_versions, sources, ins
     for c in channels:
         r = c['releases'][0]
         lines.append(f"| {c['channel']} | {' / '.join(r['builds'])} | {r['date'] or '?'} | {in_data(r['build'])} |")
-    lines += ['', "Insider scan scheduling is enabled, but the VM can only install the Beta and Experimental channels' builds so far." if insider else
+    lines += ['', "Insider scan scheduling is enabled." if insider else
               "Insider builds aren't scanned yet. "
               'Scan scheduling is currently disabled.']
     lines += ['', '### Sources', ''] + [f'- {s}' for s in sources]
@@ -504,7 +504,7 @@ def main():
     parser.add_argument('--data-dir', default='data')
     parser.add_argument('--builds', nargs='*', default=[], help='Scan these builds instead, even if data/ has them')
     parser.add_argument('--all', action='store_true', help="Scan each version's newest build even if data/ has it (to scan it again)")
-    parser.add_argument('--insider', action='store_true', help="Also schedule scans of Insider channel builds (not used yet: the VM can install the Beta and Experimental channels' builds)")
+    parser.add_argument('--insider', action='store_true', help="Also schedule scans of Insider channel builds (not used yet)")
     parser.add_argument('--releases', help='Write the newest builds of every version and Insider channel to this file')
     parser.add_argument('--summary', help='Add a Markdown summary to this file')
     parser.add_argument('--page-file', help='Read the release information page (HTML) from this file instead of downloading it')

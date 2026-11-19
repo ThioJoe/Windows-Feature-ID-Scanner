@@ -282,9 +282,11 @@ def package_roles(client, update):
     """{KB: role} of the update's packages, from the names of the component databases in its AggregatedMetadata.cab, which say what
     each package is: EKBUpdateCompDB_<KB> (an enablement package), outer.AggregatedMetadata_<KB> (the cumulative update, or a
     checkpoint cumulative update it builds on), SafeOSDUCompDB_<KB> and SetupDUCompDB_<KB> (the Safe OS and Setup dynamic updates).
-    DotNetServicingCompDB is the .NET Framework update, under the key 'dotnet'."""
+    DotNetServicingCompDB is the .NET Framework update, under the key 'dotnet'. Some builds' metadata has the names in lowercase with a
+    leading underscore (_dotnetservicingcompdb.xml.cab)."""
     roles = {}
     for n in cab_names(metadata_cab(client, update)):
+        n = n.lstrip('_')
         m = re.match(r'(?i)(EKBUpdateCompDB|outer\.AggregatedMetadata|SafeOSDUCompDB|SetupDUCompDB)_(KB\d+)\.', n)
         if m:
             kind = m.group(1).lower()
@@ -300,9 +302,10 @@ def packages(client, update, architecture='x64'):
     checkpoint cumulative updates (DISM installs the ones a device still needs when they're in the cumulative update's folder), the
     cumulative update, the enablement package that gives the build its number, and the .NET Framework update. Each has its role
     (package_roles) and KB. Left out: the Safe OS dynamic update (WinRE's) and the Setup dynamic update (for Windows Setup), and the
-    images and packages for new installations and other Windows cores, which are most of the update."""
+    images and packages for new installations and other Windows cores, which are most of the update. An update without a KB is a
+    whole build (Future Platforms' builds are): a new installation's image is the build, so the .NET Framework update is all there is."""
     roles = package_roles(client, update)
-    if update['kb'] not in roles:
+    if update['kb'] and update['kb'] not in roles:
         raise RuntimeError(f"the update's metadata doesn't have its cumulative update {update['kb']}: it isn't one a device on the same "
                            f"Windows core installs ({', '.join(f'{kb} {role}' for kb, role in sorted(roles.items())) or 'nothing'})")
     wanted = {'checkpoint': 'msu', 'cumulative': 'msu', 'enablement': 'cab'}
@@ -348,19 +351,22 @@ def image_files(client, update, folder, edition='professional', language='en-us'
     root = compdb(meta, f'DesktopTargetCompDB_{edition}_{language}.xml.cab', folder)
     by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
     ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
-    files, missing = {}, []
+    files, missing, image = {}, [], {}
     for item in root.iterfind('.//c:Packages/c:Package/c:Payload/c:PayloadItem', ns):
         f = by_sha256.get(base64.b64decode(item.get('PayloadHash')).hex())
         if f:
             files[f['sha1']] = f
+            # The image is MetadataESD\<edition>_<language>.esd, a file the update names <edition>_<language>.esd or with a MetadataESD_ prefix
+            if item.get('Path', '').lower().endswith(f'\\{edition}_{language}.esd'):
+                image[f['sha1']] = f
         else:
             missing.append(item.get('Path'))
     if missing:
         raise RuntimeError(f"the update has no file for {len(missing)} of the {edition} {language} payloads: {', '.join(missing[:5])}")
     files = sorted(files.values(), key=lambda f: f['name'].lower())
-    image = [f for f in files if f['name'].lower() == f'{edition}_{language}.esd']
+    image = list(image.values())
     if len(image) != 1:
-        raise RuntimeError(f'the {edition} {language} payloads have {len(image)} files named {edition}_{language}.esd')
+        raise RuntimeError(f'the {edition} {language} payloads have {len(image)} files for {edition}_{language}.esd')
     apps = [f.get('FeatureID') for f in root.iterfind('c:Features/c:Feature/c:Dependencies/c:Feature', ns) if f.get('Group') == 'PreinstalledApps']
     return {'edition': edition, 'language': language, 'image': image[0]['name'], 'metadata': meta,
             'references': [f['name'] for f in files if re.search(r'(?i)\.(esd|wim)$', f['name'])],
@@ -368,10 +374,11 @@ def image_files(client, update, folder, edition='professional', language='en-us'
 
 
 def compdb(meta, name, folder):
-    """A component database from the AggregatedMetadata.cab at meta, by its name there (case doesn't matter), parsed. It's a cabinet
-    inside the metadata cabinet; the file in it has the same name."""
+    """A component database from the AggregatedMetadata.cab at meta, by its name there (case doesn't matter, and some builds' metadata
+    has the names in lowercase with a leading underscore), parsed. It's a cabinet inside the metadata cabinet, with the database as its
+    one file, which expand.exe names after the cabinet."""
     with open(meta, 'rb') as f:
-        member = next((n for n in cab_names(f.read()) if n.lower() == name.lower()), None)
+        member = next((n for n in cab_names(f.read()) if n.lower().lstrip('_') == name.lower()), None)
     if not member:
         raise RuntimeError(f'the update has no {name}')
     inner = expand_member(meta, member, os.path.join(folder, 'compdb-cab'))
@@ -379,28 +386,31 @@ def compdb(meta, name, folder):
 
 
 def app_files(update, meta, folder, wanted):
-    """The apps a new installation of the build has, which the update has as separate packages: wanted is the FeatureIDs of the apps
+    r"""The apps a new installation of the build has, which the update has as separate packages: wanted is the FeatureIDs of the apps
     the edition has (image_files), and the app database (DesktopTargetCompDB_App_Neutral in AggregatedMetadata.cab) has a feature for
     each app in the PreinstalledApps group, which has the file to provision (a bundle, whose packages are separate files that go next
     to it, or the app's own package), the frameworks it requires (features of their own) and its license. Payloads the update has no
-    file for (other architectures' packages) are left out. Returns {'apps': [{'id', 'type', 'main', 'dependencies', 'license'}],
-    'frameworks': {id: [files]}, 'files': [file dicts]}."""
+    file for (other architectures' packages) are left out. Each app's files go in a folder of their own, apps\<FeatureID>, at their
+    places in the database relative to the file to provision (a bundle's stub packages are in AppxMetadata\Stub, and some updates
+    name the files with their folders in front, such as IPA_Weather_...): 'links' has each one's path there and its name in the update
+    (link_files makes them). Returns {'apps': [{'id', 'type', 'main', 'dependencies', 'license'}], 'frameworks': {id: [files]},
+    'files': [file dicts], 'links': {path: name}}, where main is the path in the download folder of the file to provision."""
     ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
     root = compdb(meta, 'DesktopTargetCompDB_App_Neutral.xml.cab', folder)
     by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
-    payloads = {}  # Package ID: its files in the update
+    payloads = {}  # Package ID: [(its payload's path in the database, its file in the update)]
     for package in root.iterfind('c:Packages/c:Package', ns):
-        found = [by_sha256.get(base64.b64decode(i.get('PayloadHash')).hex()) for i in package.iterfind('c:Payload/c:PayloadItem', ns)]
-        payloads[package.get('ID')] = [f for f in found if f]
+        found = [(i.get('Path'), by_sha256.get(base64.b64decode(i.get('PayloadHash')).hex())) for i in package.iterfind('c:Payload/c:PayloadItem', ns)]
+        payloads[package.get('ID')] = [(path, f) for path, f in found if f]
     features = {f.get('FeatureID'): f for f in root.iterfind('c:Features/c:Feature', ns) if f.get('Group') == 'PreinstalledApps'}
     missing = [i for i in wanted if i not in features]
     if missing:
         raise RuntimeError(f"the app database has no feature for {', '.join(missing)}")
-    apps, frameworks, files = [], {}, {}
+    apps, frameworks, files, links = [], {}, {}, {}
 
     def own_files(feature_id):
-        own = [f for p in features[feature_id].iterfind('c:Packages/c:Package', ns) for f in payloads.get(p.get('ID'), [])]
-        for f in own:
+        own = [pf for p in features[feature_id].iterfind('c:Packages/c:Package', ns) for pf in payloads.get(p.get('ID'), [])]
+        for _, f in own:
             files[f['sha1']] = f
         return own
 
@@ -409,21 +419,37 @@ def app_files(update, meta, folder, wanted):
         own = own_files(feature_id)
         if not own:
             continue  # Nothing in the update for this architecture
-        bundles = [f for f in own if re.search(r'(?i)\.(msix|appx)bundle$', f['name'])]
-        packages = [f for f in own if not re.search(r'(?i)[._]split\.|language-|scale-|\.(msix|appx)bundle$', f['name'])]
+        bundles = [(p, f) for p, f in own if re.search(r'(?i)\.(msix|appx)bundle$', f['name'])]
+        packages = [(p, f) for p, f in own if not re.search(r'(?i)[._]split\.|language-|scale-|\.(msix|appx)bundle$', f['name'])]
         main = bundles or packages
         if len(main) != 1:
-            raise RuntimeError(f"the app {feature_id} has {len(main)} files that could be its package: {[f['name'] for f in main]}")
+            raise RuntimeError(f"the app {feature_id} has {len(main)} files that could be its package: {[f['name'] for _, f in main]}")
+        base = main[0][0].rsplit('\\', 1)[0] + '\\'
+        outside = [p for p, _ in own if not p.lower().startswith(base.lower())]
+        if outside:
+            raise RuntimeError(f"the app {feature_id} has files outside the folder of {main[0][0]}: {outside[:3]}")
+        for p, f in own:
+            links['apps\\%s\\%s' % (feature_id, p[len(base):])] = f['name']
         dependencies = [d.get('FeatureID') for d in feature.iterfind('c:Dependencies/c:Feature', ns)]
         for d in dependencies:
             if d not in features:
                 raise RuntimeError(f'the app {feature_id} requires {d}, which the app database has no feature for')
             if d not in frameworks:
-                frameworks[d] = sorted({f['name'] for f in own_files(d)})
+                frameworks[d] = sorted({f['name'] for _, f in own_files(d)})
         license = feature.find("c:CustomInformation/c:CustomInfo[@Key='licensedata']", ns)
-        apps.append({'id': feature_id, 'type': feature.get('Type'), 'main': main[0]['name'], 'dependencies': dependencies,
-                     'license': license.text.strip() if license is not None and license.text else None})
-    return {'apps': apps, 'frameworks': frameworks, 'files': sorted(files.values(), key=lambda f: f['name'].lower())}
+        apps.append({'id': feature_id, 'type': feature.get('Type'), 'main': 'apps\\%s\\%s' % (feature_id, main[0][0][len(base):]),
+                     'dependencies': dependencies, 'license': license.text.strip() if license is not None and license.text else None})
+    return {'apps': apps, 'frameworks': frameworks, 'files': sorted(files.values(), key=lambda f: f['name'].lower()), 'links': links}
+
+
+def link_files(links, folder):
+    """Makes the links app_files lists: {path in folder: name of a downloaded file in folder}, as hard links (the same volume)."""
+    for path, name in links.items():
+        target = os.path.join(folder, *path.split('\\'))
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        if os.path.exists(target):
+            os.remove(target)
+        os.link(os.path.join(folder, name), target)
 
 
 def with_links(client, update, files):
@@ -538,6 +564,7 @@ def main():
             apps = app_files(update, image['metadata'], args.out, image['apps'])
             log(f"apps: {len(apps['apps'])}, with {len(apps['frameworks'])} frameworks ({sum(f['size'] for f in apps['files']) / 1e9:.1f} GB)")
             download(client, update, image['files'] + apps['files'] + picked, args.out)
+            link_files(apps['links'], args.out)
             result['image'] = {k: image[k] for k in ('edition', 'language', 'image', 'references', 'cabs')}
             result['apps'] = {k: apps[k] for k in ('apps', 'frameworks')}
             result['folder'] = os.path.abspath(args.out)
