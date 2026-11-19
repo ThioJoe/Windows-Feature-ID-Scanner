@@ -2,7 +2,8 @@
 # Scans x64 Windows 11 builds inside a Hyper-V virtual machine on an x64 runner, so the build scanned doesn't depend on what the
 # runner image has. The VM is built entirely from Microsoft's servers (see scan-in-vm.ps1). A daily check (check-windows-builds.py)
 # finds the builds Microsoft has released for every Windows 11 version and Windows Insider channel, records them in
-# data/releases.json for the site, and starts a scan for every build of the versions the VM can be built for that isn't in data/ yet.
+# data/releases.json for the site, and starts a scan for every build of the versions the VM can be built for that isn't in data/ yet,
+# and for the newest build of each Insider channel (except Release Preview's, which become the versions' updates).
 name: Windows VM Feature Scanner
 
 on:
@@ -26,10 +27,10 @@ concurrency:
   group: windows-scanner
   cancel-in-progress: false
 
-# Insider scans aren't enabled yet: while the WINDOWS_INSIDER_DEVICE secret (a placeholder) is empty, Insider builds are listed but
-# not scheduled.
+# Insider builds are scanned unless the repository variable INSIDER_SCANS is 'false' (Settings > Secrets and variables > Actions >
+# Variables); they're listed either way.
 env:
-  INSIDER_DEVICE: ${{ secrets.WINDOWS_INSIDER_DEVICE }}
+  INSIDER: ${{ vars.INSIDER_SCANS != 'false' && '--insider' || '' }}
 
 jobs:
   check:
@@ -52,7 +53,7 @@ jobs:
           VERSIONS: ${{ inputs.versions }}
           BUILDS: ${{ inputs.builds }}
           FORCE: ${{ inputs.force && '--all' || '' }}
-        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE ${INSIDER_DEVICE:+--insider} --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
+        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
 
       # The list only changes when Microsoft releases something
       - name: Commit the list of released builds

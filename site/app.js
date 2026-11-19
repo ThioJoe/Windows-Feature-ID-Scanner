@@ -1022,7 +1022,7 @@ async function renderReleases() {
     `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
     "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
     (releases.insider.some((c) => c.scannedInVm)
-      ? "Insider builds are scanned in a virtual machine made from each build's own files from Windows Update, except Release Preview's, which are scanned as the updates they become.</p>"
+      ? "Each Insider channel's newest build is scanned in a virtual machine made from the build's own files from Windows Update, which only has a channel's newest build; Release Preview's builds are scanned as the updates they become.</p>"
       : 'Insider builds are not scanned yet.</p>');
 
   html += '<h2>Windows 11</h2><p class="muted legend">Update is Microsoft\'s label for the release: the year and month, then ' +
@@ -1056,7 +1056,8 @@ async function renderReleases() {
     const listed = new Set(c.releases.map((r) => r.build));
     const scanned = index.builds.filter((b) => b.architecture === 'AMD64' && listed.has(b.build)).sort(compareVersions).pop();
     c.releases.forEach((r, i) => {
-      const due = c.scannedInVm && (scanned ? compareVersions(r, scanned) > 0 : i === 0);
+      // Only a channel's newest build can be scanned (Windows Update has no other)
+      const due = c.scannedInVm && i === 0 && (!scanned || compareVersions(r, scanned) > 0);
       html += '<tr>' + (i === 0 ? groupCell(c.channel, c.releases.length, n === releases.insider.length - 1) : '') +
         `<td class="id">${esc(r.builds.join(' / '))}</td><td>${esc(r.date || '')}</td>` +
         `<td><a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a></td>` +

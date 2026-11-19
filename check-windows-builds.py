@@ -1,6 +1,7 @@
 # check-windows-builds.py
 # Finds the Windows 11 builds Microsoft has released, for every version and every Windows Insider channel, and which of them need a
-# scan: the builds of the versions scanned in the VM (scan-in-vm.ps1) that data/ doesn't have yet.
+# scan: the builds of the versions scanned in the VM (scan-in-vm.ps1) that data/ doesn't have yet, and with --insider the newest
+# build of each Insider channel.
 #
 # Sources, all Microsoft's. Each is read every time, so they can be checked against each other; a page's HTML is only read when
 # the Microsoft Learn API (see microsoft_learn.py), which gives the same page as Markdown, fails:
@@ -18,13 +19,14 @@
 #     --summary "$GITHUB_STEP_SUMMARY"     writes all of it as Markdown
 #     --all                                scans each version's newest build even if data/ has it
 #     --builds 26300.9725 26200.9711       scans these builds (even if data/ has them) instead
-#     --insider                            also schedules the Insider channels' builds (not used yet: scan-in-vm.ps1 can install the
-#                                          builds of Beta and Experimental, and of their 26H1 and Future Platforms cores)
+#     --insider                            also schedules the newest build of each Insider channel, except Release Preview's
 #
 # A version's builds come with its monthly security update (B, the second week), the optional preview (D, the fourth week) and
 # out-of-band releases (OOB); each is a different build, so each is scanned. Every build newer than the version's newest one in
 # data/ counts, so none is missed when two come out between checks (only the newest few when many are missing; --builds takes the
-# rest). A version with no build in data/ yet starts at its newest.
+# rest). A version with no build in data/ yet starts at its newest. An Insider channel's newest build is the only one Windows Update
+# gives (scan-in-vm.ps1 gets it there), so that's the one scanned, unless data/ has it or a newer build of the channel; a build that
+# came out and was replaced between two checks isn't.
 
 import argparse
 import datetime
@@ -424,6 +426,16 @@ def new_builds(name, rows, done, rescan):
     return new
 
 
+def newest_insider_build(channel, done, rescan):
+    """An Insider channel's build to scan, as a list: its newest, the only one Windows Update gives, unless data/ has it or a newer
+    build of the channel (or with rescan)."""
+    newest = channel['releases'][0]
+    scanned = [version_tuple(r['build']) for r in channel['releases'] if r['build'] in done]
+    if rescan or not scanned or version_tuple(newest['build']) > max(scanned):
+        return [insider_row(channel, newest['build'], newest['date'])]
+    return []
+
+
 def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted, insider):
     """The builds to scan, each with its version (or Insider channel), KB and so on, ordered by update so builds that share their
     binaries follow each other."""
@@ -440,6 +452,9 @@ def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted
                     raise RuntimeError(f"build {build} is a Release Preview build, which is scanned as the update it becomes")
                 if not insider:
                     raise RuntimeError(f"build {build} is a Windows Insider build ({channel['channel']}), and Insider scans are off")
+                if r is not channel['releases'][0]:
+                    raise RuntimeError(f"build {build} isn't the newest build of Insider {channel['channel']} ({channel['releases'][0]['build']}), "
+                                       "and Windows Update only gives a channel's newest build")
                 row = insider_row(channel, build, r['date'])
             picks.append(row)
     else:
@@ -450,7 +465,7 @@ def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted
             picks += new_builds(version, info['releases'], done, rescan)
         if insider:
             for channel in filter(scannable, channels):
-                picks += [insider_row(channel, r['build'], r['date']) for r in new_builds('Insider ' + channel['channel'], channel['releases'], done, rescan)]
+                picks += newest_insider_build(channel, done, rescan)
     return [dict(r, key=f"{r['build']}-{arch}", scanned=r['build'] in done)
             for r in sorted(picks, key=lambda r: (version_tuple(r['build'])[1], version_tuple(r['build'])[0]))]
 
@@ -488,9 +503,8 @@ def summary_markdown(scan, versions, channels, have, scan_versions, sources, ins
     for c in channels:
         r = c['releases'][0]
         lines.append(f"| {c['channel']} | {' / '.join(r['builds'])} | {r['date'] or '?'} | {in_data(r['build'])} |")
-    lines += ['', "Insider scan scheduling is enabled." if insider else
-              "Insider builds aren't scanned yet. "
-              'Scan scheduling is currently disabled.']
+    lines += ['', "Insider scan scheduling is enabled: each channel's newest build is scanned, except Release Preview's." if insider else
+              'Insider scans are off.']
     lines += ['', '### Sources', ''] + [f'- {s}' for s in sources]
     if warnings:
         lines += ['', '### Warnings', ''] + [f'- {w}' for w in warnings]
@@ -504,7 +518,7 @@ def main():
     parser.add_argument('--data-dir', default='data')
     parser.add_argument('--builds', nargs='*', default=[], help='Scan these builds instead, even if data/ has them')
     parser.add_argument('--all', action='store_true', help="Scan each version's newest build even if data/ has it (to scan it again)")
-    parser.add_argument('--insider', action='store_true', help="Also schedule scans of Insider channel builds (not used yet)")
+    parser.add_argument('--insider', action='store_true', help="Also schedule a scan of each Insider channel's newest build, except Release Preview's")
     parser.add_argument('--releases', help='Write the newest builds of every version and Insider channel to this file')
     parser.add_argument('--summary', help='Add a Markdown summary to this file')
     parser.add_argument('--page-file', help='Read the release information page (HTML) from this file instead of downloading it')
@@ -535,7 +549,7 @@ def main():
     for r in scan:
         log(f"To scan: {r['key']} ({'Insider ' + r['channel'] if r.get('channel') else r['version'] + ', ' + r['kb']}){' again' if r['scanned'] else ''}")
     if not args.insider:
-            log('Insider scans are off (not enabled yet)')
+            log('Insider scans are off')
     if not scan:
         log('Nothing to scan')
 
