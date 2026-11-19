@@ -17,7 +17,7 @@
 #     --json-out offer.json                     also writes it to this file
 #   python windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
 #   python windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
-#   python windows_update.py image --channel Experimental --out <folder>              # and a new installation's files (Windows only)
+#   python windows_update.py image --channel Experimental --out <folder>              # and a new installation's files and apps (Windows only)
 #
 # The download links last from 10 minutes (small files) to several hours (the cumulative update), so they're asked for right before
 # the downloads. They're plain HTTP, as Windows Update's are; each file is checked against the SHA-256 in the update's metadata, which
@@ -339,23 +339,17 @@ def image_files(client, update, folder, edition='professional', language='en-us'
     (DesktopTargetCompDB_<edition>_<language> in AggregatedMetadata.cab): the edition's image (<edition>_<language>.esd, whose last
     image is the installation's), the package ESDs and WIMs that hold the files the image refers to but doesn't contain, and the
     packages that come as cabs (the Features on Demand an installation has, and the like), whose files the image refers to as well.
-    Each payload is matched to the update's files by the SHA-256 the database gives it."""
+    Each payload is matched to the update's files by the SHA-256 the database gives it. The edition's feature also names the apps an
+    installation of it has, which the update has as separate packages (app_files)."""
     os.makedirs(folder, exist_ok=True)
-    data = metadata_cab(client, update)
     meta = os.path.join(folder, 'AggregatedMetadata.cab')
     with open(meta, 'wb') as f:
-        f.write(data)
-    wanted = f'desktoptargetcompdb_{edition}_{language}.xml.cab'.lower()
-    member = next((n for n in cab_names(data) if n.lower() == wanted), None)
-    if not member:
-        raise RuntimeError(f'the update has no component database for {edition} {language}')
-    # The database is a cabinet inside the metadata cabinet; the file in it has the same name
-    inner = expand_member(meta, member, os.path.join(folder, 'compdb-cab'))
-    xml_path = expand_member(inner, member, os.path.join(folder, 'compdb'))
+        f.write(metadata_cab(client, update))
+    root = compdb(meta, f'DesktopTargetCompDB_{edition}_{language}.xml.cab', folder)
     by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
     ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
     files, missing = {}, []
-    for item in ET.parse(xml_path).getroot().iterfind('.//c:Packages/c:Package/c:Payload/c:PayloadItem', ns):
+    for item in root.iterfind('.//c:Packages/c:Package/c:Payload/c:PayloadItem', ns):
         f = by_sha256.get(base64.b64decode(item.get('PayloadHash')).hex())
         if f:
             files[f['sha1']] = f
@@ -367,9 +361,69 @@ def image_files(client, update, folder, edition='professional', language='en-us'
     image = [f for f in files if f['name'].lower() == f'{edition}_{language}.esd']
     if len(image) != 1:
         raise RuntimeError(f'the {edition} {language} payloads have {len(image)} files named {edition}_{language}.esd')
-    return {'edition': edition, 'language': language, 'image': image[0]['name'],
+    apps = [f.get('FeatureID') for f in root.iterfind('c:Features/c:Feature/c:Dependencies/c:Feature', ns) if f.get('Group') == 'PreinstalledApps']
+    return {'edition': edition, 'language': language, 'image': image[0]['name'], 'metadata': meta,
             'references': [f['name'] for f in files if re.search(r'(?i)\.(esd|wim)$', f['name'])],
-            'cabs': [f['name'] for f in files if f['name'].lower().endswith('.cab')], 'files': files}
+            'cabs': [f['name'] for f in files if f['name'].lower().endswith('.cab')], 'files': files, 'apps': apps}
+
+
+def compdb(meta, name, folder):
+    """A component database from the AggregatedMetadata.cab at meta, by its name there (case doesn't matter), parsed. It's a cabinet
+    inside the metadata cabinet; the file in it has the same name."""
+    with open(meta, 'rb') as f:
+        member = next((n for n in cab_names(f.read()) if n.lower() == name.lower()), None)
+    if not member:
+        raise RuntimeError(f'the update has no {name}')
+    inner = expand_member(meta, member, os.path.join(folder, 'compdb-cab'))
+    return ET.parse(expand_member(inner, member, os.path.join(folder, 'compdb'))).getroot()
+
+
+def app_files(update, meta, folder, wanted):
+    """The apps a new installation of the build has, which the update has as separate packages: wanted is the FeatureIDs of the apps
+    the edition has (image_files), and the app database (DesktopTargetCompDB_App_Neutral in AggregatedMetadata.cab) has a feature for
+    each app in the PreinstalledApps group, which has the file to provision (a bundle, whose packages are separate files that go next
+    to it, or the app's own package), the frameworks it requires (features of their own) and its license. Payloads the update has no
+    file for (other architectures' packages) are left out. Returns {'apps': [{'id', 'type', 'main', 'dependencies', 'license'}],
+    'frameworks': {id: [files]}, 'files': [file dicts]}."""
+    ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
+    root = compdb(meta, 'DesktopTargetCompDB_App_Neutral.xml.cab', folder)
+    by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
+    payloads = {}  # Package ID: its files in the update
+    for package in root.iterfind('c:Packages/c:Package', ns):
+        found = [by_sha256.get(base64.b64decode(i.get('PayloadHash')).hex()) for i in package.iterfind('c:Payload/c:PayloadItem', ns)]
+        payloads[package.get('ID')] = [f for f in found if f]
+    features = {f.get('FeatureID'): f for f in root.iterfind('c:Features/c:Feature', ns) if f.get('Group') == 'PreinstalledApps'}
+    missing = [i for i in wanted if i not in features]
+    if missing:
+        raise RuntimeError(f"the app database has no feature for {', '.join(missing)}")
+    apps, frameworks, files = [], {}, {}
+
+    def own_files(feature_id):
+        own = [f for p in features[feature_id].iterfind('c:Packages/c:Package', ns) for f in payloads.get(p.get('ID'), [])]
+        for f in own:
+            files[f['sha1']] = f
+        return own
+
+    for feature_id in wanted:
+        feature = features[feature_id]
+        own = own_files(feature_id)
+        if not own:
+            continue  # Nothing in the update for this architecture
+        bundles = [f for f in own if re.search(r'(?i)\.(msix|appx)bundle$', f['name'])]
+        packages = [f for f in own if not re.search(r'(?i)[._]split\.|language-|scale-|\.(msix|appx)bundle$', f['name'])]
+        main = bundles or packages
+        if len(main) != 1:
+            raise RuntimeError(f"the app {feature_id} has {len(main)} files that could be its package: {[f['name'] for f in main]}")
+        dependencies = [d.get('FeatureID') for d in feature.iterfind('c:Dependencies/c:Feature', ns)]
+        for d in dependencies:
+            if d not in features:
+                raise RuntimeError(f'the app {feature_id} requires {d}, which the app database has no feature for')
+            if d not in frameworks:
+                frameworks[d] = sorted({f['name'] for f in own_files(d)})
+        license = feature.find("c:CustomInformation/c:CustomInfo[@Key='licensedata']", ns)
+        apps.append({'id': feature_id, 'type': feature.get('Type'), 'main': main[0]['name'], 'dependencies': dependencies,
+                     'license': license.text.strip() if license is not None and license.text else None})
+    return {'apps': apps, 'frameworks': frameworks, 'files': sorted(files.values(), key=lambda f: f['name'].lower())}
 
 
 def with_links(client, update, files):
@@ -437,7 +491,7 @@ def sha256_of(path):
 def main():
     parser = argparse.ArgumentParser(description="Ask Windows Update what it offers a device in a Windows Insider channel, and get the files.")
     parser.add_argument('action', choices=['offer', 'links', 'download', 'image'],
-                        help="image (Windows only): download a new installation's files and the packages that bring it to the build")
+                        help="image (Windows only): download a new installation's files and apps, and the packages that bring it to the build")
     parser.add_argument('--channel', required=True, help='An Insider channel, by its name in the release notes: ' + ', '.join(CHANNELS) + "; or 'retail'")
     parser.add_argument('--os-build', help="The build of the device asking, such as 26300.9711 (default: the start of the channel's Windows core)")
     parser.add_argument('--os-branch', help="The device's branch (from its BuildLabEx, such as ge_release): an error if the channel's builds are on another core")
@@ -481,8 +535,11 @@ def main():
             image = image_files(client, update, args.out, args.image_edition.lower(), args.language.lower())
             log(f"installation image: {image['image']}, with {len(image['references']) - 1} ESDs and WIMs and {len(image['cabs'])} cabs "
                 f"({sum(f['size'] for f in image['files']) / 1e9:.1f} GB)")
-            download(client, update, image['files'] + picked, args.out)
+            apps = app_files(update, image['metadata'], args.out, image['apps'])
+            log(f"apps: {len(apps['apps'])}, with {len(apps['frameworks'])} frameworks ({sum(f['size'] for f in apps['files']) / 1e9:.1f} GB)")
+            download(client, update, image['files'] + apps['files'] + picked, args.out)
             result['image'] = {k: image[k] for k in ('edition', 'language', 'image', 'references', 'cabs')}
+            result['apps'] = {k: apps[k] for k in ('apps', 'frameworks')}
             result['folder'] = os.path.abspath(args.out)
         result['packages'] = picked
     text = json.dumps(result, indent=1)

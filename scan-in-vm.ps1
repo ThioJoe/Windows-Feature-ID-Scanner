@@ -19,8 +19,9 @@
 #      A Windows Insider build (-InsiderChannel) is in neither catalog. Windows Update gives a channel's build to a request that
 #      describes a device in the channel, which windows_update.py makes the way Windows does, so nothing is enrolled. Its cumulative
 #      updates are built on the channels' own baseline, not a released build's, so the VM is made from the build's own installation
-#      image instead of the Media Creation Tool's (Get-InsiderImage), and installs the build's cumulative update and enablement package
-#      with DISM (Install-InsiderBuild), with flight signing on, as on any Insider PC.
+#      image instead of the Media Creation Tool's (Get-InsiderImage), with the apps the edition comes with (Add-InsiderApps), and
+#      installs the build's cumulative update and enablement package with DISM (Install-InsiderBuild), with flight signing on, as on
+#      any Insider PC.
 #   4. Windows Update installs whatever else it offers that doesn't change the build, and the Microsoft Store updates the apps that
 #      come with Windows (cumulative updates don't). What still can't be installed after retries is noted in the build's data.
 #   5. After a last restart, the VM is checked against what the build is supposed to be (Test-VmInstallation): Windows' servicing,
@@ -803,11 +804,11 @@ function Invoke-WindowsUpdatePy([string[]]$arguments) {
 
 function Get-InsiderImage {
     # The Insider build's own files, from Windows Update (windows_update.py image): a new installation's (the Pro edition image, the
-    # package ESDs and WIMs that hold the files it refers to, and the cabs of the features it has), and the packages that bring it to the
-    # build (the cumulative update with the checkpoint cumulative update it builds on, the enablement package and the .NET Framework
-    # update). The VM can't be made from a released build's image instead: the channels' cumulative updates are built on the channels'
-    # own baseline (ge_release_flt 26100.6, not 26100.1), which is why Microsoft's docs say a device joins a channel by an in-place
-    # upgrade. Returns what image.json in the download folder says.
+    # package ESDs and WIMs that hold the files it refers to, the cabs of the features it has, and its apps), and the packages that
+    # bring it to the build (the cumulative update with the checkpoint cumulative update it builds on, the enablement package and the
+    # .NET Framework update). The VM can't be made from a released build's image instead: the channels' cumulative updates are built
+    # on the channels' own baseline (ge_release_flt 26100.6, not 26100.1), which is why Microsoft's docs say a device joins a channel
+    # by an in-place upgrade. Returns what image.json in the download folder says.
     $folder = Join-Path $WorkDir 'insider'
     $file = Join-Path $folder 'image.json'
     $arguments = @('image', '--channel', $InsiderChannel, '--out', $folder, '--json-out', $file)
@@ -845,8 +846,8 @@ function Get-InsiderReferences($image) {
 }
 
 function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
-    # The rest of an Insider build's disk, once its image is applied: the target edition, flight signing, and the packages the VM installs
-    # once it's up (Install-InsiderBuild)
+    # The rest of an Insider build's disk, once its image is applied: the target edition, the apps, flight signing, and the packages
+    # the VM installs once it's up (Install-InsiderBuild)
     $current = (Get-WindowsEdition -Path $winRoot).Edition
     if ($current -ne $Edition) {
         # As Microsoft's business images are made from the Pro image: Enterprise is one of its target editions (DISM /Get-TargetEditions)
@@ -854,6 +855,7 @@ function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
         & dism.exe /English "/Image:$winRoot" "/Set-Edition:$Edition" | Select-Object -Last 1 | ForEach-Object { Log $_ }
         if ($LASTEXITCODE -ne 0) { throw "DISM couldn't change the edition to $Edition ($LASTEXITCODE)" }
     }
+    Add-InsiderApps $image $winRoot
     # Insider builds are signed with Microsoft's development certificates (Microsoft Development PCA 2014), which Windows only trusts with
     # flight signing on: Microsoft documents `bcdedit /set {bootmgr} flightsigning on` and `bcdedit /set flightsigning on` "to trust
     # Windows Insider Preview builds that are signed with certificates that are not trusted by default", and Insider PCs have it on.
@@ -875,6 +877,39 @@ function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
     New-Item -ItemType Directory -Force $updates | Out-Null
     foreach ($p in @($image.packages)) { Copy-Item (Join-Path $image.folder $p.name) $updates -Force }
     Log "The VM's disk has the build's packages: $((@($image.packages) | ForEach-Object { "$($_.role) $($_.kb)" }) -join ', ')"
+}
+
+function Add-InsiderApps($image, [string]$winRoot) {
+    # The apps a new installation has, which Microsoft's images come with but the update has as separate packages (Get-InsiderImage):
+    # each provisioned with DISM, with the frameworks it requires and its license, from the download folder, where a bundle's packages
+    # are next to it. One that can't be provisioned is noted in the build's data (Add-ScanNotes), as a Store update that fails is.
+    $licenses = Join-Path $WorkDir 'insider-licenses'
+    New-Item -ItemType Directory -Force $licenses | Out-Null
+    $apps = @($image.apps.apps)
+    Log "Provisioning the $($apps.Count) apps that come with the build"
+    $done = @(); $failed = @()
+    foreach ($app in $apps) {
+        $arguments = @("/Image:$winRoot", '/Add-ProvisionedAppxPackage', "/PackagePath:$(Join-Path $image.folder $app.main)", '/Region:all')
+        foreach ($dependency in @($app.dependencies)) {
+            foreach ($file in @($image.apps.frameworks.$dependency)) { if ($file) { $arguments += "/DependencyPackagePath:$(Join-Path $image.folder $file)" } }
+        }
+        if ($app.license) {
+            $license = Join-Path $licenses "$($app.id).xml"
+            Set-Content $license $app.license -Encoding UTF8
+            $arguments += "/LicensePath:$license"
+        } else {
+            $arguments += '/SkipLicense'
+        }
+        $output = @(& dism.exe /English @arguments)
+        if ($LASTEXITCODE -eq 0) {
+            $done += $app.id
+        } else {
+            $failed += "$($app.id) ($LASTEXITCODE)"
+            Log "  $($app.id) couldn't be provisioned ($LASTEXITCODE): $(($output | Where-Object { $_ -match 'Error|failed' } | Select-Object -First 2) -join ' ')"
+        }
+    }
+    Log "Provisioned $($done.Count) of $($apps.Count) apps$(if ($failed) { "; not: $($failed -join ', ')" })"
+    Save-Report 'insider-apps.json' @{ provisioned = $done; failed = $failed }
 }
 
 function Install-InsiderBuild {
@@ -1019,6 +1054,11 @@ function Add-ScanNotes {
         $r = Get-Content $wu -Raw | ConvertFrom-Json
         $left = @(@($r.notInstalled) | Where-Object { $_ })
         if ($left) { $notes += "Updates Windows Update offered that couldn't be installed: $($left -join '; ')" }
+    }
+    $apps = Join-Path $OutputDir 'insider-apps.json'
+    if (Test-Path $apps) {
+        $left = @(@((Get-Content $apps -Raw | ConvertFrom-Json).failed) | Where-Object { $_ })
+        if ($left) { $notes += "Apps that come with the build that couldn't be provisioned: $($left -join '; ')" }
     }
     $fields = @()
     if ($InsiderChannel) { $fields += '"insiderChannel": ' + (ConvertTo-Json $InsiderChannel -Compress) }
