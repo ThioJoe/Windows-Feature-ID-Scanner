@@ -398,10 +398,12 @@ function Get-VmBuild {
     }
 }
 
-function Restart-ScanVM {
+function Restart-ScanVM([switch]$AnyPending) {
     # Restarted from inside, so Windows finishes installing updates the way it does on any PC. Installing a cumulative update can take
     # more than one restart (Windows' servicing restarts the VM again by itself, even after it has signed in), so this waits until the
-    # VM has stayed up for a couple of minutes with no restart pending.
+    # VM has stayed up for a couple of minutes with no restart pending. With -AnyPending, only until it has stayed up: a restart that
+    # isn't for updates needn't wait for a restart Windows' servicing asks for (a VM fresh from the image can have one pending that
+    # nothing does).
     Log 'Restarting the VM'
     $before = Invoke-InVM -Retry { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
     try { Invoke-InVM { Restart-Computer -Force } } catch { }
@@ -423,7 +425,7 @@ function Restart-ScanVM {
             $stable = 0
             continue
         }
-        if ($state.Boot -le $before -or $state.Boot -ne $lastBoot -or $state.Pending) {
+        if ($state.Boot -le $before -or $state.Boot -ne $lastBoot -or ($state.Pending -and -not $AnyPending)) {
             $lastBoot = $state.Boot
             $stable = 0
             continue
@@ -1365,7 +1367,7 @@ function Invoke-TraceInVM {
 try { & C:\scan\trace-features.ps1 -Prepare *>&1 | ForEach-Object { Write-Log "$_" }; Write-Result 'ok' } catch { Write-Result "error $($_.Exception.Message)" }
 '@
         if ($prepared -ne 'ok') { throw $prepared }
-        Restart-ScanVM
+        Restart-ScanVM -AnyPending
         Set-VmNetwork
         $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 115 -script @'
 try {
