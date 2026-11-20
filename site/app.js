@@ -690,6 +690,14 @@ function featureDetail(build) {
     const template = `${root.kids.length > 1 ? 10 : 0}px ` + Array(columns).fill('max-content').join(' 30px ');
     return `<span class="req-tree" style="grid-template-columns: ${template}">${items.join('')}</span>`;
   };
+  // A feature's ID and those of every feature it requires, in the order the tree shows them
+  const withRequired = (id, ids = new Set()) => {
+    if (!ids.has(id)) {
+      ids.add(id);
+      for (const k of requiresOf(id)) withRequired(k, ids);
+    }
+    return ids;
+  };
   return async (row) => {
     const f = byId.get(row.id) || row;
     const parts = [];
@@ -709,7 +717,13 @@ function featureDetail(build) {
           ? `which ${causedBy.length > 1 ? 'are' : 'is'} disabled by default` : `whose default${causedBy.length > 1 ? 's aren\'t' : ' isn\'t'} known`) : '';
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
-    if ((f.requires || []).length) parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`);
+    if ((f.requires || []).length) {
+      // The IDs as ViVeTool's /id: takes them. Disabling what a feature requires would also turn off the other features that require it.
+      const ids = [...withRequired(f.id)];
+      parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`,
+        `<p class="req-copy"><button type="button" class="copy-ids" data-ids="${ids.join(',')}">Copy ${ids.length} IDs</button>` +
+        '<span class="muted">This feature and all it requires, comma-separated for ViVeTool /enable or /reset. To disable it, use only its own ID.</span></p>');
+    }
     if (requiredBy.has(f.id)) {
       // Grouped by how many columns each takes, then alphabetical (fitCells puts them in that order once it has measured them)
       const cell = (id) => `<span class="cell" data-name="${esc((byId.get(id) || {}).name || '')}" data-id="${id}">${link(id)}</span>`;
@@ -730,6 +744,29 @@ function featureDetail(build) {
     }
     return parts.join('') || '<p class="muted">Nothing more is known about this feature.</p>';
   };
+}
+
+// Copies the IDs of a feature panel's copy button (its data-ids), and says so on the button for a moment
+async function copyIds(button) {
+  const label = button.dataset.label || (button.dataset.label = button.textContent);
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(button.dataset.ids);
+    copied = true;
+  } catch (e) {
+    // Where the Clipboard API isn't available or allowed: the older way, from a selected text box
+    const area = document.createElement('textarea');
+    area.value = button.dataset.ids;
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    try { copied = document.execCommand('copy'); } catch (e2) { copied = false; }
+    area.remove();
+  }
+  button.textContent = copied ? 'Copied' : 'Couldn\'t copy';
+  clearTimeout(button.copyTimer);
+  button.copyTimer = setTimeout(() => { button.textContent = label; }, 1500);
 }
 
 // Names that don't come from the build's own symbols: [label, explanation]
@@ -1204,6 +1241,11 @@ async function init() {
   });
   for (const id of ['bld-select', 'bld-named', 'bld-store', 'bld-new', 'bld-details']) $(id).addEventListener('change', bld);
   $('bld-search').addEventListener('input', debounce(bld, 250));
+  // The copy buttons of feature panels, which are added and removed with the panels
+  document.addEventListener('click', (e) => {
+    const button = e.target.closest('button.copy-ids');
+    if (button) copyIds(button);
+  });
   document.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
     const v = a.dataset.view;
