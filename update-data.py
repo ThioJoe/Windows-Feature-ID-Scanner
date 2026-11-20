@@ -29,6 +29,8 @@ NUMERIC_NAME = re.compile(r'^(?:ID|FI)?\d+$')
 STORE_FIELDS = (('Priority', 'priority'), ('State', 'state'), ('Type', 'type'), ('Variant', 'variant'), ('PayloadKind', 'payloadKind'), ('Payload', 'payload'))
 SYMBOL_FIELDS = ('declaredIn', 'default', 'changeTime', 'requires')  # Copied from scan-symbols.py's output when present
 CHECK_DAYS = 60     # How long after a build's release catch-up-symbols.py keeps asking the symbol server for the PDBs its scan didn't get
+INSIDER_CHECK_DAYS = 14  # The same for an Insider build, which the channel's next build replaces in a week or two (the symbol cache keeps
+                         # the PDBs of the builds still checked, and an Insider build has thousands of its own)
 WARN_PENDING = 25   # Binaries with features whose symbols a scan didn't get, above which the run gets a warning. A scan normally has a few;
                     # one that runs before Microsoft has published an update's symbols has hundreds.
 
@@ -205,7 +207,8 @@ def add_build(data_dir, summary_path, symbols_path):
     # release. Those of binaries that had features in earlier versions mean features are only known from those versions (unverified).
     manifest = symbols.get('manifest')
     start = (release or {}).get('date') or (summary.get('timestamp') or '')[:10]
-    until = (datetime.date.fromisoformat(start) + datetime.timedelta(days=CHECK_DAYS)).isoformat() if start else None
+    days = INSIDER_CHECK_DAYS if summary.get('insiderChannel') else CHECK_DAYS
+    until = (datetime.date.fromisoformat(start) + datetime.timedelta(days=days)).isoformat() if start else None
     pending = [p for p in (manifest or {}).get('pdbs', {}).values() if p.get('fallbackFeatures')]
     if len(pending) >= WARN_PENDING:  # (The few of a normal scan, such as Store apps updated past their published symbols, only get their features marked)
         header['symbolsPending'] = {'binaries': len(pending), 'unverified': sum(1 for f in ordered if f.get('unverified')), 'until': until}

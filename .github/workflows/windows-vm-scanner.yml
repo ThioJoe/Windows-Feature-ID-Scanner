@@ -178,7 +178,7 @@ jobs:
           if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           # (A folder per scan's cache, though download-artifact can put a lone one straight in symbol-caches/)
           mapfile -t caches < <(find symbol-caches -type f -name symbol-cache-AMD64.json 2>/dev/null | sort)
-          if [ ${#caches[@]} -gt 0 ]; then python3 merge-symbol-caches.py --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
+          if [ ${#caches[@]} -gt 0 ]; then python3 merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data

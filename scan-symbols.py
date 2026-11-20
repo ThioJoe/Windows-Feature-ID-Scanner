@@ -1853,6 +1853,38 @@ def pick_name(names):
 def log(msg):
     print(msg, flush=True)
 
+def build_tuple(build):
+    return tuple(int(x) for x in build.split('.'))
+
+def scanned_build(manifest_path):
+    """The build a scan is of, such as 26300.10075: with --manifest, the build whose data/builds/<build>-<arch>/symbols.json it is;
+    otherwise this machine's (Windows only). None if it can't be told."""
+    if manifest_path:
+        m = re.match(r'(\d+\.\d+)-', os.path.basename(os.path.dirname(os.path.abspath(manifest_path))))
+        return m.group(1) if m else None
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\Windows NT\CurrentVersion') as k:
+            return '%s.%d' % (winreg.QueryValueEx(k, 'CurrentBuildNumber')[0], winreg.QueryValueEx(k, 'UBR')[0])
+    except (ImportError, OSError):
+        return None
+
+def earliest_build(a, b):
+    """The lower of two builds (either can be None): the first build a PDB was seen in."""
+    return min((x for x in (a, b) if x), key=build_tuple, default=None)
+
+def earlier_version(candidates, build):
+    """Of the cache entries (key, entry) for other versions of a binary, the one to take its features from when its own PDB can't be had:
+    the newest from this build or an earlier one, by the build each entry was first seen in. A later build's version can have code this
+    build hasn't (an Insider build of a newer core, scanned after a released build's update). Entries without their build, from before
+    the cache recorded it, count by when they were scanned, and only when no entry with a build qualifies."""
+    if build:
+        dated = [c for c in candidates if c[1].get('build') and build_tuple(c[1]['build']) <= build_tuple(build)]
+        if dated:
+            return max(dated, key=lambda c: (build_tuple(c[1]['build']), c[1].get('scanned', '')))
+        candidates = [c for c in candidates if not c[1].get('build')]
+    return max(candidates, key=lambda c: c[1].get('scanned', ''), default=None)
+
 def main():
     parser = argparse.ArgumentParser(description='Extract Windows feature names and IDs from public symbols.')
     parser.add_argument('--root', action='append', default=None, help='Directory to scan recursively (repeatable). Defaults to the Windows directories that ship features.')
@@ -1920,7 +1952,10 @@ def main():
                 store_modules[os.path.basename(path)] = component
         log('[scan] %d modules only in the component store, %d unique PDBs in all (%.0fs)' % (len(store_modules), len(by_pdb), time.time() - start))
 
-    # 2. Results cache
+    # 2. Results cache. Each PDB's entry has the build it was first seen in, so a build whose own PDB of a binary can't be had takes the
+    #    features of an earlier version, not a later build's (earlier_version)
+    build = scanned_build(args.manifest)
+    log('[scan] build: %s' % (build or 'unknown'))
     cache = {}
     if args.results_cache and os.path.exists(args.results_cache):
         try:
@@ -1996,7 +2031,11 @@ def main():
                 if image is None or image.pdb_key != pdb_key:
                     raise RuntimeError("the symbol server doesn't have the binary the build's scan found")
             features = extract_features(pdb_path, image)
-            entry = {'status': 'ok', 'scanned': today, 'modules': sorted({os.path.basename(i.path) for i in infos}), 'features': features}
+            entry = {'status': 'ok', 'scanned': today}
+            first = earliest_build((cached or {}).get('build'), build)
+            if first:
+                entry['build'] = first
+            entry.update({'modules': sorted({os.path.basename(i.path) for i in infos}), 'features': features})
             try:
                 entry['usage'] = analyze_usage(pdb_path, image, features, demangler)
             except Exception as e:  # A binary the analysis can't handle still keeps its features
@@ -2061,7 +2100,7 @@ def main():
     # 5. A binary whose PDB still couldn't be downloaded, or that the symbol server doesn't have (Microsoft can publish an update's symbols
     #    days after the update), keeps what's already known about it, so its features aren't dropped from this build. If this exact PDB was
     #    read before, the cache has its features (only the usage details the cache didn't keep are missing), and the cache keeps them too.
-    #    Otherwise it falls back to what the most recently scanned earlier version of the binary contained, marked unverified.
+    #    Otherwise it falls back to what the newest earlier version of the binary contained (earlier_version), marked unverified.
     restored = set()
     for key, result in list(results.items()):
         earlier = cache_before.get('%s/%s' % key)
@@ -2081,7 +2120,7 @@ def main():
         # The PDB name alone isn't enough: different binaries can share one (smartscreen.exe and smartscreen.dll both use smartscreen.pdb)
         modules = {os.path.basename(i.path).lower() for i in by_pdb[key]}
         candidates = [c for c in previous_by_name.get(key[0], []) if modules & {m.lower() for m in c[1].get('modules', [])}]
-        previous = max(candidates, key=lambda c: c[1].get('scanned', ''), default=None)
+        previous = earlier_version(candidates, build)
         if previous:
             log('[scan] gave up on %s/%s (%s); using features from earlier version %s' % (key[0], key[1], result.get('error') or 'not on the symbol server', previous[0]))
             results[key] = {'status': 'previousVersion', 'from': previous[0], 'features': previous[1]['features'], 'usage': previous[1].get('usage'), 'reason': result['status']}
