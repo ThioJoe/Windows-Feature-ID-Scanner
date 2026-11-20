@@ -7,7 +7,9 @@
 # kept is the one that still has its usage details (scan-symbols.py keeps those only for the PDBs of its own scan), else the most
 # recently scanned or checked. The cache already in data/ isn't read: every scan's copy contains all of it. Usage details are only
 # kept for the PDBs of the newest build of each version among the scans, as for a single scan, so that scanning many builds at once
-# doesn't make the file too big for GitHub (100 MB).
+# doesn't make the file too big for GitHub (100 MB), and only as far as the file stays under LIMIT: an Insider build's PDBs are
+# its own, so the details of several Insider builds can be too much together. The builds with the lowest base build numbers (the
+# released versions, then the Insider channels' cores) keep theirs first.
 #
 #   python merge-symbol-caches.py --out data/symbol-cache-AMD64.json caches/*/symbol-cache-AMD64.json
 
@@ -16,6 +18,8 @@ import json
 import os
 import re
 import sys
+
+LIMIT = 90 * 1000 * 1000  # Bytes: GitHub refuses a file over 100 MB
 
 
 def load(path):
@@ -64,14 +68,31 @@ def main():
     for path, (base, ubr) in builds.items():
         if base not in newest or ubr > builds[newest[base]][1]:
             newest[base] = path
-    keep = set().union(*(usage_of[p] for p in set(newest.values()) | (set(usage_of) - set(builds))))
+    # Each PDB's line in the file without and with its usage details: the details are added build by build while the file stays under
+    # LIMIT (those of a cache that doesn't name its build first)
+    line = lambda key, entry: len(json.dumps(key)) + len(json.dumps(entry, separators=(',', ':'))) + 4
+    plain = {k: {x: y for x, y in e.items() if x not in ('usage', 'usageError')} for k, e in merged.items()}
+    total = sum(line(k, e) for k, e in plain.items())
+    keep, kept, left_out = set(), [], []
+    for path in [p for p in usage_of if p not in builds] + [newest[b] for b in sorted(newest)]:
+        more = usage_of[path] - keep
+        add = sum(line(k, merged[k]) - line(k, plain[k]) for k in more)
+        if total + add > LIMIT:
+            left_out.append(path)
+            continue
+        keep |= more
+        total += add
+        kept.append(path)
     stripped = 0
     for key, entry in merged.items():
         if key not in keep and ('usage' in entry or 'usageError' in entry):
-            merged[key] = {x: y for x, y in entry.items() if x not in ('usage', 'usageError')}
+            merged[key] = plain[key]
             stripped += 1
+    name = lambda p: os.path.basename(os.path.dirname(p)) or p
     if stripped:
-        print('[cache] usage details kept for the PDBs of %s; dropped for %d others' % (', '.join(sorted(os.path.basename(os.path.dirname(p)) for p in newest.values())), stripped))
+        print('[cache] usage details kept for the PDBs of %s; dropped for %d others' % (', '.join(sorted(name(p) for p in kept if p in builds)) or 'none', stripped))
+    for path in left_out:
+        print('[cache] usage details of %s left out: the file would be over %d MB with them' % (name(path), LIMIT // 1000000))
 
     # The same layout as scan-symbols.py writes: one PDB per line, so git diffs stay small
     with open(args.out, 'w', encoding='utf-8', newline='\n') as f:
