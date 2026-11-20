@@ -675,11 +675,23 @@ function featureDetail(build) {
   };
   const rowsOf = (cells) => 1 + Math.max(...cells.map(([r]) => r));
   const permutations = (a) => (a.length < 2 ? [a] : a.flatMap((x, i) => permutations(a.filter((_, j) => j !== i)).map((p) => [x, ...p])));
+  // How many boxes a feature's tree has with every path followed, or Infinity if its requirements loop back. Orders are only compared
+  // for requirements whose trees take up to ORDER_BOXES together: every x64 feature's take fewer than 130, but some ARM64 builds'
+  // requirements branch and loop back so much that laying out every order would take minutes. The others keep longest chain first.
+  const ORDER_BOXES = 500;
+  const boxes = new Map();
+  const boxCount = (id) => {
+    if (!boxes.has(id)) {
+      boxes.set(id, Infinity);  // Until its requirements are counted: reaching it again on the way means they loop back
+      boxes.set(id, 1 + ((byId.get(id) || {}).requires || []).reduce((n, k) => n + boxCount(k), 0));
+    }
+    return boxes.get(id);
+  };
   const requiresOf = (id) => {
     if (!ordered.has(id)) {
       const ids = [...((byId.get(id) || {}).requires || [])].sort((a, b) => chainLength(b) - chainLength(a));
       ordered.set(id, ids);  // Until the best order is worked out, in case requirements ever loop back to it
-      if (ids.length > 1 && ids.length <= 6) {
+      if (ids.length > 1 && ids.length <= 6 && ids.reduce((n, k) => n + boxCount(k), 0) <= ORDER_BOXES) {
         let best = ids, fewest = Infinity;
         for (const p of permutations(ids)) {
           const rows = rowsOf(place(p.map((k) => ({ cells: fullTree(k) }))));
