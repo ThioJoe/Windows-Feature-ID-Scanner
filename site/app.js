@@ -350,8 +350,9 @@ function latestBuild(arch) {
 }
 
 // The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
-// first-seen.json counts them in (update-data.py), and the first build of each Insider channel (of an architecture) in that order
-let buildsByKey = null, releaseRank = null, channelFirst = null;
+// first-seen.json counts them in (update-data.py), the first build of each Insider channel (of an architecture) in that order, and the
+// builds that came out on each architecture's first tracked day
+let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null;
 function buildOrder() {
   if (!buildsByKey) {
     buildsByKey = new Map(index.builds.map((b) => [b.key, b]));
@@ -364,37 +365,62 @@ function buildOrder() {
       if (b.insiderChannel && !firsts.has(channel)) firsts.set(channel, b.key);
     }
     channelFirst = new Set(firsts.values());
+    earliestBuilds = new Map();
+    for (const b of ordered) {
+      const earliest = earliestBuilds.get(b.architecture);
+      if (!earliest) earliestBuilds.set(b.architecture, [b.key]);
+      else if (date(buildsByKey.get(earliest[0])) === date(b)) earliest.push(b.key);
+    }
   }
 }
 
-// The build a feature was first seen in, with its Insider channel if it's an Insider build (Future Platforms shortened to FP)
-function firstSeenText(arch, id) {
-  const key = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
-  if (!key) return '';
+// Whether a build came out on its architecture's first tracked day, so that every feature it has counts as first seen in it by default
+function isEarliestBuild(b) {
   buildOrder();
-  const b = buildsByKey.get(key);
-  return b && b.insiderChannel ? `${key} (${versionText(b).replace('Future Platforms', 'FP')})` : key;
+  return (earliestBuilds.get(b.architecture) || []).includes(b.key);
+}
+
+// The builds a feature was first seen in: the ones that had it of the builds that came out on the first day any build had it. In
+// first-seen.json that's one build's key, or a list of them when several builds that came out that day had it.
+function firstSeenKeys(arch, id) {
+  const v = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
+  return !v ? [] : Array.isArray(v) ? v : [v];
+}
+
+// The builds a feature was first seen in, as the First seen column lists them. names gives the build of the view a name in its place,
+// such as "This build"; other builds are listed by key, with the Insider channel of an Insider build (Future Platforms shortened to FP).
+// Each has why the feature may be older if the build came out on the first tracked day, or was the first scanned of its Insider channel:
+// every feature such a build had that no earlier scan had counts as first seen there by default, however old.
+function firstSeenEntries(arch, id, names) {
+  buildOrder();
+  return firstSeenKeys(arch, id).map((key) => {
+    const b = buildsByKey.get(key), earliest = earliestBuilds.get(arch) || [];
+    const text = (names && names[key]) || (b && b.insiderChannel ? `${key} (${versionText(b).replace('Future Platforms', 'FP')})` : key);
+    const why = earliest.includes(key)
+      ? `This was ${earliest.length > 1 ? 'one of the earliest builds' : 'the earliest build'} scanned, so the feature counts as first seen here by default. It may be older.`
+      : channelFirst.has(key) ? `This was the first ${versionText(b)} build scanned, so a feature no earlier scan had counts as first seen here by default. It may be older.`
+      : '';
+    return { text, why };
+  });
+}
+
+function firstSeenText(arch, id, names) {
+  return firstSeenEntries(arch, id, names).map((e) => e.text).join('\n');
 }
 
 // An info icon, in the color of the text around it
 const INFO_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.75" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
   '<path d="M8 7.25v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.75" r="1" fill="currentColor"/></svg>';
 
-// The same, with an info icon where the build was the earliest scanned or the first scanned of its Insider channel: every feature it had
-// that no earlier scan had counts as first seen there by default, however old
-function firstSeenHtml(arch, id) {
-  const text = firstSeenText(arch, id);
-  if (!text) return '';
-  const key = firstSeen.firstSeen[arch][String(id)], b = buildsByKey.get(key);
-  const why = key === firstSeen.firstTrackedBuild[arch] ? 'This was the earliest build scanned, so the feature counts as first seen here by default. It may be older.'
-    : channelFirst.has(key) ? `This was the first ${versionText(b)} build scanned, so a feature no earlier scan had counts as first seen here by default. It may be older.`
-    : '';
-  return esc(text) + (why ? `<span class="seen-default" title="${esc(why)}" aria-label="${esc(why)}" role="img">${INFO_ICON}</span>` : '');
+// The same as HTML: a line per build, with an info icon where the feature may be older
+function firstSeenHtml(arch, id, names) {
+  return firstSeenEntries(arch, id, names).map((e) => `<span class="seen-build">${esc(e.text)}` +
+    (e.why ? `<span class="seen-default" title="${esc(e.why)}" aria-label="${esc(e.why)}" role="img">${INFO_ICON}</span>` : '') + '</span>').join('<br>');
 }
 
 // For sorting by first seen: the order the builds came out
 function firstSeenRank(arch, id) {
-  const key = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
+  const key = firstSeenKeys(arch, id)[0];
   if (!key) return '';
   buildOrder();
   return releaseRank.has(key) ? releaseRank.get(key) : '';
@@ -930,6 +956,7 @@ async function renderCompare() {
   for (const [id, f] of of) if (!nf.has(id)) removed.push(f);
 
   const arch = b.architecture;
+  const seenNames = { [a.key]: 'Old build', [b.key]: 'New build' };  // How the First seen column names the two builds
   const sections = [
     ['Added', 'added', added, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
@@ -940,7 +967,7 @@ async function renderCompare() {
     ['Removed', 'removed', removed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id), html: (f) => firstSeenHtml(a.architecture, f.id), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id, seenNames), html: (f) => firstSeenHtml(a.architecture, f.id, seenNames), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ['Renamed', 'changed', renamed, [
@@ -951,7 +978,7 @@ async function renderCompare() {
     ['Newly named', 'changed', newlyNamed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(arch, f.id), html: (f) => firstSeenHtml(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(arch, f.id, seenNames), html: (f) => firstSeenHtml(arch, f.id, seenNames), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ...(nameLost.length ? [['Name lost', 'changed', nameLost, [
@@ -1006,16 +1033,18 @@ async function renderBuild() {
   const arch = b.architecture;
   const detailText = searchDetails && q ? await loadDetailText(arch) : null;
   if (render !== buildRender) return;
-  const seen = firstSeen.firstSeen[arch] || {};
   const hit = (f) => matches(f, q, namedOnly) || (detailText !== null && (!namedOnly || f.name) && (detailText.get(f.id) || '').includes(q));
-  const rows = b.features.filter((f) => hit(f) && (!storeOnly || f.store) && (!newOnly || seen[String(f.id)] === key));
-  const firstTracked = firstSeen.firstTrackedBuild[arch] === key;
+  const rows = b.features.filter((f) => hit(f) && (!storeOnly || f.store) && (!newOnly || firstSeenKeys(arch, f.id).includes(key)));
+  const firstTracked = isEarliestBuild(b);
+  const thisBuild = { [key]: 'This build' };  // How the First seen column names this build
   $('bld-status').textContent = `${buildLabel(b)}: ${b.features.length} feature IDs, ${b.features.filter((f) => f.name).length} named, ` +
     `${b.features.filter((f) => f.store).length} in the feature store. Showing ${rows.length}.` +
     (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '');
   out.insertAdjacentHTML('beforeend', pendingNote(b));
   if (firstTracked) {
-    out.insertAdjacentHTML('beforeend', `<p class="notice"><b>${esc(buildLabel(b))}:</b> This is the earliest ${esc(archName(arch))} build scanned. ` +
+    const several = earliestBuilds.get(arch).length > 1;
+    out.insertAdjacentHTML('beforeend', `<p class="notice"><b>${esc(buildLabel(b))}:</b> This is ${several ? 'one of the earliest' : 'the earliest'} ` +
+      `${esc(archName(arch))} build${several ? 's' : ''} scanned. ` +
       'With no earlier scan to compare it with, every feature in it counts as first seen here by default, so the First seen column shows N/A.</p>');
   }
   renderTable(out, rows, [
@@ -1023,7 +1052,7 @@ async function renderBuild() {
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
     { title: 'Default', value: (f) => DEFAULTS[f.default] || '', sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
     firstTracked ? { title: 'First seen', value: () => 'N/A', cls: 'seen' }
-      : { title: 'First seen', value: (f) => firstSeenText(arch, f.id), html: (f) => firstSeenHtml(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
+      : { title: 'First seen', value: (f) => firstSeenText(arch, f.id, thisBuild), html: (f) => firstSeenHtml(arch, f.id, thisBuild), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
     { title: 'Modules', value: modsText, cls: 'mods' },
   ], undefined, featureDetail(b));

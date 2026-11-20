@@ -6,7 +6,7 @@
 #       details.json                       what each binary's code reveals about each feature (callers, strings, ...)
 #       super-god-mode/                    Super God Mode's statistics for the build, its CSV and XML files as it writes them
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
-#   data/first-seen.json                   For each architecture, the first tracked build each feature ID appeared in
+#   data/first-seen.json                   For each architecture, the first tracked build(s) each feature ID appeared in
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
 #
 # Usage:
@@ -459,15 +459,21 @@ def regenerate(data_dir):
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
     # Builds count in the order they came out, so a feature an Insider build had before a released build with a lower number counts in the
-    # Insider build, and one a 25H2 build had in July doesn't count in a 24H2 build scanned from October.
+    # Insider build, and one a 25H2 build had in July doesn't count in a 24H2 build scanned from October. Builds that came out the same day
+    # count together: a feature that several of them were the first to have, such as a security update's builds of 24H2, 25H2 and 26H2, or
+    # Insider builds of several channels, has a list of them instead of one build.
     first_seen = {}
     first_tracked = {}
     for b in sorted(builds, key=release_order):
         arch = b['architecture']
         first_tracked.setdefault(arch, b['key'])
         seen = first_seen.setdefault(arch, {})
+        day = release_order(b)[0]
         for f in b['features']:
-            seen.setdefault(str(f['id']), b['key'])
+            first = seen.setdefault(str(f['id']), (day, []))
+            if first[0] == day:
+                first[1].append(b['key'])
+    first_seen = {arch: {i: keys[0] if len(keys) == 1 else keys for i, (_, keys) in seen.items()} for arch, seen in first_seen.items()}
     with open(os.path.join(data_dir, 'first-seen.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump({'firstTrackedBuild': first_tracked, 'firstSeen': first_seen}, f, separators=(',', ':'), sort_keys=True)
 
