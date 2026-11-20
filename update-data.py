@@ -2,15 +2,16 @@
 # Maintains the feature database in data/:
 #
 #   data/builds/<build>-<arch>/            A folder per scanned build:
-#       features.json                      every feature ID found (named or not), from symbols and/or the feature store
+#       features.json                      every feature ID found (named or not), from symbols, the feature store and/or a feature trace
 #       details.json                       what each binary's code reveals about each feature (callers, strings, ...)
 #       super-god-mode/                    Super God Mode's statistics for the build, its CSV and XML files as it writes them
+#       trace.json                         the build's latest feature trace (trace-features.ps1): its run, and what each target checked
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build(s) each feature ID appeared in
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
 #
 # Usage:
-#   python update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>]
+#   python update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>] [--trace <folder>]
 #                                          # add/replace a build, then regenerate everything
 #   python update-data.py                  # only regenerate index, first-seen and diffs (and fill in what builds already here lack)
 #
@@ -33,6 +34,8 @@ INSIDER_CHECK_DAYS = 14  # The same for an Insider build, which the channel's ne
                          # the PDBs of the builds still checked, and an Insider build has thousands of its own)
 WARN_PENDING = 25   # Binaries with features whose symbols a scan didn't get, above which the run gets a warning. A scan normally has a few;
                     # one that runs before Microsoft has published an update's symbols has hundreds.
+TRACE_LIST_LIMIT = 8  # Processes and targets kept in a feature's trace entry (the build's trace.json has every target's features)
+ALWAYS = {'enabled': 'alwaysEnabled', 'disabled': 'alwaysDisabled'}
 
 
 def load_json(path):
@@ -125,9 +128,13 @@ def warn_renamed(data_dir, key, features):
     return len(changed)
 
 
-def add_build(data_dir, summary_path, symbols_path):
+def add_build(data_dir, summary_path, symbols_path, trace_dir=None):
     summary = load_json(summary_path)
     symbols = load_json(symbols_path) if symbols_path and os.path.exists(symbols_path) else {'features': []}
+    trace_path = os.path.join(trace_dir, 'trace.json') if trace_dir else None
+    trace = load_json(trace_path) if trace_path and os.path.exists(trace_path) else None
+    if trace_dir and not trace:
+        print('[data] no feature trace for this build (%s has no trace.json)' % trace_dir)
 
     full_build = summary['fullBuild']
     arch = summary['architecture']
@@ -170,6 +177,9 @@ def add_build(data_dir, summary_path, symbols_path):
 
     details = {f['id']: dict(f['usage']) for f in symbols.get('features', []) if f.get('usage')}
     merge_earlier_scan(features, details, earlier_features, earlier_details, symbols.get('manifest'))
+    if trace:
+        add_trace(features, trace)
+    trace_defaults(features)
 
     # A feature whose code was removed from every binary can stay in the feature store. Its name is still known from earlier builds.
     known = {}
@@ -197,6 +207,9 @@ def add_build(data_dir, summary_path, symbols_path):
     }
     if summary.get('notes'):
         header['notes'] = summary['notes']  # Anything about the scan worth knowing, such as Store apps the VM couldn't update
+    trace_run = trace_header(trace, features) if trace else earlier_build.get('trace')
+    if trace_run:
+        header['trace'] = trace_run  # The latest feature trace of the build (its features keep what earlier ones saw too)
     if summary.get('insiderChannel'):
         header['insiderChannel'] = summary['insiderChannel']  # A Windows Insider build, from this channel
     release = release_lookup(data_dir).get(full_build)
@@ -226,6 +239,8 @@ def add_build(data_dir, summary_path, symbols_path):
         path, len(ordered), sum(1 for f in ordered if f['name']), sum(1 for f in ordered if 'store' in f)))
     write_details(data_dir, key, details)
     write_symbol_list(data_dir, key, manifest, until)
+    if trace:
+        write_trace(data_dir, key, trace)
     if len(pending) >= WARN_PENDING:
         message = ("%s: the symbol server didn't have the symbols of %d binaries whose earlier versions had features, so %d of the build's "
                    'features are only known from those earlier versions (marked unverified). The daily symbol catch-up completes the build '
@@ -277,6 +292,8 @@ def merge_earlier_scan(features, details, earlier, earlier_details, manifest):
                 for k in ('default', 'changeTime'):
                     if not entry.get(k) and old.get(k):
                         entry[k] = old[k]
+                        if k == 'default' and old.get('defaultSource'):
+                            entry['defaultSource'] = old['defaultSource']
                 if old.get('requires'):
                     entry['requires'] = sorted(set(entry.get('requires', [])) | set(old['requires']))
             if entry.get('unverified') and not old.get('unverified') and (modules or old.get('declaredIn')):
@@ -285,10 +302,90 @@ def merge_earlier_scan(features, details, earlier, earlier_details, manifest):
                 entry['store'] = old['store']
             if not entry.get('viveToolName') and old.get('viveToolName') and old['viveToolName'] != entry['name']:
                 entry['viveToolName'] = old['viveToolName']
+            if 'trace' in old:
+                entry['trace'] = old['trace']  # What earlier traces saw (add_trace adds this scan's trace to it)
         # Code details: this scan's for the binaries it has them for, the earlier ones for the others it still links the feature to
         kept = {m: u for m, u in earlier_details.get(str(fid), {}).items() if m in entry['modules'] and m not in stale and m not in details.get(fid, {})}
         if kept:
             details[fid] = dict(sorted(dict(details.get(fid, {}), **kept).items()))
+
+
+def trace_only(f):
+    """Whether only a feature trace knows the feature: no binary's symbols have it, nor the feature store. Its first trace isn't where
+    it first appeared, so such a feature counts in neither first seen nor the diffs between builds."""
+    return 'trace' in f and not f.get('modules') and not f.get('declaredIn') and 'store' not in f
+
+
+def merge_trace(old, new):
+    """A feature's trace entry with what another trace saw added: the newer's values first, then the older's that it doesn't have"""
+    out = {}
+    for k in ('stages', 'results', 'variants', 'processes', 'targets'):
+        items = list(new.get(k, [])) + [x for x in old.get(k, []) if x not in new.get(k, [])]
+        if k in ('results', 'variants'):
+            items = sorted(items)
+        elif k in ('processes', 'targets'):
+            items = items[:TRACE_LIST_LIMIT]
+        if items:
+            out[k] = items
+    return out
+
+
+def add_trace(features, trace):
+    """Adds a feature trace (trace.json from summarize-trace.py) to the build's features. Each feature it saw checked gets a trace
+    entry: the stages its checks reported (the stage compiled into the binary that checked it, the one most checks reported first),
+    how they came out (on, off), the variants of variant checks, and the processes and targets that checked it (the most first, up to
+    TRACE_LIST_LIMIT). A feature no symbols or feature store had gets an entry of its own. A scan of the build again adds to them."""
+    added = 0
+    for fid, t in trace.get('features', {}).items():
+        fid = int(fid)
+        if fid not in features:
+            features[fid] = {'id': fid, 'name': None, 'modules': []}
+            added += 1
+        new = {'stages': [t['stage']] + [s for s in t['stages'] if s != t['stage']], 'results': t['results']}
+        for k in ('variants', 'processes', 'targets'):
+            if t.get(k):
+                new[k] = t[k]
+        features[fid]['trace'] = merge_trace(features[fid].get('trace', {}), new)
+    print('[data] feature trace: %d features checked, %d of them found by nothing else' % (len(trace.get('features', {})), added))
+
+
+def trace_defaults(features):
+    """Defaults from the feature trace (defaultSource 'trace'): the stage most checks reported, for a feature the symbols give no
+    default for; and always enabled (or always disabled) where the symbols say enabled (disabled) but every check reported always,
+    since C++ code only shows whether a feature is enabled or disabled. Where the trace and the symbols disagree otherwise, the symbols'
+    default stays (the site shows what the trace saw with it): the binaries that checked it may not be the ones the default is from."""
+    for entry in features.values():
+        t = entry.get('trace')
+        if not t:
+            continue
+        if not entry.get('default') or entry.get('defaultSource') == 'trace':
+            entry['default'] = t['stages'][0]
+            entry['defaultSource'] = 'trace'
+        elif entry['default'] in ALWAYS and set(t['stages']) == {ALWAYS[entry['default']]}:
+            entry['default'] = ALWAYS[entry['default']]
+            entry['defaultSource'] = 'trace'
+
+
+def trace_header(trace, features):
+    """The build header's summary of its latest feature trace"""
+    run = trace.get('run', {})
+    out = {k: run[k] for k in ('tracedAt', 'minutes', 'boot', 'checks', 'eventsLost') if k in run}
+    out['features'] = len(trace.get('features', {}))
+    out['traceOnly'] = sum(1 for f in features.values() if trace_only(f))
+    out['targets'] = sum(v.get('opened', 0) for v in run.get('targets', {}).values())
+    if run.get('error'):
+        out['error'] = run['error']
+    return out
+
+
+def write_trace(data_dir, key, trace):
+    """Stores the run of a build's latest feature trace and its targets (with the features each one checked) in
+    data/builds/<build>-<arch>/trace.json, one target per line. What it saw of each feature is in features.json."""
+    path = os.path.join(build_dir(data_dir, key), 'trace.json')
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write('{"run": %s,\n"targets": [\n%s\n]}\n' % (json.dumps(trace.get('run', {})),
+                                                        ',\n'.join(json.dumps(t, separators=(',', ':')) for t in trace.get('targets', []))))
+    print('[data] wrote the feature trace run (%d targets) to %s' % (len(trace.get('targets', [])), path))
 
 
 def write_symbol_list(data_dir, key, manifest, until):
@@ -341,8 +438,8 @@ def store_signature(feat):
 def diff_builds(old, new):
     of = {f['id']: f for f in old['features']}
     nf = {f['id']: f for f in new['features']}
-    added = [nf[i] for i in sorted(set(nf) - set(of))]
-    removed = [of[i] for i in sorted(set(of) - set(nf))]
+    added = [nf[i] for i in sorted(set(nf) - set(of)) if not trace_only(nf[i])]  # (A trace sees what's checked while it runs, not what's new)
+    removed = [of[i] for i in sorted(set(of) - set(nf)) if not trace_only(of[i])]
     renamed, newly_named, name_lost, store_changed, default_changed = [], [], [], [], []
     for i in sorted(set(of) & set(nf)):
         a, b = of[i], nf[i]
@@ -355,8 +452,10 @@ def diff_builds(old, new):
                 name_lost.append({'id': i, 'oldName': a['name']})
         if store_signature(a) != store_signature(b):
             store_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': a.get('store'), 'new': b.get('store')})
-        # Only where both builds know the value; builds scanned before default states were read don't have them
-        old_default = {k: a[k] for k in ('default', 'changeTime') if a.get(k) and b.get(k)}
+        # Only where both builds know the value; builds scanned before default states were read don't have them. Not defaults from
+        # feature traces: a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
+        old_default = {k: a[k] for k in ('default', 'changeTime') if a.get(k) and b.get(k)
+                       and not (k == 'default' and 'trace' in (a.get('defaultSource'), b.get('defaultSource')))}
         new_default = {k: b[k] for k in old_default}
         if old_default != new_default:
             default_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': old_default, 'new': new_default})
@@ -470,6 +569,8 @@ def regenerate(data_dir):
         seen = first_seen.setdefault(arch, {})
         day = release_order(b)[0]
         for f in b['features']:
+            if trace_only(f):
+                continue
             first = seen.setdefault(str(f['id']), (day, []))
             if first[0] == day:
                 first[1].append(b['key'])
@@ -519,9 +620,10 @@ def main():
     parser.add_argument('--summary', help='summary.json from scan-features.ps1')
     parser.add_argument('--symbols', help='symbol-features.json from scan-symbols.py')
     parser.add_argument('--super-god-mode', help="Folder with Super God Mode's statistics for the build (from run-super-god-mode.ps1)")
+    parser.add_argument('--trace', help='Folder with the feature trace of the build (trace.json, from trace-features.ps1)')
     args = parser.parse_args()
     if args.summary:
-        key = add_build(args.data_dir, args.summary, args.symbols)
+        key = add_build(args.data_dir, args.summary, args.symbols, args.trace)
         if args.super_god_mode:
             store_super_god_mode(args.data_dir, key, args.super_god_mode)
     regenerate(args.data_dir)
