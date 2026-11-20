@@ -85,8 +85,8 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-group-label { padding: 8px 12px 2px 26px; color: var(--muted); font-size: 12px; font-weight: 600; }
 /* The line between Insider channels of different platforms or versions (app.js) */
 .picker-divided::before { content: ''; display: block; margin: 8px 12px 0; border-top: 1px solid var(--border); }
-/* An info icon after an Insider channel's name: what its core version is, when hovered */
-.picker-note { margin-left: 5px; cursor: help; }
+/* An info icon after an Insider channel's name: what it is, when hovered or clicked (its padding makes it easier to stay on) */
+.picker-note { margin: 0 -2px 0 3px; padding: 2px; cursor: help; }
 .picker-note svg { width: 1.1em; height: 1.1em; vertical-align: -0.2em; }
 .picker-option { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 4px 14px 4px 40px; cursor: pointer; }
 .picker-option > span { white-space: nowrap; }
@@ -148,8 +148,16 @@ td.id { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; white-sp
 td.name { min-width: 180px; overflow-wrap: anywhere; }
 td.mods, td.store, td.seen { color: var(--muted); font-size: 12px; }
 .seen-build { white-space: nowrap; }
-.seen-default { margin-left: 4px; cursor: help; }
+.seen-default { margin: 0 -2px 0 2px; padding: 2px; cursor: help; }  /* (Its padding makes it easier to stay on) */
 .seen-default svg { width: 1.1em; height: 1.1em; vertical-align: -0.2em; }
+/* An info icon's note (app.js, showTip): below or above the icon, with a hanging indent for each bullet point */
+.tip {
+  position: fixed; z-index: 30; max-width: min(340px, calc(100vw - 16px)); padding: 6px 10px;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+  font-size: 12px; line-height: 1.45;
+}
+.tip-bullet { padding-left: .9em; text-indent: -.9em; }
+.tip-bullet + .tip-bullet { margin-top: 4px; }
 td a { color: var(--accent); }
 td.last { border-bottom: none; }
 .unnamed { color: var(--muted); font-style: italic; }

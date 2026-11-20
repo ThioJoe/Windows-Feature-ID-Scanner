@@ -190,7 +190,7 @@ class BuildPicker extends HTMLElement {
         const notes = g.notes || [];
         html += `<div role="group"${g.divider ? ' class="picker-divided"' : ''} aria-label="${esc(s.label + ' ' + g.label)}"` +
           `${notes.length ? ` aria-description="${esc(notes.join(' '))}"` : ''}><div class="picker-group-label" aria-hidden="true">${esc(g.label)}` +
-          `${notes.length ? `<span class="picker-note" title="${esc(notes.map((n) => `• ${n}`).join('\n'))}">${INFO_ICON}</span>` : ''}</div>`;
+          `${notes.length ? `<span class="picker-note" data-tip="${esc(notes.map((n) => `• ${n}`).join('\n'))}">${INFO_ICON}</span>` : ''}</div>`;
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
@@ -451,7 +451,8 @@ const INFO_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy
 // The same as HTML: a line per build, with an info icon where the feature may be older
 function firstSeenHtml(arch, id, names) {
   return firstSeenEntries(arch, id, names).map((e) => `<span class="seen-build">${esc(e.text)}` +
-    (e.why ? `<span class="seen-default" title="${esc(e.why)}" aria-label="${esc(e.why)}" role="img">${INFO_ICON}</span>` : '') + '</span>').join('<br>');
+    // (Its empty title keeps the row's "Show details" tooltip from showing as well)
+    (e.why ? `<span class="seen-default" data-tip="${esc(e.why)}" title="" aria-label="${esc(e.why)}" role="img">${INFO_ICON}</span>` : '') + '</span>').join('<br>');
 }
 
 // For sorting by first seen: the order the builds came out
@@ -803,6 +804,50 @@ async function copyIds(button) {
   button.textContent = copied ? 'Copied' : 'Couldn\'t copy';
   clearTimeout(button.copyTimer);
   button.copyTimer = setTimeout(() => { button.textContent = label; }, 1500);
+}
+
+// An info icon's note (its data-tip): shown while the pointer is over the icon or the note, and from a click or tap on the icon until the
+// next one elsewhere. (A title attribute's tooltip only shows on hover, hides when the pointer moves or clicks, and never shows on a touch
+// screen.) A line that starts with "• " is a bullet point. A hover shows it after a moment, so moving across a column of icons doesn't
+// flash each one's note.
+const tip = { el: null, target: null, pinned: false, timer: 0, pending: null, showTimer: 0 };
+
+function showTip(target, pinned) {
+  clearTimeout(tip.showTimer);
+  tip.pending = null;
+  if (!tip.el) {
+    tip.el = document.createElement('div');
+    tip.el.className = 'tip';
+    tip.el.setAttribute('role', 'tooltip');
+    tip.el.addEventListener('pointerenter', () => clearTimeout(tip.timer));
+    tip.el.addEventListener('pointerleave', () => { if (!tip.pinned) hideTipSoon(); });
+    document.body.appendChild(tip.el);
+  }
+  clearTimeout(tip.timer);
+  tip.target = target;
+  tip.pinned = pinned;
+  tip.el.innerHTML = target.dataset.tip.split('\n').map((line) => `<div${line.startsWith('• ') ? ' class="tip-bullet"' : ''}>${esc(line)}</div>`).join('');
+  // Below the icon, or above it where there's no room below, and within the window (measured from the corner, at its full width)
+  tip.el.style.left = tip.el.style.top = '0px';
+  tip.el.hidden = false;
+  const r = target.getBoundingClientRect(), w = tip.el.offsetWidth, h = tip.el.offsetHeight;
+  tip.el.style.left = `${Math.max(8, Math.min(r.left - 10, window.innerWidth - w - 8))}px`;
+  tip.el.style.top = `${r.bottom + 4 + h <= window.innerHeight - 8 ? r.bottom + 4 : Math.max(8, r.top - 4 - h)}px`;
+}
+
+function hideTip() {
+  clearTimeout(tip.timer);
+  clearTimeout(tip.showTimer);
+  tip.pending = null;
+  if (tip.el) tip.el.hidden = true;
+  tip.target = null;
+  tip.pinned = false;
+}
+
+// After a moment, so the pointer can slip off the icon, or move onto the note, without the note going away
+function hideTipSoon() {
+  clearTimeout(tip.timer);
+  tip.timer = setTimeout(hideTip, 300);
 }
 
 // Names that don't come from the build's own symbols: [label, explanation]
@@ -1282,6 +1327,43 @@ async function init() {
     const button = e.target.closest('button.copy-ids');
     if (button) copyIds(button);
   });
+  // Info icons' notes (showTip): on hover with a mouse or pen
+  document.addEventListener('pointerover', (e) => {
+    const t = e.target.closest('[data-tip]');
+    if (!t || e.pointerType === 'touch') return;
+    if (t === tip.target) {
+      clearTimeout(tip.timer);
+    } else if (t !== tip.pending) {
+      clearTimeout(tip.showTimer);
+      tip.pending = t;
+      tip.showTimer = setTimeout(() => showTip(t, false), 200);
+    }
+  });
+  document.addEventListener('pointerout', (e) => {
+    const t = e.target.closest('[data-tip]');
+    if (!t || t.contains(e.relatedTarget)) return;
+    if (t === tip.pending) {
+      clearTimeout(tip.showTimer);
+      tip.pending = null;
+    }
+    if (t === tip.target && !tip.pinned) hideTipSoon();
+  });
+  // A click or tap on an icon shows its note until the next one elsewhere (or hides it, when it's already shown that way), and does
+  // nothing else, such as opening a table row's details
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-tip]');
+    if (!t) return;
+    e.stopPropagation();
+    if (t === tip.target && tip.pinned) hideTip();
+    else showTip(t, true);
+  }, true);
+  document.addEventListener('pointerdown', (e) => {
+    if (tip.target && !e.target.closest('[data-tip]') && !tip.el.contains(e.target)) hideTip();
+  }, true);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && tip.target) hideTip(); });
+  // (A note stays where it was put, so it goes when what's under it moves)
+  document.addEventListener('scroll', () => { if (tip.target) hideTip(); }, true);
+  window.addEventListener('resize', () => { if (tip.target) hideTip(); });
   document.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
     const v = a.dataset.view;
