@@ -313,7 +313,8 @@ function releaseTag(b) {
 }
 
 // Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
-// own, by channel, with a line between the channels named for another platform or version, such as Beta (26H1), and the main ones
+// own, by channel, with a line between channels of different platforms or versions, as Flight Hub groups them: those named for one, such as
+// Experimental (Future Platforms) or Beta (26H1), and the main ones
 function fillBuildPicker(picker, selectedKey) {
   const columns = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
@@ -325,12 +326,13 @@ function fillBuildPicker(picker, selectedKey) {
   }
   const columnOrder = (c) => (c === 'AMD64' ? 0 : c === 'Insider' ? 2 : 1);
   const insiderArchs = [...new Set(index.builds.filter((b) => b.insiderChannel).map((b) => archName(b.architecture)))].join(', ');
+  const platform = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';  // Its name's ending in parentheses, if any
   picker.setSections([...columns].sort(([x], [y]) => columnOrder(x) - columnOrder(y) || x.localeCompare(y)).map(([column, groups]) => ({
     label: column === 'Insider' ? 'Insider' : archName(column),
     note: column === 'Insider' ? insiderArchs : archName(column) !== column ? column : '',
     groups: [...groups].map(([label, builds], i, all) => ({
       label,
-      divider: column === 'Insider' && i > 0 && label.endsWith(')') !== all[i - 1][0].endsWith(')'),
+      divider: column === 'Insider' && i > 0 && platform(label) !== platform(all[i - 1][0]),
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,

@@ -83,7 +83,7 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-section-label { position: sticky; top: 0; z-index: 1; padding: 6px 12px; background: var(--panel); border-bottom: 1px solid var(--border); font-weight: 600; }
 .picker-section-label span { margin-left: 4px; color: var(--muted); font-size: 12px; font-weight: normal; }
 .picker-group-label { padding: 8px 12px 2px 26px; color: var(--muted); font-size: 12px; font-weight: 600; }
-/* The line between the Insider channels named for another platform or version and the main ones */
+/* The line between Insider channels of different platforms or versions (app.js) */
 .picker-divided::before { content: ''; display: block; margin: 8px 12px 0; border-top: 1px solid var(--border); }
 .picker-option { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 4px 14px 4px 40px; cursor: pointer; }
 .picker-option > span { white-space: nowrap; }
