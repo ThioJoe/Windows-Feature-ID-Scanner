@@ -88,7 +88,7 @@ function loadDetailText(arch) {
       for (const shard of shards) {
         for (const [id, d] of Object.entries(shard)) {
           const parts = [];
-          for (const u of Object.values(d.usage)) for (const k of ['callers', 'strings', 'sources', 'imports', 'symbols', 'calls', 'tables']) parts.push(...(u[k] || []));
+          for (const u of Object.values(d.usage || {})) for (const k of ['callers', 'strings', 'sources', 'imports', 'symbols', 'calls', 'tables']) parts.push(...(u[k] || []));
           text.set(Number(id), parts.join('\n').toLowerCase());
         }
       }
@@ -740,6 +740,7 @@ function featureDetail(build) {
   };
   return async (row) => {
     const f = byId.get(row.id) || row;
+    const det = await loadDetails(build.architecture, f.id);
     const parts = [];
     if (NAME_SOURCES[f.nameSource]) parts.push(`<p class="muted">${esc(NAME_SOURCES[f.nameSource][1])}.</p>`);
     if (f.default || f.changeTime) {
@@ -759,6 +760,7 @@ function featureDetail(build) {
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
     if (f.trace) parts.push(traceHtml(f, build));
+    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, build));
     if ((f.requires || []).length) {
       // The IDs as ViVeTool's /id: takes them. Disabling what a feature requires would also turn off the other features that require it.
       const ids = [...withRequired(f.id)];
@@ -772,8 +774,7 @@ function featureDetail(build) {
       const cell = (id) => `<span class="cell" data-name="${esc((byId.get(id) || {}).name || '')}" data-id="${id}">${link(id)}</span>`;
       parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${requiredBy.get(f.id).map(cell).join('')}</div></div>`);
     }
-    const det = await loadDetails(build.architecture, f.id);
-    if (det) {
+    if (det && det.usage) {
       parts.push(...Object.entries(det.usage).map(([mod, u]) => moduleDetail(mod, u)));
       if (det.build !== build.key) parts.push(`<p class="muted">Code details are from build ${esc(det.build)}.</p>`);
     }
@@ -899,6 +900,14 @@ function traceHtml(f, build) {
   const run = build.trace;
   const when = run && run.tracedAt ? ` (${run.minutes}-minute trace, ${esc(run.tracedAt.slice(0, 10))})` : '';
   return `<p>${parts.join(' ')}<span class="muted">${when}</span></p>`;
+}
+
+// Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
+// processes and targets: the stages and results were that build's.
+function otherTraceHtml(t, build) {
+  return `<p><b>Checked at runtime</b> in the feature trace of build ${esc(t.build)}, by ${andList(t.processes.map((p) => esc(p)))}` +
+    ((t.targets || []).length ? `, when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}` : '') + '. ' +
+    `<span class="muted">${build.trace ? "This build's trace didn't see it checked." : 'This build has no feature trace.'}</span></p>`;
 }
 
 // ---------------------------------------------------------------------------
