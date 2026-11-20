@@ -314,20 +314,27 @@ function releaseTag(b) {
   return '';
 }
 
-// What the Insider channels of each Windows core version are, by the core version at the end of their names in parentheses (none for the
-// main channels), from Microsoft's descriptions (https://learn.microsoft.com/windows-insider/flighting)
-const CORE_NOTES = {
-  'Future Platforms': 'Previously known as "Canary". Builds are not aligned to any retail release of Windows.',
-  '26H1': 'Despite the name, based on a newer core than 24H2, 25H2 and 26H2. The released 26H1 only comes preinstalled on select new devices ' +
-    'and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
-  '': 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Typically previews features coming to those versions in later ' +
-    'updates.',
+// What each Insider channel is, from Microsoft's descriptions (https://learn.microsoft.com/windows-insider/flighting): its Windows core
+// version, then what the features in its builds are
+const CHANNEL_NOTES = {
+  'Experimental (Future Platforms)': 'Previously known as "Canary". Builds are not aligned to any retail release of Windows.',
+  'Experimental (26H1)': 'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on ' +
+    'select new devices and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs. Contains features that ' +
+    'may or may not ship in a future monthly update.',
+  'Beta (26H1)': 'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new ' +
+    'devices and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs. Typically contains features ' +
+    'planned to ship in an upcoming monthly update.',
+  Experimental: 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Contains features that may or may not ship in a ' +
+    'future monthly update.',
+  Beta: 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Typically contains features planned to ship in an upcoming ' +
+    'monthly update.',
 };
+// A channel's Windows core version: the end of its name in parentheses, none for the main channels
 const coreVersion = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';
 
 // Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
 // own, by channel, with a line between channels of different Windows core versions as Flight Hub groups them (those named for one, such as
-// Experimental (Future Platforms) or Beta (26H1), and the main ones), and an info icon on each channel with what its core version is
+// Experimental (Future Platforms) or Beta (26H1), and the main ones), and an info icon on each channel with what it is
 function fillBuildPicker(picker, selectedKey) {
   const columns = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
@@ -345,7 +352,7 @@ function fillBuildPicker(picker, selectedKey) {
     groups: [...groups].map(([label, builds], i, all) => ({
       label,
       divider: column === 'Insider' && i > 0 && coreVersion(label) !== coreVersion(all[i - 1][0]),
-      note: column === 'Insider' ? CORE_NOTES[coreVersion(label)] || '' : '',
+      note: column === 'Insider' ? CHANNEL_NOTES[label] || '' : '',
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,
