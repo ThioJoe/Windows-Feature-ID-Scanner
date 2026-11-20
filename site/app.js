@@ -186,7 +186,7 @@ class BuildPicker extends HTMLElement {
     for (const s of sections) {
       html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
       for (const g of s.groups) {
-        html += `<div role="group" aria-label="${esc(s.label + ' ' + g.label)}"><div class="picker-group-label" aria-hidden="true">${esc(g.label)}</div>`;
+        html += `<div role="group"${g.divider ? ' class="picker-divided"' : ''} aria-label="${esc(s.label + ' ' + g.label)}"><div class="picker-group-label" aria-hidden="true">${esc(g.label)}</div>`;
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
@@ -313,7 +313,7 @@ function releaseTag(b) {
 }
 
 // Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
-// own, by channel
+// own, by channel, with a line between the channels named for another platform or version, such as Beta (26H1), and the main ones
 function fillBuildPicker(picker, selectedKey) {
   const columns = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
@@ -328,8 +328,9 @@ function fillBuildPicker(picker, selectedKey) {
   picker.setSections([...columns].sort(([x], [y]) => columnOrder(x) - columnOrder(y) || x.localeCompare(y)).map(([column, groups]) => ({
     label: column === 'Insider' ? 'Insider' : archName(column),
     note: column === 'Insider' ? insiderArchs : archName(column) !== column ? column : '',
-    groups: [...groups].map(([label, builds]) => ({
+    groups: [...groups].map(([label, builds], i, all) => ({
       label,
+      divider: column === 'Insider' && i > 0 && label.endsWith(')') !== all[i - 1][0].endsWith(')'),
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,
