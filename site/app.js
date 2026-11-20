@@ -186,7 +186,9 @@ class BuildPicker extends HTMLElement {
     for (const s of sections) {
       html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
       for (const g of s.groups) {
-        html += `<div role="group"${g.divider ? ' class="picker-divided"' : ''} aria-label="${esc(s.label + ' ' + g.label)}"><div class="picker-group-label" aria-hidden="true">${esc(g.label)}</div>`;
+        html += `<div role="group"${g.divider ? ' class="picker-divided"' : ''} aria-label="${esc(s.label + ' ' + g.label)}"` +
+          `${g.note ? ` aria-description="${esc(g.note)}"` : ''}><div class="picker-group-label" aria-hidden="true">${esc(g.label)}` +
+          `${g.note ? `<span class="picker-note" title="${esc(g.note)}">${INFO_ICON}</span>` : ''}</div>`;
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
@@ -312,9 +314,20 @@ function releaseTag(b) {
   return '';
 }
 
+// What the Insider channels of each Windows core version are, by the core version at the end of their names in parentheses (none for the
+// main channels), from Microsoft's descriptions (https://learn.microsoft.com/windows-insider/flighting)
+const CORE_NOTES = {
+  'Future Platforms': 'Previously known as "Canary". Builds are not aligned to any retail release of Windows.',
+  '26H1': 'Despite the name, based on a newer core than 24H2, 25H2 and 26H2. The released 26H1 only comes preinstalled on select new devices ' +
+    'and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
+  '': 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Typically previews features coming to those versions in later ' +
+    'updates.',
+};
+const coreVersion = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';
+
 // Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
-// own, by channel, with a line between channels of different platforms or versions, as Flight Hub groups them: those named for one, such as
-// Experimental (Future Platforms) or Beta (26H1), and the main ones
+// own, by channel, with a line between channels of different Windows core versions as Flight Hub groups them (those named for one, such as
+// Experimental (Future Platforms) or Beta (26H1), and the main ones), and an info icon on each channel with what its core version is
 function fillBuildPicker(picker, selectedKey) {
   const columns = new Map();
   for (const b of [...index.builds].sort((x, y) => compareVersions(y, x))) {
@@ -326,13 +339,13 @@ function fillBuildPicker(picker, selectedKey) {
   }
   const columnOrder = (c) => (c === 'AMD64' ? 0 : c === 'Insider' ? 2 : 1);
   const insiderArchs = [...new Set(index.builds.filter((b) => b.insiderChannel).map((b) => archName(b.architecture)))].join(', ');
-  const platform = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';  // Its name's ending in parentheses, if any
   picker.setSections([...columns].sort(([x], [y]) => columnOrder(x) - columnOrder(y) || x.localeCompare(y)).map(([column, groups]) => ({
     label: column === 'Insider' ? 'Insider' : archName(column),
     note: column === 'Insider' ? insiderArchs : archName(column) !== column ? column : '',
     groups: [...groups].map(([label, builds], i, all) => ({
       label,
-      divider: column === 'Insider' && i > 0 && platform(label) !== platform(all[i - 1][0]),
+      divider: column === 'Insider' && i > 0 && coreVersion(label) !== coreVersion(all[i - 1][0]),
+      note: column === 'Insider' ? CORE_NOTES[coreVersion(label)] || '' : '',
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,
