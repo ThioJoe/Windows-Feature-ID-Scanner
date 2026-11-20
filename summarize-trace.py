@@ -7,7 +7,8 @@
 # (on or off, and the variant for variant checks), the processes that checked it, the phases of the trace it was checked in, and the
 # targets (pages, folders, apps, ...) it can be put down to. A target's checks are those made while it was open by processes in the
 # signed-in user's session, other than trace-features.ps1's own; checks that most targets of its kind make (such as File Explorer's
-# for any folder) are left out, so what's left is particular to it. The run's details (when, how long, events lost, the targets and
+# for any folder), and those a program makes whenever it starts (such as Settings, which some Control Panel links open), are left
+# out, so what's left is particular to it. The run's details (when, how long, events lost, the targets and
 # what each opened) go with them. update-data.py adds the summary to the build's data.
 
 import bisect
@@ -26,6 +27,9 @@ KERNEL_PROCESS = '22fb2cd6-0e7b-422b-a0c7-2fad1fd0e716'
 STAGES = {1007: 'alwaysDisabled', 1008: 'disabled', 1009: 'enabled', 1010: 'alwaysEnabled'}  # Event ID: the stage, as scan-symbols.py names them
 BASELINE_SHARE = 0.4    # A feature checked while this share of a kind's targets were open is the kind's, not any one target's
 BASELINE_MIN = 5        # Kinds with fewer targets than this have no baseline
+STARTUP_SECONDS = 10    # A process's checks this long after it started are its startup's
+STARTUP_SHARE = 0.5     # A feature a program checks at startup in this share of its starts is the program's, not any one target's
+STARTUP_MIN = 3         # Programs started fewer times than this have no startup baseline
 SIGN_IN_MINUTES = 2     # Checks this long after Explorer started count as sign-in
 KIND_NAMES = {'app': 'app', 'task': 'Control Panel'}
 
@@ -78,15 +82,19 @@ def main():
         el.clear()
     checks.sort()
 
-    def process(pid, t):
-        """The image name, session and parent of the process with this ID at this time (IDs are reused)"""
+    def instance(pid, t):
+        """The process with this ID at this time (IDs are reused): its start time (None if it was running before the trace), image
+        name, session and parent"""
         best = None
         for s in starts.get(pid, ()):
             if s[0] <= t + timedelta(seconds=1):
                 best = s
         if best:
-            return best[1:]
-        return snapshot.get(pid, ('pid %d' % pid, -1, 0))
+            return best
+        return (None,) + snapshot.get(pid, ('pid %d' % pid, -1, 0))
+
+    def process(pid, t):
+        return instance(pid, t)[1:]
 
     targets = [r for r in read_csv(os.path.join(folder, 'targets.csv')) if r.get('kind') not in ('start', 'end')]
     ours = {int(r['target']) for r in read_csv(os.path.join(folder, 'targets.csv')) if r.get('kind') == 'start' and r['target'].isdigit()}
@@ -115,7 +123,25 @@ def main():
         f['processes'][name] += 1
         f['phases'].add(phase(t))
 
-    # What each target's window checked, in the user's session, not counting trace-features.ps1's own process and its console
+    # What programs check whenever they start (Settings, File Explorer's windows, Control Panel), whichever target started them: the
+    # features a program checked in the first seconds after most of its starts
+    started = defaultdict(set)   # (process ID, start time): what it checked at startup
+    for t, pid, stage, fid, kind in checks:
+        inst = instance(pid, t)
+        if inst[0] is not None and (t - inst[0]).total_seconds() <= STARTUP_SECONDS:
+            started[(pid, inst[0])].add(fid)
+    runs = defaultdict(list)     # Image name: the startup checks of each of its starts in the trace
+    for pid, start_list in starts.items():
+        for st in start_list:
+            runs[st[1].lower()].append(started.get((pid, st[0]), set()))
+    startup = {}
+    for name, sets in runs.items():
+        if len(sets) >= STARTUP_MIN:
+            counts = Counter(fid for x in sets for fid in x)
+            startup[name] = {fid for fid, n in counts.items() if n >= STARTUP_SHARE * len(sets)}
+
+    # What each target's window checked, in the user's session, not counting trace-features.ps1's own process and its console, or
+    # what a program checks whenever it starts
     times = [c[0] for c in checks]
     windows = []
     for r in targets:
@@ -124,7 +150,7 @@ def main():
             a, b = when(r['opened']), when(r['closed'])
             for t, pid, stage, fid, kind in checks[bisect.bisect_left(times, a):bisect.bisect_right(times, b)]:
                 name, sess, parent = process(pid, t)
-                if pid in ours or (parent in ours and name.lower() == 'conhost.exe'):
+                if pid in ours or (parent in ours and name.lower() == 'conhost.exe') or fid in startup.get(name.lower(), ()):
                     continue
                 if session is None or sess == session:
                     found.add(fid)
@@ -177,6 +203,7 @@ def main():
                         'failed': sum(1 for r in targets if r['kind'] == k and r.get('opened') and r.get('error')),
                         'notOpened': sum(1 for r in targets if r['kind'] == k and not r.get('opened'))} for k in kinds},
         'baselines': {k: len(v) for k, v in baseline.items()},
+        'startupBaselines': {k: len(v) for k, v in sorted(startup.items()) if v},
     }
     for k in ('user', 'error'):
         if run.get(k):

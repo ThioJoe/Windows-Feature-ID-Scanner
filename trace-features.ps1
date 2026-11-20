@@ -23,7 +23,7 @@ param(
     [string]$SuperGodModeDir,              # Super God Mode's statistics; without them only the shell's UI and the Start menu's apps are opened
     [switch]$Prepare,
     [int]$IdleMinutes = 5,                 # How long Windows is left alone first (from sign-in, when the trace started at boot)
-    [int]$TargetMinutes = 60,              # Time limit for opening targets
+    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them took about 73 minutes on the ARM64 runner)
     [string]$Python = 'python',            # For summarize-trace.py
     [string]$Targets,                      # (Internal) Open the targets as the signed-in user, recording them in this CSV file
     [switch]$RestartShell                  # (Internal, with -Targets) Restart Explorer first
@@ -115,18 +115,20 @@ public static class TraceKeys {
     Write-Target 'start' 'process' "$PID" (Now) ''  # So the summary can leave out this script's own checks
 
     if ($RestartShell) {
-        # The trace started after sign-in, so Explorer's startup (with the taskbar) and the shell's hosts aren't in it yet; they start
-        # again by themselves (Explorer through Winlogon, the others when they're next used)
+        # The trace started after sign-in, so the startup of Explorer (with the taskbar) and of the shell's hosts isn't in it yet. They
+        # start again by themselves: Explorer through Winlogon, ShellHost (Quick Settings, the notification center, Run) and
+        # TextInputHost (the emoji panel, the touch keyboard) at once, the others when they're next used. Their flyouts check few
+        # features when they open, having checked them when they started.
         $opened = Now; $problem = ''
         try {
-            Get-Process explorer, StartMenuExperienceHost, SearchHost, ShellExperienceHost -ErrorAction SilentlyContinue |
+            Get-Process explorer, StartMenuExperienceHost, SearchHost, ShellExperienceHost, ShellHost, TextInputHost -ErrorAction SilentlyContinue |
                 Where-Object { $_.SessionId -eq $session } | Stop-Process -Force
             $back = $false
             for ($i = 0; $i -lt 15 -and -not $back; $i++) { Start-Sleep -Seconds 2; $back = [bool](Get-Process explorer -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session }) }
             if (-not $back) { Start-Process explorer.exe }
             Start-Sleep -Seconds 20
         } catch { $problem = $_.Exception.Message -replace '\s+', ' ' }
-        Write-Target 'shell' 'Explorer restarted' 'explorer.exe' $opened $problem
+        Write-Target 'shell' 'Explorer (restarted)' 'explorer.exe' $opened $problem
     }
 
     # The shell's own UI. Esc closes each; what would lock the PC or start Narrator or Magnifier isn't here.

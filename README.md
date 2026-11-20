@@ -57,10 +57,12 @@ Each time Windows' code checks a feature, Windows can write an event: the `Micro
 
 1. In the VM, recording starts at boot (an AutoLogger session, set up before a restart), so boot and sign-in are in the trace. The ARM64 runner can't restart, so there it starts with the step, and Explorer is restarted so that its startup is in the trace too. Process start events (`Microsoft-Windows-Kernel-Process`) give the processes' names.
 2. Windows is left alone for 5 minutes (counted from sign-in in the VM), for background work and the tasks that run after sign-in.
-3. Then, in the signed-in user's session, it opens one target at a time and closes it again a few seconds later: parts of the shell through their keyboard shortcuts (Start, Search, Quick Settings, the notification center, Widgets, Task view, the Win+X menu, clipboard history, the emoji panel, a new virtual desktop and others), the Start menu's apps that come with Windows, and every `ms-settings:` page, Windows Security page, Control Panel task link and shell folder Super God Mode found. It runs elevated, so nothing waits for a UAC prompt, and leaves out what would lock the PC or take over input (Narrator, Magnifier, Voice access, the On-Screen Keyboard). It stops opening targets after 60 minutes.
+3. Then, in the signed-in user's session, it opens one target at a time and closes it again a few seconds later: parts of the shell through their keyboard shortcuts (Start, Search, Quick Settings, the notification center, Widgets, Task view, the Win+X menu, clipboard history, the emoji panel, a new virtual desktop and others), the Start menu's apps that come with Windows, and every `ms-settings:` page, Windows Security page, Control Panel task link and shell folder Super God Mode found. It runs elevated, so nothing waits for a UAC prompt, and leaves out what would lock the PC or take over input (Narrator, Magnifier, Voice access, the On-Screen Keyboard). It stops opening targets after 75 minutes; all of them took about 73 on the ARM64 runner.
 4. `tracerpt` decodes the trace and `summarize-trace.py` summarizes it in `trace.json`.
 
-A target's checks are those made while it was open by processes in the user's session, other than the script's own. Checks that most targets of a kind make (Settings' for any page, File Explorer's for any folder) are left out, so what's left is particular to the target.
+A trace adds about an hour and a half to a scan. Setting the repository variable `FEATURE_TRACE` to `false` leaves it out of both workflows.
+
+A target's checks are those made while it was open by processes in the user's session, other than the script's own. Checks that most targets of a kind make (Settings' for any page, File Explorer's for any folder), and those a program makes whenever it starts (such as Settings, which some Control Panel links open), are left out, so what's left is particular to the target.
 
 What a trace adds to a build's data (`update-data.py --trace`):
 

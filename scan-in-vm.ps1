@@ -45,6 +45,7 @@ param(
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
     [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
     [string]$InsiderChannel,               # Install the newest build of this Windows Insider channel (such as Beta) instead of -Kb and -Version
+    [switch]$SkipTrace,                    # No feature trace after the scan (trace-features.ps1)
     [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace')]
     [string]$Step = 'All'
 )
@@ -1366,7 +1367,7 @@ try { & C:\scan\trace-features.ps1 -Prepare *>&1 | ForEach-Object { Write-Log "$
         if ($prepared -ne 'ok') { throw $prepared }
         Restart-ScanVM
         Set-VmNetwork
-        $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 100 -script @'
+        $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 115 -script @'
 try {
     & C:\scan\trace-features.ps1 -OutputDir C:\scan\output-temp\trace -SuperGodModeDir C:\scan\output-temp\super-god-mode -Python C:\scan\python\python.exe *>&1 | ForEach-Object { Write-Log "$_" }
     Write-Result 'ok'
@@ -1412,7 +1413,7 @@ try {
         Log "Super God Mode didn't run: $($_.Exception.Message)"
     }
 
-    Invoke-TraceInVM
+    if (-not $SkipTrace) { Invoke-TraceInVM }
 
     Log "Copying the results to $OutputDir"
     $s = Get-VmSession

@@ -91,10 +91,12 @@ jobs:
         run: .\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
 
       # Which features Windows checks while it runs, and while Super God Mode's pages and folders are opened (see trace-features.ps1).
-      # It comes in addition to the scan, so a failure only means the build's data has no trace
+      # It comes in addition to the scan, so a failure only means the build's data has no trace. It takes about an hour and a half; the
+      # repository variable FEATURE_TRACE set to false leaves it out.
       - name: Trace feature checks
+        if: vars.FEATURE_TRACE != 'false'
         shell: powershell
-        timeout-minutes: 90
+        timeout-minutes: 105
         continue-on-error: true
         run: .\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
 
