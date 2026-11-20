@@ -349,26 +349,47 @@ function latestBuild(arch) {
   return list.filter((b) => !b.insiderChannel).pop() || list[list.length - 1];
 }
 
-// The builds by key, and each build's place in the order builds came out (its release date, then its build number), which is the order
-// first-seen.json counts them in (update-data.py)
-let buildsByKey = null, releaseRank = null;
+// The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
+// first-seen.json counts them in (update-data.py), and the first build of each Insider channel (of an architecture) in that order
+let buildsByKey = null, releaseRank = null, channelFirst = null;
 function buildOrder() {
   if (!buildsByKey) {
     buildsByKey = new Map(index.builds.map((b) => [b.key, b]));
     const date = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
     const ordered = [...index.builds].sort((x, y) => (date(x) < date(y) ? -1 : date(x) > date(y) ? 1 : compareVersions(x, y)));
     releaseRank = new Map(ordered.map((b, i) => [b.key, i]));
+    const firsts = new Map();
+    for (const b of ordered) {
+      const channel = `${b.architecture} ${b.insiderChannel}`;
+      if (b.insiderChannel && !firsts.has(channel)) firsts.set(channel, b.key);
+    }
+    channelFirst = new Set(firsts.values());
   }
 }
 
-// The build a feature was first seen in, with its Insider channel if it's an Insider build
+// The build a feature was first seen in, with its Insider channel if it's an Insider build (Future Platforms shortened to FP)
 function firstSeenText(arch, id) {
   const key = firstSeen.firstSeen[arch] && firstSeen.firstSeen[arch][String(id)];
   if (!key) return '';
   buildOrder();
   const b = buildsByKey.get(key);
-  const text = b && b.insiderChannel ? `${key} (${versionText(b)})` : key;
-  return key === firstSeen.firstTrackedBuild[arch] ? `≤ ${text}` : text;
+  return b && b.insiderChannel ? `${key} (${versionText(b).replace('Future Platforms', 'FP')})` : key;
+}
+
+// An info icon, in the color of the text around it
+const INFO_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.75" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+  '<path d="M8 7.25v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.75" r="1" fill="currentColor"/></svg>';
+
+// The same, with an info icon where the build was the earliest scanned or the first scanned of its Insider channel: every feature it had
+// that no earlier scan had counts as first seen there by default, however old
+function firstSeenHtml(arch, id) {
+  const text = firstSeenText(arch, id);
+  if (!text) return '';
+  const key = firstSeen.firstSeen[arch][String(id)], b = buildsByKey.get(key);
+  const why = key === firstSeen.firstTrackedBuild[arch] ? 'This was the earliest build scanned, so the feature counts as first seen here by default. It may be older.'
+    : channelFirst.has(key) ? `This was the first ${versionText(b)} build scanned, so a feature no earlier scan had counts as first seen here by default. It may be older.`
+    : '';
+  return esc(text) + (why ? `<span class="seen-default" title="${esc(why)}" aria-label="${esc(why)}" role="img">${INFO_ICON}</span>` : '');
 }
 
 // For sorting by first seen: the order the builds came out
@@ -919,7 +940,7 @@ async function renderCompare() {
     ['Removed', 'removed', removed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id), html: (f) => firstSeenHtml(a.architecture, f.id), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ['Renamed', 'changed', renamed, [
@@ -930,7 +951,7 @@ async function renderCompare() {
     ['Newly named', 'changed', newlyNamed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
       { title: 'Name', value: (f) => f.name, cls: 'name' },
-      { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
+      { title: 'First seen', value: (f) => firstSeenText(arch, f.id), html: (f) => firstSeenHtml(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ...(nameLost.length ? [['Name lost', 'changed', nameLost, [
@@ -993,11 +1014,16 @@ async function renderBuild() {
     `${b.features.filter((f) => f.store).length} in the feature store. Showing ${rows.length}.` +
     (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '');
   out.insertAdjacentHTML('beforeend', pendingNote(b));
+  if (firstTracked) {
+    out.insertAdjacentHTML('beforeend', `<p class="notice"><b>${esc(buildLabel(b))}:</b> This is the earliest ${esc(archName(arch))} build scanned. ` +
+      'With no earlier scan to compare it with, every feature in it counts as first seen here by default, so the First seen column shows N/A.</p>');
+  }
   renderTable(out, rows, [
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
     { title: 'Default', value: (f) => DEFAULTS[f.default] || '', sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
-    { title: 'First seen', value: (f) => firstSeenText(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
+    firstTracked ? { title: 'First seen', value: () => 'N/A', cls: 'seen' }
+      : { title: 'First seen', value: (f) => firstSeenText(arch, f.id), html: (f) => firstSeenHtml(arch, f.id), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
     { title: 'Modules', value: modsText, cls: 'mods' },
   ], undefined, featureDetail(b));
