@@ -759,7 +759,8 @@ function featureDetail(build) {
       const ids = [...withRequired(f.id)];
       parts.push(`<p class="req-line"><b>Requires:</b> ${tree(requiresOf(f.id), new Set([f.id]))}</p>`,
         `<p class="req-copy"><button type="button" class="copy-ids" data-ids="${ids.join(',')}">Copy ${ids.length} IDs</button>` +
-        '<span class="muted">This feature and all it requires, comma-separated for ViVeTool /enable or /reset. To disable it, use only its own ID.</span></p>');
+        '<span class="muted">Copies this feature ID and its dependencies as a comma-separated list. Use with ViVeTool /enable or /reset. ' +
+        'To disable it, use only its own ID.</span></p>');
     }
     if (requiredBy.has(f.id)) {
       // Grouped by how many columns each takes, then alphabetical (fitCells puts them in that order once it has measured them)
