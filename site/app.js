@@ -321,25 +321,25 @@ function releaseTag(b) {
 const CHANNEL_NOTES = {
   'Experimental (Future Platforms)': [
     'Previously known as "Canary".',
-    'Builds are not aligned to any retail release of Windows.',
+    'Builds are not aligned to any retail release of Windows, and their features may or may not appear in future updates.',
   ],
   'Experimental (26H1)': [
     'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new devices and ' +
       'isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
-    'Contains features that may or may not ship in a future monthly update.',
+    'Experimental: Contains features that may or may not ship in a future monthly update.',
   ],
   'Beta (26H1)': [
     'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new devices and ' +
       'isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
-    'Typically contains features planned to ship in an upcoming monthly update.',
+    'Beta: Typically contains features planned to ship in an upcoming monthly update.',
   ],
   Experimental: [
     'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2.',
-    'Contains features that may or may not ship in a future monthly update.',
+    'Experimental: Contains features that may or may not ship in a future monthly update.',
   ],
   Beta: [
     'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2.',
-    'Typically contains features planned to ship in an upcoming monthly update.',
+    'Beta: Typically contains features planned to ship in an upcoming monthly update.',
   ],
 };
 // A channel's Windows core version: the end of its name in parentheses, none for the main channels
