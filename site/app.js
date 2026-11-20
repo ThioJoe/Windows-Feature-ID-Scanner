@@ -186,9 +186,11 @@ class BuildPicker extends HTMLElement {
     for (const s of sections) {
       html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
       for (const g of s.groups) {
+        // A group's notes: a bulleted line each on its info icon, and plain sentences for screen readers
+        const notes = g.notes || [];
         html += `<div role="group"${g.divider ? ' class="picker-divided"' : ''} aria-label="${esc(s.label + ' ' + g.label)}"` +
-          `${g.note ? ` aria-description="${esc(g.note)}"` : ''}><div class="picker-group-label" aria-hidden="true">${esc(g.label)}` +
-          `${g.note ? `<span class="picker-note" title="${esc(g.note)}">${INFO_ICON}</span>` : ''}</div>`;
+          `${notes.length ? ` aria-description="${esc(notes.join(' '))}"` : ''}><div class="picker-group-label" aria-hidden="true">${esc(g.label)}` +
+          `${notes.length ? `<span class="picker-note" title="${esc(notes.map((n) => `• ${n}`).join('\n'))}">${INFO_ICON}</span>` : ''}</div>`;
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
@@ -315,19 +317,30 @@ function releaseTag(b) {
 }
 
 // What each Insider channel is, from Microsoft's descriptions (https://learn.microsoft.com/windows-insider/flighting): its Windows core
-// version, then what the features in its builds are
+// version, then what the features in its builds are. Each point is a bulleted line on the channel's info icon.
 const CHANNEL_NOTES = {
-  'Experimental (Future Platforms)': 'Previously known as "Canary". Builds are not aligned to any retail release of Windows.',
-  'Experimental (26H1)': 'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on ' +
-    'select new devices and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs. Contains features that ' +
-    'may or may not ship in a future monthly update.',
-  'Beta (26H1)': 'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new ' +
-    'devices and isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs. Typically contains features ' +
-    'planned to ship in an upcoming monthly update.',
-  Experimental: 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Contains features that may or may not ship in a ' +
-    'future monthly update.',
-  Beta: 'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2. Typically contains features planned to ship in an upcoming ' +
-    'monthly update.',
+  'Experimental (Future Platforms)': [
+    'Previously known as "Canary".',
+    'Builds are not aligned to any retail release of Windows.',
+  ],
+  'Experimental (26H1)': [
+    'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new devices and ' +
+      'isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
+    'Contains features that may or may not ship in a future monthly update.',
+  ],
+  'Beta (26H1)': [
+    'Based on a newer core than 24H2, 25H2 and 26H2, despite the name. The released 26H1 only comes preinstalled on select new devices and ' +
+      'isn\'t offered through Windows Update, but Insiders can choose these builds on other PCs.',
+    'Typically contains features planned to ship in an upcoming monthly update.',
+  ],
+  Experimental: [
+    'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2.',
+    'Contains features that may or may not ship in a future monthly update.',
+  ],
+  Beta: [
+    'The "normal" Insider channels, on the same core as 24H2, 25H2 and 26H2.',
+    'Typically contains features planned to ship in an upcoming monthly update.',
+  ],
 };
 // A channel's Windows core version: the end of its name in parentheses, none for the main channels
 const coreVersion = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';
@@ -352,7 +365,7 @@ function fillBuildPicker(picker, selectedKey) {
     groups: [...groups].map(([label, builds], i, all) => ({
       label,
       divider: column === 'Insider' && i > 0 && coreVersion(label) !== coreVersion(all[i - 1][0]),
-      note: column === 'Insider' ? CHANNEL_NOTES[label] || '' : '',
+      notes: column === 'Insider' ? CHANNEL_NOTES[label] || [] : [],
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,
