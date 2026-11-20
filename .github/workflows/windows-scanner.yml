@@ -90,6 +90,14 @@ jobs:
         continue-on-error: true
         run: .\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
 
+      # Which features Windows checks while it runs, and while Super God Mode's pages and folders are opened (see trace-features.ps1).
+      # It comes in addition to the scan, so a failure only means the build's data has no trace
+      - name: Trace feature checks
+        shell: powershell
+        timeout-minutes: 90
+        continue-on-error: true
+        run: .\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
+
       - name: Create output directory based on build version
         shell: powershell
         run: |
@@ -124,7 +132,7 @@ jobs:
       - name: Add build to data/ and commit
         shell: powershell
         run: |
-          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode"
+          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode" --trace "$env:BUILD_FOLDER\trace"
           if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
