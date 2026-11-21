@@ -428,15 +428,6 @@
    "store": null
   },
   {
-   "id": 63985063,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63999188,
    "name": "RefreshEmptyDirectoryText_63999188",
    "modules": [
@@ -458,15 +449,6 @@
    "modules": [
     "rasdlg.dll",
     "rasman.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 64043044,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
    ],
    "store": null
   },
@@ -681,33 +663,6 @@
    "name": null,
    "modules": [
     "ExplorerFrame.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 64305957,
-   "name": null,
-   "modules": [
-    "KernelBase.dll",
-    "SHCore.dll",
-    "Widgets.dll",
-    "WidgetsUWP.dll",
-    "windowsudk.shellcommon.dll"
-   ],
-   "store": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 64306828,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
    ],
    "store": null
   },
@@ -2472,6 +2427,15 @@
    "store": null
   },
   {
+   "id": 61821968,
+   "name": "ValidateBugcheckMiniport",
+   "modules": [
+    "dbgeng.dll"
+   ],
+   "store": null,
+   "unverified": true
+  },
+  {
    "id": 61839287,
    "name": "ReleaseManaged_Standalone_2604",
    "modules": [
@@ -3029,6 +2993,15 @@
    "store": null
   },
   {
+   "id": 62637758,
+   "name": null,
+   "modules": [
+    "dbgeng.dll"
+   ],
+   "store": null,
+   "unverified": true
+  },
+  {
    "id": 62643729,
    "name": "WuSettings_ExtendablePauseAdditionalTelemetry",
    "modules": [
@@ -3182,6 +3155,15 @@
    ]
   },
   {
+   "id": 63027573,
+   "name": null,
+   "modules": [
+    "ImageLib.dll"
+   ],
+   "store": null,
+   "unverified": true
+  },
+  {
    "id": 63041670,
    "name": null,
    "modules": [
@@ -3222,6 +3204,15 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 63134332,
+   "name": null,
+   "modules": [
+    "ImageLib.dll"
+   ],
+   "store": null,
+   "unverified": true
   },
   {
    "id": 63143013,
@@ -3454,6 +3445,15 @@
    "unverified": true
   },
   {
+   "id": 63742986,
+   "name": null,
+   "modules": [
+    "ImageLib.dll"
+   ],
+   "store": null,
+   "unverified": true
+  },
+  {
    "id": 63753697,
    "name": null,
    "modules": [
@@ -3507,6 +3507,15 @@
     "mfcore.dll"
    ],
    "store": null
+  },
+  {
+   "id": 64315484,
+   "name": "Servicing_DbgEngNoSignatureChecksOnPreLoadedExtensions",
+   "modules": [
+    "dbgeng.dll"
+   ],
+   "store": null,
+   "unverified": true
   },
   {
    "id": 64383037,
@@ -3765,6 +3774,18 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 64305957,
+   "name": null,
+   "old": null,
+   "new": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
   }
  ],
  "defaultChanged": [
@@ -3778,6 +3799,30 @@
    "new": {
     "default": "alwaysEnabled",
     "changeTime": "read"
+   }
+  },
+  {
+   "id": 54237951,
+   "name": "TestConfNum",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 54237988,
+   "name": "TestGateImp",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
    }
   },
   {
@@ -3850,6 +3895,18 @@
    "new": {
     "default": "enabled",
     "changeTime": "moduleReload"
+   }
+  },
+  {
+   "id": 60985670,
+   "name": "Servicing_SpaceportIntegerOverflow",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
    }
   },
   {
@@ -3994,18 +4051,6 @@
    "new": {
     "default": "enabled",
     "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 62561433,
-   "name": null,
-   "old": {
-    "default": "disabled",
-    "changeTime": "moduleReload"
-   },
-   "new": {
-    "default": "enabled",
-    "changeTime": "moduleReload"
    }
   },
   {
