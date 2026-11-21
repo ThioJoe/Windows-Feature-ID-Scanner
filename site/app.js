@@ -1218,7 +1218,7 @@ async function renderBuild() {
   const thisBuild = { [key]: 'This build' };  // How the First seen column names this build
   const traced = b.features.filter((f) => f.trace).length;
   $('bld-status').textContent = `${buildLabel(b)}: ${b.features.length} feature IDs, ${b.features.filter((f) => f.name).length} named, ` +
-    `${b.features.filter((f) => f.store).length} in the feature store${traced ? `, ${traced} checked at runtime` : ''}. Showing ${rows.length}.` +
+    `${b.features.filter((f) => f.store).length} in the feature store${traced ? `, ${traced} with runtime details` : ''}. Showing ${rows.length}.` +
     (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '') +
     (tracedOnly && !traced ? ' This build has no feature trace.' : '');
   out.insertAdjacentHTML('beforeend', pendingNote(b));
