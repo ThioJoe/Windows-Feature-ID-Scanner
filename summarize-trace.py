@@ -6,9 +6,9 @@
 # For each feature checked: the stages its checks reported (the stage compiled into the binary that checked it), how they came out
 # (on or off, and the variant for variant checks), the processes that checked it, the phases of the trace it was checked in, and the
 # targets (pages, folders, apps, ...) it can be put down to. A target's checks are those made while it was open by processes in the
-# signed-in user's session, other than trace-features.ps1's own; checks that most targets of its kind make (such as File Explorer's
-# for any folder), and those a program makes whenever it starts (such as Settings, which some Control Panel links open), are left
-# out, so what's left is particular to it. The run's details (when, how long, events lost, the targets and
+# signed-in user's session, other than trace-features.ps1's own and a GitHub runner's; checks that most targets of its kind make
+# (such as File Explorer's for any folder), and those a program makes whenever it starts (such as Settings, which some Control Panel
+# links open), are left out, so what's left is particular to it. The run's details (when, how long, events lost, the targets and
 # what each opened) go with them. update-data.py adds the summary to the build's data.
 
 import bisect
@@ -32,6 +32,7 @@ STARTUP_SHARE = 0.5     # A feature a program checks at startup in this share of
 STARTUP_MIN = 3         # Programs started fewer times than this have no startup baseline
 SIGN_IN_MINUTES = 2     # Checks this long after Explorer started count as sign-in
 KIND_NAMES = {'app': 'app', 'task': 'Control Panel'}
+RUNNER = re.compile(r'^(hosted-compute-agent|provjobd|runner\.(listener|worker|provisioner))', re.I)  # A GitHub runner's own programs
 
 
 def when(s):
@@ -96,6 +97,32 @@ def main():
     def process(pid, t):
         return instance(pid, t)[1:]
 
+    # The GitHub runner's own processes and what they start, which run in the user's session there: its agent starts wsl.exe every
+    # 30 seconds, and the workflow's steps run under Runner.Worker. What they check isn't what a target did.
+    runner_cache = {}
+
+    def from_runner(pid, t, depth=0):
+        start, name, _, parent = instance(pid, t)
+        key = (pid, start)
+        if key not in runner_cache:
+            runner_cache[key] = False  # (Reused process IDs could make a loop; it ends here)
+            if RUNNER.match(name):
+                runner_cache[key] = True
+            elif parent and parent != pid and depth < 16:
+                # The parent as it was when this process started, or for one running before the trace, as the snapshot has it
+                runner_cache[key] = from_runner(parent, start, depth + 1) if start else from_snapshot(parent, depth + 1)
+        return runner_cache[key]
+
+    def from_snapshot(pid, depth):
+        while pid and depth < 16:
+            name, _, parent = snapshot.get(pid, ('', -1, 0))
+            if RUNNER.match(name):
+                return True
+            if parent == pid:
+                break
+            pid, depth = parent, depth + 1
+        return False
+
     targets = [r for r in read_csv(os.path.join(folder, 'targets.csv')) if r.get('kind') not in ('start', 'end')]
     ours = {int(r['target']) for r in read_csv(os.path.join(folder, 'targets.csv')) if r.get('kind') == 'start' and r['target'].isdigit()}
     session = run.get('session')
@@ -140,8 +167,8 @@ def main():
             counts = Counter(fid for x in sets for fid in x)
             startup[name] = {fid for fid, n in counts.items() if n >= STARTUP_SHARE * len(sets)}
 
-    # What each target's window checked, in the user's session, not counting trace-features.ps1's own process and its console, or
-    # what a program checks whenever it starts
+    # What each target's window checked, in the user's session, not counting trace-features.ps1's own process and its console, the
+    # runner's processes, or what a program checks whenever it starts
     times = [c[0] for c in checks]
     windows = []
     for r in targets:
@@ -150,7 +177,8 @@ def main():
             a, b = when(r['opened']), when(r['closed'])
             for t, pid, stage, fid, kind in checks[bisect.bisect_left(times, a):bisect.bisect_right(times, b)]:
                 name, sess, parent = process(pid, t)
-                if pid in ours or (parent in ours and name.lower() == 'conhost.exe') or fid in startup.get(name.lower(), ()):
+                if (pid in ours or (parent in ours and name.lower() == 'conhost.exe') or fid in startup.get(name.lower(), ())
+                        or from_runner(pid, t)):
                     continue
                 if session is None or sess == session:
                     found.add(fid)
