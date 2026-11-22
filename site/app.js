@@ -885,7 +885,7 @@ const modsText = (f) => (f.modules || []).join(', ');
 const traceOnly = (f) => Boolean(f.trace) && !(f.modules || []).length && !(f.declaredIn || []).length && !f.store;
 // The default the symbols give a feature (none for one only a feature trace gives)
 const symbolDefault = (f) => f.symbolDefault || (f.defaultSource !== 'trace' ? f.default : undefined);
-const checkedBy = (f) => ((f.trace.processes || []).length ? `checked by ${f.trace.processes.join(', ')}` : 'checked at runtime');
+const checkedBy = (f) => ((f.trace.processes || []).length ? `checked by ${f.trace.processes.join(', ')}` : 'in the runtime trace');
 // The modules, or for a feature only a trace has, the processes that checked it
 const modsCell = {
   title: 'Modules', cls: 'mods',
@@ -894,36 +894,41 @@ const modsCell = {
 };
 const TRACE_DEFAULT = 'From a feature trace: the stage compiled into the binaries that checked the feature while Windows ran';
 const defaultCell = (f) => (f.defaultSource === 'trace' ? `<span class="trace-default" title="${esc(TRACE_DEFAULT)}">${esc(DEFAULTS[f.default])}</span>` : esc(DEFAULTS[f.default] || ''));
-const stageText = (s) => DEFAULTS[s] + (s.startsWith('always') ? '' : ' by default');
-const andList = (items) => (items.length > 1 ? items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1] : items[0] || '');
 
-// What a build's feature trace saw of a feature, for its panel
+const TRACE_LIST_LIMIT = 8;  // The processes and targets a feature's trace entry keeps (update-data.py)
+const onOff = (s) => (s === 'enabled' || s === 'alwaysEnabled' ? 'on' : s ? 'off' : '');
+
+// A trace entry's processes that checked the feature (the most checks first) and the targets it was checked on (the most particular to
+// it first), as the rows of a panel's block
+function traceLists(t) {
+  const list = (title, items) => (items.length
+    ? `<div class="kv"><span>${title}</span><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}` +
+      (items.length >= TRACE_LIST_LIMIT ? `<li class="muted" title="The data keeps up to ${TRACE_LIST_LIMIT}">…</li>` : '') + '</ul></div>' : '');
+  return list('Found usage by', t.processes || []) + list('Found triggers', t.targets || []);
+}
+
+// What a build's feature trace saw of a feature, for its panel: who checked it, on what, and how the checks came out against the default
+// they reported (the stage compiled into the binaries that made them). Where the symbols give the feature another default (the one the
+// panel shows), that's noted too: the binaries that checked it may not be the ones that default is from.
 function traceHtml(f, build) {
   const t = f.trace;
-  const stages = andList(t.stages.map(stageText));
-  const results = andList(t.results);
-  const procs = t.processes || [];
-  const parts = [`<b>Checked at runtime</b>${procs.length ? ` by ${andList(procs.map((p) => esc(p)))}` : ''}` +
-    (procs.length >= 8 ? ' (among others)' : '') + `: reported as ${esc(stages)}` +
-    (t.stages.length > 1 ? ' (by different binaries)' : '') + `, and came out ${esc(results)}` +
-    ((t.variants || []).length ? ` (variant ${esc(t.variants.join(', '))})` : '') + '.'];
-  const plain = (s) => (s || '').replace(/^always(.)/, (_, c) => c.toLowerCase());
-  if (f.default && f.defaultSource !== 'trace' && !t.stages.some((s) => plain(s) === plain(f.default))) {
-    parts.push('The binaries that checked it may not be the ones its default is from.');
-  }
-  if ((t.targets || []).length) parts.push(`Checked when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}.`);
-  const run = build.trace;
-  const when = run && run.tracedAt ? ` (${run.minutes}-minute trace, ${esc(run.tracedAt.slice(0, 10))})` : '';
-  return `<p>${parts.join(' ')}<span class="muted">${when}</span></p>`;
+  const mixed = t.results.length > 1;
+  const state = mixed ? 'Enabled and disabled' : t.results[0] === 'on' ? 'Enabled' : 'Disabled';
+  const reported = [...new Set(t.stages.map(onOff))];
+  const notes = [reported.length > 1 ? `defaults: ${reported.join(', ')}` : !mixed && t.results[0] === reported[0] ? 'matches default' : `default: ${reported[0]}`];
+  const symbols = onOff(symbolDefault(f));
+  if (symbols && reported.length === 1 && symbols !== reported[0]) notes.push(`symbols' default: ${symbols}`);
+  return `<div class="mod"><h4>Runtime trace data</h4>${traceLists(t)}<p><b>Feature runtime state:</b> ` +
+    `<span class="state ${mixed ? '' : t.results[0] === 'on' ? 'enabled' : 'disabled'}">${state}</span>` +
+    ((t.variants || []).length ? `, variant ${esc(t.variants.join(', '))}` : '') +
+    (notes.length ? ` <span class="muted">(${esc(notes.join('; '))})</span>` : '') + '</p></div>';
 }
 
 // Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
 // processes and targets: the stages and results were that build's.
 function otherTraceHtml(t, build) {
-  return `<p><b>Checked at runtime</b> in the feature trace of build ${esc(t.build)}` +
-    ((t.processes || []).length ? `, by ${andList(t.processes.map((p) => esc(p)))}` : '') +
-    ((t.targets || []).length ? `, when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}` : '') + '. ' +
-    `<span class="muted">${build.trace ? "This build's trace didn't see it checked." : 'This build has no feature trace.'}</span></p>`;
+  return `<div class="mod"><h4>Runtime trace data <span class="muted">from build ${esc(t.build)}; ` +
+    `${build.trace ? "not seen in this build's trace" : 'this build has no trace'}</span></h4>${traceLists(t)}</div>`;
 }
 
 // ---------------------------------------------------------------------------
