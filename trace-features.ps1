@@ -23,7 +23,7 @@ param(
     [string]$SuperGodModeDir,              # Super God Mode's statistics; without them only the shell's UI and the Start menu's apps are opened
     [switch]$Prepare,
     [int]$IdleMinutes = 5,                 # How long Windows is left alone first (from sign-in, when the trace started at boot)
-    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them should take about 65 minutes, from the time each kind took in the tests)
+    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them took 68 minutes in a test on the ARM64 runner)
     [string]$Python = 'python',            # For summarize-trace.py
     [string]$Targets,                      # (Internal) Open the targets as the signed-in user, recording them in this CSV file
     [switch]$RestartShell                  # (Internal, with -Targets) Restart Explorer first
@@ -55,6 +55,21 @@ public static class TraceKeys {
         foreach (byte k in keys) { keybd_event(k, 0, Flags(k), UIntPtr.Zero); System.Threading.Thread.Sleep(30); }
         System.Threading.Thread.Sleep(holdMs);
         for (int i = keys.Length - 1; i >= 0; i--) { keybd_event(keys[i], 0, Flags(keys[i]) | 2u, UIntPtr.Zero); System.Threading.Thread.Sleep(30); }
+    }
+}
+public static class TracePages {
+    // Opens a page through the shell, on a thread of its own: the shell waits until the page's app has taken it, which an app that has
+    // stopped responding doesn't (the shell gives up after a minute). The error, "" when the page opened, or null after timeoutMs.
+    public static string Open(string page, int timeoutMs) {
+        string result = null;
+        var thread = new System.Threading.Thread(() => {
+            try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(page) { UseShellExecute = true }); result = ""; }
+            catch (Exception e) { result = e.Message; }
+        });
+        thread.IsBackground = true;
+        thread.SetApartmentState(System.Threading.ApartmentState.STA);
+        thread.Start();
+        return thread.Join(timeoutMs) ? result : null;
     }
 }
 '@
@@ -110,6 +125,24 @@ public static class TraceKeys {
         $exe, $arguments = Split-Command $command
         if ($exe -match '^(shell:|::\{)') { $arguments = "$exe $arguments".Trim(); $exe = 'explorer.exe' }
         if ($arguments) { Start-Process -FilePath $exe -ArgumentList $arguments } else { Start-Process -FilePath $exe }
+    }
+    function Open-Page([string]$kind, [string]$page, [string]$app, [string]$homePage) {
+        # A page in the app's window. Opening one waits until the app has taken it, which an app that has stopped responding doesn't
+        # (Windows gives up after a minute): on some runners, Settings stops responding whenever it's sent to another page from Display
+        # or Advanced display (from Display even after 15 seconds on it). So after 10 seconds the app is closed and started again on its
+        # home page, between targets so that its startup checks count for none, and the page is opened again.
+        for ($try = 1; $try -le 2; $try++) {
+            $script:pageFailed = $false
+            Open-Target $kind $page $page {
+                $result = [TracePages]::Open($page, 10000)
+                if ($null -eq $result) { $script:pageFailed = $true; throw "$app stopped responding" }
+                if ($result) { throw $result }
+            } 2 @($app)
+            if (-not $script:pageFailed -or (Get-Date) -gt $deadline) { return }
+            try { Get-Process $app -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session } | Stop-Process -Force } catch {}
+            try { Start-Process $homePage } catch {}
+            Start-Sleep -Seconds 6
+        }
     }
 
     Write-Target 'start' 'process' "$PID" (Now) ''  # So the summary can leave out this script's own checks
@@ -168,13 +201,13 @@ public static class TraceKeys {
     # checks come within half a second, so each page gets 2 seconds.
     $settings = @(Read-List 'MS_Settings.csv' | ForEach-Object { $_.'Full Setting Command' } | Where-Object { $_ -like 'ms-settings:*' } | Select-Object -Unique)
     if ($settings) { Open-Target 'settings' 'Settings (home)' 'ms-settings:' { Start-Process 'ms-settings:' } 6 @('SystemSettings') }
-    foreach ($s in $settings) { Open-Target 'settings' $s $s { Start-Process $s } 2 @('SystemSettings') }
+    foreach ($s in $settings) { Open-Page 'settings' $s 'SystemSettings' 'ms-settings:' }
     Get-Process SystemSettings -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session } | Stop-Process -Force
 
     # Windows Security pages, the same way
     $security = @(Read-List 'Deep_Links.csv' | ForEach-Object { $_.'Full Command' } | Where-Object { $_ -like 'windowsdefender:*' } | Select-Object -Unique)
     if ($security) { Open-Target 'security' 'Windows Security (home)' 'windowsdefender:' { Start-Process 'windowsdefender:' } 6 @('SecHealthUI') }
-    foreach ($s in $security) { Open-Target 'security' $s $s { Start-Process $s } 2 @('SecHealthUI') }
+    foreach ($s in $security) { Open-Page 'security' $s 'SecHealthUI' 'windowsdefender:' }
     Get-Process SecHealthUI -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session } | Stop-Process -Force
 
     # Control Panel's task links: its pages, applets, wizards and tools. Not Narrator, the recovery drive wizard or help links.
