@@ -88,7 +88,7 @@ jobs:
     # The builds are scanned at the same time, each on its own runner; the commit job adds them all to data/ afterwards
     strategy:
       fail-fast: false
-      max-parallel: 6
+      max-parallel: 8  # (GitHub runs up to 20 jobs at once for a public repository; the newest builds of all 7 channels and versions at once)
       matrix:
         build: ${{ fromJSON(needs.check.outputs.builds) }}
     permissions:
