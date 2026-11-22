@@ -883,7 +883,9 @@ const modsText = (f) => (f.modules || []).join(', ');
 // Whether only a feature trace knows the feature (no binary's symbols have it, nor the feature store). A trace sees what's checked while
 // it runs, so such a feature counts in neither first seen nor the builds' added and removed features.
 const traceOnly = (f) => Boolean(f.trace) && !(f.modules || []).length && !(f.declaredIn || []).length && !f.store;
-const checkedBy = (f) => `checked by ${f.trace.processes.join(', ')}`;
+// The default the symbols give a feature (none for one only a feature trace gives)
+const symbolDefault = (f) => f.symbolDefault || (f.defaultSource !== 'trace' ? f.default : undefined);
+const checkedBy = (f) => ((f.trace.processes || []).length ? `checked by ${f.trace.processes.join(', ')}` : 'checked at runtime');
 // The modules, or for a feature only a trace has, the processes that checked it
 const modsCell = {
   title: 'Modules', cls: 'mods',
@@ -900,8 +902,9 @@ function traceHtml(f, build) {
   const t = f.trace;
   const stages = andList(t.stages.map(stageText));
   const results = andList(t.results);
-  const parts = [`<b>Checked at runtime</b> by ${andList(t.processes.map((p) => esc(p)))}` +
-    (t.processes.length >= 8 ? ' (among others)' : '') + `: reported as ${esc(stages)}` +
+  const procs = t.processes || [];
+  const parts = [`<b>Checked at runtime</b>${procs.length ? ` by ${andList(procs.map((p) => esc(p)))}` : ''}` +
+    (procs.length >= 8 ? ' (among others)' : '') + `: reported as ${esc(stages)}` +
     (t.stages.length > 1 ? ' (by different binaries)' : '') + `, and came out ${esc(results)}` +
     ((t.variants || []).length ? ` (variant ${esc(t.variants.join(', '))})` : '') + '.'];
   const plain = (s) => (s || '').replace(/^always(.)/, (_, c) => c.toLowerCase());
@@ -917,7 +920,8 @@ function traceHtml(f, build) {
 // Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
 // processes and targets: the stages and results were that build's.
 function otherTraceHtml(t, build) {
-  return `<p><b>Checked at runtime</b> in the feature trace of build ${esc(t.build)}, by ${andList(t.processes.map((p) => esc(p)))}` +
+  return `<p><b>Checked at runtime</b> in the feature trace of build ${esc(t.build)}` +
+    ((t.processes || []).length ? `, by ${andList(t.processes.map((p) => esc(p)))}` : '') +
     ((t.targets || []).length ? `, when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}` : '') + '. ' +
     `<span class="muted">${build.trace ? "This build's trace didn't see it checked." : 'This build has no feature trace.'}</span></p>`;
 }
@@ -1124,11 +1128,12 @@ async function renderCompare() {
     if (JSON.stringify(o.store || null) !== JSON.stringify(f.store || null)) {
       storeChanged.push({ id, name: f.name || o.name, modules: f.modules, oldStore: o.store, newStore: f.store });
     }
-    // Only where both builds know the value; builds scanned before default states were read don't have them. Not defaults from feature
-    // traces: a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
-    const known = ['default', 'changeTime'].filter((k) => o[k] && f[k] && !(k === 'default' && [o.defaultSource, f.defaultSource].includes('trace')));
-    if (known.some((k) => o[k] !== f[k])) {
-      const pick = (x) => Object.fromEntries(known.map((k) => [k, x[k]]));
+    // Only where both builds know the value; builds scanned before default states were read don't have them. The symbols' defaults, not
+    // feature traces': a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
+    const value = (x, k) => (k === 'default' ? symbolDefault(x) : x[k]);
+    const known = ['default', 'changeTime'].filter((k) => value(o, k) && value(f, k));
+    if (known.some((k) => value(o, k) !== value(f, k))) {
+      const pick = (x) => Object.fromEntries(known.map((k) => [k, value(x, k)]));
       defaultChanged.push({ id, name: f.name || o.name, modules: f.modules, oldState: pick(o), newState: pick(f) });
     }
   }

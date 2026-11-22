@@ -269,7 +269,7 @@ def merge_earlier_scan(features, details, earlier, earlier_details, manifest):
                 continue  # Only a placeholder for binaries this scan read, which don't have it
             entry = features[fid] = dict(old, modules=modules)
             if stale:
-                for k in ('default', 'changeTime', 'requires'):
+                for k in ('default', 'defaultSource', 'symbolDefault', 'changeTime', 'requires'):
                     entry.pop(k, None)
         else:
             # A name from the symbols over one from ViVeTool's dictionary or an earlier build
@@ -292,8 +292,10 @@ def merge_earlier_scan(features, details, earlier, earlier_details, manifest):
                 for k in ('default', 'changeTime'):
                     if not entry.get(k) and old.get(k):
                         entry[k] = old[k]
-                        if k == 'default' and old.get('defaultSource'):
-                            entry['defaultSource'] = old['defaultSource']
+                        if k == 'default':
+                            for extra in ('defaultSource', 'symbolDefault'):
+                                if old.get(extra):
+                                    entry[extra] = old[extra]
                 if old.get('requires'):
                     entry['requires'] = sorted(set(entry.get('requires', [])) | set(old['requires']))
             if entry.get('unverified') and not old.get('unverified') and (modules or old.get('declaredIn')):
@@ -333,8 +335,8 @@ def merge_trace(old, new):
 def add_trace(features, trace):
     """Adds a feature trace (trace.json from summarize-trace.py) to the build's features. Each feature it saw checked gets a trace
     entry: the stages its checks reported (the stage compiled into the binary that checked it, the one most checks reported first),
-    how they came out (on, off), the variants of variant checks, and the processes and targets that checked it (the most first, up to
-    TRACE_LIST_LIMIT). A feature no symbols or feature store had gets an entry of its own. A scan of the build again adds to them."""
+    how they came out (on, off), the variants of variant checks, and the processes that checked it (the most checks first) and the
+    targets (those with the fewest features first, the most particular to it), up to TRACE_LIST_LIMIT of each. A feature no symbols or feature store had gets an entry of its own. A scan of the build again adds to them."""
     added = 0
     for fid, t in trace.get('features', {}).items():
         fid = int(fid)
@@ -353,17 +355,30 @@ def trace_defaults(features):
     """Defaults from the feature trace (defaultSource 'trace'): the stage most checks reported, for a feature the symbols give no
     default for; and always enabled (or always disabled) where the symbols say enabled (disabled) but every check reported always,
     since C++ code only shows whether a feature is enabled or disabled. Where the trace and the symbols disagree otherwise, the symbols'
-    default stays (the site shows what the trace saw with it): the binaries that checked it may not be the ones the default is from."""
+    default stays (the site shows what the trace saw with it): the binaries that checked it may not be the ones the default is from.
+    The symbols' own default of a refined feature stays in symbolDefault, which is what comparisons between builds use."""
     for entry in features.values():
         t = entry.get('trace')
         if not t:
             continue
-        if not entry.get('default') or entry.get('defaultSource') == 'trace':
+        symbols = symbol_default(entry)
+        if not symbols:
             entry['default'] = t['stages'][0]
             entry['defaultSource'] = 'trace'
-        elif entry['default'] in ALWAYS and set(t['stages']) == {ALWAYS[entry['default']]}:
-            entry['default'] = ALWAYS[entry['default']]
+            entry.pop('symbolDefault', None)
+        elif symbols in ALWAYS and set(t['stages']) == {ALWAYS[symbols]}:
+            entry['default'] = ALWAYS[symbols]
             entry['defaultSource'] = 'trace'
+            entry['symbolDefault'] = symbols
+        elif entry.get('defaultSource') == 'trace':
+            entry['default'] = symbols  # (Refined by an earlier trace that this one doesn't bear out)
+            entry.pop('defaultSource', None)
+            entry.pop('symbolDefault', None)
+
+
+def symbol_default(f):
+    """The default the symbols give a feature (None for one only a feature trace gives)"""
+    return f.get('symbolDefault') or (f.get('default') if f.get('defaultSource') != 'trace' else None)
 
 
 def trace_header(trace, features):
@@ -452,11 +467,12 @@ def diff_builds(old, new):
                 name_lost.append({'id': i, 'oldName': a['name']})
         if store_signature(a) != store_signature(b):
             store_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': a.get('store'), 'new': b.get('store')})
-        # Only where both builds know the value; builds scanned before default states were read don't have them. Not defaults from
-        # feature traces: a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
-        old_default = {k: a[k] for k in ('default', 'changeTime') if a.get(k) and b.get(k)
-                       and not (k == 'default' and 'trace' in (a.get('defaultSource'), b.get('defaultSource')))}
-        new_default = {k: b[k] for k in old_default}
+        # Only where both builds know the value; builds scanned before default states were read don't have them. The symbols' defaults,
+        # not feature traces': a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
+        va = {'default': symbol_default(a), 'changeTime': a.get('changeTime')}
+        vb = {'default': symbol_default(b), 'changeTime': b.get('changeTime')}
+        old_default = {k: va[k] for k in ('default', 'changeTime') if va[k] and vb[k]}
+        new_default = {k: vb[k] for k in old_default}
         if old_default != new_default:
             default_changed.append({'id': i, 'name': b['name'] or a['name'], 'old': old_default, 'new': new_default})
 

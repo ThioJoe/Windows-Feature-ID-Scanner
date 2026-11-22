@@ -211,7 +211,7 @@ def main():
         entry['features'] = own
         target_list.append(entry)
         for fid in own:
-            features[fid].setdefault('targets', []).append(label)
+            features[fid].setdefault('targets', []).append((len(own), label))
 
     summary_path = os.path.join(folder, 'tracerpt-summary.txt')
     lost = None
@@ -245,7 +245,7 @@ def main():
         entry['processes'] = [p for p, _ in f['processes'].most_common() if not p.startswith('pid ')]  # (Not a process the trace didn't name)
         entry['phases'] = [p for p in ('boot', 'signIn', 'idle', 'targets') if p in f['phases']]
         if f.get('targets'):
-            entry['targets'] = f['targets']
+            entry['targets'] = [label for _, label in sorted(f['targets'], key=lambda x: x[0])]  # The most particular (fewest features) first
         out[str(fid)] = entry
     path = os.path.join(folder, 'trace.json')
     with open(path, 'w', encoding='utf-8', newline='\n') as fh:
