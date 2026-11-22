@@ -149,7 +149,14 @@ function Get-UpdateCatalogLinks([string]$updateId) {
 
 function Get-CumulativeUpdate {
     # The download links of the target cumulative update's files. The same files serve 24H2, 25H2 and 26H2; take the entry for the target version.
-    $entry = Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' -and $_.Title -match "version $Version" } | Select-Object -First 1
+    # The catalog's search can leave an entry out for a while (a 25H2 scan once found no entry for KB5132057, while the 26H2 scan started at
+    # the same time found its own), so it's asked again before giving up.
+    for ($attempt = 1; ; $attempt++) {
+        $entry = Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' -and $_.Title -match "version $Version" } | Select-Object -First 1
+        if ($entry -or $attempt -ge 5) { break }
+        Log "The Microsoft Update Catalog's search has no x64 $Version entry for $Kb; asking again in a minute"
+        Start-Sleep -Seconds 60
+    }
     if (-not $entry) { throw "No x64 $Version entry for $Kb in the Microsoft Update Catalog" }
     Log "Update: $($entry.Title)"
     # Since 24H2, a cumulative update can come with "checkpoint" updates that have to be installed first; the download dialog lists them all
