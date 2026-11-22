@@ -94,9 +94,10 @@ jobs:
           KB: ${{ matrix.build.kb }}
           BUILD: ${{ matrix.build.build }}
           CHANNEL: ${{ matrix.build.channel }}  # An Insider build's channel (empty for the released versions' builds)
+          FEATURE_TRACE: ${{ vars.FEATURE_TRACE }}  # false: no feature trace after the scan (it takes about an hour and ten minutes)
         run: |
           python --version
-          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output"
+          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false')
 
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks
@@ -172,7 +173,7 @@ jobs:
           while read -r folder; do
             key="${folder#output/Windows-Build-}"
             echo "Adding $key"
-            python3 update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode"
+            python3 update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode" --trace "$folder/trace"
             keys+=("$key")
           done < <(find output -mindepth 1 -maxdepth 1 -type d -name 'Windows-Build-*' 2>/dev/null | sort -t- -k3,3V)
           if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi

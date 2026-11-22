@@ -28,7 +28,8 @@
 #      DISM /ScanHealth, sfc /verifyonly and the installed files against Microsoft's file lists (verify-windows-files.py). If a check
 #      fails, the run stops before the scan.
 #   6. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, then Super God Mode
-#      (run-super-god-mode.ps1) as the VM's own user, and their output is copied back.
+#      (run-super-god-mode.ps1) as the VM's own user, then, after a restart, the feature trace (trace-features.ps1), and their output
+#      is copied back.
 #
 # Steps can be run one at a time with -Step, which is how it was developed and tested.
 
@@ -44,7 +45,8 @@ param(
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
     [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
     [string]$InsiderChannel,               # Install the newest build of this Windows Insider channel (such as Beta) instead of -Kb and -Version
-    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan')]
+    [switch]$SkipTrace,                    # No feature trace after the scan (trace-features.ps1)
+    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace')]
     [string]$Step = 'All'
 )
 
@@ -396,10 +398,12 @@ function Get-VmBuild {
     }
 }
 
-function Restart-ScanVM {
+function Restart-ScanVM([switch]$AnyPending) {
     # Restarted from inside, so Windows finishes installing updates the way it does on any PC. Installing a cumulative update can take
     # more than one restart (Windows' servicing restarts the VM again by itself, even after it has signed in), so this waits until the
-    # VM has stayed up for a couple of minutes with no restart pending.
+    # VM has stayed up for a couple of minutes with no restart pending. With -AnyPending, only until it has stayed up: a restart that
+    # isn't for updates needn't wait for a restart Windows' servicing asks for (a VM fresh from the image can have one pending that
+    # nothing does).
     Log 'Restarting the VM'
     $before = Invoke-InVM -Retry { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
     try { Invoke-InVM { Restart-Computer -Force } } catch { }
@@ -421,7 +425,7 @@ function Restart-ScanVM {
             $stable = 0
             continue
         }
-        if ($state.Boot -le $before -or $state.Boot -ne $lastBoot -or $state.Pending) {
+        if ($state.Boot -le $before -or $state.Boot -ne $lastBoot -or ($state.Pending -and -not $AnyPending)) {
             $lastBoot = $state.Boot
             $stable = 0
             continue
@@ -1349,8 +1353,31 @@ function Copy-ScannerToVM {
             Remove-Item C:\scan\python.zip
         }
     }
-    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py', 'run-super-god-mode.ps1') {
+    foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py', 'run-super-god-mode.ps1', 'trace-features.ps1', 'summarize-trace.py') {
         Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
+    }
+}
+
+function Invoke-TraceInVM {
+    # Which features Windows checks while it runs (trace-features.ps1), from a restart on so that boot and sign-in are in the trace, and
+    # then what opening Super God Mode's pages and folders checks. It comes in addition to the scan, so a failure only means the build's
+    # data has no trace. It runs after the scan and Super God Mode, since the restart and what the trace opens change the VM.
+    try {
+        $prepared = Invoke-VmTask 'TracePrepare' -timeoutMinutes 10 -script @'
+try { & C:\scan\trace-features.ps1 -Prepare *>&1 | ForEach-Object { Write-Log "$_" }; Write-Result 'ok' } catch { Write-Result "error $($_.Exception.Message)" }
+'@
+        if ($prepared -ne 'ok') { throw $prepared }
+        Restart-ScanVM -AnyPending
+        Set-VmNetwork
+        $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 115 -script @'
+try {
+    & C:\scan\trace-features.ps1 -OutputDir C:\scan\output-temp\trace -SuperGodModeDir C:\scan\output-temp\super-god-mode -Python C:\scan\python\python.exe *>&1 | ForEach-Object { Write-Log "$_" }
+    Write-Result 'ok'
+} catch { Write-Result "error $($_.Exception.Message)" }
+'@
+        if ($trace -ne 'ok') { Log "The feature trace didn't run: $trace" }
+    } catch {
+        Log "The feature trace didn't run: $($_.Exception.Message)"
     }
 }
 
@@ -1388,6 +1415,8 @@ try {
         Log "Super God Mode didn't run: $($_.Exception.Message)"
     }
 
+    if (-not $SkipTrace) { Invoke-TraceInVM }
+
     Log "Copying the results to $OutputDir"
     $s = Get-VmSession
     Copy-Item -FromSession $s -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
@@ -1406,7 +1435,7 @@ if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageK
 }
 if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd $insiderImage | Out-Null }
-if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan') {
+if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace') {
     Start-ScanVM
     $script:VmSession = Wait-ScanVM
     Set-VmNetwork
@@ -1447,5 +1476,11 @@ if ($Step -in 'All', 'Scan') {
     $build = (Get-VmBuild).Split(' ')[0]
     if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
     Invoke-ScanInVM (Join-Path $RepoDir 'data\symbol-cache-AMD64.json')
+}
+if ($Step -eq 'Trace') {
+    # Only the feature trace (the scan has its own), with what's in the VM: Super God Mode's statistics if the scan made them
+    Copy-ScannerToVM
+    Invoke-TraceInVM
+    Copy-Item -FromSession (Get-VmSession) -Path C:\scan\output-temp\trace -Destination $OutputDir -Recurse -Force -ErrorAction SilentlyContinue
 }
 Log "Done: $Step"

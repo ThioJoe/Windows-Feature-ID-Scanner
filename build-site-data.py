@@ -4,7 +4,9 @@
 #
 #   <out>/details/<arch>/<nn>.json   For each feature ID, its code details (from the builds' details.json) from the newest build of the
 #                                    architecture that has them, with that build's key. Split by feature ID (ID % 64), so that showing a
-#                                    feature only downloads the file it's in rather than all of a build's details.
+#                                    feature only downloads the file it's in rather than all of a build's details. Also what the newest
+#                                    feature trace that saw it says of where it's used (the processes and the targets that checked it,
+#                                    from a build's features.json), for builds whose own trace didn't see it.
 #
 #   <out>/super-god-mode.json        The builds that have Super God Mode statistics (their super-god-mode/ folder), with the version,
 #                                    user and any error from its run.json.
@@ -97,16 +99,33 @@ def main():
             for fid, usage in json.load(f).items():
                 newest.setdefault(arch, {})[int(fid)] = (key, usage)
 
-    for arch, features in sorted(newest.items()):
+    # Where the newest trace that saw a feature saw it used. Not its stages or results: those belong to that build.
+    traced = {}  # arch -> feature ID -> {build, processes, targets}
+    names = [name for name in os.listdir(builds_dir) if os.path.exists(os.path.join(builds_dir, name, 'features.json'))] if os.path.isdir(builds_dir) else []
+    for key in sorted(names, key=lambda k: version_tuple(k.rsplit('-', 1)[0])):
+        with open(os.path.join(builds_dir, key, 'features.json'), encoding='utf-8') as f:
+            build = json.load(f)
+        for feat in build.get('features', []) if build.get('trace') else []:
+            if feat.get('trace'):
+                t = feat['trace']
+                traced.setdefault(build['architecture'], {})[feat['id']] = dict({'build': key, 'processes': t.get('processes', [])},
+                                                                               **({'targets': t['targets']} if t.get('targets') else {}))
+
+    for arch in sorted(set(newest) | set(traced)):
+        features, seen = newest.get(arch, {}), traced.get(arch, {})
+        entry = lambda fid: dict({'build': features[fid][0], 'usage': features[fid][1]} if fid in features else {},
+                                 **({'trace': seen[fid]} if fid in seen else {}))
         out_dir = os.path.join(args.out, 'details', arch)
         os.makedirs(out_dir, exist_ok=True)
         for n in range(SHARDS):
-            lines = ['%s: %s' % (json.dumps(str(fid)), json.dumps({'build': features[fid][0], 'usage': features[fid][1]}, separators=(',', ':')))
-                     for fid in sorted(features) if fid % SHARDS == n]
+            lines = ['%s: %s' % (json.dumps(str(fid)), json.dumps(entry(fid), separators=(',', ':')))
+                     for fid in sorted(set(features) | set(seen)) if fid % SHARDS == n]
             with open(os.path.join(out_dir, '%02d.json' % n), 'w', encoding='utf-8', newline='\n') as f:
                 f.write('{\n' + ',\n'.join(lines) + '\n}\n' if lines else '{}\n')
         builds = sorted({key for key, _ in features.values()})
         print('[site] %s: code details of %d features, from %s' % (arch, len(features), ', '.join(builds)))
+        if seen:
+            print('[site] %s: where %d features are used, from the feature traces of %s' % (arch, len(seen), ', '.join(sorted({t['build'] for t in seen.values()}))))
     os.makedirs(args.out, exist_ok=True)
     super_god_mode(builds_dir, args.out)
     return 0

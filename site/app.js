@@ -88,7 +88,7 @@ function loadDetailText(arch) {
       for (const shard of shards) {
         for (const [id, d] of Object.entries(shard)) {
           const parts = [];
-          for (const u of Object.values(d.usage)) for (const k of ['callers', 'strings', 'sources', 'imports', 'symbols', 'calls', 'tables']) parts.push(...(u[k] || []));
+          for (const u of Object.values(d.usage || {})) for (const k of ['callers', 'strings', 'sources', 'imports', 'symbols', 'calls', 'tables']) parts.push(...(u[k] || []));
           text.set(Number(id), parts.join('\n').toLowerCase());
         }
       }
@@ -499,6 +499,9 @@ function matches(f, q, namedOnly) {
   if (f.viveToolName && f.viveToolName.toLowerCase().includes(q)) return true;
   if (f.oldName && f.oldName.toLowerCase().includes(q)) return true;
   if (f.newName && f.newName.toLowerCase().includes(q)) return true;
+  // What a feature trace opened when it was checked, such as ms-settings:display; and for a feature only a trace has, what checked it
+  if (f.trace && (f.trace.targets || []).some((t) => t.toLowerCase().includes(q))) return true;
+  if (traceOnly(f) && (f.trace.processes || []).some((p) => p.toLowerCase().includes(q))) return true;
   return (f.modules || []).some((m) => m.toLowerCase().includes(q));
 }
 
@@ -672,11 +675,23 @@ function featureDetail(build) {
   };
   const rowsOf = (cells) => 1 + Math.max(...cells.map(([r]) => r));
   const permutations = (a) => (a.length < 2 ? [a] : a.flatMap((x, i) => permutations(a.filter((_, j) => j !== i)).map((p) => [x, ...p])));
+  // How many boxes a feature's tree has with every path followed, or Infinity if its requirements loop back. Orders are only compared
+  // for requirements whose trees take up to ORDER_BOXES together: every x64 feature's take fewer than 130, but some ARM64 builds'
+  // requirements branch and loop back so much that laying out every order would take minutes. The others keep longest chain first.
+  const ORDER_BOXES = 500;
+  const boxes = new Map();
+  const boxCount = (id) => {
+    if (!boxes.has(id)) {
+      boxes.set(id, Infinity);  // Until its requirements are counted: reaching it again on the way means they loop back
+      boxes.set(id, 1 + ((byId.get(id) || {}).requires || []).reduce((n, k) => n + boxCount(k), 0));
+    }
+    return boxes.get(id);
+  };
   const requiresOf = (id) => {
     if (!ordered.has(id)) {
       const ids = [...((byId.get(id) || {}).requires || [])].sort((a, b) => chainLength(b) - chainLength(a));
       ordered.set(id, ids);  // Until the best order is worked out, in case requirements ever loop back to it
-      if (ids.length > 1 && ids.length <= 6) {
+      if (ids.length > 1 && ids.length <= 6 && ids.reduce((n, k) => n + boxCount(k), 0) <= ORDER_BOXES) {
         let best = ids, fewest = Infinity;
         for (const p of permutations(ids)) {
           const rows = rowsOf(place(p.map((k) => ({ cells: fullTree(k) }))));
@@ -737,12 +752,14 @@ function featureDetail(build) {
   };
   return async (row) => {
     const f = byId.get(row.id) || row;
+    const det = await loadDetails(build.architecture, f.id);
     const parts = [];
     if (NAME_SOURCES[f.nameSource]) parts.push(`<p class="muted">${esc(NAME_SOURCES[f.nameSource][1])}.</p>`);
     if (f.default || f.changeTime) {
       const def = f.default ? DEFAULTS[f.default] + (f.default.startsWith('always') ? '' : ' by default') : '';
       const when = f.changeTime ? 'changes take effect ' + CHANGE_TIMES[f.changeTime] : '';
-      parts.push(`<p><b>Default:</b> ${esc([def, when].filter(Boolean).join('; '))}</p>`);
+      const source = f.defaultSource === 'trace' ? ` <span class="src" title="${esc(TRACE_DEFAULT)}">from a feature trace</span>` : '';
+      parts.push(`<p><b>Default:</b> ${esc(def)}${def ? source : ''}${def && when ? '; ' : ''}${esc(when)}</p>`);
     }
     // Shown when the features it requires decide it: not for a feature that's off by default anyway, or one with no known default
     // that nothing it requires turns off
@@ -754,6 +771,8 @@ function featureDetail(build) {
           ? `which ${causedBy.length > 1 ? 'are' : 'is'} disabled by default` : `whose default${causedBy.length > 1 ? 's aren\'t' : ' isn\'t'} known`) : '';
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
+    if (f.trace) parts.push(traceHtml(f, build));
+    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, build));
     if ((f.requires || []).length) {
       // The IDs as ViVeTool's /id: takes them. Disabling what a feature requires would also turn off the other features that require it.
       const ids = [...withRequired(f.id)];
@@ -767,8 +786,7 @@ function featureDetail(build) {
       const cell = (id) => `<span class="cell" data-name="${esc((byId.get(id) || {}).name || '')}" data-id="${id}">${link(id)}</span>`;
       parts.push(`<div class="req-by"><b>Required by:</b><div class="cells">${requiredBy.get(f.id).map(cell).join('')}</div></div>`);
     }
-    const det = await loadDetails(build.architecture, f.id);
-    if (det) {
+    if (det && det.usage) {
       parts.push(...Object.entries(det.usage).map(([mod, u]) => moduleDetail(mod, u)));
       if (det.build !== build.key) parts.push(`<p class="muted">Code details are from build ${esc(det.build)}.</p>`);
     }
@@ -862,6 +880,51 @@ const nameCell = (f) => (f.name ? esc(f.name) : '<span class="unnamed">unnamed</
   (f.viveToolName ? ` <span class="muted" title="ViVeTool's dictionary names this feature differently from the symbols">(ViVeTool: ${esc(f.viveToolName)})</span>` : '') +
   (f.unverified ? ' <span class="unverified" title="This build\'s symbols for its binary couldn\'t be downloaded; known from an earlier version of the binary">unverified</span>' : '');
 const modsText = (f) => (f.modules || []).join(', ');
+// Whether only a feature trace knows the feature (no binary's symbols have it, nor the feature store). A trace sees what's checked while
+// it runs, so such a feature counts in neither first seen nor the builds' added and removed features.
+const traceOnly = (f) => Boolean(f.trace) && !(f.modules || []).length && !(f.declaredIn || []).length && !f.store;
+// The default the symbols give a feature (none for one only a feature trace gives)
+const symbolDefault = (f) => f.symbolDefault || (f.defaultSource !== 'trace' ? f.default : undefined);
+const checkedBy = (f) => ((f.trace.processes || []).length ? `checked by ${f.trace.processes.join(', ')}` : 'checked at runtime');
+// The modules, or for a feature only a trace has, the processes that checked it
+const modsCell = {
+  title: 'Modules', cls: 'mods',
+  value: (f) => modsText(f) || (traceOnly(f) ? checkedBy(f) : ''),
+  html: (f) => (traceOnly(f) ? `<span class="muted">${esc(checkedBy(f))}</span>` : esc(modsText(f))),
+};
+const TRACE_DEFAULT = 'From a feature trace: the stage compiled into the binaries that checked the feature while Windows ran';
+const defaultCell = (f) => (f.defaultSource === 'trace' ? `<span class="trace-default" title="${esc(TRACE_DEFAULT)}">${esc(DEFAULTS[f.default])}</span>` : esc(DEFAULTS[f.default] || ''));
+const stageText = (s) => DEFAULTS[s] + (s.startsWith('always') ? '' : ' by default');
+const andList = (items) => (items.length > 1 ? items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1] : items[0] || '');
+
+// What a build's feature trace saw of a feature, for its panel
+function traceHtml(f, build) {
+  const t = f.trace;
+  const stages = andList(t.stages.map(stageText));
+  const results = andList(t.results);
+  const procs = t.processes || [];
+  const parts = [`<b>Checked at runtime</b>${procs.length ? ` by ${andList(procs.map((p) => esc(p)))}` : ''}` +
+    (procs.length >= 8 ? ' (among others)' : '') + `: reported as ${esc(stages)}` +
+    (t.stages.length > 1 ? ' (by different binaries)' : '') + `, and came out ${esc(results)}` +
+    ((t.variants || []).length ? ` (variant ${esc(t.variants.join(', '))})` : '') + '.'];
+  const plain = (s) => (s || '').replace(/^always(.)/, (_, c) => c.toLowerCase());
+  if (f.default && f.defaultSource !== 'trace' && !t.stages.some((s) => plain(s) === plain(f.default))) {
+    parts.push('The binaries that checked it may not be the ones its default is from.');
+  }
+  if ((t.targets || []).length) parts.push(`Checked when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}.`);
+  const run = build.trace;
+  const when = run && run.tracedAt ? ` (${run.minutes}-minute trace, ${esc(run.tracedAt.slice(0, 10))})` : '';
+  return `<p>${parts.join(' ')}<span class="muted">${when}</span></p>`;
+}
+
+// Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
+// processes and targets: the stages and results were that build's.
+function otherTraceHtml(t, build) {
+  return `<p><b>Checked at runtime</b> in the feature trace of build ${esc(t.build)}` +
+    ((t.processes || []).length ? `, by ${andList(t.processes.map((p) => esc(p)))}` : '') +
+    ((t.targets || []).length ? `, when the trace opened ${andList(t.targets.map((x) => `<code>${esc(x)}</code>`))}` : '') + '. ' +
+    `<span class="muted">${build.trace ? "This build's trace didn't see it checked." : 'This build has no feature trace.'}</span></p>`;
+}
 
 // ---------------------------------------------------------------------------
 // Super God Mode
@@ -1056,7 +1119,7 @@ async function renderCompare() {
   const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [], defaultChanged = [];
   for (const [id, f] of nf) {
     const o = of.get(id);
-    if (!o) { added.push(f); continue; }
+    if (!o) { if (!traceOnly(f)) added.push(f); continue; }
     if (o.name !== f.name) {
       if (!o.name) newlyNamed.push(f);
       else if (f.name) renamed.push({ id, oldName: o.name, newName: f.name, name: f.name, modules: f.modules });
@@ -1065,14 +1128,16 @@ async function renderCompare() {
     if (JSON.stringify(o.store || null) !== JSON.stringify(f.store || null)) {
       storeChanged.push({ id, name: f.name || o.name, modules: f.modules, oldStore: o.store, newStore: f.store });
     }
-    // Only where both builds know the value; builds scanned before default states were read don't have them
-    const known = ['default', 'changeTime'].filter((k) => o[k] && f[k]);
-    if (known.some((k) => o[k] !== f[k])) {
-      const pick = (x) => Object.fromEntries(known.map((k) => [k, x[k]]));
+    // Only where both builds know the value; builds scanned before default states were read don't have them. The symbols' defaults, not
+    // feature traces': a trace only has the binaries that checked the feature while it ran, which needn't be the same ones each time.
+    const value = (x, k) => (k === 'default' ? symbolDefault(x) : x[k]);
+    const known = ['default', 'changeTime'].filter((k) => value(o, k) && value(f, k));
+    if (known.some((k) => value(o, k) !== value(f, k))) {
+      const pick = (x) => Object.fromEntries(known.map((k) => [k, value(x, k)]));
       defaultChanged.push({ id, name: f.name || o.name, modules: f.modules, oldState: pick(o), newState: pick(f) });
     }
   }
-  for (const [id, f] of of) if (!nf.has(id)) removed.push(f);
+  for (const [id, f] of of) if (!nf.has(id) && !traceOnly(f)) removed.push(f);
 
   const arch = b.architecture;
   const seenNames = { [a.key]: 'Old build', [b.key]: 'New build' };  // How the First seen column names the two builds
@@ -1140,7 +1205,7 @@ let buildRender = 0;
 async function renderBuild() {
   const key = $('bld-select').value;
   const q = $('bld-search').value.trim().toLowerCase();
-  const namedOnly = $('bld-named').checked, storeOnly = $('bld-store').checked, newOnly = $('bld-new').checked;
+  const namedOnly = $('bld-named').checked, storeOnly = $('bld-store').checked, newOnly = $('bld-new').checked, tracedOnly = $('bld-traced').checked;
   const searchDetails = $('bld-details').checked;
   const out = $('bld-results');
   setHash(buildHash());
@@ -1153,13 +1218,23 @@ async function renderBuild() {
   const detailText = searchDetails && q ? await loadDetailText(arch) : null;
   if (render !== buildRender) return;
   const hit = (f) => matches(f, q, namedOnly) || (detailText !== null && (!namedOnly || f.name) && (detailText.get(f.id) || '').includes(q));
-  const rows = b.features.filter((f) => hit(f) && (!storeOnly || f.store) && (!newOnly || firstSeenKeys(arch, f.id).includes(key)));
+  const rows = b.features.filter((f) => hit(f) && (!storeOnly || f.store) && (!newOnly || firstSeenKeys(arch, f.id).includes(key)) && (!tracedOnly || f.trace));
   const firstTracked = isEarliestBuild(b);
   const thisBuild = { [key]: 'This build' };  // How the First seen column names this build
+  const traced = b.features.filter((f) => f.trace).length;
   $('bld-status').textContent = `${buildLabel(b)}: ${b.features.length} feature IDs, ${b.features.filter((f) => f.name).length} named, ` +
-    `${b.features.filter((f) => f.store).length} in the feature store. Showing ${rows.length}.` +
-    (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '');
+    `${b.features.filter((f) => f.store).length} in the feature store${traced ? `, ${traced} with runtime details` : ''}. Showing ${rows.length}.` +
+    (newOnly && firstTracked ? ' This is the first tracked build, so every ID counts as new here.' : '') +
+    (tracedOnly && !traced ? ' This build has no feature trace.' : '');
   out.insertAdjacentHTML('beforeend', pendingNote(b));
+  if (b.trace && tracedOnly) {
+    const t = b.trace, only = b.features.filter(traceOnly).length;
+    out.insertAdjacentHTML('beforeend', `<p class="notice"><b>Feature trace:</b> Windows wrote an event each time its code checked a feature, ` +
+      `for ${t.minutes} minutes on <time>${esc((t.tracedAt || '').slice(0, 10))}</time>${t.boot ? ' from boot' : ''}, while the trace opened ` +
+      `${fmt(t.targets || 0)} settings pages, folders, apps and parts of the shell one at a time. It saw ${fmt(traced)} features checked` +
+      (only ? `, ${fmt(only)} of them in no binary's symbols or the feature store` : '') + '. A feature only shows up if code that checks it ran, ' +
+      'so this is a sample of what Windows uses, not everything it has.</p>');
+  }
   if (firstTracked) {
     const several = earliestBuilds.get(arch).length > 1;
     out.insertAdjacentHTML('beforeend', `<p class="notice"><b>${esc(buildLabel(b))}:</b> This is ${several ? 'one of the earliest' : 'the earliest'} ` +
@@ -1169,11 +1244,11 @@ async function renderBuild() {
   renderTable(out, rows, [
     { title: 'ID', value: (f) => f.id, cls: 'id' },
     { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
-    { title: 'Default', value: (f) => DEFAULTS[f.default] || '', sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
+    { title: 'Default', value: (f) => DEFAULTS[f.default] || '', html: defaultCell, sortKey: (f) => DEFAULT_ORDER[f.default] || '', cls: 'store' },
     firstTracked ? { title: 'First seen', value: () => 'N/A', cls: 'seen' }
       : { title: 'First seen', value: (f) => firstSeenText(arch, f.id, thisBuild), html: (f) => firstSeenHtml(arch, f.id, thisBuild), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
     { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
-    { title: 'Modules', value: modsText, cls: 'mods' },
+    modsCell,
   ], undefined, featureDetail(b));
 }
 
@@ -1321,7 +1396,7 @@ async function init() {
     $('cmp-new').value = o;
     cmp();
   });
-  for (const id of ['bld-select', 'bld-named', 'bld-store', 'bld-new', 'bld-details']) $(id).addEventListener('change', bld);
+  for (const id of ['bld-select', 'bld-named', 'bld-store', 'bld-new', 'bld-traced', 'bld-details']) $(id).addEventListener('change', bld);
   $('bld-search').addEventListener('input', debounce(bld, 250));
   // The copy buttons of feature panels, which are added and removed with the panels
   document.addEventListener('click', (e) => {
