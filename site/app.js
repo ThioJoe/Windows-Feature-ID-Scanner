@@ -163,7 +163,7 @@ class BuildPicker extends HTMLElement {
       if (o) this.pick(o.dataset.value);
     });
     this.list.addEventListener('mousemove', (e) => {
-      const o = e.target.closest('[role=option]');
+      const o = e.target.closest('[role=option]:not([aria-disabled=true])');
       if (o && o !== this.active) this.setActive(o, 'none');
     });
     // Closes when focus moves elsewhere (Tab, a click outside), or on a tap outside, which doesn't move focus on every phone
@@ -207,6 +207,27 @@ class BuildPicker extends HTMLElement {
     this.list.innerHTML = html;
     this.active = null;
     this.value = this.items.some((x) => x.value === this.current) ? this.current : (this.items.length ? this.items[0].value : '');
+    this.markTaken();
+  }
+
+  // A value the list shows greyed out and doesn't let be picked, with a note saying why when it's hovered or clicked (the build the other
+  // compare picker has)
+  setTaken(value, note) {
+    this.taken = value;
+    this.takenNote = note;
+    this.markTaken();
+  }
+
+  markTaken() {
+    for (const o of this.list.querySelectorAll('[role=option]')) {
+      if (o.dataset.value === this.taken) {
+        o.setAttribute('aria-disabled', 'true');
+        o.dataset.tip = this.takenNote;
+      } else {
+        o.removeAttribute('aria-disabled');
+        delete o.dataset.tip;
+      }
+    }
   }
 
   option(value) {
@@ -233,6 +254,7 @@ class BuildPicker extends HTMLElement {
   }
 
   pick(value) {
+    if (value === this.taken) return;
     this.close(true);
     if (value === this.current) return;
     this.value = value;
@@ -772,7 +794,7 @@ function featureDetail(build) {
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
     if (f.trace) parts.push(traceHtml(f, build, await loadTraceTargets(build.key)));
-    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, build, await loadTraceTargets(det.trace.build)));
+    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, f.id, await loadTraceTargets(det.trace.build)));
     if ((f.requires || []).length) {
       // The IDs as ViVeTool's /id: takes them. Disabling what a feature requires would also turn off the other features that require it.
       const ids = [...withRequired(f.id)];
@@ -945,10 +967,11 @@ function traceHtml(f, build, full) {
 }
 
 // Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
-// processes and targets: the stages and results were that build's.
-function otherTraceHtml(t, build, full) {
-  return `<div class="mod"><h4>Runtime trace data <span class="muted">from build ${esc(t.build)}; ` +
-    `${build.trace ? "not seen in this build's trace" : 'this build has no trace'}</span></h4>${traceLists(t, full)}</div>`;
+// processes and targets: the stages and results were that build's, whose panel the link leads to.
+function otherTraceHtml(t, id, full) {
+  return '<div class="mod"><h4>Runtime trace data</h4><h5>From other builds</h5>' +
+    `<div class="kv"><span>Build</span><div class="val"><a href="${featureHref(t.build, id)}" title="Feature ${id} in ${esc(t.build)}">${esc(t.build)}</a></div></div>` +
+    `${traceLists(t, full)}</div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1134,6 +1157,9 @@ async function renderCompare() {
   const namedOnly = $('cmp-named').checked;
   const out = $('cmp-results');
   setHash(`compare/${oldKey}/${newKey}`);
+  // Each picker greys out the build the other one has, which it doesn't let be picked too
+  $('cmp-old').setTaken(newKey, "Already selected as the new build; a build can't be compared with itself");
+  $('cmp-new').setTaken(oldKey, "Already selected as the old build; a build can't be compared with itself");
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';
@@ -1169,13 +1195,13 @@ async function renderCompare() {
   const sections = [
     ['Added', 'added', added, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
-      { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
+      { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name wide' },
       { title: 'Feature store', value: (f) => storeText(f.store), cls: 'store' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ['Removed', 'removed', removed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
-      { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name' },
+      { title: 'Name', value: (f) => f.name, html: nameCell, cls: 'name wide' },
       { title: 'First seen', value: (f) => firstSeenText(a.architecture, f.id, seenNames), html: (f) => firstSeenHtml(a.architecture, f.id, seenNames), sortKey: (f) => firstSeenRank(a.architecture, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
@@ -1186,13 +1212,13 @@ async function renderCompare() {
     ]],
     ['Newly named', 'changed', newlyNamed, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
-      { title: 'Name', value: (f) => f.name, cls: 'name' },
+      { title: 'Name', value: (f) => f.name, cls: 'name wide' },
       { title: 'First seen', value: (f) => firstSeenText(arch, f.id, seenNames), html: (f) => firstSeenHtml(arch, f.id, seenNames), sortKey: (f) => firstSeenRank(arch, f.id), cls: 'seen' },
       { title: 'Modules', value: modsText, cls: 'mods' },
     ]],
     ...(nameLost.length ? [['Name lost', 'changed', nameLost, [
       { title: 'ID', value: (f) => f.id, cls: 'id' },
-      { title: 'Old name', value: (f) => f.oldName, cls: 'name' },
+      { title: 'Old name', value: (f) => f.oldName, cls: 'name wide' },
       { title: 'Old modules', value: modsText, cls: 'mods' },
     ]]] : []),
     ['Feature store changes', 'changed', storeChanged, [
