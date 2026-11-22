@@ -302,13 +302,17 @@ def packages(client, update, architecture='x64'):
     checkpoint cumulative updates (DISM installs the ones a device still needs when they're in the cumulative update's folder), the
     cumulative update, the enablement package that gives the build its number, and the .NET Framework update. Each has its role
     (package_roles) and KB. Left out: the Safe OS dynamic update (WinRE's) and the Setup dynamic update (for Windows Setup), and the
-    images and packages for new installations and other Windows cores, which are most of the update. An update without a cumulative
-    update is a whole build (Future Platforms' builds are, with a KB of their own or without, as 29712.1013's KB5136956): a new
-    installation's image is the build, so the .NET Framework update, if it has one, is all there is."""
+    images and packages for new installations and other Windows cores, which are most of the update. A Future Platforms update's
+    metadata names no cumulative update: the update's own KB's .msu is its cumulative update when it has one (29712.1013's KB5136956,
+    whose image is 29712.1000), and an update without one is a whole build (29708.1003, without a KB): a new installation's image is
+    the build, so the .NET Framework update, if it has one, is all there is."""
     roles = package_roles(client, update)
     if update['kb'] and update['kb'] not in roles and 'checkpoint' in roles.values():  # Cumulative updates, none of them its own
         raise RuntimeError(f"the update's metadata doesn't have its cumulative update {update['kb']}: it isn't one a device on the same "
                            f"Windows core installs ({', '.join(f'{kb} {role}' for kb, role in sorted(roles.items())) or 'nothing'})")
+    if update['kb'] and update['kb'] not in roles and any(
+            re.match(r'(?i)^windows\d+\.\d+-%s-%s\.msu$' % (update['kb'], architecture), f['name']) for f in update['files']):
+        roles[update['kb']] = 'cumulative'
     wanted = {'checkpoint': 'msu', 'cumulative': 'msu', 'enablement': 'cab'}
     picked = []
     for kb, role in sorted(roles.items()):

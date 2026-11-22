@@ -928,8 +928,8 @@ function Install-InsiderBuild {
     # installed with DISM, as a released build's are: the cumulative update, with the checkpoint cumulative update it builds on in the
     # same folder, then after a restart the enablement package that gives the build the channel's build number, and the build's .NET
     # Framework update. The VM isn't enrolled in the Insider program; flight signing, which the build is signed for, is on (Set-InsiderImage).
-    # A build whose update has no cumulative update (Future Platforms' builds are whole builds) is its image already, so only the .NET
-    # Framework update is installed.
+    # A build whose update has no cumulative update (as Future Platforms' 29708.1003 was a whole build) is its image already, so only the
+    # .NET Framework update is installed.
     $file = Join-Path $WorkDir 'insider\image.json'
     if (-not (Test-Path $file)) { throw "No ${file}: the VM has to be made from the Insider build's own image (-Step Disk with -InsiderChannel)" }
     $image = Get-Content $file -Raw | ConvertFrom-Json
