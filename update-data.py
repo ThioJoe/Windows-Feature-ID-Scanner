@@ -351,6 +351,39 @@ def add_trace(features, trace):
     print('[data] feature trace: %d features checked, %d of them found by nothing else' % (len(trace.get('features', {})), added))
 
 
+def add_trace_only(data_dir, summary_path, trace_dir):
+    """Adds a feature trace to a build data/ has, without scanning it again (scan-in-vm.ps1 -TraceOnly, whose summary.json only says
+    which build it is): its features get what the trace saw (add_trace) and the defaults it gives (trace_defaults), the build's header the
+    run (trace_header) and trace.json the targets. Nothing else of the build changes. Returns the build's key."""
+    summary = load_json(summary_path)
+    key = build_key(summary['fullBuild'], summary['architecture'])
+    path = os.path.join(build_dir(data_dir, key), 'features.json')
+    if not os.path.exists(path):
+        sys.exit('[data] %s is not in data/: a trace alone can only be added to a build that was scanned' % key)
+    trace_path = os.path.join(trace_dir or '', 'trace.json')
+    if not trace_dir or not os.path.exists(trace_path):
+        sys.exit('[data] no feature trace of %s to add (%s has no trace.json)' % (key, trace_dir))
+    trace = load_json(trace_path)
+    build = load_json(path)
+    features = {f['id']: f for f in build['features']}
+    before = len(features)
+    add_trace(features, trace)
+    trace_defaults(features)
+    # The run goes where add_build puts it: after the notes, or after the symbols' statistics
+    header, run, after = {}, trace_header(trace, features), 'notes' if 'notes' in build else 'symbolStats'
+    for k, v in build.items():
+        if k != 'features':
+            header[k] = run if k == 'trace' else v
+        if k == after and 'trace' not in build:
+            header['trace'] = run
+    header.setdefault('trace', run)
+    write_build_file(path, header, [features[k] for k in sorted(features)])
+    write_trace(data_dir, key, trace)
+    print('[data] added the feature trace of %s: %d features checked, %d of them new to the build' % (
+        key, len(trace.get('features', {})), len(features) - before))
+    return key
+
+
 def trace_defaults(features):
     """Defaults from the feature trace (defaultSource 'trace'): the stage most checks reported, for a feature the symbols give no
     default for; and always enabled (or always disabled) where the symbols say enabled (disabled) but every check reported always,
@@ -638,7 +671,9 @@ def main():
     parser.add_argument('--super-god-mode', help="Folder with Super God Mode's statistics for the build (from run-super-god-mode.ps1)")
     parser.add_argument('--trace', help='Folder with the feature trace of the build (trace.json, from trace-features.ps1)')
     args = parser.parse_args()
-    if args.summary:
+    if args.summary and load_json(args.summary).get('traceOnly'):
+        add_trace_only(args.data_dir, args.summary, args.trace)  # (Its --symbols and --super-god-mode aren't used)
+    elif args.summary:
         key = add_build(args.data_dir, args.summary, args.symbols, args.trace)
         if args.super_god_mode:
             store_super_god_mode(args.data_dir, key, args.super_god_mode)

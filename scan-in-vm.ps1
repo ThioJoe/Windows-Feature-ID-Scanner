@@ -46,12 +46,15 @@ param(
     [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
     [string]$InsiderChannel,               # Install the newest build of this Windows Insider channel (such as Beta) instead of -Kb and -Version
     [switch]$SkipTrace,                    # No feature trace after the scan (trace-features.ps1)
+    [switch]$TraceOnly,                    # No scan: only Super God Mode (for the trace's targets) and the feature trace, for a build data/ has
+                                           # without a trace (summary.json then only says which build it is, with traceOnly)
     [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace')]
     [string]$Step = 'All'
 )
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+if ($TraceOnly -and $SkipTrace) { throw '-TraceOnly and -SkipTrace together leave nothing to do' }
 if (-not $OutputDir) { $OutputDir = Join-Path $WorkDir 'output' }
 New-Item -ItemType Directory -Force $WorkDir, $OutputDir | Out-Null
 
@@ -1388,8 +1391,11 @@ try {
 }
 
 function Invoke-ScanInVM([string]$resultsCache) {
-    # The scan runs the way the regular workflow runs it on the runner
+    # The scan runs the way the regular workflow runs it on the runner (with -TraceOnly, only Super God Mode and the trace)
     Copy-ScannerToVM
+    if ($TraceOnly) {
+        Log 'No scan (-TraceOnly): Super God Mode, for the trace''s targets, and the feature trace'
+    } else {
     if ($resultsCache -and (Test-Path $resultsCache)) { Copy-ToVM $resultsCache 'C:\scan\symbol-cache.json' }
 
     Log 'Running the scan inside the VM'
@@ -1406,6 +1412,7 @@ try {
 } catch { Write-Result "error $($_.Exception.Message)" }
 '@
     if ($result -ne 'ok') { throw "The scan inside the VM failed: $result" }
+    }
 
     # Super God Mode's statistics, as the VM's user would get them. They come in addition to the scan, so a failure only means the
     # build's data has none (run-super-god-mode.ps1 reports its own failures in run.json and still succeeds).
@@ -1426,6 +1433,12 @@ try {
     Log "Copying the results to $OutputDir"
     $s = Get-VmSession
     Copy-Item -FromSession $s -Path C:\scan\output-temp\* -Destination $OutputDir -Recurse -Force
+    if ($TraceOnly) {
+        # Which build the trace is of, for the workflow and update-data.py, which adds only the trace to the build's data
+        if (-not (Test-Path (Join-Path $OutputDir 'trace\trace.json'))) { throw 'The feature trace inside the VM made no trace.json (see above)' }
+        @{ fullBuild = (Get-VmBuild).Split(' ')[0]; architecture = 'AMD64'; traceOnly = $true } | ConvertTo-Json | Set-Content (Join-Path $OutputDir 'summary.json') -Encoding UTF8
+        return
+    }
     foreach ($f in 'symbol-features.json', 'extracted-names.txt') { Copy-Item -FromSession $s -Path "C:\scan\$f" -Destination $OutputDir -Force }
     if ($resultsCache) { Copy-Item -FromSession $s -Path C:\scan\symbol-cache.json -Destination $resultsCache -Force }
     Add-ScanNotes

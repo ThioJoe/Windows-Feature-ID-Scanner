@@ -19,6 +19,10 @@ on:
         description: 'Scan the newest builds even if they are in data/ already'
         type: boolean
         default: false
+      trace_only:
+        description: 'Only the feature trace, added to the data of builds already in data/ (give them in builds): no scan'
+        type: boolean
+        default: false
   schedule:
     - cron: '41 8 * * *'
 
@@ -54,7 +58,14 @@ jobs:
           VERSIONS: ${{ inputs.versions }}
           BUILDS: ${{ inputs.builds }}
           FORCE: ${{ inputs.force && '--all' || '' }}
-        run: python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
+          TRACE_ONLY: ${{ inputs.trace_only }}
+        run: |
+          # A trace alone is added to a build's data, so the builds have to be given, and in data/ already
+          if [ "$TRACE_ONLY" = true ]; then
+            [ -n "$BUILDS" ] || { echo "::error::trace_only needs the builds to trace in builds"; exit 1; }
+            for b in $BUILDS; do [ -f "data/builds/$b-AMD64/features.json" ] || { echo "::error::$b-AMD64 isn't in data/, so it needs a full scan"; exit 1; }; done
+          fi
+          python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
 
       # The list only changes when Microsoft releases something
       - name: Commit the list of released builds
@@ -96,9 +107,10 @@ jobs:
           BUILD: ${{ matrix.build.build }}
           CHANNEL: ${{ matrix.build.channel }}  # An Insider build's channel (empty for the released versions' builds)
           FEATURE_TRACE: ${{ vars.FEATURE_TRACE }}  # false: no feature trace after the scan (it takes about an hour and ten minutes)
+          TRACE_ONLY: ${{ inputs.trace_only }}      # true: no scan, only the trace (scan-in-vm.ps1 -TraceOnly)
         run: |
           python --version
-          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false')
+          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false') -TraceOnly:($env:TRACE_ONLY -eq 'true')
 
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks
@@ -186,6 +198,7 @@ jobs:
           git add data
           if git diff --cached --quiet; then echo "No changes to data/."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           if [ ${#keys[@]} -eq 1 ]; then message="Add feature data for build ${keys[0]}"; else message="Add feature data for builds $(IFS=,; echo "${keys[*]}" | sed 's/,/, /g')"; fi
+          if [ "${{ inputs.trace_only }}" = true ]; then message="${message/feature data for/the feature traces of}"; message="${message/traces of build /trace of build }"; fi
           git commit -q -m "$message"
           git pull -q --rebase origin "$GITHUB_REF_NAME"
           git push -q origin "HEAD:$GITHUB_REF_NAME"
