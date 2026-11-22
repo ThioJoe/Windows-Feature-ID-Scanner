@@ -6,8 +6,9 @@
 # PDBs it didn't get, with what's needed to download their binaries from the symbol server (see scan-symbols.py and update-data.py).
 #
 #   python catch-up-symbols.py check [--github-output] [--summary FILE]
-#       Asks the symbol server for each build's pending PDBs and their binaries, until the build's checkUntil (CHECK_DAYS after its
-#       release, see update-data.py), and lists the builds it has some of now. Only needs Python, so it runs on any runner.
+#       Asks the symbol server for each build's pending PDBs, and for the binaries of those it has now, until the build's checkUntil
+#       (CHECK_DAYS after its release, see update-data.py), and lists the builds it has some of now. Only needs Python, so it runs on any
+#       runner.
 #
 #   python catch-up-symbols.py run --builds KEY [KEY ...] [--github-output] [--summary FILE]
 #       Scans those builds' PDBs again with scan-symbols.py --manifest, which takes what the results cache has for the PDBs the scan
@@ -98,33 +99,49 @@ def pending_builds(data_dir, today):
     return checked, stopped
 
 
-def check(args):
-    today = datetime.date.today().isoformat()
-    builds, stopped = pending_builds(args.data_dir, today)
-    # One question per PDB and binary, though builds that share binaries list the same ones
-    questions = {}
-    for _, _, pending in builds:
-        for cache_key, entry in pending.items():
-            questions[('pdb', cache_key)] = (entry.get('pdbName') or cache_key.split('/')[0], cache_key.split('/', 1)[1])
-            for file in entry.get('files', []):
-                questions[('binary', file['name'], binary_key(file))] = (file['name'], binary_key(file))
-    pdbs = sum(1 for k in questions if k[0] == 'pdb')
-    print('[check] asking the symbol server for %d PDBs and %d binaries of %d builds' % (pdbs, len(questions) - pdbs, len(builds)), flush=True)
-    answers, failed = {}, 0
+def ask(questions, what, answers):
+    """Asks the symbol server about each of the questions ({key: (name, its key on the server)}), 8 at a time, and puts its answers in
+    answers, saying every PROGRESS_SECONDS how far it's got. Returns how many of them failed (their answer is False)."""
+    failed = found = 0
     started = shown = time.monotonic()
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(on_server, *q): k for k, q in questions.items()}
-        for future in concurrent.futures.as_completed(futures):
+        for done, future in enumerate(concurrent.futures.as_completed(futures), 1):
             try:
                 answers[futures[future]] = future.result()
             except Exception as e:
                 answers[futures[future]] = False
                 failed += 1
                 print('[check] %s: %s' % ('/'.join(futures[future][1:]), e), flush=True)
+            found += bool(answers[futures[future]])
             if time.monotonic() - shown >= PROGRESS_SECONDS:
                 shown = time.monotonic()
-                print('[check] %d of %d answered after %d minutes; %d of the PDBs are on the symbol server so far' % (
-                    len(answers), len(futures), (shown - started) // 60, sum(1 for k, v in answers.items() if v and k[0] == 'pdb')), flush=True)
+                print('[check] %d of %d %s answered after %d minutes; %d of them are on the symbol server' % (
+                    done, len(futures), what, (shown - started) // 60, found), flush=True)
+    return failed
+
+
+def check(args):
+    today = datetime.date.today().isoformat()
+    builds, stopped = pending_builds(args.data_dir, today)
+    # One question per PDB, though builds that share binaries list the same ones; then one per binary of the PDBs the symbol server has
+    # now. A PDB is no use without its binary, and most of them are still missing, so most binaries needn't be asked about.
+    answers, failed = {}, 0
+    pdbs = {}
+    for _, _, pending in builds:
+        for cache_key, entry in pending.items():
+            pdbs[('pdb', cache_key)] = (entry.get('pdbName') or cache_key.split('/')[0], cache_key.split('/', 1)[1])
+    print('[check] asking the symbol server for %d PDBs of %d builds' % (len(pdbs), len(builds)), flush=True)
+    failed += ask(pdbs, 'PDBs', answers)
+    binaries = {}
+    for _, _, pending in builds:
+        for cache_key, entry in pending.items():
+            if answers.get(('pdb', cache_key)):
+                for file in entry.get('files', []):
+                    binaries[('binary', file['name'], binary_key(file))] = (file['name'], binary_key(file))
+    print('[check] %d of the PDBs are on the symbol server now; asking for their %d binaries' % (
+        sum(1 for k in pdbs if answers.get(k)), len(binaries)), flush=True)
+    failed += ask(binaries, 'binaries', answers)
 
     ready, rows = [], []
     for key, doc, pending in builds:
