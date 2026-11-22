@@ -15,6 +15,10 @@
 #                                    (Settings_XML_Resolved.xml) as a table, Settings_Index: what each entry says, where it leads,
 #                                    and the feature that shows or hides it.
 #
+#   <out>/trace-targets/<build>.json What the build's feature trace's app and Control Panel targets opened in full, by their labels (from
+#                                    its trace.json), for the site's tooltips: an app's program with its folder, and a Control Panel
+#                                    link's command.
+#
 #   python build-site-data.py --data data --out _site/derived
 
 import argparse
@@ -84,6 +88,43 @@ def super_god_mode(builds_dir, out):
     print('[site] Super God Mode statistics of %d builds: %s' % (len(found), ', '.join(found) or 'none'))
 
 
+# The known folders an app ID can start with ({1AC14E77-...}\odbcad32.exe: the folder's ID and the path in it)
+KNOWN_FOLDERS = {
+    '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}': r'%windir%\System32',
+    '{D65231B0-B2F1-4857-A4CE-A8E7C6EA7D27}': r'%windir%\SysWOW64',
+    '{F38BF404-1D43-42F2-9305-67DE0B28FC23}': r'%windir%',
+    '{905E63B6-C1BF-494E-B29C-65B732D3D21A}': r'%ProgramFiles%',
+    '{6D809377-6AF0-444B-8957-A3773F02200E}': r'%ProgramFiles%',
+    '{7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E}': r'%ProgramFiles(x86)%',
+}
+
+
+def trace_targets(builds_dir, out):
+    # The labels show an app by its program alone and a Control Panel link by its name, and each names one thing in its build
+    # (summarize-trace.py, target_labels)
+    done = []
+    for key in sorted(os.listdir(builds_dir)) if os.path.isdir(builds_dir) else []:
+        path = os.path.join(builds_dir, key, 'trace.json')
+        if not os.path.exists(path):
+            continue
+        full = {}
+        with open(path, encoding='utf-8') as f:
+            for t in json.load(f).get('targets', []):
+                target = t['target']
+                if t['kind'] == 'app' and '\\' in target:
+                    folder, _, rest = target.partition('\\')
+                    target = KNOWN_FOLDERS.get(folder.upper(), folder) + '\\' + rest
+                elif t['kind'] != 'task':
+                    continue
+                if target not in full.setdefault(t['label'], []):
+                    full[t['label']].append(target)
+        os.makedirs(os.path.join(out, 'trace-targets'), exist_ok=True)
+        with open(os.path.join(out, 'trace-targets', key + '.json'), 'w', encoding='utf-8', newline='\n') as f:
+            json.dump({label: '\n'.join(targets) for label, targets in sorted(full.items())}, f, ensure_ascii=False, indent=0)
+        done.append('%s (%d)' % (key, len(full)))
+    print('[site] the full targets of the feature traces of %s' % (', '.join(done) or 'no build'))
+
+
 def main():
     parser = argparse.ArgumentParser(description='Derive the files the site loads from data/.')
     parser.add_argument('--data', default='data')
@@ -128,6 +169,7 @@ def main():
             print('[site] %s: where %d features are used, from the feature traces of %s' % (arch, len(seen), ', '.join(sorted({t['build'] for t in seen.values()}))))
     os.makedirs(args.out, exist_ok=True)
     super_god_mode(builds_dir, args.out)
+    trace_targets(builds_dir, args.out)
     return 0
 
 

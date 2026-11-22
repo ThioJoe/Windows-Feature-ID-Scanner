@@ -156,6 +156,8 @@ td.mods, td.store, td.seen { color: var(--muted); font-size: 12px; }
   background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
   font-size: 12px; line-height: 1.45;
 }
+/* (A trace target's path or command, app.js targetHtml) */
+.tip.tip-path { max-width: min(720px, calc(100vw - 16px)); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .tip-bullet { padding-left: .9em; text-indent: -.9em; }
 .tip-bullet + .tip-bullet { margin-top: 4px; }
 td a { color: var(--accent); }
@@ -192,6 +194,12 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 .detail .kv > span { color: var(--muted); font-size: 12px; flex: none; width: 110px; }
 .detail ul { margin: 0; padding: 0; list-style: none; min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
 .detail .kv > .val { min-width: 0; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+/* A feature trace's targets: what was opened as code, then its name a little apart */
+.detail ul.targets { font: inherit; font-size: 13px; line-height: 1.75; }
+.detail ul.targets code { font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; padding: 1px 4px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); }
+.detail .target-name { margin-left: .8em; }
+.detail ul.targets [data-tip] { cursor: help; }
+.detail .target-full[data-tip] { text-decoration: underline dotted; text-underline-offset: 3px; }
 .sgm-entry .kv > span { width: 170px; }
 /* The features a feature requires, on a grid read left to right (placed by app.js): boxes outlined by their default state, green
    enabled, red disabled, grey not known, with the ID on top and the name below. Between the columns, an arrow from a feature to the

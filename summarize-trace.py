@@ -31,8 +31,57 @@ STARTUP_SECONDS = 10    # A process's checks this long after it started are its 
 STARTUP_SHARE = 0.5     # A feature a program checks at startup in this share of its starts is the program's, not any one target's
 STARTUP_MIN = 3         # Programs started fewer times than this have no startup baseline
 SIGN_IN_MINUTES = 2     # Checks this long after Explorer started count as sign-in
-KIND_NAMES = {'app': 'app', 'task': 'Control Panel'}
 RUNNER = re.compile(r'^(hosted-compute-agent|provjobd|runner\.(listener|worker|provisioner))', re.I)  # A GitHub runner's own programs
+
+
+def target_label(kind, name, target):
+    """How the site names a target: first what was opened, which stays the same in every language Windows has, between backticks (the
+    site shows it as code), then its name. A Settings or Windows Security page is its address; a Control Panel link is its name, in
+    quotes (its command can be long); a Start menu app is its program (the file its app ID ends in, as {1AC14E77-...}\\odbcad32.exe, a
+    known folder's ID and the path in it) or else its app ID, then its name in quotes; a folder is its shell: address, then its name
+    where the address doesn't have it already; a hotkey is its keys, then what they open; the shell's restart is its program."""
+    name = (name or '').replace('`', "'")
+    code = '`%s`'.__mod__
+    if kind in ('settings', 'security'):
+        return code(target)
+    if kind == 'task':
+        return 'Control Panel: "%s"' % (name or target)
+    if kind == 'app':
+        return 'App: ' + code(target.rsplit('\\', 1)[-1]) + (' "%s"' % name if name else '')
+    if kind == 'folder':
+        clsid = target.lower().startswith('shell:::')
+        named = name and (name not in target if clsid else name.lower() != target.split(':', 1)[-1].lower())
+        return ('CLSID Folder: ' if clsid else 'Named Folder: ') + code(target) + (' (%s)' % name if named else '')
+    if kind == 'keys':
+        keys = re.match(r'^(.*) \(([^()]+)\)$', name or target)  # Search (Win+S)
+        return 'Hotkey: ' + (code(keys.group(2)) + ' (%s)' % keys.group(1) if keys else code(name or target))
+    if kind == 'shell':
+        return 'Upon App Relaunch: ' + code(target)
+    return name or target
+
+
+def target_labels(targets):
+    """The labels of a trace's targets ({kind, label, target}, target_label), each naming one thing in the build: Control Panel links of the
+    same name that run different commands (as "Change account type" runs netplwiz.exe or control.exe /name Microsoft.UserAccounts) each
+    get their program before the name, or their whole command where the programs are the same too."""
+    labels = [target_label(r['kind'], r['label'], r['target']) for r in targets]
+    opened = defaultdict(set)
+    for r, label in zip(targets, labels):
+        opened[label].add(r['target'])
+
+    def program(command):
+        m = re.search(r'(?i)([^\\/"\s]+\.exe)(?=["\s]|$)', command)
+        return m.group(1) if m else command
+
+    out = []
+    for r, label in zip(targets, labels):
+        if r['kind'] == 'task' and len(opened[label]) > 1:
+            shown = program(r['target'])
+            if shown in {program(t) for t in opened[label] if t != r['target']}:
+                shown = r['target']
+            label = label.replace('Control Panel: ', 'Control Panel: `%s` ' % shown.replace('`', "'"), 1)
+        out.append(label)
+    return out
 
 
 def when(s):
@@ -194,16 +243,8 @@ def main():
             counts = Counter(fid for s in sets for fid in s)
             baseline[kind] = {fid for fid, n in counts.items() if n >= BASELINE_SHARE * len(sets)}
     target_list = []
-    for r, found in zip(targets, windows):
+    for r, found, label in zip(targets, windows, target_labels(targets)):
         own = sorted(found - baseline.get(r['kind'], set()))
-        # How the site names the target: a page by its address, a folder by its name and address, others by name and kind
-        label = r['label'] or r['target']
-        if r['kind'] in ('settings', 'security'):
-            label = r['target']
-        elif r['kind'] == 'folder' and r['label'] and r['label'] not in r['target']:
-            label = '%s (%s)' % (r['label'], r['target'])
-        elif r['kind'] in KIND_NAMES:
-            label = '%s (%s)' % (label, KIND_NAMES[r['kind']])
         entry = {'kind': r['kind'], 'label': label, 'target': r['target']}
         if r.get('opened'):
             entry['opened'] = r['opened']

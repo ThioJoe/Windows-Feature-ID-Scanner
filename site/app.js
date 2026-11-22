@@ -500,7 +500,7 @@ function matches(f, q, namedOnly) {
   if (f.oldName && f.oldName.toLowerCase().includes(q)) return true;
   if (f.newName && f.newName.toLowerCase().includes(q)) return true;
   // What a feature trace opened when it was checked, such as ms-settings:display; and for a feature only a trace has, what checked it
-  if (f.trace && (f.trace.targets || []).some((t) => t.toLowerCase().includes(q))) return true;
+  if (f.trace && (f.trace.targets || []).some((t) => t.replace(/`/g, '').toLowerCase().includes(q))) return true;
   if (traceOnly(f) && (f.trace.processes || []).some((p) => p.toLowerCase().includes(q))) return true;
   return (f.modules || []).some((m) => m.toLowerCase().includes(q));
 }
@@ -771,8 +771,8 @@ function featureDetail(build) {
           ? `which ${causedBy.length > 1 ? 'are' : 'is'} disabled by default` : `whose default${causedBy.length > 1 ? 's aren\'t' : ' isn\'t'} known`) : '';
       parts.push(`<p><b>Effective default:</b> <span class="eff ${e}">${e === 'unknown' ? 'not known' : e}</span>${why}</p>`);
     }
-    if (f.trace) parts.push(traceHtml(f, build));
-    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, build));
+    if (f.trace) parts.push(traceHtml(f, build, await loadTraceTargets(build.key)));
+    else if (det && det.trace && det.trace.build !== build.key) parts.push(otherTraceHtml(det.trace, build, await loadTraceTargets(det.trace.build)));
     if ((f.requires || []).length) {
       // The IDs as ViVeTool's /id: takes them. Disabling what a feature requires would also turn off the other features that require it.
       const ids = [...withRequired(f.id)];
@@ -845,6 +845,7 @@ function showTip(target, pinned) {
   clearTimeout(tip.timer);
   tip.target = target;
   tip.pinned = pinned;
+  tip.el.classList.toggle('tip-path', 'tipPath' in target.dataset);
   tip.el.innerHTML = target.dataset.tip.split('\n').map((line) => `<div${line.startsWith('• ') ? ' class="tip-bullet"' : ''}>${esc(line)}</div>`).join('');
   // Below the icon, or above it where there's no room below, and within the window (measured from the corner, at its full width)
   tip.el.style.left = tip.el.style.top = '0px';
@@ -898,19 +899,38 @@ const defaultCell = (f) => (f.defaultSource === 'trace' ? `<span class="trace-de
 const TRACE_LIST_LIMIT = 8;  // The processes and targets a feature's trace entry keeps (update-data.py)
 const onOff = (s) => (s === 'enabled' || s === 'alwaysEnabled' ? 'on' : s ? 'off' : '');
 
+// derived/trace-targets/<build>.json: what a build's trace's app and Control Panel targets opened in full (a program with its folder, a
+// link's command), by their labels
+const traceTargets = new Map();
+const loadTraceTargets = (key) => {
+  if (!traceTargets.has(key)) traceTargets.set(key, getJson(`trace-targets/${key}.json`, DERIVED).catch(() => ({})));
+  return traceTargets.get(key);
+};
+
+// A trace target's label: what was opened as code (between backticks in the data), and the name after it a little apart. Where it was
+// opened from more than the label shows (an app's program's folder, a Control Panel link's command), hovering the program or the
+// link's name shows that at once.
+const targetHtml = (label, full) => {
+  const tipped = full ? ` data-tip="${esc(full.includes('\n') ? full.split('\n').map((x) => '• ' + x).join('\n') : full)}" data-tip-path` : '';
+  const quoted = !label.includes('`') && label.match(/^([^"]*)(".*")$/);
+  if (quoted) return `${esc(quoted[1])}<span class="target-full"${tipped}>${esc(quoted[2])}</span>`;
+  return label.split('`').map((part, i) => (i % 2 ? `<code${i === 1 ? tipped : ''}>${esc(part)}</code>`
+    : i && part.startsWith(' ') ? `<span class="target-name">${esc(part.slice(1))}</span>` : esc(part))).join('');
+};
+
 // A trace entry's processes that checked the feature (the most checks first) and the targets it was checked on (the most particular to
 // it first), as the rows of a panel's block
-function traceLists(t) {
-  const list = (title, items) => (items.length
-    ? `<div class="kv"><span>${title}</span><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}` +
+function traceLists(t, full) {
+  const list = (title, items, html, cls = '') => (items.length
+    ? `<div class="kv"><span>${title}</span><ul${cls}>${items.map((x) => `<li>${html(x)}</li>`).join('')}` +
       (items.length >= TRACE_LIST_LIMIT ? `<li class="muted" title="The data keeps up to ${TRACE_LIST_LIMIT}">…</li>` : '') + '</ul></div>' : '');
-  return list('Found usage by', t.processes || []) + list('Found triggers', t.targets || []);
+  return list('Found usage by', t.processes || [], esc) + list('Found triggers', t.targets || [], (x) => targetHtml(x, full[x]), ' class="targets"');
 }
 
 // What a build's feature trace saw of a feature, for its panel: who checked it, on what, and how the checks came out against the default
 // they reported (the stage compiled into the binaries that made them). Where the symbols give the feature another default (the one the
 // panel shows), that's noted too: the binaries that checked it may not be the ones that default is from.
-function traceHtml(f, build) {
+function traceHtml(f, build, full) {
   const t = f.trace;
   const mixed = t.results.length > 1;
   const state = mixed ? 'Enabled and disabled' : t.results[0] === 'on' ? 'Enabled' : 'Disabled';
@@ -918,7 +938,7 @@ function traceHtml(f, build) {
   const notes = [reported.length > 1 ? `defaults: ${reported.join(', ')}` : !mixed && t.results[0] === reported[0] ? 'matches default' : `default: ${reported[0]}`];
   const symbols = onOff(symbolDefault(f));
   if (symbols && reported.length === 1 && symbols !== reported[0]) notes.push(`symbols' default: ${symbols}`);
-  return `<div class="mod"><h4>Runtime trace data</h4>${traceLists(t)}<p><b>Feature runtime state:</b> ` +
+  return `<div class="mod"><h4>Runtime trace data</h4>${traceLists(t, full)}<p><b>Feature runtime state:</b> ` +
     `<span class="state ${mixed ? '' : t.results[0] === 'on' ? 'enabled' : 'disabled'}">${state}</span>` +
     ((t.variants || []).length ? `, variant ${esc(t.variants.join(', '))}` : '') +
     (notes.length ? ` <span class="muted">(${esc(notes.join('; '))})</span>` : '') + '</p></div>';
@@ -926,9 +946,9 @@ function traceHtml(f, build) {
 
 // Where another build's feature trace saw a feature used, for a build whose own trace didn't see it (or that has none). Only the
 // processes and targets: the stages and results were that build's.
-function otherTraceHtml(t, build) {
+function otherTraceHtml(t, build, full) {
   return `<div class="mod"><h4>Runtime trace data <span class="muted">from build ${esc(t.build)}; ` +
-    `${build.trace ? "not seen in this build's trace" : 'this build has no trace'}</span></h4>${traceLists(t)}</div>`;
+    `${build.trace ? "not seen in this build's trace" : 'this build has no trace'}</span></h4>${traceLists(t, full)}</div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1417,7 +1437,7 @@ async function init() {
     } else if (t !== tip.pending) {
       clearTimeout(tip.showTimer);
       tip.pending = t;
-      tip.showTimer = setTimeout(() => showTip(t, false), 200);
+      tip.showTimer = setTimeout(() => showTip(t, false), 'tipPath' in t.dataset ? 0 : 200);
     }
   });
   document.addEventListener('pointerout', (e) => {
