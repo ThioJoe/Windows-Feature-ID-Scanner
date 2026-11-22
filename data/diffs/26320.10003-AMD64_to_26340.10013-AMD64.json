@@ -53,6 +53,15 @@
    "unverified": true
   },
   {
+   "id": 62143530,
+   "name": null,
+   "modules": [
+    "perfmon.exe"
+   ],
+   "store": null,
+   "unverified": true
+  },
+  {
    "id": 62234653,
    "name": "Servicing_PbdaTagSectionOverflow",
    "modules": [
@@ -241,7 +250,12 @@
   }
  ],
  "renamed": [],
- "newlyNamed": [],
+ "newlyNamed": [
+  {
+   "id": 63663753,
+   "name": "ReleaseManaged_Standalone_Enabled_2701"
+  }
+ ],
  "nameLost": [],
  "storeChanged": [
   {
@@ -516,7 +530,7 @@
   },
   {
    "id": 63663753,
-   "name": null,
+   "name": "ReleaseManaged_Standalone_Enabled_2701",
    "old": [
     {
      "priority": "Security (9)",
@@ -770,6 +784,18 @@
  ],
  "defaultChanged": [
   {
+   "id": 41088358,
+   "name": "AppRestorePlaceholders",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
    "id": 45467134,
    "name": "Servicing_Dcr_Future",
    "old": {
@@ -782,6 +808,18 @@
    }
   },
   {
+   "id": 49402389,
+   "name": null,
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
    "id": 49453572,
    "name": "Standalone_Future",
    "old": {
@@ -790,6 +828,30 @@
    },
    "new": {
     "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 57048226,
+   "name": "ValLabTest",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 61154045,
+   "name": "Standalone_26_11_NonSec",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
     "changeTime": "reboot"
    }
   },

@@ -252,15 +252,6 @@
    "store": null
   },
   {
-   "id": 55706575,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 55766439,
    "name": null,
    "modules": [
@@ -1407,25 +1398,6 @@
     "win32appinventorycsp.dll"
    ],
    "store": null
-  },
-  {
-   "id": 62366113,
-   "name": "LockReliabilityMeasuresWave3",
-   "modules": [
-    "KernelBase.dll",
-    "SHCore.dll",
-    "SettingsHandlers_nt.dll",
-    "Widgets.dll",
-    "windows.immersiveshell.serviceprovider.dll",
-    "windowsudk.shellcommon.dll"
-   ],
-   "store": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
   },
   {
    "id": 62367039,
@@ -2867,7 +2839,7 @@
   },
   {
    "id": 63204755,
-   "name": null,
+   "name": "RemoveActionWordsFromSearch",
    "modules": [],
    "store": [
     {
@@ -3916,7 +3888,7 @@
   },
   {
    "id": 63586488,
-   "name": null,
+   "name": "WinActActionDecorationDocked",
    "modules": [],
    "store": [
     {
@@ -4152,15 +4124,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63619601,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
-   ],
-   "store": null
   },
   {
    "id": 63619752,
@@ -4530,25 +4493,6 @@
    "store": null
   },
   {
-   "id": 63663245,
-   "name": null,
-   "modules": [
-    "KernelBase.dll",
-    "SHCore.dll",
-    "UXFrame.dll",
-    "Widgets.dll",
-    "WidgetsUWP.dll",
-    "windowsudk.shellcommon.dll"
-   ],
-   "store": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
    "id": 63664421,
    "name": "SH_K2",
    "modules": [
@@ -4827,15 +4771,6 @@
    "store": null
   },
   {
-   "id": 63706382,
-   "name": null,
-   "modules": [
-    "Widgets.dll",
-    "WidgetsUWP.dll"
-   ],
-   "store": null
-  },
-  {
    "id": 63706421,
    "name": null,
    "modules": [
@@ -4931,7 +4866,7 @@
   },
   {
    "id": 63738354,
-   "name": null,
+   "name": "WinActPhoneLinkActionsDocked",
    "modules": [],
    "store": [
     {
@@ -5652,16 +5587,6 @@
    "name": "XVPDolbyVisionRESupportReset_2610",
    "modules": [
     "msvproc.dll"
-   ],
-   "store": null
-  },
-  {
-   "id": 63867082,
-   "name": null,
-   "modules": [
-    "LockCanvasView.dll",
-    "Widgets.dll",
-    "WidgetsUWP.dll"
    ],
    "store": null
   },
@@ -6873,7 +6798,7 @@
   },
   {
    "id": 64152173,
-   "name": null,
+   "name": "LVTVD",
    "modules": [],
    "store": [
     {
@@ -11649,6 +11574,15 @@
     "Magnify.exe",
     "SettingsEnvironment.Desktop.dll",
     "SettingsHandlers_nt.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 60279873,
+   "name": null,
+   "modules": [
+    "Widgets.dll",
+    "WidgetsUWP.dll"
    ],
    "store": null
   },
@@ -17972,6 +17906,18 @@
    ]
   },
   {
+   "id": 62366113,
+   "name": "LockReliabilityMeasuresWave3",
+   "old": null,
+   "new": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 62590774,
    "name": "NXTCADLetWebAppHandleEscKey",
    "old": [
@@ -18060,6 +18006,18 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 63663245,
+   "name": null,
+   "old": null,
+   "new": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
   }
  ],
  "defaultChanged": [
@@ -18114,18 +18072,6 @@
   {
    "id": 23057199,
    "name": "ShellExecuteRedirection",
-   "old": {
-    "default": "disabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 27829265,
-   "name": "DesktopDWMCursor",
    "old": {
     "default": "disabled",
     "changeTime": "reboot"
@@ -18220,18 +18166,6 @@
    }
   },
   {
-   "id": 49453572,
-   "name": "Standalone_Future",
-   "old": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "disabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
    "id": 50179255,
    "name": "LockWidgetCanvas",
    "old": {
@@ -18264,30 +18198,6 @@
    },
    "new": {
     "default": "enabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 54237988,
-   "name": "TestGateImp",
-   "old": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 54237993,
-   "name": "ImplVal",
-   "old": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "alwaysEnabled",
     "changeTime": "reboot"
    }
   },
@@ -18458,42 +18368,6 @@
    }
   },
   {
-   "id": 58988972,
-   "name": "TestLoc1Perf",
-   "old": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 58989002,
-   "name": "Ten2Loc",
-   "old": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 58989021,
-   "name": "UexTest7",
-   "old": {
-    "default": "disabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
    "id": 58989070,
    "name": "TestUex12",
    "old": {
@@ -18514,6 +18388,18 @@
    },
    "new": {
     "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 58989177,
+   "name": "TestLoc03",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
     "changeTime": "reboot"
    }
   },
@@ -18730,26 +18616,14 @@
    }
   },
   {
-   "id": 61160789,
-   "name": "LocPerfVal",
+   "id": 61187478,
+   "name": "SynchronizedLayoutPublicApi",
    "old": {
     "default": "enabled",
     "changeTime": "reboot"
    },
    "new": {
-    "default": "alwaysEnabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 61161268,
-   "name": "ConfAccImp",
-   "old": {
     "default": "disabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "enabled",
     "changeTime": "reboot"
    }
   },
@@ -18896,18 +18770,6 @@
   {
    "id": 62124378,
    "name": "RDX_BugFixRollout_6D",
-   "old": {
-    "default": "disabled",
-    "changeTime": "reboot"
-   },
-   "new": {
-    "default": "enabled",
-    "changeTime": "reboot"
-   }
-  },
-  {
-   "id": 62125982,
-   "name": "Magnifier_PerMonitorScale",
    "old": {
     "default": "disabled",
     "changeTime": "reboot"
@@ -19106,6 +18968,18 @@
    },
    "new": {
     "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 62786322,
+   "name": "CompositionMagnifier_Iter2",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "disabled",
     "changeTime": "reboot"
    }
   },
