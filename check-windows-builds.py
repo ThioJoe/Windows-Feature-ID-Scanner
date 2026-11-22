@@ -399,6 +399,20 @@ def scanned_keys(data_dir):
             if os.path.exists(os.path.join(builds_dir, name, 'features.json'))}
 
 
+def insider_scans(data_dir):
+    """{Insider channel: [build key, ...]}: the builds data/index.json has of each channel, as they were scanned"""
+    path = os.path.join(data_dir, 'index.json')
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as f:
+        builds = json.load(f).get('builds', [])
+    out = {}
+    for b in builds:
+        if b.get('insiderChannel'):
+            out.setdefault(b['insiderChannel'], []).append(b['key'])
+    return out
+
+
 def scannable(channel):
     """Whether an Insider channel's builds are scanned (when Insider scans are on). Release Preview's are the next preview updates of
     the released versions, which are scanned as those when they come out."""
@@ -426,20 +440,22 @@ def new_builds(name, rows, done, rescan):
     return new
 
 
-def newest_insider_build(channel, done, rescan):
+def newest_insider_build(channel, done, rescan, channel_scans=()):
     """An Insider channel's build to scan, as a list: its newest, the only one Windows Update gives, unless data/ has it or a newer
-    build of the channel (or with rescan)."""
+    build of the channel (or with rescan). Its newer builds in data/ include those the release notes don't list yet (channel_scans):
+    Windows Update can give a newer revision of the build first, and the VM scans that instead."""
     newest = channel['releases'][0]
-    scanned = [version_tuple(r['build']) for r in channel['releases'] if r['build'] in done]
+    scanned = [version_tuple(r['build']) for r in channel['releases'] if r['build'] in done] + [version_tuple(b) for b in channel_scans]
     if rescan or not scanned or version_tuple(newest['build']) > max(scanned):
         return [insider_row(channel, newest['build'], newest['date'])]
     return []
 
 
-def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted, insider):
+def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted, insider, channel_keys=None):
     """The builds to scan, each with its version (or Insider channel), KB and so on, ordered by update so builds that share their
-    binaries follow each other."""
+    binaries follow each other. channel_keys: the builds in data/ of each Insider channel (insider_scans)."""
     done = {k.rsplit('-', 1)[0] for k in have if k.endswith('-' + arch)}
+    channel_builds = {c: {k.rsplit('-', 1)[0] for k in keys if k.endswith('-' + arch)} for c, keys in (channel_keys or {}).items()}
     picks = []
     if wanted:
         for build in wanted:
@@ -465,7 +481,7 @@ def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted
             picks += new_builds(version, info['releases'], done, rescan)
         if insider:
             for channel in filter(scannable, channels):
-                picks += newest_insider_build(channel, done, rescan)
+                picks += newest_insider_build(channel, done, rescan, channel_builds.get(channel['channel'], ()))
     return [dict(r, key=f"{r['build']}-{arch}", scanned=r['build'] in done)
             for r in sorted(picks, key=lambda r: (version_tuple(r['build'])[1], version_tuple(r['build'])[0]))]
 
@@ -534,7 +550,7 @@ def main():
     sources += insider_sources
     have = scanned_keys(args.data_dir)
     try:
-        scan = builds_to_scan(versions, channels, args.versions, args.arch, have, args.all, args.builds, args.insider)
+        scan = builds_to_scan(versions, channels, args.versions, args.arch, have, args.all, args.builds, args.insider, insider_scans(args.data_dir))
     except RuntimeError as e:
         log(str(e))
         return 1

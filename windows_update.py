@@ -525,6 +525,8 @@ def main():
     parser.add_argument('--image-edition', default='professional', help='image: the edition of the installation image (its ESD is <edition>_<language>.esd)')
     parser.add_argument('--language', default='en-us', help='image: the installation\'s language')
     parser.add_argument('--expected-build', help='An error unless Windows Update offers this build')
+    parser.add_argument('--or-newer-revision', action='store_true',
+                        help='With --expected-build: also take a newer revision of that build, which Windows Update can offer before the release notes list it')
     parser.add_argument('--out', help='download, image: the folder the files go in')
     parser.add_argument('--json-out', help='Also write the JSON to this file')
     args = parser.parse_args()
@@ -545,8 +547,11 @@ def main():
     update = offer(client, channel, args.os_build, args.edition)
     log(f"offered: {update['title']} (build {update['build']}, {update['kb'] or 'no KB'}, update {update['updateId']} revision {update['revision']}, {len(update['files'])} files)")
     if args.expected_build and update['build'] != args.expected_build:
-        log(f"Windows Update offers build {update['build']}, not {args.expected_build}")
-        return 3
+        offered, expected = (tuple(int(x) for x in b.split('.')) for b in (update['build'], args.expected_build))
+        if not (args.or_newer_revision and offered[0] == expected[0] and offered > expected):
+            log(f"Windows Update offers build {update['build']}, not {args.expected_build}")
+            return 3
+        log(f"Windows Update offers build {update['build']}, a newer revision of {args.expected_build}")
     result = {k: update[k] for k in ('channel', 'osBuild', 'title', 'build', 'kb', 'updateId', 'revision')}
     result['fileCount'] = len(update['files'])
     if args.action in ('links', 'download', 'image'):
