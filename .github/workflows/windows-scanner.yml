@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}  # The branch tip, not the commit the run was queued at: a run that waited for another sees the builds it added
 
       - name: Check whether this build has already been scanned
         id: check
@@ -47,6 +49,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref }}  # The branch tip: the data and symbol cache the scan adds to
           fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
 
       - name: Get Windows version and build info

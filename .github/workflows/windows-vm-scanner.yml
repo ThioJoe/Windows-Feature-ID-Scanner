@@ -45,6 +45,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref }}  # The branch tip, not the commit the run was queued at: a run that waited for another sees the builds it added
           fetch-depth: 0  # Full history so the commit can be rebased onto the branch tip
 
       - name: Find the released builds and those to scan
