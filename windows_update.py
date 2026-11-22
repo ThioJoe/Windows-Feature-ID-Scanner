@@ -302,10 +302,11 @@ def packages(client, update, architecture='x64'):
     checkpoint cumulative updates (DISM installs the ones a device still needs when they're in the cumulative update's folder), the
     cumulative update, the enablement package that gives the build its number, and the .NET Framework update. Each has its role
     (package_roles) and KB. Left out: the Safe OS dynamic update (WinRE's) and the Setup dynamic update (for Windows Setup), and the
-    images and packages for new installations and other Windows cores, which are most of the update. An update without a KB is a
-    whole build (Future Platforms' builds are): a new installation's image is the build, so the .NET Framework update is all there is."""
+    images and packages for new installations and other Windows cores, which are most of the update. An update without a cumulative
+    update is a whole build (Future Platforms' builds are, with a KB of their own or without, as 29712.1013's KB5136956): a new
+    installation's image is the build, so the .NET Framework update, if it has one, is all there is."""
     roles = package_roles(client, update)
-    if update['kb'] and update['kb'] not in roles:
+    if update['kb'] and update['kb'] not in roles and 'checkpoint' in roles.values():  # Cumulative updates, none of them its own
         raise RuntimeError(f"the update's metadata doesn't have its cumulative update {update['kb']}: it isn't one a device on the same "
                            f"Windows core installs ({', '.join(f'{kb} {role}' for kb, role in sorted(roles.items())) or 'nothing'})")
     wanted = {'checkpoint': 'msu', 'cumulative': 'msu', 'enablement': 'cab'}
@@ -525,6 +526,8 @@ def main():
     parser.add_argument('--image-edition', default='professional', help='image: the edition of the installation image (its ESD is <edition>_<language>.esd)')
     parser.add_argument('--language', default='en-us', help='image: the installation\'s language')
     parser.add_argument('--expected-build', help='An error unless Windows Update offers this build')
+    parser.add_argument('--or-newer-revision', action='store_true',
+                        help='With --expected-build: also take a newer revision of that build, which Windows Update can offer before the release notes list it')
     parser.add_argument('--out', help='download, image: the folder the files go in')
     parser.add_argument('--json-out', help='Also write the JSON to this file')
     args = parser.parse_args()
@@ -545,8 +548,11 @@ def main():
     update = offer(client, channel, args.os_build, args.edition)
     log(f"offered: {update['title']} (build {update['build']}, {update['kb'] or 'no KB'}, update {update['updateId']} revision {update['revision']}, {len(update['files'])} files)")
     if args.expected_build and update['build'] != args.expected_build:
-        log(f"Windows Update offers build {update['build']}, not {args.expected_build}")
-        return 3
+        offered, expected = (tuple(int(x) for x in b.split('.')) for b in (update['build'], args.expected_build))
+        if not (args.or_newer_revision and offered[0] == expected[0] and offered > expected):
+            log(f"Windows Update offers build {update['build']}, not {args.expected_build}")
+            return 3
+        log(f"Windows Update offers build {update['build']}, a newer revision of {args.expected_build}")
     result = {k: update[k] for k in ('channel', 'osBuild', 'title', 'build', 'kb', 'updateId', 'revision')}
     result['fileCount'] = len(update['files'])
     if args.action in ('links', 'download', 'image'):

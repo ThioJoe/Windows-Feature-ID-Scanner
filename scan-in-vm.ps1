@@ -816,12 +816,18 @@ function Get-InsiderImage {
     $folder = Join-Path $WorkDir 'insider'
     $file = Join-Path $folder 'image.json'
     $arguments = @('image', '--channel', $InsiderChannel, '--out', $folder, '--json-out', $file)
-    if ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild) }
+    if ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild, '--or-newer-revision') }
     Remove-Item $file -ErrorAction SilentlyContinue
     $code = Invoke-WindowsUpdatePy $arguments
-    if ($code -eq 3) { throw "Windows Update doesn't offer build $ExpectedBuild to a device in the $InsiderChannel channel (see above for what it offers)" }
+    if ($code -eq 3) { throw "Windows Update doesn't offer build $ExpectedBuild or a newer revision of it to a device in the $InsiderChannel channel (see above for what it offers)" }
     if ($code -ne 0 -or -not (Test-Path $file)) { throw "Getting the $InsiderChannel channel's build from Windows Update failed ($code)" }
     $image = Get-Content $file -Raw | ConvertFrom-Json
+    if ($ExpectedBuild -and $image.build -ne $ExpectedBuild) {
+        # A newer revision of the build than the release notes list yet (as 29712.1013 was for 29712.1000): the VM gets it, and it's
+        # what the scan checks the VM's build against
+        Log "Windows Update gives the $InsiderChannel channel build $($image.build), a newer revision of $ExpectedBuild"
+        $script:ExpectedBuild = $image.build
+    }
     Log "The $InsiderChannel channel's build: $($image.title) ($(if ($image.kb) { $image.kb } else { 'no KB' }), update $($image.updateId) revision $($image.revision))"
     return $image
 }
