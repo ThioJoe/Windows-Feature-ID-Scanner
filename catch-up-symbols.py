@@ -25,12 +25,14 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SERVER = 'https://msdl.microsoft.com/download/symbols'
 USER_AGENT = 'Microsoft-Symbol-Server/10.0.0.0'
+PROGRESS_SECONDS = 300  # How often check says how far it's got (its questions take about an hour)
 
 spec = importlib.util.spec_from_file_location('update_data', os.path.join(HERE, 'update-data.py'))
 update_data = importlib.util.module_from_spec(spec)
@@ -106,7 +108,10 @@ def check(args):
             questions[('pdb', cache_key)] = (entry.get('pdbName') or cache_key.split('/')[0], cache_key.split('/', 1)[1])
             for file in entry.get('files', []):
                 questions[('binary', file['name'], binary_key(file))] = (file['name'], binary_key(file))
+    pdbs = sum(1 for k in questions if k[0] == 'pdb')
+    print('[check] asking the symbol server for %d PDBs and %d binaries of %d builds' % (pdbs, len(questions) - pdbs, len(builds)), flush=True)
     answers, failed = {}, 0
+    started = shown = time.monotonic()
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(on_server, *q): k for k, q in questions.items()}
         for future in concurrent.futures.as_completed(futures):
@@ -115,7 +120,11 @@ def check(args):
             except Exception as e:
                 answers[futures[future]] = False
                 failed += 1
-                print('[check] %s: %s' % ('/'.join(futures[future][1:]), e))
+                print('[check] %s: %s' % ('/'.join(futures[future][1:]), e), flush=True)
+            if time.monotonic() - shown >= PROGRESS_SECONDS:
+                shown = time.monotonic()
+                print('[check] %d of %d answered after %d minutes; %d of the PDBs are on the symbol server so far' % (
+                    len(answers), len(futures), (shown - started) // 60, sum(1 for k, v in answers.items() if v and k[0] == 'pdb')), flush=True)
 
     ready, rows = [], []
     for key, doc, pending in builds:
