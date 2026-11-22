@@ -94,7 +94,7 @@ jobs:
           KB: ${{ matrix.build.kb }}
           BUILD: ${{ matrix.build.build }}
           CHANNEL: ${{ matrix.build.channel }}  # An Insider build's channel (empty for the released versions' builds)
-          FEATURE_TRACE: ${{ vars.FEATURE_TRACE }}  # false: no feature trace after the scan (it takes about an hour and a half)
+          FEATURE_TRACE: ${{ vars.FEATURE_TRACE }}  # false: no feature trace after the scan (it takes about an hour and ten minutes)
         run: |
           python --version
           .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false')

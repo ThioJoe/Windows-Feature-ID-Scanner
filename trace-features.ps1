@@ -23,7 +23,7 @@ param(
     [string]$SuperGodModeDir,              # Super God Mode's statistics; without them only the shell's UI and the Start menu's apps are opened
     [switch]$Prepare,
     [int]$IdleMinutes = 5,                 # How long Windows is left alone first (from sign-in, when the trace started at boot)
-    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them should take about 75 minutes, from the time each kind took in the tests)
+    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them should take about 65 minutes, from the time each kind took in the tests)
     [string]$Python = 'python',            # For summarize-trace.py
     [string]$Targets,                      # (Internal) Open the targets as the signed-in user, recording them in this CSV file
     [switch]$RestartShell                  # (Internal, with -Targets) Restart Explorer first
@@ -164,16 +164,17 @@ public static class TraceKeys {
     }
 
     # Settings pages, in one Settings window (opening a page in it again goes to that page). Its home page first, which takes the checks
-    # of the app starting, so they don't count for the first page in the list.
+    # of the app starting, so they don't count for the first page in the list. In a Settings window that's already open, a page's own
+    # checks come within half a second, so each page gets 2 seconds.
     $settings = @(Read-List 'MS_Settings.csv' | ForEach-Object { $_.'Full Setting Command' } | Where-Object { $_ -like 'ms-settings:*' } | Select-Object -Unique)
     if ($settings) { Open-Target 'settings' 'Settings (home)' 'ms-settings:' { Start-Process 'ms-settings:' } 6 @('SystemSettings') }
-    foreach ($s in $settings) { Open-Target 'settings' $s $s { Start-Process $s } 4 @('SystemSettings') }
+    foreach ($s in $settings) { Open-Target 'settings' $s $s { Start-Process $s } 2 @('SystemSettings') }
     Get-Process SystemSettings -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session } | Stop-Process -Force
 
     # Windows Security pages, the same way
     $security = @(Read-List 'Deep_Links.csv' | ForEach-Object { $_.'Full Command' } | Where-Object { $_ -like 'windowsdefender:*' } | Select-Object -Unique)
     if ($security) { Open-Target 'security' 'Windows Security (home)' 'windowsdefender:' { Start-Process 'windowsdefender:' } 6 @('SecHealthUI') }
-    foreach ($s in $security) { Open-Target 'security' $s $s { Start-Process $s } 4 @('SecHealthUI') }
+    foreach ($s in $security) { Open-Target 'security' $s $s { Start-Process $s } 2 @('SecHealthUI') }
     Get-Process SecHealthUI -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $session } | Stop-Process -Force
 
     # Control Panel's task links: its pages, applets, wizards and tools. Not Narrator, the recovery drive wizard or help links.
