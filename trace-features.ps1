@@ -43,6 +43,8 @@ function Now { (Get-Date).ToUniversalTime().ToString('o') }
 # ---------------------------------------------------------------------------
 
 if ($Targets) {
+    # An error that stops the targets goes in a file next to their log, for the run's report (the scheduled task has no window)
+    trap { "$($_.Exception.Message) $($_.InvocationInfo.PositionMessage)" -replace '\s+', ' ' | Set-Content "$Targets.error" -ErrorAction SilentlyContinue; break }
     Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
@@ -268,6 +270,7 @@ if ($Prepare) {
 
 if (-not $OutputDir) { throw '-OutputDir is needed' }
 New-Item -ItemType Directory -Force $OutputDir, $TraceDir | Out-Null
+$OutputDir = (Resolve-Path $OutputDir).Path  # The targets' scheduled task starts in another folder, and .NET resolves paths from its own
 $run = [ordered]@{ started = (Now); boot = $false; idleMinutes = $IdleMinutes; targetMinutes = $TargetMinutes }
 try {
     $os = Get-CimInstance Win32_OperatingSystem
@@ -305,7 +308,7 @@ try {
     $run.targetsStarted = (Now)
 
     $targetLog = Join-Path $OutputDir 'targets.csv'
-    Remove-Item $targetLog -ErrorAction SilentlyContinue
+    Remove-Item $targetLog, "$targetLog.error" -ErrorAction SilentlyContinue
     $arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$PSCommandPath`" -Targets `"$targetLog`" -TargetMinutes $TargetMinutes"
     if ($SuperGodModeDir -and (Test-Path $SuperGodModeDir)) { $arguments += " -SuperGodModeDir `"$((Resolve-Path $SuperGodModeDir).Path)`"" }
     if (-not $run.boot) { $arguments += ' -RestartShell' }
@@ -322,7 +325,8 @@ try {
         if (-not $done -and (Get-ScheduledTask -TaskName $task).State -ne 'Running') { break }
     }
     if (-not $done) {
-        $run.error = 'The targets did not finish'
+        $why = Get-Content "$targetLog.error" -Raw -ErrorAction SilentlyContinue
+        $run.error = if ($why) { "The targets did not finish: $($why.Trim())" } else { 'The targets did not finish' }
         Stop-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue
     }
     $task = Get-ScheduledTaskInfo -TaskName $task -ErrorAction SilentlyContinue
@@ -341,10 +345,12 @@ try {
     if (-not (Test-Path $xml)) { throw "tracerpt wrote nothing: $($out -join ' ')" }
 } catch {
     $run.error = $_.Exception.Message
-    Write-Warning "Feature trace: $($run.error)"
-    if ($env:GITHUB_ACTIONS -eq 'true') { Write-Host "::warning::Feature trace: $($run.error)" }
     & logman.exe stop $Session -ets 2>&1 | Out-Null
     & logman.exe delete "autosession\$Session" 2>&1 | Out-Null
+}
+if ($run.error) {
+    Write-Warning "Feature trace: $($run.error)"
+    if ($env:GITHUB_ACTIONS -eq 'true') { Write-Host "::warning::Feature trace: $($run.error)" }
 }
 [IO.File]::WriteAllText((Join-Path $OutputDir 'run.json'), ($run | ConvertTo-Json -Depth 4), (New-Object Text.UTF8Encoding $false))
 
