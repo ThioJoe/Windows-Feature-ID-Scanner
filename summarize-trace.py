@@ -168,12 +168,13 @@ def main():
             startup[name] = {fid for fid, n in counts.items() if n >= STARTUP_SHARE * len(sets)}
 
     # What each target's window checked, in the user's session, not counting trace-features.ps1's own process and its console, the
-    # runner's processes, or what a program checks whenever it starts
+    # runner's processes, or what a program checks whenever it starts. Nothing for a target that failed to open: its window only has
+    # what Windows did meanwhile (such as reporting Settings as not responding).
     times = [c[0] for c in checks]
     windows = []
     for r in targets:
         found = set()
-        if r.get('opened'):
+        if r.get('opened') and not r.get('error'):
             a, b = when(r['opened']), when(r['closed'])
             for t, pid, stage, fid, kind in checks[bisect.bisect_left(times, a):bisect.bisect_right(times, b)]:
                 name, sess, parent = process(pid, t)
@@ -186,7 +187,7 @@ def main():
     baseline = {}
     by_kind = defaultdict(list)
     for r, found in zip(targets, windows):
-        if r.get('opened'):
+        if r.get('opened') and not r.get('error'):
             by_kind[r['kind']].append(found)
     for kind, sets in by_kind.items():
         if len(sets) >= BASELINE_MIN:
