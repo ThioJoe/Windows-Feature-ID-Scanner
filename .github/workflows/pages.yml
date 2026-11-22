@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment-again.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -50,6 +50,18 @@ jobs:
         with:
           path: _site
 
+      # Deploying right after the upload can find no artifact in the run yet (GitHub lists it a moment later, as in the Symbol Catch-up
+      # run of 2026-11-21), so a failed deploy is tried again after 30 seconds
       - name: Deploy
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Wait before deploying again
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+
+      - name: Deploy again
+        id: deployment-again
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
