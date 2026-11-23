@@ -147,7 +147,8 @@ class WindowsUpdate:
         self.cookie = re.search(r'<EncryptedData>(.*?)</EncryptedData>', text, re.S).group(1)
 
     def sync_updates(self, device, products, installed):
-        """The updates SyncUpdates returns: {ID: {'id', 'leaf', 'type', 'updateId', 'revision', 'core', 'extended', 'title'}}."""
+        """The updates SyncUpdates returns: {ID: {'id', 'leaf', 'type', 'updateId', 'revision', 'changed', 'core', 'extended', 'title'}}.
+        changed: the day the update's deployment last changed (its LastChangeTime), which is the day the update was released."""
         if not self.cookie:
             self.get_cookie()
         caller = 'E:Interactive=1&IsSeeker=1&Acquisition=1&SheddingAware=1&Id=MoUpdateOrchestrator'  # A "Check for updates" click
@@ -175,7 +176,8 @@ class WindowsUpdate:
             kind = re.search(r'<Properties UpdateType="(\w+)"', core)
             updates[info.findtext('w:ID', '', NS)] = {
                 'id': info.findtext('w:ID', '', NS), 'leaf': info.findtext('w:IsLeaf', '', NS) == 'true', 'type': kind and kind.group(1),
-                'updateId': ident and ident.group(1), 'revision': ident and int(ident.group(2)), 'core': core}
+                'updateId': ident and ident.group(1), 'revision': ident and int(ident.group(2)),
+                'changed': info.findtext('w:Deployment/w:LastChangeTime', '', NS)[:10] or None, 'core': core}
         for update in result.findall('w:ExtendedUpdateInfo/w:Updates/w:Update', NS):
             entry = updates.setdefault(update.findtext('w:ID', '', NS), {'id': update.findtext('w:ID', '', NS)})
             fragment = update.findtext('w:Xml', '', NS)
@@ -211,7 +213,7 @@ def update_files(extended):
 
 def offer(client, channel, os_build, edition='Enterprise', architecture='AMD64'):
     """What Windows Update offers a device at os_build in the channel (None: not in any channel): the newest Windows update among
-    the updates it returns, with its build, KB and files."""
+    the updates it returns, with its build, KB, release date and files."""
     branch = CHANNELS[channel][1] if channel else 'ge_release'
     device = device_attributes(channel, os_build, edition, architecture)
     products = 'PN=Client.OS.rs2.%s&Branch=%s&PrimaryOSProduct=1&Repairable=1&V=10.0.%s&ReofferUpdate=1' % (architecture.lower(), branch, os_build)
@@ -227,7 +229,7 @@ def offer(client, channel, os_build, edition='Enterprise', architecture='AMD64')
             if u.get('leaf') and release and u.get('extended'):
                 kb = re.search(r'<KBArticleID>(\d+)</KBArticleID>', u['extended'])
                 offers.append({'title': u.get('title'), 'build': release.group(1), 'updateId': u['updateId'], 'revision': u['revision'],
-                               'kb': 'KB' + kb.group(1) if kb else None, 'files': update_files(u['extended'])})
+                               'kb': 'KB' + kb.group(1) if kb else None, 'date': u.get('changed'), 'files': update_files(u['extended'])})
         more = [int(u['id']) for u in updates.values() if u.get('type') == 'Category' and int(u['id']) not in installed]
         if offers or not more:
             break

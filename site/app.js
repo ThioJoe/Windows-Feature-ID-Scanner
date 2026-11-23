@@ -1318,7 +1318,7 @@ async function renderReleases() {
     ? `<a href="#build/${encodeURIComponent(`${build}-${arch}`)}">scanned</a>` : '');
   const vm = releases.windows11.filter((v) => v.scannedInVm).map((v) => v.version);
   let html = '<p class="muted">The newest builds of each Windows 11 version that is still serviced, and of each Windows Insider channel, ' +
-    "from Microsoft's update history and Insider release notes, checked daily. " +
+    "from Microsoft's update history, Insider release notes and Windows Update, checked daily. " +
     `x64 builds of ${esc(vm.join(', '))} are scanned in a virtual machine built from Microsoft's servers as they come out; ` +
     "ARM64 builds are scanned when GitHub's ARM64 runner has them. " +
     (releases.insider.some((c) => c.scannedInVm)
@@ -1360,7 +1360,9 @@ async function renderReleases() {
       const due = c.scannedInVm && i === 0 && (!scanned || compareVersions(r, scanned) > 0);
       html += '<tr>' + (i === 0 ? groupCell(c.channel, c.releases.length, n === releases.insider.length - 1) : '') +
         `<td class="id">${esc(r.builds.join(' / '))}</td><td>${esc(r.date || '')}</td>` +
-        `<td><a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a></td>` +
+        // (A build the release notes don't list has the date Windows Update gives with it)
+        `<td>${r.notes ? `<a href="${esc(r.notes)}">${esc(r.notes.split('/').pop())}</a>`
+          : `<span class="muted" title="Not in the release notes: the build ${esc(r.source || '')} gives the channel">${esc(r.source || '')}</span>`}</td>` +
         `<td>${scanLink(r.build, 'AMD64') || (due ? '<span class="muted">not yet</span>' : none)}</td>` +
         `<td>${scanLink(r.build, 'ARM64') || none}</td></tr>`;
     });

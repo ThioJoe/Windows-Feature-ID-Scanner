@@ -8,7 +8,8 @@
 #   Versions and their updates  support.microsoft.com's index of its Windows 11 update history (JSON), checked against the Windows 11
 #                               release information page, which also stands in for the index if that can't be read or lacks a version
 #   Insider builds              the index of the Windows Insider release notes (JSON), with each build's release date from Flight Hub,
-#                               which also stands in for the index if that can't be read
+#                               which also stands in for the index if that can't be read, and Windows Update (windows_update.py): the
+#                               build it gives each channel, with its release date, for a build the release notes don't list
 # A source that fails, and sources that disagree about a version's or channel's newest build, are reported (as warnings in GitHub
 # Actions). The check only fails when no source says what the builds of a version to scan are.
 #
@@ -41,6 +42,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import microsoft_learn  # noqa: E402
+import windows_update  # noqa: E402
 
 SERVICING_INDEX_URL = 'https://support.microsoft.com/en-us/servicing/os/windows-11/toc.json'
 RELEASE_INFO_URL = 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'
@@ -389,6 +391,42 @@ def insider_channels(learn):
     return channels, sources
 
 
+def windows_update_builds(channels, previous=None):
+    """Asks Windows Update for the build it gives each Insider channel, as a scan does (windows_update.py), with its release date:
+    the day the update's deployment last changed, which is Flight Hub's release date wherever both have the build. A build the
+    release notes don't list, such as a flight's build with its own cumulative update (29712.1013, where they list 29712.1000), is
+    added to the channel's builds with that date, and a listed build that Flight Hub has no date for gets it. Such builds stay in
+    the channel's list from one check to the next (previous: the last data/releases.json) while the release notes don't list them,
+    as the notes' older builds do, also after Windows Update moves on or when it can't be asked. Release Preview's channels are left
+    out: a request from the start of their Windows core isn't given their newest build. Returns the sources read."""
+    client, asked = windows_update.WindowsUpdate(timeout=60), 0
+    for channel in filter(scannable, channels):
+        listed = lambda build: next((r for r in channel['releases'] if build in r['builds']), None)
+        for c in (previous or {}).get('insider', []):
+            if c['channel'] == channel['channel']:
+                channel['releases'] += [dict(r) for r in c['releases'] if r.get('source') and not listed(r['build'])]
+        offer = None
+        if channel['channel'] not in windows_update.CHANNELS:
+            warn(f"Insider channel {channel['channel']}: windows_update.py doesn't know it, so Windows Update wasn't asked for its build")
+        else:
+            try:
+                offer = windows_update.offer(client, channel['channel'], windows_update.CHANNELS[channel['channel']][2])
+                asked += 1
+            except Exception as e:
+                warn(f"Windows Update couldn't be asked for the build of Insider channel {channel['channel']}: {e}")
+        if offer:
+            build, date = offer['build'], offer.get('date')
+            r = listed(build)
+            if not r:
+                channel['releases'].append({'build': build, 'builds': [build], 'notes': None, 'date': date, 'source': 'Windows Update'})
+            elif not r['date']:
+                r['date'] = date
+            elif date and date != r['date'] and not r.get('source'):
+                warn(f"Insider channel {channel['channel']}: Flight Hub says {build} came out on {r['date']}, Windows Update on {date}")
+        channel['releases'] = newest_first(channel['releases'])
+    return [f'Windows Update: the builds it gives {asked} Insider channels, with their release dates'] if asked else []
+
+
 # ---------------------------------------------------------------------------
 # What to scan, and the reports
 # ---------------------------------------------------------------------------
@@ -488,14 +526,15 @@ def builds_to_scan(versions, channels, scan_versions, arch, have, rescan, wanted
 
 def releases_document(versions, channels, previous, insider):
     """What data/releases.json holds: every build of every serviced version, so that a scanned build's update, release date and KB
-    stay known (update-data.py stores them with the build), and the newest builds of every Insider channel. Nothing in it changes
-    from one check to the next unless Microsoft releases something (whether data/ has a build is looked up from data/index.json)."""
+    stay known (update-data.py stores them with the build), and the newest builds of every Insider channel (with the one Windows
+    Update gives it when the release notes don't list that, marked with its source). Nothing in it changes from one check to the
+    next unless Microsoft releases something (whether data/ has a build is looked up from data/index.json)."""
     doc = {'windows11': [{'version': v, 'base': info['base'], 'scannedInVm': v in VM_VERSIONS,
                           'releases': [{k: r[k] for k in ('build', 'kb', 'date', 'type')} for r in info['releases']]}
                          for v, info in sorted(versions.items(), reverse=True) if info['active'] or v in VM_VERSIONS]}
     if channels:
         doc['insider'] = [{'channel': c['channel'], 'scannedInVm': insider and scannable(c),
-                           'releases': [{k: r[k] for k in ('build', 'builds', 'date', 'notes')} for r in c['releases'][:LISTED]]}
+                           'releases': [{k: r[k] for k in ('build', 'builds', 'date', 'notes', 'source') if k in r} for r in c['releases'][:LISTED]]}
                           for c in channels]
     else:
         doc['insider'] = (previous or {}).get('insider', [])  # Keep the last list rather than lose it when the sources fail
@@ -518,7 +557,7 @@ def summary_markdown(scan, versions, channels, have, scan_versions, sources, ins
     lines += ['', '### Windows Insider', '', '| Channel | Newest build | Released | In data/ |', '|---|---|---|---|']
     for c in channels:
         r = c['releases'][0]
-        lines.append(f"| {c['channel']} | {' / '.join(r['builds'])} | {r['date'] or '?'} | {in_data(r['build'])} |")
+        lines.append(f"| {c['channel']} | {' / '.join(r['builds'])}{' (Windows Update)' if r.get('source') else ''} | {r['date'] or '?'} | {in_data(r['build'])} |")
     lines += ['', "Insider scan scheduling is enabled: each channel's newest build is scanned, except Release Preview's." if insider else
               'Insider scans are off.']
     lines += ['', '### Sources', ''] + [f'- {s}' for s in sources]
@@ -546,8 +585,12 @@ def main():
     if not versions:
         log('No source says what the Windows 11 versions and their builds are')
         return 1
+    previous = None
+    if args.releases and os.path.exists(args.releases):
+        with open(args.releases, encoding='utf-8') as f:
+            previous = json.load(f)
     channels, insider_sources = insider_channels(learn)
-    sources += insider_sources
+    sources += insider_sources + windows_update_builds(channels, previous)
     have = scanned_keys(args.data_dir)
     try:
         scan = builds_to_scan(versions, channels, args.versions, args.arch, have, args.all, args.builds, args.insider, insider_scans(args.data_dir))
@@ -561,7 +604,7 @@ def main():
             log(f"{v}: newest build {r['build']} ({r['type']}, {r['date']}, {r['kb']}; from the {info['source']})")
     for c in channels:
         r = c['releases'][0]
-        log(f"Insider {c['channel']}: newest build {' / '.join(r['builds'])} ({r['date'] or 'no date'})")
+        log(f"Insider {c['channel']}: newest build {' / '.join(r['builds'])} ({r['date'] or 'no date'}{', from Windows Update' if r.get('source') else ''})")
     for r in scan:
         log(f"To scan: {r['key']} ({'Insider ' + r['channel'] if r.get('channel') else r['version'] + ', ' + r['kb']}){' again' if r['scanned'] else ''}")
     if not args.insider:
@@ -570,10 +613,6 @@ def main():
         log('Nothing to scan')
 
     if args.releases:
-        previous = None
-        if os.path.exists(args.releases):
-            with open(args.releases, encoding='utf-8') as f:
-                previous = json.load(f)
         with open(args.releases, 'w', encoding='utf-8', newline='\n') as f:
             json.dump(releases_document(versions, channels, previous, args.insider), f, indent=1)
             f.write('\n')
