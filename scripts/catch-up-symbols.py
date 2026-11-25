@@ -12,7 +12,7 @@
 #
 #   python scripts/catch-up-symbols.py run --builds KEY [KEY ...] [--github-output] [--summary FILE]
 #       Scans those builds' PDBs again with scan-symbols.py --manifest, which takes what the results cache has for the PDBs the scan
-#       got and downloads the others with their binaries (checked against the SHA-256 the scan recorded), so no VM is needed. The result
+#       got and downloads the others with their binaries (by name, PE timestamp and size, and naming the PDB), so no VM is needed. The result
 #       goes into data/ with update-data.py, which keeps the build's feature store data and Super God Mode statistics, and the code
 #       details of binaries it has no new ones for. Runs on Windows, where scan-symbols.py demangles names and expands compressed
 #       files the same way as in the scans.

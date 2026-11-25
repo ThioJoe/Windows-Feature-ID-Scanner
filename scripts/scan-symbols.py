@@ -20,7 +20,6 @@ import argparse
 import base64
 import bisect
 import concurrent.futures
-import hashlib
 import http.client
 import json
 import mmap
@@ -144,27 +143,16 @@ def read_pe_info(path):
     return None
 
 def binary_files(infos):
-    """What's needed to download a PDB's binaries from the symbol server later (it keeps them by file name, PE timestamp and image
-    size), and to check that the download is the same file: one entry per distinct file."""
+    """What's needed to download a PDB's binaries from the symbol server later, which keeps them by file name, PE timestamp and image
+    size: one entry per distinct file."""
     files, seen = [], set()
     for info in infos:
         identity = (os.path.basename(info.path).lower(), info.timestamp, info.image_size)
         if identity in seen:
             continue  # Another copy of the same binary
-        try:
-            digest = sha256_file(info.path)
-        except OSError:
-            continue
         seen.add(identity)
-        files.append({'name': os.path.basename(info.path), 'timestamp': info.timestamp, 'imageSize': info.image_size, 'sha256': digest})
-    return sorted(files, key=lambda f: (f['name'].lower(), f['sha256']))
-
-def sha256_file(path):
-    h = hashlib.sha256()
-    with open(path, 'rb') as f:
-        for block in iter(lambda: f.read(1 << 20), b''):
-            h.update(block)
-    return h.hexdigest()
+        files.append({'name': os.path.basename(info.path), 'timestamp': info.timestamp, 'imageSize': info.image_size})
+    return sorted(files, key=lambda f: (f['name'].lower(), f['timestamp'], f['imageSize']))
 
 def rva_to_offset(sections, rva):
     for va, vsize, raw_size, raw_ptr in sections:
@@ -448,6 +436,15 @@ class Pdb:
                     if m and 1 <= segment <= len(section_vas):
                         yield (kind_name, m.group(1), section_vas[segment - 1] + offset)
             pos = end
+
+def pdb_guid(path):
+    """The GUID in a PDB's info stream, which the key a binary's debug record names its PDB by starts with (then comes the age)"""
+    pdb = Pdb(path)
+    try:
+        info = pdb.stream(1)
+    finally:
+        pdb.close()
+    return '%08X%04X%04X%s' % (struct.unpack_from('<IHH', info, 12) + (info[20:28].hex().upper(),)) if len(info) >= 28 else None
 
 def extract_features(pdb_path, info):
     """Returns a sorted list of [name, id, source] found for one image/PDB pair."""
@@ -2020,16 +2017,22 @@ def main():
                 source = 'downloaded'
             image = infos[0]
             if manifest:
-                # The binary from the symbol server, which has to be the very file the build's scan found
+                # The build's binary from the symbol server, which keeps binaries by name, PE timestamp and image size (Windows' timestamps
+                # are a hash of the compiled file), and whose debug record has to name this PDB. The file itself isn't compared with the
+                # build's: the symbol server's copy can be signed differently, or not at all.
                 binary_path = os.path.join(work_dir, '%s.%s.bin' % (pdb_key, threading.get_ident()))
                 image = None
                 for file in manifest['pdbs'][cache_key].get('files', []):
-                    if (downloader.fetch(file['name'], '%08X%x' % (file['timestamp'], file['imageSize']), binary_path) == 'ok'
-                            and sha256_file(binary_path) == file['sha256']):
-                        image = read_pe_info(binary_path)
-                        break
-                if image is None or image.pdb_key != pdb_key:
+                    if downloader.fetch(file['name'], '%08X%x' % (file['timestamp'], file['imageSize']), binary_path) == 'ok':
+                        candidate = read_pe_info(binary_path)
+                        if candidate and (candidate.pdb_key, candidate.timestamp, candidate.image_size) == (pdb_key, file['timestamp'], file['imageSize']):
+                            image = candidate
+                            break
+                if image is None:
                     raise RuntimeError("the symbol server doesn't have the binary the build's scan found")
+            # The PDB has to be the one the binary names (the symbol server keeps PDBs by the GUID in them)
+            if pdb_guid(pdb_path) != pdb_key[:32]:
+                raise RuntimeError("the PDB isn't the one the binary names (its GUID is different)")
             features = extract_features(pdb_path, image)
             entry = {'status': 'ok', 'scanned': today}
             first = earliest_build((cached or {}).get('build'), build)
