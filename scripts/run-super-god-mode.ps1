@@ -4,7 +4,7 @@
 # protocols and hidden app links it finds, and the XML data the task links and deep links come from, as it writes them. The shortcuts
 # it creates aren't kept. update-data.py stores the statistics in data/builds/<build>-<arch>/super-god-mode/.
 #
-#   .\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
+#   .\scripts\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
 #
 # Besides the statistics files, -OutputDir gets run.json: the script's version, its signature, the user it ran as and the number of
 # rows in each CSV file. What the script finds partly depends on that user (their apps and the URL protocols those register), so the VM

@@ -28,7 +28,7 @@ jobs:
 
       - name: Ask the symbol server for the PDBs the scans didn't get
         id: check
-        run: python3 catch-up-symbols.py check --github-output --summary "$GITHUB_STEP_SUMMARY"
+        run: python3 scripts/catch-up-symbols.py check --github-output --summary "$GITHUB_STEP_SUMMARY"
 
   complete:
     needs: check
@@ -53,7 +53,7 @@ jobs:
         run: |
           python --version
           $builds = $env:BUILDS -split ' '
-          python catch-up-symbols.py run --builds @builds --github-output --summary $env:GITHUB_STEP_SUMMARY
+          python scripts\catch-up-symbols.py run --builds @builds --github-output --summary $env:GITHUB_STEP_SUMMARY
           if ($LASTEXITCODE -ne 0) { Write-Error "catch-up-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
 
       - name: Commit

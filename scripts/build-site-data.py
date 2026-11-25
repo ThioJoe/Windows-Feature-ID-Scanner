@@ -19,7 +19,7 @@
 #                                    its trace.json), for the site's tooltips: an app's program with its folder, and a Control Panel
 #                                    link's command.
 #
-#   python build-site-data.py --data data --out _site/derived
+#   python scripts/build-site-data.py --data data --out _site/derived
 
 import argparse
 import csv

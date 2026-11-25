@@ -44,7 +44,7 @@ jobs:
           cp -r site/. _site/
           cp -r data _site/data
           rm -rf _site/data/builds/*/details.json _site/data/builds/*/super-god-mode _site/data/builds/*/symbols.json _site/data/builds/*/trace.json _site/data/symbol-cache*.json
-          python3 build-site-data.py --data data --out _site/derived
+          python3 scripts/build-site-data.py --data data --out _site/derived
 
       - uses: actions/upload-pages-artifact@v5
         with:

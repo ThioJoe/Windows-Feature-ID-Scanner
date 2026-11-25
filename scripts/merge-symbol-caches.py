@@ -18,7 +18,7 @@
 # (an Insider build has about 6,000 PDBs no other build has). Each PDB also gets the first build it was seen in ('build'), which a
 # scan uses to fall back to an earlier version of a binary, not to a later build's (scan-symbols.py).
 #
-#   python merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json caches/*/symbol-cache-AMD64.json
+#   python scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json caches/*/symbol-cache-AMD64.json
 
 import argparse
 import datetime

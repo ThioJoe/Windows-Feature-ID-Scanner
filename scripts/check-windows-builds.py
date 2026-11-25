@@ -13,7 +13,7 @@
 # A source that fails, and sources that disagree about a version's or channel's newest build, are reported (as warnings in GitHub
 # Actions). The check only fails when no source says what the builds of a version to scan are.
 #
-#   python check-windows-builds.py --arch AMD64                         # prints the builds to scan as JSON
+#   python scripts/check-windows-builds.py --arch AMD64                 # prints the builds to scan as JSON
 #     --versions 26H2 25H2                 only these versions (default: every version the VM can be built for)
 #     --github-output                      also writes `builds` (JSON) and `needed` to $GITHUB_OUTPUT
 #     --releases data/releases.json        writes the newest builds of every version and Insider channel, which the site lists

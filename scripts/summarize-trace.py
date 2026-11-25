@@ -1,7 +1,7 @@
 # summarize-trace.py
 # Summarizes a feature trace (trace-features.ps1) into trace.json in the same folder:
 #
-#   python summarize-trace.py <folder>      # with events.xml (tracerpt's decoding), processes.csv, targets.csv and run.json
+#   python scripts/summarize-trace.py <folder>      # with events.xml (tracerpt's decoding), processes.csv, targets.csv and run.json
 #
 # For each feature checked: the stages its checks reported (the stage compiled into the binary that checked it), how they came out
 # (on or off, and the variant for variant checks), the processes that checked it, the phases of the trace it was checked in, and the

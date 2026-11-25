@@ -5,7 +5,7 @@ A modern take on mach2's feature scanning: GitHub Actions scans Windows 11 for f
 
 ## How it works
 
-The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`) runs on the `windows-11-arm` runner, because the Windows Server images don't carry the consumer feature set.
+The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`) runs on the `windows-11-arm` runner, because the Windows Server images don't carry the consumer feature set. Its steps, each a script in `scripts/`:
 
 1. **`scan-symbols.py`** finds feature names and IDs in Microsoft's public symbols. For every binary under the Windows directories it downloads the matching PDB from the Microsoft symbol server and reads the symbols that WIL feature staging emits (`Feature_<Name>__descriptor`, `Feature_<Name>__private_descriptor`, `__WilFeatureTraits_Feature_<Name>::id`), then reads each feature's ID from the binary. C++ features in binaries built with older WIL have no descriptor; their ID comes from the code of their `GetCurrentFeatureEnabledState`, which passes it to Windows. This replaces mach2, which is retired and fails on current PDBs. For binaries that contain features, it also analyzes their code (see below). It also scans the binaries of the component store (WinSxS), the newest version of each component (`--component-store`): the files of optional features that aren't turned on, such as Hyper-V and the Windows Subsystem for Linux, of components that only live there, such as the servicing stack, and of installed ones outside the folders above, such as the driver store's drivers for hardware the machine doesn't have. Binaries already found in those folders are the same files, so their PDBs aren't read twice. Windows keeps the files of components that aren't installed compressed (LZMS blocks, or a delta against nothing); they're expanded with Windows' own `cabinet.dll` and `msdelta.dll`. A build lists the modules only the component store has in `componentStore`, and the site says so in a feature's details.
 2. **`scan-features.ps1`** runs ViVeTool to dump the feature store (the IDs actually configured on the machine) and fills in names from step 1.
@@ -115,6 +115,6 @@ The site doesn't load the `details.json` files or the `super-god-mode/` folders 
 
 ## Running locally
 
-`python scan-symbols.py` works on any Windows machine with Python 3 (no packages needed). It writes `extracted-names.txt` (`ID Name`) and `symbol-features.json`. See `--help` for options such as `--root`, `--symbol-cache` and `--keep-pdbs`.
+`python scripts/scan-symbols.py` works on any Windows machine with Python 3 (no packages needed). It writes `extracted-names.txt` (`ID Name`) and `symbol-features.json`. See `--help` for options such as `--root`, `--symbol-cache` and `--keep-pdbs`.
 
-To view the site locally, put the contents of `site/` and a copy of `data/` in a folder, run `python build-site-data.py --out <folder>/derived`, and serve the folder with any web server (`python -m http.server`).
+To view the site locally, put the contents of `site/` and a copy of `data/` in a folder, run `python scripts/build-site-data.py --out <folder>/derived`, and serve the folder with any web server (`python -m http.server`).

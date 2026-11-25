@@ -65,7 +65,7 @@ jobs:
             [ -n "$BUILDS" ] || { echo "::error::trace_only needs the builds to trace in builds"; exit 1; }
             for b in $BUILDS; do [ -f "data/builds/$b-AMD64/features.json" ] || { echo "::error::$b-AMD64 isn't in data/, so it needs a full scan"; exit 1; }; done
           fi
-          python3 check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
+          python3 scripts/check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
 
       # The list only changes when Microsoft releases something
       - name: Commit the list of released builds
@@ -110,7 +110,7 @@ jobs:
           TRACE_ONLY: ${{ inputs.trace_only }}      # true: no scan, only the trace (scan-in-vm.ps1 -TraceOnly)
         run: |
           python --version
-          .\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false') -TraceOnly:($env:TRACE_ONLY -eq 'true')
+          .\scripts\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false') -TraceOnly:($env:TRACE_ONLY -eq 'true')
 
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks
@@ -186,13 +186,13 @@ jobs:
           while read -r folder; do
             key="${folder#output/Windows-Build-}"
             echo "Adding $key"
-            python3 update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode" --trace "$folder/trace"
+            python3 scripts/update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode" --trace "$folder/trace"
             keys+=("$key")
           done < <(find output -mindepth 1 -maxdepth 1 -type d -name 'Windows-Build-*' 2>/dev/null | sort -t- -k3,3V)
           if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           # (A folder per scan's cache, though download-artifact can put a lone one straight in symbol-caches/)
           mapfile -t caches < <(find symbol-caches -type f -name symbol-cache-AMD64.json 2>/dev/null | sort)
-          if [ ${#caches[@]} -gt 0 ]; then python3 merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
+          if [ ${#caches[@]} -gt 0 ]; then python3 scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data

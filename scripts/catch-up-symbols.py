@@ -5,12 +5,12 @@
 # scan then keeps what earlier versions of those binaries contained (marked unverified), and data/builds/<build>/symbols.json lists the
 # PDBs it didn't get, with what's needed to download their binaries from the symbol server (see scan-symbols.py and update-data.py).
 #
-#   python catch-up-symbols.py check [--github-output] [--summary FILE]
+#   python scripts/catch-up-symbols.py check [--github-output] [--summary FILE]
 #       Asks the symbol server for each build's pending PDBs, and for the binaries of those it has now, until the build's checkUntil
 #       (CHECK_DAYS after its release, see update-data.py), and lists the builds it has some of now. Only needs Python, so it runs on any
 #       runner.
 #
-#   python catch-up-symbols.py run --builds KEY [KEY ...] [--github-output] [--summary FILE]
+#   python scripts/catch-up-symbols.py run --builds KEY [KEY ...] [--github-output] [--summary FILE]
 #       Scans those builds' PDBs again with scan-symbols.py --manifest, which takes what the results cache has for the PDBs the scan
 #       got and downloads the others with their binaries (checked against the SHA-256 the scan recorded), so no VM is needed. The result
 #       goes into data/ with update-data.py, which keeps the build's feature store data and Super God Mode statistics, and the code
@@ -249,7 +249,7 @@ def run(args):
 
 def main():
     parser = argparse.ArgumentParser(description="Complete builds whose scan didn't get every binary's symbols.")
-    parser.add_argument('--data-dir', default=os.path.join(HERE, 'data'))
+    parser.add_argument('--data-dir', default=os.path.join(os.path.dirname(HERE), 'data'))  # data/ beside scripts/
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('check', help='List the builds the symbol server has some of the missing PDBs of now')
     p.add_argument('--github-output', action='store_true', help='Write builds (space-separated) and needed to $GITHUB_OUTPUT')

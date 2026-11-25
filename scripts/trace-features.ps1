@@ -7,8 +7,8 @@
 # session: the shell's own UI (with its keyboard shortcuts), the Start menu's Microsoft apps, and every ms-settings: page, Windows
 # Security page, Control Panel task link and shell folder Super God Mode found (its statistics, from run-super-god-mode.ps1).
 #
-#   .\trace-features.ps1 -Prepare        # Start recording at the next restart, so the trace has boot and sign-in (the VM scanner)
-#   .\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
+#   .\scripts\trace-features.ps1 -Prepare        # Start recording at the next restart, so the trace has boot and sign-in (the VM scanner)
+#   .\scripts\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
 #
 # The second form uses the session the restart started if there is one, and otherwise starts one (and restarts the shell, so its
 # startup is in the trace). It writes trace.json to -OutputDir (summarize-trace.py's summary, which update-data.py adds to the build's

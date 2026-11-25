@@ -20,8 +20,8 @@
 # separately. As a cross-check, the report lists file names the target update carries in the same version family whose installed
 # copies all stayed as they were in the image. Names repeat across components, so these aren't necessarily problems.
 #
-#   python verify-windows-files.py image --root F:\ --out image-files.csv.gz
-#   python verify-windows-files.py check --kb KB5127936 --kb KB5043080 --image image-files.csv.gz --out verification-files.json --inventory files.csv.gz
+#   python scripts/verify-windows-files.py image --root F:\ --out image-files.csv.gz
+#   python scripts/verify-windows-files.py check --kb KB5127936 --kb KB5043080 --image image-files.csv.gz --out verification-files.json --inventory files.csv.gz
 
 import argparse
 import csv

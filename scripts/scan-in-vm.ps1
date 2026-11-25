@@ -41,7 +41,7 @@ param(
     [string]$WorkDir = 'D:\vmscan',        # Needs about 60 GB: the image and the virtual disk
     [string]$VmName = 'FeatureScan',
     [int]$VmMemoryGB = 0,                  # 0: what the runner can spare (its free memory less 3 GB), from 4 to 12 GB
-    [string]$RepoDir = $PSScriptRoot,      # The scanner's files, copied into the VM
+    [string]$RepoDir = (Split-Path $PSScriptRoot),  # The repository (its scripts/ are copied into the VM)
     [string]$OutputDir,                    # Where the scan output is copied back to (default: <WorkDir>\output)
     [string]$BaseImage,                    # Start from the catalog's image of this build (such as 26100.4349) instead of the newest one that fits
     [string]$InsiderChannel,               # Install the newest build of this Windows Insider channel (such as Beta) instead of -Kb and -Version
@@ -206,7 +206,7 @@ function New-ScanDisk([string]$esd, $insider) {
 
     # The image's files before Windows first starts, for the file check before the scan (files no update lists must be the image's)
     Log 'Listing the files of the image'
-    & python.exe (Join-Path $RepoDir 'verify-windows-files.py') image --root $winRoot --out (Join-Path $WorkDir 'image-files.csv.gz')
+    & python.exe (Join-Path $RepoDir 'scripts\verify-windows-files.py') image --root $winRoot --out (Join-Path $WorkDir 'image-files.csv.gz')
     if ($LASTEXITCODE -ne 0) { throw "Listing the image's files failed ($LASTEXITCODE)" }
 
     & bcdboot.exe "$($winRoot)Windows" /s $efiRoot /f UEFI | Out-Null
@@ -812,7 +812,7 @@ Write-Result $LASTEXITCODE
 function Invoke-WindowsUpdatePy([string[]]$arguments) {
     # windows_update.py on the runner: its progress (stderr) is logged, its JSON goes to the file its arguments name
     $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
-    & python.exe (Join-Path $RepoDir 'windows_update.py') @arguments 2>&1 | ForEach-Object { if ($_ -is [System.Management.Automation.ErrorRecord]) { Log "$_" } }
+    & python.exe (Join-Path $RepoDir 'scripts\windows_update.py') @arguments 2>&1 | ForEach-Object { if ($_ -is [System.Management.Automation.ErrorRecord]) { Log "$_" } }
     return $LASTEXITCODE
 }
 
@@ -1370,7 +1370,7 @@ function Copy-ScannerToVM {
         }
     }
     foreach ($f in 'scan-symbols.py', 'scan-features.ps1', 'download-vivetool.ps1', 'verify-windows-files.py', 'microsoft_learn.py', 'run-super-god-mode.ps1', 'trace-features.ps1', 'summarize-trace.py') {
-        Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir $f) -Destination C:\scan\ -Force
+        Copy-Item -ToSession (Get-VmSession) -Path (Join-Path $RepoDir "scripts\$f") -Destination C:\scan\ -Force
     }
 }
 

@@ -70,20 +70,20 @@ jobs:
 
       - name: Download and Extract ViVeTool
         shell: powershell
-        run: .\download-vivetool.ps1
+        run: .\scripts\download-vivetool.ps1
 
       - name: Extract feature names from symbols
         shell: powershell
         run: |
           python --version
-          python scan-symbols.py --component-store --results-cache data\symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json
+          python scripts\scan-symbols.py --component-store --results-cache data\symbol-cache.json --names-out extracted-names.txt --json-out symbol-features.json
           if ($LASTEXITCODE -ne 0) { Write-Error "scan-symbols.py failed with exit code $LASTEXITCODE"; exit 1 }
           Write-Host "Preview of the first 5 lines of extracted-names.txt:"
           Get-Content "extracted-names.txt" -TotalCount 5 | Out-Host
 
       - name: Run feature scanner script
         shell: powershell
-        run: .\scan-features.ps1
+        run: .\scripts\scan-features.ps1
 
       # Super God Mode's statistics (see run-super-god-mode.ps1). They come in addition to the scan, so a failure only means the build's
       # data has none
@@ -91,7 +91,7 @@ jobs:
         shell: powershell
         timeout-minutes: 30
         continue-on-error: true
-        run: .\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
+        run: .\scripts\run-super-god-mode.ps1 -OutputDir output-temp\super-god-mode
 
       # Which features Windows checks while it runs, and while Super God Mode's pages and folders are opened (see trace-features.ps1).
       # It comes in addition to the scan, so a failure only means the build's data has no trace. It takes about an hour and ten minutes; the
@@ -101,7 +101,7 @@ jobs:
         shell: powershell
         timeout-minutes: 105
         continue-on-error: true
-        run: .\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
+        run: .\scripts\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
 
       - name: Create output directory based on build version
         shell: powershell
@@ -137,7 +137,7 @@ jobs:
       - name: Add build to data/ and commit
         shell: powershell
         run: |
-          python update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode" --trace "$env:BUILD_FOLDER\trace"
+          python scripts\update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode" --trace "$env:BUILD_FOLDER\trace"
           if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

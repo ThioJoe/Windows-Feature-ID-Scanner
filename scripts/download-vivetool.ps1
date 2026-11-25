@@ -50,8 +50,8 @@ Write-Host ""
 # --- Extraction ---
 Write-Host "Extracting files from $outputZipFile..."
 try {
-    Expand-Archive -Path $outputZipFile -DestinationPath . -Force
-    Write-Host "[SUCCESS] Files extracted to the current directory."
+    Expand-Archive -Path $outputZipFile -DestinationPath $PSScriptRoot -Force
+    Write-Host "[SUCCESS] Files extracted to $PSScriptRoot, where scan-features.ps1 looks for them."
 }
 catch {
     Write-Error "Failed to extract the archive. The file may be corrupt or you may be missing permissions."

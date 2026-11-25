@@ -11,9 +11,9 @@
 #   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
 #
 # Usage:
-#   python update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>] [--trace <folder>]
+#   python scripts/update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>] [--trace <folder>]
 #                                          # add/replace a build, then regenerate everything
-#   python update-data.py                  # only regenerate index, first-seen and diffs (and fill in what builds already here lack)
+#   python scripts/update-data.py          # only regenerate index, first-seen and diffs (and fill in what builds already here lack)
 #
 # features.json and details.json are written with one feature per line so git diffs between commits stay small and readable. The site
 # doesn't load details.json itself: build-site-data.py derives the files it loads when the site is published.

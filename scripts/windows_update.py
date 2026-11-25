@@ -13,11 +13,11 @@
 # are built on the channels' own baseline (ge_release_flt 26100.6, not the released builds' 26100.1), so a released build becomes an
 # Insider build by an in-place upgrade, as Microsoft's docs say of switching channels.
 #
-#   python windows_update.py offer --channel Experimental --os-build 26300.9711       # the update offered (build, KB, ID), as JSON
+#   python scripts/windows_update.py offer --channel Experimental --os-build 26300.9711       # the update offered (build, KB, ID), as JSON
 #     --json-out offer.json                     also writes it to this file
-#   python windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
-#   python windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
-#   python windows_update.py image --channel Experimental --out <folder>              # and a new installation's files and apps (Windows only)
+#   python scripts/windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
+#   python scripts/windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
+#   python scripts/windows_update.py image --channel Experimental --out <folder>              # and a new installation's files and apps (Windows only)
 #
 # The download links last from 10 minutes (small files) to several hours (the cumulative update), so they're asked for right before
 # the downloads. They're plain HTTP, as Windows Update's are; each file is checked against the SHA-256 in the update's metadata, which
