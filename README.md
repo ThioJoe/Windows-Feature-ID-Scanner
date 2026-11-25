@@ -16,6 +16,7 @@ Automated scanning for Windows Feature ID details in each newly released Windows
 - **Runtime analysis**: Uses Windows event tracing to spot if windows components check a feature ID
 
 ## Build Comparison Tool Features
+- Compare any two scanned builds
 - Feature IDs that have been added, removed, or renamed
 - Default state changes for a feature ID
 - Renamed or newly named feature IDs
