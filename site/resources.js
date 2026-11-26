@@ -180,21 +180,27 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     `${fmt(changes.filter((c) => c.change === 'changed').length)} changed, ${fmt(changes.filter((c) => c.change === 'added').length)} added, ` +
     `${fmt(changes.filter((c) => c.change === 'removed').length)} removed. Images and files load from the repository's assets branch.`);
 
-  // One subsection: its rows come from rows() (a promise), shown in a table with these columns
-  const sub = async (id, title, rowsPromise, columns, detail) => {
-    let rows;
-    try {
-      rows = await rowsPromise;
-    } catch (e) {
-      if (isCurrent()) note(`${esc(title)}: could not load (${esc(e.message)})`);
-      return;
-    }
-    if (!isCurrent()) return;
-    rows.forEach((r, i) => { r.id = i; });
-    const counts = Object.keys(CHANGE_ORDER).map((c) => [c, rows.filter((r) => r.change === c).length]).filter(([, n]) => n)
-      .map(([c, n]) => `<span class="${c}">${fmt(n)} ${c}</span>`).join(', ');
-    const sec = section(box, 'compare:res:' + id, 'h3', '', `${esc(title)} <span class="count">${counts || '0'}</span>`, rows.length > 0);
-    if (rows.length) renderTable(sec, rows, columns, undefined, detail);
+  // One subsection: its rows (a promise) in a table with these columns. Its place is kept in order while all the subsections load
+  // at the same time.
+  const pending = [];
+  const sub = (id, title, rowsPromise, columns, detail) => {
+    const slot = document.createElement('div');
+    box.appendChild(slot);
+    pending.push((async () => {
+      let rows;
+      try {
+        rows = await rowsPromise;
+      } catch (e) {
+        if (isCurrent()) slot.innerHTML = `<p class="muted">${esc(title)}: could not load (${esc(e.message)})</p>`;
+        return;
+      }
+      if (!isCurrent()) return;
+      rows.forEach((r, i) => { r.id = i; });
+      const counts = Object.keys(CHANGE_ORDER).map((c) => [c, rows.filter((r) => r.change === c).length]).filter(([, n]) => n)
+        .map(([c, n]) => `<span class="${c}">${fmt(n)} ${c}</span>`).join(', ');
+      const sec = section(slot, 'compare:res:' + id, 'h3', '', `${esc(title)} <span class="count">${counts || '0'}</span>`, rows.length > 0);
+      if (rows.length) renderTable(sec, rows, columns, undefined, detail);
+    })());
   };
 
   // Icons and cursors of executables, by their group's ID
@@ -374,4 +380,5 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   } catch (e) {
     allSec.querySelector('.count').textContent = '(could not load: ' + e.message + ')';
   }
+  await Promise.all(pending);
 }
