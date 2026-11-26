@@ -138,6 +138,14 @@ function pendingNote(b) {
 // what typing jumps to and label the HTML the button shows. The sections are side by side, a column each (stacked on a narrow screen).
 // The list works like a listbox: arrow keys (left and right to the next column), Home/End, Page Up/Down, Enter or Space to pick,
 // Escape to close, and typing the start of a build number.
+// Whether the compare pickers show every build, not only those that came out no later or no earlier than the other's: a checkbox in
+// their lists, kept for the viewer (data-show-all on a picker, which says what it shows otherwise)
+let showAllBuilds = (() => { try { return localStorage.getItem('showAllBuilds') === '1'; } catch (e) { return false; } })();
+function setShowAllBuilds(on) {
+  showAllBuilds = on;
+  try { localStorage.setItem('showAllBuilds', on ? '1' : '0'); } catch (e) { /* storage blocked */ }
+  document.dispatchEvent(new Event('show-all-builds'));
+}
 class BuildPicker extends HTMLElement {
   connectedCallback() {
     if (this.button) return;
@@ -169,6 +177,14 @@ class BuildPicker extends HTMLElement {
     // Closes when focus moves elsewhere (Tab, a click outside), or on a tap outside, which doesn't move focus on every phone
     this.addEventListener('focusout', (e) => { if (!this.contains(e.relatedTarget)) this.close(false); });
     document.addEventListener('pointerdown', (e) => { if (!this.contains(e.target)) this.close(false); });
+    if (this.hasAttribute('data-show-all')) {
+      this.list.addEventListener('change', (e) => {
+        if (!e.target.closest('.picker-all')) return;
+        setShowAllBuilds(e.target.checked);
+        this.list.focus({ preventScroll: true });
+      });
+      document.addEventListener('show-all-builds', () => this.markRange());
+    }
   }
 
   get value() { return this.current; }
@@ -178,6 +194,7 @@ class BuildPicker extends HTMLElement {
     this.current = item ? v : '';
     this.button.querySelector('.picker-value').innerHTML = item ? item.label : '';
     for (const o of this.list.querySelectorAll('[role=option]')) o.setAttribute('aria-selected', String(o.dataset.value === this.current));
+    this.markRange();
   }
 
   setSections(sections, footer = '') {
@@ -203,7 +220,10 @@ class BuildPicker extends HTMLElement {
       html += '</div>';
     }
     html += '</div>';
-    if (footer) html += `<div class="picker-footer" aria-hidden="true">${footer}</div>`;
+    const all = this.hasAttribute('data-show-all')
+      ? '<label class="picker-all" title="Released builds are ordered by release date, and so are Insider builds. An Insider build counts as newer than the ' +
+        `released builds that came out before its channel's next build."><input type="checkbox"> Show all builds <span>(otherwise only those ${esc(this.dataset.showAll)})</span></label>` : '';
+    if (footer || all) html += `<div class="picker-footer">${all}${footer ? `<span aria-hidden="true">${footer}</span>` : ''}</div>`;
     this.list.innerHTML = html;
     this.active = null;
     this.value = this.items.some((x) => x.value === this.current) ? this.current : (this.items.length ? this.items[0].value : '');
@@ -230,19 +250,43 @@ class BuildPicker extends HTMLElement {
     }
   }
 
+  // The values the list shows unless "Show all builds" is checked: those keep() is true for, and the one picked (null: all of them).
+  // The compare pickers show the builds that came out no later or no earlier than the other's.
+  setRange(keep) {
+    this.keep = keep;
+    this.markRange();
+  }
+
+  markRange() {
+    const all = !this.keep || showAllBuilds;
+    for (const o of this.list.querySelectorAll('[role=option]')) o.hidden = !all && o.dataset.value !== this.current && !this.keep(o.dataset.value);
+    for (const g of this.list.querySelectorAll('[role=group]')) g.hidden = !g.querySelector('[role=option]:not([hidden])');
+    for (const s of this.list.querySelectorAll('.picker-section')) s.hidden = !s.querySelector('[role=group]:not([hidden])');
+    const box = this.list.querySelector('.picker-all input');
+    if (box) box.checked = showAllBuilds;
+    if (!this.list.hidden) {
+      this.place();
+      if (!this.active || this.active.hidden) this.setActive(this.option(this.current) || this.list.querySelector('[role=option]:not([hidden])'), 'center');
+    }
+  }
+
   option(value) {
     return [...this.list.querySelectorAll('[role=option]')].find((o) => o.dataset.value === value);
+  }
+
+  // The list can be wider than the button: keep it inside the window
+  place() {
+    this.list.style.left = '0px';
+    const room = document.documentElement.clientWidth - 8, left = this.getBoundingClientRect().left, width = this.list.offsetWidth;
+    if (left + width > room) this.list.style.left = Math.max(8 - left, room - width - left) + 'px';
   }
 
   open() {
     if (!this.list.hidden || !this.items.length) return;
     this.list.hidden = false;
     this.button.setAttribute('aria-expanded', 'true');
-    // The list can be wider than the button: keep it inside the window
-    this.list.style.left = '0px';
-    const room = document.documentElement.clientWidth - 8, left = this.getBoundingClientRect().left, width = this.list.offsetWidth;
-    if (left + width > room) this.list.style.left = Math.max(8 - left, room - width - left) + 'px';
-    this.setActive(this.option(this.current) || this.list.querySelector('[role=option]'), 'center');
+    this.place();
+    this.setActive(this.option(this.current) || this.list.querySelector('[role=option]:not([hidden])'), 'center');
     this.list.focus({ preventScroll: true });
   }
 
@@ -273,7 +317,8 @@ class BuildPicker extends HTMLElement {
   }
 
   onKey(e) {
-    const opts = [...this.list.querySelectorAll('[role=option]')];
+    if (e.target.closest('.picker-all')) return;  // (The checkbox's own keys)
+    const opts = [...this.list.querySelectorAll('[role=option]:not([hidden])')];
     const i = opts.indexOf(this.active);
     const go = (n) => { e.preventDefault(); this.setActive(opts[Math.max(0, Math.min(opts.length - 1, n))]); };
     switch (e.key) {
@@ -287,12 +332,12 @@ class BuildPicker extends HTMLElement {
       case 'ArrowRight': {
         // The option nearest the same height in the column to the left or right
         if (!this.active) return;
-        const columns = [...this.list.querySelectorAll('.picker-section')];
+        const columns = [...this.list.querySelectorAll('.picker-section:not([hidden])')];
         const next = columns[columns.indexOf(this.active.closest('.picker-section')) + (e.key === 'ArrowRight' ? 1 : -1)];
         if (!next) return;
         e.preventDefault();
         const y = this.active.getBoundingClientRect().top, dy = (o) => Math.abs(o.getBoundingClientRect().top - y);
-        this.setActive([...next.querySelectorAll('[role=option]')].reduce((a, b) => (dy(b) < dy(a) ? b : a)));
+        this.setActive([...next.querySelectorAll('[role=option]:not([hidden])')].reduce((a, b) => (dy(b) < dy(a) ? b : a)));
         return;
       }
       case 'Enter':
@@ -411,11 +456,13 @@ function latestBuild(arch) {
 // The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
 // first-seen.json counts them in (update-data.py), the first build of each Insider channel (of an architecture) in that order, and the
 // builds that came out on each architecture's first tracked day
-let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null;
+let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null, insiderUntil = null;
+// A build's release date, or the day it was scanned where that's not known
+const releaseDate = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
 function buildOrder() {
   if (!buildsByKey) {
     buildsByKey = new Map(index.builds.map((b) => [b.key, b]));
-    const date = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
+    const date = releaseDate;
     const ordered = [...index.builds].sort((x, y) => (date(x) < date(y) ? -1 : date(x) > date(y) ? 1 : compareVersions(x, y)));
     releaseRank = new Map(ordered.map((b, i) => [b.key, i]));
     const firsts = new Map();
@@ -424,6 +471,15 @@ function buildOrder() {
       if (b.insiderChannel && !firsts.has(channel)) firsts.set(channel, b.key);
     }
     channelFirst = new Set(firsts.values());
+    // Each Insider build's channel's next build's release date (none for the newest)
+    insiderUntil = new Map();
+    const last = new Map();
+    for (const b of ordered) {
+      if (!b.insiderChannel) continue;
+      const channel = `${b.architecture} ${b.insiderChannel}`;
+      if (last.has(channel)) insiderUntil.set(last.get(channel), releaseDate(b));
+      last.set(channel, b.key);
+    }
     earliestBuilds = new Map();
     for (const b of ordered) {
       const earliest = earliestBuilds.get(b.architecture);
@@ -1171,6 +1227,17 @@ async function renderCompare() {
   // Each picker greys out the build the other one has, which it doesn't let be picked too
   $('cmp-old').setTaken(newKey, "Already selected as the new build; a build can't be compared with itself");
   $('cmp-new').setTaken(oldKey, "Already selected as the old build; a build can't be compared with itself");
+  // Unless "Show all builds" is checked, each lists the builds no newer (the old one) or no older (the new one) than the other's. Released
+  // builds are ordered by release date, and so are Insider builds: build numbers don't order builds of different versions (24H2, 25H2 and
+  // 26H2 get the same updates) or the Insider channels on other cores. An Insider build's features are ahead of the released builds', so
+  // it counts as newer than those that came out before its channel's next build, and older than those after.
+  buildOrder();
+  const until = (b) => insiderUntil.get(b.key) || '9999-12-31';
+  const noOlder = (x, y) => (Boolean(x.insiderChannel) === Boolean(y.insiderChannel) ? releaseDate(x) >= releaseDate(y)
+    : x.insiderChannel ? releaseDate(y) < until(x) : releaseDate(x) >= until(y));
+  const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
+  $('cmp-old').setRange(known ? (v) => v !== newKey && noOlder(buildsByKey.get(newKey), buildsByKey.get(v)) : null);
+  $('cmp-new').setRange(known ? (v) => v !== oldKey && noOlder(buildsByKey.get(v), buildsByKey.get(oldKey)) : null);
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';
