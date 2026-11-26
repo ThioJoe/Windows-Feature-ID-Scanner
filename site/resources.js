@@ -115,8 +115,10 @@ const imageGrid = (kind, before, after, marked = () => false) => {
   }));
   const columns = [...sizes.values()].sort((p, q) => p.x[0] * p.x[1] - q.x[0] * q.x[1] || p.x[2] - q.x[2])
     .flatMap(({ sides }) => Array.from({ length: Math.max(sides[0].length, sides[1].length) }, (_, i) => [sides[0][i], sides[1][i]]));
-  const cell = (x) => (x ? `<td><span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span></td>` : '<td></td>');
-  const row = (label, side, list) => `<tr><th>${label}</th>${list && list.length ? columns.map((c) => cell(c[side])).join('') : `<td colspan="${columns.length}" class="muted">(none)</td>`}</tr>`;
+  // (Where only the other has the size, a box the size of its image that says so)
+  const cell = (x, other) => (x ? `<td><span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span></td>`
+    : `<td><span class="res-size"><span class="res-none" style="width:${Math.min(other[0], 96)}px;height:${Math.min(other[1], 96)}px" title="No ${other[0]}×${other[1]}, ${other[2]}-bit image">none</span><br>&nbsp;</span></td>`);
+  const row = (label, side, list) => `<tr><th>${label}</th>${list && list.length ? columns.map((c) => cell(c[side], c[1 - side])).join('') : `<td colspan="${columns.length}" class="muted">(none)</td>`}</tr>`;
   return `<div class="res-grid-wrap"><table class="res-grid">${row('Old', 0, before)}${row('New', 1, after)}</table></div>`;
 };
 
