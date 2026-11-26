@@ -104,9 +104,21 @@ const imagePreview = (kind, images, max = 48) => {
   const x = largestImage(images);
   return x ? imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, max) : '<span class="muted">(none)</span>';
 };
-const imageStrip = (kind, images, marked = () => false) => (images && images.length
-  ? [...images].sort((p, q) => p[0] * p[1] - q[0] * q[1] || p[2] - q[2]).map((x) => `<span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span>`).join('')
-  : '<span class="muted">(none)</span>');
+// The old and new images of an icon or cursor in two rows, a column for each size and bit depth, so that the same size lines up (a
+// cell is empty where one of them doesn't have it)
+const imageGrid = (kind, before, after, marked = () => false) => {
+  const key = (x) => `${x[0]}x${x[1]}x${x[2]}`;
+  const sizes = new Map();
+  [before, after].forEach((list, side) => (list || []).forEach((x) => {
+    if (!sizes.has(key(x))) sizes.set(key(x), { x, sides: [[], []] });
+    sizes.get(key(x)).sides[side].push(x);
+  }));
+  const columns = [...sizes.values()].sort((p, q) => p.x[0] * p.x[1] - q.x[0] * q.x[1] || p.x[2] - q.x[2])
+    .flatMap(({ sides }) => Array.from({ length: Math.max(sides[0].length, sides[1].length) }, (_, i) => [sides[0][i], sides[1][i]]));
+  const cell = (x) => (x ? `<td><span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span></td>` : '<td></td>');
+  const row = (label, side, list) => `<tr><th>${label}</th>${list && list.length ? columns.map((c) => cell(c[side])).join('') : `<td colspan="${columns.length}" class="muted">(none)</td>`}</tr>`;
+  return `<div class="res-grid-wrap"><table class="res-grid">${row('Old', 0, before)}${row('New', 1, after)}</table></div>`;
+};
 
 // Added, removed and changed keys of two objects (with equal() for what counts as the same)
 function objectDiff(before, after, equal = (x, y) => JSON.stringify(x) === JSON.stringify(y)) {
@@ -241,7 +253,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   // One subsection: its rows (a promise) in a table with these columns. Its place is kept in order while all the subsections load
   // at the same time.
   const pending = [];
-  const sub = (id, title, rowsPromise, columns, detail) => {
+  const sub = (id, title, rowsPromise, columns, detail, noteHtml) => {
     const slot = document.createElement('div');
     box.appendChild(slot);
     pending.push((async () => {
@@ -257,15 +269,34 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
       const counts = Object.keys(CHANGE_ORDER).map((c) => [c, rows.filter((r) => r.change === c).length]).filter(([, n]) => n)
         .map(([c, n]) => `<span class="${c}">${fmt(n)} ${c}</span>`).join(', ');
       const sec = section(slot, 'compare:res:' + id, 'h3', '', `${esc(title)} <span class="count">${counts || '0'}</span>`, rows.length > 0);
+      const extra = noteHtml && noteHtml();
+      if (extra) (rows.length ? sec : slot).insertAdjacentHTML('beforeend', `<p class="muted">${extra}</p>`);
       if (rows.length) renderTable(sec, rows, columns, undefined, detail);
     })());
   };
 
-  // Icons and cursors of executables, by their group's ID
+  // Icons and cursors of executables, by their group's ID. One whose only image is 1×1 is a placeholder: programs built from Chromium's
+  // code (copilotapp.exe, mscopilot.exe) keep the places of the icons they don't use, since Windows refers to an icon by its position in
+  // the file, with a 1×1 image in each. Those are left out where neither build has more than a placeholder, so a real icon that
+  // replaces one, or that one replaces, still shows.
+  const placeholder = (images) => !images || (images.length > 0 && images.every((x) => x[0] <= 1 && x[1] <= 1));
+  const leftOut = { icons: [], cursors: [] };
   const groupRows = (part, kind) => Promise.all(changes.filter((c) => partChanged(c, part)).map(async (c) => {
     const [o, n] = await loadBoth(c, part);
     return objectDiff(o, n).map((r) => ({ ...r, path: c.path, kind })).filter((r) => matchesQ(r.path, r.key));
-  })).then((x) => x.flat());
+  })).then((x) => x.flat().filter((r) => {
+    if (!placeholder(r.old) || !placeholder(r.new)) return true;
+    leftOut[kind].push(r);
+    return false;
+  }));
+  const placeholderNote = (kind) => () => {
+    const rows = leftOut[kind];
+    if (!rows.length) return '';
+    const files = [...new Set(rows.map((r) => fileName(r.path)))].sort();
+    return `Not counted: ${fmt(rows.length)} ${kind === 'icons' ? 'icon' : 'cursor'}${rows.length === 1 ? '' : 's'} whose only image is a 1×1 placeholder ` +
+      `(in ${esc(files.slice(0, 5).join(', '))}${files.length > 5 ? ` and ${fmt(files.length - 5)} more files` : ''}). Programs built from Chromium's code ` +
+      "keep a 1×1 image in the places of the icons they don't use, since Windows refers to an icon by its position in the file.";
+  };
   // A changed icon's images that differ (by size and bits), so its preview is one that changed rather than its largest
   const sizeKey = (x) => `${x[0]}x${x[1]}x${x[2]}`;
   const differing = (r) => {
@@ -292,14 +323,15 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     { title: 'Old', value: () => '', html: (r) => imagePreview(kind, differing(r)[0]), cls: 'res-cell' },
     { title: 'New', value: () => '', html: (r) => imagePreview(kind, differing(r)[1]), cls: 'res-cell' }];
   const groupDetail = (kind) => async (r) => {
-    const keys = r.change === 'changed' ? changedVariations(r) : new Set();
+    // (Outlined only where some of them changed, not all)
+    const changed = r.change === 'changed' ? changedVariations(r) : new Set();
+    const keys = changed.size < new Set([...(r.old || []), ...(r.new || [])].map(sizeKey)).size ? changed : new Set();
     const marked = (x) => keys.has(sizeKey(x));
-    return `<div class="res-detail"><div><b>Old</b><div>${imageStrip(kind, r.old, marked)}</div></div>` +
-      `<div><b>New</b><div>${imageStrip(kind, r.new, marked)}</div></div>` +
+    return `<div class="res-detail">${imageGrid(kind, r.old, r.new, marked)}` +
       `<p class="muted">${keys.size ? 'Outlined: the variations that changed. ' : ''}${esc(r.path)}</p></div>`;
   };
-  await sub('icons', 'Icons', groupRows('icons', 'icons'), groupColumns('icons'), groupDetail('icons'));
-  await sub('cursors', 'Cursors in executables', groupRows('cursors', 'cursors'), groupColumns('cursors'), groupDetail('cursors'));
+  await sub('icons', 'Icons', groupRows('icons', 'icons'), groupColumns('icons'), groupDetail('icons'), placeholderNote('icons'));
+  await sub('cursors', 'Cursors in executables', groupRows('cursors', 'cursors'), groupColumns('cursors'), groupDetail('cursors'), placeholderNote('cursors'));
 
   // Bitmaps and other images in executables
   const imageRows = Promise.all(changes.filter((c) => partChanged(c, 'bitmaps') || partChanged(c, 'images')).map(async (c) => {
