@@ -290,6 +290,11 @@ def check(files, updates, image, windir):
     target_hashes = {r[3] for r in target['rows'] if r[3]}
     other_hashes = {r[3] for u in others for r in u['rows'] if r[3]}
     other_sizes = {(base_name(r[0]), r[2]) for u in others for r in u['rows'] if not r[3]}  # Older lists have no hashes
+    # The target update's too, before 2026: its files are then matched by name and size. Such a list doesn't name every file (not the
+    # language resources of the binaries it lists, nor a file installed under another name than the one it gives), so a file it doesn't
+    # name can't be checked against it; sfc and DISM still check it against the component manifests Microsoft signs
+    target_sizes = {(base_name(r[0]), r[2]) for r in target['rows'] if not r[3]}
+    target_names = {name for name, _ in target_sizes} if not target_hashes else set()  # (Only a list with no hashes at all)
     target_by_name = {}
     for name, version, size, digest in target['rows']:
         if digest:
@@ -308,7 +313,7 @@ def check(files, updates, image, windir):
         name = os.path.basename(f['path']).lower()
         if '\\assembly\\nativeimages_' in f['path'].lower():
             category = 'dotnetNativeImage'  # .NET's precompiled code, which each PC regenerates; no list covers it
-        elif f['sha256'] in target_hashes:
+        elif f['sha256'] in target_hashes or (name, f['size']) in target_sizes:
             category = 'listedByTargetUpdate'
         elif f['sha256'] in other_hashes or (name, f['size']) in other_sizes:
             category = 'listedByOtherUpdate'
@@ -316,6 +321,8 @@ def check(files, updates, image, windir):
             category = 'unverified'
         elif image.get(relative(f['path'])) == f['sha256']:
             category = 'unchangedFromImage'
+        elif target_names and name not in target_names:
+            category = 'notNamedByTargetList'
         else:
             category = 'changed' if relative(f['path']) in image else 'new'
         kind = 'installed' if f['component'] else 'other'
