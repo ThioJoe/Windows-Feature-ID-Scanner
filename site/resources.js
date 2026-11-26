@@ -37,8 +37,13 @@ const loadPart = (hash) => resCached(resCaches.parts, hash, async () => (await a
 const loadRegistry = (hash) => resCached(resCaches.registry, hash, async () => (await assetFetch(`registry/${hash.slice(0, 2)}/${hash}.json`)).json());
 const loadFileList = (key) => resCached(resCaches.files, key, async () => parseFileList(await assetGzText(`builds/${encodeURIComponent(key)}/files.csv.gz`)));
 
-// files.csv.gz: path, size, hash (a path with a comma or quote is quoted, as Python's csv module writes it). Keyed by the path in lower
-// case: Windows doesn't tell paths apart by case.
+// What a file is matched across builds by: its path in lower case (Windows doesn't tell paths apart by case), without the hash a driver
+// package's folder in the driver store is named with (ntprint.inf_amd64_6fe9a2a3d1e1d2f8), which changes when the package is updated
+const fileKey = (path) => path.toLowerCase().replace(/^(windows\\system32\\driverstore\\filerepository\\[^\\]+?)_[0-9a-f]{16}(?=\\|\.ini$)/, '$1');
+// (The whole path where another path has the same key already: two versions of a driver package)
+const setByFileKey = (map, path, value) => { const k = fileKey(path); map.set(map.has(k) ? path.toLowerCase() : k, value); };
+
+// files.csv.gz: path, size, hash (a path with a comma or quote is quoted, as Python's csv module writes it). Keyed by fileKey().
 function parseFileList(text) {
   const files = new Map();
   let i = 0, header = true;
@@ -68,7 +73,7 @@ function parseFileList(text) {
       break;
     }
     if (header) { header = false; continue; }
-    if (fields.length >= 3 && fields[0]) files.set(fields[0].toLowerCase(), { path: fields[0], size: fields[1], hash: fields[2] });
+    if (fields.length >= 3 && fields[0]) setByFileKey(files, fields[0], { path: fields[0], size: fields[1], hash: fields[2] });
   }
   return files;
 }
@@ -167,7 +172,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   status.remove();
 
   // The files read in either build, and the changed ones
-  const files = (ix) => new Map(Object.entries(ix.files).map(([p, h]) => [p.toLowerCase(), { path: p, hash: h }]));
+  const files = (ix) => { const m = new Map(); for (const [p, h] of Object.entries(ix.files)) setByFileKey(m, p, { path: p, hash: h }); return m; };
   const fa = files(ia), fb = files(ib);
   const changes = [];
   for (const [k, n] of fb) {
