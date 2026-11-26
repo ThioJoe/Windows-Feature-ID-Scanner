@@ -111,9 +111,11 @@ jobs:
         run: |
           $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
           & git clone -q --filter=blob:none --no-checkout --depth 1 --branch assets "https://github.com/${{ github.repository }}.git" "$env:RUNNER_TEMP\assets-branch" 2>&1 | Out-Null
-          $paths = if ($LASTEXITCODE -eq 0) { @(& git -C "$env:RUNNER_TEMP\assets-branch" ls-tree -r --name-only HEAD) } else { @() }
+          # (No branch yet, or no answer: then everything found is new to the scan, and the commit job leaves out what the branch has)
+          $paths = @(if ($LASTEXITCODE -eq 0) { & git -C "$env:RUNNER_TEMP\assets-branch" ls-tree -r --name-only HEAD })
           [IO.File]::WriteAllLines("$env:RUNNER_TEMP\assets-known.txt", [string[]]$paths)
           Write-Host "The assets branch has $($paths.Count) paths"
+          exit 0  # (Not git's exit code, which the step would end with otherwise)
 
       # The 26H2 base image, if an earlier scan saved it in the Actions cache (scan-in-vm.ps1 checks its hash before using it)
       - name: Restore the 26H2 base image

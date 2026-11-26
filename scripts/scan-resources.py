@@ -661,8 +661,8 @@ def store_bitmap(store, data):
         except (ValueError, struct.error, IndexError):
             # Not one this script decodes: kept as a .bmp file, which browsers show too
             header = b'BM' + struct.pack('<IHHI', 14 + len(data), 0, 0, 14 + header_size)
-            path = image_path('bitmaps', w, h, hash_, 'bmp')
-            store.put(path, header + bytes(data))
+            store.put(image_path('bitmaps', w, h, hash_, 'bmp'), header + bytes(data))
+            return [w, h, hash_, 'bmp']
     return [w, h, hash_]
 
 def read_pe(store, data, name):
