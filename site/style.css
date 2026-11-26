@@ -243,3 +243,13 @@ tr.detail > td { background: var(--panel); padding: 8px 12px 12px; }
 }
 footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); padding-top: 12px; padding-bottom: 24px; }
 footer a { color: var(--accent); }
+/* Resource data: images on a checkerboard, so transparency shows */
+.res-img { vertical-align: middle; image-rendering: auto; background: repeating-conic-gradient(var(--border) 0% 25%, transparent 0% 50%) 50% / 12px 12px; }
+td.res-cell { white-space: nowrap; }
+.res-glyph { font-size: 32px; line-height: 1.2; }
+.res-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.res-path { overflow-wrap: anywhere; }
+.res-detail > div { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 16px; margin-bottom: 8px; }
+.res-detail > div > b { width: 3em; align-self: center; }
+.res-detail > div > div { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 12px; }
+.res-size { display: inline-block; text-align: center; font-size: 11px; }

@@ -1245,6 +1245,7 @@ async function renderCompare() {
     if (filtered.length) renderTable(sec, filtered, cols, undefined, title === 'Removed' ? detailOld : detailNew);
   }
   await renderSgmCompare(out, a, b, q, () => render === compareRender);
+  await renderResourcesCompare(out, a, b, q, () => render === compareRender);
 }
 
 // ---------------------------------------------------------------------------

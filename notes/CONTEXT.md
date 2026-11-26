@@ -1,7 +1,7 @@
 # Windows-Feature-ID-Scanner
 A modern take on mach2's feature scanning: GitHub Actions scans Windows 11 for feature IDs and their names (ARM64 on a GitHub runner, x64 in a virtual machine built from Microsoft's servers), stores the results per build, and tracks what changes between builds.
 
-**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes, and the shell folders, settings pages, Settings search entries, URL protocols and other links Super God Mode found in each) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, its default state, and the chain of features it requires with their default states (a feature that's on by default stays off if one of them is off), with a button that copies its ID and theirs as a list for ViVeTool, and, where a feature trace saw it checked while Windows ran, the processes that checked it and the pages, folders or apps it was checked for. It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned.
+**Browse the data:** the GitHub Pages site (published from `site/`) compares any two scanned builds (added / removed / renamed features, feature store changes, default state changes, and the shell folders, settings pages, Settings search entries, URL protocols and other links Super God Mode found in each) and lists every feature ID in a build with the build it first appeared in. Click a feature to see what its code reveals: the functions that check it, the strings they use, its default state, and the chain of features it requires with their default states (a feature that's on by default stays off if one of them is off), with a button that copies its ID and theirs as a list for ViVeTool, and, where a feature trace saw it checked while Windows ran, the processes that checked it and the pages, folders or apps it was checked for. It also lists the builds Microsoft has released for every Windows 11 version and Insider channel, and which of them have been scanned. For x64 builds, the comparison also covers what the builds' files hold besides code (see [Resource data](#resource-data)): icons, UI text, APIs, font glyphs, policies, the shell's UI files and registry keys.
 
 ## How it works
 
@@ -25,7 +25,7 @@ The `Windows VM Feature Scanner` workflow (`.github/workflows/windows-vm-scanner
 
 1. The base image comes from the Media Creation Tool's catalogs of Windows images, which list each image file on Microsoft's servers with its hash. The tool's download link still points to a 24H2 catalog from June 2025; the tool then asks Windows Update's metadata service for the current catalog (26H2 at the time of writing), and so does the script. It takes the newest image that can become the target version: a 26H2 image can't become 25H2, so 25H2 and 24H2 start from the 24H2 one. The image is applied to a virtual disk that boots without the setup screens.
 2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM. 24H2, 25H2 and 26H2 share their code and their cumulative updates.
-3. Unless the image is that version already, the target version's enablement package is installed, which is what makes the build a 25H2 or 26H2 one. Microsoft distributes it only through Windows Update and WSUS, not the Update Catalog. The runner is a Windows Server, so it sets up the WSUS role in the background and synchronizes Windows 11's upgrades, which gives the package's file on Microsoft's servers; the VM installs that file alone with DISM, which keeps the build at the target update. Failing that, the VM takes the file from Windows Update's offer of the version (chosen with its target release version policy), which it only downloads, since the offer comes with the newest cumulative update. Windows Update doesn't offer the version every time; the VM then gets the file with the newest update installed, and goes back to a checkpoint taken before. That's what lets any past build be scanned, not only the newest.
+3. Unless the image is that version already, the target version's enablement package is installed, which is what makes the build a 25H2 or 26H2 one. Microsoft distributes it only through Windows Update and WSUS, not the Update Catalog. WSUS has given the same file every time (`Windows11.0-KB5054156-x64.cab` for 25H2, `Windows11.0-KB5121794-x64.cab` for 26H2), so the script downloads it from that link, checked against its size and the SHA-1 its name ends with, and only asks WSUS when that fails or for a version it has no link for. The runner is a Windows Server, so it sets up the WSUS role in the background and synchronizes Windows 11's upgrades, which gives the package's file on Microsoft's servers; the VM installs that file alone with DISM, which keeps the build at the target update. Failing that, the VM takes the file from Windows Update's offer of the version (chosen with its target release version policy), which it only downloads, since the offer comes with the newest cumulative update. Windows Update doesn't offer the version every time; the VM then gets the file with the newest update installed, and goes back to a checkpoint taken before. That's what lets any past build be scanned, not only the newest.
 4. Windows Update then installs whatever else it offers, as it would on any PC at that build (Defender and Windows Security platform updates, .NET and so on), leaving out updates that would change the build. The Microsoft Store updates the apps that come with Windows, which cumulative updates don't touch, so they're at the versions a PC gets today rather than the ones the image was made with. An app update that fails because the app is running is retried after closing what Windows' deployment log names, and whatever still fails is retried after a restart. Apps and these other updates don't decide the build, so one that still can't be installed doesn't stop the scan; the build's data gets a `notes` entry saying so.
 5. After a last restart, the VM is checked against what the build is supposed to be:
    - Windows' servicing lists the build's cumulative update as installed, with no update half installed or waiting for a restart.
@@ -34,6 +34,9 @@ The `Windows VM Feature Scanner` workflow (`.github/workflows/windows-vm-scanner
 
    If a check fails, nothing is recorded. The reports (`verification.json` and the others, plus a list of every file with its SHA-256) are kept with the run's artifacts either way.
 6. The same scan as on the ARM64 runner runs inside the VM, with Super God Mode run as the VM's own user, as it would be by someone using that PC. If the VM didn't end up at the expected build, nothing is recorded. Then the VM restarts for the feature trace, which records from boot on, so boot and sign-in are in it.
+7. Windows shuts down, and `scan-resources.py` reads the VM's disk on the runner (see [Resource data](#resource-data)).
+
+Each download logs its size and how long it took. A 26H2 base image a scan downloads is saved in the repository's Actions cache, and later scans of 26H2 builds start from it (after checking its hash against the catalog's); only the 26H2 image, since it and the 24H2 one together wouldn't fit in the cache's 10 GB. In practice the runners download the images from Microsoft in a minute or two (4.3 GB in 44 seconds, 5.8 GB in a minute and a half), so the cache saves little; the timings will show whether it's worth keeping.
 
 Starting from an older image and updating it gives the same Windows as Microsoft's own image of that build: built both ways (from Microsoft's 26300.9711 image as it is, and from the June 2025 24H2 image plus the October update and the 26H2 enablement package), every file installed from the component store was byte-identical between the two VMs, and neither had one the other lacked, apart from three of .NET's precompiled native images. The differences were in apps (the Store apps and Edge an image comes with), the update history, and files Windows generates on each PC.
 
@@ -77,6 +80,42 @@ In a 73-minute test on the ARM64 runner (26200.9974, with every target), 2,267 f
 
 A scan of the build again adds to what earlier traces saw. A trace can't see code for hardware the machine doesn't have (pen, touch, NPU, cameras, a battery), code that only runs when a feature that's off is on, code that depends on something other than features (region, edition, a Microsoft account), the setup screens, upgrades and most error paths. Kernel-mode code and processes that don't load `kernelbase.dll` probably write no events.
 
+## Resource data
+
+Besides feature IDs, each x64 build's files are read for what they hold besides code, so that comparing two builds also shows changed icons, new UI text, new APIs and so on. `scan-resources.py` only reads files, so it runs on the runner against the VM's disk, mounted read-only once Windows has shut down (which also makes the registry hives and the scheduled tasks readable). It records, for every file version no earlier build had (files are identified by their SHA-256):
+
+- **Executables** (DLL, EXE, SYS and the like, the `.mun` files in `SystemResources` that hold the resources of system binaries such as imageres and shell32, en-US `.mui` files, visual styles): the PE timestamp and image size (what the symbol server keeps a binary under), the file version, the exports, and a hash of every resource. From the resources: icons and cursors (each image converted to PNG where it isn't one already, named by the hash of the original), bitmaps and images, string and message tables, and dialog and menu text.
+- **WinRT metadata** (`.winmd`): the types and their methods, properties, events and fields.
+- **Fonts** (Segoe Fluent Icons, Segoe MDL2 Assets, Segoe UI Emoji, Segoe UI Variable): the files, a hash of each character's glyph (its outline, variations and color layers), and of each ligature, which is how emoji with skin tones and ZWJ sequences are drawn.
+- **Cursors** (`Windows\Cursors`): each frame as PNG, with its hotspot, and animated cursors' timing.
+- **Whole files:** the shell's UI files in `SystemApps`, `ShellExperiences`, `ImmersiveControlPanel`, `ShellComponents` and `SystemResources` (images, SVGs, Lottie animations and other JSON, the setup screens' and other web apps' HTML, JavaScript and CSS, compiled XAML, `.pri` files, videos), Group Policy templates, wallpapers and lock screens, sounds, themes, PowerShell's inbox modules, servicing package manifests (which list the optional features and capabilities) and scheduled tasks.
+- **Registry** (the SOFTWARE and SYSTEM hives, read by the script itself): MDM/CSP policy definitions (`PolicyManager\default`), services and drivers, ETW providers and WinRT activatable classes.
+- **Every file of the build**, with its size and hash, from the file check's list.
+
+Store apps (`WindowsApps`), Edge and Copilot are left out: they update on their own schedule, not with builds.
+
+Everything goes in the repository's `assets` branch, an orphan branch (no history shared with `main`), stored once and named by the first 16 hex digits of its SHA-256 (`<h>` is the first of them, `<hh>` the first two):
+
+```
+assets branch
+├── icons/<W>x<H>/<h>/<hash>.png      Icon images (cursors/ and bitmaps/ the same way)
+├── images/<W>x<H>/<h>/<hash>.<ext>   Other images (images/svg/<h>/<hash>.svg for SVGs)
+├── files/<kind>/<h>/<hash><ext>      Whole files (fonts, shell, policies, sounds, themes, powershell, servicing, tasks)
+├── meta/<hh>/<hash>.json             What was read from a file version: its name, timestamp, version and so on, and its parts' hashes
+├── parts/<hh>/<hash>.json            Each part on its own (an executable's exports, icons, strings, ...), so that a part a new version of
+│                                     a file has unchanged isn't stored again
+├── registry/<hh>/<hash>.json         Each registry key recorded
+└── builds/<build>-<arch>/
+    ├── files.csv.gz                  Every file of the build: path, size, hash
+    └── index.json.gz                 Each file the script read, with its hash, and for each file version the hashes of its parts
+```
+
+A scan writes only what the branch doesn't have yet (the scan job lists the branch's files first, without downloading them). The VM workflow's commit job adds the scans' new files to the branch (`merge-resources.py`) and pushes it before committing `data/`, where `data/builds/<build>-<arch>/resources.json` records that the build has resource data, which `update-data.py` copies into `data/index.json`. A build already in `data/` can get its resource data without being scanned again: run the VM workflow with *resources_only* and the builds in *builds* (`scan-in-vm.ps1 -ResourcesOnly`: the VM is made, updated and checked as for a scan, without the Store app updates, and only the resource data is read). An Insider build has to be its channel's newest, as for a scan: Windows Update only gives a channel's newest build.
+
+On the site, comparing two builds that both have resource data adds a *Resource Data* section: icons (each changed icon with the sizes that changed, old and new), bitmaps and images in executables, UI text (strings, messages, dialogs and menu items), APIs (exports, WinRT types and members), font glyphs drawn with each build's own font file, whole files (with images shown and links to the files), registry keys, and every file added or removed. The site reads it all from the branch through GitHub's raw file links, which other sites may read.
+
+The first build stores the most; after that, a build adds only what changed. (A test against a whole GitHub runner, with its Visual Studio and other tools, read 129,397 files in 13 minutes.)
+
 ## What the code reveals
 
 Every feature a binary uses comes with WIL plumbing compiled into it: a descriptor, state variables and small functions specific to that feature. `scan-symbols.py` decodes each such binary's ARM64 or x64 code and finds every call to those functions and every use of those variables, and the PDB's public symbols name the functions they're in. From that:
@@ -103,7 +142,8 @@ data/
 │   ├── details.json            What each binary's code reveals about each feature, one per line (callers, strings, ...)
 │   ├── symbols.json            The build's PDBs, one per line, with what's needed to download their binaries, and which ones its scan didn't get (for the symbol catch-up)
 │   ├── super-god-mode/         Super God Mode's statistics for the build: its CSV and XML files as it writes them, and run.json
-│   └── trace.json              The build's latest feature trace: the run, and the features each target it opened checked
+│   ├── trace.json              The build's latest feature trace: the run, and the features each target it opened checked
+│   └── resources.json          That the build has resource data in the assets branch (see Resource data), with counts
 └── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)
 ```
 
