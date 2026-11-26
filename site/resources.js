@@ -37,9 +37,12 @@ const loadPart = (hash) => resCached(resCaches.parts, hash, async () => (await a
 const loadRegistry = (hash) => resCached(resCaches.registry, hash, async () => (await assetFetch(`registry/${hash.slice(0, 2)}/${hash}.json`)).json());
 const loadFileList = (key) => resCached(resCaches.files, key, async () => parseFileList(await assetGzText(`builds/${encodeURIComponent(key)}/files.csv.gz`)));
 
-// What a file is matched across builds by: its path in lower case (Windows doesn't tell paths apart by case), without the hash a driver
-// package's folder in the driver store is named with (ntprint.inf_amd64_6fe9a2a3d1e1d2f8), which changes when the package is updated
-const fileKey = (path) => path.toLowerCase().replace(/^(windows\\system32\\driverstore\\filerepository\\[^\\]+?)_[0-9a-f]{16}(?=\\|\.ini$)/, '$1');
+// What a file is matched across builds by: its path in lower case (Windows doesn't tell paths apart by case), without what changes in
+// folder names when what's in them is updated: the hash a driver package's folder in the driver store is named with
+// (ntprint.inf_amd64_6fe9a2a3d1e1d2f8), and the version the Windows Security platform's and the servicing stack's folders are named with
+const fileKey = (path) => path.toLowerCase()
+  .replace(/^(windows\\system32\\driverstore\\filerepository\\[^\\]+?)_[0-9a-f]{16}(?=\\|\.ini$)/, '$1')
+  .replace(/^(windows\\system32\\securityhealth|windows\\servicing\\version)\\\d+\.\d+\.\d+\.\d+[^\\]*(?=\\)/, '$1\\*');
 // (The whole path where another path has the same key already: two versions of a driver package)
 const setByFileKey = (map, path, value) => { const k = fileKey(path); map.set(map.has(k) ? path.toLowerCase() : k, value); };
 
