@@ -20,9 +20,17 @@ function resCached(map, key, load) {
 }
 
 async function assetFetch(path) {
-  const res = await fetch(ASSETS + path);
-  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
-  return res;
+  // GitHub answers HTTP 429 when one address reads many raw files in a short time (a comparison reads about a thousand): wait and try
+  // again, longer each time
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(ASSETS + path);
+    if (res.status === 429 && attempt < 5) {
+      await new Promise((resolve) => setTimeout(resolve, 2 ** attempt * (1000 + Math.random() * 1000)));
+      continue;
+    }
+    if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+    return res;
+  }
 }
 
 // A .gz file's text (decompressed here, unless the browser already did on the way)
