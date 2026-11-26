@@ -240,6 +240,7 @@ class BuildPicker extends HTMLElement {
   markTaken() {
     for (const o of this.list.querySelectorAll('[role=option]')) {
       const v = o.dataset.value;
+      o.classList.toggle('taken', v === this.taken);
       if (this.blocked(v)) {
         o.setAttribute('aria-disabled', 'true');
         o.dataset.tip = v === this.taken ? this.takenNote : this.rangeNote;
