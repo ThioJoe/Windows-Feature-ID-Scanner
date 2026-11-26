@@ -138,8 +138,8 @@ function pendingNote(b) {
 // what typing jumps to and label the HTML the button shows. The sections are side by side, a column each (stacked on a narrow screen).
 // The list works like a listbox: arrow keys (left and right to the next column), Home/End, Page Up/Down, Enter or Space to pick,
 // Escape to close, and typing the start of a build number.
-// Whether the compare pickers show every build, not only those that came out no later or no earlier than the other's: a checkbox in
-// their lists, kept for the viewer (data-show-all on a picker, which says what it shows otherwise)
+// Whether the compare pickers let any build be picked, not only those with a build number no higher or no lower than the other's: a
+// checkbox in their lists, kept for the viewer (data-show-all on a picker)
 let showAllBuilds = (() => { try { return localStorage.getItem('showAllBuilds') === '1'; } catch (e) { return false; } })();
 function setShowAllBuilds(on) {
   showAllBuilds = on;
@@ -220,9 +220,9 @@ class BuildPicker extends HTMLElement {
       html += '</div></div>';
     }
     html += '</div>';
-    const all = this.hasAttribute('data-show-all')
-      ? `<label class="picker-all"><input type="checkbox"> Allow any build <span>(otherwise those ${esc(this.dataset.showAll)} are greyed out)</span></label>` : '';
-    if (footer || all) html += `<div class="picker-footer">${all}${footer ? `<span aria-hidden="true">${footer}</span>` : ''}</div>`;
+    const range = this.hasAttribute('data-show-all')
+      ? '<div class="picker-range"><span class="picker-range-text"></span><label class="picker-all"><input type="checkbox"> Allow any build</label></div>' : '';
+    if (footer || range) html += `<div class="picker-footer">${range}${footer ? `<span aria-hidden="true">${footer}</span>` : ''}</div>`;
     this.list.innerHTML = html;
     this.active = null;
     this.value = this.items.some((x) => x.value === this.current) ? this.current : (this.items.length ? this.items[0].value : '');
@@ -251,10 +251,12 @@ class BuildPicker extends HTMLElement {
   }
 
   // The values the list lets be picked unless "Allow any build" is checked: those keep() is true for, and the one picked (null: all of
-  // them); the others are greyed out, with the note. The compare pickers allow the builds no newer or no older than the other's.
-  setRange(keep, note) {
+  // them); the others are greyed out, with the note, and the line above the checkbox says which can be picked (text). The compare
+  // pickers allow the builds with a build number no higher or no lower than the other's.
+  setRange(keep, note, text) {
     this.keep = keep;
     this.rangeNote = note;
+    this.rangeText = text;
     this.markRange();
   }
 
@@ -266,25 +268,23 @@ class BuildPicker extends HTMLElement {
     this.markTaken();
     const box = this.list.querySelector('.picker-all input');
     if (box) box.checked = showAllBuilds;
+    const line = this.list.querySelector('.picker-range-text');
+    if (line) line.textContent = showAllBuilds || !this.keep ? 'Showing all builds' : this.rangeText || '';
   }
 
   option(value) {
     return [...this.list.querySelectorAll('[role=option]')].find((o) => o.dataset.value === value);
   }
 
-  // The list can be wider than the button: keep it inside the window
-  place() {
-    this.list.style.left = '0px';
-    const room = document.documentElement.clientWidth - 8, left = this.getBoundingClientRect().left, width = this.list.offsetWidth;
-    if (left + width > room) this.list.style.left = Math.max(8 - left, room - width - left) + 'px';
-  }
-
   open() {
     if (!this.list.hidden || !this.items.length) return;
     this.list.hidden = false;
     this.button.setAttribute('aria-expanded', 'true');
-    this.place();
-    this.setActive(this.option(this.current) || this.list.querySelector('[role=option]:not([hidden])'), 'center');
+    // The list can be wider than the button: keep it inside the window
+    this.list.style.left = '0px';
+    const room = document.documentElement.clientWidth - 8, left = this.getBoundingClientRect().left, width = this.list.offsetWidth;
+    if (left + width > room) this.list.style.left = Math.max(8 - left, room - width - left) + 'px';
+    this.setActive(this.option(this.current) || this.list.querySelector('[role=option]'), 'center');
     this.list.focus({ preventScroll: true });
   }
 
@@ -316,7 +316,7 @@ class BuildPicker extends HTMLElement {
 
   onKey(e) {
     if (e.target.closest('.picker-all')) return;  // (The checkbox's own keys)
-    const opts = [...this.list.querySelectorAll('[role=option]:not([hidden])')];
+    const opts = [...this.list.querySelectorAll('[role=option]')];
     const i = opts.indexOf(this.active);
     const go = (n) => { e.preventDefault(); this.setActive(opts[Math.max(0, Math.min(opts.length - 1, n))]); };
     switch (e.key) {
@@ -330,12 +330,12 @@ class BuildPicker extends HTMLElement {
       case 'ArrowRight': {
         // The option nearest the same height in the column to the left or right
         if (!this.active) return;
-        const columns = [...this.list.querySelectorAll('.picker-section:not([hidden])')];
+        const columns = [...this.list.querySelectorAll('.picker-section')];
         const next = columns[columns.indexOf(this.active.closest('.picker-section')) + (e.key === 'ArrowRight' ? 1 : -1)];
         if (!next) return;
         e.preventDefault();
         const y = this.active.getBoundingClientRect().top, dy = (o) => Math.abs(o.getBoundingClientRect().top - y);
-        this.setActive([...next.querySelectorAll('[role=option]:not([hidden])')].reduce((a, b) => (dy(b) < dy(a) ? b : a)));
+        this.setActive([...next.querySelectorAll('[role=option]')].reduce((a, b) => (dy(b) < dy(a) ? b : a)));
         return;
       }
       case 'Enter':
@@ -1219,9 +1219,9 @@ async function renderCompare() {
   buildOrder();
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
   $('cmp-old').setRange(known ? (v) => compareVersions(buildsByKey.get(v), buildsByKey.get(newKey)) <= 0 : null,
-    'A higher build number than the new build (check "Allow any build" below to pick it)');
+    'A higher build number than the new build (check "Allow any build" below to pick it)', known ? `Showing builds older than ${buildsByKey.get(newKey).build}` : '');
   $('cmp-new').setRange(known ? (v) => compareVersions(buildsByKey.get(v), buildsByKey.get(oldKey)) >= 0 : null,
-    'A lower build number than the old build (check "Allow any build" below to pick it)');
+    'A lower build number than the old build (check "Allow any build" below to pick it)', known ? `Showing builds newer than ${buildsByKey.get(oldKey).build}` : '');
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';

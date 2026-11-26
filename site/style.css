@@ -104,15 +104,14 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-tag { padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-size: 11px; }
 .picker-footer {
   position: sticky; bottom: -6px; margin: 6px 0 -6px; padding: 6px 12px;
-  background: var(--panel); border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; white-space: normal;
+  background: var(--panel); border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; white-space: normal; text-align: right;
   contain: inline-size;  /* Wraps to the columns' width instead of widening the list */
 }
 .picker-footer b { color: var(--fg); font-weight: 600; }
-/* The compare pickers' checkbox for every build, not only those that came out no later or no earlier than the other's (app.js) */
-.picker-all { display: block; margin-bottom: 4px; color: var(--fg); cursor: pointer; }
+/* The compare pickers' line saying which builds can be picked, and their checkbox for any build (app.js) */
+.picker-range { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 2px 14px; margin-bottom: 4px; color: var(--fg); }
+.picker-all { cursor: pointer; white-space: nowrap; }
 .picker-all input { margin: 0 4px 0 0; vertical-align: -2px; }
-.picker-all span { color: var(--muted); }
-.picker-list [hidden] { display: none; }
 .legend { margin: 0 0 8px; }
 .legend b { color: var(--fg); }
 .picker-meta { margin-left: auto; padding-left: 20px; color: var(--muted); font-size: 12px; }
