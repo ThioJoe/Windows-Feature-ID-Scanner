@@ -104,8 +104,8 @@ const imagePreview = (kind, images, max = 48) => {
   const x = largestImage(images);
   return x ? imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, max) : '<span class="muted">(none)</span>';
 };
-const imageStrip = (kind, images) => (images && images.length
-  ? [...images].sort((p, q) => p[0] * p[1] - q[0] * q[1] || p[2] - q[2]).map((x) => `<span class="res-size">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span>`).join('')
+const imageStrip = (kind, images, marked = () => false) => (images && images.length
+  ? [...images].sort((p, q) => p[0] * p[1] - q[0] * q[1] || p[2] - q[2]).map((x) => `<span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span>`).join('')
   : '<span class="muted">(none)</span>');
 
 // Added, removed and changed keys of two objects (with equal() for what counts as the same)
@@ -274,19 +274,30 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     const oc = r.old.filter((x) => n.get(sizeKey(x)) !== x[3]), nc = r.new.filter((x) => o.get(sizeKey(x)) !== x[3]);
     return [oc.length ? oc : r.old, nc.length ? nc : r.new];
   };
-  const sizesText = (r) => {
-    const [oc, nc] = differing(r);
-    const sizes = [...new Set([...(oc || []), ...(nc || [])].map((x) => `${x[0]}×${x[1]}`))];
-    return r.change === 'changed' ? sizes.join(', ') : `${(r.new || r.old).length} images`;
+  // The variations (an image of one size and bit depth) the change is in: all of an added or removed icon's, those of a changed icon
+  // that were added, removed or changed
+  const changedVariations = (r) => {
+    const pairs = (list) => new Set((list || []).map((x) => `${sizeKey(x)}:${x[3]}`));
+    const o = pairs(r.old), n = pairs(r.new);
+    return new Set([...(r.old || []).filter((x) => !n.has(`${sizeKey(x)}:${x[3]}`)), ...(r.new || []).filter((x) => !o.has(`${sizeKey(x)}:${x[3]}`))].map(sizeKey));
+  };
+  const variationsText = (r) => {
+    const all = new Set([...(r.old || []), ...(r.new || [])].map(sizeKey)).size;
+    return `${r.change === 'changed' ? `${fmt(changedVariations(r).size)} of ` : ''}${fmt(all)} variation${all === 1 ? '' : 's'}`;
   };
   const groupColumns = (kind) => [changeColumn,
     { title: 'File', value: (r) => fileName(r.path), html: fileCell, cls: 'name' },
     { title: 'ID', value: (r) => r.key, cls: 'id' },
-    { title: 'Sizes changed', value: sizesText, cls: 'mods' },
+    { title: 'Variations', value: variationsText, sortKey: (r) => changedVariations(r).size, cls: 'mods' },
     { title: 'Old', value: () => '', html: (r) => imagePreview(kind, differing(r)[0]), cls: 'res-cell' },
     { title: 'New', value: () => '', html: (r) => imagePreview(kind, differing(r)[1]), cls: 'res-cell' }];
-  const groupDetail = (kind) => async (r) => `<div class="res-detail"><div><b>Old</b><div>${imageStrip(kind, r.old)}</div></div>` +
-    `<div><b>New</b><div>${imageStrip(kind, r.new)}</div></div><p class="muted">${esc(r.path)}</p></div>`;
+  const groupDetail = (kind) => async (r) => {
+    const keys = r.change === 'changed' ? changedVariations(r) : new Set();
+    const marked = (x) => keys.has(sizeKey(x));
+    return `<div class="res-detail"><div><b>Old</b><div>${imageStrip(kind, r.old, marked)}</div></div>` +
+      `<div><b>New</b><div>${imageStrip(kind, r.new, marked)}</div></div>` +
+      `<p class="muted">${keys.size ? 'Outlined: the variations that changed. ' : ''}${esc(r.path)}</p></div>`;
+  };
   await sub('icons', 'Icons', groupRows('icons', 'icons'), groupColumns('icons'), groupDetail('icons'));
   await sub('cursors', 'Cursors in executables', groupRows('cursors', 'cursors'), groupColumns('cursors'), groupDetail('cursors'));
 
