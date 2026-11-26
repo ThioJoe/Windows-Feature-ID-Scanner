@@ -222,7 +222,7 @@ class BuildPicker extends HTMLElement {
     html += '</div>';
     const all = this.hasAttribute('data-show-all')
       ? '<label class="picker-all" title="Released builds are ordered by release date, and so are Insider builds. An Insider build counts as newer than the ' +
-        `released builds that came out before its channel's next build."><input type="checkbox"> Show all builds <span>(otherwise only those ${esc(this.dataset.showAll)})</span></label>` : '';
+        `released builds that came out before its channel's next build."><input type="checkbox"> Allow any build <span>(otherwise those ${esc(this.dataset.showAll)} are greyed out)</span></label>` : '';
     if (footer || all) html += `<div class="picker-footer">${all}${footer ? `<span aria-hidden="true">${footer}</span>` : ''}</div>`;
     this.list.innerHTML = html;
     this.active = null;
@@ -240,9 +240,10 @@ class BuildPicker extends HTMLElement {
 
   markTaken() {
     for (const o of this.list.querySelectorAll('[role=option]')) {
-      if (o.dataset.value === this.taken) {
+      const v = o.dataset.value;
+      if (this.blocked(v)) {
         o.setAttribute('aria-disabled', 'true');
-        o.dataset.tip = this.takenNote;
+        o.dataset.tip = v === this.taken ? this.takenNote : this.rangeNote;
       } else {
         o.removeAttribute('aria-disabled');
         delete o.dataset.tip;
@@ -250,24 +251,22 @@ class BuildPicker extends HTMLElement {
     }
   }
 
-  // The values the list shows unless "Show all builds" is checked: those keep() is true for, and the one picked (null: all of them).
-  // The compare pickers show the builds that came out no later or no earlier than the other's.
-  setRange(keep) {
+  // The values the list lets be picked unless "Allow any build" is checked: those keep() is true for, and the one picked (null: all of
+  // them); the others are greyed out, with the note. The compare pickers allow the builds no newer or no older than the other's.
+  setRange(keep, note) {
     this.keep = keep;
+    this.rangeNote = note;
     this.markRange();
   }
 
+  blocked(value) {
+    return value === this.taken || (!showAllBuilds && Boolean(this.keep) && value !== this.current && !this.keep(value));
+  }
+
   markRange() {
-    const all = !this.keep || showAllBuilds;
-    for (const o of this.list.querySelectorAll('[role=option]')) o.hidden = !all && o.dataset.value !== this.current && !this.keep(o.dataset.value);
-    for (const g of this.list.querySelectorAll('[role=group]')) g.hidden = !g.querySelector('[role=option]:not([hidden])');
-    for (const s of this.list.querySelectorAll('.picker-section')) s.hidden = !s.querySelector('[role=group]:not([hidden])');
+    this.markTaken();
     const box = this.list.querySelector('.picker-all input');
     if (box) box.checked = showAllBuilds;
-    if (!this.list.hidden) {
-      this.place();
-      if (!this.active || this.active.hidden) this.setActive(this.option(this.current) || this.list.querySelector('[role=option]:not([hidden])'), 'center');
-    }
   }
 
   option(value) {
@@ -298,7 +297,7 @@ class BuildPicker extends HTMLElement {
   }
 
   pick(value) {
-    if (value === this.taken) return;
+    if (this.blocked(value)) return;
     this.close(true);
     if (value === this.current) return;
     this.value = value;
@@ -1237,8 +1236,8 @@ async function renderCompare() {
     : x.insiderChannel ? releaseDate(y) < until(x) : releaseDate(x) >= until(y));
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
   // (The other's build is among them, greyed out)
-  $('cmp-old').setRange(known ? (v) => noOlder(buildsByKey.get(newKey), buildsByKey.get(v)) : null);
-  $('cmp-new').setRange(known ? (v) => noOlder(buildsByKey.get(v), buildsByKey.get(oldKey)) : null);
+  $('cmp-old').setRange(known ? (v) => noOlder(buildsByKey.get(newKey), buildsByKey.get(v)) : null, 'Newer than the new build (check "Allow any build" below to pick it)');
+  $('cmp-new').setRange(known ? (v) => noOlder(buildsByKey.get(v), buildsByKey.get(oldKey)) : null, 'Older than the old build (check "Allow any build" below to pick it)');
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';

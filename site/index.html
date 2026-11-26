@@ -23,9 +23,9 @@
 <main>
   <section id="view-compare" hidden>
     <div class="controls">
-      <div class="field"><span id="cmp-old-label">Old build</span> <build-picker id="cmp-old" data-label="cmp-old-label" data-show-all="no newer than the new build"></build-picker></div>
+      <div class="field"><span id="cmp-old-label">Old build</span> <build-picker id="cmp-old" data-label="cmp-old-label" data-show-all="newer than the new build"></build-picker></div>
       <button id="cmp-swap" type="button" title="Swap old and new" aria-label="Swap old and new">⇄</button>
-      <div class="field"><span id="cmp-new-label">New build</span> <build-picker id="cmp-new" data-label="cmp-new-label" data-show-all="no older than the old build"></build-picker></div>
+      <div class="field"><span id="cmp-new-label">New build</span> <build-picker id="cmp-new" data-label="cmp-new-label" data-show-all="older than the old build"></build-picker></div>
     </div>
     <div class="controls">
       <input id="cmp-search" type="search" placeholder="Filter by ID, name or module">
