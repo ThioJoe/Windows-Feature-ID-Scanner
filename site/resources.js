@@ -130,6 +130,44 @@ function flattenRegistry(tree, path = '', out = {}) {
 
 const registryText = (values) => Object.entries(values || {}).map(([k, v]) => `${k || '(default)'} = ${Array.isArray(v) ? v.join('; ') : v}`).join('\n');
 
+// Values Windows writes as it runs, which differ between any two installations, so they're left out of the comparison (key path, then
+// the value's name): in services, network bindings, times and counters, IDs made for the machine and performance counter numbers;
+// whether an ETW provider was ever enabled; the WNF state names of MDM/CSP policies, and the processor and graphics power settings
+// Windows registers as MDM/CSP knobs for the hardware it finds (which differ between the runners builds were scanned on). These are
+// the ones seen to differ between builds.
+const REGISTRY_STATE = {
+  services: new RegExp([/^[^\\]+\\(Linkage|State|SQMState|SecureTimeLimits|Epoch2?)\\/,
+    /^[^\\]+\\Performance\\(First Counter|Last Counter|First Help|Last Help|Object List)$/,
+    /^(CLFS\\Authentication\\Key|W32Time\\Config\\LastKnownGoodTime|TPM\\OsBootCount|TPM\\(WMI|ProvisionInfo)\\.*|rdyboost\\(Diagnostics|AttachState)\\.*)$/,
+    /^(rdyboost\\Parameters\\(ReadyBootVolumeUniqueId|LastBootPlanUserTime|BootPlan|EffectivePends)|spaceport\\Parameters\\(ControlId|PrimordialId))$/,
+    /^(LanmanServer\\Parameters\\Guid|Tcpip6\\Parameters\\Dhcpv6DUID|HyperVideo\\Video\\VideoID|srvnet\\Parameters\\MajorSequence)$/].map((r) => r.source).join('|'), 'i'),
+  etwProviders: /^[^\\]+\\Enabled$/i,
+  policyManager: /^knobs\\Power\/Policy\/Settings\/|\\wnfStateName\d*$/i,
+};
+// A build's registry keys as compared: without those values, and without the keys that had only those (or have none, under a key
+// whose values are all left out)
+function registryForCompare(label, flat) {
+  const state = REGISTRY_STATE[label];
+  if (!state) return flat;
+  const out = {};
+  for (const [key, values] of Object.entries(flat)) {
+    const kept = Object.fromEntries(Object.entries(values).filter(([name]) => !state.test(`${key}\\${name}`)));
+    if (Object.keys(kept).length || (!Object.keys(values).length && !state.test(`${key}\\`))) out[key] = kept;
+  }
+  return out;
+}
+// Two keys' values are the same if they differ only in what changes with an update of a driver package, the Windows Security platform
+// or Edge (the folder names in their paths, as fileKey()), in letter case, in how a path under the Windows folder is written, or in the
+// order of a list
+const registryPathForm = (s) => s.toLowerCase()
+  .replace(/(\\driverstore\\filerepository\\[^\\]+?)_[0-9a-f]{16}(?=\\)/g, '$1')
+  .replace(/(\\securityhealth)\\\d+\.\d+\.\d+\.\d+[^\\]*(?=\\)/g, '$1\\*')
+  .replace(/(\\microsoft\\edge[a-z]*\\application)\\\d+\.\d+\.\d+\.\d+(?=\\)/g, '$1\\*')
+  .replace(/^\\systemroot\\/, '');
+const registryCompareForm = (values) => JSON.stringify(Object.entries(values || {}).map(([k, v]) =>
+  [k.toLowerCase(), Array.isArray(v) ? v.map((x) => (typeof x === 'string' ? registryPathForm(x) : x)).sort() : typeof v === 'string' ? registryPathForm(v) : v]).sort());
+const registryEqual = (x, y) => registryCompareForm(x) === registryCompareForm(y);
+
 // What kind of whole file it is, from where it is: the groups the compare view lists them in
 function fileGroup(path) {
   const p = path.toLowerCase();
@@ -363,7 +401,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     const ho = (ia.registry || {})[label], hn = (ib.registry || {})[label];
     if (!ho || !hn) continue;
     const rows = ho === hn ? Promise.resolve([]) : Promise.all([loadRegistry(ho), loadRegistry(hn)]).then(([o, n]) =>
-      objectDiff(flattenRegistry(o), flattenRegistry(n)).map((r) => ({ ...r, path: r.key, oldText: r.old && registryText(r.old), newText: r.new && registryText(r.new) }))
+      objectDiff(registryForCompare(label, flattenRegistry(o)), registryForCompare(label, flattenRegistry(n)), registryEqual).map((r) => ({ ...r, path: r.key, oldText: r.old && registryText(r.old), newText: r.new && registryText(r.new) }))
         .filter((r) => matchesQ(r.key, r.oldText, r.newText)));
     await sub('registry:' + label, title, rows, [changeColumn,
       { title: 'Key', value: (r) => r.key, html: (r) => `<span class="res-path">${esc(r.key)}</span>${label === 'etwProviders' && (r.new || r.old || {})[''] ? `<div class="muted">${esc((r.new || r.old)[''])}</div>` : ''}`, cls: 'sgm' },
