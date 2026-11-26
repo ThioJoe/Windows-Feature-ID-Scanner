@@ -30,6 +30,9 @@
 #   6. The scanner runs inside the VM, the same way the regular workflow runs it on the runner, then Super God Mode
 #      (run-super-god-mode.ps1) as the VM's own user, then, after a restart, the feature trace (trace-features.ps1), and their output
 #      is copied back.
+#   7. Windows shuts down, and scan-resources.py reads the VM's disk on the runner: what the build's files hold besides code (icons,
+#      UI text, APIs, policies, registry keys and so on). With -ResourcesOnly, that's all a run does for a build data/ has already
+#      (no feature scan, Super God Mode or trace, and no Store app updates, whose files the resource data leaves out).
 #
 # Steps can be run one at a time with -Step, which is how it was developed and tested.
 
@@ -48,13 +51,16 @@ param(
     [switch]$SkipTrace,                    # No feature trace after the scan (trace-features.ps1)
     [switch]$TraceOnly,                    # No scan: only Super God Mode (for the trace's targets) and the feature trace, for a build data/ has
                                            # without a trace (summary.json then only says which build it is, with traceOnly)
-    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace')]
+    [switch]$ResourcesOnly,                # No scan or trace: only the resource data (scan-resources.py), for a build data/ has
+    [string]$ResourcesKnown,               # The paths the assets branch has already (git ls-tree), which scan-resources.py doesn't write again
+    [ValidateSet('All', 'Image', 'Download', 'Disk', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace', 'Resources')]
     [string]$Step = 'All'
 )
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 if ($TraceOnly -and $SkipTrace) { throw '-TraceOnly and -SkipTrace together leave nothing to do' }
+if ($TraceOnly -and $ResourcesOnly) { throw '-TraceOnly and -ResourcesOnly are two different runs' }
 if (-not $OutputDir) { $OutputDir = Join-Path $WorkDir 'output' }
 New-Item -ItemType Directory -Force $WorkDir, $OutputDir | Out-Null
 
@@ -66,8 +72,16 @@ function Log([string]$msg) { Write-Host ("[vm {0}] {1}" -f (Get-Date -Format 'HH
 
 function Save-Url([string]$url, [string]$path) {
     # BITS isn't available in every session, and Invoke-WebRequest is slow for large files on Windows PowerShell, so use curl.exe (part of Windows)
+    $started = Get-Date
     & curl.exe -fsSL --retry 5 --retry-delay 5 -o $path $url
     if ($LASTEXITCODE -ne 0) { throw "Download failed ($LASTEXITCODE): $url" }
+    Write-DownloadTime (Split-Path $path -Leaf) (Get-Item $path).Length $started
+}
+
+function Write-DownloadTime([string]$name, [long]$bytes, [datetime]$started) {
+    # How long each download takes, to see what would be worth keeping in the Actions cache
+    $seconds = [math]::Max(((Get-Date) - $started).TotalSeconds, 0.01)
+    Log ("Downloaded {0}: {1:N1} MB in {2:N1} s ({3:N1} MB/s)" -f $name, ($bytes / 1MB), $seconds, ($bytes / 1MB / $seconds))
 }
 
 function Get-ProductsCatalogs {
@@ -118,14 +132,36 @@ function Get-BaseImage {
     $esd = Join-Path $WorkDir $file.FileName
     # Newer catalogs list a SHA-256 hash, older ones SHA-1
     $algorithm, $expected = if ($file.Sha256) { 'SHA256', $file.Sha256.ToUpper() } elseif ($file.Sha1) { 'SHA1', $file.Sha1.ToUpper() } else { throw "No hash for $($file.FileName) in the catalog" }
+    # The workflow restores the 26H2 image it saved in the Actions cache into image-cache\ (Save-ImageToCache), if it has one
+    $cached = Join-Path (Join-Path $WorkDir 'image-cache') $file.FileName
+    if (-not (Test-Path $esd) -and (Test-Path $cached)) {
+        $started = Get-Date
+        $ok = (Get-FileHash $cached -Algorithm $algorithm).Hash -eq $expected
+        Log ("The Actions cache has {0}: {1} (checked in {2:N0} s)" -f $file.FileName, $(if ($ok) { 'its hash is right' } else { 'its hash is wrong, so it''s downloaded' }), ((Get-Date) - $started).TotalSeconds)
+        if ($ok) { Move-Item $cached $esd }
+    }
     if (-not (Test-Path $esd) -or (Get-FileHash $esd -Algorithm $algorithm).Hash -ne $expected) {
         Log "Downloading $($file.FileName) ($([math]::Round([double]$file.Size / 1GB, 1)) GB)"
         Save-Url $file.FilePath $esd
         $hash = (Get-FileHash $esd -Algorithm $algorithm).Hash
         if ($hash -ne $expected) { throw "$algorithm mismatch for $esd" }
+        if ($pick.Base -eq 26300) { Save-ImageToCache $esd }
     }
     Log "Base image: $($file.FileName)"
     return $esd
+}
+
+function Save-ImageToCache([string]$esd) {
+    # The workflow saves image-cache\ in the Actions cache (10 GB per repository) under the key this writes to the step's outputs, so
+    # later scans of 26H2 builds can start from it. Only the 26H2 image: it and the 24H2 one together wouldn't fit. A hard link, so the
+    # VM's disk doesn't need the space twice.
+    if (-not $env:GITHUB_OUTPUT) { return }
+    $folder = Join-Path $WorkDir 'image-cache'
+    New-Item -ItemType Directory -Force $folder | Out-Null
+    Get-ChildItem $folder -File | Remove-Item -Force
+    New-Item -ItemType HardLink -Path (Join-Path $folder (Split-Path $esd -Leaf)) -Target $esd | Out-Null
+    [IO.File]::AppendAllText($env:GITHUB_OUTPUT, "image-cache-key=base-image-26H2-$([IO.Path]::GetFileNameWithoutExtension($esd))`n")  # (UTF-8 without a BOM)
+    Log 'The workflow will save the image in the Actions cache'
 }
 
 function Search-UpdateCatalog([string]$query) {
@@ -505,6 +541,7 @@ foreach ($url in @(__URLS__)) {
     $name = [IO.Path]::GetFileName(([uri]$url).AbsolutePath)
     $path = Join-Path C:\scan-updates $name
     Write-Log "downloading $name"
+    $started = Get-Date
     for ($attempt = 1; $attempt -le 5; $attempt++) {
         # curl's own retries don't cover a transfer cut off partway (error 18), so that resumes the partial file (-C -) here
         & curl.exe -fsSL --retry 5 --retry-delay 5 -C - -o $path $url
@@ -513,6 +550,8 @@ foreach ($url in @(__URLS__)) {
         Start-Sleep -Seconds 10
     }
     if ($LASTEXITCODE -ne 0) { Write-Result "download failed (curl $LASTEXITCODE): $url"; return }
+    $seconds = [math]::Max(((Get-Date) - $started).TotalSeconds, 0.01)
+    Write-Log ("downloaded {0}: {1:N1} MB in {2:N1} s ({3:N1} MB/s)" -f $name, ((Get-Item $path).Length / 1MB), $seconds, ((Get-Item $path).Length / 1MB / $seconds))
 }
 $target = Get-ChildItem C:\scan-updates -Filter '*-__KB__-*.msu' | Select-Object -First 1
 if (-not $target) { Write-Result 'none of the downloaded files is __KB__ itself'; return }
@@ -648,6 +687,34 @@ try {
 }
 
 $EnablementPackageKbs = @{ '25H2' = 'KB5054156'; '26H2' = 'KB5121794' }  # Their KB articles
+
+# The packages' own files, as WSUS gave them every time (the same file for every build of the version), so a scan doesn't wait for
+# WSUS to be set up and synchronized (31 to 68 minutes). The name of each ends with the file's SHA-1. WSUS is only asked for a
+# package that isn't here, or whose file can't be had this way any more.
+$KnownEnablementPackages = @{
+    'KB5054156' = @{ Name = 'Windows11.0-KB5054156-x64.cab'; Size = 26156
+                     Url = 'http://dl.delivery.mp.microsoft.com/filestreamingservice/files/73c5fe0c-8018-48a8-a83a-5d2988081e68/public/windows11.0-kb5054156-x64_a5c08a3679a59c051376f17e506abf0adc278fcf.cab' }
+    'KB5121794' = @{ Name = 'Windows11.0-KB5121794-x64.cab'; Size = 26004
+                     Url = 'http://dl.delivery.mp.microsoft.com/filestreamingservice/files/5c6230b6-922d-4680-b0aa-ddfc072bbd73/public/windows11.0-kb5121794-x64_edc390e77424858ed95964e071638f4aec308c76.cab' }
+}
+
+function Get-KnownEnablementPackage([string]$packageKb) {
+    # The package's file from its known link, checked against its size and the SHA-1 at the end of its name, and copied into the VM.
+    # Returns its path in the VM, or nothing (WSUS is asked then). DISM also checks its signature before installing it.
+    $known = $KnownEnablementPackages[$packageKb]
+    if (-not $known) { return }
+    $local = Join-Path $WorkDir $known.Name
+    try { Save-Url $known.Url $local } catch { Log "The $packageKb file didn't download from its known link ($($_.Exception.Message))"; return }
+    $sha1 = (Get-FileHash $local -Algorithm SHA1).Hash.ToLower()
+    $expected = [regex]::Match($known.Url, '_([0-9a-f]{40})\.cab$').Groups[1].Value
+    if ((Get-Item $local).Length -ne $known.Size -or $sha1 -ne $expected) {
+        Log "The $packageKb file from its known link isn't the one expected ($((Get-Item $local).Length) bytes, SHA-1 $sha1)"
+        return
+    }
+    $inVm = "C:\scan-updates\$($known.Name)"
+    Copy-ToVM $local $inVm
+    return $inVm
+}
 
 function Start-WsusLookup([string]$packageKb) {
     # WSUS, a Windows Server role, gets update metadata from Microsoft Update, including where each update's files are on Microsoft's
@@ -786,8 +853,12 @@ function Install-TargetVersion {
     }
     $packageKb = $EnablementPackageKbs[$Version]
     if (-not $packageKb) { return (Install-VersionOffer) }  # A version whose enablement package isn't known here yet
-    $file = Get-EnablementPackageFromWsus $packageKb
-    $source = 'WSUS'
+    $file = Get-KnownEnablementPackage $packageKb
+    $source = 'its known link'
+    if (-not $file) {
+        $file = Get-EnablementPackageFromWsus $packageKb
+        $source = 'WSUS'
+    }
     if (-not $file) {
         $source = 'Windows Update'
         $file = Get-EnablementPackage $packageKb
@@ -1451,17 +1522,61 @@ try {
     Add-ScanNotes
 }
 
+function Invoke-ResourceScan([string]$build) {
+    # What the build's files hold besides code (scan-resources.py: icons, UI text, APIs, policies, registry keys, ...), read from the
+    # VM's disk on the runner once Windows has shut down, which also makes the registry hives and the scheduled tasks readable. The
+    # list of every file that the VM's check made (files.csv.gz) goes with it. Outside -ResourcesOnly, a failure only means the
+    # build has no resource data this time.
+    try {
+        Close-VmSession
+        Log 'Shutting Windows down to read the VM''s disk'
+        Stop-VM -Name $VmName -Force  # A shutdown through Windows, not a power-off
+        $vhd = (Get-VMHardDiskDrive -VMName $VmName | Select-Object -First 1).Path
+        for ($attempt = 1; ; $attempt++) {
+            # Hyper-V can hold on to the disk for a moment after the VM has stopped
+            try { $disk = Mount-VHD -Path $vhd -ReadOnly -Passthru -ErrorAction Stop | Get-Disk; break } catch {
+                if ($attempt -ge 12) { throw }
+                Start-Sleep -Seconds 5
+            }
+        }
+        try {
+            $part = Get-Partition -DiskNumber $disk.Number | Where-Object Type -eq 'Basic' | Sort-Object Size -Descending | Select-Object -First 1
+            if (-not $part.DriveLetter -or $part.DriveLetter -eq [char]0) {
+                $part | Add-PartitionAccessPath -AssignDriveLetter
+                $part = Get-Partition -DiskNumber $disk.Number -PartitionNumber $part.PartitionNumber
+            }
+            $root = "$($part.DriveLetter):\"
+            $arguments = @('--root', $root, '--build', "$build-AMD64", '--out', (Join-Path $OutputDir 'resources'))
+            $inventory = Join-Path $OutputDir 'files.csv.gz'
+            if (Test-Path $inventory) { $arguments += @('--inventory', $inventory) }
+            if ($ResourcesKnown -and (Test-Path $ResourcesKnown)) { $arguments += @('--known', $ResourcesKnown) }
+            Log "Reading the resource data from the VM's disk ($root)"
+            $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
+            & python.exe (Join-Path $RepoDir 'scripts\scan-resources.py') @arguments 2>&1 | ForEach-Object { Log "$_" }
+            $code = $LASTEXITCODE
+            $ErrorActionPreference = 'Stop'
+            if ($code -ne 0) { throw "scan-resources.py failed ($code)" }
+        } finally {
+            Dismount-VHD -Path $vhd
+        }
+    } catch {
+        if ($ResourcesOnly) { throw }
+        Log "No resource data for this build: $($_.Exception.Message)"
+    }
+}
+
 # ---------------------------------------------------------------------------
 
 $esd = $null; $updateUrls = $null; $insiderImage = $null
 if ($Step -in 'All', 'Image', 'Disk') { if ($InsiderChannel) { $insiderImage = Get-InsiderImage } else { $esd = Get-BaseImage } }
 if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageKbs[$Version] -and
+    -not $KnownEnablementPackages[$EnablementPackageKbs[$Version]] -and
     (-not $ExpectedBuild -or ($ExpectedBuild -split '\.')[0] -ne ((Split-Path $esd -Leaf) -split '\.')[0])) {
     Start-WsusLookup $EnablementPackageKbs[$Version]  # The image isn't the target version, so the VM will need the enablement package
 }
 if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd $insiderImage | Out-Null }
-if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace') {
+if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace', 'Resources') {
     Start-ScanVM
     $script:VmSession = Wait-ScanVM
     Set-VmNetwork
@@ -1488,7 +1603,7 @@ if ($Step -in 'All', 'FeatureUpdate') {
     Log "VM build after the feature update: $(Get-VmBuild)"
 }
 if ($Step -in 'All', 'Updates') { Install-OtherUpdates }
-if ($Step -in 'All', 'Apps') { Update-StoreApps }
+if ($Step -in 'All', 'Apps' -and -not $ResourcesOnly) { Update-StoreApps }  # (Store apps' files aren't in the resource data)
 if ($Step -in 'All', 'Verify') {
     # A last restart after all the updates, as a PC gets, so the checks and then the scan see Windows as it starts from now on
     # (restarting after the checks could change what they checked)
@@ -1498,10 +1613,17 @@ if ($Step -in 'All', 'Verify') {
     $kbs = @(@(if ($Kb) { $Kb.ToUpper() }) + @($updateUrls | ForEach-Object { if ($_ -match '-(kb\d+)-') { $Matches[1].ToUpper() } }) | Where-Object { $_ } | Select-Object -Unique)
     Test-VmInstallation $kbs
 }
-if ($Step -in 'All', 'Scan') {
+if ($Step -in 'All', 'Scan', 'Resources') {
     $build = (Get-VmBuild).Split(' ')[0]
     if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
-    Invoke-ScanInVM (Join-Path $RepoDir 'data\symbol-cache-AMD64.json')
+}
+if ($Step -in 'All', 'Scan' -and -not $ResourcesOnly) { Invoke-ScanInVM (Join-Path $RepoDir 'data\symbol-cache-AMD64.json') }
+if ($Step -in 'All', 'Resources' -and -not $TraceOnly) {
+    Invoke-ResourceScan $build
+    if ($ResourcesOnly) {
+        # Which build the resource data is of, for the workflow (nothing of the build's feature data changes)
+        @{ fullBuild = $build; architecture = 'AMD64'; resourcesOnly = $true } | ConvertTo-Json | Set-Content (Join-Path $OutputDir 'summary.json') -Encoding UTF8
+    }
 }
 if ($Step -eq 'Trace') {
     # Only the feature trace (the scan has its own), with what's in the VM: Super God Mode's statistics if the scan made them

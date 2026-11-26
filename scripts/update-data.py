@@ -604,6 +604,11 @@ def regenerate(data_dir):
             index['builds'][-1]['insiderChannel'] = b['insiderChannel']
         if b.get('release'):
             index['builds'][-1]['release'] = b['release']
+        # Its resource data (scan-resources.py), which the site loads from the assets branch
+        resources = os.path.join(build_dir(data_dir, b['key']), 'resources.json')
+        if os.path.exists(resources):
+            r = load_json(resources)
+            index['builds'][-1]['resources'] = {'files': r.get('files'), 'scannedAt': r.get('scannedAt')}
 
     # First seen, per architecture. The first tracked build of an architecture is where tracking began, not necessarily where a feature appeared.
     # Builds count in the order they came out, so a feature an Insider build had before a released build with a lower number counts in the

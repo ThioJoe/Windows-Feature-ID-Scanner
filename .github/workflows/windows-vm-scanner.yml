@@ -23,6 +23,10 @@ on:
         description: 'Only the feature trace, added to the data of builds already in data/ (give them in builds): no scan'
         type: boolean
         default: false
+      resources_only:
+        description: 'Only the resource data (icons, UI text, APIs, ...) of builds already in data/ (give them in builds): no scan or trace'
+        type: boolean
+        default: false
   schedule:
     - cron: '41 8 * * *'
 
@@ -59,10 +63,12 @@ jobs:
           BUILDS: ${{ inputs.builds }}
           FORCE: ${{ inputs.force && '--all' || '' }}
           TRACE_ONLY: ${{ inputs.trace_only }}
+          RESOURCES_ONLY: ${{ inputs.resources_only }}
         run: |
-          # A trace alone is added to a build's data, so the builds have to be given, and in data/ already
-          if [ "$TRACE_ONLY" = true ]; then
-            [ -n "$BUILDS" ] || { echo "::error::trace_only needs the builds to trace in builds"; exit 1; }
+          # A trace or the resource data alone is added to a build's data, so the builds have to be given, and in data/ already
+          if [ "$TRACE_ONLY" = true ] && [ "$RESOURCES_ONLY" = true ]; then echo "::error::trace_only and resources_only are two different runs"; exit 1; fi
+          if [ "$TRACE_ONLY" = true ] || [ "$RESOURCES_ONLY" = true ]; then
+            [ -n "$BUILDS" ] || { echo "::error::trace_only and resources_only need the builds in builds"; exit 1; }
             for b in $BUILDS; do [ -f "data/builds/$b-AMD64/features.json" ] || { echo "::error::$b-AMD64 isn't in data/, so it needs a full scan"; exit 1; }; done
           fi
           python3 scripts/check-windows-builds.py --arch AMD64 ${VERSIONS:+--versions $VERSIONS} ${BUILDS:+--builds $BUILDS} $FORCE $INSIDER --releases data/releases.json --summary "$GITHUB_STEP_SUMMARY" --github-output
@@ -99,7 +105,27 @@ jobs:
         with:
           ref: ${{ github.ref }}  # The branch tip: the symbol cache the scan starts from
 
+      # What the assets branch has already, which scan-resources.py doesn't write again (the branch's file list, without the files)
+      - name: List what the assets branch has
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Continue'  # Windows PowerShell turns a native command's error output into errors
+          & git clone -q --filter=blob:none --no-checkout --depth 1 --branch assets "https://github.com/${{ github.repository }}.git" "$env:RUNNER_TEMP\assets-branch" 2>&1 | Out-Null
+          $paths = if ($LASTEXITCODE -eq 0) { @(& git -C "$env:RUNNER_TEMP\assets-branch" ls-tree -r --name-only HEAD) } else { @() }
+          [IO.File]::WriteAllLines("$env:RUNNER_TEMP\assets-known.txt", [string[]]$paths)
+          Write-Host "The assets branch has $($paths.Count) paths"
+
+      # The 26H2 base image, if an earlier scan saved it in the Actions cache (scan-in-vm.ps1 checks its hash before using it)
+      - name: Restore the 26H2 base image
+        if: ${{ matrix.build.version == '26H2' && !matrix.build.channel }}
+        uses: actions/cache/restore@v4
+        with:
+          path: D:\vmscan\image-cache
+          key: base-image-26H2-${{ github.run_id }}
+          restore-keys: base-image-26H2-
+
       - name: Build the VM and scan inside it
+        id: vm
         shell: powershell
         env:
           VERSION: ${{ matrix.build.version }}
@@ -108,9 +134,18 @@ jobs:
           CHANNEL: ${{ matrix.build.channel }}  # An Insider build's channel (empty for the released versions' builds)
           FEATURE_TRACE: ${{ vars.FEATURE_TRACE }}  # false: no feature trace after the scan (it takes about an hour and ten minutes)
           TRACE_ONLY: ${{ inputs.trace_only }}      # true: no scan, only the trace (scan-in-vm.ps1 -TraceOnly)
+          RESOURCES_ONLY: ${{ inputs.resources_only }}  # true: no scan, only the resource data (scan-in-vm.ps1 -ResourcesOnly)
         run: |
           python --version
-          .\scripts\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false') -TraceOnly:($env:TRACE_ONLY -eq 'true')
+          .\scripts\scan-in-vm.ps1 -Version $env:VERSION -Kb $env:KB -ExpectedBuild $env:BUILD -InsiderChannel $env:CHANNEL -OutputDir "$env:GITHUB_WORKSPACE\vm-output" -SkipTrace:($env:FEATURE_TRACE -eq 'false') -TraceOnly:($env:TRACE_ONLY -eq 'true') -ResourcesOnly:($env:RESOURCES_ONLY -eq 'true') -ResourcesKnown "$env:RUNNER_TEMP\assets-known.txt"
+
+      # A 26H2 base image this scan downloaded (scan-in-vm.ps1 gives the key), for the next scans; kept whatever happened to the scan
+      - name: Save the 26H2 base image
+        if: ${{ always() && steps.vm.outputs.image-cache-key != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: D:\vmscan\image-cache
+          key: ${{ steps.vm.outputs.image-cache-key }}
 
       # When a check of the VM fails, there's no scan output, but the reports of the checks say what was wrong
       - name: Upload the reports of the VM's checks
@@ -180,24 +215,60 @@ jobs:
       # Oldest build first: update-data.py fills in a build's missing feature names from the earlier builds in data/
       - name: Add the builds to data/ and commit
         id: commit
+        env:
+          GITHUB_TOKEN: ${{ github.token }}  # To push the assets branch
         run: |
           set -euo pipefail
           keys=()
+          resource_keys=()
           while read -r folder; do
             key="${folder#output/Windows-Build-}"
+            [ -d "$folder/resources" ] && resource_keys+=("$key")
+            if python3 -c "import json, sys; sys.exit(0 if json.load(open(sys.argv[1], encoding='utf-8-sig')).get('resourcesOnly') else 1)" "$folder/summary.json"; then
+              continue  # Only resource data: the build's feature data stays as it is
+            fi
             echo "Adding $key"
             python3 scripts/update-data.py --summary "$folder/summary.json" --symbols "$folder/symbol-features.json" --super-god-mode "$folder/super-god-mode" --trace "$folder/trace"
             keys+=("$key")
           done < <(find output -mindepth 1 -maxdepth 1 -type d -name 'Windows-Build-*' 2>/dev/null | sort -t- -k3,3V)
-          if [ ${#keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ ${#keys[@]} -eq 0 ] && [ ${#resource_keys[@]} -eq 0 ]; then echo "No build was scanned."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # The resource data (scan-resources.py) goes to the assets branch, pushed first: data/index.json lists the builds that have it
+          if [ ${#resource_keys[@]} -gt 0 ]; then
+            url="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            if git ls-remote --exit-code --heads "$url" assets > /dev/null 2>&1; then
+              # Its file list without the files: the paths added are committed on top of it
+              git clone -q --filter=blob:none --no-checkout --depth 1 --branch assets "$url" assets-branch
+              git -C assets-branch read-tree HEAD
+              git -C assets-branch ls-tree -r --name-only HEAD > assets-known.txt
+            else
+              git init -q assets-branch
+              git -C assets-branch checkout -q --orphan assets
+              git -C assets-branch remote add origin "$url"
+              : > assets-known.txt
+            fi
+            python3 scripts/merge-resources.py --assets assets-branch --known assets-known.txt --added assets-added.txt --data-dir data $(for k in "${resource_keys[@]}"; do echo "output/Windows-Build-$k/resources"; done)
+            if [ -s assets-added.txt ]; then
+              git -C assets-branch config user.name "github-actions[bot]"
+              git -C assets-branch config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              (cd assets-branch && git add --pathspec-from-file=../assets-added.txt)
+              if ! git -C assets-branch diff --cached --quiet; then
+                git -C assets-branch commit -q -m "Resource data of $(IFS=,; echo "${resource_keys[*]}" | sed 's/,/, /g')"
+                git -C assets-branch push -q origin HEAD:refs/heads/assets
+              fi
+            fi
+            python3 scripts/update-data.py  # The index then lists the builds' resource data
+          fi
           # (A folder per scan's cache, though download-artifact can put a lone one straight in symbol-caches/)
           mapfile -t caches < <(find symbol-caches -type f -name symbol-cache-AMD64.json 2>/dev/null | sort)
-          if [ ${#caches[@]} -gt 0 ]; then python3 scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
+          if [ ${#keys[@]} -eq 0 ]; then echo "Only resource data: the symbol cache stays as it is"
+          elif [ ${#caches[@]} -gt 0 ]; then python3 scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
           if git diff --cached --quiet; then echo "No changes to data/."; echo "committed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
-          if [ ${#keys[@]} -eq 1 ]; then message="Add feature data for build ${keys[0]}"; else message="Add feature data for builds $(IFS=,; echo "${keys[*]}" | sed 's/,/, /g')"; fi
+          if [ ${#keys[@]} -eq 0 ]; then
+            if [ ${#resource_keys[@]} -eq 1 ]; then message="Add the resource data of build ${resource_keys[0]}"; else message="Add the resource data of builds $(IFS=,; echo "${resource_keys[*]}" | sed 's/,/, /g')"; fi
+          elif [ ${#keys[@]} -eq 1 ]; then message="Add feature data for build ${keys[0]}"; else message="Add feature data for builds $(IFS=,; echo "${keys[*]}" | sed 's/,/, /g')"; fi
           if [ "${{ inputs.trace_only }}" = true ]; then message="${message/feature data for/the feature traces of}"; message="${message/traces of build /trace of build }"; fi
           git commit -q -m "$message"
           git pull -q --rebase origin "$GITHUB_REF_NAME"
