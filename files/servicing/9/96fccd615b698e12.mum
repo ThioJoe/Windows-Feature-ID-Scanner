@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0618" version="10.0.26100.6899" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0618" releaseType="Feature Pack">
+    <update name="EC193AF6DB65B1DE54FBF2E733041EAB6E0EC9F982F8E9B5DC64A5AB06644FE3">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment06180" version="10.0.26100.6899" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="0053472C44BABC21884900824F1FD1723AA94D45701723B378C07ADBB564D63C" restart="required">
+      <driver inf="wudfrd.inf" ranking="normal">
+        <assemblyIdentity name="dual_wudfrd.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="46A5ADC9AFCC43C7EAD9DB34F60CE774EA93907B5AB2C33E3D4401575F4D3C81">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Kernel-Processor-Power-Events-Package" version="10.0.26100.3037" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="45317E94998F0BC9C47B35B1A4AAF110766EE915B0F0398D10874B071A058134">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package061820" version="10.0.26100.6899" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,3413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<voicecommands>
+  <intent-mapping>
+    <intent-none>None</intent-none>
+    <intent-block-intent>Task.BlockIntent</intent-block-intent>
+    <intent-undo>Task.Undo</intent-undo>
+    <intent-redo>Task.Redo</intent-redo>
+    <intent-open>Task.Open</intent-open>
+    <intent-start>Task.Start</intent-start>
+    <intent-switch-app>Task.SwitchApp</intent-switch-app>
+    <intent-close>Task.Close</intent-close>
+    <intent-hide>Task.Hide</intent-hide>
+    <intent-dismiss>Task.Dismiss</intent-dismiss>
+    <intent-stop>Task.Stop</intent-stop>
+    <intent-cancel>Task.Cancel</intent-cancel>
+    <intent-fast>Task.Fast</intent-fast>
+    <intent-slow>Task.Slow</intent-slow>
+    <intent-move-direction>Task.MoveDirection</intent-move-direction>
+    <intent-invokecontrol>Task.InvokeControl</intent-invokecontrol>
+    <intent-moveslider>Task.MoveSlider</intent-moveslider>
+    <intent-volumeup>Task.VolumeUp</intent-volumeup>
+    <intent-volumedown>Task.VolumeDown</intent-volumedown>
+    <intent-volumemute>Task.VolumeMute</intent-volumemute>
+    <intent-volumeunmute>Task.VolumeUnmute</intent-volumeunmute>
+    <intent-scroll>Task.Scroll</intent-scroll>
+    <intent-scroll-accelerated-commands>Task.Scroll.AcceleratedCommands</intent-scroll-accelerated-commands>
+    <intent-scroll-start-scrolling>Task.Scroll.StartScrolling</intent-scroll-start-scrolling>
+    <intent-scroll-stop-scrolling>Task.Scroll.StopScrolling</intent-scroll-stop-scrolling>
+    <intent-copy>Task.Copy</intent-copy>
+    <intent-cut>Task.Cut</intent-cut>
+    <intent-paste>Task.Paste</intent-paste>
+    <intent-save>Task.Save</intent-save>
+    <intent-minimize>Task.Minimize</intent-minimize>
+    <intent-maximize>Task.Maximize</intent-maximize>
+    <intent-restore>Task.Restore</intent-restore>
+    <intent-listallwindows>Task.ListAllWindows</intent-listallwindows>
+    <intent-showdesktop>Task.ShowDesktop</intent-showdesktop>
+    <intent-press>Task.Press</intent-press>
+    <intent-selectall>Task.SelectAll</intent-selectall>
+    <intent-deleteall>Task.DeleteAll</intent-deleteall>
+    <intent-focus>Task.Focus</intent-focus>
+    <intent-screenshot>Task.Screenshot</intent-screenshot>
+    <intent-move>Task.Move</intent-move>
+    <intent-goto>Task.Common.GoTo</intent-goto>
+    <intent-onscreenkeyboard>Task.OnScreenKeyboard</intent-onscreenkeyboard>
+    <intent-hold>Task.Hold</intent-hold>
+    <intent-release>Task.Release</intent-release>
+    <intent-mouseclick>Task.Mouse.Click</intent-mouseclick>
+    <intent-mousemovement>Task.Mouse.Movements</intent-mousemovement>
+    <intent-mouse-movement-stop-moving>Task.Mouse.StopMoving</intent-mouse-movement-stop-moving>
+    <intent-rotatescreen>Task.RotateScreen</intent-rotatescreen>
+    <intent-search-app>Task.SearchApp</intent-search-app>
+    
+    <!-- Browser commands -->
+    <intent-browser-newtab>Task.Browser.NewTab</intent-browser-newtab>
+    <intent-browser-closetab>Task.Browser.CloseTab</intent-browser-closetab>
+    <intent-browser-addressbar>Task.Browser.AddressBar</intent-browser-addressbar>
+    <intent-browser-refreshpage>Task.Browser.RefreshPage</intent-browser-refreshpage>
+    <intent-browser-newwindow>Task.Browser.NewWindow</intent-browser-newwindow>
+    <intent-browser-privatewindow>Task.Browser.NewPrivateWindow</intent-browser-privatewindow>
+    <intent-browser-goback>Task.Browser.GoBack</intent-browser-goback>
+    <intent-browser-goforward>Task.Browser.GoForward</intent-browser-goforward>
+    <intent-browser-bookmarkpage>Task.Browser.BookmarkPage</intent-browser-bookmarkpage>
+    <intent-browser-closebrowser>Task.Browser.CloseBrowser</intent-browser-closebrowser>
+    <intent-browser-zoomin>Task.Browser.ZoomIn</intent-browser-zoomin>
+    <intent-browser-zoomout>Task.Browser.ZoomOut</intent-browser-zoomout>
+    <intent-browser-mutetab>Task.Browser.MuteTab</intent-browser-mutetab>
+    <intent-browser-unmutetab>Task.Browser.UnmuteTab</intent-browser-unmutetab>
+    <intent-browser-duplicatetab>Task.Browser.DuplicateTab</intent-browser-duplicatetab>
+    <intent-browser-movetonewwindow>Task.Browser.MoveTabToNewWindow</intent-browser-movetonewwindow>
+    <intent-browser-gotonthtab>Task.Browser.GoToNthTab</intent-browser-gotonthtab>
+    <intent-browser-pintab>Task.Browser.PinTab</intent-browser-pintab>
+    <intent-browser-unpintab>Task.Browser.UnpinTab</intent-browser-unpintab>
+    <intent-browser-favourite>Task.Browser.Favourite</intent-browser-favourite>
+    <intent-browser-previouslyclosedtab>Task.Browser.PreviouslyClosedTab</intent-browser-previouslyclosedtab>
+    <intent-browser-rearrangetabs>Task.Browser.RearrangeTabs</intent-browser-rearrangetabs>
+    <intent-browser-opensearchbox>Task.Browser.OpenSearchBox</intent-browser-opensearchbox>
+    <intent-browser-closesearchbox>Task.Browser.CloseSearchBox</intent-browser-closesearchbox>
+    <intent-browser-nextword>Task.Browser.NextWord</intent-browser-nextword>
+    <intent-browser-previousword>Task.Browser.PreviousWord</intent-browser-previousword>
+    <intent-browser-findonpage>Task.Browser.FindOnPage</intent-browser-findonpage>
+    <intent-browser-fullscreen>Task.Browser.FullScreen</intent-browser-fullscreen>
+    <intent-browser-exitfullscreen>Task.Browser.ExitFullScreen</intent-browser-exitfullscreen>
+    <intent-browser-gohome>Task.Browser.GoHome</intent-browser-gohome>
+    <intent-browser-history>Task.Browser.History</intent-browser-history>
+    <intent-browser-downloads>Task.Browser.Downloads</intent-browser-downloads>
+    <intent-browser-opendevelopertools>Task.Browser.OpenDeveloperTools</intent-browser-opendevelopertools>
+    <intent-browser-closedevelopertools>Task.Browser.CloseDeveloperTools</intent-browser-closedevelopertools>
+    <intent-browser-showcontextmenu>Task.Browser.ShowContextMenu</intent-browser-showcontextmenu>
+    <intent-browser-openinnewtab>Task.Browser.OpenInNewTab</intent-browser-openinnewtab>
+    <intent-browser-openbookmarkpage>Task.Browser.OpenBookMarkPage</intent-browser-openbookmarkpage>
+    <intent-browser-exitcontextmenu>Task.Browser.ExitContextMenu</intent-browser-exitcontextmenu>
+    <!-- Browser commands end -->
+
+    <!-- VoiceAccess Commands-->
+    <intent-VoiceAccess-sleep>Task.VoiceAccess.Sleep</intent-VoiceAccess-sleep>
+    <intent-VoiceAccess-on>Task.VoiceAccess.On</intent-VoiceAccess-on>
+    <intent-VoiceAccess-off>Task.VoiceAccess.Off</intent-VoiceAccess-off>
+    <!--VoiceAccess Commands end-->
+
+    <!-- WebSearch Commands-->
+    <intent-websearch-googlesearch>Task.WebSearch.GoogleSearch</intent-websearch-googlesearch>
+    <intent-websearch-bingsearch>Task.WebSearch.BingSearch</intent-websearch-bingsearch>
+    <intent-websearch-youtubesearch>Task.WebSearch.YouTubeSearch</intent-websearch-youtubesearch>
+    <!-- WebSearch Commands end-->
+
+    <!-- Dictation Commands start -->
+    <intent-dictation-goto>Task.Dictation.Goto</intent-dictation-goto>
+    <intent-dictation-insert>Task.Dictation.Insert</intent-dictation-insert>
+    <intent-dictation-select>Task.Dictation.Select</intent-dictation-select>
+    <intent-dictation-spell>Task.Dictation.Spell</intent-dictation-spell>
+    <intent-dictation-correct>Task.Dictation.Correct</intent-dictation-correct>
+    <intent-dictation-unselect>Task.UnselectThat</intent-dictation-unselect>
+    <intent-dictation-copy>Task.Dictation.Copy</intent-dictation-copy>
+    <intent-dictation-cut>Task.Dictation.Cut</intent-dictation-cut>
+    <intent-dictation-bold>Task.Dictation.Bold</intent-dictation-bold>
+    <intent-dictation-italicize>Task.Dictation.Italicize</intent-dictation-italicize>
+    <intent-dictation-underline>Task.Dictation.Underline</intent-dictation-underline>
+    <intent-dictation-delete>Task.Dictation.Delete</intent-dictation-delete>
+    <intent-dictation-lowercase>Task.Dictation.Lowercase</intent-dictation-lowercase>
+    <intent-dictation-uppercase>Task.Dictation.Uppercase</intent-dictation-uppercase>
+    <intent-dictation-capitalize>Task.Dictation.Capitalize</intent-dictation-capitalize>
+    <intent-dictation-type>Task.Dictation.Type</intent-dictation-type>
+    <intent-dictation-select-from>Task.Dictation.SelectFrom</intent-dictation-select-from>
+    <intent-dictation-caps-insert>Task.Dictation.Caps</intent-dictation-caps-insert>
+    <intent-dictation-nospace>Task.Dictation.Nospace</intent-dictation-nospace>
+    <intent-dictation-nospace-that>Task.Dictation.NospaceThat</intent-dictation-nospace-that>
+    <!-- Dictation Commands end -->
+
+    <!-- Disambiguation Commands -->
+    <intent-disambiguation>Event.Disambiguation</intent-disambiguation>
+    <!-- Disambiguation Commands end -->
+
+    <!-- Grid Overlay Commands -->
+    <intent-grid-show>Task.Grid.Show</intent-grid-show>
+    <intent-grid-hide>Task.Grid.Hide</intent-grid-hide>
+    <intent-grid-drilldown>Task.Grid.DrillDown</intent-grid-drilldown>
+    <intent-grid-mark>Task.Grid.Mark</intent-grid-mark>
+    <intent-grid-drag>Task.Grid.Drag</intent-grid-drag>
+    <intent-grid-click>Task.Grid.Click</intent-grid-click>
+    <intent-grid-undo>Task.Grid.Undo</intent-grid-undo>
+    <!-- Grid Overlay Commands end -->
+
+    <!-- Number Overlay Commands -->
+    <intent-overlay-shownumbers>Task.Overlay.ShowNumbers</intent-overlay-shownumbers>
+    <intent-overlay-hidenumbers>Task.Overlay.HideNumbers</intent-overlay-hidenumbers>
+    <!-- Number Overlay Commands end -->
+
+    <!-- FRE Commands-->
+    <intent-fre-opentutorial>Task.OpenTutorial</intent-fre-opentutorial>
+    <intent-fre-showallcommands>Task.ShowAllCommands</intent-fre-showallcommands>
+    <intent-fre-showcustomcommands>Task.ShowCustomCommands</intent-fre-showcustomcommands>
+    <!--FRE Commands end-->
+
+    <!--Mode switch Commands-->
+    <intent-default-mode>Task.Default.Mode</intent-default-mode>
+    <intent-command-mode>Task.Command.Mode</intent-command-mode>
+    <intent-dictation-mode>Task.Dictation.Mode</intent-dictation-mode>
+    <!--Mode switch Commands end-->
+
+    <!-- Touch Keyboard Commands -->
+    <intent-touchkeyboard-show>Task.TouchKeyboard.Show</intent-touchkeyboard-show>
+    <intent-touchkeyboard>Event.TouchKeyboard</intent-touchkeyboard>
+    <intent-touchkeyboard-hide>Task.TouchKeyboard.Hide</intent-touchkeyboard-hide>
+    <intent-touchkeyboard-invalid>Task.TouchKeyboard.Invalid</intent-touchkeyboard-invalid>
+    <!-- Touch Keyboard Commands end -->
+
+    <!--Spell Command Starts-->
+    <intent-spell-show>Task.Spell.Show</intent-spell-show>
+    <intent-spell-invalid>Task.Spell.Invalid</intent-spell-invalid>
+    <intent-spell-none>Task.Spell.None</intent-spell-none>
+    <!--Spell Command Ends-->
+
+    <!--Add vocabulary Command Starts-->
+    <intent-vocabulary-add>Task.Vocabulary.Add</intent-vocabulary-add>
+    <!--Add vocabulary Command Ends-->
+    
+    <!-- Persistent UI Commands -->
+    <intent-voice-access-settings>Task.Open.VoiceAccessSettings</intent-voice-access-settings>
+    <intent-voice-access-help>Task.Open.VoiceAccessHelp</intent-voice-access-help>
+    <!-- Persistent UI Commands end -->
+
+    <!-- Shell Shortcuts -->
+    <intent-open-startmenu>Task.Open.StartMenu</intent-open-startmenu>
+    <intent-open-searchmenu>Task.Open.SearchMenu</intent-open-searchmenu>
+    <!-- Shell Shortcuts end -->
+
+    <!-- Commands for Secure Desktop -->
+    <intent-showpassword>Task.ShowPassword</intent-showpassword>
+    <intent-hello>Task.SecureDesktop.Hello</intent-hello>
+    <!-- Commands for Secure Desktop -->
+
+    <!-- Text Snippet Insert Commands -->
+    <intent-text-snippet-insert>Task.TextSnippetInsert</intent-text-snippet-insert>
+    <!-- Text Snippet Insert Commands -->
+
+    <!-- Open File or Folder Command -->
+    <intent-open-file-path>Task.OpenFilePath</intent-open-file-path>
+    <intent-open-url>Task.OpenUrl</intent-open-url>
+    <intent-custom-command-keypress>Task.CustomCommand.KeyPress</intent-custom-command-keypress>
+    <!-- Open File or Folder Command -->
+
+    <intent-fluid-dictation-on>Task.FluidDictation.On</intent-fluid-dictation-on>
+    <intent-fluid-dictation-off>Task.FluidDictation.Off</intent-fluid-dictation-off>
+    
+    <!-- Narrator Commands -->
+    <intent-narrator-start>Task.Narrator.Start</intent-narrator-start>
+    <intent-narrator-open-settings>Task.Narrator.Open.Settings</intent-narrator-open-settings>
+    <intent-narrator-volume-up>Task.Narrator.Volume.Up</intent-narrator-volume-up>
+    <intent-narrator-volume-down>Task.Narrator.Volume.Down</intent-narrator-volume-down>
+    <intent-narrator-speed-up>Task.Narrator.Speed.Up</intent-narrator-speed-up>
+    <intent-narrator-speed-down>Task.Narrator.Speed.Down</intent-narrator-speed-down>
+    <intent-narrator-image-title-description>Task.Narrator.Image.Link.Description</intent-narrator-image-title-description>
+    <intent-narrator-webpage-summary>Task.Narrator.Webpage.Summary</intent-narrator-webpage-summary>
+    <intent-narrator-toggle-scanmode>Task.Narrator.Toggle.Scanmode</intent-narrator-toggle-scanmode>
+    <intent-narrator-primary-action>Task.Narrator.Primary.Action</intent-narrator-primary-action>
+    <intent-narrator-secondary-action>Task.Narrator.Secondary.Action</intent-narrator-secondary-action>
+    <intent-narrator-read-the-first-character-of-a-line>Task.Narrator.Read.The.First.Character.Of.A.Line</intent-narrator-read-the-first-character-of-a-line>
+    <intent-narrator-read-the-last-character-of-a-line>Task.Narrator.Read.The.Last.Character.Of.A.Line</intent-narrator-read-the-last-character-of-a-line>
+    <intent-narrator-move-to-and-read-the-first-line-of-text>Task.Narrator.Move.To.And.Read.The.First.Line.Of.Text</intent-narrator-move-to-and-read-the-first-line-of-text>
+    <intent-narrator-move-to-and-read-the-last-line-of-text>Task.Narrator.Move.To.And.Read.The.Last.Line.Of.Text</intent-narrator-move-to-and-read-the-last-line-of-text>
+    <intent-narrator-jump-to-next-text>Task.Narrator.Jump.To.Next.Text</intent-narrator-jump-to-next-text>
+    <intent-narrator-jump-to-previous-text>Task.Narrator.Jump.To.Previous.Text</intent-narrator-jump-to-previous-text>
+    <intent-narrator-select-current-character>Task.Narrator.Select.Current.Character</intent-narrator-select-current-character>
+    <intent-narrator-select-previous-character>Task.Narrator.Select.Previous.Character</intent-narrator-select-previous-character>
+    <intent-narrator-select-current-word>Task.Narrator.Select.Current.Word</intent-narrator-select-current-word>
+    <intent-narrator-select-previous-word>Task.Narrator.Select.Previous.Word</intent-narrator-select-previous-word>
+    <intent-narrator-select-current-line>Task.Narrator.Select.Current.Line</intent-narrator-select-current-line>
+    <intent-narrator-select-previous-line>Task.Narrator.Select.Previous.Line</intent-narrator-select-previous-line>
+    <intent-narrator-select-current-paragraph>Task.Narrator.Select.Current.Paragraph</intent-narrator-select-current-paragraph>
+    <intent-narrator-select-previous-paragraph>Task.Narrator.Select.Previous.Paragraph</intent-narrator-select-previous-paragraph>
+    <intent-narrator-select-to-beginning-of-line>Task.Narrator.Select.To.Beginning.Of.Line</intent-narrator-select-to-beginning-of-line>
+    <intent-narrator-select-to-end-of-line>Task.Narrator.Select.To.End.Of.Line</intent-narrator-select-to-end-of-line>
+    <intent-narrator-select-to-beginning-of-document>Task.Narrator.Select.To.Beginning.Of.Document</intent-narrator-select-to-beginning-of-document>
+    <intent-narrator-select-to-end-of-document>Task.Narrator.Select.To.End.Of.Document</intent-narrator-select-to-end-of-document>
+    <intent-narrator-select-current-page>Task.Narrator.Select.Current.Page</intent-narrator-select-current-page>
+    <intent-narrator-select-previous-page>Task.Narrator.Select.Previous.Page</intent-narrator-select-previous-page>
+    <intent-narrator-mark-the-beginning-of-block-of-text>Task.Narrator.Mark.The.Beginning.Of.Block.Of.Text</intent-narrator-mark-the-beginning-of-block-of-text>
+    <intent-narrator-select-all-text-between-a-mark>Task.Narrator.Select.All.Text.Between.A.Mark</intent-narrator-select-all-text-between-a-mark>
+    <intent-narrator-copy-selection>Task.Narrator.Copy.Selection</intent-narrator-copy-selection>
+    <intent-narrator-cut-selection>Task.Narrator.Cut.Selection</intent-narrator-cut-selection>
+    <intent-narrator-paste-selection>Task.Narrator.Paste.Selection</intent-narrator-paste-selection>
+    <intent-narrator-select-all>Task.Narrator.Select.All</intent-narrator-select-all>
+    <intent-narrator-read-selection>Task.Narrator.Read.Selection</intent-narrator-read-selection>
+    <intent-narrator-spell-selection>Task.Narrator.Spell.Selection</intent-narrator-spell-selection>
+    <!-- Narrator Commands end -->
+
+    <!-- Narrator Chapter-4 Commands Start -->
+    <intent-narrator-stop-reading>Task.Narrator.Stop.Reading</intent-narrator-stop-reading>
+    <intent-narrator-read-window-title>Task.Narrator.Read.Window.Title</intent-narrator-read-window-title>
+    <intent-narrator-read-a-window>Task.Narrator.Read.A.Window</intent-narrator-read-a-window>
+    <intent-narrator-read-the-current-item>Task.Narrator.Read.The.Current.Item</intent-narrator-read-the-current-item>
+    <intent-narrator-read-the-current-item>Task.Narrator.Read.The.Current.Item</intent-narrator-read-the-current-item>
+    <intent-narrator-read-from-focus>Task.Narrator.Read.From.Focus</intent-narrator-read-from-focus>
+    <intent-narrator-read-from-beginning>Task.Narrator.Read.From.Beginning</intent-narrator-read-from-beginning>
+    <intent-narrator-read-from-beginning-to-cursor>Task.Narrator.Read.From.Beginning.To.Cursor</intent-narrator-read-from-beginning-to-cursor>
+    <intent-narrator-change-the-level-of-verbosity>Task.Narrator.Change.The.Level.Of.Verbosity</intent-narrator-change-the-level-of-verbosity>
+    <intent-narrator-hear-formatting-attributes>Task.Narrator.Hear.Formatting.Attributes</intent-narrator-hear-formatting-attributes>
+    <intent-narrator-previous-group-of-formatting-attributes>Task.Narrator.Previous.Group.Of.Formatting.Attributes</intent-narrator-previous-group-of-formatting-attributes>
+    <intent-narrator-change-capitalization-reading-mode>Task.Narrator.Change.Capitalization.Reading.Mode</intent-narrator-change-capitalization-reading-mode>
+    <!-- Narrator Chapter-4 Commands end -->
+
+    <!-- Narrator Chapter-5 Commands -->
+    
+    <intent-narrator-navigate-view-left>Task.Narrator.Navigate.Left</intent-narrator-navigate-view-left>
+    <intent-narrator-navigate-view-right>Task.Narrator.Navigate.Right</intent-narrator-navigate-view-right>
+    <intent-narrator-main-landmark>Task.Narrator.Main.Landmark</intent-narrator-main-landmark>
+    <intent-narrator-list-landmark>Task.Narrator.List.Landmark</intent-narrator-list-landmark>
+    <intent-narrator-find>Task.Narrator.Find</intent-narrator-find>
+    <intent-narrator-find-next>Task.Narrator.Find.Next</intent-narrator-find-next>
+    <intent-narrator-find-previous>Task.Narrator.Find.Previous</intent-narrator-find-previous>
+    <intent-narrator-list-all-links>Task.Narrator.List.All.Links</intent-narrator-list-all-links>
+    <intent-narrator-list-all-headings>Task.Narrator.List.All.Headings</intent-narrator-list-all-headings>
+    <intent-narrator-jump-to>Task.Narrator.Jump.To</intent-narrator-jump-to>
+    <intent-narrator-read-from>Task.Narrator.Read.From</intent-narrator-read-from>
+    <!-- Narrator Chapter-5 Commands end -->
+
+    <!-- Narrator Appendix Commands -->
+    <intent-narrator-toggle-input-learning>Task.Narrator.Toggle.Input.Learning</intent-narrator-toggle-input-learning>
+    <intent-narrator-show-commands-list>Task.Narrator.Show.Commands.List</intent-narrator-show-commands-list>
+    <intent-narrator-show-commands-for-current-item>Task.Narrator.Show.Commands.For.Current.Item</intent-narrator-show-commands-for-current-item>
+    <intent-narrator-toggle-search-mode>Task.Narrator.Toggle.Search.Mode</intent-narrator-toggle-search-mode>
+    <intent-narrator-read-current-date-and-time>Task.Narrator.Read.Current.Date.And.Time</intent-narrator-read-current-date-and-time>
+    <intent-narrator-provide-narrator-feedback>Task.Narrator.Provide.Narrator.Feedback</intent-narrator-provide-narrator-feedback>
+    <intent-narrator-lock-narrator-key>Task.Narrator.Lock.Narrator.Key</intent-narrator-lock-narrator-key>
+    <intent-narrator-toggle-developer-mode>Task.Narrator.Toggle.Developer.Mode</intent-narrator-toggle-developer-mode>
+    <intent-narrator-pass-keys-to-application>Task.Narrator.Pass.Keys.To.Application</intent-narrator-pass-keys-to-application>
+    <intent-narrator-toggle-mouse-mode>Task.Narrator.Toggle.Mouse.Mode</intent-narrator-toggle-mouse-mode>
+    <intent-narrator-toggle-character-reading>Task.Narrator.Toggle.Character.Reading</intent-narrator-toggle-character-reading>
+    <intent-narrator-read-context>Task.Narrator.Read.Context</intent-narrator-read-context>
+    <intent-narrator-set-read-context-verbosity>Task.Narrator.Set.Read.Context.Verbosity</intent-narrator-set-read-context-verbosity>
+    <intent-narrator-change-read-context-order>Task.Narrator.Change.Read.Context.Order</intent-narrator-change-read-context-order>
+    <intent-narrator-read-item-advanced>Task.Narrator.Read.Item.Advanced</intent-narrator-read-item-advanced>
+    <intent-narrator-repeat-phrase>Task.Narrator.Repeat.Phrase</intent-narrator-repeat-phrase>
+    <intent-narrator-read-document>Task.Narrator.Read.Document</intent-narrator-read-document>
+    <intent-narrator-read-next-new-line>Task.Narrator.Read.Next.New.Line</intent-narrator-read-next-new-line>
+    <intent-narrator-exit>Task.Narrator.Exit</intent-narrator-exit>
+    <intent-narrator-outlook-headers-on-off>Task.Narrator.Outlook.Headers.On.Off</intent-narrator-outlook-headers-on-off>
+    <intent-narrator-move-to-first-item-in-window>Task.Narrator.Move.To.First.Item.In.Window</intent-narrator-move-to-first-item-in-window>
+    <intent-narrator-move-to-last-item-in-window>Task.Narrator.Move.To.Last.Item.In.Window</intent-narrator-move-to-last-item-in-window>
+    <intent-narrator-go-back-one-item>Task.Narrator.Go.Back.One.Item</intent-narrator-go-back-one-item>
+    <intent-narrator-move-cursor-to-system-cursor>Task.Narrator.Move.Cursor.To.System.Cursor</intent-narrator-move-cursor-to-system-cursor>
+    <intent-narrator-set-focus-to-item>Task.Narrator.Set.Focus.To.Item</intent-narrator-set-focus-to-item>
+    <intent-narrator-jump-to-linked-item>Task.Narrator.Jump.To.Linked.Item</intent-narrator-jump-to-linked-item>
+    <intent-narrator-jump-to-annotated-content>Task.Narrator.Jump.To.Annotated.Content</intent-narrator-jump-to-annotated-content>
+    <intent-narrator-navigate-to-parent>Task.Narrator.Navigate.To.Parent</intent-narrator-navigate-to-parent>
+    <intent-narrator-navigate-to-next-sibling>Task.Narrator.Navigate.To.Next.Sibling</intent-narrator-navigate-to-next-sibling>
+    <intent-narrator-navigate-to-previous-sibling>Task.Narrator.Navigate.To.Previous.Sibling</intent-narrator-navigate-to-previous-sibling>
+    <intent-narrator-navigate-to-first-child>Task.Narrator.Navigate.To.First.Child</intent-narrator-navigate-to-first-child>
+    <intent-narrator-change-to>Task.Narrator.Change.To</intent-narrator-change-to>
+    <intent-narrator-webpage-summary-and-popular-links>Task.Narrator.Webpage.Summary.And.Popular.Links</intent-narrator-webpage-summary-and-popular-links>
+
+  </intent-mapping>
+  <command id="none">
+    <intent>intent-none</intent>
+    <text>{text}</text>
+    <receiver>none-receiver</receiver>
+    <successFeedback>
+      <kOverlayControlClicked>IntentNonekOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentNoneIntermediateFeedback</intermediate>
+      <kFluidDictationIntermediateFeedback>FluidDictationExecuteIntermediateFeedback</kFluidDictationIntermediateFeedback>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentNoneMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentNoneInvalidEntity</kInvalidEntity>
+      <kInvalidCommand>IntentNoneInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <command id="intent-block-intent">
+    <intent>intent-block-intent</intent>
+    <errorFeedback>
+      <kInvalidCommand>IntentNoneEventDisallowedOperation</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <command id="intent-open">
+    <intent>intent-open</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <errorFeedback>
+      <kGenericException>ApplicationLaunchOrSwitchHelpText</kGenericException>
+      <kMissingEntity>IntentOpenMissingEntity</kMissingEntity>
+      <kInvalidEntity>CommonApplicationInvalidEntity</kInvalidEntity>
+      <kApplicationNotFound>CommonApplicationNotFound</kApplicationNotFound>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-start">
+    <intent>intent-start</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <errorFeedback>
+      <kGenericException>ApplicationLaunchOrSwitchHelpText</kGenericException>
+      <kMissingEntity>IntentStartMissingEntity</kMissingEntity>
+      <kInvalidEntity>CommonApplicationInvalidEntity</kInvalidEntity>
+      <kApplicationNotFound>CommonApplicationNotFound</kApplicationNotFound>
+    </errorFeedback>
+  </command>
+  <command id="intent-open-file-path">
+    <intent>intent-open-file-path</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <errorFeedback>
+      <kGenericException>LaunchFailedHelpText</kGenericException>
+      <kMissingEntity>IntentOpenFilePathMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentOpenFileDefaultAppNotFound</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-open-url">
+    <intent>intent-open-url</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <errorFeedback>
+      <kGenericException>LaunchFailedHelpText</kGenericException>
+      <kMissingEntity>IntentOpenUrlMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-switch-app">
+    <intent>intent-switch-app</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonSwitchIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>ApplicationLaunchOrSwitchHelpText</kGenericException>
+      <kMissingEntity>IntentSwitchAppMissingEntity</kMissingEntity>
+      <kInvalidEntity>CommonApplicationInvalidEntity</kInvalidEntity>
+      <kApplicationNotFound>CommonApplicationNotFound</kApplicationNotFound>
+    </errorFeedback>
+  </command>
+  <command id="intent-search-app">
+    <intent>intent-search-app</intent>
+    <entity>{entity}</entity>
+    <receiver>app-launch-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonSearchIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>ApplicationLaunchOrSwitchHelpText</kGenericException>
+      <kMissingEntity>IntentSearchAppMissingEntity</kMissingEntity>
+      <kInvalidEntity>CommonApplicationInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-invokecontrol">
+    <intent>intent-invokecontrol</intent>
+    <entity>{entity}</entity>
+    <receiver>standard-control-receiver</receiver>
+    <errorFeedback>
+      <kMissingEntity>IntentInvokeControlMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentInvokeControlInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-moveslider">
+    <intent>intent-moveslider</intent>
+    <entity>{entity}</entity>
+    <receiver>standard-control-receiver</receiver>
+    <errorFeedback>
+      <kMissingEntity>IntentMoveSliderMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentMoveSliderInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-close">
+    <intent>intent-close</intent>
+    <entity>{entity}</entity>
+    <key_name>{{ALT}}{SPACE}{100 WAIT}c</key_name>
+    <receiver>window-state-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>WindowStateReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>WindowStateReceiverInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-hide">
+    <intent>intent-hide</intent>
+    <entity>{entity}</entity>
+    <key_name>{{ALT}}{SPACE}{100 WAIT}n</key_name>
+    <receiver>window-state-receiver</receiver>
+    <successFeedback>
+      <kEventCancelOperation>MultiPointTextSelectionStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentMinimizeIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>WindowStateReceiverInvalidEntity</kInvalidEntity>
+      <kInvalidAppInFocus>WindowStateReceiverInvalidAppInFocus</kInvalidAppInFocus>
+      <kGenericException>GenericException</kGenericException>
+      <kMissingEntity>WindowStateReceiverMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-dismiss">
+    <intent>intent-dismiss</intent>
+    <key_name>{escape}</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>DismissFeedbackText</kNone>
+      <kEventCancelOperation>MultiPointTextSelectionStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-stop">
+    <intent>intent-stop</intent>
+    <successFeedback>
+      <kNone>IntentStopkNone</kNone>
+    </successFeedback>
+  </command>
+  <command id="intent-cancel">
+    <intent>intent-cancel</intent>
+    <successFeedback>
+      <kNone>IntentCancelkNone</kNone>
+      <kEventCancelOperation>MultiPointTextSelectionStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+  </command>
+  <command id="intent-fast">
+    <intent>intent-fast</intent>
+    <successFeedback>
+      <kNone>IntentFastkNone</kNone>
+    </successFeedback>
+  </command>
+  <command id="intent-slow">
+    <intent>intent-slow</intent>
+    <successFeedback>
+      <kNone>IntentSlowkNone</kNone>
+    </successFeedback>
+  </command>
+  <command id="intent-move-direction">
+    <intent>intent-move-direction</intent>
+    <entity>{entity}</entity>
+  </command>
+  <command id="intent-volumeup">
+    <intent>intent-volumeup</intent>
+    <key_name>{VK 0xAF}</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>VolumeUpFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentVolumeUpIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-volumedown">
+    <intent>intent-volumedown</intent>
+    <key_name>{VK 0xAE}</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>VolumeDownFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentVolumeDownIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-volumemute">
+    <intent>intent-volumemute</intent>
+    <key_name>{VK 0xAD}</key_name>
+    <receiver>volumemute-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonMuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-volumeunmute">
+    <intent>intent-volumeunmute</intent>
+    <key_name>{VK 0xAD}</key_name>
+    <receiver>volumemute-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonUnmuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-scroll">
+    <entity>{entity}</entity>
+    <intent>intent-scroll</intent>
+    <receiver>scroll-receiver</receiver>
+    <successFeedback>
+      <kNone>ScrollFeedbackTemplateText</kNone>
+      <kSingleScrollOperation>ScrollFeedbackTemplateText</kSingleScrollOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentScrollIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kMissingEntity>ScrollReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>ScrollReceiverInvalidEntity</kInvalidEntity>
+      <kInvalidCommand>ScrollReceiverInvalidCommand</kInvalidCommand>
+      <kInvalidElementInFocus>ScrollReceiverInvalidElementInFocus</kInvalidElementInFocus>
+      <kInvalidAppInFocus>ScrollReceiverInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-scroll-accelerated-commands">
+    <entity>{entity}</entity>
+    <intent>intent-scroll-accelerated-commands</intent>
+    <receiver>scroll-accelerated-commands-receiver</receiver>
+    <successFeedback>
+      <kNone>ScrollFeedbackTemplateText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentScrollIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidElementInFocus>ScrollReceiverInvalidElementInFocus</kInvalidElementInFocus>
+      <kInvalidAppInFocus>ScrollReceiverInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-scroll-start-scrolling">
+    <entity>{entity}</entity>
+    <intent>intent-scroll-start-scrolling</intent>
+    <receiver>scroll-receiver</receiver>
+    <successFeedback>
+      <kNone>ScrollFeedbackTemplateText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentScrollIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kMissingEntity>ScrollReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>ScrollReceiverInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-scroll-stop-scrolling">
+    <entity>{entity}</entity>
+    <intent>intent-scroll-stop-scrolling</intent>
+    <receiver>scroll-receiver</receiver>
+    <successFeedback>
+      <kNone>ScrollFeedbackTemplateText</kNone>
+      <kEventCancelOperation>ScrollingStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentScrollIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kMissingEntity>ScrollReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>ScrollReceiverInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-copy">
+    <intent>intent-copy</intent>
+    <key_name>{{CTRL}}c</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>CopyFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentCopyIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-cut">
+    <intent>intent-cut</intent>
+    <key_name>{{CTRL}}x</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>CutFeedbackText</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-paste">
+    <intent>intent-paste</intent>
+    <key_name>{{CTRL}}v</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>PasteFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentPasteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-save">
+    <intent>intent-save</intent>
+    <key_name>{{CTRL}}s</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>SaveFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentSaveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-minimize">
+    <intent>intent-minimize</intent>
+    <entity>{entity}</entity>
+    <key_name>{{ALT}}{SPACE}{100 WAIT}n</key_name>
+    <receiver>window-state-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentMinimizeIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>WindowStateReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>WindowStateReceiverInvalidEntity</kInvalidEntity>
+      <kInvalidAppInFocus>MinimizeIntentInvalidAppInFocus</kInvalidAppInFocus>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-maximize">
+    <intent>intent-maximize</intent>
+    <entity>{entity}</entity>
+    <receiver>window-state-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentMaximizeIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>WindowStateReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>WindowStateReceiverInvalidEntity</kInvalidEntity>
+      <kInvalidAppInFocus>MaximizeIntentInvalidAppInFocus1</kInvalidAppInFocus>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidCommand>MaximizeIntentInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <command id ="intent-restore">
+    <intent>intent-restore</intent>
+    <entity>{entity}</entity>
+    <key_name>{{WIN}}{DOWN}</key_name>
+    <receiver>window-state-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentRestoreIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>WindowStateReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>WindowStateReceiverInvalidEntity</kInvalidEntity>
+      <kInvalidAppInFocus>WindowStateReceiverInvalidAppInFocus</kInvalidAppInFocus>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidCommand>RestoreIntentInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <command id="intent-selectall">
+    <intent>intent-selectall</intent>
+    <key_name>{{CTRL}}a</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>SelectAllFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonSelectIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-deleteall">
+    <intent>intent-deleteall</intent>
+    <receiver>delete-all-receiver</receiver>
+    <successFeedback>
+      <kNone>DeleteAllFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>DeleteAllIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+      <kInvalidAppInFocus>DeleteAllInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id ="intent-showdesktop">
+    <intent>intent-showdesktop</intent>
+    <receiver>show-desktop-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentShowDesktopIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-listallwindows">
+    <intent>intent-listallwindows</intent>
+    <key_name>{{WIN}}{TAB}</key_name>
+    <receiver>list-all-windows-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentListAllWindowsIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidAppInFocus>ListAllWindowsReceiverInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-press">
+    <intent>intent-press</intent>
+    <entity>{entity}</entity>
+    <receiver>keyboard-command-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentPressIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentPressInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentPressMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-focus">
+    <intent>intent-focus</intent>
+    <entity>{entity}</entity>
+    <receiver>uia-focus-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentFocusIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kMissingEntity>IntentFocusMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentFocusInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-screenshot">
+    <intent>intent-screenshot</intent>
+    <key_name>{PRTSC}</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>ScreenshotFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentScreenshotIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-move">
+    <intent>intent-move</intent>
+    <entity>{entity}</entity>
+    <receiver>move-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentMoveInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentMoveMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-onscreenkeyboard">
+    <intent>intent-onscreenkeyboard</intent>
+    <entity>{entity}</entity>
+    <key_name>{{WIN}}{{CTRL}}o</key_name>
+    <receiver>on-screen-keyboard-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentOnScreenKeyboardInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentOnScreenKeyboardMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-hold">
+    <intent>intent-hold</intent>
+    <entity>{entity}</entity>
+    <receiver>keyboard-command-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentHoldIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentHoldInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentHoldMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-release">
+    <intent>intent-release</intent>
+    <entity>{entity}</entity>
+    <receiver>keyboard-command-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentReleaseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentReleaseInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentReleaseMissingEntity</kMissingEntity>
+      <kInvalidCommand>IntentReleaseInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <command id="intent-mouseclick">
+    <intent>intent-mouseclick</intent>
+    <entity>{entity}</entity>
+    <receiver>mouse-click-receiver</receiver>
+    <successFeedback>
+      <kNone>MouseClickFeedbackText</kNone>
+      <kOverlayControlClicked>IntentMouseClickkOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentMouseClickIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentMouseClickInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentMouseClickMissingEntity</kMissingEntity>
+      <kInvalidTextRangeSelected>IntentCorrectionOperationInvalidTextRange</kInvalidTextRangeSelected>
+    </errorFeedback>
+  </command>
+  <command id="intent-mousemovement">
+    <intent>intent-mousemovement</intent>
+    <entity>{entity}</entity>
+    <receiver>mouse-pointer-receiver</receiver>
+    <successFeedback>
+      <kNone>MouseMovementFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentMouseMovementInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentMouseMovementMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-mouse-movement-stop-moving">
+    <intent>intent-mouse-movement-stop-moving</intent>
+    <entity>{entity}</entity>
+    <receiver>mouse-pointer-receiver</receiver>
+    <successFeedback>
+      <kNone>MouseMovementFeedbackText</kNone>
+      <kEventCancelOperation>MouseMovementStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentMouseMovementInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentMouseMovementMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-rotatescreen">
+    <intent>intent-rotatescreen</intent>
+    <entity>{entity}</entity>
+    <receiver>rotate-screen-receiver</receiver>
+    <successFeedback>
+      <kNone>RotateScreenFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentRotateScreenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>RotateScreenReceiverInvalidEntity</kInvalidEntity>
+      <kMissingEntity>RotateScreenReceiverMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-goto">
+    <intent>intent-goto</intent>
+    <entity>{entity}</entity>
+    <receiver>group-intent-receiver</receiver>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>GotoFailureNoTextOrLabelFound</kInvalidEntity>
+      <kGotoMissingEntity>GotoMissingEntity</kGotoMissingEntity>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <successFeedback>
+      <kGoToSuccessSingleText>IntentGoToSuccessSingleText</kGoToSuccessSingleText>
+      <kGoToSuccessMultipleText>IntentGoToSuccessMultipleText</kGoToSuccessMultipleText>
+    </successFeedback>  
+  </command>
+
+  <!-- Browser commands -->
+  <command id="intent-browser-newtab">
+    <intent>intent-browser-newtab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-closetab">
+    <intent>intent-browser-closetab</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>CloseTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+      <kInvalidEntity>IntentBrowserCloseTabkInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-addressbar">
+    <intent>intent-browser-addressbar</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>GoToAddressBarFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-refreshpage">
+    <intent>intent-browser-refreshpage</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>RefreshPageFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentRefreshPageIntermediateFeedbackText</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-newwindow">
+    <intent>intent-browser-newwindow</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenNewWindowFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-privatewindow">
+    <intent>intent-browser-privatewindow</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenNewWindowFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-goback">
+    <intent>intent-browser-goback</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>GoBackFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>BrowserReceiverGoIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-goforward">
+    <intent>intent-browser-goforward</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>GoForwardFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>BrowserReceiverGoIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-findonpage">
+    <intent>intent-browser-findonpage</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>FindOnPageFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentFindOnPageIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentFindOnPageMissingEntity</kMissingEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-closesearchbox">
+    <intent>intent-browser-closesearchbox</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>CloseSearchBoxFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-nextword">
+    <intent>intent-browser-nextword</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>NextWordFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-previousword">
+    <intent>intent-browser-previousword</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>PreviousWordFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-opensearchbox">
+    <intent>intent-browser-opensearchbox</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenSearchBoxFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-bookmarkpage">
+    <intent>intent-browser-bookmarkpage</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>BookmarkPageFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentBookmarkPageIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-gohome">
+    <intent>intent-browser-gohome</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>GoHomeFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonSwitchIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-fullscreen">
+    <intent>intent-browser-fullscreen</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>FullScreenFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonSwitchIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-exitfullscreen">
+    <intent>intent-browser-exitfullscreen</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>ExitFullScreenFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentExitFullScreenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-closebrowser">
+    <intent>intent-browser-closebrowser</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>CloseBrowserFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-zoomin">
+    <intent>intent-browser-zoomin</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>ZoomInFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentZoomInIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-zoomout">
+    <intent>intent-browser-zoomout</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>ZoomOutFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentZoomOutIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-mutetab">
+    <intent>intent-browser-mutetab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>MuteTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-unmutetab">
+    <intent>intent-browser-unmutetab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>UnmuteTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonUnmuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-duplicatetab">
+    <intent>intent-browser-duplicatetab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>DuplicateTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentDuplicateTabIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-movetonewwindow">
+    <intent>intent-browser-movetonewwindow</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>MoveToNewWindowFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentMoveToNewWindowInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-gotonthtab">
+    <intent>intent-browser-gotonthtab</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>GoToNthTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentGoToNthTabMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentGoToNthTabInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-pintab">
+    <intent>intent-browser-pintab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>PinTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentPinTabIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-unpintab">
+    <intent>intent-browser-unpintab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>UnpinTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentUnpinTabIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-previouslyclosedtab">
+    <intent>intent-browser-previouslyclosedtab</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-rearrangetabs">
+    <intent>intent-browser-rearrangetabs</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>RearrangeTabFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonMoveIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentRearrangeTabMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentRearrangeTabInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-history">
+    <intent>intent-browser-history</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>HistoryFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-downloads">
+    <intent>intent-browser-downloads</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>DownloadsFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-opendevelopertools">
+    <intent>intent-browser-opendevelopertools</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenDeveloperToolsFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-closedevelopertools">
+    <intent>intent-browser-closedevelopertools</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>CloseDeveloperToolsFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-showcontextmenu">
+    <intent>intent-browser-showcontextmenu</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>ShowContextMenuFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentShowContextMenuInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-openinnewtab">
+    <intent>intent-browser-openinnewtab</intent>
+    <entity>{entity}</entity>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenInNewTabFeedbackText</kNone>
+      <kOverlayControlClicked>OpenInNewTabDisambiguationFeedbackText</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentOpenInNewTabMissingEntity</kMissingEntity>
+      <kInvalidEntity>IntentOpenInNewTabInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-openbookmarkpage">
+    <intent>intent-browser-openbookmarkpage</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenBookMarkPageFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-browser-exitcontextmenu">
+    <intent>intent-browser-exitcontextmenu</intent>
+    <receiver>browser-receiver</receiver>
+    <successFeedback>
+      <kNone>ExitContextMenuFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonCloseIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidAppInFocus>BrowserReceiverkInvalidAppInFocus</kInvalidAppInFocus>
+    </errorFeedback>
+  </command>
+  <!-- Browser commands end-->
+
+  <!-- WebSearch Commands-->
+  <command id="intent-websearch-googlesearch">
+    <intent>intent-websearch-googlesearch</intent>
+    <entity>{entity}</entity>
+    <receiver>websearch-receiver</receiver>
+    <successFeedback>
+      <kNone>WebSearchFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>WebSearchReceiverIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>SearchReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>SearchReceiverInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-websearch-bingsearch">
+    <intent>intent-websearch-bingsearch</intent>
+    <entity>{entity}</entity>
+    <receiver>websearch-receiver</receiver>
+    <successFeedback>
+      <kNone>WebSearchFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>WebSearchReceiverIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>SearchReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>SearchReceiverInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-websearch-youtubesearch">
+    <intent>intent-websearch-youtubesearch</intent>
+    <entity>{entity}</entity>
+    <receiver>websearch-receiver</receiver>
+    <successFeedback>
+      <kNone>WebSearchFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>WebSearchReceiverIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>SearchReceiverMissingEntity</kMissingEntity>
+      <kInvalidEntity>SearchReceiverInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- WebSearch Commands end-->
+
+  <!-- Dictation Commands start -->
+  <command id="intent-dictation-goto">
+    <intent>intent-dictation-goto</intent>
+    <entity>{entity}</entity>
+    <receiver>text-navigation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-insert">
+    <intent>intent-dictation-insert</intent>
+    <text>{text}</text>
+    <receiver>text-insert-receiver</receiver>
+    <successFeedback>
+      <kNone>PrefixDictationCommandSuccessFeedback</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationInvalidElementInFocusFeedback</kInvalidElementInFocus>
+      <kPasswordFieldInFocus>DictationInsertionInPasswordFieldFeedback</kPasswordFieldInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-dictation-type">
+    <intent>intent-dictation-type</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-insert-receiver</receiver>
+    <successFeedback>
+      <kNone>PrefixDictationCommandSuccessFeedback</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationInvalidElementInFocusFeedback</kInvalidElementInFocus>
+      <kMissingEntity>IntentDictationTypeMissingEntity</kMissingEntity>
+      <kPasswordFieldInFocus>DictationInsertionInPasswordFieldFeedback</kPasswordFieldInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-dictation-caps-insert">
+    <intent>intent-dictation-caps-insert</intent>
+    <entity>{entity}</entity>
+    <text>{text}</text>
+    <receiver>text-insert-receiver</receiver>
+    <successFeedback>
+      <kNone>PrefixDictationCommandSuccessFeedback</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+      <kPasswordFieldInFocus>DictationInsertionInPasswordFieldFeedback</kPasswordFieldInFocus>
+      <kMissingEntity>IntentDictationCapsMissingEntity</kMissingEntity>
+    </errorFeedback>>
+    <intermediateFeedback>
+      <intermediate>PrefixDictationCommandIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-nospace">
+    <intent>intent-dictation-nospace</intent>
+    <entity>{entity}</entity>
+    <text>{text}</text>
+    <receiver>text-insert-receiver</receiver>
+    <successFeedback>
+      <kNone>PrefixDictationCommandSuccessFeedback</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+      <kPasswordFieldInFocus>DictationInsertionInPasswordFieldFeedback</kPasswordFieldInFocus>
+      <kMissingEntity>IntentDictationNoSpaceMissingEntity</kMissingEntity>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>PrefixDictationCommandIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-nospace-that">
+    <intent>intent-dictation-nospace-that</intent>
+    <entity>{entity}</entity>
+    <text>{text}</text>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNone>NospaceThatFeedbackText</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-select">
+    <intent>intent-dictation-select</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidElementInFocus>IntentDictationSelectionInvalidElementInFocus</kInvalidElementInFocus>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-select-from">
+    <intent>intent-dictation-select-from</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <successFeedback>
+      <kEventCancelOperation>MultiPointTextSelectionStoppedFeedbackText</kEventCancelOperation>
+      <kMultiPointTextSelectDisambiguation>MultiPointTextSelectionDisambiguationFeedbackText</kMultiPointTextSelectDisambiguation>
+      <kOverlayControlClicked>MultiPointTextSelectionkOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>MultiPointTextSelectionMissingEntity</kMissingEntity>
+      <kInvalidCommand>MultiPointTextSelectionInvalidCommand</kInvalidCommand>
+      <kInvalidEntity>MultiPointTextSelectionInvalidEntity</kInvalidEntity>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-dictation-spell">
+    <intent>intent-dictation-spell</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidElementInFocus>IntentDictationSpellInvalidElementInFocus</kInvalidElementInFocus>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-correct">
+    <intent>intent-dictation-correct</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+      <kOverlayControlClicked>IntentCorrectionOverlayControlClicked</kOverlayControlClicked>
+      <kEventCancelOperation>IntentCorrectionCancelOperation></kEventCancelOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidElementInFocus>IntentDictationSpellInvalidElementInFocus</kInvalidElementInFocus>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kMissingEntity>IntentDictationCorrectionOperationMissingEntity</kMissingEntity>
+      <kInvalidTextRangeSelected>IntentCorrectionOperationInvalidTextRange</kInvalidTextRangeSelected>
+      <kInvalidCommand>IntentCorrectionInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-unselect">
+    <intent>intent-dictation-unselect</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-dictation-copy">
+    <intent>intent-dictation-copy</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-cut">
+    <intent>intent-dictation-cut</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-bold">
+    <intent>intent-dictation-bold</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-italicize">
+    <intent>intent-dictation-italicize</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-underline">
+    <intent>intent-dictation-underline</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-delete">
+    <intent>intent-dictation-delete</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-lowercase">
+    <intent>intent-dictation-lowercase</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+      <kNoOperationEmbeddedObject>NoOperationEmbeddedObjectFeedbackText</kNoOperationEmbeddedObject>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidTextRangeSelected>IntentDictationOperationInvalidTextRange</kInvalidTextRangeSelected>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-uppercase">
+    <intent>intent-dictation-uppercase</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+      <kNoOperationEmbeddedObject>NoOperationEmbeddedObjectFeedbackText</kNoOperationEmbeddedObject>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidTextRangeSelected>IntentDictationOperationInvalidTextRange</kInvalidTextRangeSelected>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <command id="intent-dictation-capitalize">
+    <intent>intent-dictation-capitalize</intent>
+    <text>{text}</text>
+    <entity>{entity}</entity>
+    <receiver>text-select-format-manipulation-receiver</receiver>
+    <successFeedback>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+      <kNoOperationEmbeddedObject>NoOperationEmbeddedObjectFeedbackText</kNoOperationEmbeddedObject>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentDictationOperationInvalidEntity</kInvalidEntity>
+      <kInvalidTextRangeSelected>IntentDictationOperationInvalidTextRange</kInvalidTextRangeSelected>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+  </command>
+  <!-- Dictation Commands end -->
+
+  <!-- Disambiguation Commands-->
+  <command id="intent-disambiguation">
+    <intent>intent-disambiguation</intent>
+    <successFeedback>
+      <kGoToDisambiguation>IntentGoToDisambiguation</kGoToDisambiguation>
+    </successFeedback>
+  </command>
+  <!-- Disambiguation Commands end-->
+
+  <!-- Grid Overlay Commands -->
+  <command id="intent-grid-show">
+    <intent>intent-grid-show</intent>
+    <successFeedback>
+      <kNone>IntentGridShowkNone</kNone>
+      <kNoneMultipleMonitors>IntentGridShowkNoneMultipleMonitors</kNoneMultipleMonitors>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridShowIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentGridShowkInvalidEntity</kInvalidEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-hide">
+    <intent>intent-grid-hide</intent>
+    <successFeedback>
+      <kNone>IntentGridHidekNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridHideIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentGridHidekInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-drilldown">
+    <intent>intent-grid-drilldown</intent>
+    <successFeedback>
+      <kNone>IntentGridDrillDownkNone</kNone>
+      <kSwitchedToMonitor>IntentGridDrillDownkSwitchedToMonitor</kSwitchedToMonitor>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridDrillDownIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>IntentGridDrillDownkGenericException</kGenericException>
+      <kInvalidCommand>IntentGridDrillDownkInvalidCommand</kInvalidCommand>
+      <kInvalidEntity>IntentGridDrillDownkInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentGridDrillDownkMissingEntity</kMissingEntity>
+      <kInvalidMonitorIdentifier>IntentGridDrillDownkInvalidMonitorIdentifier</kInvalidMonitorIdentifier>
+      <kInvalidSwitchMonitorCommand>IntentGridDrillDownkInvalidSwitchMonitorCommand</kInvalidSwitchMonitorCommand>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-mark">
+    <intent>intent-grid-mark</intent>
+    <successFeedback>
+      <kNone>IntentGridMarkkNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridMarkIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentGridMarkkInvalidEntity</kInvalidEntity>
+      <kGenericException>IntentGridMarkkGenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-drag">
+    <intent>intent-grid-drag</intent>
+    <successFeedback>
+      <kOverlayControlClicked>IntentGridDragkOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridDragIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>IntentGridDragkGenericException</kGenericException>
+      <kMissingEntity>IntentGridDragkMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-click">
+    <intent>intent-grid-click</intent>
+    <successFeedback>
+      <kOverlayControlClicked>IntentGridClickkOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentGridClickkInvalidEntity</kInvalidEntity>
+      <kGenericException>IntentGridClickkGenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-grid-undo">
+    <intent>intent-grid-undo</intent>
+    <successFeedback>
+      <kNone>IntentGridUndokNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentGridUndoIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>IntentGridUndokGenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Grid Overlay Commands End -->
+
+  <!-- Undo/Redo Commands Start -->
+  <command id="intent-undo">
+    <intent>intent-undo</intent>
+    <receiver>undo-redo-receiver</receiver>
+    <key_name>{{CTRL}}z</key_name>
+    <successFeedback>
+      <kNone>IntentUndokNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentUndoIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>IntentUndokGenericException</kGenericException>
+      <kInvalidElementInFocus>DictationInvalidElementInFocusFeedback</kInvalidElementInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-redo">
+    <intent>intent-redo</intent>
+    <receiver>undo-redo-receiver</receiver>
+    <key_name>{{CTRL}}y</key_name>
+    <successFeedback>
+      <kNone>IntentRedokNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentRedoIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>IntentRedokGenericException</kGenericException>
+      <kInvalidElementInFocus>DictationInvalidElementInFocusFeedback</kInvalidElementInFocus>
+    </errorFeedback>
+  </command>
+  <!-- Undo/Redo Commands End -->
+
+  <!-- Number Overlay Commands-->
+  <command id="intent-overlay-shownumbers">
+    <intent>intent-overlay-shownumbers</intent>
+    <successFeedback>
+      <kNone>IntentShowNumberskNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentShowNumbersIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentShowNumbersMissingEntity</kMissingEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-overlay-hidenumbers">
+    <intent>intent-overlay-hidenumbers</intent>
+    <successFeedback>
+      <kNone>IntentHideNumberskNone</kNone>
+      <kEventCancelOperation>MultiPointTextSelectionStoppedFeedbackText</kEventCancelOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentHideNumbersIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentHideNumbersInvalidEntity</kInvalidEntity>
+      <kInvalidCommand>IntentHideNumbersInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <!-- Number Overlay Commands end-->
+
+  <!-- Touch Keyboard Commands-->
+  <command id="intent-touchkeyboard-show">
+    <intent>intent-touchkeyboard-show</intent>
+    <successFeedback>
+      <kNone>IntentTouchKeyboardShowkNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentTouchKeyboardShowIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-touchkeyboard">
+    <intent>intent-touchkeyboard</intent>
+    <successFeedback>
+      <kNone>IntentTouchKeyboardShowkNone</kNone>
+      <kLaunchKeyboard>IntentTouchKeyboardkLaunchKeyboard</kLaunchKeyboard>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentTouchKeyboardShowIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kMissingEntity>IntentTouchKeyboardShowMissingEntity</kMissingEntity>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-touchkeyboard-hide">
+    <intent>intent-touchkeyboard-hide</intent>
+    <successFeedback>
+      <kNone>IntentTouchKeyboardHidekNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentTouchKeyboardHideIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentTouchKeyboardHideInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-touchkeyboard-invalid">
+    <intent>intent-touchkeyboard-invalid</intent>
+    <successFeedback>
+      <kNone>IntentTouchKeyboardInvalidkNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentTouchKeyboardInvalidIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentTouchKeyboardInvalidInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <!-- Touch Keyboard Commands end-->
+
+  <!--Spell Commands Starts-->
+  <command id="intent-spell-show">
+    <intent>intent-spell-show</intent>
+    <successFeedback>
+      <kNone>IntentSpellShowkNone</kNone>
+      <kNoOperation>NoOperationFeedbackText</kNoOperation>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentSpellShowkInvalidEntity</kInvalidEntity>
+      <kInvalidElementInFocus>DictationCommandInvalidElementInFocus</kInvalidElementInFocus>
+      <kPasswordFieldInFocus>DictationInsertionInPasswordFieldFeedback</kPasswordFieldInFocus>
+      <kNonPrimaryMonitorInFocus>NonPrimaryMonitorInFocus</kNonPrimaryMonitorInFocus>
+    </errorFeedback>
+  </command>
+  <command id="intent-spell-invalid">
+    <intent>intent-spell-invalid</intent>
+    <successFeedback>
+      <kNone>IntentSpellInvalidkNone</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentSpellInvalidIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentSpellInvalidkInvalidEntity</kInvalidEntity>
+    </errorFeedback>
+  </command>
+  <command id="intent-spell-none">
+    <intent>intent-spell-none</intent>
+    <successFeedback>
+      <kNone>IntentSpellNonekNone</kNone>
+      <kEventCancelOperation>IntentSpellNonekEventCancelOperation</kEventCancelOperation>
+      <kOverlayControlClicked>IntentSpellNonekEventkOverlayControlClicked</kOverlayControlClicked>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>IntentSpellNoneIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>IntentSpellNonekInvalidEntity</kInvalidEntity>
+      <kInvalidCommand>IntentSpellNonekInvalidCommand</kInvalidCommand>
+    </errorFeedback>
+  </command>
+  <!--Spell Commands Ends-->
+  
+  <command id="intent-vocabulary-add">
+    <intent>intent-vocabulary-add</intent>
+    <successFeedback>
+      <kNone>IntentAddedToVocabulary</kNone>
+      <kAddToVocabulary>IntentAddToVocabularyWindow</kAddToVocabulary>
+    </successFeedback>
+    <errorFeedback>
+      <kNoOperation>GenericException</kNoOperation>
+    </errorFeedback>
+  </command>
+
+  <!-- FRE Commands Start -->
+  <command id="intent-fre-opentutorial">
+    <intent>intent-fre-opentutorial</intent>
+    <receiver>fre-command-receiver</receiver>
+  </command>
+  <command id="intent-fre-showallcommands">
+    <intent>intent-fre-showallcommands</intent>
+    <receiver>fre-command-receiver</receiver>
+  </command>
+  <command id="intent-fre-showcustomcommands">
+    <intent>intent-fre-showcustomcommands</intent>
+    <receiver>fre-command-receiver</receiver>
+  </command>
+  <!-- FRE Commands End -->
+
+  <!-- Mode switch Commands Start -->
+  <command id="intent-default-mode">
+    <intent>intent-default-mode</intent>
+    <receiver>mode-switch-receiver</receiver>
+  </command>
+  <command id="intent-command-mode">
+    <intent>intent-command-mode</intent>
+    <receiver>mode-switch-receiver</receiver>
+  </command>
+  <command id="intent-dictation-mode">
+    <intent>intent-dictation-mode</intent>
+    <receiver>mode-switch-receiver</receiver>
+    <errorFeedback>
+      <kInvalidElementInFocus>DictationInvalidElementInFocusFeedback</kInvalidElementInFocus>
+    </errorFeedback>
+  </command>
+  <!-- FRE Commands End -->
+
+  <!-- Shell Shortcuts Commands -->
+  <command id="intent-open-startmenu">
+    <intent>intent-open-startmenu</intent>
+    <key_name>{WIN}</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenStartMenuFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-open-searchmenu">
+    <intent>intent-open-searchmenu</intent>
+    <key_name>{{WIN}}s</key_name>
+    <receiver>keyboard-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenSearchMenuFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Shell Shortcuts Commands End -->
+
+  <!-- VoiceAccess UI Commands -->
+  <command id="intent-voice-access-settings">
+    <intent>intent-voice-access-settings</intent>
+    <receiver>voice-access-ui-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenVoiceAccessSettingsFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>VoiceAccessUIInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-voice-access-help">
+    <intent>intent-voice-access-help</intent>
+    <receiver>voice-access-ui-receiver</receiver>
+    <successFeedback>
+      <kNone>OpenVoiceAccessHelpFeedbackText</kNone>
+    </successFeedback>
+    <intermediateFeedback>
+      <intermediate>CommonOpenIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kInvalidEntity>VoiceAccessUIInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-showpassword">
+    <intent>intent-showpassword</intent>
+    <receiver>show-password-receiver</receiver>
+    <successFeedback>
+      <kNone>ShowPasswordFeedbackText</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kInvalidEntity>ShowPasswordInvalidEntity</kInvalidEntity>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-hello">
+    <intent>intent-hello</intent>
+    <receiver>curtain-screen-lift-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-text-snippet-insert">
+    <intent>intent-text-snippet-insert</intent>
+    <entity>{entity}</entity>
+    <receiver>text-snippet-insert-receiver</receiver>
+    <successFeedback>
+      <kNone>TextSnippetInsertFeedbackText</kNone>
+    </successFeedback>
+    <errorFeedback>
+      <kMissingEntity>TextSnippetInsertMissingEntity</kMissingEntity>
+      <kInvalidElementInFocus>TextSnippetInsertInvalidElementInFocusFeedback</kInvalidElementInFocus>
+      <kPasswordFieldInFocus>TextSnippetInsertPasswordFieldFeedback</kPasswordFieldInFocus>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-custom-command-keypress">
+    <intent>intent-custom-command-keypress</intent>
+    <entity>{entity}</entity>
+    <receiver>keyboard-receiver</receiver>
+    <intermediateFeedback>
+      <intermediate>IntentPressIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+      <kInvalidEntity>IntentPressInvalidEntity</kInvalidEntity>
+      <kMissingEntity>IntentPressMissingEntity</kMissingEntity>
+    </errorFeedback>
+  </command>
+  <!-- VoiceAccess UI Commands End -->
+
+  <!-- Narrator Appendix-B General Commands -->
+
+  <command id="intent-narrator-change-to">
+    <intent>intent-narrator-change-to</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <entity>{entity}</entity>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-exit">
+    <intent>intent-narrator-exit</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{ESC}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-webpage-summary-and-popular-links">
+    <intent>intent-narrator-webpage-summary-and-popular-links</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}s</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <!-- Narrator Appendix-B General Commands End -->
+
+  <!-- Narrator Appendix-B Adjust speech -->
+
+  <command id="intent-narrator-outlook-headers-on-off">
+    <intent>intent-narrator-outlook-headers-on-off</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}h</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-read-context">
+    <intent>intent-narrator-read-context</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}/</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-set-read-context-verbosity">
+    <intent>intent-narrator-set-read-context-verbosity</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}/</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-change-read-context-order">
+    <intent>intent-narrator-change-read-context-order</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}/</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <!-- Narrator Appendix-B Adjust speech End -->
+
+  <!-- Narrator Appendix-B Read and work with text -->
+
+  <command id="intent-narrator-read-document">
+    <intent>intent-narrator-read-document</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}c</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <!-- Narrator Appendix-B Read and work with text End -->
+
+  <!-- Narrator Appendix-B Narrator focus commands -->
+
+  <command id="intent-narrator-move-to-first-item-in-window">
+    <intent>intent-narrator-move-to-first-item-in-window</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{HOME}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-move-to-last-item-in-window">
+    <intent>intent-narrator-move-to-last-item-in-window</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{END}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-go-back-one-item">
+    <intent>intent-narrator-go-back-one-item</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{BACKSPACE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-move-cursor-to-system-cursor">
+    <intent>intent-narrator-move-cursor-to-system-cursor</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{NUM-}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-set-focus-to-item">
+    <intent>intent-narrator-set-focus-to-item</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{NUM+}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-jump-to-linked-item">
+    <intent>intent-narrator-jump-to-linked-item</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}a</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-jump-to-annotated-content">
+    <intent>intent-narrator-jump-to-annotated-content</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}a</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-navigate-to-parent">
+    <intent>intent-narrator-navigate-to-parent</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}{UPARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-navigate-to-next-sibling">
+    <intent>intent-narrator-navigate-to-next-sibling</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}{RIGHTARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-navigate-to-previous-sibling">
+    <intent>intent-narrator-navigate-to-previous-sibling</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}{LEFTARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-navigate-to-first-child">
+    <intent>intent-narrator-navigate-to-first-child</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}{DOWNARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <!-- Narrator Appendix-B Narrator focus commands End -->
+
+  <!-- Narrator Chapter-1 and Chapter-2 Commands -->
+
+  <command id="intent-narrator-start">
+    <intent>intent-narrator-start</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{WIN}}{{CTRL}}{ENTER}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-open-settings">
+    <intent>intent-narrator-open-settings</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{WIN}}{{CTRL}}n</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-volume-up">
+    <intent>intent-narrator-volume-up</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{PLUS}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-volume-down">
+    <intent>intent-narrator-volume-down</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{MINUS}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-speed-up">
+    <intent>intent-narrator-speed-up</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{EQUAL}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-speed-down">
+    <intent>intent-narrator-speed-down</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{MINUS}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-image-title-description">
+    <intent>intent-narrator-image-title-description</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}d</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+
+  <command id="intent-narrator-webpage-summary">
+    <intent>intent-narrator-webpage-summary</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}s</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Narrator Commands End  -->
+  
+  <!-- Narrator Chapter-3 Commands -->
+  <command id="intent-narrator-toggle-scanmode">
+    <intent>intent-narrator-toggle-scanmode</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{SPACE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-primary-action">
+    <intent>intent-narrator-primary-action</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{ENTER}}{SPACE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-secondary-action">
+    <intent>intent-narrator-secondary-action</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{ENTER}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-the-first-character-of-a-line">
+    <intent>intent-narrator-read-the-first-character-of-a-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{HOME}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-the-last-character-of-a-line">
+    <intent>intent-narrator-read-the-last-character-of-a-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{END}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-move-to-and-read-the-first-line-of-text">
+    <intent>intent-narrator-move-to-and-read-the-first-line-of-text</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{HOME}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-move-to-and-read-the-last-line-of-text">
+    <intent>intent-narrator-move-to-and-read-the-last-line-of-text</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{END}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-jump-to-next-text">
+    <intent>intent-narrator-jump-to-next-text</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{DOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-jump-to-previous-text">
+    <intent>intent-narrator-jump-to-previous-text</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{UP}}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>  
+  <command id="intent-narrator-select-current-character">
+    <intent>intent-narrator-select-current-character</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{RIGHT}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-previous-character">
+    <intent>intent-narrator-select-previous-character</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{LEFT}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-current-word">
+    <intent>intent-narrator-select-current-word</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{RIGHT}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-previous-word">
+    <intent>intent-narrator-select-previous-word</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{LEFT}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-current-line">
+    <intent>intent-narrator-select-current-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{DOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-previous-line">
+    <intent>intent-narrator-select-previous-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{UP}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-current-paragraph">
+    <intent>intent-narrator-select-current-paragraph</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{DOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-previous-paragraph">
+    <intent>intent-narrator-select-previous-paragraph</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{UP}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-to-beginning-of-line">
+    <intent>intent-narrator-select-to-beginning-of-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{HOME}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-to-end-of-line">
+    <intent>intent-narrator-select-to-end-of-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{END}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-to-beginning-of-document">
+    <intent>intent-narrator-select-to-beginning-of-document</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{HOME}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-to-end-of-document">
+    <intent>intent-narrator-select-to-end-of-document</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}{{SHIFT}}{END}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-current-page">
+    <intent>intent-narrator-select-current-page</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{PAGEDOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-previous-page">
+    <intent>intent-narrator-select-previous-page</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{SHIFT}}{PAGEUP}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-mark-the-beginning-of-block-of-text">
+    <intent>intent-narrator-mark-the-beginning-of-block-of-text</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{F9}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-all-text-between-a-mark">
+    <intent>intent-narrator-select-all-text-between-a-mark</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{F10}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-copy-selection">
+    <intent>intent-narrator-copy-selection</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}c</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-cut-selection">
+    <intent>intent-narrator-cut-selection</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}x</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-paste-selection">
+    <intent>intent-narrator-paste-selection</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}v</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-select-all">
+    <intent>intent-narrator-select-all</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CTRL}}a</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-selection">
+    <intent>intent-narrator-read-selection</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}{DOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-spell-selection">
+    <intent>intent-narrator-spell-selection</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}{DOWN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Narrator Chapter-3 Commands End -->
+
+  <!-- Narrator Chapter-4 Commands -->
+  <command id="intent-narrator-stop-reading">
+    <intent>intent-narrator-stop-reading</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{CTRL}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-window-title">
+    <intent>intent-narrator-read-window-title</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}t</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-a-window">
+    <intent>intent-narrator-read-a-window</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}w</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-the-current-item">
+    <intent>intent-narrator-read-the-current-item</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{TAB}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-from-focus">
+    <intent>intent-narrator-read-from-focus</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}r</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-from-beginning">
+    <intent>intent-narrator-read-from-beginning</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}r</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-from-beginning-to-cursor">
+    <intent>intent-narrator-read-from-beginning-to-cursor</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}j</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-change-the-level-of-verbosity">
+    <intent>intent-narrator-change-the-level-of-verbosity</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}v</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-hear-formatting-attributes">
+    <intent>intent-narrator-hear-formatting-attributes</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}f</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-previous-group-of-formatting-attributes">
+    <intent>intent-narrator-previous-group-of-formatting-attributes</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}f</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-change-capitalization-reading-mode">
+    <intent>intent-narrator-change-capitalization-reading-mode</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FOUR}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Narrator Chapter-4 Commands -->
+
+  <!-- Narrator Chapter 5 Commands-->
+
+  <command id="intent-narrator-navigate-view-left">
+    <intent>intent-narrator-navigate-view-left</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{LEFTARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-navigate-view-right">
+    <intent>intent-narrator-navigate-view-right</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{RIGHTARROW}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-main-landmark">
+    <intent>intent-narrator-main-landmark</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}n</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-list-landmark">
+    <intent>intent-narrator-list-landmark</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONFIVE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-find">
+    <intent>intent-narrator-find</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}f</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-find-next">
+    <intent>intent-narrator-find-next</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONTHREE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-find-previous">
+    <intent>intent-narrator-find-previous</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{SHIFT}}{FUNCTIONTHREE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-list-all-links">
+    <intent>intent-narrator-list-all-links</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONSEVEN}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-list-all-headings">
+    <intent>intent-narrator-list-all-headings</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONSIX}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <!-- Narrator Chapter 5 Commands End -->
+  
+  <command id="intent-narrator-jump-to">
+    <intent>intent-narrator-jump-to</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <entity>{entity}</entity>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-narrator-read-from">
+    <intent>intent-narrator-read-from</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <entity>{entity}</entity>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-toggle-input-learning">
+    <intent>intent-narrator-toggle-input-learning</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}1</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-show-commands-list">
+    <intent>intent-narrator-show-commands-list</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONONE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-show-commands-for-current-item">
+    <intent>intent-narrator-show-commands-for-current-item</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONTWO}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback> 
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-toggle-search-mode">
+    <intent>intent-narrator-toggle-search-mode</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{ENTER}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-read-current-date-and-time">
+    <intent>intent-narrator-read-current-date-and-time</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{FUNCTIONTWELVE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-provide-narrator-feedback">
+    <intent>intent-narrator-provide-narrator-feedback</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}f</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-lock-narrator-key">
+    <intent>intent-narrator-lock-narrator-key</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}z</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-toggle-developer-mode">
+    <intent>intent-narrator-toggle-developer-mode</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{CTRL}}{FUNCTIONTWELVE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-pass-keys-to-application">
+    <intent>intent-narrator-pass-keys-to-application</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{THREE}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-toggle-mouse-mode">
+    <intent>intent-narrator-toggle-mouse-mode</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{{ALT}}m</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-toggle-character-reading">
+    <intent>intent-narrator-toggle-character-reading</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{TWO}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-read-item-advanced">
+    <intent>intent-narrator-read-item-advanced</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}{ZERO}</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id = "intent-narrator-repeat-phrase">
+    <intent>intent-narrator-repeat-phrase</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}x</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>  
+  <command id = "intent-narrator-read-next-new-line">
+    <intent>intent-narrator-read-next-new-line</intent>
+    <receiver>Screen-Reader-Receiver</receiver>
+    <key_name>{{CAPSLOCK}}o</key_name>
+    <intermediateFeedback>
+      <intermediate>CommonExecuteIntermediateFeedback</intermediate>
+    </intermediateFeedback>
+    <errorFeedback>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+  <command id="intent-fluid-dictation-on">
+	<intent>intent-fluid-dictation-on</intent>
+	<receiver>voice-access-settings-receiver</receiver>
+	  <successFeedback>
+		  <kNone>FluidDictationFeedbackTextOn</kNone>
+	  </successFeedback>
+    <errorFeedback>
+      <kFluidDictationModelNotAvailable>FluidDictationModelNotAvailable</kFluidDictationModelNotAvailable>
+      <kFluidDictationModelNotReady>FluidDictationModelNotReady</kFluidDictationModelNotReady>
+      <kGenericException>GenericException</kGenericException>
+  </errorFeedback>
+  </command>
+  <command id="intent-fluid-dictation-off">
+	<intent>intent-fluid-dictation-off</intent>
+	<receiver>voice-access-settings-receiver</receiver>
+	<successFeedback>
+		<kNone>FluidDictationFeedbackTextOff</kNone>
+	</successFeedback>
+    <errorFeedback>
+      <kFluidDictationModelNotAvailable>FluidDictationModelNotAvailable</kFluidDictationModelNotAvailable>
+      <kFluidDictationModelNotReady>FluidDictationModelNotReady</kFluidDictationModelNotReady>
+      <kGenericException>GenericException</kGenericException>
+    </errorFeedback>
+  </command>
+</voicecommands>

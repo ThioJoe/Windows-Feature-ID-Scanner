@@ -1,0 +1,2978 @@
+{
+    "INCLUSIVETEST": {
+        "start": "InclusiveTest",
+        "speechCapable": true,
+        "InclusiveTest": {
+            "cxid": "InclusiveTest",
+            "url": "ms-appx-web:///views/inclusiveTest.html",
+            "visibility": false,
+            "cancelID": "Local",
+            "successID": "TemplateInstances"
+        },
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "visibility": false
+        },
+        "TemplateInstances": {
+            "cxid": "TemplateInstances",
+            "url": "ms-appx-web:///views/templateInstances.html"
+        }
+    },
+    "TEST": {
+        "start": "Test",
+        "Test": {
+            "cxid": "Test",
+            "url": "ms-appx-web:///views/test.html",
+            "visibility": false,
+            "timeout": 5000,
+            "backID": "Bing",
+            "cancelID": "Local",
+            "successID": "Test"
+        },
+        "Bing": {
+            "cxid": "Bing",
+            "url": "https://www.bing.com",
+            "visibility": true,
+            "initialize": {
+                "getData": "CloudExperienceHost.getContext",
+                "key": "cxh-init"
+            }
+        },
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "visibility": false
+        }
+    },
+    "LITETEST": {
+        "start": "OobeLanguage",
+        "speechCapable": false,
+        "frameName": "oobe-light-frame",
+        "personality": "CloudExperienceHost.Personality.LiteWhite",
+        "useBackstackForBackNavigation": true,
+        "OobeLanguage": {
+            "cxid": "OobeLanguage",
+            "frameAnimation": "languageLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeLanguage-main.html",
+            "successID": "OobeRegion",
+            "failID": "OobeRegion",
+            "cancelID": "OobeRegion",
+            "abortID": "OobeRegion",
+            "visibility": false,
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeRegion": {
+            "cxid": "OobeRegion",
+            "frameAnimation": "regionLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeRegion-main.html",
+            "successID": "OobeKeyboard",
+            "failID": "OobeKeyboard",
+            "cancelID": "OobeKeyboard",
+            "abortID": "OobeKeyboard",
+            "visibility": false
+        },
+        "OobeKeyboard": {
+            "cxid": "OobeKeyboard",
+            "frameAnimation": "keyboardLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeKeyboard-main.html",
+            "successID": "OobeEula",
+            "failID": "OobeEula",
+            "cancelID": "OobeEula",
+            "abortID": "OobeEula",
+            "visibility": false
+        },
+        "OobeWireless": {
+            "cxid": "OobeWireless",
+            "frameAnimation": "wifiLottie.json",
+            "hostedApplicationLaunchArguments": "CloudExperienceHost.Environment.GetWiFiHostedApplicationArgumentsWcosDefaults",
+            "launcher": "js:HostedApplication",
+            "hostedApplicationProtocol": "ms-oobenetwork:",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkConnectionFlow_cw5n1h2txyewy!App",
+            "successID": "OobeEula",
+            "failID": "OobeEula",
+            "cancelID": "OobeEula",
+            "action1ID": "OobeCaptivePortal",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeEula": {
+            "cxid": "OobeEula",
+            "frameAnimation": "eulaLottie.json",
+            "url": "ms-appx-web:///webapps/AOobe/view/oobeeula-a.html",
+            "successID": "OobeSettings",
+            "failID": "OobeSettings",
+            "cancelID": "OobeSettings",
+            "abortID": "OobeSettings",
+            "visibility": false
+        },
+        "OobeSettings": {
+            "cxid": "OobeSettings",
+            "frameAnimation": "privacysettingsLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-main.html",
+            "successID": "OobeSettingsMultiPage",
+            "failID": "OobeSettingsMultiPage",
+            "cancelID": "OobeSettingsMultiPage",
+            "abortID": "OobeSettingsMultiPage",
+            "visibility": false
+        },
+        "OobeSettingsMultiPage": {
+            "cxid": "OobeSettingsMultiPage",
+            "frameAnimation": "privacysettingsLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-multipage-main.html",
+            "canExitCxh": true,
+            "visibility": false
+        },
+        "OobeIDPS": {
+            "cxid": "OobeIDPS",
+            "frameAnimation": "msasigninLottie.json",
+            "url": "https://account.live.com/disambiguationpage",
+            "urlint": "https://account.live-int.com/disambiguationpage",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "internetRequired": true,
+            "ignoreResult": true,
+            "visibility": false
+        },
+        "OobeMSA": {
+            "cxid": "OobeMSA",
+            "frameAnimation": "msasigninLottie.json",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80600",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80600",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "successID": "OobeLocal",
+            "failID": "OobeLocal",
+            "cancelID": "OobeIDPS",
+            "disableBackNavigationToNode": true,
+            "abortID": "OobeLocal"
+        },
+        "OobeMSAHello": {
+            "cxid": "OobeMSAHello",
+            "frameAnimation": "winhellofaceLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeHello-main.html",
+            "ignoreResult": true,
+            "timeout": 60000,
+            "internetRequired": true,
+            "checkpointOnSuccess": true,
+            "successID": "OobeSettings",
+            "failID": "OobeSettings",
+            "cancelID": "OobeSettings",
+            "abortID": "OobeSettings",
+            "visibility": false,
+            "disableBackNavigationToNodeOnSuccess": true,
+            "canExitCxh": true
+        },
+        "OobeMSANGCEnrollWithHello": {
+            "cxid": "OobeMSANGCEnrollWithHello",
+            "frameAnimation": "lockandpinLottie.json",
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "ignoreResult": true,
+            "successID": "OobeSettings",
+            "failID": "OobeSettings",
+            "cancelID": "OobeSettings",
+            "abortID": "OobeSettings",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeError": {
+            "cxid": "OobeError",
+            "frameAnimation": "errorLottie.json",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeError-main.html",
+            "visibility": false
+        }
+    },
+    "LOCALONLY": {
+        "start": "Local",
+        "notifyOnLastFinished": true,
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "successID": "OemRegistration",
+            "visibility": false
+        },
+        "OemRegistration": {
+            "cxid": "OemRegistration",
+            "url": "ms-appx-web:///views/OEMRegistration.html",
+            "visibility": false
+        }
+    },
+    "FRXAAD": {
+        "start": "AAD",
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "showAccountErrorPageOnFailure": true,
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            },
+            "successID": "AADv10",
+            "abortID": "Local",
+            "cancelID": "Local",
+            "failID": "Local"
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "showAccountErrorPageOnFailure": true,
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            },
+            "abortID": "Local",
+            "cancelID": "Local",
+            "failID": "Local"
+        },
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "backID": "AAD",
+            "visibility": false
+        }
+    },
+    "MOSETAAD": {
+        "start": "AAD",
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "successID": "AADv10",
+            "showErrorPageOnFailure": true
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHAADRECOVERY": {
+        "start": "AAD",
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "successID": "AADv10",
+            "showErrorPageOnFailure": true
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "MOSETMSALOCAL": {
+        "start": "MSA",
+        "MSA": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80601",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80601",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "successID": "MSAHello",
+            "showErrorPageOnFailure": true
+        },
+        "MSAHello": {
+            "cxid": "MSAHello",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "MSANGCEnrollWithHello",
+            "failID": "MSANGCEnroll",
+            "cancelID": "MSANGCEnroll",
+            "abortID": "MSANGCEnroll",
+            "visibility": false
+        },
+        "MSANGCEnrollWithHello": {
+            "cxid": "MSANGCEnrollWithHello",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "offlineID": "OfflineWithHello"
+        },
+        "OfflineWithHello": {
+            "cxid": "OfflineWithHello",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnrollWithHello"
+        },
+        "MSANGCEnroll": {
+            "cxid": "MSANGCEnroll",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnroll"
+        }
+    },
+    "MOSETMSA": {
+        "start": "RDP",
+        "RDP": {
+            "cxid": "RDP",
+            "url": "ms-appx-web:///views/roamingDisambiguation.html",
+            "successID": "MSA",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MSA": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80601",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80601",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "MOSETAADLOCAL": {
+        "start": "ConnectAADAccount",
+        "ConnectAADAccount": {
+            "cxid": "ConnectAADAccount",
+            "url": "https://login.microsoftonline.com/webapp/ConnectAADAccount/1",
+            "urlint": "https://login.windows-ppe.net/webApp/ConnectAADAccount/1",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "internetRequired": true,
+            "offlineID": "OfflinePage"
+        },
+        "OfflinePage": {
+            "cxid": "OfflinePage",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "ConnectAADAccount"
+        }
+    },
+    "MOSETCONNECTTOWORK": {
+        "start": "Work",
+        "Work": {
+            "cxid": "Work",
+            "url": "https://login.microsoftonline.com/webapp/UnifiedEnrollment/4",
+            "urlint": "https://login.windows-ppe.net/webapp/UnifiedEnrollment/4",
+            "showErrorPageOnFailure": true,
+            "visibility": false,
+            "offlineID": "offlinePage",
+            "action1ID": "MDM",
+            "action2ID": "AAD"
+        },
+        "offlinePage": {
+            "cxid": "offlinePage",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollment.html",
+            "successID": "MDM",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDM": {
+            "cxid": "MDM",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscovery.html",
+            "failID": "Work",
+            "successID": "MDMEnrollmentFinished",
+            "action1ID": "MDMOnPremEnrollment",
+            "action2ID": "MDMDiscoveryError",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMDiscoveryError": {
+            "cxid": "MDMDiscoveryError",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscoveryError.html",
+            "failID": "MDM",
+            "successID": "Discovery",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "showErrorPageOnFailure": true,
+            "successID": "AADv10",
+            "cancelID": "Work"
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "showErrorPageOnFailure": true,
+            "cancelID": "Work"
+        },
+        "MDMOnPremEnrollment": {
+            "cxid": "MDMOnPremEnrollment",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentOnPremAuth.html",
+            "failID": "MDMEnrollmentFinished",
+            "successID": "MDMEnrollmentFinished",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMEnrollmentFinished": {
+            "cxid": "MDMEnrollmentFinished",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentFinished.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        }
+    },
+    "MOSETMDMCONNECTTOWORK": {
+        "start": "Work",
+        "Work": {
+            "cxid": "Work",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollment.html",
+            "successID": "Discovery",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "Discovery": {
+            "cxid": "Discovery",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscovery.html",
+            "failID": "Work",
+            "successID": "MDMEnrollmentFinished",
+            "action1ID": "MDMOnPremEnrollment",
+            "action2ID": "MDMDiscoveryError",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMDiscoveryError": {
+            "cxid": "MDMDiscoveryError",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscoveryError.html",
+            "failID": "Work",
+            "successID": "Discovery",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMOnPremEnrollment": {
+            "cxid": "MDMOnPremEnrollment",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentOnPremAuth.html",
+            "failID": "MDMEnrollmentFinished",
+            "successID": "MDMEnrollmentFinished",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMEnrollmentFinished": {
+            "cxid": "MDMEnrollmentFinished",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentFinished.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        }
+    },
+    "MOSETMAMCONNECTTOWORK": {
+        "start": "Work",
+        "Work": {
+            "cxid": "Work",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollment.html",
+            "successID": "Discovery",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "Discovery": {
+            "cxid": "Discovery",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscovery.html",
+            "failID": "MDMEnrollmentFinished",
+            "successID": "MDMEnrollmentFinished",
+            "action1ID": "MDMOnPremEnrollment",
+            "action2ID": "MDMDiscoveryError",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMDiscoveryError": {
+            "cxid": "MDMDiscoveryError",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentDiscoveryError.html",
+            "failID": "MDMEnrollmentFinished",
+            "successID": "Discovery",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMOnPremEnrollment": {
+            "cxid": "MDMOnPremEnrollment",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentOnPremAuth.html",
+            "failID": "MDMEnrollmentFinished",
+            "successID": "MDMEnrollmentFinished",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        },
+        "MDMEnrollmentFinished": {
+            "cxid": "MDMEnrollmentFinished",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentFinished.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        }
+    },
+    "MOSETMDMCONNECTTOWORKPROGRESS": {
+        "start": "Progress",
+        "Progress": {
+            "cxid": "Progress",
+            "url": "ms-appx-web:///webapps/unifiedEnrollment/views/unifiedEnrollmentProgress.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        }
+    },
+    "MOSETMDMCONNECTTOWORKPROVISIONINGPROGRESS": {
+        "start": "Progress",
+        "Progress": {
+            "cxid": "Progress",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEsp",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "ProgressRefactored",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "ProgressRefactored": {
+            "cxid": "ProgressRefactored",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "showErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        }
+    },
+    "SETPHONEPAIRING": {
+        "start": "SMS",
+        "SMS": {
+            "cxid": "SMS",
+            "url": "https://sdx.microsoft.com/frx/mmx/phonepairing/settings",
+            "urlint": "https://sdx.microsoft-int.com/frx/mmx/phonepairing/settings",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline",
+            "queryStringBuilder": "CloudExperienceHost.MobileExperience.getSettingsQueryString"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "SMS"
+        }
+    },
+    "SETADDLOCALONLY": {
+        "start": "Local",
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        }
+    },
+    "SETSQSALOCALONLY": {
+        "start": "SQSA",
+        "SQSA": {
+            "cxid": "SQSA",
+            "url": "ms-appx-web:///views/sqsaLocalAccount.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true
+        }
+    },
+    "SETADDNEWUSER": {
+        "start": "ADDUSER",
+        "ADDUSER": {
+            "cxid": "ADDUSER",
+            "url": "https://account.live.com/adduser",
+            "urlint": "https://account.live-int.com/adduser",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "failID": "Local",
+            "offlineID": "Local",
+            "showErrorPageOnFailure": true
+        },
+        "Local": {
+            "cxid": "Local",
+            "url": "ms-appx-web:///views/localAccount.html",
+            "backID": "ADDUSER",
+            "visibility": false
+        }
+    },
+    "SETCHANGEPWD": {
+        "start": "CHANGEPWD",
+        "CHANGEPWD": {
+            "cxid": "CHANGEPWD",
+            "url": "https://account.live.com/client/Password/Change?cpcxt=CPQToken",
+            "urlint": "https://account.live-int.com/client/Password/Change?cpcxt=CPQToken",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "TSETADDFAMILY": {
+        "start": "ADDFAMILY",
+        "ADDFAMILY": {
+            "cxid": "ADDFAMILY",
+            "url": "https://account.live.com/addtofamily",
+            "urlint": "https://account.live-int.com/addtofamily",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHAAD": {
+        "start": "AADHello",
+        "notifyOnFirstVisible": true,
+        "AADHello": {
+            "cxid": "AADHello",
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "NGCWithHello",
+            "failID": "NGC",
+            "cancelID": "NGC",
+            "abortID": "NGC",
+            "visibility": false
+        },
+        "NGCWithHello": {
+            "cxid": "NGCWithHello",
+            "url": "https://account.live.com/aadngc?uiflavor=win10&hello=1&showSuccess=1",
+            "urlint": "https://account.live-int.com/aadngc?uiFlavor=win10&hello=1&showSuccess=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        },
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngc?uiflavor=win10&showSuccess=1",
+            "urlint": "https://account.live-int.com/aadngc?uiFlavor=win10&showSuccess=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADORMDM": {
+        "start": "MDMProgress",
+        "notifyOnFirstVisible": true,
+        "MDMProgress": {
+            "cxid": "MDMProgress",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "MDMProgressRefactored",
+            "failID": "AADHello",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEspAndShouldShowEsp",
+            "action2ID": "AADHello",
+            "action3ID": "AADHello",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressRefactored": {
+            "cxid": "MDMProgressRefactored",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.EnrollmentStatusPage",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "AADHello",
+            "failID": "AADHello",
+            "action2ID": "AADHello",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "AADHello": {
+            "cxid": "AADHello",
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "NGCWithHello",
+            "failID": "NGC",
+            "cancelID": "NGC",
+            "abortID": "NGC",
+            "visibility": false
+        },
+        "NGCWithHello": {
+            "cxid": "NGCWithHello",
+            "url": "https://account.live.com/aadngc?uiflavor=win10&hello=1&showSuccess=1",
+            "urlint": "https://account.live-int.com/aadngc?uiflavor=win10&hello=1&showSuccess=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        },
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngc?uiflavor=win10&showSuccess=1",
+            "urlint": "https://account.live-int.com/aadngc?uiFlavor=win10&showSuccess=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADNGCONLY": {
+        "start": "NGC",
+        "notifyOnFirstVisible": true,
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngc?uiflavor=win10&showSuccess=1",
+            "urlint": "https://account.live-int.com/aadngc?uiflavor=win10&showSuccess=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADNGCRESET": {
+        "start": "NGC",
+        "notifyOnFirstVisible": true,
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngcreset?uiflavor=win10&destructive=1&nonDestructive=1",
+            "urlint": "https://account.live-int.com/aadngcreset?uiflavor=win10&destructive=1&nonDestructive=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADNGCRESETDESTRUCTIVE": {
+        "start": "NGC",
+        "notifyOnFirstVisible": true,
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngcreset?uiflavor=win10&destructive=1",
+            "urlint": "https://account.live-int.com/aadngcreset?uiflavor=win10&destructive=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADNGCRESETNONDESTRUCTIVE": {
+        "start": "NGC",
+        "notifyOnFirstVisible": true,
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngcreset?uiflavor=win10&nonDestructive=1",
+            "urlint": "https://account.live-int.com/aadngcreset?uiflavor=win10&nonDestructive=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHAADNGCFIXME": {
+        "start": "NGC",
+        "notifyOnFirstVisible": true,
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngcreset?uiflavor=win10&fixMe=1",
+            "urlint": "https://account.live-int.com/aadngcreset?uiflavor=win10&fixMe=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "NTHENT": {
+        "start": "EnterpriseHello",
+        "notifyOnFirstVisible": true,
+        "EnterpriseHello": {
+            "cxid": "EnterpriseHello",
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "EnterpriseHelloNGC",
+            "failID": "EnterpriseNGC",
+            "cancelID": "EnterpriseNGC",
+            "abortID": "EnterpriseNGC",
+            "visibility": false
+        },
+        "EnterpriseHelloNGC": {
+            "cxid": "EnterpriseHelloNGC",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        },
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGC",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHENTORMDM": {
+        "start": "MDMProgress",
+        "notifyOnFirstVisible": true,
+        "MDMProgress": {
+            "cxid": "MDMProgress",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEspAndShouldShowEsp",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "MDMProgressRefactored",
+            "action3ID": "EnterpriseHello",
+            "failID": "EnterpriseHello",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressRefactored": {
+            "cxid": "MDMProgressRefactored",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.EnrollmentStatusPage",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "EnterpriseHello",
+            "failID": "EnterpriseHello",
+            "action2ID": "EnterpriseHello",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "EnterpriseHello": {
+            "cxid": "EnterpriseHello",
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "EnterpriseHelloNGC",
+            "failID": "EnterpriseNGC",
+            "cancelID": "EnterpriseNGC",
+            "abortID": "EnterpriseNGC",
+            "visibility": false
+        },
+        "EnterpriseHelloNGC": {
+            "cxid": "EnterpriseHelloNGC",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        },
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGC",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHENTNGCFIXME": {
+        "start": "EnterpriseNGC",
+        "notifyOnFirstVisible": true,
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGCFixMe",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHENTNGCONLY": {
+        "start": "EnterpriseNGC",
+        "notifyOnFirstVisible": true,
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGC",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHENTNGCRESET": {
+        "start": "EnterpriseNGC",
+        "notifyOnFirstVisible": true,
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGCReset",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTHENTNGCRESETDESTRUCTIVE": {
+        "start": "EnterpriseNGC",
+        "notifyOnFirstVisible": true,
+        "EnterpriseNGC": {
+            "cxid": "EnterpriseNGCReset",
+            "url": "ms-appx-web:///webapps/enterpriseNgcEnrollment/views/enterpriseNgcEnrollment.html",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "NTH": {
+        "start": "MSA",
+        "msaTicketContext": "WindowsLogon",
+        "notifyOnFirstVisible": true,
+        "MSA": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlinePOPAuth.srf?id=80605",
+            "urlint": "https://login.live-int.com/ppsecure/inlinePOPAuth.srf?id=80605",
+            "successID": "MSAHello",
+            "failID": "MSAHello",
+            "cancelID": "MSAHello",
+            "abortID": "MSAHello",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "httpMethod": "post",
+            "contentType": "application/x-www-form-urlencoded",
+            "initialize": {
+                "getData": "CloudExperienceHost.MSA.getAuthTokenPostData"
+            }
+        },
+        "MSAHello": {
+            "cxid": "MSAHello",
+            "requiredDisabledFeatureName": "WebSignInForStubAccounts",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "MSANGCEnrollWithHello",
+            "failID": "MSANGCEnroll",
+            "cancelID": "MSANGCEnroll",
+            "abortID": "MSANGCEnroll",
+            "visibility": false
+        },
+        "MSANGCEnrollWithHello": {
+            "cxid": "MSANGCEnrollWithHello",
+            "requiredDisabledFeatureName": "WebSignInForStubAccounts",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "successID": "OneDrive",
+            "failID": "OneDrive",
+            "cancelID": "OneDrive",
+            "abortID": "OneDrive",
+            "offlineID": "OfflineWithHello"
+        },
+        "OfflineWithHello": {
+            "cxid": "OfflineWithHello",
+            "requiredDisabledFeatureName": "WebSignInForStubAccounts",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnrollWithHello",
+            "failID": "OneDrive",
+            "cancelID": "OneDrive",
+            "abortID": "OneDrive"
+        },
+        "MSANGCEnroll": {
+            "cxid": "MSANGCEnroll",
+            "requiredDisabledFeatureName": "WebSignInForStubAccounts",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "successID": "OneDrive",
+            "failID": "OneDrive",
+            "cancelID": "OneDrive",
+            "abortID": "OneDrive",
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnroll",
+            "failID": "OneDrive",
+            "cancelID": "OneDrive",
+            "abortID": "OneDrive"
+        },
+        "OneDrive": {
+            "cxid": "OneDrive",
+            "url": "https://onedrive.live.com/windows/officeoutofboxexperience",
+            "urlint": "https://onedrive.live-int.com/windows/officeoutofboxexperience",
+            "visibility": false,
+            "successID": "Office",
+            "failID": "Office",
+            "cancelID": "Office",
+            "abortID": "Office"
+        },
+        "Office": {
+            "cxid": "Office",
+            "url": "https://www.microsoft.com/officeoobe/",
+            "urlint": "https://wwwqa.microsoft.com/officeoobe/",
+            "visibility": false
+        }
+    },
+    "NTHNGCUPSELL": {
+        "start": "MSAHello",
+        "msaTicketContext": "WindowsLogon",
+        "notifyOnFirstVisible": true,
+        "MSAHello": {
+            "cxid": "MSAHello",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "MSANGCEnrollWithHello",
+            "failID": "MSANGCEnroll",
+            "cancelID": "MSANGCEnroll",
+            "abortID": "MSANGCEnroll",
+            "visibility": false
+        },
+        "MSANGCEnrollWithHello": {
+            "cxid": "MSANGCEnrollWithHello",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "offlineID": "OfflineWithHello"
+        },
+        "OfflineWithHello": {
+            "cxid": "OfflineWithHello",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnrollWithHello"
+        },
+        "MSANGCEnroll": {
+            "cxid": "MSANGCEnroll",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnroll"
+        }
+    },
+    "NTHPRIVACY": {
+        "start": "StartSelector",
+        "error": "OobeError",
+        "notifyOnFirstVisible": true,
+        "useBackstackForBackNavigation": true,
+        "frameName": "oobe-frame",
+        "personality": "CloudExperienceHost.Personality.InclusiveBlue",
+        "speechCapable": true,
+        "speechDisabled": true,
+        "blockLateWebAppCalls": true,
+        "blockEarlyExit": true,
+        "StartSelector": {
+            "cxid": "StartSelector",
+            "launcher": "js:OOBEStartSelector",
+            "successID": "OobeSettingsSelector",
+            "visibility": false
+        },
+        "OobeError": {
+            "cxid": "OobeError",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeError-main.html",
+            "visibility": false
+        },
+        "OobeSettingsSelector": {
+            "cxid": "OobeSettingsSelector",
+            "requiredFeatureName": "OobeSettingsMultiPage",
+            "launcher": "js:OobeSettingsSelector",
+            "successID": "OobeSettings",
+            "cancelID": "OobeSettings",
+            "failID": "OobeSettings",
+            "abortID": "OobeSettings",
+            "action1ID": "OobeSettingsMultiPage",
+            "visibility": false
+        },
+        "OobeSettings": {
+            "cxid": "OobeSettings",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-main.html",
+            "canExitCxh": true,
+            "timeout": 120000,
+            "visibility": false
+        },
+        "OobeSettingsMultiPage": {
+            "cxid": "OobeSettingsMultiPage",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-multipage-main.html",
+            "canExitCxh": true,
+            "timeout": 120000,
+            "visibility": false
+        }
+    },
+    "FRXINCLUSIVE": {
+        "start": "StartSelector",
+        "error": "OobeError",
+        "msaTicketContext": "OOBE",
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "useBackstackForBackNavigation": true,
+        "frameName": "oobe-frame",
+        "personality": "CloudExperienceHost.Personality.InclusiveBlue",
+        "speechCapable": true,
+        "blockLateWebAppCalls": true,
+        "blockEarlyExit": true,
+        "StartSelector": {
+            "cxid": "StartSelector",
+            "launcher": "js:OOBEStartSelector",
+            "successID": "AutoPilotPrefetch",
+            "visibility": false
+        },
+        "OobeError": {
+            "cxid": "OobeError",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeError-main.html",
+            "visibility": false
+        },
+        "AutoPilotPrefetch": {
+            "cxid": "AutoPilotPrefetch",
+            "policyName": "prefetch",
+            "launcher": "js:OOBEAutoPilot",
+            "internetRequired": true,
+            "successID": "OobeLanguage",
+            "failID": "OobeLanguage",
+            "cancelID": "OobeLanguage",
+            "offlineID": "OobeLanguage",
+            "disableErrorPageOnFailure": true,
+            "visibility": false,
+            "timeout": 60000
+        },
+        "OobeLanguage": {
+            "cxid": "OobeLanguage",
+            "preloadCheck": "CloudExperienceHostAPI.OobeDisplayLanguageManagerCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeLanguage-main.html",
+            "timeout": 60000,
+            "successID": "OobeLanguageAutoPilot",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "failID": "OobeLanguageAutoPilot",
+            "cancelID": "OobeLanguageAutoPilot",
+            "abortID": "OobeLanguageAutoPilot",
+            "visibility": false
+        },
+        "OobeLanguageAutoPilot": {
+            "cxid": "OobeLanguageAutoPilot",
+            "launcher": "js:OOBEAutoPilot",
+            "policyName": "CloudAssignedLanguage",
+            "successID": "OobeWelcome",
+            "failID": "OobeWelcome",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeWelcome": {
+            "cxid": "OobeWelcome",
+            "preloadCheck": "CloudExperienceHost.Bookends",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeWelcome-main.html",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "ignoreResult": true,
+            "successID": "OobeRegion",
+            "failID": "OobeRegion",
+            "visibility": false
+        },
+        "OobeEnterpriseProvisioning": {
+            "cxid": "OobeEnterpriseProvisioning",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeEnterpriseProvisioning-main.html",
+            "cancelID": "OobeLanguage",
+            "action1ID": "OobeProvisioningEntry",
+            "action2ID": "AutopilotWhiteGloveOobeZdp",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "OobeProvisioningEntry": {
+            "cxid": "OobeProvisioningEntry",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeProvisioningEntry-main.html",
+            "successID": "OobeProvisioningStatus",
+            "cancelID": "OobeEnterpriseProvisioning",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "AutopilotWhiteGloveOobeZdp": {
+            "cxid": "AutopilotWhiteGloveOobeZdp",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeZdp-main.html",
+            "internetRequired": true,
+            "successID": "AutopilotWhiteGloveUpdate",
+            "failID": "AutopilotWhiteGloveUpdate",
+            "cancelID": "AutopilotWhiteGloveUpdate",
+            "offlineID": "AutopilotWhiteGloveUpdate",
+            "abortID": "AutopilotWhiteGloveUpdate",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false
+        },
+        "AutopilotWhiteGloveUpdate": {
+            "cxid": "AutopilotWhiteGloveUpdate",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldSkipAutoPilotUpdate",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/Oobeautopilotupdate-main.html",
+            "internetRequired": true,
+            "successID": "AutopilotWhiteGloveReboot",
+            "failID": "AutopilotWhiteGloveReboot",
+            "offlineID": "AutopilotWhiteGloveReboot",
+            "abortID": "AutopilotWhiteGloveReboot",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false
+        },
+        "AutopilotWhiteGloveReboot": {
+            "cxid": "AutopilotWhiteGloveReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "AutopilotWhiteGloveLanding",
+            "visibility": false
+        },
+        "AutopilotWhiteGloveLanding": {
+            "cxid": "AutopilotWhiteGloveLanding",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/AutopilotWhiteGloveLanding-main.html",
+            "successID": "MDMProgressForPlugAndForget",
+            "failID": "AutopilotWhiteGloveResult",
+            "cancelID": "OobeEnterpriseProvisioning",
+            "action1ID": "MDMProgressAfterDJ",
+            "action2ID": "OobeDomainJoinReboot",
+            "action3ID": "AutopilotWhiteGloveLanding",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "AutopilotWhiteGloveResult": {
+            "cxid": "AutopilotWhiteGloveResult",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/AutopilotWhiteGloveResult-main.html",
+            "action1ID": "AutopilotWhiteGloveLanding",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "OobeProvisioningStatus": {
+            "cxid": "OobeProvisioningStatus",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeProvisioningStatus-main.html",
+            "successID": "OobeLanguage",
+            "action1ID": "OobeLocal",
+            "action2ID": "OobeProvisioningStatus",
+            "action3ID": "OobeProvisioningReboot",
+            "visibility": false,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true,
+            "canExitCxh": true
+        },
+        "OobeProvisioningReboot": {
+            "cxid": "OobeProvisioningReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeProvisioningStatus",
+            "visibility": false
+        },
+        "OobeRegion": {
+            "cxid": "OobeRegion",
+            "preloadCheck": "CloudExperienceHostAPI.OobeRegionManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeRegion-main.html",
+            "timeout": 60000,
+            "successID": "OobeRegionAutoPilot",
+            "failID": "OobeRegionAutoPilot",
+            "cancelID": "OobeRegionAutoPilot",
+            "abortID": "OobeRegionAutoPilot",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "OobeRegionAutoPilot": {
+            "cxid": "OobeRegionAutoPilot",
+            "launcher": "js:OOBEAutoPilot",
+            "policyName": "CloudAssignedRegion",
+            "successID": "OobeKeyboard",
+            "failID": "OobeKeyboard",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeKeyboard": {
+            "cxid": "OobeKeyboard",
+            "preloadCheck": "CloudExperienceHostAPI.OobeKeyboardManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeKeyboard-main.html",
+            "timeout": 60000,
+            "successID": "OobeDevicePairing",
+            "failID": "OobeDevicePairing",
+            "cancelID": "OobeDevicePairing",
+            "abortID": "OobeDevicePairing",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "OobeDevicePairing": {
+            "cxid": "OobeDevicePairing",
+            "preloadCheck": "CloudExperienceHostAPI.OobeDevicePairingManager",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeDevicePairing-main.html",
+            "ignoreResult": true,
+            "successID": "OobeWireless",
+            "failID": "OobeWireless",
+            "cancelID": "OobeWireless",
+            "abortID": "OobeWireless",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeWireless": {
+            "cxid": "OobeWireless",
+            "preloadCheck": "CloudExperienceHost.Wireless",
+            "hostedApplicationLaunchArguments": "CloudExperienceHost.Environment.GetWiFiHostedApplicationArguments",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkConnectionFlow_cw5n1h2txyewy!App",
+            "successID": "AutopilotActivation",
+            "failID": "AutopilotActivation",
+            "cancelID": "OobeNetworkLossAversion",
+            "action1ID": "OobeCaptivePortal",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeCaptivePortal": {
+            "cxid": "OobeCaptivePortal",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkCaptivePortal_cw5n1h2txyewy!App",
+            "successID": "OobeWireless",
+            "failID": "OobeWireless",
+            "cancelID": "OobeWireless",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "AutopilotActivation": {
+            "cxid": "AutopilotActivation",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeautopilotactivation-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.Activation",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "OobeZdp",
+            "failID": "OobeWireless",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "OobeNetworkLossAversion": {
+            "cxid": "OobeNetworkLossAversion",
+            "requiredDisabledFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversion-main.html",
+            "successID": "OobeNetworkLossAversionV2",
+            "failID": "AutopilotActivation",
+            "cancelID": "AutopilotActivation",
+            "abortID": "AutopilotActivation",
+            "action1ID": "OobeWireless",
+            "visibility": false
+        },
+        "OobeNetworkLossAversionV2": {
+            "cxid": "OobeNetworkLossAversionV2",
+            "requiredFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversionV2-main.html",
+            "successID": "AutopilotActivation",
+            "failID": "AutopilotActivation",
+            "cancelID": "AutopilotActivation",
+            "abortID": "AutopilotActivation",
+            "action1ID": "OobeWireless",
+            "visibility": false
+        },
+        "OobeZdp": {
+            "cxid": "OobeZdp",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeZdp-main.html",
+            "internetRequired": true,
+            "successID": "AutopilotUpdate",
+            "failID": "AutopilotUpdate",
+            "cancelID": "AutopilotUpdate",
+            "offlineID": "AutopilotUpdate",
+            "abortID": "AutopilotUpdate",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false
+        },
+        "AutopilotUpdate": {
+            "cxid": "AutopilotUpdate",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/Oobeautopilotupdate-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldSkipAutoPilotUpdate",
+            "preloadCheckSkipOnFailure": true,
+            "internetRequired": true,
+            "successID": "AutoPilotDeviceRename",
+            "offlineID": "AutoPilotDeviceRename",
+            "abortID": "AutoPilotDeviceRename",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false
+        },
+        "AutoPilotDeviceRename": {
+            "cxid": "AutoPilotDeviceRename",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/Oobeautopilotreboot-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldSkipDeviceRename",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "Reboot",
+            "failID": "Reboot",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "Reboot": {
+            "cxid": "Reboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeWirelessAfterZDPReboot",
+            "visibility": false
+        },
+        "OobeWirelessAfterZDPReboot": {
+            "cxid": "OobeWirelessAfterZDPReboot",
+            "preloadCheck": "CloudExperienceHost.WirelessCommercial",
+            "requiredFeatureName": "AutopilotNetwork",
+            "hostedApplicationLaunchArguments": "CloudExperienceHost.Environment.GetWiFiHostedApplicationArguments",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkConnectionFlow_cw5n1h2txyewy!App",
+            "successID": "AutoPilotVetoESTS",
+            "failID": "AutoPilotVetoESTS",
+            "cancelID": "OobeNetworkLossAversionAfterZDPReboot",
+            "action1ID": "OobeCaptivePortalAfterZDPReboot",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeCaptivePortalAfterZDPReboot": {
+            "cxid": "OobeCaptivePortalAfterZDPReboot",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkCaptivePortal_cw5n1h2txyewy!App",
+            "successID": "OobeWirelessAfterZDPReboot",
+            "failID": "OobeWirelessAfterZDPReboot",
+            "cancelID": "OobeWirelessAfterZDPReboot",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeNetworkLossAversionAfterZDPReboot": {
+            "cxid": "OobeNetworkLossAversionAfterZDPReboot",
+            "requiredDisabledFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversion-main.html",
+            "successID": "OobeNetworkLossAversionAfterZDPRebootV2",
+            "failID": "AutoPilotVetoESTS",
+            "action1ID": "OobeWirelessAfterZDPReboot",
+            "visibility": false
+        },
+        "OobeNetworkLossAversionAfterZDPRebootV2": {
+            "cxid": "OobeNetworkLossAversionAfterZDPRebootV2",
+            "requiredFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversionV2-main.html",
+            "successID": "AutoPilotVetoESTS",
+            "failID": "AutoPilotVetoESTS",
+            "action1ID": "OobeWirelessAfterZDPReboot",
+            "visibility": false
+        },
+        "AutoPilotVetoESTS": {
+            "cxid": "AutoPilotVetoESTS",
+            "url": "https://login.microsoftonline.com/webapp/AutoPilot/1",
+            "urlint": "https://login.windows-ppe.net/webapp/AutoPilot/1",
+            "queryStringBuilder": "CloudExperienceHost.AutoPilot.getZTDQueryStringAsync",
+            "requiredFeatureName": "AutopilotESTS",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.Veto",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "OobeEnterpriseProvisioningAfterConnectivity",
+            "failID": "OobeEnterpriseProvisioningAfterConnectivity",
+            "action1ID": "MDMProgressForPlugAndForget",
+            "action2ID": "AutoPilotVetoReboot",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "AutoPilotVetoReboot": {
+            "cxid": "AutoPilotVetoReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeLanguage",
+            "visibility": false
+        },
+        "OobeEnterpriseProvisioningAfterConnectivity": {
+            "cxid": "OobeEnterpriseProvisioningAfterConnectivity",
+            "preloadCheck": "CloudExperienceHostAPI.Provisioning.ProvisioningStatusManagerStatics",
+            "launcher": "js:OobeEnterpriseProvisioningAfterConnectivity",
+            "timeout": 120000,
+            "successID": "OobeProvisioningRebootAfterConnectivity",
+            "failID": "OobeProvisioningRebootAfterConnectivity",
+            "cancelID": "OobeProvisioningRebootAfterConnectivity",
+            "visibility": false,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeProvisioningRebootAfterConnectivity": {
+            "cxid": "OobeProvisioningRebootAfterConnectivity",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeFeatureUpdate",
+            "visibility": false
+        },
+        "OobeFeatureUpdate": {
+            "cxid": "OobeFeatureUpdate",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeFeatureUpdate-main.html",
+            "preloadCheck": "CloudExperienceHost.FeatureUpdate",
+            "internetRequired": true,
+            "ignoreResult": true,
+            "successID": "OobeEnableDriverUpdate",
+            "failID": "OobeEnableDriverUpdate",
+            "cancelID": "OobeEnableDriverUpdate",
+            "offlineID": "OobeEnableDriverUpdate",
+            "abortID": "OobeEnableDriverUpdate",
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "OobeEnableDriverUpdate": {
+            "cxid": "OobeEnableDriverUpdate",
+            "launcher": "js:OobeEnableDriverUpdate",
+            "ignoreResult": true,
+            "successID": "OobeEula",
+            "failID": "OobeEula",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeEula": {
+            "cxid": "OobeEula",
+            "preloadCheck": "CloudExperienceHostAPI.OobeEulaManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeEula-main.html",
+            "timeout": 60000,
+            "successID": "OobeCloudContentHydrant",
+            "cancelID": "OobeCloudContentHydrant",
+            "abortID": "OobeCloudContentHydrant",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "OobeCloudContentHydrant": {
+            "cxid": "OobeCloudContentHydrant",
+            "preloadCheck": "CloudExperienceHost.AccountAndServices",
+            "launcher": "js:OobeCloudContentHydrant",
+            "ignoreResult": true,
+            "successID": "OobeRetailDemoEntry",
+            "failID": "OobeRetailDemoEntry",
+            "abortID": "OobeRetailDemoEntry",
+            "cancelID": "OobeRetailDemoEntry",
+            "disableErrorPageOnFailure": true
+        },
+        "OobeRetailDemoEntry": {
+            "cxid": "OobeRetailDemoEntry",
+            "launcher": "js:OobeRetailDemoEntry",
+            "successID": "AutopilotPostReset",
+            "action1ID": "rdxSetup",
+            "action2ID": "OobeSettingsSelector",
+            "failID": "AutopilotPostReset",
+            "abortID": "AutopilotPostReset",
+            "cancelID": "AutopilotPostReset",
+            "visibility": false
+        },
+        "AutopilotPostReset": {
+            "cxid": "AutopilotPostReset",
+            "launcher": "js:OOBEAutoPilot",
+            "policyName": "postReset",
+            "successID": "OobeDomainJoin",
+            "failID": "OobeDomainJoin",
+            "abortID": "OobeDomainJoin",
+            "cancelID": "OobeDomainJoin",
+            "action1ID": "RebootZtd",
+            "action2ID": "MDMProgressAfterDJ",
+            "action3ID": "OobeAAD",
+            "disableBackNavigationToNode": true
+        },
+        "OobeDomainJoin": {
+            "cxid": "OobeDomainJoin",
+            "preloadCheck": "EnterpriseDeviceManagement.Enrollment.ReflectedEnrollmentStatics",
+            "url": "https://login.microsoftonline.com/webapp/OtaDomainJoin/2",
+            "urlint": "https://login.windows-ppe.net/webapp/OtaDomainJoin/2",
+            "successID": "OobePersonalizedWelcome",
+            "failID": "OobePersonalizedWelcome",
+            "abortID": "OobePersonalizedWelcome",
+            "cancelID": "OobePersonalizedWelcome",
+            "action1ID": "MDMProgressAfterDJ",
+            "action2ID": "OobeDomainJoinReboot",
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true,
+            "visibility": false,
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            }
+        },
+        "OobeDomainJoinReboot": {
+            "cxid": "OobeDomainJoinReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "MDMProgressAfterDJ",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressAfterDJ": {
+            "cxid": "MDMProgressAfterDJ",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "successID": "MDMProgressAfterDJRefactored",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "OobeDomainJoinReboot",
+            "action2ID": "AutopilotWhiteGloveResult",
+            "action3ID": "OobeDomainJoinReboot",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEspAndShouldShowEsp",
+            "preloadCheckSkipOnFailure": true,
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressAfterDJRefactored": {
+            "cxid": "MDMProgressAfterDJ",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "successID": "OobeSettingsSelector",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "OobeDomainJoinReboot",
+            "action2ID": "AutopilotWhiteGloveResult",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.EnrollmentStatusPage",
+            "preloadCheckSkipOnFailure": true,
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "OobePersonalizedWelcome": {
+            "cxid": "OobePersonalizedWelcome",
+            "url": "https://sdx.microsoft.com/frx/deviceconfig/personalized-welcome",
+            "urlint": "https://sdx.microsoft-int.com/frx/deviceconfig/personalized-welcome",
+            "requiredFeatureName": "PersonalizedWelcome",
+            "preloadCheck": "CloudExperienceHost.PersonalizedWelcome",
+            "internetRequired": true,
+            "action1ID": "OobeMSA",
+            "successID": "OobeIDPS",
+            "failID": "OobeIDPS",
+            "cancelID": "OobeIDPS",
+            "abortID": "OobeIDPS",
+            "offlineID": "OobeIDPS",
+            "visibility": false
+        },
+        "OobeIDPS": {
+            "cxid": "OobeIDPS",
+            "preloadCheck": "CloudExperienceHost.AccountDisambiguation",
+            "url": "https://account.live.com/disambiguationpage",
+            "urlint": "https://account.live-int.com/disambiguationpage",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "internetRequired": true,
+            "ignoreResult": true,
+            "successID": "OobeLocal",
+            "failID": "AutopilotOfflineCheck",
+            "cancelID": "OobeLocal",
+            "offlineID": "AutopilotOfflineCheck",
+            "abortID": "OobeLocal",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "AutopilotOfflineCheck": {
+            "cxid": "AutopilotOfflineCheck",
+            "launcher": "js:OOBEAutoPilot",
+            "policyName": "offlineCheck",
+            "successID": "OobeLocal",
+            "failID": "OobeLocal",
+            "cancelID": "OobeLocal",
+            "abortID": "OobeLocal",
+            "action1ID": "OobeWireless",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeAAD": {
+            "cxid": "OobeAAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "successID": "OobeAADv10",
+            "failID": "OobeLocal",
+            "cancelID": "OobeIDPS",
+            "abortID": "OobeLocal",
+            "disableBackNavigationToNode": true,
+            "visibility": false,
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            }
+        },
+        "OobeAADv10": {
+            "cxid": "OobeAADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "successID": "RebootZtd",
+            "failID": "OobeLocal",
+            "cancelID": "OobeIDPS",
+            "abortID": "OobeLocal",
+            "disableBackNavigationToNode": true,
+            "visibility": false,
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            }
+        },
+        "RebootZtd": {
+            "cxid": "RebootZtd",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeWirelessAfterRebootZtd",
+            "visibility": false
+        },
+        "OobeWirelessAfterRebootZtd": {
+            "cxid": "OobeWirelessAfterRebootZtd",
+            "preloadCheck": "CloudExperienceHost.WirelessCommercial",
+            "requiredFeatureName": "AutopilotNetwork",
+            "hostedApplicationLaunchArguments": "CloudExperienceHost.Environment.GetWiFiHostedApplicationArguments",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkConnectionFlow_cw5n1h2txyewy!App",
+            "successID": "MDMProgressAfterAAD",
+            "failID": "MDMProgressAfterAAD",
+            "cancelID": "OobeNetworkLossAversionAfterRebootZtd",
+            "action1ID": "OobeCaptivePortalAfterRebootZtd",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeCaptivePortalAfterRebootZtd": {
+            "cxid": "OobeCaptivePortalAfterRebootZtd",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkCaptivePortal_cw5n1h2txyewy!App",
+            "successID": "OobeWirelessAfterRebootZtd",
+            "failID": "OobeWirelessAfterRebootZtd",
+            "cancelID": "OobeWirelessAfterRebootZtd",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeNetworkLossAversionAfterRebootZtd": {
+            "cxid": "OobeNetworkLossAversionAfterRebootZtd",
+            "requiredDisabledFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversion-main.html",
+            "successID": "OobeNetworkLossAversionAfterRebootZtdV2",
+            "failID": "MDMProgressAfterAAD",
+            "action1ID": "OobeWirelessAfterRebootZtd",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "OobeNetworkLossAversionAfterRebootZtdV2": {
+            "cxid": "OobeNetworkLossAversionAfterRebootZtdV2",
+            "requiredFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversionV2-main.html",
+            "successID": "MDMProgressAfterAAD",
+            "failID": "MDMProgressAfterAAD",
+            "action1ID": "OobeWirelessAfterRebootZtd",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressForPlugAndForget": {
+            "cxid": "MDMProgressForPlugAndForget",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEsp",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "MDMProgressForPlugAndForgetRefactored",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "RebootZtdForPlugAndForget",
+            "action2ID": "AutopilotWhiteGloveResult",
+            "action3ID": "OobeSettingsSelector",
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressForPlugAndForgetRefactored": {
+            "cxid": "MDMProgressForPlugAndForgetRefactored",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "successID": "OobeSettingsSelector",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "RebootZtdForPlugAndForget",
+            "action2ID": "AutopilotWhiteGloveResult",
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "RebootZtdForPlugAndForget": {
+            "cxid": "RebootZtdForPlugAndForget",
+            "launcher": "js:OOBEReboot",
+            "successID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "visibility": false
+        },
+        "OobeWirelessAfterRebootZtdForPlugAndForget": {
+            "cxid": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "preloadCheck": "CloudExperienceHost.WirelessCommercial",
+            "requiredFeatureName": "AutopilotNetwork",
+            "hostedApplicationLaunchArguments": "CloudExperienceHost.Environment.GetWiFiHostedApplicationArguments",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkConnectionFlow_cw5n1h2txyewy!App",
+            "successID": "MDMProgressForPlugAndForget",
+            "failID": "MDMProgressForPlugAndForget",
+            "cancelID": "OobeNetworkLossAversionAfterRebootZtdForPlugAndForget",
+            "action1ID": "OobeCaptivePortalAfterRebootZtdForPlugAndForget",
+            "disableBackNavigationToNode": true
+        },
+        "OobeCaptivePortalAfterRebootZtdForPlugAndForget": {
+            "cxid": "OobeCaptivePortalAfterRebootZtdForPlugAndForget",
+            "launcher": "js:HostedApplication",
+            "appUserModelId": "Microsoft.Windows.OOBENetworkCaptivePortal_cw5n1h2txyewy!App",
+            "successID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "failID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "cancelID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeNetworkLossAversionAfterRebootZtdForPlugAndForget": {
+            "cxid": "OobeNetworkLossAversionAfterRebootZtdForPlugAndForget",
+            "requiredDisabledFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversion-main.html",
+            "successID": "OobeNetworkLossAversionAfterRebootZtdForPlugAndForgetV2",
+            "failID": "MDMProgressForPlugAndForget",
+            "action1ID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "OobeNetworkLossAversionAfterRebootZtdForPlugAndForgetV2": {
+            "cxid": "OobeNetworkLossAversionAfterRebootZtdForPlugAndForgetV2",
+            "requiredFeatureName": "OobeNetworkLossAversionPageV2",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeNetworkLossAversionV2-main.html",
+            "successID": "MDMProgressForPlugAndForget",
+            "failID": "MDMProgressForPlugAndForget",
+            "action1ID": "OobeWirelessAfterRebootZtdForPlugAndForget",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressAfterAAD": {
+            "cxid": "MDMProgressAfterAAD",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEspAndShouldShowEsp",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "MDMProgressAfterAADRefactored",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "RebootZtd",
+            "action3ID": "OobeSettingsSelector",
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "MDMProgressAfterAADRefactored": {
+            "cxid": "MDMProgressAfterAADRefactored",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.EnrollmentStatusPage",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "OobeSettingsSelector",
+            "failID": "OobeSettingsSelector",
+            "action1ID": "RebootZtd",
+            "visibility": false,
+            "ignoreResult": true,
+            "disableErrorPageOnFailure": true,
+            "disableBackNavigationToNode": true
+        },
+        "OobeMSA": {
+            "cxid": "OobeMSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80600",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80600",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForKnownUserLogin",
+            "successID": "OobeMSAHello",
+            "failID": "OobeLocal",
+            "cancelID": "OobePersonalizedWelcome",
+            "disableBackNavigationToNode": true,
+            "abortID": "OobeMSAOffer",
+            "disableErrorPageOnFailure": true
+        },
+        "OobeMSAHello": {
+            "cxid": "OobeMSAHello",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeHello-main.html",
+            "ignoreResult": true,
+            "successID": "OobeMSANGCEnrollWithHello",
+            "failID": "OobeMSANGCEnroll",
+            "cancelID": "OobeMSANGCEnroll",
+            "abortID": "OobeMSANGCEnroll",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false,
+            "timeout": 120000
+        },
+        "OobeMSANGCEnrollWithHello": {
+            "cxid": "OobeMSANGCEnrollWithHello",
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "ignoreResult": true,
+            "successID": "OobeMSAIncentiveConfirmation",
+            "failID": "OobeMSAIncentiveConfirmation",
+            "cancelID": "OobeMSAIncentiveConfirmation",
+            "abortID": "OobeMSAIncentiveConfirmation",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeMSANGCEnroll": {
+            "cxid": "OobeMSANGCEnroll",
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "ignoreResult": true,
+            "successID": "OobeMSAIncentiveConfirmation",
+            "failID": "OobeMSAIncentiveConfirmation",
+            "cancelID": "OobeMSAIncentiveConfirmation",
+            "abortID": "OobeMSAIncentiveConfirmation",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobeMSAOffer": {
+            "cxid": "OobeMSAOffer",
+            "requiredDisabledFeatureName": "DisableDynamicContent",
+            "launcher": "js:OobeSkipNode",
+            "ignoreResult": true,
+            "successID": "OobeMSAOfferStatic",
+            "failID": "OobeMSAOfferStatic",
+            "cancelID": "OobeMSAOfferStatic",
+            "abortID": "OobeMSAOfferStatic",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeMSAOfferStatic": {
+            "cxid": "OobeMSAOfferStatic",
+            "requiredFeatureName": "DisableDynamicContent",
+            "url": "https://sdx.microsoft.com/frx/lav/static?cxhScenario=frx&cxhPlatform=desktop",
+            "urlint": "https://sdx.microsoft-int.com/frx/lav/static?cxhScenario=frx&cxhPlatform=desktop",
+            "ignoreResult": true,
+            "successID": "OobeMSA",
+            "failID": "OobeLocal",
+            "cancelID": "OobeLocal",
+            "abortID": "OobeLocal",
+            "preloadSkipID": "OobeLocal",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeMSAIncentiveConfirmation": {
+            "cxid": "OobeMSAIncentiveConfirmation",
+            "requiredDisabledFeatureName": "DisableDynamicContent",
+            "launcher": "js:OobeSkipNode",
+            "successID": "OobePreSettingsExperimentation",
+            "failID": "OobePreSettingsExperimentation",
+            "cancelID": "OobePreSettingsExperimentation",
+            "abortID": "OobePreSettingsExperimentation",
+            "visibility": false,
+            "disableErrorPageOnFailure": true,
+            "ignoreResult": true
+        },
+        "OobeLocal": {
+            "cxid": "OobeLocal",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeLocalAccount-main.html",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "successID": "OobeLocalHello",
+            "visibility": false
+        },
+        "OobeLocalHello": {
+            "cxid": "OobeLocalHello",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeHello-main.html",
+            "ignoreResult": true,
+            "successID": "OobeLocalNGC",
+            "failID": "OobePreSettingsExperimentation",
+            "cancelID": "OobePreSettingsExperimentation",
+            "abortID": "OobePreSettingsExperimentation",
+            "disableBackNavigationToNodeOnSuccess": true,
+            "visibility": false,
+            "timeout": 120000
+        },
+        "OobeLocalNGC": {
+            "cxid": "OobeLocalNGC",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeLocalNGC-main.html",
+            "ignoreResult": true,
+            "successID": "OobePreSettingsExperimentation",
+            "failID": "OobePreSettingsExperimentation",
+            "cancelID": "OobePreSettingsExperimentation",
+            "disableBackNavigationToNodeOnSuccess": true
+        },
+        "OobePreSettingsExperimentation": {
+            "cxid": "OobePreSettingsExperimentation",
+            "url": "https://sdx.microsoft.com/frx/oobe-pre-settings-experimentation",
+            "urlint": "https://sdx.microsoft-int.com/frx/oobe-pre-settings-experimentation",
+            "preloadCheck": "CloudExperienceHost.OobeExperimentationPages",
+            "supportedSignInIdentityProviders": [ "local", "msa" ],
+            "disableBackNavigationToNodeOnSuccess": true,
+            "ignoreResult": true,
+            "internetRequired": true,
+            "successID": "OobeSettingsSelector",
+            "cancelID": "OobeSettingsSelector",
+            "offlineID": "OobeSettingsSelector",
+            "failID": "OobeSettingsSelector",
+            "abortID": "OobeSettingsSelector",
+            "preloadSkipID": "OobeSettingsSelector",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeSettingsSelector": {
+            "cxid": "OobeSettingsSelector",
+            "requiredFeatureName": "OobeSettingsMultiPage",
+            "launcher": "js:OobeSettingsSelector",
+            "successID": "OobeSettings",
+            "cancelID": "OobeSettings",
+            "failID": "OobeSettings",
+            "abortID": "OobeSettings",
+            "action1ID": "OobeSettingsMultiPage",
+            "visibility": false
+        },
+        "OobeSettings": {
+            "cxid": "OobeSettings",
+            "preloadCheck": "CloudExperienceHostAPI.OobeSettingsManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-main.html",
+            "successID": "OobeUpdateSettings",
+            "visibility": false
+        },
+        "OobeSettingsMultiPage": {
+            "cxid": "OobeSettingsMultiPage",
+            "preloadCheck": "CloudExperienceHostAPI.OobeSettingsManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeSettings-multipage-main.html",
+            "successID": "OobeUpdateSettings",
+            "visibility": false
+        },
+        "OobeUpdateSettings": {
+            "cxid": "OobeUpdateSettings",
+            "preloadCheck": "CloudExperienceHostAPI.OobeUpdateSettingsManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeUpdateSettings-main.html",
+            "successID": "OobePostSettingsExperimentation",
+            "visibility": false
+        },
+        "OobePostSettingsExperimentation": {
+            "cxid": "OobePostSettingsExperimentation",
+            "url": "https://sdx.microsoft.com/frx/oobe-post-settings-experimentation",
+            "urlint": "https://sdx.microsoft-int.com/frx/oobe-post-settings-experimentation",
+            "preloadCheck": "CloudExperienceHost.OobeExperimentationPages",
+            "supportedSignInIdentityProviders": [ "local", "msa" ],
+            "disableBackNavigationToNodeOnSuccess": true,
+            "ignoreResult": true,
+            "internetRequired": true,
+            "successID": "OobeActivitySyncConsent",
+            "cancelID": "OobeActivitySyncConsent",
+            "offlineID": "OobeActivitySyncConsent",
+            "failID": "OobeActivitySyncConsent",
+            "abortID": "OobeActivitySyncConsent",
+            "preloadSkipID": "OobeActivitySyncConsent",
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeActivitySyncConsent": {
+            "cxid": "OobeActivitySyncConsent",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeactivitysyncconsent-main.html",
+            "requiredFeatureName": "OobeActivitySyncConsentPage",
+            "supportedSignInIdentityProviders": [ "local", "msa", "aad" ],
+            "preloadCheck": "CloudExperienceHostAPI.TaskFlow.OobeActivityPrivacyManager",
+            "ignoreResult": true,
+            "successID": "OobePhonePairing",
+            "failID": "OobePhonePairing",
+            "cancelID": "OobePhonePairing",
+            "abortID": "OobePhonePairing",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobePhonePairing": {
+            "cxid": "OobePhonePairing",
+            "url": "https://sdx.microsoft.com/frx/mmx/phonepairing/oobe",
+            "urlint": "https://sdx.microsoft-int.com/frx/mmx/phonepairing/oobe",
+            "supportedSignInIdentityProviders": [ "msa" ],
+            "ignoreResult": true,
+            "successID": "OobeOneDrive",
+            "failID": "OobeOneDrive",
+            "cancelID": "OobeOneDrive",
+            "abortID": "OobeOneDrive",
+            "visibility": false,
+            "disableErrorPageOnFailure": true,
+            "queryStringBuilder": "CloudExperienceHost.MobileExperience.getOobeQueryString"
+        },
+        "OobeOneDrive": {
+            "cxid": "OobeOneDrive",
+            "url": "https://onedrive.live.com/windows/officeoutofboxexperience",
+            "urlint": "https://onedrive.live-int.com/windows/officeoutofboxexperience",
+            "supportedSignInIdentityProviders": [ "msa" ],
+            "ignoreResult": true,
+            "successID": "OobeOffice",
+            "failID": "OobeOffice",
+            "cancelID": "OobeOffice",
+            "abortID": "OobeOffice",
+            "visibility": false,
+            "needCustomHeaders": [ "cxh-windowsTelemetryLevel" ],
+            "disableErrorPageOnFailure": true
+        },
+        "OobeOffice": {
+            "cxid": "OobeOffice",
+            "url": "https://www.microsoft.com/officeoobe/",
+            "urlint": "https://wwwqa.microsoft.com/officeoobe/",
+            "supportedSignInIdentityProviders": [ "msa" ],
+            "ignoreResult": true,
+            "successID": "OobeCloudServicesExperimentation",
+            "failID": "OobeCloudServicesExperimentation",
+            "cancelID": "OobeCloudServicesExperimentation",
+            "abortID": "OobeCloudServicesExperimentation",
+            "visibility": false,
+            "needCustomHeaders": [ "cxh-windowsProductKey", "cxh-windowsProductKeyFiveByFive", "cxh-windowsTelemetryLevel" ],
+            "disableErrorPageOnFailure": true
+        },
+        "OobeCloudServicesExperimentation": {
+            "cxid": "OobeCloudServicesExperimentation",
+            "url": "https://sdx.microsoft.com/frx/oobe-cloud-services-experimentation",
+            "urlint": "https://sdx.microsoft-int.com/frx/oobe-cloud-services-experimentation",
+            "preloadCheck": "CloudExperienceHost.OobeExperimentationPages",
+            "supportedSignInIdentityProviders": [ "local", "msa" ],
+            "disableBackNavigationToNodeOnSuccess": true,
+            "ignoreResult": true,
+            "internetRequired": true,
+            "successID": "OobeCortana",
+            "cancelID": "OobeCortana",
+            "offlineID": "OobeCortana",
+            "failID": "OobeCortana",
+            "abortID": "OobeCortana",
+            "preloadSkipID": "OobeCortana",
+            "needCustomHeaders": [ "cxh-windowsTelemetryLevel" ],
+            "disableErrorPageOnFailure": true,
+            "visibility": false
+        },
+        "OobeCortana": {
+            "cxid": "OobeCortana",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeCortana-main.html",
+            "supportedSignInIdentityProviders": [ "local", "msa" ],
+            "ignoreResult": true,
+            "successID": "OobeOemRegistration",
+            "failID": "OobeOemRegistration",
+            "cancelID": "OobeOemRegistration",
+            "abortID": "OobeOemRegistration",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeOemRegistration": {
+            "cxid": "OobeOemRegistration",
+            "preloadCheck": "CloudExperienceHostAPI.OEMRegistrationStatics",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeOemRegistration-main.html",
+            "ignoreResult": true,
+            "successID": "OobeEndDynamic",
+            "failID": "OobeEndDynamic",
+            "cancelID": "OobeEndDynamic",
+            "abortID": "OobeEndDynamic",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeEndDynamic": {
+            "cxid": "OobeEndDynamic",
+            "requiredDisabledFeatureName": "DisableDynamicContent",
+            "preloadCheck": "CloudExperienceHost.AccountAndServices",
+            "launcher": "js:OobeSkipNode",
+            "ignoreResult": true,
+            "successID": "OobeTelemetryFlush",
+            "failID": "OobeTelemetryFlush",
+            "cancelID": "OobeTelemetryFlush",
+            "abortID": "OobeTelemetryFlush",
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeTelemetryFlush": {
+            "cxid": "OobeTelemetryFlush",
+            "preloadCheck": "CloudExperienceHost.AccountAndServices",
+            "launcher": "js:OobeTelemetryFlush",
+            "ignoreResult": true,
+            "successID": "OobeOutro",
+            "failID": "OobeOutro",
+            "cancelID": "OobeOutro",
+            "abortID": "OobeOutro",
+            "visibility": false,
+            "disableBackNavigationToNode": true,
+            "disableErrorPageOnFailure": true
+        },
+        "OobeOutro": {
+            "cxid": "OobeOutro",
+            "preloadCheck": "CloudExperienceHost.Bookends",
+            "skipExitsCxh": true,
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeoutro-main.html",
+            "canExitCxh": true,
+            "visibility": false
+        },
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetupInclusive.html",
+            "successID": "rdxSecurity",
+            "action1ID": "rdxShutdowns",
+            "abortID": "rdxAdmin",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdownsInclusive.html",
+            "successID": "rdxSecurity",
+            "cancelID": "rdxSetup",
+            "failID": "rdxAdmin",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "rdxSecurity": {
+            "cxid": "RDXSECURITY",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSecurityInclusive.html",
+            "successID": "rdxMsa",
+            "abortID": "rdxAdmin",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "rdxAdmin": {
+            "cxid": "RDXADMIN",
+            "url": "ms-appx-web:///RetailDemo/retailDemoAdmin.html",
+            "successID": "rdxLocal",
+            "disableBackNavigationToNode": true,
+            "visibility": false
+        },
+        "rdxMsa": {
+            "cxid": "RDXMSA",
+            "url": "ms-appx-web:///RetailDemo/retailDemoMsaInclusive.html",
+            "successID": "rdxLocal",
+            "disableBackNavigationToNode": true,
+            "cancelID": "msaSignIn",
+            "offlineID": "msaSignIn",
+            "internetRequired": true
+        },
+        "msaSignIn": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80600",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80600",
+            "speechCapableOverride": false,
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "abortID": "rdxLocal",
+            "failID": "rdxLocal",
+            "offlineID": "rdxLocal",
+            "canExitCxh": true,
+            "disableBackNavigationToNode": true
+        },
+        "rdxLocal": {
+            "cxid": "RDXLOCAL",
+            "url": "ms-appx-web:///RetailDemo/retailDemoLocal.html",
+            "disableBackNavigationToNode": true,
+            "canExitCxh": true,
+            "visibility": false
+        }
+    },
+    "FRXMOBILE": {
+        "start": "AAD",
+        "notifyOnLastFinished": true,
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "showErrorPageOnFailure": true,
+            "successID": "AADv10"
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "showErrorPageOnFailure": true,
+            "successID": "NGC"
+        },
+        "NGC": {
+            "cxid": "NGC",
+            "url": "https://account.live.com/aadngc?uiflavor=win10",
+            "urlint": "https://account.live-int.com/aadngc?uiflavor=win10",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "FRXMOBILEBULKAAD": {
+        "start": "BULKAAD",
+        "notifyOnLastFinished": true,
+        "BULKAAD": {
+            "cxid": "BULKAAD",
+            "url": "ms-appx-web:///views/hololensWorkAccount.html",
+            "failID": "BULKAAD",
+            "backID": "BULKAAD"
+        }
+    },
+    "FRXCOMMERCIAL": {
+        "start": "StartSelector",
+        "error": "OobeError",
+        "msaTicketContext": "OOBE",
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "useBackstackForBackNavigation": true,
+        "frameName": "oobe-frame",
+        "speechCapable": true,
+        "blockLateWebAppCalls": true,
+        "blockEarlyExit": true,
+        "StartSelector": {
+            "cxid": "StartSelector",
+            "launcher": "js:OOBEStartSelector",
+            "successID": "AutoPilotPrefetch",
+            "visibility": false
+        },
+        "OobeError": {
+            "cxid": "OobeError",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeError-main.html",
+            "visibility": false
+        },
+        "AutoPilotPrefetch": {
+            "cxid": "AutoPilotPrefetch",
+            "policyName": "prefetch",
+            "launcher": "js:OOBEAutoPilot",
+            "internetRequired": true,
+            "successID": "ManagementProgress",
+            "failID": "OobeError",
+            "cancelID": "OobeError",
+            "offlineID": "OobeError",
+            "disableErrorPageOnFailure": true,
+            "visibility": false,
+            "timeout": 60000,
+            "disableBackNavigationToNode": true
+        },
+        "ManagementProgress": {
+            "cxid": "ManagementProgress",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.ShouldUseRefactoredEsp",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "timeout": 60000,
+            "successID": "OobeOutro",
+            "failID": "OobeOutro",
+            "cancelID": "OobeOutro",
+            "abortID": "OobeOutro",
+            "action1ID": "OobeReboot",
+            "action3ID": "OobeOutro",
+            "disableBackNavigationToNode": true,
+            "canExitCxh": true,
+            "visibility": false
+        },
+        "ManagementProgressRefactored": {
+            "cxid": "ManagementProgressRefactored",
+            "preloadCheck": "CloudExperienceHostAPI.OobeKeyboardManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/autopilot/autopilotespprogress-main.html",
+            "timeout": 60000,
+            "successID": "OobeOutro",
+            "failID": "OobeOutro",
+            "cancelID": "OobeOutro",
+            "abortID": "OobeOutro",
+            "action1ID": "OobeReboot",
+            "disableBackNavigationToNode": true,
+            "canExitCxh": true,
+            "visibility": false
+        },
+        "OobeReboot": {
+            "cxid": "OobeReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "ManagementProgress",
+            "visibility": false
+        },
+        "OobeOutro": {
+            "cxid": "OobeOutro",
+            "preloadCheck": "CloudExperienceHost.Bookends",
+            "skipExitsCxh": true,
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeoutro-main.html",
+            "canExitCxh": true,
+            "visibility": false
+        }
+    },
+    "FRXRDX": {
+        "start": "rdxSetup",
+        "msaTicketContext": "OOBE",
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetup.html",
+            "successID": "rdxSecurity",
+            "action1ID": "rdxShutdowns",
+            "abortID": "rdxAdmin",
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdowns.html",
+            "successID": "rdxSecurity",
+            "cancelID": "rdxSetup",
+            "failID": "rdxAdmin",
+            "visibility": false
+        },
+        "rdxSecurity": {
+            "cxid": "RDXSECURITY",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSecurity.html",
+            "successID": "rdxMsa",
+            "failID": "rdxAdmin",
+            "visibility": false
+        },
+        "rdxAdmin": {
+            "cxid": "RDXADMIN",
+            "url": "ms-appx-web:///RetailDemo/retailDemoAdmin.html",
+            "successID": "rdxLocal",
+            "visibility": false
+        },
+        "rdxMsa": {
+            "cxid": "RDXMSA",
+            "url": "ms-appx-web:///RetailDemo/retailDemoMsa.html",
+            "successID": "rdxLocal",
+            "cancelID": "msaSignIn"
+        },
+        "msaSignIn": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80600",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80600",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "abortID": "rdxLocal",
+            "failID": "rdxLocal",
+            "offlineID": "rdxLocal",
+            "showAccountErrorPageOnFailure": true
+        },
+        "rdxLocal": {
+            "cxid": "RDXLOCAL",
+            "url": "ms-appx-web:///RetailDemo/retailDemoLocal.html",
+            "visibility": false
+        }
+    },
+    "FRXRDXMOB": {
+        "start": "rdxSetup",
+        "notifyOnFirstVisible": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetup.html",
+            "successID": "rdxMsa",
+            "failID": "rdxMsa",
+            "visibility": false
+        },
+        "rdxMsa": {
+            "cxid": "RDXMSA",
+            "url": "ms-appx-web:///RetailDemo/retailDemoMsa.html"
+        }
+    },
+    "RDXPOSTOOBE": {
+        "start": "rdxSetup",
+        "notifyOnFirstVisible": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetup.html",
+            "successID": "rdxSecurity",
+            "action1ID": "rdxShutdowns",
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdowns.html",
+            "successID": "rdxSecurity",
+            "cancelID": "rdxSetup",
+            "visibility": false
+        },
+        "rdxSecurity": {
+            "cxid": "RDXSECURITY",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSecurity.html",
+            "visibility": false
+        }
+    },
+    "RDXPOSTOOBEINCLUSIVE": {
+        "start": "rdxSetup",
+        "notifyOnFirstVisible": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetupInclusive.html",
+            "successID": "rdxSecurity",
+            "action1ID": "rdxShutdowns",
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdownsInclusive.html",
+            "successID": "rdxSecurity",
+            "cancelID": "rdxSetup",
+            "visibility": false
+        },
+        "rdxSecurity": {
+            "cxid": "RDXSECURITY",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSecurityInclusive.html",
+            "visibility": false
+        }
+    },
+    "RDXRACSKU": {
+        "start": "rdxSetup",
+        "notifyOnFirstVisible": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetup.html",
+            "action1ID": "rdxAdvanced",
+            "visibility": false
+        },
+        "rdxAdvanced": {
+            "cxid": "RDXADVANCED",
+            "url": "ms-appx-web:///RetailDemo/retailDemoAdvanced.html",
+            "action1ID": "rdxShutdowns",
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdowns.html",
+            "cancelID": "rdxAdvanced",
+            "visibility": false
+        }
+    },
+    "RDXRACSKUINCLUSIVE": {
+        "start": "rdxSetup",
+        "notifyOnFirstVisible": true,
+        "rdxSetup": {
+            "cxid": "RDXSETUP",
+            "url": "ms-appx-web:///RetailDemo/retailDemoSetupInclusive.html",
+            "action1ID": "rdxAdvanced",
+            "visibility": false
+        },
+        "rdxAdvanced": {
+            "cxid": "RDXADVANCED",
+            "url": "ms-appx-web:///RetailDemo/retailDemoAdvancedInclusive.html",
+            "action1ID": "rdxShutdowns",
+            "visibility": false
+        },
+        "rdxShutdowns": {
+            "cxid": "RDXSHUTDOWNS",
+            "url": "ms-appx-web:///RetailDemo/retailDemoShutdownsInclusive.html",
+            "cancelID": "rdxAdvanced",
+            "visibility": false
+        }
+    },
+    "MSARDX": {
+        "start": "msaAutocreate",
+        "msaAutocreate": {
+            "cxid": "MSA",
+            "url": "https://account.live.com/rdm",
+            "urlint": "https://account.live-int.com/rdm",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "XBOXCONNECT": {
+        "start": "Connect",
+        "msaTicketContext": "OOBE",
+        "Connect": {
+            "cxid": "Connect",
+            "httpMethod": "post",
+            "visibility": false,
+            "timeout": 60000,
+            "showErrorPageOnFailure": false,
+            "encoding": "utf8",
+            "contentType": "application/x-www-form-urlencoded",
+            "url": "https://login.live.com/IfExists.srf?id=80501",
+            "urlint": "https://login.live-int.com/IfExists.srf?id=80501",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForXbox",
+            "initialize": {
+                "getData": "CloudExperienceHost.MSA.getDevicePostData",
+                "key": "DDA"
+            }
+        }
+    },
+    "XBOXCONNECTWITHEMAIL": {
+        "start": "ConnectWithEmail",
+        "msaTicketContext": "OOBE",
+        "ConnectWithEmail": {
+            "cxid": "ConnectWithEmail",
+            "visibility": false,
+            "timeout": 60000,
+            "showErrorPageOnFailure": false,
+            "url": "https://login.live.com/ppsecure/InlineLogin.srf?id=80501&fsui=1",
+            "urlint": "https://login.live-int.com/ppsecure/InlineLogin.srf?id=80501&fsui=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForXboxConnectWithEmail"
+        }
+    },
+    "MSAPINENROLL": {
+        "start": "MSANGCEnroll",
+        "MSANGCEnroll": {
+            "cxid": "MSANGCEnroll",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCEnroll"
+        }
+    },
+    "MSAPINRESET": {
+        "start": "MSANGCReset",
+        "MSANGCReset": {
+            "cxid": "MSANGCReset",
+            "url": "https://account.live.com/msangc?fl=reset",
+            "urlint": "https://account.live-int.com/msangc?fl=reset",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "MSANGCReset"
+        }
+    },
+    "MSACFLPINRESET": {
+        "start": "MSACflPinReset",
+        "notifyOnFirstVisible": true,
+        "msaTicketContext": "WindowsLogon",
+        "MSACflPinReset": {
+            "cxid": "MSACflPinReset",
+            "url": "https://account.live.com/msangc?fl=reset&sscr=1&cxhcss=oobedesktop",
+            "urlint": "https://account.live-int.com/msangc?fl=reset&sscr=1&cxhcss=oobedesktop",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "successID": "AADNGC",
+            "showErrorPageOnFailure": true
+        },
+        "AADNGC": {
+            "cxid": "AADNGC",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipAadNgcProvisioning",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/aadngc?showSuccess=1&cxhcss=oobedesktop",
+            "urlint": "https://account.live-int.com/aadngc?showSuccess=1&cxhcss=oobedesktop",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount"
+        }
+    },
+    "MSACFLPINRESETSIGNIN": {
+        "start": "msaCflPinResetSignIn",
+        "error": "SSPRError",
+        "speechCapable": true,
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "frameName": "sspr-frame",
+        "useCloseToExitCxh": true,
+        "msaCflPinResetSignIn": {
+            "cxid": "msaCflPinResetSignIn",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80609",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80609",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLoginWithScenarioContext",
+            "customProperty": "MSACFLPINRESET",
+            "offlineID": "SSPRError"
+        },
+        "SSPRError": {
+            "cxid": "SSPRError",
+            "url": "ms-appx-web:///webapps/inclusiveSspr/view/ssprerror-main.html",
+            "visibility": false
+        }
+    },
+    "MSACXSIGNINAUTHONLY": {
+        "start": "CxSignIn",
+        "CxSignIn": {
+            "cxid": "CxSignIn",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80610",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80610",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLoginWithScenarioContext",
+            "showErrorPageOnFailure": true,
+            "offlineID": "CxSignInError"
+        },
+        "CxSignInError": {
+            "cxid": "CxSignInError",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxSignIn"
+        }
+    },
+    "MSACXSIGNINPINRESET": {
+        "start": "CxSignIn",
+        "CxSignIn": {
+            "cxid": "CxSignIn",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80610",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80610",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLoginWithScenarioContext",
+            "customProperty": "UseOobeBroker",
+            "showErrorPageOnFailure": true,
+            "offlineID": "CxSignInError",
+            "successID": "CxPinReset"
+        },
+        "CxSignInError": {
+            "cxid": "CxSignInError",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxSignIn"
+        },
+        "CxPinReset": {
+            "cxid": "CxPinReset",
+            "url": "https://account.live.com/msangc?fl=reset",
+            "urlint": "https://account.live-int.com/msangc?fl=reset",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "customProperty": "UseOobeBroker",
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxPinReset"
+        }
+    },
+    "MSACXSIGNINPINADD": {
+        "start": "CxSignIn",
+        "CxSignIn": {
+            "cxid": "CxSignIn",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80610",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80610",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLoginWithScenarioContext",
+            "customProperty": "UseOobeBroker",
+            "showErrorPageOnFailure": true,
+            "offlineID": "CxSignInError",
+            "successID": "CxHello"
+        },
+        "CxSignInError": {
+            "cxid": "CxSignInError",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxSignIn"
+        },
+        "CxHello": {
+            "cxid": "CxHello",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "ms-appx-web:///views/helloEnrollment.html",
+            "ignoreResult": true,
+            "successID": "CxHelloEnroll",
+            "failID": "CxPinEnroll",
+            "cancelID": "CxPinEnroll",
+            "abortID": "CxPinEnroll",
+            "visibility": false
+        },
+        "CxHelloEnroll": {
+            "cxid": "CxHelloEnroll",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "customProperty": "UseOobeBroker",
+            "offlineID": "OfflineHello"
+        },
+        "OfflineHello": {
+            "cxid": "OfflineHello",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxHelloEnroll"
+        },
+        "CxPinEnroll": {
+            "cxid": "CxPinEnroll",
+            "preloadCheck": "CloudExperienceHost.MSA.ShouldSkipNGCEnroll",
+            "preloadCheckSkipOnFailure": true,
+            "url": "https://account.live.com/msangc?fl=enroll",
+            "urlint": "https://account.live-int.com/msangc?fl=enroll",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+            "customProperty": "UseOobeBroker",
+            "showErrorPageOnFailure": true,
+            "offlineID": "Offline"
+        },
+        "Offline": {
+            "cxid": "Offline",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "CxPinEnroll"
+        }
+    },
+    "FRXHOLOLENS": {
+        "start": "EULA",
+        "msaTicketContext": "OOBE",
+        "EULA": {
+            "cxid": "EULA",
+            "preloadCheck": "CloudExperienceHostAPI.OobeEulaManagerStaticsCore",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeEula-hololens.html",
+            "timeout": 30000,
+            "successID": "IDPS",
+            "failID": "IDPS",
+            "visibility": false
+        },
+        "IDPS": {
+            "cxid": "IDPS",
+            "ignoreResult": true,
+            "url": "https://sdx.microsoft.com/frx/idps",
+            "urlint": "https://sdx.microsoft-ppe.com/frx/idps",
+            "showErrorPageOnFailure": true,
+            "offlineID": "OFFLINE",
+            "visibility": false
+        },
+        "AAD": {
+            "cxid": "AAD",
+            "requiredDisabledFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/9",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/9",
+            "successID": "AADv10",
+            "cancelID": "IDPS",
+            "abortID": "IDPS",
+            "failID": "DIAG",
+            "offlineID": "OFFLINE",
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            }
+        },
+        "AADv10": {
+            "cxid": "AADv10",
+            "requiredFeatureName": "AADJv10",
+            "url": "https://login.microsoftonline.com/WebApp/CloudDomainJoin/10",
+            "urlint": "https://login.windows-ppe.net/WebApp/CloudDomainJoin/10",
+            "cancelID": "IDPS",
+            "abortID": "IDPS",
+            "failID": "DIAG",
+            "offlineID": "OFFLINE",
+            "initialize": {
+                "getData": "CloudExperienceHost.getAllowedIdentityProviders",
+                "key": "cxh-idps"
+            }
+        },
+        "MSA": {
+            "cxid": "MSA",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80600",
+            "urlint": "https://login.live-int.com/ppsecure/inlineconnect.srf?id=80600",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "cancelID": "IDPS",
+            "abortID": "IDPS",
+            "offlineID": "OFFLINE",
+            "showErrorPageOnFailure": true
+        },
+        "BULKAAD": {
+            "cxid": "BULKAAD",
+            "url": "ms-appx-web:///views/hololensWorkAccount.html",
+            "failID": "BULKAAD",
+            "backID": "BULKAAD"
+        },
+        "DIAG": {
+            "cxid": "DIAG",
+            "url": "ms-appx-web:///webapps/hololensDiagnostics/views/hololensDiagnostics.html",
+            "cancelID": "AAD",
+            "failID": "IDPS",
+            "abortID": "IDPS"
+        },
+        "OFFLINE": {
+            "cxid": "OFFLINE",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "IDPS"
+        }
+    },
+    "FRXHOLOLENSAUTOPILOT": {
+        "start": "StartSelector",
+        "error": "OobeError",
+        "msaTicketContext": "OOBE",
+        "useBackstackForBackNavigation": true,
+        "frameName": "default-frame",
+        "blockLateWebAppCalls": true,
+        "StartSelector": {
+            "cxid": "StartSelector",
+            "launcher": "js:OOBEStartSelector",
+            "successID": "AutoPilotPrefetch",
+            "visibility": false
+        },
+        "OobeError": {
+            "cxid": "OobeError",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeError-main.html",
+            "visibility": false
+        },
+        "AutoPilotPrefetch": {
+            "cxid": "AutoPilotPrefetch",
+            "policyName": "prefetch",
+            "launcher": "js:OOBEAutoPilot",
+            "internetRequired": true,
+            "successID": "AutoPilotVetoESTS",
+            "failID": "OobeError",
+            "cancelID": "OobeError",
+            "offlineID": "OobeError",
+            "disableErrorPageOnFailure": true,
+            "visibility": false,
+            "timeout": 60000
+        },
+        "AutoPilotVetoESTS": {
+            "cxid": "AutoPilotVetoESTS",
+            "url": "https://login.microsoftonline.com/webapp/AutoPilot/1",
+            "urlint": "https://login.windows-ppe.net/webapp/AutoPilot/1",
+            "queryStringBuilder": "CloudExperienceHost.AutoPilot.getZTDQueryStringAsync",
+            "preloadCheck": "CloudExperienceHost.AutoPilot.Veto",
+            "preloadCheckSkipOnFailure": true,
+            "successID": "AutopilotEnrollmentStatus",
+            "failID": "AutopilotEnrollmentStatus",
+            "action1ID": "AutopilotEnrollmentStatus",
+            "visibility": false,
+            "disableBackNavigationToNode": true
+        },
+        "AutopilotEnrollmentStatus": {
+            "cxid": "AutopilotEnrollmentStatus",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/oobeprovisioningprogress-main.html",
+            "timeout": 60000,
+            "action1ID": "OobeReboot",
+            "disableBackNavigationToNode": true,
+            "canExitCxh": true,
+            "visibility": false
+        },
+        "OobeReboot": {
+            "cxid": "OobeReboot",
+            "launcher": "js:OOBEReboot",
+            "successID": "AutopilotEnrollmentStatus",
+            "visibility": false
+        }
+    },
+    "FRXHOLOLENSCORTANA": {
+        "start": "OobeCortana",
+        "OobeCortana": {
+            "cxid": "OobeCortana",
+            "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeCortana-main.html",
+            "ignoreResult": true,
+            "visibility": false,
+            "disableErrorPageOnFailure": true
+        }
+    },
+    "AMX": {
+        "start": "DYNAMICPAGE",
+        "DYNAMICPAGE": {
+            "cxid": "DYNAMICPAGE",
+            "url": "https://account.microsoft.com",
+            "urlPathParam": "target",
+            "failID": "FALLBACK"
+        },
+        "FALLBACK": {
+            "cxid": "FALLBACK",
+            "url": "https://account.microsoft.com",
+            "urlPathParam": "fallback",
+            "showErrorPageOnFailure": true
+        }
+    },
+    "WLTUC": {
+        "start": "ADDUSER",
+        "ADDUSER": {
+            "cxid": "ADDUSER",
+            "url": "https://login.live.com/ppsecure/inlineconnect.srf?id=80601",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForLogin",
+            "successID": "WLTFLOW",
+            "showErrorPageOnFailure": true
+        },
+        "WLTFLOW": {
+            "cxid": "WLTFLOW",
+            "url": "https://sdx.microsoft.com/wlt",
+            "urlint": "https://sdx.microsoft-ppe.com/wlt",
+            "failID": "WLTERR"
+        },
+        "WLTERR": {
+            "cxid": "WLTERR",
+            "url": "https://sdx.microsoft.com/wlt/error",
+            "urlint": "https://sdx.microsoft-ppe.com/wlt/error"
+        }
+    },
+    "WLT": {
+        "start": "WLTFLOW",
+        "WLTFLOW": {
+            "cxid": "WLTFLOW",
+            "url": "https://sdx.microsoft.com/wlt",
+            "urlint": "https://sdx.microsoft-ppe.com/wlt",
+            "failID": "WLTERR"
+        },
+        "WLTERR": {
+            "cxid": "WLTERR",
+            "url": "https://sdx.microsoft.com/wlt/error",
+            "urlint": "https://sdx.microsoft-ppe.com/wlt/error"
+        }
+    },
+    "WLTEST": {
+        "start": "WLTEST",
+        "WLTEST": {
+            "cxid": "WLTEST",
+            "url": "https://sdx.microsoft-ppe.com/wlt/test"
+        }
+    },
+    "AADSSPR": {
+        "start": "SSPR",
+        "error": "SSPRError",
+        "notifyOnFirstVisible": true,
+        "frameName": "sspr-frame",
+        "useCloseToExitCxh": true,
+        "notifyOnLastFinished": true,
+        "SSPR": {
+            "cxid": "SSPR",
+            "url": "https://passwordreset.microsoftonline.com/n/passwordreset?experience=WIN10_TB",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getAadSscrParameters",
+            "offlineID": "SSPRError"
+        },
+        "SSPRError": {
+            "cxid": "SSPRError",
+            "url": "ms-appx-web:///webapps/inclusiveSspr/view/ssprerror-main.html",
+            "visibility": false
+        }
+    },
+    "AADSSPRV2": {
+        "start": "SSPR",
+        "error": "SSPRError",
+        "notifyOnFirstVisible": true,
+        "frameName": "sspr-frame",
+        "notifyOnLastFinished": true,
+        "SSPR": {
+            "cxid": "SSPR",
+            "url": "https://passwordreset.microsoftonline.com/n/passwordreset?experience=WIN10_TB",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getAadSscrParameters",
+            "offlineID": "SSPRError"
+        },
+        "SSPRError": {
+            "cxid": "SSPRError",
+            "url": "ms-appx-web:///webapps/inclusiveSspr/view/ssprerror-main.html",
+            "visibility": false
+        }
+    },
+    "AADPINRESETAUTH": {
+        "start": "AadPinResetAuth",
+        "error": "SSPRError",
+        "speechCapable": true,
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "frameName": "sspr-frame",
+        "useCloseToExitCxh": true,
+        "AadPinResetAuth": {
+            "cxid": "AadPinResetAuth",
+            "url": "https://login.microsoftonline.com/WebApp/WindowsLogon/1",
+            "urlint": "https://login.windows-ppe.net/WebApp/WindowsLogon/1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getAadSscrParameters",
+            "offlineID": "SSPRError"
+        },
+        "SSPRError": {
+            "cxid": "SSPRError",
+            "url": "ms-appx-web:///webapps/inclusiveSspr/view/ssprerror-main.html",
+            "visibility": false
+        }
+    },
+    "AADWEBAUTH": {
+        "start": "AadWebAuth",
+        "error": "AadWebAuthError",
+        "AadWebAuth": {
+            "cxid": "AadWebAuth",
+            "url": "https://login.microsoftonline.com/WebApp/WindowsLogon/1",
+            "urlint": "https://login.windows-ppe.net/WebApp/WindowsLogon/1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getAadSscrParameters",
+            "offlineID": "AadWebAuthError"
+        },
+        "AadWebAuthError": {
+            "cxid": "AadWebAuthError",
+            "url": "ms-appx-web:///views/nointernet.html",
+            "visibility": false,
+            "showErrorPageOnFailure": true,
+            "successID": "AadWebAuth"
+        }
+    },
+    "MSASSPR": {
+        "start": "SSPR",
+        "error": "SSPRError",
+        "notifyOnFirstVisible": true,
+        "notifyOnLastFinished": true,
+        "speechCapable": true,
+        "frameName": "sspr-frame",
+        "useCloseToExitCxh": true,
+        "SSPR": {
+            "cxid": "SSPR",
+            "url": "https://account.live.com/password/reset?sscr=1",
+            "urlint": "https://account.live-int.com/password/reset?sscr=1",
+            "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForSSPR",
+            "showErrorPageOnFailure": true,
+            "offlineID": "SSPRError"
+        },
+        "SSPRError": {
+            "cxid": "SSPRError",
+            "url": "ms-appx-web:///webapps/inclusiveSspr/view/ssprerror-main.html",
+            "visibility": false
+        }
+    }
+}

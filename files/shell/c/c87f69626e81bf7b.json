@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "actions": [
+    {
+      "id": "VisualAssist.DescribeImage",
+      "icon": "ms-resource://Files/VisualAssist/Assets/DescribeImage24x25.png",
+      "description": "ms-resource://VisualAssist/Resources/VisualAssistActionDesc",
+      "usesGenerativeAI": true,
+      "inputs": [
+        {
+          "name": "InputImageToDescribe",
+          "kind": "Photo"
+        }
+      ],
+      "inputCombinations": [
+        {
+          "inputs": [ "InputImageToDescribe" ],
+          "description": "ms-resource://VisualAssist/Resources/VisualAssistActionInputDesc"
+        }
+      ],
+      "invocation": {
+        "type": "COM",
+        "clsid": "F237040E-055B-466C-ADA8-C47E296A6607"
+      }
+    }
+  ]
+}

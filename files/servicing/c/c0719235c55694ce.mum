@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Cortana and speech recognition for English (US)" displayName="English (US) speech recognition" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-LanguageFeatures-Speech-en-us-Package" version="10.0.26100.6899" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="304" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="installed" FeatureType="language" ManageFeatureSettings="page=SettingsPageTimeRegionLanguage" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Language.Speech" version="1.0" language="en-us" />
+      </capability>
+      <dependency>
+        <capabilityIdentity name="Language.TextToSpeech" version="1.0" language="en-us" />
+      </dependency>
+    </declareCapability>
+    <update name="66707c082bbf64621e1483814cade78a">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-LanguageFeatures-Speech-en-us-Deployment" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="01b119f775d52fe143e9b6a39857102f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-LanguageFeatures-Speech-en-us-Package" version="10.0.26100.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

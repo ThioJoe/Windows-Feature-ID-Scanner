@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root/standardcimv2/MSFT_NetFirewallHyperVVMSetting" ClassVersion="1.0.0">
+    <Version>1.0.0.0</Version>
+    <DefaultNoun>NetFirewallHyperVVMSetting</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="GetAll">
+        <QueryableProperties>
+          <Property PropertyName="Name">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByName" IsMandatory="true" Position="0" Aliases="VMCreatorId" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+        <QueryOptions>
+          <Option OptionName="All">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+          <Option OptionName="PolicyStore">
+            <Type PSType="string" />
+            <CmdletParameterMetadata />
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" ConfirmImpact="Medium" />
+        <Method MethodName="cim:ModifyInstance">
+          <Parameters>
+            <Parameter ParameterName="Enabled">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="Enabled" />
+            </Parameter>
+            <Parameter ParameterName="DefaultInboundAction">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="DefaultInboundAction" />
+            </Parameter>
+            <Parameter ParameterName="DefaultOutboundAction">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="DefaultOutboundAction" />
+            </Parameter>
+            <Parameter ParameterName="LoopbackEnabled">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="LoopbackEnabled" />
+            </Parameter>
+            <Parameter ParameterName="AllowHostPolicyMerge">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="AllowHostPolicyMerge" />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <GetCmdletParameters>
+          <QueryableProperties>
+            <Property PropertyName="Name">
+              <Type PSType="string" />
+              <RegularQuery AllowGlobbing="true">
+                <CmdletParameterMetadata Aliases="VMCreatorId" PSName="Name" Position="0" IsMandatory="true" CmdletParameterSets="ByName" />
+              </RegularQuery>
+            </Property>
+          </QueryableProperties>
+          <QueryOptions>
+            <Option OptionName="PolicyStore">
+              <Type PSType="string" />
+              <CmdletParameterMetadata />
+            </Option>
+          </QueryOptions>
+        </GetCmdletParameters>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+        <Method MethodName="cim:DeleteInstance" />
+      </Cmdlet>
+    </InstanceCmdlets>
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="New" ConfirmImpact="Medium" />
+        <Method MethodName="cim:CreateInstance">
+          <Parameters>
+            <Parameter ParameterName="cim:OperationOption:PolicyStore">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="PolicyStore" />
+            </Parameter>
+            <Parameter ParameterName="cim:OperationOption:GPOSession">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="GPOSession" />
+            </Parameter>
+            <Parameter ParameterName="Name">
+              <Type PSType="string" />
+              <CmdletParameterMetadata Aliases="VMCreatorId" PSName="Name" />
+            </Parameter>
+            <Parameter ParameterName="Enabled">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="Enabled" />
+            </Parameter>
+            <Parameter ParameterName="DefaultInboundAction">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="DefaultInboundAction" />
+            </Parameter>
+            <Parameter ParameterName="DefaultOutboundAction">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="DefaultOutboundAction" />
+            </Parameter>
+            <Parameter ParameterName="LoopbackEnabled">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="LoopbackEnabled" />
+            </Parameter>
+            <Parameter ParameterName="AllowHostPolicyMerge">
+              <Type PSType="NetSecurity.GpoBoolean" />
+              <CmdletParameterMetadata PSName="AllowHostPolicyMerge" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+  <Enums>
+    <Enum EnumName="NetSecurity.GpoBoolean" UnderlyingType="uint16">
+      <Value Name="False" Value="0" />
+      <Value Name="True" Value="1" />
+      <Value Name="NotConfigured" Value="2" />
+    </Enum>
+    <Enum EnumName="NetSecurity.Action" UnderlyingType="uint16">
+      <Value Name="NotConfigured" Value="0" />
+      <Value Name="Allow" Value="2" />
+      <Value Name="Block" Value="4" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp">
+    <!--
+        Manual versioning is used for this app.
+        Appx version should be in sync with version used for the app name in Microsoft-Windows-NcsiUwpApp.AppxSetup.man
+        See https://osgwiki.com/wiki/System_Apps#Servicing
+    -->
+  <Identity
+    Name="NcsiUwpApp"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Version="1000.25128.1000.0"
+    ResourceId="neutral" />
+
+  <mp:PhoneIdentity PhoneProductId="2f4ca6d4-e3ab-4bab-b297-b6a3306ecf7d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>NcsiUwpApp</DisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <Logo>Assets\1X1.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="1000.26100.1.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="NcsiUwpApp.exe"
+      EntryPoint="NcsiUwpApp.App">
+      <uap:VisualElements
+        DisplayName="NcsiUwpApp"
+        Square150x150Logo="Assets\1X1.png"
+        Square44x44Logo="Assets\1X1.png"
+        Description="NcsiUwpApp"
+        AppListEntry="none"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\1X1.png"/>
+        <uap:SplashScreen Image="Assets\1X1.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="NcsiUwpBackgroundTasks.MainTask">
+          <BackgroundTasks>
+            <Task Type="general"/>
+            <Task Type="systemEvent"/>
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="NcsiUwpBackgroundTasks.MaintenanceTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent"/>
+            <Task Type="timer"/>
+            <Task Type="general"/>
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.preInstalledConfigTask" EntryPoint="NcsiUwpBackgroundTasks.PreInstallBackgroundConfigTask"/>
+        <Extension Category="windows.updateTask" EntryPoint="NcsiUwpBackgroundTasks.PreInstallBackgroundConfigTask"/>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>NcsiUwpBackgroundTasks.dll</Path>
+        <ActivatableClass ActivatableClassId="NcsiUwpBackgroundTasks.PreInstallBackgroundConfigTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="NcsiUwpBackgroundTasks.MainTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="NcsiUwpBackgroundTasks.MaintenanceTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="extendedBackgroundTaskTime" />
+    <rescap:Capability Name="featureStagingInfo" />
+  </Capabilities>
+</Package>

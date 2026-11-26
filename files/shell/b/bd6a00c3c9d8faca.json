@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "mcpServers": [
+    {
+      "name": "Windows File System",
+      "title": "Windows File System Server",
+      "type": "stdio",
+      "command": "ActionsMcpHost.exe",
+      "args": [ "McpServer", "FileSystem" ]
+    },
+    {
+      "name": "Windows Windowing Tools",
+      "type": "com",
+      "clsid": "26EC7652-46E4-4B59-B9EB-A76060DD693A",
+      "subtype": "namedpipe"
+    },
+    {
+      "name": "Windows File Tools",
+      "type": "com",
+      "clsid": "8C40C1AA-CB5A-428A-AEF6-EDD1549D9BEC",
+      "subtype": "namedpipe"
+    },
+    {
+      "name": "Windows Settings Tools",
+      "type": "com",
+      "clsid": "1E71DA0C-E2F7-49A7-B40A-F6C5F9EA832A",
+      "subtype": "namedpipe"
+    },
+    {
+      "name": "Windows Snap Layouts",
+      "type": "stdio",
+      "command": "ActionsMcpHost.exe",
+      "args": [ "McpServer", "SnapWindows" ]
+    }
+  ]
+}

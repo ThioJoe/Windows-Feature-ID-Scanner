@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Capture steps with screenshots to save or share." displayName="Steps Recorder" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-StepsRecorder-Package" version="10.0.26100.6899" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="482" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="all" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="App.StepsRecorder" version="1.0" />
+      </capability>
+      <satelliteInfo>
+        <require type="arch" value="wow64" />
+        <require type="language" value="*" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="a9f52a4d4fc26d3bf71bb894f81a3fad">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-StepsRecorder-Deployment" version="10.0.26100.6725" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,2055 @@
+@font-face {
+	font-family: Segoe UI Webfont;
+	src: local("Segoe UI Light"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot?#iefix) format("embedded-opentype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.svg#web) format("svg");
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face {
+	font-family: Segoe UI Webfont;
+	src: local("Segoe UI"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot?#iefix) format("embedded-opentype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.svg#web) format("svg");
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: Segoe UI Webfont;
+	src: local("Segoe UI Semibold"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/semibold/latest.eot?#iefix) format("embedded-opentype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype"), url(//i.s-microsoft.com/fonts/segoe-ui/west-european/semibold/latest.svg#web) format("svg");
+	font-weight: 600;
+	font-style: normal;
+}
+html {
+	font-family: sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;
+}
+body {
+	margin: 0px;
+}
+article {
+	display: block;
+}
+aside {
+	display: block;
+}
+details {
+	display: block;
+}
+figcaption {
+	display: block;
+}
+figure {
+	display: block;
+}
+footer {
+	display: block;
+}
+header {
+	display: block;
+}
+hgroup {
+	display: block;
+}
+main {
+	display: block;
+}
+nav {
+	display: block;
+}
+section {
+	display: block;
+}
+summary {
+	display: block;
+}
+audio {
+	vertical-align: baseline; display: inline-block;
+}
+canvas {
+	vertical-align: baseline; display: inline-block;
+}
+progress {
+	vertical-align: baseline; display: inline-block;
+}
+video {
+	vertical-align: baseline; display: inline-block;
+}
+audio:not([controls]) {
+	height: 0px; display: none;
+}
+[hidden] {
+	display: none;
+}
+template {
+	display: none;
+}
+a {
+	background: 0px 0px;
+}
+a:active {
+	outline: 0px;
+}
+a:hover {
+	outline: 0px;
+}
+abbr[title] {
+	border-bottom-color: currentColor; border-bottom-width: 1px; border-bottom-style: dotted;
+}
+b {
+	font-weight: 700;
+}
+strong {
+	font-weight: 700;
+}
+dfn {
+	font-style: italic;
+}
+h1 {
+	margin: 0.67em 0px; font-size: 2em;
+}
+mark {
+	background: rgb(255, 255, 0); color: rgb(0, 0, 0);
+}
+small {
+	font-size: 80%;
+}
+sub {
+	line-height: 0; font-size: 75%; vertical-align: baseline; position: relative;
+}
+sup {
+	line-height: 0; font-size: 75%; vertical-align: baseline; position: relative;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0px currentColor; border-image: none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	height: 0px; box-sizing: content-box; -moz-box-sizing: content-box;
+}
+pre {
+	overflow: auto;
+}
+code {
+	font-family: monospace,monospace; font-size: 1em;
+}
+kbd {
+	font-family: monospace,monospace; font-size: 1em;
+}
+pre {
+	font-family: monospace,monospace; font-size: 1em;
+}
+samp {
+	font-family: monospace,monospace; font-size: 1em;
+}
+button {
+	font: inherit; margin: 0px; color: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+input {
+	font: inherit; margin: 0px; color: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+optgroup {
+	font: inherit; margin: 0px; color: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+select {
+	font: inherit; margin: 0px; color: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+textarea {
+	font: inherit; margin: 0px; color: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+button {
+	overflow: visible;
+}
+button {
+	text-transform: none;
+}
+select {
+	text-transform: none;
+}
+button {
+	cursor: pointer; -webkit-appearance: button;
+}
+html input[type=button] {
+	cursor: pointer; -webkit-appearance: button;
+}
+input[type=reset] {
+	cursor: pointer; -webkit-appearance: button;
+}
+input[type=submit] {
+	cursor: pointer; -webkit-appearance: button;
+}
+button[disabled] {
+	cursor: default;
+}
+html input[disabled] {
+	cursor: default;
+}
+input {
+	line-height: normal;
+}
+input[type=checkbox] {
+	padding: 0px; box-sizing: border-box;
+}
+input[type=radio] {
+	padding: 0px; box-sizing: border-box;
+}
+input[type=search] {
+	-webkit-appearance: textfield;
+}
+fieldset {
+	margin: 0px 2px; padding: 0.35em 0.62em 0.75em; border: 1px solid silver; border-image: none;
+}
+legend {
+	padding: 0px; border: 0px currentColor; border-image: none;
+}
+textarea {
+	overflow: auto;
+}
+optgroup {
+	font-weight: 700;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+td {
+	padding: 0px;
+}
+th {
+	padding: 0px;
+}
+input {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+button {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+textarea {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+select {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+option {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+progress {
+	line-height: inherit; max-width: 100%; box-sizing: border-box;
+}
+input[type=color] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=date] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=datetime] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=datetime-local] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=email] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=month] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=number] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=password] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=search] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=tel] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=text] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=time] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=url] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=week] {
+	padding: 4px 8px; border: 2px solid rgb(153, 153, 153); background-color: rgb(255, 255, 255);
+}
+input[type=color]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=date]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=datetime]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=datetime-local]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=email]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=month]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=number]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=password]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=search]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=tel]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=text]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=time]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=url]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=week]:hover {
+	border-color: rgb(102, 102, 102);
+}
+input[type=color]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=date]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=datetime]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=datetime-local]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=email]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=month]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=number]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=password]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=search]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=tel]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=text]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=time]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=url]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=week]:focus {
+	border-color: rgb(0, 120, 215);
+}
+input[type=color]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=date]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=datetime]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=datetime-local]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=email]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=month]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=number]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=password]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=search]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=tel]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=text]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=time]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=url]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=week]:disabled {
+	border-color: rgb(204, 204, 204) !important; color: gray !important; background-color: rgb(204, 204, 204) !important;
+}
+input[type=color].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=date].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=datetime].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=datetime-local].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=email].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=month].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=number].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=password].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=search].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=tel].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=text].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=time].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=url].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input[type=week].inputState_error {
+	border-color: rgb(232, 17, 35);
+}
+input::-ms-clear {
+	padding: 4px 8px; height: 100%; color: rgb(153, 153, 153); margin-right: -8px; margin-left: 4px;
+}
+input::-ms-reveal {
+	padding: 4px 8px; height: 100%; color: rgb(153, 153, 153); margin-right: -8px; margin-left: 4px;
+}
+input::-ms-clear:hover {
+	color: rgb(0, 120, 215);
+}
+input::-ms-reveal:hover {
+	color: rgb(0, 120, 215);
+}
+input::-ms-clear:active {
+	color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input::-ms-reveal:active {
+	color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+.control-button {
+	padding: 3px 12px; border: 2px solid rgb(115, 115, 115); text-align: center; color: rgb(255, 255, 255); overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; -ms-text-overflow: ellipsis; min-width: 100px; max-width: 100%; box-sizing: border-box; background-color: rgb(115, 115, 115); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+button {
+	padding: 3px 12px; border: 2px solid rgb(115, 115, 115); text-align: center; color: rgb(255, 255, 255); overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; -ms-text-overflow: ellipsis; min-width: 100px; max-width: 100%; box-sizing: border-box; background-color: rgb(115, 115, 115); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+input[type=button] {
+	padding: 3px 12px; border: 2px solid rgb(115, 115, 115); text-align: center; color: rgb(255, 255, 255); overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; -ms-text-overflow: ellipsis; min-width: 100px; max-width: 100%; box-sizing: border-box; background-color: rgb(115, 115, 115); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+input[type=submit] {
+	padding: 3px 12px; border: 2px solid rgb(115, 115, 115); text-align: center; color: rgb(255, 255, 255); overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; -ms-text-overflow: ellipsis; min-width: 100px; max-width: 100%; box-sizing: border-box; background-color: rgb(115, 115, 115); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+input[type=reset] {
+	padding: 3px 12px; border: 2px solid rgb(115, 115, 115); text-align: center; color: rgb(255, 255, 255); overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; -ms-text-overflow: ellipsis; min-width: 100px; max-width: 100%; box-sizing: border-box; background-color: rgb(115, 115, 115); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+.control-button:hover {
+	border-color: rgb(89, 89, 89);
+}
+button:hover {
+	border-color: rgb(89, 89, 89);
+}
+input[type=button]:hover {
+	border-color: rgb(89, 89, 89);
+}
+input[type=submit]:hover {
+	border-color: rgb(89, 89, 89);
+}
+input[type=reset]:hover {
+	border-color: rgb(89, 89, 89);
+}
+.control-button:focus {
+	border-color: rgb(89, 89, 89);
+}
+button:focus {
+	border-color: rgb(89, 89, 89);
+}
+input[type=button]:focus {
+	border-color: rgb(89, 89, 89);
+}
+input[type=submit]:focus {
+	border-color: rgb(89, 89, 89);
+}
+input[type=reset]:focus {
+	border-color: rgb(89, 89, 89);
+}
+.control-button:hover {
+	cursor: pointer;
+}
+button:hover {
+	cursor: pointer;
+}
+input[type=button]:hover {
+	cursor: pointer;
+}
+input[type=submit]:hover {
+	cursor: pointer;
+}
+input[type=reset]:hover {
+	cursor: pointer;
+}
+.control-button:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+button:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=button]:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=submit]:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=reset]:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+.buttonType_themed.control-button {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+button.buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=button].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=submit].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=reset].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+.buttonType_themed.control-button:hover {
+	border-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:focus {
+	border-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+button.buttonType_themed:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=button].buttonType_themed:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=submit].buttonType_themed:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=reset].buttonType_themed:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+button:disabled {
+	border-color: rgb(217, 217, 217) !important; outline: 0px; color: rgb(153, 153, 153) !important; cursor: default; background-color: rgb(217, 217, 217) !important;
+}
+input[type=button]:disabled {
+	border-color: rgb(217, 217, 217) !important; outline: 0px; color: rgb(153, 153, 153) !important; cursor: default; background-color: rgb(217, 217, 217) !important;
+}
+input[type=submit]:disabled {
+	border-color: rgb(217, 217, 217) !important; outline: 0px; color: rgb(153, 153, 153) !important; cursor: default; background-color: rgb(217, 217, 217) !important;
+}
+input[type=reset]:disabled {
+	border-color: rgb(217, 217, 217) !important; outline: 0px; color: rgb(153, 153, 153) !important; cursor: default; background-color: rgb(217, 217, 217) !important;
+}
+.control-button:link {
+	color: rgb(255, 255, 255);
+}
+.control-button:visited {
+	color: rgb(255, 255, 255);
+}
+.buttonType_themed.control-button:link {
+	color: rgb(255, 255, 255);
+}
+.buttonType_themed.control-button:visited {
+	color: rgb(255, 255, 255);
+}
+.buttonState_disabled.control-button {
+	border-color: rgb(217, 217, 217) !important; color: rgb(153, 153, 153) !important; cursor: default; background-color: rgb(217, 217, 217) !important;
+}
+input[type=radio] {
+	width: 20px; height: 20px;
+}
+input[type=radio]::-ms-check {
+	border: 2px solid rgb(51, 51, 51); color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);
+}
+input[type=radio]:checked::-ms-check {
+	border-color: rgb(0, 120, 215); color: rgb(0, 120, 215);
+}
+input[type=radio]:hover::-ms-check {
+	border-color: rgb(0, 0, 0);
+}
+input[type=radio]:active::-ms-check {
+	border-color: rgb(51, 51, 51); color: rgb(51, 51, 51);
+}
+input[type=radio]:disabled::-ms-check {
+	border-color: rgb(204, 204, 204) !important; color: rgb(204, 204, 204) !important; background-color: rgb(255, 255, 255) !important;
+}
+input[type=radio]:checked:disabled::-ms-check {
+	color: rgb(204, 204, 204) !important;
+}
+input[type=checkbox] {
+	width: 20px; height: 20px;
+}
+input[type=checkbox]::-ms-check {
+	border: 2px solid rgb(153, 153, 153); color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);
+}
+input[type=checkbox]:checked::-ms-check {
+	border-color: rgb(0, 120, 215); background-color: rgb(0, 120, 215);
+}
+input[type=checkbox]:hover::-ms-check {
+	border-color: rgb(51, 51, 51);
+}
+input[type=checkbox]:active::-ms-check {
+	border-color: rgb(51, 51, 51); background-color: rgb(118, 118, 118);
+}
+input[type=checkbox]:disabled::-ms-check {
+	border-color: rgb(204, 204, 204) !important; color: rgb(204, 204, 204) !important; background-color: rgb(255, 255, 255) !important;
+}
+progress {
+	height: 4px; color: rgb(0, 120, 215); display: block; background-color: rgb(204, 204, 204); -webkit-appearance: none;
+}
+progress::-ms-fill {
+	color: rgb(0, 120, 215);
+}
+input[type=range] {
+	height: 42px; padding-top: 16px; padding-bottom: 16px;
+}
+input[type=range]::-ms-track {
+	height: 2px; color: transparent; background-color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+	background-color: rgb(0, 120, 215);
+}
+input[type=range]::-ms-fill-upper {
+	background-color: rgb(153, 153, 153);
+}
+input[type=range]::-ms-thumb {
+	border-radius: 4px; width: 24px; height: 8px; background-color: rgb(0, 120, 215);
+}
+input[type=range]:hover::-ms-thumb {
+	background-color: rgb(38, 38, 38);
+}
+input[type=range]:active::-ms-thumb {
+	background-color: rgb(230, 230, 230);
+}
+input[type=range]:disabled::-ms-fill-lower {
+	background-color: rgb(204, 204, 204) !important;
+}
+input[type=range]:disabled::-ms-fill-upper {
+	background-color: rgb(204, 204, 204) !important;
+}
+input[type=range]:disabled::-ms-thumb {
+	background-color: rgb(230, 230, 230) !important;
+}
+html {
+	font-size: 100%;
+}
+body {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-family: "Segoe UI Webfont",Ebrima,"Nirmala UI",Gadugi,"Segoe Xbox Symbol","Segoe UI Symbol","Meiryo UI","Khmer UI",Tunga,"Lao UI",Raavi,"Iskoola Pota",Latha,Leelawadee,"Microsoft YaHei UI","Microsoft JhengHei UI","Malgun Gothic","Estrangelo Edessa","Microsoft Himalaya","Microsoft New Tai Lue","Microsoft PhagsPa","Microsoft Tai Le","Microsoft Yi Baiti","Mongolian Baiti","MV Boli","Myanmar Text","Cambria Math"; font-size: 0.93rem; font-weight: 400;
+}
+a {
+	color: rgb(204, 204, 204); text-decoration: none;
+}
+a:link {
+	color: rgb(0, 120, 215);
+}
+a:visited {
+	color: rgb(0, 120, 215);
+}
+a:hover {
+	color: rgb(102, 102, 102);
+}
+a:focus {
+	color: rgb(0, 120, 215);
+}
+a:active {
+	color: rgb(153, 153, 153);
+}
+h1 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+h2 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+h3 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+h4 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+h5 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+h6 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-headline {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-header {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-subheader {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-title {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-subtitle {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-body {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-base {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-caption {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-captionAlt {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-subcaption {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-display1 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-display2 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-display3 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-title1 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-title2 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-title3 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-caption1 {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+p {
+	margin-top: 1.25rem; margin-bottom: 1.25rem;
+}
+.text-display1 {
+	line-height: 5rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 3.87rem; font-weight: 200;
+}
+.text-headline {
+	line-height: 5rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 3.87rem; font-weight: 200;
+}
+.textType_maxLinesOne.text-display1 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 5rem;
+}
+.textType_maxLinesOne.text-headline {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 5rem;
+}
+.textType_maxLinesTwo.text-display1 {
+	max-height: 10rem;
+}
+.textType_maxLinesTwo.text-headline {
+	max-height: 10rem;
+}
+.textType_maxLinesThree.text-display1 {
+	max-height: 15rem;
+}
+.textType_maxLinesThree.text-headline {
+	max-height: 15rem;
+}
+.textType_maxLinesFour.text-display1 {
+	max-height: 20rem;
+}
+.textType_maxLinesFour.text-headline {
+	max-height: 20rem;
+}
+.text-display2 {
+	line-height: 3.5rem; padding-top: 0.21rem; padding-bottom: 0.21rem; font-size: 2.87rem; font-weight: 200;
+}
+.text-header {
+	line-height: 3.5rem; padding-top: 0.21rem; padding-bottom: 0.21rem; font-size: 2.87rem; font-weight: 200;
+}
+h1 {
+	line-height: 3.5rem; padding-top: 0.21rem; padding-bottom: 0.21rem; font-size: 2.87rem; font-weight: 200;
+}
+.textType_maxLinesOne.text-display2 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 3.5rem;
+}
+.textType_maxLinesOne.text-header {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 3.5rem;
+}
+h1.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 3.5rem;
+}
+.textType_maxLinesTwo.text-display2 {
+	max-height: 7rem;
+}
+.textType_maxLinesTwo.text-header {
+	max-height: 7rem;
+}
+h1.textType_maxLinesTwo {
+	max-height: 7rem;
+}
+.textType_maxLinesThree.text-display2 {
+	max-height: 10.5rem;
+}
+.textType_maxLinesThree.text-header {
+	max-height: 10.5rem;
+}
+h1.textType_maxLinesThree {
+	max-height: 10.5rem;
+}
+.textType_maxLinesFour.text-display2 {
+	max-height: 14rem;
+}
+.textType_maxLinesFour.text-header {
+	max-height: 14rem;
+}
+h1.textType_maxLinesFour {
+	max-height: 14rem;
+}
+.text-display3 {
+	line-height: 2.5rem; padding-top: 0.19rem; padding-bottom: 0.19rem; font-size: 2.12rem; font-weight: 200;
+}
+.text-subheader {
+	line-height: 2.5rem; padding-top: 0.19rem; padding-bottom: 0.19rem; font-size: 2.12rem; font-weight: 200;
+}
+h2 {
+	line-height: 2.5rem; padding-top: 0.19rem; padding-bottom: 0.19rem; font-size: 2.12rem; font-weight: 200;
+}
+.textType_maxLinesOne.text-display3 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 2.5rem;
+}
+.textType_maxLinesOne.text-subheader {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 2.5rem;
+}
+h2.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 2.5rem;
+}
+.textType_maxLinesTwo.text-display3 {
+	max-height: 5rem;
+}
+.textType_maxLinesTwo.text-subheader {
+	max-height: 5rem;
+}
+h2.textType_maxLinesTwo {
+	max-height: 5rem;
+}
+.textType_maxLinesThree.text-display3 {
+	max-height: 7.5rem;
+}
+.textType_maxLinesThree.text-subheader {
+	max-height: 7.5rem;
+}
+h2.textType_maxLinesThree {
+	max-height: 7.5rem;
+}
+.textType_maxLinesFour.text-display3 {
+	max-height: 10rem;
+}
+.textType_maxLinesFour.text-subheader {
+	max-height: 10rem;
+}
+h2.textType_maxLinesFour {
+	max-height: 10rem;
+}
+.text-title {
+	line-height: 1.75rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 1.5rem; font-weight: 300;
+}
+h3 {
+	line-height: 1.75rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 1.5rem; font-weight: 300;
+}
+.textType_maxLinesOne.text-title {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.75rem;
+}
+h3.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.75rem;
+}
+.textType_maxLinesTwo.text-title {
+	max-height: 3.5rem;
+}
+h3.textType_maxLinesTwo {
+	max-height: 3.5rem;
+}
+.textType_maxLinesThree.text-title {
+	max-height: 5.25rem;
+}
+h3.textType_maxLinesThree {
+	max-height: 5.25rem;
+}
+.textType_maxLinesFour.text-title {
+	max-height: 7rem;
+}
+h3.textType_maxLinesFour {
+	max-height: 7rem;
+}
+.text-title1 {
+	line-height: 1.75rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 1.5rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-title1 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.75rem;
+}
+.textType_maxLinesTwo.text-title1 {
+	max-height: 3.5rem;
+}
+.textType_maxLinesThree.text-title1 {
+	max-height: 5.25rem;
+}
+.textType_maxLinesFour.text-title1 {
+	max-height: 7rem;
+}
+.text-title2 {
+	line-height: 1.75rem; padding-top: 0.14rem; padding-bottom: 0.14rem; font-size: 1.5rem; font-weight: 200;
+}
+.textType_maxLinesOne.text-title2 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.75rem;
+}
+.textType_maxLinesTwo.text-title2 {
+	max-height: 3.5rem;
+}
+.textType_maxLinesThree.text-title2 {
+	max-height: 5.25rem;
+}
+.textType_maxLinesFour.text-title2 {
+	max-height: 7rem;
+}
+.text-title3 {
+	line-height: 1.5rem; padding-top: 0.1rem; padding-bottom: 0.1rem; font-size: 1.25rem; font-weight: 400;
+}
+.text-subtitle {
+	line-height: 1.5rem; padding-top: 0.1rem; padding-bottom: 0.1rem; font-size: 1.25rem; font-weight: 400;
+}
+h4 {
+	line-height: 1.5rem; padding-top: 0.1rem; padding-bottom: 0.1rem; font-size: 1.25rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-title3 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.5rem;
+}
+.textType_maxLinesOne.text-subtitle {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.5rem;
+}
+h4.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.5rem;
+}
+.textType_maxLinesTwo.text-title3 {
+	max-height: 3rem;
+}
+.textType_maxLinesTwo.text-subtitle {
+	max-height: 3rem;
+}
+h4.textType_maxLinesTwo {
+	max-height: 3rem;
+}
+.textType_maxLinesThree.text-title3 {
+	max-height: 4.5rem;
+}
+.textType_maxLinesThree.text-subtitle {
+	max-height: 4.5rem;
+}
+h4.textType_maxLinesThree {
+	max-height: 4.5rem;
+}
+.textType_maxLinesFour.text-title3 {
+	max-height: 6rem;
+}
+.textType_maxLinesFour.text-subtitle {
+	max-height: 6rem;
+}
+h4.textType_maxLinesFour {
+	max-height: 6rem;
+}
+.text-caption1 {
+	line-height: 0.87rem; padding-top: 0.07rem; padding-bottom: 0.07rem; font-size: 0.75rem; font-weight: 400;
+}
+.text-caption {
+	line-height: 0.87rem; padding-top: 0.07rem; padding-bottom: 0.07rem; font-size: 0.75rem; font-weight: 400;
+}
+h5 {
+	line-height: 0.87rem; padding-top: 0.07rem; padding-bottom: 0.07rem; font-size: 0.75rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-caption1 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.87rem;
+}
+.textType_maxLinesOne.text-caption {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.87rem;
+}
+h5.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.87rem;
+}
+.textType_maxLinesTwo.text-caption1 {
+	max-height: 1.75rem;
+}
+.textType_maxLinesTwo.text-caption {
+	max-height: 1.75rem;
+}
+h5.textType_maxLinesTwo {
+	max-height: 1.75rem;
+}
+.textType_maxLinesThree.text-caption1 {
+	max-height: 2.62rem;
+}
+.textType_maxLinesThree.text-caption {
+	max-height: 2.62rem;
+}
+h5.textType_maxLinesThree {
+	max-height: 2.62rem;
+}
+.textType_maxLinesFour.text-caption1 {
+	max-height: 3.5rem;
+}
+.textType_maxLinesFour.text-caption {
+	max-height: 3.5rem;
+}
+h5.textType_maxLinesFour {
+	max-height: 3.5rem;
+}
+.text-caption2 {
+	line-height: 0.75rem; padding-top: 0.05rem; padding-bottom: 0.05rem; font-size: 0.62rem; font-weight: 400;
+}
+.text-captionAlt {
+	line-height: 0.75rem; padding-top: 0.05rem; padding-bottom: 0.05rem; font-size: 0.62rem; font-weight: 400;
+}
+h6 {
+	line-height: 0.75rem; padding-top: 0.05rem; padding-bottom: 0.05rem; font-size: 0.62rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-caption2 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.75rem;
+}
+.textType_maxLinesOne.text-captionAlt {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.75rem;
+}
+h6.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.75rem;
+}
+.textType_maxLinesTwo.text-caption2 {
+	max-height: 1.5rem;
+}
+.textType_maxLinesTwo.text-captionAlt {
+	max-height: 1.5rem;
+}
+h6.textType_maxLinesTwo {
+	max-height: 1.5rem;
+}
+.textType_maxLinesThree.text-caption2 {
+	max-height: 2.25rem;
+}
+.textType_maxLinesThree.text-captionAlt {
+	max-height: 2.25rem;
+}
+h6.textType_maxLinesThree {
+	max-height: 2.25rem;
+}
+.textType_maxLinesFour.text-caption2 {
+	max-height: 3rem;
+}
+.textType_maxLinesFour.text-captionAlt {
+	max-height: 3rem;
+}
+h6.textType_maxLinesFour {
+	max-height: 3rem;
+}
+.text-caption3 {
+	line-height: 0.62rem; padding-top: 0.02rem; padding-bottom: 0.02rem; font-size: 0.5rem; font-weight: 400;
+}
+.text-subcaption {
+	line-height: 0.62rem; padding-top: 0.02rem; padding-bottom: 0.02rem; font-size: 0.5rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-caption3 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.62rem;
+}
+.textType_maxLinesOne.text-subcaption {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 0.62rem;
+}
+.textType_maxLinesTwo.text-caption3 {
+	max-height: 1.25rem;
+}
+.textType_maxLinesTwo.text-subcaption {
+	max-height: 1.25rem;
+}
+.textType_maxLinesThree.text-caption3 {
+	max-height: 1.87rem;
+}
+.textType_maxLinesThree.text-subcaption {
+	max-height: 1.87rem;
+}
+.textType_maxLinesFour.text-caption3 {
+	max-height: 2.5rem;
+}
+.textType_maxLinesFour.text-subcaption {
+	max-height: 2.5rem;
+}
+.text-body1 {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 400;
+}
+.text-body {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 400;
+}
+p {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 400;
+}
+.textType_maxLinesOne.text-body1 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.25rem;
+}
+.textType_maxLinesOne.text-body {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.25rem;
+}
+p.textType_maxLinesOne {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.25rem;
+}
+.textType_maxLinesTwo.text-body1 {
+	max-height: 2.5rem;
+}
+.textType_maxLinesTwo.text-body {
+	max-height: 2.5rem;
+}
+p.textType_maxLinesTwo {
+	max-height: 2.5rem;
+}
+.textType_maxLinesThree.text-body1 {
+	max-height: 3.75rem;
+}
+.textType_maxLinesThree.text-body {
+	max-height: 3.75rem;
+}
+p.textType_maxLinesThree {
+	max-height: 3.75rem;
+}
+.textType_maxLinesFour.text-body1 {
+	max-height: 5rem;
+}
+.textType_maxLinesFour.text-body {
+	max-height: 5rem;
+}
+p.textType_maxLinesFour {
+	max-height: 5rem;
+}
+.text-body2 {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 600;
+}
+.text-base {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 600;
+}
+.textType_maxLinesOne.text-body2 {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.25rem;
+}
+.textType_maxLinesOne.text-base {
+	white-space: nowrap; -ms-text-overflow: ellipsis; max-height: 1.25rem;
+}
+.textType_maxLinesTwo.text-body2 {
+	max-height: 2.5rem;
+}
+.textType_maxLinesTwo.text-base {
+	max-height: 2.5rem;
+}
+.textType_maxLinesThree.text-body2 {
+	max-height: 3.75rem;
+}
+.textType_maxLinesThree.text-base {
+	max-height: 3.75rem;
+}
+.textType_maxLinesFour.text-body2 {
+	max-height: 5rem;
+}
+.textType_maxLinesFour.text-base {
+	max-height: 5rem;
+}
+[class*=textType_maxLines] {
+	overflow: hidden;
+}
+html {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+.template-input {
+	margin-top: 24px; margin-bottom: 24px; position: relative;
+}
+.template-input label {
+	margin-top: 8px; margin-bottom: 8px; display: block;
+}
+.template-input input {
+	margin-right: 8px;
+}
+.template-input label {
+	margin-right: 8px;
+}
+.inputType_radio.template-input input {
+	float: left;
+}
+.inputType_checkbox.template-input input {
+	float: left;
+}
+.inputType_radio.template-input input + label {
+	display: table-cell;
+}
+.inputType_checkbox.template-input input + label {
+	display: table-cell;
+}
+.inputType_radio.template-input input:disabled + label {
+	color: rgb(204, 204, 204);
+}
+.inputType_checkbox.template-input input:disabled + label {
+	color: rgb(204, 204, 204);
+}
+.template-input .input-errorDialog {
+	margin-top: 12px; margin-bottom: 12px;
+}
+.template-input .input-errorDialog::before {
+	display: table; content: " ";
+}
+.template-input .input-errorDialog::after {
+	display: table; content: " ";
+}
+.template-input .input-errorDialog::after {
+	clear: both;
+}
+.template-input .input-errorDialog .errorDialog-dialogRoot {
+	float: left;
+}
+.template-buttonGroup {
+	margin-top: 24px; margin-bottom: 24px;
+}
+.template-buttonGroup .control-button {
+	margin-top: 4px; margin-right: 4px; margin-bottom: 4px;
+}
+.template-buttonGroup button {
+	margin-top: 4px; margin-right: 4px; margin-bottom: 4px;
+}
+.template-buttonGroup input[type=submit] {
+	margin-top: 4px; margin-right: 4px; margin-bottom: 4px;
+}
+.template-buttonGroup input[type=button] {
+	margin-top: 4px; margin-right: 4px; margin-bottom: 4px;
+}
+.template-buttonGroup input[type=reset] {
+	margin-top: 4px; margin-right: 4px; margin-bottom: 4px;
+}
+.template-tooltip {
+	padding: 4px 0px; border: 2px solid rgb(153, 153, 153); color: rgb(0, 0, 0); background-color: rgb(230, 230, 230);
+}
+.template-tooltip :first-child {
+	margin-top: 0px;
+}
+.template-tooltip :last-child {
+	margin-bottom: 0px;
+}
+.tooltipType_error.template-tooltip {
+	border-color: rgb(255, 255, 255); color: rgb(232, 17, 35); background-color: rgb(255, 255, 255);
+}
+a:hover:focus {
+	color: rgb(102, 102, 102);
+}
+a:hover:active {
+	color: rgb(153, 153, 153);
+}
+.control-button {
+	color: rgb(255, 255, 255);
+}
+button {
+	color: rgb(255, 255, 255);
+}
+input[type=button] {
+	color: rgb(255, 255, 255);
+}
+input[type=submit] {
+	color: rgb(255, 255, 255);
+}
+input[type=reset] {
+	color: rgb(255, 255, 255);
+}
+.control-button:hover {
+	color: rgb(255, 255, 255);
+}
+button:hover {
+	color: rgb(255, 255, 255);
+}
+input[type=button]:hover {
+	color: rgb(255, 255, 255);
+}
+input[type=submit]:hover {
+	color: rgb(255, 255, 255);
+}
+input[type=reset]:hover {
+	color: rgb(255, 255, 255);
+}
+.control-button:hover:active {
+	color: rgb(255, 255, 255);
+}
+button:hover:active {
+	color: rgb(255, 255, 255);
+}
+input[type=button]:hover:active {
+	color: rgb(255, 255, 255);
+}
+input[type=submit]:hover:active {
+	color: rgb(255, 255, 255);
+}
+input[type=reset]:hover:active {
+	color: rgb(255, 255, 255);
+}
+.control-button:hover:focus {
+	color: rgb(255, 255, 255);
+}
+button:hover:focus {
+	color: rgb(255, 255, 255);
+}
+input[type=button]:hover:focus {
+	color: rgb(255, 255, 255);
+}
+input[type=submit]:hover:focus {
+	color: rgb(255, 255, 255);
+}
+input[type=reset]:hover:focus {
+	color: rgb(255, 255, 255);
+}
+.control-button:hover:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+button:hover:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=button]:hover:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=submit]:hover:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+input[type=reset]:hover:active {
+	border-color: rgb(89, 89, 89); background-color: rgb(89, 89, 89);
+}
+.button_primary.control-button:hover {
+	background-color: rgb(0, 120, 215);
+}
+button.button_primary:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=button].button_primary:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=submit].button_primary:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=reset].button_primary:hover {
+	background-color: rgb(0, 120, 215);
+}
+.buttonType_themed.control-button:hover {
+	background-color: rgb(0, 120, 215);
+}
+button.buttonType_themed:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=button].buttonType_themed:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=submit].buttonType_themed:hover {
+	background-color: rgb(0, 120, 215);
+}
+input[type=reset].buttonType_themed:hover {
+	background-color: rgb(0, 120, 215);
+}
+.button_primary.control-button:focus {
+	background-color: rgb(0, 120, 215);
+}
+button.button_primary:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=button].button_primary:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=submit].button_primary:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=reset].button_primary:focus {
+	background-color: rgb(0, 120, 215);
+}
+.buttonType_themed.control-button:focus {
+	background-color: rgb(0, 120, 215);
+}
+button.buttonType_themed:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=button].buttonType_themed:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=submit].buttonType_themed:focus {
+	background-color: rgb(0, 120, 215);
+}
+input[type=reset].buttonType_themed:focus {
+	background-color: rgb(0, 120, 215);
+}
+.button_primary.control-button:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+.button_primary.control-button:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.button_primary:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].button_primary:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].button_primary:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].button_primary:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:hover:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=text]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=password]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=email]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=number]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=tel]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=url]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=search]:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+textarea:focus {
+	color: rgb(64, 64, 64); background-color: rgb(255, 255, 255);
+}
+input[type=checkbox] {
+	margin: 0px 8px 0px 0px;
+}
+input[type=radio] {
+	margin: 0px 8px 0px 0px;
+}
+input[type=checkbox]:hover:active::-ms-check {
+	border-color: rgb(51, 51, 51); color: rgb(255, 255, 255); background-color: rgb(118, 118, 118);
+}
+select {
+	border-color: rgb(153, 153, 153); color: rgb(0, 0, 0);
+}
+select:enabled {
+	border-color: rgb(153, 153, 153); color: rgb(0, 0, 0);
+}
+select:hover {
+	border-color: rgb(102, 102, 102);
+}
+select:enabled:hover {
+	border-color: rgb(102, 102, 102);
+}
+select:active {
+	border-color: rgb(102, 102, 102);
+}
+select:enabled:active {
+	border-color: rgb(102, 102, 102);
+}
+select::-ms-value {
+	margin: 0px; padding: 4px 8px;
+}
+option {
+	background: rgb(242, 242, 242); color: rgb(0, 0, 0);
+}
+option:checked {
+	background: rgb(242, 242, 242); color: rgb(0, 0, 0);
+}
+option:hover {
+	background: rgb(230, 230, 230); color: rgb(0, 0, 0);
+}
+option:checked:hover {
+	background: rgb(230, 230, 230); color: rgb(0, 0, 0);
+}
+select:enabled:focus option:hover {
+	background: rgb(230, 230, 230); color: rgb(0, 0, 0);
+}
+select:enabled:focus option:checked:hover {
+	background: rgb(230, 230, 230); color: rgb(0, 0, 0);
+}
+input::-ms-clear:hover:active {
+	background-color: rgb(0, 120, 215);
+}
+input::-ms-reveal:hover:active {
+	background-color: rgb(0, 120, 215);
+}
+progress {
+	color: rgb(0, 120, 215);
+}
+progress:indeterminate {
+	color: rgb(0, 120, 215);
+}
+.win-flyout {
+	padding-top: 6px; margin-bottom: 7px;
+}
+.win-flyout h4 {
+	margin-top: 0px; margin-bottom: 4px;
+}
+.win-flyout p {
+	margin-bottom: 0px;
+}
+.win-flyout h4 + p {
+	margin-top: 0px;
+}
+legend {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 600;
+}
+p {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 400; max-width: 672px;
+}
+li {
+	line-height: 1.25rem; padding-top: 0.01rem; padding-bottom: 0.01rem; font-size: 0.93rem; font-weight: 400; max-width: 672px;
+}
+.action-link {
+	line-height: 0.87rem; padding-top: 0.07rem; padding-bottom: 0.07rem; font-size: 0.75rem; font-weight: 400;
+}
+.icon {
+	font-family: "Segoe MDL2 Assets";
+}
+.icon-win-easeOfAccess::before {
+	content: "\E776";
+}
+.icon-win-keyboardStandard::before {
+	content: "\E765";
+}
+fieldset {
+	margin: 4px 0px; padding: 0px; border: currentColor; border-image: none;
+}
+fieldset:last-child {
+	margin-bottom: 0px;
+}
+fieldset p {
+	margin: 16px 0px;
+}
+legend {
+	margin-bottom: 12px;
+}
+.button_primary.control-button {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+button.button_primary {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=button].button_primary {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=submit].button_primary {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=reset].button_primary {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+.buttonType_themed.control-button {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+button.buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=button].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=submit].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+input[type=reset].buttonType_themed {
+	border-color: rgb(0, 120, 215); color: rgb(255, 255, 255); background-color: rgb(0, 120, 215);
+}
+.button_primary.control-button:hover {
+	border-color: rgb(0, 78, 140);
+}
+button.button_primary:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].button_primary:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].button_primary:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].button_primary:hover {
+	border-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:hover {
+	border-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:hover {
+	border-color: rgb(0, 78, 140);
+}
+.button_primary.control-button:focus {
+	border-color: rgb(0, 78, 140);
+}
+button.button_primary:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].button_primary:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].button_primary:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].button_primary:focus {
+	border-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:focus {
+	border-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:focus {
+	border-color: rgb(0, 78, 140);
+}
+.button_primary.control-button:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].button_primary:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+.buttonType_themed.control-button:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+button.buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=button].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=submit].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+input[type=reset].buttonType_themed:active {
+	border-color: rgb(0, 78, 140); background-color: rgb(0, 78, 140);
+}
+.control-button:link {
+	color: rgb(255, 255, 255);
+}
+.control-button:visited {
+	color: rgb(255, 255, 255);
+}
+.template-buttonGroup {
+	margin: 6px 0px; display: flex; justify-content: flex-end;
+}
+.template-buttonGroup .control-button {
+	margin: 0px 0px 0px 4px; width: 50%; height: 32px;
+}
+.template-buttonGroup :first-of-type.control-button {
+	margin: 0px;
+}
+.template-buttonGroup .button_fullWidth.control-button {
+	margin: 0px; width: 100%;
+}
+@media all and (min-width:640px)
+{
+.template-buttonGroup .control-button {
+	margin-left: 12px;
+}
+.template-buttonGroup .control-button {
+	width: auto;
+}
+.template-buttonGroup .button_fullWidth.control-button {
+	width: auto;
+}
+}
+.tooltipType_error.tooltip {
+	padding: 4px 0px;
+}
+.template-input {
+	margin-top: 12px; margin-bottom: 12px;
+}
+.inputType_checkbox.template-input {
+	padding: 2px 0px;
+}
+.template-input .input-errorDialog {
+	margin-top: 0px; margin-bottom: 0px; display: inline-block; position: static;
+}
+.template-input .errorDialogType_above.input-errorDialog {
+	margin-top: 0px; margin-bottom: 0px;
+}
+input[type=color] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=date] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=datetime] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=datetime-local] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=email] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=month] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=number] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=password] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=search] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=tel] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=text] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=time] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=url] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+input[type=week] {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+select {
+	width: 100%; margin-top: 0px; margin-bottom: 0px;
+}
+@media all and (min-width:640px)
+{
+input[type=color] {
+	width: 296px;
+}
+input[type=date] {
+	width: 296px;
+}
+input[type=datetime] {
+	width: 296px;
+}
+input[type=datetime-local] {
+	width: 296px;
+}
+input[type=email] {
+	width: 296px;
+}
+input[type=month] {
+	width: 296px;
+}
+input[type=number] {
+	width: 296px;
+}
+input[type=password] {
+	width: 296px;
+}
+input[type=search] {
+	width: 296px;
+}
+input[type=tel] {
+	width: 296px;
+}
+input[type=text] {
+	width: 296px;
+}
+input[type=time] {
+	width: 296px;
+}
+input[type=url] {
+	width: 296px;
+}
+input[type=week] {
+	width: 296px;
+}
+select {
+	width: 296px;
+}
+}
+legend {
+	max-width: 100%;
+}
+.control-progress {
+	padding: 32px 0px 36px; width: 320px; text-align: center; color: rgb(0, 120, 215);
+}
+.control-progress progress {
+	margin: 0px auto;
+}
+.control-progress progress.win-large.win-ring {
+	width: 64px; height: 64px;
+}
+.control-progress h4 {
+	margin: 16px 0px 0px;
+}
+.control-actionLinks {
+	list-style: none; margin: 0px; padding: 0px;
+}
+.control-actionLinks li {
+	margin: 12px 0px 0px; padding: 0.07rem 0px; line-height: 0.87rem; font-size: 0.75rem; font-weight: 400;
+}
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+}
+body {
+	background-color: rgb(255, 255, 255);
+}
+.control-app {
+	height: 100%; display: -ms-grid; -ms-grid-columns: 1fr; -ms-grid-rows: 1fr minmax(600px, 870px) 1fr;
+}
+.control-app .app-content {
+	margin: 0px auto; width: 100%; min-width: 448px; max-width: 1024px; -ms-grid-column: 1; -ms-grid-row: 2; background-color: rgb(255, 255, 255);
+}
+.control-page {
+	height: 100%; display: -ms-grid; -ms-grid-columns: 64px 1fr 32px; -ms-grid-rows: 32px 1fr 80px;
+}
+.control-page .page-body {
+	display: -ms-grid; -ms-overflow-x: hidden; -ms-overflow-y: auto; max-height: 758px; -ms-grid-column: 2; -ms-grid-columns: 1fr 32px; -ms-grid-row: 2; -ms-grid-rows: minmax(116px, max-content) 1fr 1px; -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.control-page .page-body .body-header {
+	margin-bottom: 28px; display: -ms-grid; -ms-grid-column: 1; -ms-grid-columns: 1fr auto; -ms-grid-row: 1; -ms-grid-row-align: end; -ms-grid-rows: 1fr;
+}
+.control-page .page-body .body-header h2 {
+	margin: 0px; color: rgb(0, 120, 215); -ms-grid-column: 1; -ms-grid-row: 1; -ms-grid-row-align: center;
+}
+.control-page .page-body .body-header .img-brand {
+	height: 60px; margin-right: 16px; -ms-grid-column: 2; -ms-grid-column-align: end; -ms-grid-row: 1; -ms-grid-row-align: center;
+}
+.control-page .page-body .body-container {
+	display: -ms-grid; -ms-grid-column: 1; -ms-grid-columns: 1fr; -ms-grid-row: 2; -ms-grid-rows: auto 1fr;
+}
+.control-page .page-body .body-container .container-content {
+	-ms-grid-column: 1; -ms-grid-row: 1;
+}
+.control-page .page-body .body-container .container-content p:first-child {
+	margin-top: 0px;
+}
+.control-page .page-body .body-container .container-content p.content-lead {
+	margin-bottom: 32px;
+}
+.control-page .page-body .body-container .container-content .content-buttons {
+	text-align: right; margin-top: 4px;
+}
+@media all and (min-width:640px)
+{
+.control-page .page-body .body-container .container-content .content-buttons {
+	padding-right: 0px;
+}
+}
+.control-page .page-body .body-container .container-footer {
+	display: -ms-grid; -ms-grid-column: 1; -ms-grid-columns: 1fr; -ms-grid-row: 2; -ms-grid-rows: 1fr 8px auto;
+}
+.control-page .page-body .body-container .container-footer .footer-content {
+	-ms-grid-column: 1; -ms-grid-row: 3;
+}
+.control-page .page-footer {
+	height: 80px; display: -ms-grid; -ms-grid-column: 2; -ms-grid-columns: auto 1fr 32px; -ms-grid-row: 3; -ms-grid-rows: 16px auto;
+}
+.control-page .page-footer .footer-icons {
+	display: none; -ms-grid-column: 1; -ms-grid-row: 2;
+}
+@media all and (min-width:640px)
+{
+.control-page .page-footer .footer-icons {
+	display: flex;
+}
+}
+.control-page .page-footer .footer-icons .icon {
+	width: 48px; height: 48px; text-align: center; color: rgb(153, 153, 153); line-height: 48px; font-size: 26px; margin-right: 12px;
+}
+.control-page .page-footer .footer-icons .icon:hover {
+	color: rgb(102, 102, 102);
+}
+.control-page .page-footer .footer-buttons {
+	-ms-grid-column: 2; -ms-grid-row: 2;
+}
+.page_centered.control-page {
+	-ms-grid-columns: 1fr; -ms-grid-rows: 1fr;
+}
+.page_centered.control-page .page-body {
+	-ms-grid-column: 1; -ms-grid-columns: 1fr auto 1fr; -ms-grid-row: 1; -ms-grid-rows: 1fr auto 1fr;
+}
+.page_centered.control-page .page-body .body-container {
+	display: block; -ms-grid-column: 2; -ms-grid-row: 2;
+}
+.gridcol-one {
+	-ms-grid-column: 1;
+}
+.gridcol-two {
+	-ms-grid-column: 3;
+}
+.gridrow-one {
+	-ms-grid-row: 1;
+}
+.gridrow-two {
+	-ms-grid-row: 2;
+}
+.gridrow-three {
+	-ms-grid-row: 3;
+}
+.gridrow-four {
+	-ms-grid-row: 4;
+}
+.gridrow-five {
+	-ms-grid-row: 5;
+}
+.gridcolspan-two {
+	-ms-grid-column-span: 3;
+}
+.gridrowspan-two {
+	-ms-grid-row-span: 2;
+}
+.gridrowspan-three {
+	-ms-grid-row-span: 3;
+}
+.gridrowspan-four {
+	-ms-grid-row-span: 4;
+}
+.gridrowspan-five {
+	-ms-grid-row-span: 5;
+}
+.gridgutter {
+	height: 32px;
+}
+.gridcol-one + .gridcol-two {
+	margin-top: 32px;
+}
+@media all and (min-width:640px)
+{
+.layout-twoColumn {
+	display: -ms-grid; max-width: 672px; -ms-grid-columns: minmax(1fr, 296px) minmax(32px, 1fr) minmax(1fr, 296px); -ms-grid-rows: auto;
+}
+.layout-twoColumnText {
+	column-count: 2; column-gap: 32px;
+}
+.gridcol-one + .gridcol-two {
+	margin-top: 0px;
+}
+}

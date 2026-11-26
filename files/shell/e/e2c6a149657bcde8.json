@@ -1,0 +1,113 @@
+{
+  "NTHBIORECALLSETUP": {
+    "start": "NthMSAHello",
+    "notifyOnLastFinished": true,
+    "notifyOnFirstVisible": true,
+    "speechCapable": true,
+    "speechDisabled": true,
+    "frameName": "oobe-frame",
+    "personality": "CloudExperienceHost.Personality.LiteWhite",
+    "wallpaperBackdropEnabled": true,
+    "NthMSAHello": {
+      "cxid": "NthMSAHello",
+      "url": "ms-appx-web:///webapps/inclusiveOobe/view/OobeHello-main.html",
+      "preloadCheck": "CloudExperienceHost.NthBioExperience",
+      "preloadCheckSkipOnFailure": true,
+      "preloadSkipID": "NthSnapshotCapture",
+      "ignoreResult": true,
+      "internetRequired": true,
+      "successID": "NthMSANGCEnrollWithHello",
+      "failID": "NthMSANGCEnroll",
+      "cancelID": "NthMSANGCEnroll",
+      "abortID": "NthMSANGCEnroll",
+      "offlineID": "NthSnapshotCapture",
+      "disableBackNavigationToNodeOnSuccess": true,
+      "disableErrorPageOnFailure": true,
+      "visibility": false,
+      "measureId": 58530252
+    },
+    "NthMSANGCEnrollWithHello": {
+      "cxid": "NthMSANGCEnrollWithHello",
+      "frameAnimation": "lockandpinLottie.json",
+      "url": "https://account.live.com/msangc?fl=enroll&hello=1",
+      "urlint": "https://account.live-int.com/msangc?fl=enroll&hello=1",
+      "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+      "ignoreResult": true,
+      "internetRequired": true,
+      "successID": "NthSnapshotCapture",
+      "failID": "NthSnapshotCapture",
+      "cancelID": "NthSnapshotCapture",
+      "abortID": "NthSnapshotCapture",
+      "offlineID": "NthSnapshotCapture",
+      "disableBackNavigationToNodeOnSuccess": true,
+      "disableErrorPageOnFailure": true,
+      "visibility": false,
+      "intraWebAppVisibility": false,
+      "measureId": 58532793
+    },
+    "NthMSANGCEnroll": {
+      "cxid": "NthMSANGCEnroll",
+      "frameAnimation": "lockandpinLottie.json",
+      "url": "https://account.live.com/msangc?fl=enroll",
+      "urlint": "https://account.live-int.com/msangc?fl=enroll",
+      "queryStringBuilder": "CloudExperienceHost.MSA.getContextParametersForAccount",
+      "ignoreResult": true,
+      "internetRequired": true,
+      "successID": "NthSnapshotCapture",
+      "failID": "NthSnapshotCapture",
+      "cancelID": "NthSnapshotCapture",
+      "abortID": "NthSnapshotCapture",
+      "offlineID": "NthSnapshotCapture",
+      "disableBackNavigationToNodeOnSuccess": true,
+      "disableErrorPageOnFailure": true,
+      "visibility": false,
+      "intraWebAppVisibility": false,
+      "measureId": 58536646
+    },
+    "NthSnapshotCapture": {
+      "cxid": "NthSnapshotCapture",
+      "url": {
+        "value": "https://sdx.microsoft.com/frx/snapshot-capture2",
+        "overrideValue": "https://sdx.microsoft.com/frx/snapshot-capture3",
+        "overrideFeature": "SnapshotCaptureA9Oobe"
+      },
+      "urlint": {
+        "value": "https://sdx.microsoft-int.com/frx/snapshot-capture2",
+        "overrideValue": "https://sdx.microsoft-int.com/frx/snapshot-capture3",
+        "overrideFeature": "SnapshotCaptureA9Oobe"
+      },
+      "internetRequired": true,
+      "disableErrorPageOnFailure": true,
+      "ignoreResult": true,
+      "visibility": false,
+      "measureId": 58536657
+    }
+  },
+  "NTHRECALLSETUP": {
+    "start": "NthSnapshotCapture",
+    "notifyOnLastFinished": true,
+    "notifyOnFirstVisible": true,
+    "speechCapable": true,
+    "speechDisabled": true,
+    "frameName": "oobe-frame",
+    "personality": "CloudExperienceHost.Personality.LiteWhite",
+    "wallpaperBackdropEnabled": true,
+    "NthSnapshotCapture": {
+      "cxid": "NthSnapshotCapture",
+      "url": {
+        "value": "https://sdx.microsoft.com/frx/snapshot-capture2",
+        "overrideValue": "https://sdx.microsoft.com/frx/snapshot-capture3",
+        "overrideFeature": "SnapshotCaptureA9Oobe"
+      },
+      "urlint": {
+        "value": "https://sdx.microsoft-int.com/frx/snapshot-capture2",
+        "overrideValue": "https://sdx.microsoft-int.com/frx/snapshot-capture3",
+        "overrideFeature": "SnapshotCaptureA9Oobe"
+      },
+      "internetRequired": true,
+      "disableErrorPageOnFailure": true,
+      "ignoreResult": true,
+      "visibility": false
+    }
+  }
+}

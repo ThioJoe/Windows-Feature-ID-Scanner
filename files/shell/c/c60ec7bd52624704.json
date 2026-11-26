@@ -1,0 +1,1218 @@
+[
+    {
+        "id":"WelcomePage",
+        "type":"welcomePage",
+        "title":"Welcome to Narrator QuickStart (1 of 13)",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"This guide shows you the basics of using Narrator. Narrator reads aloud what’s on your screen so you can use that information to navigate your PC. To turn it on or off, press and hold the <bold>Windows logo</bold> key, then press <bold>Ctrl</bold> and <bold>Enter</bold>."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Every page in this guide will be read to you automatically. To stop reading, press <bold>Ctrl</bold>. Then, use the <bold>Up</bold> or <bold>Down arrow</bold> keys to keep reading from where Narrator left off. To leave the guide, press and hold <bold>Alt</bold>, then press <bold>F4</bold>."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"When you’re ready, press <bold>Enter</bold> on the <bold>Start guide</bold> button to go to the next screen."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"StartButton",
+                "type":"Button",
+                "accessKey":"S",
+                "text":"Start guide",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ExploreKeyboardPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"SecondWelcomePage",
+        "type":"secondWelcomePage",
+        "title":"Welcome to Narrator QuickStart (1 of 13)",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Welcome back. This guide will come up every time you open Narrator. If you don’t want to see it again, check the box next to \"Don’t show this guide again.\" If you ever want to revisit it, select \"Learn Narrator basics with QuickStart\" in your Narrator settings. You'll also find a link to the complete Narrator guide there."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To go through this guide again, press <bold>Enter</bold> on the <bold>Resume guide</bold> button."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Remember, to turn Narrator on or off, press and hold the <bold>Windows logo</bold> key, then press <bold>Ctrl</bold> and <bold>Enter</bold>. To stop reading, press <bold>Ctrl</bold>. Then, use the <bold>Up</bold> or <bold>Down arrow</bold> keys to keep reading from where Narrator left off. To leave the guide, press and hold <bold>Alt</bold>, then press <bold>F4</bold>.​"
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"ResumeButton",
+                "type":"Button",
+                "accessKey":"R",
+                "text":"Resume guide",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Resume",
+                    "targetId":""
+                }
+            },
+            {
+                "id":"StartOverButton",
+                "type":"Button",
+                "accessKey":"S",
+                "text":"Start over",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ExploreKeyboardPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"ExploreKeyboardPage",
+        "type":"normalPage",
+        "title":"Explore your keyboard (2 of 13)​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Throughout this guide, you’ll hear keyboard shortcuts and Narrator commands that may be useful to you. They’ll sound like this."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"<bold>Caps lock + 1</bold>."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"That means press and hold <bold>Caps lock</bold>, then press the number <bold>1</bold> key. This shortcut turns on input learning."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Input learning tells you what keys you’re pressing on your keyboard, as well as the Narrator command associated with them. To turn it off, press and hold <bold>Caps lock</bold>, then press the number <bold>1</bold> key twice."
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Press <bold>Enter</bold> on the <bold>Next</bold> button to go to the next screen."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"WelcomePage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ScanModePage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"ScanModePage",
+        "type":"normalPage",
+        "title":"Scan mode (3 of 13)​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Scan mode is a feature of Narrator that lets you use just a few keys to move around your screen."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Scan mode is already on unless you turned it off. You can practice turning it off and on by pressing <bold>Caps lock + Spacebar</bold>. Be sure it’s turned on for the remainder of this guide."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"While you’re in scan mode, you can press the <bold>Up</bold> and <bold>Down arrow</bold> keys to read different parts of the page. When you get to something that you want to use, like a link or button, press <bold>Enter</bold>."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ExploreKeyboardPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ReadingWordsPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"ReadingWordsPage",
+        "type":"normalPage",
+        "title":"Reading words and characters (4 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You can review individual characters in words by using the <bold>Left</bold> and <bold>Right arrow</bold> keys. This is a great way to check spelling."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To read word by word, press <bold>Ctrl + Left arrow</bold> or <bold>Ctrl + Right arrow</bold>."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You can try this now, or go to the next screen."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ScanModePage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"HeadingsPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"HeadingsPage",
+        "type":"normalPage",
+        "title":"Headings (5 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"In addition to using the <bold>Up</bold> and <bold>Down arrow</bold> keys, you can also move to different sections on a page using headings. Here are some examples of how different heading levels are read out."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"Level1",
+                "text":"This is a heading level 1, which is often used for page titles."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"Level2",
+                "text":"This is a heading level 2, which is often used for section headings within pages."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move to the next heading, press the <bold>H key</bold>. To go back to the previous heading, press <bold>Shift + H</bold>. You may need to do that on this page."
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You can try this now, or go to the next screen."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ReadingWordsPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"LandmarksPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"LandmarksPage",
+        "type":"normalPage",
+        "title":"Landmarks (6 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Landmarks are like containers that enclose similar parts of a page or app, and you can navigate directly to them. They can be a grouping of similar elements, like buttons or blocks of text, or a single element like a search box. You’ll see them a lot on the web."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"There are generally three types of landmarks:"
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Navigation landmarks let you move between different parts of an app. The <bold>Next</bold> and <bold>Back</bold> buttons on this page are inside a navigation landmark."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Main landmarks are an app’s content. The words are part of this page’s main landmark."
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Search landmarks are typically search boxes. We’ll talk more about these later."
+            },
+            {
+                "id":"Paragraph6",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move to the next landmark, press the <bold>D</bold> key. To go back to the previous landmark, press <bold>Shift + D</bold>. You may need to do that on this page."
+            },
+            {
+                "id":"Paragraph7",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You can try this now, or go to the next screen."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"HeadingsPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"EnteringTextPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"EnteringTextPage",
+        "type":"normalPage",
+        "title":"Entering text (7 of 13)​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Text boxes are places on a page where you can enter your own text. You’ll find them a lot in forms. When you land inside a text box, scan mode will automatically turn off. "
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"After you’re done typing, you can use the <bold>Down arrow</bold> key to keep going. If you’re in a multi-line text box, you may need to press the <bold>Down arrow</bold> several times to get out of the box. Once you’re out of the text box, scan mode will turn back on.​"
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"There’s a single-line text box below. Go ahead and practice entering text."
+            },
+            {
+                "id":"TextBox",
+                "type":"TextBox",
+                "accessKey":"",
+                "header":"This is a label for a text box.",
+                "text":"You're now inside the text box, so you can start typing",
+                "isDefaultFocus":true
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"LandmarksPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ControlsPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"ControlsPage",
+        "type":"normalPage",
+        "title":"Buttons, check boxes, and other controls (8 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Controls let you take actions and make choices. The <bold>Next</bold> and <bold>Back</bold> buttons in this guide are a type of control. You'll get to try out several different types of controls on this page."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move between them, press the <bold>Up</bold> and <bold>Down arrow</bold> keys, or press <bold>Tab</bold> or <bold>Shift + Tab</bold>. Using the <bold>Tab</bold> key will work to move between controls even when you’re not using a screen reader like Narrator."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"In some cases, the <bold>Up</bold> and <bold>Down arrow</bold> keys may move you through a list of choices in a control. Once you get to the choice you want, press <bold>Enter</bold>. You'll also press <bold>Enter</bold> to use controls that only have two states, like a toggle or check box."
+            },
+            {
+                "id":"CheckBox",
+                "type":"CheckBox",
+                "accessKey":"",
+                "text":"This is a check box text label",
+                "isDefaultFocus":true,
+                "checked":false,
+                "action":
+                {
+                    "type":"",
+                    "targetId":""
+                }
+            },
+            {
+                "id":"ComboBox",
+                "type":"ComboBox",
+                "accessKey":"",
+                "header":"This is a combo box text label",
+                "isDefaultFocus":false,
+                "option":
+                [
+                    "–Choose a continent–",
+                    "Africa",
+                    "Antarctica​",
+                    "Asia",
+                    "Australia​",
+                    "Europe​",
+                    "North America",
+                    "South America​"
+                ],
+                "selectedItem":1
+            },
+            {
+                "id":"ToggleSwitch",
+                "type":"ToggleSwitch",
+                "accessKey":"",
+                "header":"This is a toggle text label",
+                "isDefaultFocus":false,
+                "checked":false
+            },
+            {
+                "id":"SearchBox",
+                "type":"AutoSuggestBox",
+                "accessKey":"",
+                "header":"This is a search box text label",
+                "text":"Type the name of a continent",
+                "isDefaultFocus":false,
+                "option":
+                [
+                    "Africa",
+                    "Antarctica​",
+                    "Asia",
+                    "Australia​",
+                    "Europe​",
+                    "North America",
+                    "South America​"
+                ],
+                "action":
+                {
+                    "type":"Show",
+                    "targetId":"controlID"
+                }
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"EnteringTextPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorKeyPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"NarratorKeyPage",
+        "type":"normalPage",
+        "title":"The Narrator key (9 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You may have noticed that <bold>Caps lock</bold> is an essential key in many Narrator commands. When used in Narrator, <bold>Caps lock</bold> is also known as the <bold>Narrator</bold> key. <bold>Insert</bold> can also serve as your <bold>Narrator</bold> key."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"So, when you encounter a command that uses the <bold>Narrator</bold> key, just remember that you can use either <bold>Caps lock</bold> or <bold>Insert</bold>. The <bold>Narrator</bold> key will be referred to as simply \"<bold>Narrator</bold>\" in commands from now on."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ControlsPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorCommandsPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"NarratorCommandsPage",
+        "type":"normalPage",
+        "title":"Important Narrator commands (10 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Let’s go over a few Narrator commands that let you customize what and how Narrator reads things to you. Here they are."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Increase Narrator voice speed by pressing <bold>Narrator + the Plus sign</bold>."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Decrease voice speed by pressing <bold>Narrator + the Minus sign</bold>."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Hear the current item by pressing <bold>Narrator + Tab</bold>."
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Hear the title of a window by pressing <bold>Narrator + T</bold>."
+            },
+            {
+                "id":"Paragraph6",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To go to the top of a window, press <bold>Narrator + Home</bold>."
+            },
+            {
+                "id":"Paragraph7",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To go to the bottom of a window, press <bold>Narrator + End</bold>."
+            },
+            {
+                "id":"Paragraph8",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To read from wherever you are, press <bold>Narrator + R</bold>."
+            },
+            {
+                "id":"Paragraph9",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To read from the top of the window, press <bold>Narrator + W</bold>."
+            },
+            {
+                "id":"Paragraph10",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To browse a list of Narrator commands, press <bold>Narrator + F1</bold>."
+            },
+            {
+                "id":"Paragraph11",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To open Narrator settings, press <bold>Windows logo key + Ctrl + N</bold>."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorKeyPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"TryWebpagePage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"TryWebpagePage",
+        "type":"normalPage",
+        "title":"Try it out: Explore a webpage (11 of 13)​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Let’s practice what you’ve learned so far by exploring a sample webpage. Here’s a reminder of some of the skills you can use."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move up and down a page, press the <bold>Up</bold> and <bold>Down arrow</bold> keys."
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To review individual text characters, press the <bold>Left</bold> and <bold>Right arrow</bold> keys."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To read word by word, press <bold>Ctrl + Left arrow</bold> or <bold>Ctrl + Right arrow</bold>."
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move between headings, press the <bold>H key</bold>, or <bold>Shift + H</bold>."
+            },
+            {
+                "id":"Paragraph6",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To move between landmarks, press the <bold>D key</bold>, or <bold>Shift + D</bold>."
+            },
+            {
+                "id":"Paragraph7",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"This page has a search box that makes suggestions as you type. Once you hear Narrator say, \"search or enter web address, editing,\" type the word \"more.\" Then, press the <bold>Up</bold> and <bold>Down arrow</bold> keys to move through the options, and press Enter to choose one. All the options will take you to the same page."
+            },
+            {
+                "id":"Paragraph8",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"You’re now entering the sample webpage. When you’re ready to move on, find the <bold>Next</bold> button and press <bold>Enter</bold>."
+            },
+            {
+                "id":"AddressAutoSuggestBox",
+                "type":"AutoSuggestBox",
+                "accessKey":"D",
+                "header":"This is a label for the search box",
+                "text":"Search or enter web address",
+                "isDefaultFocus":true,
+                "option":
+                [
+                    "www.morevegetablesplease.com",
+                    "morevegetablesplease.com",
+                    "morevegetablesplease"
+                ],
+                "action":
+                {
+                    "type":"Show",
+                    "targetId":"SampleWebView"
+                }
+            },
+            {
+                "id":"SampleWebView",
+                "type":"WebView",
+                "accessKey":"",
+                "text":"<!doctype html><html dir='ltr' ><head><meta charset='utf-8' /><title>More Vegetables Please</title><link rel='stylesheet' type='text/css' href='https://compass-ssl.microsoft.com/assets/4d/93/4d9396db-7872-4cd8-bc54-d6696a226fc3.css?n=style-v3.css' /><script type='text/javascript' src='https://compass-ssl.microsoft.com/assets/c2/f0/c2f05439-d489-44da-ad75-188ae595d585.js?n=script.js' > </script><script type='text/javascript'>function ProcessKeyDown(event) {var key = String.fromCharCode(event.keyCode); if ((event.ctrlKey && (key == 'L')) || (event.altKey && (key == 'D'))) {window.external.notify('ShortCutInvoked'); }; } </script></head><body onkeydown='ProcessKeyDown(event)'><header><div class='header-near' >Better veggies. Better living.</div><div class='header-center' ><img class='site-logo' src='https://compass-ssl.microsoft.com/assets/d2/e1/d2e1a179-1361-4be3-b843-edf60624d2c7.png?n=logo.png' alt='More Veggies Please logo' /></div><div class='header-far' ></div></header><div class='banner' ><div class='banner-overlay' ><div class='banner-text' ><span class='banner-text-inner' ><span class='tagline' >Fast and healthy</span><span class='subtext-l0' >Classic Margherita Pizza with Basil and Fresh Mozzarella</span><span class='subtext-l1' >Time to Prepare</span><span class='subtext-l2' >25 min.</span></span></div></div></div><div class='content' ><p>A thin crust is the hallmark of this archetypal pizza dish. If it's too thick, you might lose the nuance of the simple flavors that make this a classic. The key is balance: Avoid overloading any one topping or flavor. Instead, let the simple ingredients blend harmoniously.\n      </p><div><fieldset><legend>Ingredients</legend><label><input class='checkbox' type='checkbox' />1 1/3 cups warm water</label><label><input class='checkbox' type='checkbox' />2 1/4  teaspoons yeast</label><label><input class='checkbox' type='checkbox' />1 teaspoon white sugar</label><label><input class='checkbox' type='checkbox' />2 1/2 cups high-elasticity flour</label><label><input class='checkbox' type='checkbox' />2 cups whole grain flour</label><label><input class='checkbox' type='checkbox' />3 or more tablespoons olive oil</label><label><input class='checkbox' type='checkbox' />3/4 teaspoon salt</label><label><input class='checkbox' type='checkbox' />2 cloves of garlic</label><label><input class='checkbox' type='checkbox' />4 ripe Roma tomatoes</label><label><input class='checkbox' type='checkbox' />handful of fresh basil</label><label><input class='checkbox' type='checkbox' />salt and pepper to taste</label><label><input class='checkbox' type='checkbox' />extra flour for dusting</label></fieldset><button class='selectAll' >Select all ingredients</button></div><h2>Pizza Dough Napolitana</h2><ol class='step-list' ><li><span class='step-list-item-text' >Stir warm water (just above room temperature), yeast and sugar together in a large bowl, then let stand until the yeast is dissolved (3–5 minutes).</span></li><li><span class='step-list-item-text' ><img src='https://compass-ssl.microsoft.com/assets/96/19/9619484a-5b1e-4e5c-a391-c0be28e7a9b1.jpg?n=dough.jpg' alt='dough' />Stir in bread flour (or other high-elastic flour), whole grain flour and salt until the dough begins to form. This dough will be slightly more wet than normal bread dough. Let the dough sit for about 5 min.</span></li><li><span class='step-list-item-text' >Turn the dough out onto a floured counter top or other work surface. Knead the dough until it feels smooth and elastic (usually around 10 minutes).</span></li><li><span class='step-list-item-text' >Add approximately 2 tablespoons of olive oil to a large bowl. Place the dough in the bowl and turn until the surface of the dough has been completely coated. Add approximately 2 tablespoons of olive oil to a large bowl. Place the dough in the bowl and turn until the surface of the dough has been completely coated.</span></li><li><span class='step-list-item-text' >Cover the bowl with plastic wrap or a clean towel and set it aside to rise. The ideal location is warm, dry and draft-free. The dough is ready once it has doubled in size, approximately one hour.</span></li></ol><p><img src='https://onecs-live.azureedge.net/api/en-us/404' alt='' /></p><h2>Minimalist Margherita</h2><ol class='step-list' ><li><span class='step-list-item-text' >Classic Neapolitan pizza cooks off the radiant heat of a pizza stone. Place your stone on a rack in the bottom third of the oven and preheat 500°F. Allow the stone to absorb heat in the oven for at least 20 minutes once you've reached that temperature.</span></li><li><span class='step-list-item-text' >Divide the dough in half and place on a floured surface. Roll each into a 12-inch circle.</span></li><li><span class='step-list-item-text' ><img src='https://compass-ssl.microsoft.com/assets/89/42/894236f4-966b-4a09-951f-88afdb14264c.jpg?n=tomatoes.jpg' alt='tomatoes' />Place toppings on the rolled-out crust. Classic toppings include Roma tomatoes and mozzarella slices. If you want to add sauce, try our Better than Mom's Pizza Sauce recipe, made from fresh tomatoes and basil—but know that you'll be bucking tradition!</span></li><li><span class='step-list-item-text' >Drizzle olive oil the tomatoes and top with torn basil. The basil is most flavorful if you tear it just before placing the pizza in the oven.</span></li><li><span class='step-list-item-text' >Use a floured pizza peel to transfer the dough to your pizza stone. Leave the pizza stone in the oven and be careful. It's going to be hot!</span></li><li><span class='step-list-item-text' >Let the dough bake. This happens fast and because each oven is different. There isn't a single rule of thumb for this step, so you'll need trust your instinct and watch the telltale sign as the crust bubbles crisp and then brown on top. The crust should rise within 2 minutes and brown within 5 minutes. Watch it carefully and get a feel for the right moment to take it out of the oven.</span></li><li><span class='step-list-item-text' >Remove the crust from the oven. Combine another tablespoon of olive oil with the garlic and brush the outer ring of the crust as a final garnish and flavor. Cool for about five minutes before serving.</span></li></ol></div></body></html>"
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorCommandsPage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NavigatingAppsPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"NavigatingAppsPage",
+        "type":"normalPage",
+        "title":"Navigating apps (12 of 13)​​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"The next few skills work whether or not you’re using a screen reader like Narrator."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"Level2",
+                "text":"Switching between apps"
+            },
+            {
+                "id":"Paragraph3",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"When you have several apps open, you can switch between them by pressing <bold>Alt + Tab</bold>. You may need to hold down <bold>Alt</bold>, and press the <bold>Tab</bold> key several times to find the app you want. If you try the shortcuts on this page, use <bold>Alt + Tab</bold> to get back to this guide."
+            },
+            {
+                "id":"Paragraph4",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"Level2",
+                "text":"Searching for apps"
+            },
+            {
+                "id":"Paragraph5",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Pressing the <bold>Windows logo key</bold> gets you to the Start menu, and to the search box on your taskbar. From there, you can enter the name of the app you want to find. Then, use the <bold>Up</bold> and <bold>Down arrow</bold> keys to move through the options, and press <bold>Enter</bold> to select one."
+            },
+            {
+                "id":"Paragraph6",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"Level2",
+                "text":"Closing apps"
+            },
+            {
+                "id":"Paragraph7",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"To close an app, press <bold>Alt + F4</bold>. You may need to press the <bold>Fn</bold> key before you do this."
+            }
+        ],
+        "navigation":
+        [
+            {
+                "id":"BackButton",
+                "type":"Button",
+                "accessKey":"B",
+                "text":"Back",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"TryWebpagePage"
+                }
+            },
+            {
+                "id":"NextButton",
+                "type":"Button",
+                "accessKey":"N",
+                "text":"Next",
+                "isDefaultFocus":true,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"SummaryPage"
+                }
+            }
+        ]
+    },
+    {
+        "id":"SummaryPage",
+        "type":"summaryPage",
+        "title":"Guide summary (13 of 13)​​​",
+        "content":
+        [
+            {
+                "id":"Paragraph1",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"Congratulations. You've reached the end of this guide. We hope it was helpful. Each section is linked below, so you can review it again if you want."
+            },
+            {
+                "id":"Paragraph2",
+                "type":"TextBlock",
+                "accessKey":"",
+                "headingLevel":"none",
+                "text":"When you’re ready to dive deeper, you can check out the <hyperlink id='UserGuideLink' url='https://go.microsoft.com/fwlink/p/?linkid=873381'>Narrator user guide</hyperlink> for even more info.​"
+            },
+            {
+                "id":"LinkWelcomePage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Welcome to Narrator (1 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"WelcomePage"
+                }
+            },
+            {
+                "id":"LinkExploreKeyboardPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Explore your keyboard (2 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ExploreKeyboardPage"
+                }
+            },
+            {
+                "id":"LinkScanModePage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Scan mode (3 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ScanModePage"
+                }
+            },
+            {
+                "id":"LinkReadingWordsPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Reading words and characters (4 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ReadingWordsPage"
+                }
+            },
+            {
+                "id":"LinkHeadingsPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Headings (5 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"HeadingsPage"
+                }
+            },
+            {
+                "id":"LinkLandmarksPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Landmarks (6 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"LandmarksPage"
+                }
+            },
+            {
+                "id":"LinkExnteringTextPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Entering text (7 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"EnteringTextPage"
+                }
+            },
+            {
+                "id":"LinkControlsPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Buttons, check boxes, and other controls (8 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"ControlsPage"
+                }
+            },
+            {
+                "id":"LinkNarratorKeyPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"The Narrator key (9 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorKeyPage"
+                }
+            },
+            {
+                "id":"LinkNarratorCommandsPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Important Narrator commands (10 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NarratorCommandsPage"
+                }
+            },
+            {
+                "id":"LinkWebviewPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Try it out: Explore a webpage (11 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"TryWebpagePage"
+                }
+            },
+            {
+                "id":"LinkNavigatingAppsPage",
+                "type":"HyperlinkButton",
+                "accessKey":"",
+                "text":"Navigating apps (12 of 13)",
+                "url":"",
+                "isDefaultFocus":false,
+                "action":
+                {
+                    "type":"Navigate",
+                    "targetId":"NavigatingAppsPage"
+                }
+            }
+        ],
+        "navigation": [
+            {
+                "id": "BackButton",
+                "type": "Button",
+                "accessKey": "B",
+                "text": "Back",
+                "isDefaultFocus": false,
+                "action": {
+                    "type": "Navigate",
+                    "targetId": "NavigatingAppsPage"
+                }
+            },
+            {
+                "id": "HomeButton",
+                "type": "Button",
+                "accessKey": "G",
+                "text": "Go to Narrator Home",
+                "isDefaultFocus": true,
+                "action": {
+                    "type": "Navigate",
+                    "targetId": "NarratorHomePage"
+                }
+            }
+        ]
+    },
+    {
+        "id": "WhatsNewPage",
+        "type": "whatsNewPage",
+        "title": "What's New",
+        "content": [
+            {
+                "id": "Paragraph1",
+                "type": "TextBlock",
+                "accessKey": "",
+                "headingLevel": "none",
+                "text": "This is the first new."
+            },
+            {
+                "id": "Paragraph2",
+                "type": "TextBlock",
+                "accessKey": "",
+                "headingLevel": "none",
+                "text": "This is the second new."
+            }
+        ],
+        "navigation": [
+            {
+                "id": "HomeButton",
+                "type": "Button",
+                "accessKey": "G",
+                "text": "Go to Narrator Home",
+                "isDefaultFocus": true,
+                "action": {
+                    "type": "Navigate",
+                    "targetId": "NarratorHomePage"
+                }
+            }
+        ]
+    }
+]

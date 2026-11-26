@@ -1,0 +1,1031 @@
+{
+    "FRESequences": [
+        {
+            "id": "FREFirstRun",
+            "sequence": [
+                "MicrophoneSelection",
+                "Welcome",
+                "NumberOverlaysPage",
+                "GridOverlayPage",
+                "DictateAndEditPage",
+                "TutorialFinalePage"
+            ]
+        },
+        {
+            "id": "FRETutorial",
+            "sequence": [
+                "NumberOverlaysPage",
+                "GridOverlayPage",
+                "DictateAndEditPage",
+                "TutorialFinalePage"
+            ]
+        },
+        {
+            "id": "FRECommandList",
+            "sequence": [
+              "FullCommandListPage",
+              "CustomCommandsPage"
+            ]
+        }
+    ],
+    "tutorialPages": [
+        {
+            "id": "NumberOverlaysPage",
+            "header": "NumberOverlaysPageHeader",
+            "description": "NumberOverlaysPageDescription",
+            "instructions": [
+                {
+                    "instruction": "NumberOverlaysPageInstruction1",
+                    "intent": "Task.VoiceAccess.On"
+                },
+                {
+                    "instruction": "NumberOverlaysPageInstruction2",
+                    "intent": "Task.Mouse.Click"
+                },
+                {
+                    "instruction": "NumberOverlaysPageInstruction3",
+                    "intent": "Task.Mouse.Click"
+                },
+                {
+                    "instruction": "NumberOverlaysPageInstruction4",
+                    "intent": "Task.Overlay.ShowNumbers"
+                },
+                {
+                    "instruction": "NumberOverlaysPageInstruction5",
+                    "intent": "Task.Mouse.Click"
+                }
+            ],
+            "sandbox": "BuildAnimal"
+        },
+        {
+            "id": "GridOverlayPage",
+            "header": "GridOverlaysPageHeader",
+            "description": "GridOverlaysPageDescription",
+            "instructions": [
+                {
+                    "instruction": "GridOverlaysPageInstruction1",
+                    "intent": "Task.Grid.Show"
+                },
+                {
+                    "instruction": "GridOverlaysPageInstruction2",
+                    "intent": "None"
+                },
+                {
+                    "instruction": "GridOverlaysPageInstruction3",
+                    "intent": "Task.Undo"
+                },
+                {
+                    "instruction": "GridOverlaysPageInstruction4",
+                    "intent": "Task.Mouse.Click"
+                }
+            ],
+            "sandbox": "FeedAnimal"
+        },
+        {
+            "id": "DictateAndEditPage",
+            "header": "DictateAndEditPageHeader",
+            "description": "DictateAndEditPageDescription",
+            "instructions": [
+                {
+                    "instruction": "DictateAndEditPageInstruction1",
+                    "intent": "Task.Mouse.Click"
+                },
+                {
+                    "instruction": "DictateAndEditPageInstruction2",
+                    "intent": "None"
+                },
+                {
+                    "instruction": "DictateAndEditPageInstruction3",
+                    "intent": "Task.Dictation.Select"
+                },
+                {
+                    "instruction": "DictateAndEditPageInstruction4",
+                    "intent": "Task.Dictation.Delete"
+                },
+                {
+                    "instruction": "DictateAndEditPageInstruction5",
+                    "intent": "None"
+                },
+                {
+                    "instruction": "DictateAndEditPageInstruction6",
+                    "intent": "Task.Mouse.Click"
+                }
+            ],
+            "sandbox": "TeachAnimal"
+        },
+        {
+            "id": "TutorialFinalePage",
+            "header": "TutorialFinalePageHeader",
+            "description": "TutorialFinalePageDescription",
+            "sandbox": "FinalAnimal"
+        }
+    ],
+    "fullCommandListPage": {
+        "header": "Voice access commands",
+        "commandLists": [
+            [
+                {
+                    "header": "Manage voice access & mic",
+                    "commands": [
+                        "Voice access wake up/sleep",
+                        "Turn off microphone",
+                        "Turn off voice access",
+                        "What can I say",
+                        "Open voice access settings",
+                        "Open voice access help",
+                        "Open voice access guide",
+                        "Command mode",
+                        "Dictation mode",
+                        "Default mode"
+                    ]
+                },
+                {
+                    "header": "Interact with controls",
+                    "commands": [
+                        "Click/Tap <item name>",
+                        "Double click <item name>",
+                        "Scroll <scroll direction>",
+                        "Start scrolling <scroll direction>",
+                        "Stop scrolling",
+                        "Move to <item name>",
+                        "Dismiss",
+                        "Check/Uncheck <item name>",
+                        "Expand <item name>",
+                        "Toggle <item name>",
+                        "Move slider <direction> <distance> times\n",
+                        "* \"direction\" is up/down/left/right",
+                        "* \"scroll direction\" is up/down"
+                    ]
+                },
+                {
+                    "header": "Control mouse & keyboard",
+                    "commands": [
+                        "Click/Tap",
+                        "Left/Right click",
+                        "Double/Triple click",
+                        "Press <key1> <key2>....",
+                        "Press <key> <count> times",
+                        "Press and hold <key>",
+                        "Release <key>"
+                    ]
+                },
+                {
+                    "header": "Select text",
+                    "commands": [
+                        "Select that",
+                        "Select all",
+                        "Select <phrase>",
+                        "Select <entity>",
+                        "Select next/previous <count> <entity>",
+                        "Select <Nth> <entity>",
+                        "Unselect that\n",
+                        "* \"entity\" is character/word/line/paragraph/page"
+                    ]
+                },
+                {
+                    "header": "Navigate text",
+                    "commands": [
+                        "Go to top/bottom",
+                        "Go to start/end of <entity>",
+                        "Move <direction> <count> times",
+                        "Move <direction> <count> <entity>",
+                        "Move before/after <phrase>\n",
+                        "* \"entity\" is character/word/line/paragraph/page",
+                        "* \"direction\" is up/down/left/right"
+                    ]
+                }
+            ],
+            [
+                {
+                    "header": "Interact with Apps",
+                    "commands": [
+                        "Open/Close <app name>",
+                        "Switch to/Go to <app name>",
+                        "Maximize/Minimize window",
+                        "Restore window",
+                        "Show task switcher",
+                        "Go to desktop",
+                        "Search on <search engine> for <x>",
+                        "Snap window to <direction>\n",
+                        "* \"x\" is the search query",
+                        "* \"search engine\" can be Bing/Google/Youtube",
+                        "* \"direction\" is left/right/top-left/top-right/bottom-left/bottom-right"
+                    ]
+                },
+                {
+                    "header": "Interact with overlays",
+                    "commands": [
+                        "Show/Hide numbers",
+                        "Show numbers <scope>",
+                        "Click/Right click <number>",
+                        "Show/Hide grid",
+                        "Show grid <here/everywhere>",
+                        "<number>  *when either number or grid overlays are visible",
+                        "Undo/Undo that *revert to previous state of the grid",
+                        "Mark/Mark <number> *when grid is visible",
+                        "Drag *after marking\n",
+                        "* \"scope\" is here/everywhere/taskbar/[app name]"
+                    ]
+                },
+                {
+                    "header": "Dictate text",
+                    "commands": [
+                        "<phrase>",
+                        "Type <phrase>",
+                        "Correct/Spell that",
+                        "Correct/Spell <phrase>",
+                        "Show/Hide keyboard\n",
+                        "* \"phrase\" could be any word(s)"
+                    ]
+                },
+                {
+                    "header": "Edit text",
+                    "commands": [
+                        "Cut/Copy that",
+                        "Paste",
+                        "Undo/Redo that",
+                        "Bold/Italicize/Underline <phrase>",
+                        "<Action> that",
+                        "<Action> <phrase>",
+                        "<Action> <entity>",
+                        "<Action> next/previous <count> <entity>\n",
+                        "* \"action\" can be delete/lowercase/uppercase/capitalize",
+                        "* \"entity\" is character/word/line/paragraph/page"
+                    ]
+                }
+            ]
+        ]
+    },
+    "commandListPage": [
+        {
+            "header": "Get started",
+            "description": "This category of commands will help the user to find the most commonly used voice access commands",
+            "commands": [
+                {
+                    "command": "Voice access wake up/sleep",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Unmute"
+                    ]
+
+                },
+                {
+                    "command": "open <application>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "show numbers",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "What can I say",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "show grid",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Open voice access help",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Open voice access guide",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Command mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Dictation mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Default mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+
+            ]
+        },
+        {
+            "header": "Manage voice access & mic",
+            "description": "This category of commands will help the user to find and interact with the microphone and the voice access application",
+            "commands": [
+                {
+                    "command": "Voice access wake up/sleep",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Unmute"
+                    ]
+
+                },
+                {
+                    "command": "Turn off microphone",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Turn off voice access",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "What can I say",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Open voice access settings",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Open voice access help",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Open voice access guide",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Command mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Dictation mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Default mode",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+
+            ]
+        },
+        {
+            "header": "Interact with controls",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Click/Tap <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Double click <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Scroll <scroll direction>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Start scrolling <scroll direction>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Stop scrolling",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Move to <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Dismiss",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Check/Uncheck <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Expand <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Toggle <item name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Move slider <direction> <distance> times\n",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+
+
+            ]
+        },
+        {
+            "header": "Control mouse & keyboard",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Click/Tap",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Left/Right click",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Double/Triple click",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Press <key1> <key2>....",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Press <key> <count> times",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Press and hold <key>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Release <key>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+            ]
+
+        },
+        {
+            "header": "Select text",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Select that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Select all",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Select <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Select <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Select next/previous <count> <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Select <Nth> <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Unselect that\n",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Navigate text",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Go to top/bottom",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Go to start/end of <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Move <direction> <count> times",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Move <direction> <count> <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Move before/after <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+
+            ]
+        },
+        {
+            "header": "Interact with Apps",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Open/Close <app name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Switch to/Go to <app name>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Maximize/Minimize window",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Restore window",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Show task switcher",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Snap window to <direction>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+
+            ]
+        },
+        {
+            "header": "Interact with overlays",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Show/Hide numbers",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Show numbers <scope>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Click/Right click <number>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Show/Hide grid",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Show grid <here/everywhere>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Undo/Undo that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Mark/Mark <number>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Drag",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Dictate text",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "<phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Type <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Correct/Spell that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Correct/Spell <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Show/Hide keyboard\n",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+            ]
+        },
+        {
+            "header": "Edit text",
+            "description": "This category of commands will help the user to interact with the microphone and voice access app",
+            "commands": [
+                {
+                    "command": "Cut/Copy that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+
+                },
+                {
+                    "command": "Paste",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Undo/Redo that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "Bold/Italicize/Underline <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "<Action> that",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "<Action> <phrase>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "<Action> <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                },
+                {
+                    "command": "<Action> next/previous <count> <entity>",
+                    "description": "This command can be used to turn the voice access on/ off",
+                    "examples": [
+                        "Voice Access wake up",
+                        "Wake up voice access",
+                        "Voice Access Sleep"
+                    ]
+                }
+            ]
+        }
+    ]
+}

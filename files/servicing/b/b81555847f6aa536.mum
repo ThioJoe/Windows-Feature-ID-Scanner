@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-ServerCommon-Package" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="IIS-WebServer-ServerCommon-Package_en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-ServerCommon-Package" version="10.0.26100.6584" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Allows you to customize the error messages returned to clients" displayName="HTTP Errors" name="IIS-HttpErrors-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HttpErrors-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HttpErrors-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Redirect client requests to a specific destination" displayName="HTTP Redirection" name="IIS-HttpRedirect-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HttpRedirect-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HttpRedirect-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable your Web server to host .NET Framework 3.5 applications" displayName=".NET Extensibility 3.5" name="IIS-NetFxExtensibility-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-NetFxExtensibility-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-NetFxExtensibility-ServerCommon-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable your Web server to host .NET Framework v4.6 applications" displayName=".NET Extensibility 4.6" name="IIS-NetFxExtensibility45-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-NetFxExtensibility45-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-NetFxExtensibility45-ServerCommon-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enables logging of Web site activity for this server" displayName="HTTP Logging" name="IIS-HttpLogging-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HttpLogging-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HTTPLogging-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install IIS 10.0 logging tools and scripts" displayName="Logging Tools" name="IIS-LoggingLibraries-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-LoggingLibraries-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-LoggingLibraries-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Monitor server, site, and application health" displayName="Request Monitor" name="IIS-RequestMonitor-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-RequestMonitor-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-RequestMonitor-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable tracing for ASP.NET applications and failed requests" displayName="Tracing" name="IIS-HttpTracing-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HttpTracing-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HttpTracing-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Authorize client access to the URLs that comprise a Web application." displayName="URL Authorization" name="IIS-URLAuthorization-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-URLAuthorization-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-Authorization-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Configure rules to block selected client requests." displayName="Request Filtering" name="IIS-RequestFiltering-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-RequestFiltering-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-RequestFiltering-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allow or deny content access based on IP address or domain name." displayName="IP Security" name="IIS-IPSecurity-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-IPSecurity-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-IPSecurity-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Compress dynamic content before returning it to client" displayName="Dynamic Content Compression" name="IIS-HttpCompressionDynamic-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HttpCompressionDynamic-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HttpCompressionDynamic-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Manage a local Web server with IIS configuration scripts" displayName="IIS Management Scripts and Tools" name="IIS-ManagementScriptingTools-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ManagementScriptingTools-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ConfigurationAPI-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install Process Model for the Windows Process Activation Service" displayName="Process Model" name="WAS-ProcessModel-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="WAS-ProcessModel-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install managed code configuration APIs" displayName="Configuration APIs" name="WAS-ConfigurationAPI-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ConfigurationAPI-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Program your application to serve HTTP requests by using core IIS functionality." displayName="Internet Information Services Hostable Web Core" name="IIS-HostableWebCore-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HostableWebCore-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-HostableWebCore-ServerCommon-Deployment-LanguagePack" version="10.0.26100.6584" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

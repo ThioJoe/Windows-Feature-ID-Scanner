@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root/standardcimv2/MSFT_NetFirewallHyperVRule" ClassVersion="1.0.0">
+    <Version>1.0.0.0</Version>
+    <DefaultNoun>NetFirewallHyperVRule</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="GetAll">
+        <QueryableProperties>
+          <Property PropertyName="InstanceID">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata PSName="Name" CmdletParameterSets="ByName" IsMandatory="true" Position="0" Aliases="ID" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="DisplayName">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByDisplayName" IsMandatory="true" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Direction">
+            <Type PSType="NetSecurity.Direction" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="VMCreatorId">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Protocol">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Action">
+            <Type PSType="NetSecurity.Action" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Enabled">
+            <Type PSType="NetSecurity.Enabled" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="EnforcementStatus">
+            <Type PSType="NetSecurity.HyperVRuleStatus" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="PolicyStoreSourceType">
+            <Type PSType="NetSecurity.PolicyStoreType" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+        <QueryOptions>
+          <Option OptionName="All">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+          <Option OptionName="PolicyStore">
+            <Type PSType="string" />
+            <CmdletParameterMetadata />
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" ConfirmImpact="Medium" />
+        <Method MethodName="cim:ModifyInstance">
+          <Parameters>
+            <Parameter ParameterName="ElementName">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="NewDisplayName" />
+            </Parameter>
+            <Parameter ParameterName="cim:OperationOption:RulePriority">
+              <Type PSType="uint16" />
+              <CmdletParameterMetadata PSName="RulePriority" />
+            </Parameter>
+            <Parameter ParameterName="Direction">
+              <Type PSType="NetSecurity.Direction" />
+              <CmdletParameterMetadata PSName="Direction" />
+            </Parameter>
+            <Parameter ParameterName="VMCreatorId">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="VMCreatorId" />
+            </Parameter>
+            <Parameter ParameterName="Protocol">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Protocol" />
+            </Parameter>
+            <Parameter ParameterName="LocalAddresses">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="LocalAddresses" />
+            </Parameter>
+            <Parameter ParameterName="LocalPorts">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="LocalPorts" />
+            </Parameter>
+            <Parameter ParameterName="RemoteAddresses">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="RemoteAddresses" />
+            </Parameter>
+            <Parameter ParameterName="RemotePorts">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="RemotePorts" />
+            </Parameter>
+            <Parameter ParameterName="Action">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="Action" />
+            </Parameter>
+            <Parameter ParameterName="Enabled">
+              <Type PSType="NetSecurity.Enabled" />
+              <CmdletParameterMetadata PSName="Enabled" />
+            </Parameter>
+            <Parameter ParameterName="Profiles">
+              <Type PSType="NetSecurity.Profile" />
+              <CmdletParameterMetadata PSName="Profiles" />
+            </Parameter>
+            <Parameter ParameterName="PortStatuses">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" />
+              <CmdletParameterMetadata PSName="PortStatuses" />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <GetCmdletParameters>
+          <QueryableProperties>
+            <Property PropertyName="InstanceID">
+              <Type PSType="string" />
+              <RegularQuery AllowGlobbing="true">
+                <CmdletParameterMetadata Aliases="ID" PSName="Name" Position="0" IsMandatory="true" CmdletParameterSets="ByName" />
+              </RegularQuery>
+            </Property>
+            <Property PropertyName="DisplayName">
+              <Type PSType="string" />
+              <RegularQuery AllowGlobbing="true">
+                <CmdletParameterMetadata PSName="DisplayName" IsMandatory="true" CmdletParameterSets="ByDisplayName" />
+              </RegularQuery>
+            </Property>
+          </QueryableProperties>
+          <QueryOptions>
+            <Option OptionName="PolicyStore">
+              <Type PSType="string" />
+              <CmdletParameterMetadata />
+            </Option>
+          </QueryOptions>
+        </GetCmdletParameters>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+        <Method MethodName="cim:DeleteInstance" />
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Rename" ConfirmImpact="Medium" />
+        <Method MethodName="Rename">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="NewName">
+              <Type PSType="string" />
+              <CmdletParameterMetadata IsMandatory="true" PSName="NewName" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Enable" ConfirmImpact="Medium" />
+        <Method MethodName="Enable">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Disable" ConfirmImpact="Medium" />
+        <Method MethodName="Disable">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+        </Method>
+      </Cmdlet>
+    </InstanceCmdlets>
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="New" ConfirmImpact="Medium" />
+        <Method MethodName="cim:CreateInstance">
+          <Parameters>
+            <Parameter ParameterName="cim:OperationOption:PolicyStore">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="PolicyStore" />
+            </Parameter>
+            <Parameter ParameterName="cim:OperationOption:GPOSession">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="GPOSession" />
+            </Parameter>
+            <Parameter ParameterName="InstanceID">
+              <Type PSType="string" />
+              <CmdletParameterMetadata Aliases="ID" PSName="Name" />
+            </Parameter>
+            <Parameter ParameterName="ElementName">
+              <Type PSType="string" />
+              <CmdletParameterMetadata IsMandatory="true" PSName="DisplayName" />
+            </Parameter>
+            <Parameter ParameterName="cim:OperationOption:RulePriority">
+              <Type PSType="uint16" />
+              <CmdletParameterMetadata PSName="RulePriority" />
+            </Parameter>
+            <Parameter ParameterName="Direction">
+              <Type PSType="NetSecurity.Direction" />
+              <CmdletParameterMetadata PSName="Direction" />
+            </Parameter>
+            <Parameter ParameterName="VMCreatorId">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="VMCreatorId" />
+            </Parameter>
+            <Parameter ParameterName="Protocol">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Protocol" />
+            </Parameter>
+            <Parameter ParameterName="LocalAddresses">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="LocalAddresses" />
+            </Parameter>
+            <Parameter ParameterName="LocalPorts">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="LocalPorts" />
+            </Parameter>
+            <Parameter ParameterName="RemoteAddresses">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="RemoteAddresses" />
+            </Parameter>
+            <Parameter ParameterName="RemotePorts">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="RemotePorts" />
+            </Parameter>
+            <Parameter ParameterName="Action">
+              <Type PSType="NetSecurity.Action" />
+              <CmdletParameterMetadata PSName="Action" />
+            </Parameter>
+            <Parameter ParameterName="Enabled">
+              <Type PSType="NetSecurity.Enabled" />
+              <CmdletParameterMetadata PSName="Enabled" />
+            </Parameter>
+            <Parameter ParameterName="Profiles">
+              <Type PSType="NetSecurity.Profile" />
+              <CmdletParameterMetadata PSName="Profiles" />
+            </Parameter>
+            <Parameter ParameterName="PortStatuses">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" />
+              <CmdletParameterMetadata PSName="PortStatuses" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+  <Enums>
+    <Enum EnumName="NetSecurity.Direction" UnderlyingType="uint16">
+      <Value Name="Inbound" Value="1" />
+      <Value Name="Outbound" Value="2" />
+    </Enum>
+    <Enum EnumName="NetSecurity.Action" UnderlyingType="uint16">
+      <Value Name="NotConfigured" Value="0" />
+      <Value Name="Allow" Value="2" />
+      <Value Name="Block" Value="4" />
+    </Enum>
+    <Enum EnumName="NetSecurity.Enabled" UnderlyingType="uint16">
+      <Value Name="True" Value="1" />
+      <Value Name="False" Value="2" />
+    </Enum>
+    <Enum EnumName="NetSecurity.HyperVRuleStatus" UnderlyingType="uint16">
+      <Value Name="Unknown" Value="0" />
+      <Value Name="OK" Value="1" />
+      <Value Name="PartiallyEnforced" Value="2" />
+      <Value Name="NoApplicablePorts" Value="3" />
+      <Value Name="ParsingError" Value="4" />
+      <Value Name="Error" Value="5" />
+    </Enum>
+    <Enum EnumName="NetSecurity.PolicyStoreType" UnderlyingType="uint16">
+      <Value Name="None" Value="0" />
+      <Value Name="Local" Value="1" />
+      <Value Name="GroupPolicy" Value="2" />
+      <Value Name="Dynamic" Value="3" />
+      <Value Name="Generated" Value="4" />
+      <Value Name="Hardcoded" Value="5" />
+      <Value Name="MDM" Value="6" />
+      <Value Name="HostFirewallLocal" Value="8" />
+      <Value Name="HostFirewallGroupPolicy" Value="9" />
+      <Value Name="HostFirewallDynamic" Value="10" />
+      <Value Name="HostFirewallMDM" Value="11" />
+    </Enum>
+    <Enum EnumName="NetSecurity.Profile" UnderlyingType="uint16" BitwiseFlags="true">
+      <Value Name="Any" Value="0" />
+      <Value Name="Public" Value="4" />
+      <Value Name="Private" Value="2" />
+      <Value Name="Domain" Value="1" />
+      <Value Name="NotApplicable" Value="65535" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

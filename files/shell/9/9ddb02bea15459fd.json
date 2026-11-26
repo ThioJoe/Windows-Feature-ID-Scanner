@@ -1,0 +1,79 @@
+{
+    "GETSTARTED": {
+        "start": "CheckMSAAccount",
+        "notifyOnFirstVisible": true,
+        "useBackstackForBackNavigation": true,
+        "reconnectHandler": {
+            "handlerCxid": "NetworkError",
+            "frequency": "Always"
+        },
+        "frameName": "oobe-light-frame",
+        "personality": "CloudExperienceHost.Personality.LiteWhite",
+        "blockLateWebAppCalls": true,
+        "blockEarlyExit": true,
+        "CheckMSAAccount": {
+            "cxid": "CheckMSAAccount",
+            "launcher": "js:CheckMSAAccount",
+            "successID": "LandingPage",
+            "failID": "LandingPageForNonMSA",
+            "visibility": false,
+            "measureId": 40426868
+        },
+        "LandingPage": {
+            "cxid": "LandingPage",
+            "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+            "internetRequired": true,
+            "backwardButtonEnabled": false,
+            "successID": "UserIntent",
+            "failID": "UserIntent",
+            "measureId": 40424633
+        },
+        "LandingPageForNonMSA": {
+            "cxid": "LandingPage",
+            "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+            "internetRequired": true,
+            "backwardButtonEnabled": false,
+            "successID": "UserIntent",
+            "failID": "UserIntent",
+            "measureId": 40424826
+        },
+        "UserIntent": {
+            "cxid": "UserIntent",
+            "url": "https://sdx.microsoft.com/getstarted/userintent/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/userintent/index.html",
+            "internetRequired": true,
+            "disableErrorPageOnFailure": true,
+            "successID": "GSReactOutro",
+            "failID": "GSReactOutro",
+            "cancelID": "GSReactOutro",
+            "visibility": false,
+            "measureId": 40427237
+        },
+        "GSReactOutro": {
+            "cxid": "GSReactOutro",
+            "url": "https://sdx.microsoft.com/getstarted/outro/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/outro/index.html",
+            "forwardButtonEnabled": false,
+            "internetRequired": true,
+            "measureId": 40426519
+        },
+        "NetworkError": {
+            "cxid": "NetworkError",
+            "url": "ms-appx-web:///webapps/guidedsetup/network/index.html",
+            "disableBackNavigationToNode": true,
+            "successID": "GSInPlaceResume",
+            "canExitCxh": true,
+            "disableErrorPageOnFailure": true,
+            "measureId": 40426665
+        },
+        "GSInPlaceResume": {
+            "cxid": "GSInPlaceResume",
+            "launcher": "js:InPlaceResume",
+            "failID": "GSReactOutro",
+            "disableBackNavigationToNode": true,
+            "measureId": 40426734
+        }
+    }
+}
