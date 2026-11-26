@@ -1392,7 +1392,11 @@ def read_file(store, data, name, kind, hash_):
         entry['lottie'] = True
     return entry
 
-def walk(root, top):
+# What verify-windows-files.py's list of every file leaves out (machine-specific or generated content), when this script makes the list
+LIST_SKIP_DIRS = {'winsxs', 'softwaredistribution', 'logs', 'temp', 'prefetch', 'installer', 'serviceprofiles', 'panther', 'livekernelreports',
+                  'minidump', 'cbstemp', 'config', 'winevt', 'logfiles', 'sru', 'catroot2', 'tasks', 'printers', 'wer'}
+
+def walk(root, top, skip_dirs=SKIP_DIRS, skip_paths=SKIP_PATHS):
     """(path, path relative to root) of every file under root\\top, outside the skipped folders"""
     stack = [os.path.join(root, top)]
     while stack:
@@ -1407,12 +1411,22 @@ def walk(root, top):
                     continue
                 rel = os.path.relpath(e.path, root).replace(os.sep, '\\')
                 if e.is_dir(follow_symlinks=False):
-                    if e.name.lower() not in SKIP_DIRS and not rel.lower().startswith(SKIP_PATHS):
+                    if e.name.lower() not in skip_dirs and not rel.lower().startswith(skip_paths):
                         stack.append(e.path)
                 elif e.is_file(follow_symlinks=False):
                     yield e.path, rel
             except OSError:
                 continue
+
+def _list_file(task):
+    path, rel = task
+    try:
+        return rel, os.path.getsize(path), h16_file(path)
+    except OSError:
+        return rel, None, None
+
+def h16_file(path):
+    return file_sha256(path)[:16]
 
 # Each worker process keeps its own Store
 _store = None
@@ -1440,6 +1454,13 @@ def _work(task):
     counts = _store.counts - before[0]
     sizes = _store.bytes - before[1]
     return rel, hash_, entry, error, counts, sizes
+
+def executor_map(function, items, workers):
+    if workers > 1 and len(items) > 100:
+        import concurrent.futures
+        with concurrent.futures.ProcessPoolExecutor(workers) as executor:
+            return list(executor.map(function, items, chunksize=64))
+    return [function(x) for x in items]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -1503,9 +1524,21 @@ def main():
             for row in csv.DictReader(f):
                 rel = re.sub(r'^[A-Za-z]:[\\/]', '', row['path'])
                 listed[rel] = (int(row['size']), row['sha256'][:16].lower())
+    else:
+        # No list from the VM's check (an Insider build has no file lists for it to check against): the same list, made here
+        rest = [(path, rel) for top in ('Windows', 'Program Files', 'Program Files (x86)')
+                for path, rel in walk(args.root, top, LIST_SKIP_DIRS, ()) if rel not in files]
+        log('Listing every file: %d more to hash' % len(rest))
+        hashed = executor_map(_list_file, rest, args.workers)
+        for rel, size, hash_ in hashed:
+            if hash_:
+                listed[rel] = (size, hash_)
     for rel, hash_ in files.items():
         if rel not in listed:
-            listed[rel] = (None, hash_)
+            try:
+                listed[rel] = (os.path.getsize(os.path.join(args.root, *rel.split('\\'))), hash_)
+            except OSError:
+                listed[rel] = (None, hash_)
     out = io.StringIO()
     w = csv.writer(out, lineterminator='\n')
     w.writerow(['path', 'size', 'hash'])
