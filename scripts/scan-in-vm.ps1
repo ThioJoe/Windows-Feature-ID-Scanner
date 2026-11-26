@@ -1381,12 +1381,16 @@ try {
     $sfcCode = $LASTEXITCODE
     $sfc -split "`n" | Where-Object { $_.Trim() } | Select-Object -Last 2 | ForEach-Object { Write-Log $_.Trim() }
     $sfcOk = $sfc -match 'did not find any integrity violations'
-    $details = @(); $variants = @()
+    $details = @(); $variants = @(); $pnp = @(); $pnpOnly = $false
     if (-not $sfcOk) {
         # What sfc found, from its lines in the CBS log (all of it if the log was started anew meanwhile)
         $log = @(Get-Content $cbsLog)
         if ($log.Count -gt $start) { $log = @($log | Select-Object -Skip $start) }
-        $details = @($log | Where-Object { $_ -match '\[SR\] (Repairing file|Cannot repair)|Hashes for file member|^\s+(Expected|Actual):' })
+        $details = @($log | Where-Object { $_ -match '\[SR\] (Repairing file|Cannot repair)|Hashes for file member|^\s+(Expected|Actual):|\[Pnp\] Corrupt file:' })
+        # sfc's check of the drivers Windows has deployed (PnP) flags a file in System32\drivers that isn't the one its driver package has
+        $pnp = @($details | ForEach-Object { if ($_ -match '\[Pnp\] Corrupt file: (.+)$') { $Matches[1].Trim() } } | Select-Object -Unique |
+            ForEach-Object { @{ path = $_; sha256 = $(if (Test-Path $_) { (Get-FileHash $_).Hash }) } })
+        $pnpOnly = $pnp.Count -gt 0 -and -not @($details | Where-Object { $_ -notmatch '\[Pnp\] Corrupt file:' })
         $flagged = @($details | ForEach-Object { if ($_ -match '\[SR\] Repairing file \\\?\?\\(.+?) from store') { $Matches[1] -replace '\\\\', '\' } } | Select-Object -Unique)
         # Windows can run a file as a variant of it that the build has next to it: after its first start, a Future Platforms build
         # runs eBPF's <name>_preview files as <name> (System32\ebpfapi.dll is then ebpfapi_preview.dll), while the component store
@@ -1399,7 +1403,8 @@ try {
         if (-not $details) { $details = @(Select-String -Path $cbsLog -Pattern '\[SR\]' | Select-Object -Last 50 | ForEach-Object { $_.Line }) }
         $details = @($details | Select-Object -First 50)
     }
-    Write-Result (@{ dism = (($dism -join "`n") -match 'No component store corruption detected'); dismCode = $dismCode; sfc = $sfcOk; sfcCode = $sfcCode; sfcDetails = $details; sfcVariants = $variants } | ConvertTo-Json -Compress)
+    Write-Result (@{ dism = (($dism -join "`n") -match 'No component store corruption detected'); dismCode = $dismCode; sfc = $sfcOk; sfcCode = $sfcCode; sfcDetails = $details; sfcVariants = $variants
+                     sfcPnp = @($pnp); sfcPnpOnly = [bool]$pnpOnly } | ConvertTo-Json -Compress -Depth 4)
 } catch { Write-Result (@{ error = $_.Exception.Message } | ConvertTo-Json -Compress) }
 '@) | ConvertFrom-Json
 
@@ -1440,7 +1445,23 @@ try {
         Log $(if ($InsiderChannel) { "No file lists to check the files against (Microsoft doesn't publish them for Insider builds)" } else { 'No update to check the files against (the build has no cumulative update of its own)' })
     }
 
-    Save-Report 'verification.json' @{ build = $build; servicing = $servicing; cumulativeUpdatePackage = $rollup; health = $health; files = $files }
+    # Microsoft's 24H2 image of September 2024 has bthmodem.sys in System32\drivers as it was deployed (26100.1), while its driver package,
+    # updated in the image, has 26100.1301, so sfc's check of deployed drivers flags it. sfc finding only that, of files each exactly as in
+    # Microsoft's image (by the list of the image's files, made before Windows first started), isn't a violation.
+    $pnpAsImage = $false
+    if (-not $health.error -and -not $health.sfc -and $health.sfcPnpOnly) {
+        $listing = Join-Path $WorkDir 'image-files.csv.gz'
+        if (Test-Path $listing) {
+            $flaggedHashes = @{}
+            foreach ($p in @($health.sfcPnp)) { $flaggedHashes[($p.path -replace '^[A-Za-z]:\\', '').ToLower()] = $p.sha256 }
+            $reader = New-Object IO.StreamReader (New-Object IO.Compression.GZipStream ([IO.File]::OpenRead($listing)), ([IO.Compression.CompressionMode]::Decompress))
+            try { $imageRows = $reader.ReadToEnd() | ConvertFrom-Csv } finally { $reader.Close() }
+            $same = @($imageRows | Where-Object { $p = ($_.path -replace '^[A-Za-z]:\\', '').ToLower(); $flaggedHashes[$p] -and $_.sha256 -eq $flaggedHashes[$p] })
+            $pnpAsImage = $same.Count -eq $flaggedHashes.Count
+        }
+        if ($pnpAsImage) { Log "sfc: only its check of deployed drivers flags files, each exactly as in Microsoft's image: $(@($health.sfcPnp | ForEach-Object { $_.path }) -join ', ')" }
+    }
+    Save-Report 'verification.json' @{ build = $build; servicing = $servicing; cumulativeUpdatePackage = $rollup; health = $health; files = $files; sfcPnpAsImage = $pnpAsImage }
     $failures = @()
     # (An Insider build installed as a feature update can be all in its base packages, with no cumulative update of its own)
     if (-not $rollup -and -not $InsiderChannel) { $failures += "no installed cumulative update package for build $build" }
@@ -1449,7 +1470,7 @@ try {
     if ($health.error) { $failures += "health checks failed: $($health.error)" }
     else {
         if (-not $health.dism) { $failures += "DISM /ScanHealth found problems (exit code $($health.dismCode))" }
-        if (-not $health.sfc) { $failures += "sfc /verifyonly found integrity violations: $($health.sfcDetails -join ' | ')" }
+        if (-not $health.sfc -and -not $pnpAsImage) { $failures += "sfc /verifyonly found integrity violations: $($health.sfcDetails -join ' | ')" }
         elseif ($health.sfcVariants) { Log "sfc: these files are the _preview variants the build has next to them, as Windows runs them: $($health.sfcVariants -join ', ')" }
     }
     if ($files -and $files.exitCode -ne '0') { $failures += "the file check found problems or failed ($($files.exitCode)); see verification-files.json" }
