@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Containers-Client-Guest-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Containers-Client-Guest" releaseType="Feature Pack">
+    <update name="e26a7a99c5a9f87f301ffee30ba241b3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-Shared-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="eae5ad25199517bfb61e5435cb30a59f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Containers-Guest-Package" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="84fd15e7c1bb2c4fdca894c5cd83ae8c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-UtilityVM-Containers-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

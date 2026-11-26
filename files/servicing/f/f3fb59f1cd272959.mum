@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package01" version="10.0.26100.9550" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package01" releaseType="Feature Pack">
+    <update name="9694b2025e9a3d1b263479cd0fc1282d">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Desktop-Required-ClientOnly-SharedWithServer-removable-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="77CBF8243EA12ED704235857EB6442A4E6FF3C6171046124576369DD34C614CC" restart="required">
+      <driver inf="microsoft_bluetooth_avrcptransport.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_avrcptransport.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B0AACEA9E24117546C4DDF67F5671A55CBDDA1EBC665733532629B6EF080E6F8" restart="required">
+      <driver inf="microsoft_bluetooth_a2dp.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_a2dp.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="91C76DE68397A71E70DA78DA766FB065BC26A50DC20B8F86E01CE2AF542068E2">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment010" version="10.0.26100.9550" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="943A8961CC7A3B21E4BA04C5FE040FA30202B511990797954AFA24D24BB4A0EF" restart="required">
+      <driver inf="btampm.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_btampm.inf" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="8B7B3BAD818B4FA10BA40FB155F2E3BD6E075D8283450185AFD197D2ABC268DA" restart="required">
+      <driver inf="microsoft_bluetooth_hfp.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_hfp.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="E7224EA97C36EA85E0624FFCFD01AC39B161A579A300044B6DFD949CA7A9FA7B" restart="required">
+      <driver inf="microsoft_bluetooth_a2dp_snk.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_a2dp_snk.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1B0495109707604E53877756E22D2252BC61CA99E4874959A42DEFAF791063C8" restart="required">
+      <driver inf="microsoft_bluetooth_a2dp_src.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_a2dp_src.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="68BACD8E11D5951158375C3533E83DA1A9FC5963D611CDF5D11661AE1B94024C" restart="required">
+      <driver inf="microsoft_bluetooth_hfp_ag.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_hfp_ag.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="30386676E05759892735677A090A5E4BF86706115FA62B8FED4CBCCA4C88008D" restart="required">
+      <driver inf="microsoft_bluetooth_hfp_hf.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_microsoft_bluetooth_hfp_hf.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="8DB137ED95D46E1E0C0BD70A956ADF9B17DABC6A4FBE80DD0ADDEBF571135BEB" restart="required">
+      <driver inf="netirda.inf" ranking="normal">
+        <assemblyIdentity name="dual_netirda.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="04156DEC86EA362C5C1B50F4807A19B058BBB42420CFFAF82FE03C91CA050CDD" restart="required">
+      <driver inf="netwmbclass.inf" ranking="normal">
+        <assemblyIdentity name="dual_netwmbclass.inf" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0CA1AA497DC61F72FF2F7434D6C3F734863D084AE1F7950F7CE18E27DCAB78C6" restart="required">
+      <driver inf="amdwps.inf" ranking="normal">
+        <assemblyIdentity name="dual_amdwps.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="38A6F95B1425ACA58F941FEC13CC9E2807FDC3F7B748B0C47604B028C0BEF048" restart="required">
+      <driver inf="genpass.inf" ranking="normal">
+        <assemblyIdentity name="dual_genpass.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0C0F65854B1532164EBD0A7151E5FB238529662CE13A6D79329E017405A910C0" restart="required">
+      <driver inf="iai2c.inf" ranking="normal">
+        <assemblyIdentity name="dual_iai2c.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="8F6B44C2CB447C83D73584B333B068CFEF2A6FA3484BC1DABFCEC61E428EDD4E" restart="required">
+      <driver inf="intelpmax.inf" ranking="normal">
+        <assemblyIdentity name="dual_intelpmax.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="4482489C59431A44065C03045ACB2CA83B19BB57B5046192F40528CBB2019563" restart="required">
+      <driver inf="netr28ux.inf" ranking="normal">
+        <assemblyIdentity name="dual_netr28ux.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="99B8B4AA31AE0DB6D639F6A84036ABA7B2390638E048E8CF9B3C69A61D1C92A1" restart="required">
+      <driver inf="netr7364.inf" ranking="normal">
+        <assemblyIdentity name="dual_netr7364.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="EE11DA3F3F9EE70AD597B236282880DADE1A96163C692A0C69C0A617F2A81B62" restart="required">
+      <driver inf="netrtwlans.inf" ranking="normal">
+        <assemblyIdentity name="dual_netrtwlans.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="3E303C65F20867F0760AF1FE987D83A8E248B8331A8BA2D78BC10F95A0FCB31A" restart="required">
+      <driver inf="netrtwlanu.inf" ranking="normal">
+        <assemblyIdentity name="dual_netrtwlanu.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5295637AF24C3C9CCB9B9ACE8BD5DD7F336D3D44FC9AED3D6427750544025E08" restart="required">
+      <driver inf="rtwlanu_oldic.inf" ranking="normal">
+        <assemblyIdentity name="dual_rtwlanu_oldic.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5A89AB6226EA4E4AC126D390253FBD1B867C83406094E3410505548A717B3E2F" restart="required">
+      <driver inf="amdgpio2.inf" ranking="normal">
+        <assemblyIdentity name="dual_amdgpio2.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="7B233E8469A822C08A7A76FC28CF0D8934D519CAAA578C505E24B93FB63EC936" restart="required">
+      <driver inf="amdi2c.inf" ranking="normal">
+        <assemblyIdentity name="dual_amdi2c.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6F56D587C740A5FA3187FAA8B71174713DA4252977EC6EA7185F53AB195E6EE4" restart="required">
+      <driver inf="applessd.inf" ranking="normal">
+        <assemblyIdentity name="dual_applessd.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="27777C66E84F73DBE41AAA4ED4F1A1D45A8666D275548EF490B2AFCEC1835517" restart="required">
+      <driver inf="bcmdhd64.inf" ranking="normal">
+        <assemblyIdentity name="dual_bcmdhd64.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="9835D3E60E4882C235AA8208880325AC1FFFC0B9B0E42ABE787942AB36FD5675" restart="required">
+      <driver inf="bcmfn2.inf" ranking="normal">
+        <assemblyIdentity name="dual_bcmfn2.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="9347FF858D64C9976E6E7AF190340858862415363C49677E97DC36A849F8299A" restart="required">
+      <driver inf="iagpio.inf" ranking="normal">
+        <assemblyIdentity name="dual_iagpio.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5FF4A6060FE5CF9CEC0DF380B031035B5B7E360FB5A596D086A9CE6D03DD1C4E" restart="required">
+      <driver inf="ialpss2i_gpio2_bxt_p.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_gpio2_bxt_p.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D7ADDDF9B71EADD6DE166B20656DD9D968956DD1265F26FF3BF657C461BECEFA" restart="required">
+      <driver inf="ialpss2i_gpio2_cnl.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_gpio2_cnl.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="4B5BFBE3766A8F0A3AC01E893E043B9EF10D2ED8428740A4AB33D9AF417F713D" restart="required">
+      <driver inf="ialpss2i_gpio2_glk.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_gpio2_glk.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="46FF66D8089DDBF87EA818CE78C48155583D757F61F392C272443439EF522533" restart="required">
+      <driver inf="ialpss2i_gpio2_skl.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_gpio2_skl.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="43C37E6998F73A0E9AB0AEA1B961E0FC5B66206AD8BAD5612113D5A7E61D453A" restart="required">
+      <driver inf="ialpss2i_i2c_bxt_p.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_i2c_bxt_p.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="05BFAF791AE2076E360E176B8B9B5FB9C581CCB563D6B507CBFE012FB1D21F87" restart="required">
+      <driver inf="ialpss2i_i2c_cnl.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_i2c_cnl.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="7B2F9D644C3A122E63E4A3A53E2AC10290504FB1C2E239AA57D238CD95E023A7" restart="required">
+      <driver inf="ialpss2i_i2c_glk.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_i2c_glk.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="4A5D302F4790FAA2382E099EB81FE4011189218C282CD26D003616137F27F4CB" restart="required">
+      <driver inf="ialpss2i_i2c_skl.inf" ranking="normal">
+        <assemblyIdentity name="dual_ialpss2i_i2c_skl.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2F832E6FB31B1C8E61FD218AE4517BD7B395D7514747F913205D13DB3041B53C" restart="required">
+      <driver inf="mbtr8897w81x64.inf" ranking="normal">
+        <assemblyIdentity name="dual_mbtr8897w81x64.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="34D31E78E75CD57CD9CEDCA60532EC5172E9186BEDEC8082DD515C6A8C72257E" restart="required">
+      <driver inf="net8187bv64.inf" ranking="normal">
+        <assemblyIdentity name="dual_net8187bv64.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2EF2A98B910D1669705F6C7B30A0FD3D4AE436C264736FC22E2D122A8A1A12B6" restart="required">
+      <driver inf="qcwlan64.inf" ranking="normal">
+        <assemblyIdentity name="dual_qcwlan64.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="23D0DA7810FB39ABFC91D3A4D4DCDAAC098A05E5742F758A89B65D4702E58CAE" restart="required">
+      <driver inf="rtvdevx64.inf" ranking="normal">
+        <assemblyIdentity name="dual_rtvdevx64.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="987B031A3E0EA77D3D5BA681773F1959BCB1AD39B5AB4AA135FF1553456BF64E" restart="required">
+      <driver inf="usbncm.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbncm.inf" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="34B6B532086C2B6C07D5C8099D5583ABF0288C13E3D1F3DBB7CCF31F62174D8A" restart="required">
+      <driver inf="usbncmum.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbncmum.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2A010E9356E62B5C8D6E4583B3CFFFE3B6219183B61851F41D48F43AAB8E145B">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-amdwps.inf-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="C8A11FCEF4EB2AE6DC8A9781FE12E150127F9419ADE09CF89B0185809F9C4BDC">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0110" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="410c1ebb5cef1c6d24e684f9d5be4bef">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0111" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="23c9b84afe526daac6c9c8241e864ca1">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0112" version="10.0.26100.9550" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

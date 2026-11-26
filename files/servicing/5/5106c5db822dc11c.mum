@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Identity-Foundation-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Identity-Foundation" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Windows-Identity-Foundation" displayName="Windows Identity Foundation 3.5" description="Windows Identity Foundation (WIF) 3.5 is a set of .NET Framework classes that can be used for implementing claims-based identity in your .NET 3.5 and 4.0 applications. WIF 3.5 has been superseded by WIF classes that are provided as part of .NET 4.5. It is recommended that you use .NET 4.5 for supporting claims-based identity in your applications.">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Windows Identity Foundation (WIF) 3.5 is a set of .NET Framework classes that can be used for implementing claims-based identity in your .NET 3.5 and 4.0 applications. WIF 3.5 has been superseded by WIF classes that are provided as part of .NET 4.5. It is recommended that you use .NET 4.5 for supporting claims-based identity in your applications." DisplayName="Windows Identity Foundation 3.5" Id="427" Type="Feature" UniqueName="Windows-Identity-Foundation">
+          <Version Major="3" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Identity-Foundation-Opt-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>
