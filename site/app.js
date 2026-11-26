@@ -1236,8 +1236,9 @@ async function renderCompare() {
   const noOlder = (x, y) => (Boolean(x.insiderChannel) === Boolean(y.insiderChannel) ? releaseDate(x) >= releaseDate(y)
     : x.insiderChannel ? releaseDate(y) < until(x) : releaseDate(x) >= until(y));
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
-  $('cmp-old').setRange(known ? (v) => v !== newKey && noOlder(buildsByKey.get(newKey), buildsByKey.get(v)) : null);
-  $('cmp-new').setRange(known ? (v) => v !== oldKey && noOlder(buildsByKey.get(v), buildsByKey.get(oldKey)) : null);
+  // (The other's build is among them, greyed out)
+  $('cmp-old').setRange(known ? (v) => noOlder(buildsByKey.get(newKey), buildsByKey.get(v)) : null);
+  $('cmp-new').setRange(known ? (v) => noOlder(buildsByKey.get(v), buildsByKey.get(oldKey)) : null);
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';
