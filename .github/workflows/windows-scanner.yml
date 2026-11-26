@@ -99,7 +99,7 @@ jobs:
       - name: Trace feature checks
         if: vars.FEATURE_TRACE != 'false'
         shell: powershell
-        timeout-minutes: 105
+        timeout-minutes: 120
         continue-on-error: true
         run: .\scripts\trace-features.ps1 -OutputDir output-temp\trace -SuperGodModeDir output-temp\super-god-mode
 

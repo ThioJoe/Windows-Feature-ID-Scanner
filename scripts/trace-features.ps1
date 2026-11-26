@@ -23,7 +23,7 @@ param(
     [string]$SuperGodModeDir,              # Super God Mode's statistics; without them only the shell's UI and the Start menu's apps are opened
     [switch]$Prepare,
     [int]$IdleMinutes = 5,                 # How long Windows is left alone first (from sign-in, when the trace started at boot)
-    [int]$TargetMinutes = 75,              # Time limit for opening targets (all of them took 68 minutes in a test on the ARM64 runner)
+    [int]$TargetMinutes = 90,              # Time limit for opening targets, for one that hangs (all of them took 68 minutes in a test on the ARM64 runner)
     [string]$Python = 'python',            # For summarize-trace.py
     [string]$Targets,                      # (Internal) Open the targets as the signed-in user, recording them in this CSV file
     [switch]$RestartShell                  # (Internal, with -Targets) Restart Explorer first

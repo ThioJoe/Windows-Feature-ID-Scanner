@@ -1510,7 +1510,7 @@ try { & C:\scan\trace-features.ps1 -Prepare *>&1 | ForEach-Object { Write-Log "$
         if ($prepared -ne 'ok') { throw $prepared }
         Restart-ScanVM -AnyPending
         Set-VmNetwork
-        $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 115 -script @'
+        $trace = Invoke-VmTask 'FeatureTrace' -timeoutMinutes 130 -script @'
 try {
     & C:\scan\trace-features.ps1 -OutputDir C:\scan\output-temp\trace -SuperGodModeDir C:\scan\output-temp\super-god-mode -Python C:\scan\python\python.exe *>&1 | ForEach-Object { Write-Log "$_" }
     Write-Result 'ok'
