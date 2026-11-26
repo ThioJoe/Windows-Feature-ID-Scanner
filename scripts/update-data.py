@@ -634,7 +634,9 @@ def regenerate(data_dir):
 
     # Diffs with the previous build of the same architecture and version (base build number), since builds of 25H2 and 26H2 come
     # out side by side. A version's first build is compared with the other version's build at the same update instead (the same
-    # binaries, so what differs is the enablement package), or the newest one before it.
+    # binaries, so what differs is the enablement package), or the newest one before it. Only versions whose base build numbers are
+    # less than 1,000 apart count: 24H2, 25H2 and 26H2 (26100, 26200, 26300) share their updates' numbers, but 26H1 (28000) and the
+    # Future Platforms builds (29000s) number their own.
     diffs_dir = os.path.join(data_dir, 'diffs')
     os.makedirs(diffs_dir, exist_ok=True)
     wanted = set()
@@ -645,7 +647,8 @@ def regenerate(data_dir):
             prev = same_version[-1]
         else:
             ubr = version_tuple(cur['build'])[1]
-            others = [b for b in earlier if version_tuple(b['build'])[1] <= ubr]
+            base = version_tuple(cur['build'])[0]
+            others = [b for b in earlier if version_tuple(b['build'])[1] <= ubr and abs(version_tuple(b['build'])[0] - base) < 1000]
             if not others:
                 continue
             prev = max(others, key=lambda b: (version_tuple(b['build'])[1], version_tuple(b['build'])))
