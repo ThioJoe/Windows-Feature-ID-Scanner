@@ -226,6 +226,7 @@
    "name": "Servicing_LBlobMemcpyFailureHandling",
    "modules": [
     "CbsCore.dll",
+    "ExtendedSecurityUpdatesAI.dll",
     "GlobMerger.dll",
     "ServicingCommon.dll",
     "ServicingUAPI.dll",
@@ -1063,7 +1064,9 @@
    "id": 62733212,
    "name": "Servicing_UCBadAllocCrashFix",
    "modules": [
-    "UpdateCompression.dll"
+    "UpdateCompression.dll",
+    "dpx.dll",
+    "turbocontainer.dll"
    ],
    "store": null
   },
@@ -3116,6 +3119,14 @@
    "store": null
   },
   {
+   "id": 64099613,
+   "name": "Servicing_MSRC148063",
+   "modules": [
+    "turbocontainer.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 64101363,
    "name": null,
    "modules": [],
@@ -4510,6 +4521,14 @@
    "store": null
   },
   {
+   "id": 64350655,
+   "name": "Servicing_SsShimPreloadFailureDiagnostics",
+   "modules": [
+    "SSShim.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 64354671,
    "name": "Tessera_WfpPolicyTagging",
    "modules": [
@@ -5114,6 +5133,14 @@
    "store": null
   },
   {
+   "id": 64428290,
+   "name": "WarpLockContentionFix",
+   "modules": [
+    "d3d10warp.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 64430640,
    "name": "Servicing_FixSpecialApcInsertionPosition",
    "modules": [
@@ -5661,6 +5688,8 @@
    "name": "Servicing_BoundedDeltaHeaderReads",
    "modules": [
     "UpdateCompression.dll",
+    "dpx.dll",
+    "turbocontainer.dll",
     "wcp.dll"
    ],
    "store": null
@@ -6001,6 +6030,8 @@
     "CbsCore.dll",
     "UpdateAgent.dll",
     "UpdateCompression.dll",
+    "dpx.dll",
+    "turbocontainer.dll",
     "turbostack.dll",
     "updateagent.dll",
     "wcp.dll"
@@ -7538,6 +7569,15 @@
    "store": null
   },
   {
+   "id": 52577977,
+   "name": "Servicing_SetupFixiSCSIDeployment",
+   "modules": [
+    "DismApi.dll",
+    "DmiProvider.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 53100348,
    "name": "VAARFF",
    "modules": [
@@ -7733,10 +7773,26 @@
    "store": null
   },
   {
+   "id": 54481534,
+   "name": "Servicing_FirewallCmiPluginDuplicateNameRules",
+   "modules": [
+    "cmifw.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 54504857,
    "name": "Preferred_Language_List_Fix",
    "modules": [
     "Windows.Devices.Enumeration.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 54509270,
+   "name": "Servicing_DISM_AvoidDateTimeStringParsing",
+   "modules": [
+    "DismApi.dll"
    ],
    "store": null
   },
@@ -7874,6 +7930,15 @@
    "modules": [
     "WaaSMedicCapsule.dll",
     "WaaSMedicSvcImpl.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 55387374,
+   "name": "Servicing_PlayBForFeatureUpdates",
+   "modules": [
+    "CbsProvider.dll",
+    "DismApi.dll"
    ],
    "store": null
   },
@@ -8572,6 +8637,18 @@
    "store": null
   },
   {
+   "id": 57354622,
+   "name": "DriverStore_InstallableDriverEnumeration",
+   "modules": [
+    "DeviceSetupManager.dll",
+    "drvinst.exe",
+    "drvsetup.dll",
+    "drvstore.dll",
+    "newdev.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 57373685,
    "name": "Servicing_FeatureTogglesFconTest",
    "modules": [
@@ -9126,6 +9203,29 @@
    "store": null
   },
   {
+   "id": 58339991,
+   "name": "Servicing_PlayBCVS",
+   "modules": [
+    "CbsCore.dll",
+    "DismApi.dll",
+    "IntlProvider.dll",
+    "ReAgent.dll",
+    "ReAgentc.exe",
+    "ServicingCommon.dll",
+    "ServicingUAPI.dll",
+    "SetupCleanupTask.dll",
+    "TiWorker.exe",
+    "TrustedInstaller.exe",
+    "UpdateAgent.dll",
+    "WinREAgent.dll",
+    "containerworker.exe",
+    "turbostack.dll",
+    "updateagent.dll",
+    "wcp.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 58340490,
    "name": "Servicing_UtcTestWatchdogShutdown",
    "modules": [
@@ -9621,6 +9721,15 @@
    "name": "Containment_UUS_FixDeadlockInPersistDownloadCalls_59228686",
    "modules": [
     "wuauengcore.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 59230186,
+   "name": "DeviceInstall_SkipLegacyInstallation",
+   "modules": [
+    "drvinst.exe",
+    "drvstore.dll"
    ],
    "store": null
   },
@@ -10963,6 +11072,17 @@
    "store": null
   },
   {
+   "id": 61106556,
+   "name": "Servicing_UseSiblingTurboStack",
+   "modules": [
+    "CbsCore.dll",
+    "ContainerAI.dll",
+    "UpdateAgent.dll",
+    "updateagent.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 61108426,
    "name": "DmaAdapterStage1DirectAttach",
    "modules": [
@@ -12049,6 +12169,20 @@
    "store": null
   },
   {
+   "id": 61756482,
+   "name": null,
+   "modules": [
+    "cryptxml.dll"
+   ],
+   "store": [
+    {
+     "priority": "Security (9)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 61758298,
    "name": "RemoveStageUserDataForInstall",
    "modules": [
@@ -12996,6 +13130,20 @@
    "store": null
   },
   {
+   "id": 62278011,
+   "name": "Servicing_BfsvcSizeCheckV2",
+   "modules": [
+    "TpmTasks.dll",
+    "bcdboot.exe",
+    "bfsvc.dll",
+    "bfsvc.exe",
+    "bootsvc.dll",
+    "securebootai.dll",
+    "windlp.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62302083,
    "name": "CassHttpSkipDnsRetry",
    "modules": [
@@ -13427,6 +13575,15 @@
    ]
   },
   {
+   "id": 62586591,
+   "name": "AppInv_FileVerifyErase_AV",
+   "modules": [
+    "aeinv.dll",
+    "aepic.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62591801,
    "name": null,
    "modules": [
@@ -13580,6 +13737,23 @@
     "SettingsHandlers_Flights3.dll"
    ],
    "store": null
+  },
+  {
+   "id": 62681533,
+   "name": null,
+   "modules": [
+    "aeinv.dll",
+    "aemarebackup.dll",
+    "aepic.dll",
+    "invagent.dll"
+   ],
+   "store": [
+    {
+     "priority": "Security (9)",
+     "state": "Enabled (2)",
+     "type": "Override (0)"
+    }
+   ]
   },
   {
    "id": 62681597,
@@ -15567,18 +15741,6 @@
    ]
   },
   {
-   "id": 61756482,
-   "name": null,
-   "old": [
-    {
-     "priority": "Security (9)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 61825274,
    "name": "CAM_Mcp_PolicyEnforcement",
    "old": [
@@ -15940,18 +16102,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62681533,
-   "name": null,
-   "old": [
-    {
-     "priority": "Security (9)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 62761302,
@@ -16692,6 +16842,42 @@
    }
   },
   {
+   "id": 39988863,
+   "name": "AppInv_UnregisterWaitCrash",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 45036787,
+   "name": "Standalone_25_08_NonSec",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 45036790,
+   "name": "Standalone_25_09_NonSec",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
    "id": 48435131,
    "name": "HEVCEnc_CodecPack",
    "old": {
@@ -16700,6 +16886,18 @@
    },
    "new": {
     "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 49453572,
+   "name": "Standalone_Future",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "disabled",
     "changeTime": "reboot"
    }
   },
@@ -16742,6 +16940,18 @@
   {
    "id": 53427769,
    "name": null,
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 54237993,
+   "name": "ImplVal",
    "old": {
     "default": "enabled",
     "changeTime": "reboot"
@@ -16905,6 +17115,66 @@
    "new": {
     "default": "alwaysEnabled",
     "changeTime": "moduleReload"
+   }
+  },
+  {
+   "id": 58705539,
+   "name": "Capture_WindowExclusionBackport",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 58989021,
+   "name": "UexTest7",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 58989070,
+   "name": "TestUex12",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 58989092,
+   "name": "TestLoc02",
+   "old": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 58989177,
+   "name": "TestLoc03",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
    }
   },
   {
@@ -17184,6 +17454,42 @@
    }
   },
   {
+   "id": 61160789,
+   "name": "LocPerfVal",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 61161244,
+   "name": "TestUxGate",
+   "old": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "alwaysEnabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 61161268,
+   "name": "ConfAccImp",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
    "id": 61161283,
    "name": "ValUxPerf2",
    "old": {
@@ -17198,6 +17504,18 @@
   {
    "id": 61170532,
    "name": null,
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 61187478,
+   "name": "SynchronizedLayoutPublicApi",
    "old": {
     "default": "disabled",
     "changeTime": "reboot"
@@ -17498,6 +17816,18 @@
   {
    "id": 62744735,
    "name": "BitLocker_Improve_Backup_On_Resume_Logic",
+   "old": {
+    "default": "disabled",
+    "changeTime": "reboot"
+   },
+   "new": {
+    "default": "enabled",
+    "changeTime": "reboot"
+   }
+  },
+  {
+   "id": 62786322,
+   "name": "CompositionMagnifier_Iter2",
    "old": {
     "default": "disabled",
     "changeTime": "reboot"
