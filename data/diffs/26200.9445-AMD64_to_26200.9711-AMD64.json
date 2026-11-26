@@ -458,6 +458,14 @@
    "store": null
   },
   {
+   "id": 57715548,
+   "name": "ComboBoxSelectionBoxValue",
+   "modules": [
+    "SettingsCoreUi.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 57991654,
    "name": "BAMCF",
    "modules": [
@@ -569,6 +577,15 @@
    "store": null
   },
   {
+   "id": 59128595,
+   "name": "Servicing_XVPSWMediaTypeFallback",
+   "modules": [
+    "mfsvr.dll",
+    "msvproc.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 59187885,
    "name": "Firewall_UX_ScreenReaderLabels",
    "modules": [
@@ -637,6 +654,14 @@
    "name": null,
    "modules": [
     "WifiCx.sys"
+   ],
+   "store": null
+  },
+  {
+   "id": 59665809,
+   "name": "MANMSIF",
+   "modules": [
+    "SRH.dll"
    ],
    "store": null
   },
@@ -2985,6 +3010,15 @@
    "store": null
   },
   {
+   "id": 62615041,
+   "name": "Dwm_FreeDesktopOnDestroy",
+   "modules": [
+    "uDWM.dll",
+    "win32kfull.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 62616258,
    "name": "EnterProductKey_AccessibilityFixes",
    "modules": [
@@ -3798,6 +3832,15 @@
    "name": null,
    "modules": [
     "Windows.UI.Cred.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 62775162,
+   "name": "OneSettingsClient_BrokeredRefresh",
+   "modules": [
+    "FlightSettings.dll",
+    "wosc.dll"
    ],
    "store": null
   },
@@ -4994,18 +5037,6 @@
     "USBXHCI.SYS"
    ],
    "store": null
-  },
-  {
-   "id": 62961321,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 62961444,
@@ -22718,6 +22749,14 @@
    ]
   },
   {
+   "id": 58638708,
+   "name": null,
+   "modules": [
+    "OSClient.API.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 58645244,
    "name": "KernelPnP_CheckDriverIntegrity",
    "modules": [
@@ -24802,6 +24841,35 @@
    "store": null
   },
   {
+   "id": 61441697,
+   "name": "EssFprPeripherals",
+   "modules": [
+    "BioCredProv.dll",
+    "KernelBase.dll",
+    "NgcCtnrSvc.dll",
+    "NgcIsoCtnr.dll",
+    "SHCore.dll",
+    "SettingsEnvironment.Desktop.dll",
+    "SettingsHandlers_Authentication.dll",
+    "SystemSettingsAdminFlows.exe",
+    "cryptngc.dll",
+    "ngcpopkeysrv.dll",
+    "ngcsvc.dll",
+    "ngctasks.dll",
+    "ngcutils.dll",
+    "wbiosrvc.dll",
+    "winbio.dll",
+    "windowsudk.shellcommon.dll"
+   ],
+   "store": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 61444202,
    "name": "Containment_UUS_PolicyReportTrailingComma",
    "modules": [
@@ -25519,6 +25587,14 @@
    ]
   },
   {
+   "id": 62353204,
+   "name": "TouchpadFeedbackSuppression2",
+   "modules": [
+    "win32kbase.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 62368302,
    "name": "ProcessPackageGraphTipDeploymentInProgress",
    "modules": [
@@ -25567,6 +25643,17 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 62576270,
+   "name": "ApplyWindowActionConvergence2",
+   "modules": [
+    "dxgkrnl.sys",
+    "win32kbase.sys",
+    "win32kfull.sys",
+    "windows.storage.dll"
+   ],
+   "store": null
   },
   {
    "id": 62649897,
@@ -25696,29 +25783,6 @@
    ]
   },
   {
-   "id": 48525682,
-   "name": "SystrayPBDT",
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
    "id": 49780915,
    "name": null,
    "old": [
@@ -25733,29 +25797,6 @@
      "priority": "ImageOverride (15)",
      "state": "Disabled (1)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 50564196,
-   "name": "SettingsDel",
-   "old": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    },
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -26150,29 +26191,6 @@
    "new": null
   },
   {
-   "id": 58349635,
-   "name": null,
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
    "id": 58437911,
    "name": null,
    "old": [
@@ -26263,54 +26281,6 @@
    ]
   },
   {
-   "id": 59867315,
-   "name": null,
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 59872186,
-   "name": "InkingWinMLReplat",
-   "old": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Disabled (1)",
-     "type": "Override (0)",
-     "variant": "2"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Disabled (1)",
-     "type": "Override (0)",
-     "variant": "2"
-    },
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 59979530,
    "name": "SoftLandingBatching",
    "old": [
@@ -26324,29 +26294,6 @@
     {
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60192063,
-   "name": "Servicing_CPDUsabilityCheck",
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
      "type": "Override (0)"
     }
    ]
@@ -26419,29 +26366,6 @@
     {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60918128,
-   "name": null,
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
      "type": "Override (0)"
     }
    ]
@@ -26555,24 +26479,6 @@
    ]
   },
   {
-   "id": 61441697,
-   "name": "EssFprPeripherals",
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61766564,
    "name": null,
    "old": [
@@ -26627,18 +26533,6 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 61951993,
-   "name": "Cplat_SFI_NTLM_Removal",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },

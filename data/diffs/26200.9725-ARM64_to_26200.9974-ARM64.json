@@ -10380,13 +10380,7 @@
    "modules": [
     "XInput1_4.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 63626234,
@@ -15220,18 +15214,6 @@
    "store": null
   },
   {
-   "id": 64107774,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 64109993,
    "name": "BugFix64109993",
    "modules": [
@@ -18016,6 +17998,14 @@
    "modules": [
     "shell32.dll",
     "windows.storage.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 43200402,
+   "name": "AcknowledgeReceiptOnLoad",
+   "modules": [
+    "Windows.CloudStore.dll"
    ],
    "store": null
   },
@@ -21734,6 +21724,12 @@
    "store": null
   },
   {
+   "id": 60671347,
+   "name": "ODRReplacingBundle",
+   "modules": [],
+   "store": null
+  },
+  {
    "id": 60690776,
    "name": null,
    "modules": [
@@ -23870,6 +23866,18 @@
    "store": null
   },
   {
+   "id": 61568090,
+   "name": null,
+   "modules": [
+    "StructuredQuery.dll",
+    "Windows.Globalization.dll",
+    "ieframe.dll",
+    "mssrch.dll",
+    "tquery.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 61568091,
    "name": null,
    "modules": [
@@ -24519,6 +24527,50 @@
    "modules": [
     "aeinv.dll",
     "aemarebackup.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 61797061,
+   "name": "Print_PlatformStabilizationFixes_2026_Wave4",
+   "modules": [
+    "APMon.dll",
+    "AppMon.dll",
+    "DAFIPP.dll",
+    "DAFMCP.dll",
+    "DAFWSD.dll",
+    "EsclProtocol.dll",
+    "EsclScan.dll",
+    "Print.PrintSupport.Source.dll",
+    "PrintConfig.dll",
+    "PrintDialog.exe",
+    "PrintManagementProvider.dll",
+    "PrintQueueActionCenter.exe",
+    "PrintWorkflowService.dll",
+    "PrinterCleanupTask.dll",
+    "SettingsContent.dll",
+    "SystemSettings.Handlers.dll",
+    "VirtualMon.dll",
+    "WSDApi.dll",
+    "Windows.Devices.Scanners.dll",
+    "Windows.Graphics.Printing.Workflow.dll",
+    "WindowsProtectedPrintConfiguration.dll",
+    "XpsDocumentTargetPrint.dll",
+    "XpsPrint.dll",
+    "gpprnext.dll",
+    "localspl.dll",
+    "printui.dll",
+    "prntvpt.dll",
+    "splwow64.exe",
+    "spoolsv.exe",
+    "spoolsvworker.exe",
+    "tcpmon.dll",
+    "usbmon.dll",
+    "usbprint.sys",
+    "wiaservc.dll",
+    "win32spl.dll",
+    "windows.immersiveshell.serviceprovider.dll",
+    "winspool.drv"
    ],
    "store": null
   },
@@ -26890,13 +26942,7 @@
     "FlightSettings.dll",
     "wosc.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 62776647,
@@ -27348,18 +27394,6 @@
    ]
   },
   {
-   "id": 61153246,
-   "name": "InSessionRepair",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61154044,
    "name": "Standalone_26_10_NonSec",
    "old": [
@@ -27478,18 +27512,6 @@
    ]
   },
   {
-   "id": 61951993,
-   "name": "Cplat_SFI_NTLM_Removal",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 62103454,
    "name": null,
    "old": [
@@ -27582,18 +27604,6 @@
      "variant": "1",
      "payloadKind": "Resident (1)",
      "payload": "0x1388"
-    }
-   ]
-  },
-  {
-   "id": 62952458,
-   "name": "OptimizeDeleteProfileForNeverLoggedIn",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },

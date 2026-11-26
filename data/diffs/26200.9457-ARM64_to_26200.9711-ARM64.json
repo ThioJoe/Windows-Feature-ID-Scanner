@@ -446,6 +446,14 @@
    "store": null
   },
   {
+   "id": 57715548,
+   "name": "ComboBoxSelectionBoxValue",
+   "modules": [
+    "SettingsCoreUi.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 57991654,
    "name": "BAMCF",
    "modules": [
@@ -554,13 +562,7 @@
     "mfsvr.dll",
     "msvproc.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 59187885,
@@ -640,13 +642,7 @@
    "modules": [
     "SRH.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 59677541,
@@ -2896,6 +2892,15 @@
    "store": null
   },
   {
+   "id": 62615041,
+   "name": "Dwm_FreeDesktopOnDestroy",
+   "modules": [
+    "uDWM.dll",
+    "win32kfull.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 62616258,
    "name": "EnterProductKey_AccessibilityFixes",
    "modules": [
@@ -3709,13 +3714,7 @@
     "FlightSettings.dll",
     "wosc.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 62776273,
@@ -20997,19 +20996,6 @@
    "store": null
   },
   {
-   "id": 51850502,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)",
-     "variant": "2"
-    }
-   ]
-  },
-  {
    "id": 52147586,
    "name": "Servicing_ColorManagementFilePickerUpdate",
    "modules": [
@@ -22209,6 +22195,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 58638708,
+   "name": null,
+   "modules": [
+    "OSClient.API.dll"
+   ],
+   "store": null
   },
   {
    "id": 58645244,
@@ -24228,6 +24222,35 @@
    "store": null
   },
   {
+   "id": 61441697,
+   "name": "EssFprPeripherals",
+   "modules": [
+    "BioCredProv.dll",
+    "KernelBase.dll",
+    "NgcCtnrSvc.dll",
+    "NgcIsoCtnr.dll",
+    "SHCore.dll",
+    "SettingsEnvironment.Desktop.dll",
+    "SettingsHandlers_Authentication.dll",
+    "SystemSettingsAdminFlows.exe",
+    "cryptngc.dll",
+    "ngcpopkeysrv.dll",
+    "ngcsvc.dll",
+    "ngctasks.dll",
+    "ngcutils.dll",
+    "wbiosrvc.dll",
+    "winbio.dll",
+    "windowsudk.shellcommon.dll"
+   ],
+   "store": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
+  },
+  {
    "id": 61444202,
    "name": "Containment_UUS_PolicyReportTrailingComma",
    "modules": [
@@ -24926,6 +24949,14 @@
    ]
   },
   {
+   "id": 62353204,
+   "name": "TouchpadFeedbackSuppression2",
+   "modules": [
+    "win32kbase.sys"
+   ],
+   "store": null
+  },
+  {
    "id": 62368302,
    "name": "ProcessPackageGraphTipDeploymentInProgress",
    "modules": [
@@ -24976,6 +25007,17 @@
    ]
   },
   {
+   "id": 62576270,
+   "name": "ApplyWindowActionConvergence2",
+   "modules": [
+    "dxgkrnl.sys",
+    "win32kbase.sys",
+    "win32kfull.sys",
+    "windows.storage.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62694402,
    "name": null,
    "modules": [
@@ -25000,6 +25042,17 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 62829766,
+   "name": "AgentId",
+   "modules": [
+    "AAD.Core.dll",
+    "TokenBroker.dll",
+    "Windows.Security.Authentication.Web.Core.dll",
+    "ntoskrnl.exe"
+   ],
+   "store": null
   },
   {
    "id": 62846944,
@@ -25072,10 +25125,6 @@
    "name": "PeopleActivityAPI"
   },
   {
-   "id": 57715548,
-   "name": "ComboBoxSelectionBoxValue"
-  },
-  {
    "id": 57949743,
    "name": "PRE"
   },
@@ -25086,10 +25135,6 @@
   {
    "id": 61839301,
    "name": "ReleaseManaged_Standalone_Enabled_2609"
-  },
-  {
-   "id": 62615041,
-   "name": "Dwm_FreeDesktopOnDestroy"
   },
   {
    "id": 62672833,
@@ -25103,47 +25148,12 @@
  "nameLost": [],
  "storeChanged": [
   {
-   "id": 46151993,
-   "name": "Containment_UUS_Tailored_Download_And_Install_46151993",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 46702346,
    "name": null,
    "old": [
     {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 47557358,
-   "name": "AccountAndRegionalPolicyEnforcement",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
      "type": "Override (0)"
     }
    ],
@@ -25690,18 +25700,6 @@
    ]
   },
   {
-   "id": 60565610,
-   "name": "HotpatchLicense_ClipDLS",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 60709678,
    "name": null,
    "old": [
@@ -25716,18 +25714,6 @@
      "priority": "ImageOverride (15)",
      "state": "Disabled (1)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60830407,
-   "name": "YieldInputQueue3",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -25840,18 +25826,6 @@
    ]
   },
   {
-   "id": 61286585,
-   "name": "Servicing_BatteryTestExempt",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61329905,
    "name": "SWT_5",
    "old": [
@@ -25888,29 +25862,6 @@
    ]
   },
   {
-   "id": 61441697,
-   "name": "EssFprPeripherals",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61766564,
    "name": null,
    "old": [
@@ -25921,18 +25872,6 @@
     }
    ],
    "new": null
-  },
-  {
-   "id": 61798161,
-   "name": "DisableRecalcOverMonitorSleep",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 61839294,
@@ -25991,41 +25930,6 @@
     }
    ],
    "new": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 62222328,
-   "name": "RendererEffectGetNaturalOutputType",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 62321685,
-   "name": null,
-   "old": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
     {
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
@@ -26106,18 +26010,6 @@
    ]
   },
   {
-   "id": 62542487,
-   "name": "FixPauseEndTimeClamp",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 62672833,
    "name": "TEUX",
    "old": [
@@ -26132,18 +26024,6 @@
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 62724339,
-   "name": "Capture_DisplayCaptureRootRebind",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -26180,18 +26060,6 @@
      "priority": "Security (9)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 62939125,
-   "name": null,
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },

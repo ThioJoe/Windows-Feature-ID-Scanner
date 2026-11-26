@@ -906,6 +906,16 @@ const modsText = (f) => (f.modules || []).join(', ');
 // Whether only a feature trace knows the feature (no binary's symbols have it, nor the feature store). A trace sees what's checked while
 // it runs, so such a feature counts in neither first seen nor the builds' added and removed features.
 const traceOnly = (f) => Boolean(f.trace) && !(f.modules || []).length && !(f.declaredIn || []).length && !f.store;
+// Whether a feature store entry is the rollout service's (priority Service): Windows writes those after it checks in with Microsoft, for
+// features Microsoft is rolling out to a share of PCs or testing, so which ones a VM gets depends on the day and on chance, not on the build
+const rolloutEntry = (c) => String(c.priority || '').startsWith('Service');
+// The feature as the build itself has it, for comparing builds: without the rollout service's entries, or null if nothing else knows it
+function asBuilt(f) {
+  if (!(f.store || []).some(rolloutEntry)) return f;
+  const store = f.store.filter((c) => !rolloutEntry(c));
+  const out = { ...f, store: store.length ? store : undefined };
+  return (out.modules || []).length || (out.declaredIn || []).length || out.store || out.trace ? out : null;
+}
 // The default the symbols give a feature (none for one only a feature trace gives)
 const symbolDefault = (f) => f.symbolDefault || (f.defaultSource !== 'trace' ? f.default : undefined);
 const checkedBy = (f) => ((f.trace.processes || []).length ? `checked by ${f.trace.processes.join(', ')}` : 'in the runtime trace');
@@ -1166,7 +1176,8 @@ async function renderCompare() {
   out.innerHTML = '';
   const [a, b] = await Promise.all([loadBuild(oldKey), loadBuild(newKey)]);
   if (render !== compareRender) return;
-  const of = new Map(a.features.map((f) => [f.id, f])), nf = new Map(b.features.map((f) => [f.id, f]));
+  const built = (x) => new Map(x.features.map(asBuilt).filter(Boolean).map((f) => [f.id, f]));
+  const of = built(a), nf = built(b);
   const added = [], removed = [], renamed = [], newlyNamed = [], nameLost = [], storeChanged = [], defaultChanged = [];
   for (const [id, f] of nf) {
     const o = of.get(id);

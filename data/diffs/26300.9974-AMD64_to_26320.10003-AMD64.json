@@ -69,30 +69,6 @@
    "store": null
   },
   {
-   "id": 42969627,
-   "name": "RepairAppRegistration_Preserves_ApplicationData",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 43283184,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 43350701,
    "name": null,
    "modules": [
@@ -108,18 +84,6 @@
     "zipfldr.dll"
    ],
    "store": null
-  },
-  {
-   "id": 45825686,
-   "name": "PackagedServiceUpdateCheck",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 46110737,
@@ -147,84 +111,12 @@
    "store": null
   },
   {
-   "id": 49084341,
-   "name": "NonBlockingWnfBroadcastSystemMessage",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 49666144,
-   "name": "SwEnumRundownRace",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 49918560,
-   "name": "UseOpenProcessForOLEACC",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 50219409,
-   "name": "Servicing_DisableContainmentOnForceParkHint",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 50219413,
-   "name": "Servicing_WpsHintsForContainment",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 51886124,
    "name": null,
    "modules": [
     "windows.applicationmodel.datatransfer.dll"
    ],
    "store": null
-  },
-  {
-   "id": 52087985,
-   "name": "Servicing_RPCSSFirewallIntegration",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 54069111,
@@ -282,18 +174,6 @@
     "SettingsHandlers_StorageSense.dll"
    ],
    "store": null
-  },
-  {
-   "id": 55199570,
-   "name": "Servicing_EnableInspect_55199570",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 55386111,
@@ -1827,6 +1707,14 @@
    "name": "Servicing_AnycastAdvertisementLimit",
    "modules": [
     "tcpip.sys"
+   ],
+   "store": null
+  },
+  {
+   "id": 62961321,
+   "name": "EnableReadAccess",
+   "modules": [
+    "Windows.StateRepository.dll"
    ],
    "store": null
   },
@@ -3666,6 +3554,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 64107774,
+   "name": "Servicing_AhcIndirectDataAccessFix",
+   "modules": [
+    "ahcache.sys"
+   ],
+   "store": null
   },
   {
    "id": 64108433,
@@ -7578,18 +7474,6 @@
    "store": null
   },
   {
-   "id": 41073112,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 41310116,
    "name": "Containment_UUS_TrackActiveCallers_41310116",
    "modules": [
@@ -7705,30 +7589,6 @@
     "DesktopSpotlight.dll"
    ],
    "store": null
-  },
-  {
-   "id": 44574505,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 44574507,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 45067181,
@@ -7850,18 +7710,6 @@
    "store": null
   },
   {
-   "id": 46804285,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 46832940,
    "name": "Profile_Service_ETW_Logging",
    "modules": [
@@ -7904,18 +7752,6 @@
    "store": null
   },
   {
-   "id": 47081492,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 47162830,
    "name": "DesktopSpotlightRescaleImprovements",
    "modules": [
@@ -7938,18 +7774,6 @@
     "GameInput.dll"
    ],
    "store": null
-  },
-  {
-   "id": 47961746,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 48146206,
@@ -7985,18 +7809,6 @@
    "store": null
   },
   {
-   "id": 48559195,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 48574223,
    "name": "Containment_UUS_BugFix_CbsCacheConcurrency_48574223",
    "modules": [
@@ -8012,18 +7824,6 @@
     "WmiPrvSE.exe"
    ],
    "store": null
-  },
-  {
-   "id": 48742963,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 48759599,
@@ -8275,18 +8075,6 @@
    "store": null
   },
   {
-   "id": 52058799,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 52146970,
    "name": "Containment_UUS_FixIncorrectCryptoAlgoCheck_52146970",
    "modules": [
@@ -8318,6 +8106,23 @@
     "usodocked.dll"
    ],
    "store": null
+  },
+  {
+   "id": 52536226,
+   "name": null,
+   "modules": [
+    "KernelBase.dll",
+    "SHCore.dll",
+    "WSAIFabricHost.dll",
+    "windowsudk.shellcommon.dll"
+   ],
+   "store": [
+    {
+     "priority": "ImageDefault (0)",
+     "state": "Disabled (1)",
+     "type": "Override (0)"
+    }
+   ]
   },
   {
    "id": 52564597,
@@ -8387,18 +8192,6 @@
     "SettingsEnvironment.Desktop.dll"
    ],
    "store": null
-  },
-  {
-   "id": 53250194,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 53338270,
@@ -8546,18 +8339,6 @@
    "store": null
   },
   {
-   "id": 54237799,
-   "name": "EUSB2",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 54260161,
    "name": null,
    "modules": [
@@ -8583,24 +8364,21 @@
    "store": null
   },
   {
+   "id": 54267669,
+   "name": "WUSARebaseMultiMSU",
+   "modules": [
+    "UpdateAgent.dll",
+    "updateagent.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 54293478,
    "name": "Containment_UUS_FixLeakCServiceRegulator_54293478",
    "modules": [
     "wuauengcore.dll"
    ],
    "store": null
-  },
-  {
-   "id": 54315747,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 54352695,
@@ -8740,18 +8518,6 @@
    "store": null
   },
   {
-   "id": 54630686,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 54678925,
    "name": null,
    "modules": [
@@ -8790,18 +8556,6 @@
     "dam.sys"
    ],
    "store": null
-  },
-  {
-   "id": 54794917,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 54915943,
@@ -8873,18 +8627,6 @@
    "store": null
   },
   {
-   "id": 55334438,
-   "name": "ApplyWindowActionConvergence",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 55341865,
    "name": "Containment_UUS_FixDSAccessViolation_55341865",
    "modules": [
@@ -8915,18 +8657,6 @@
     "Taskbar.dll"
    ],
    "store": null
-  },
-  {
-   "id": 55357339,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 55376964,
@@ -9005,18 +8735,6 @@
    "store": null
   },
   {
-   "id": 55733275,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 55754297,
    "name": "HoverCards",
    "modules": [
@@ -9073,18 +8791,6 @@
     "SettingsEnvironment.Desktop.dll"
    ],
    "store": null
-  },
-  {
-   "id": 55821866,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 55830878,
@@ -9264,54 +8970,6 @@
    "store": null
   },
   {
-   "id": 56094336,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56115452,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56135360,
-   "name": "5613_5360",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56174134,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 56189266,
    "name": null,
    "modules": [
@@ -9465,42 +9123,6 @@
    ]
   },
   {
-   "id": 56366871,
-   "name": "FixSlideshowAfterFolderDeleted",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56392605,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56392607,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 56393598,
    "name": "BlockToastImpersonation",
    "modules": [
@@ -9582,18 +9204,6 @@
     "mssrch.dll"
    ],
    "store": null
-  },
-  {
-   "id": 56502042,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 56526787,
@@ -9679,42 +9289,6 @@
    "store": null
   },
   {
-   "id": 56791125,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56856220,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 56856345,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 56858739,
    "name": "IntelVulnCheckFix",
    "modules": [
@@ -9776,18 +9350,6 @@
    ]
   },
   {
-   "id": 56904074,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 56918547,
    "name": "NXTWindows365_OwningWindow",
    "modules": [
@@ -9810,18 +9372,6 @@
     "UIAutomationCore.dll"
    ],
    "store": null
-  },
-  {
-   "id": 56955488,
-   "name": "Bugfix_56955488",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 56956670,
@@ -9880,18 +9430,6 @@
     "mssvp.dll"
    ],
    "store": null
-  },
-  {
-   "id": 56989737,
-   "name": "PlutonIpseAsyncDriver",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 57048131,
@@ -10148,18 +9686,6 @@
    "store": null
   },
   {
-   "id": 57391481,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 57413021,
    "name": "SettingsRejuv_AmPm",
    "modules": [
@@ -10354,13 +9880,7 @@
    "modules": [
     "SettingsCoreUi.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 57723278,
@@ -10526,18 +10046,6 @@
    "store": null
   },
   {
-   "id": 57929024,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 57945653,
    "name": null,
    "modules": [
@@ -10577,6 +10085,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 57984728,
+   "name": null,
+   "modules": [
+    "twinui.pcshell.dll"
+   ],
+   "store": null
   },
   {
    "id": 58007572,
@@ -10620,18 +10136,6 @@
     "infocomm.dll"
    ],
    "store": null
-  },
-  {
-   "id": 58064553,
-   "name": "Servicing_SampleTimingOnDemand",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 58081463,
@@ -10698,18 +10202,6 @@
     "omadmclient.exe"
    ],
    "store": null
-  },
-  {
-   "id": 58122380,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 58124513,
@@ -10830,18 +10322,6 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 58270538,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -11126,6 +10606,15 @@
    "store": null
   },
   {
+   "id": 58570746,
+   "name": "Servicing_ISRStatsInTriageDumps",
+   "modules": [
+    "ntkrla57.exe",
+    "ntoskrnl.exe"
+   ],
+   "store": null
+  },
+  {
    "id": 58587042,
    "name": "Containment_UUS_DeserializationSessionData_58587042",
    "modules": [
@@ -11172,18 +10661,6 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 58638708,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -11417,30 +10894,6 @@
    "store": null
   },
   {
-   "id": 58987793,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 58987797,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 59006030,
    "name": "Servicing_KeIntSteerProcessorIndex",
    "modules": [
@@ -11541,18 +10994,6 @@
     "windows.storage.dll"
    ],
    "store": null
-  },
-  {
-   "id": 59193772,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 59211481,
@@ -11658,36 +11099,12 @@
    ]
   },
   {
-   "id": 59294866,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 59302972,
    "name": null,
    "modules": [
     "ShellConfigTask.dll"
    ],
    "store": null
-  },
-  {
-   "id": 59306570,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 59345818,
@@ -12024,18 +11441,6 @@
    "store": null
   },
   {
-   "id": 59893834,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 59946973,
    "name": "L1VHMana",
    "modules": [
@@ -12086,18 +11491,6 @@
    "store": null
   },
   {
-   "id": 59994706,
-   "name": "Bugfix_59994706",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 60008973,
    "name": "CMFDXGIDeviceManager2",
    "modules": [
@@ -12133,18 +11526,6 @@
     "rasmans.dll"
    ],
    "store": null
-  },
-  {
-   "id": 60045536,
-   "name": "ClipboardEventViewer",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 60050169,
@@ -12458,18 +11839,6 @@
    ]
   },
   {
-   "id": 60454352,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 60461584,
    "name": "Containment_UUS_OutOfScopeExemptUpdates",
    "modules": [
@@ -12539,18 +11908,6 @@
    "store": null
   },
   {
-   "id": 60520313,
-   "name": "InitializeTablesDeadKeyFix",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 60538412,
    "name": "Servicing_MDE_FixUtilIsProcessAMPPL",
    "modules": [
@@ -12581,18 +11938,6 @@
     "wdc.dll"
    ],
    "store": null
-  },
-  {
-   "id": 60566563,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 60585282,
@@ -12644,18 +11989,6 @@
     "updateagent.dll"
    ],
    "store": null
-  },
-  {
-   "id": 60671347,
-   "name": "ODRReplacingBundle",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 60672510,
@@ -13064,18 +12397,6 @@
     "winload.efi"
    ],
    "store": null
-  },
-  {
-   "id": 60938008,
-   "name": "AutoSR_2603",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 60958765,
@@ -13647,30 +12968,6 @@
    "store": null
   },
   {
-   "id": 61276672,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 61289132,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61294970,
    "name": "Containment_UUS_NewDownloadProgressModel",
    "modules": [
@@ -13705,18 +13002,6 @@
     "twinui.pcshell.dll"
    ],
    "store": null
-  },
-  {
-   "id": 61342113,
-   "name": "Servicing_ForceSanitizationOfEndpointId",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 61348287,
@@ -13791,18 +13076,6 @@
     "InstallServiceTasks.dll"
    ],
    "store": null
-  },
-  {
-   "id": 61372722,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 61381752,
@@ -13897,18 +13170,6 @@
     "PITR.dll"
    ],
    "store": null
-  },
-  {
-   "id": 61441697,
-   "name": "EssFprPeripherals",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 61441708,
@@ -14109,18 +13370,6 @@
    "store": null
   },
   {
-   "id": 61481157,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61482114,
    "name": "ErrorSourceInfoReporting",
    "modules": [
@@ -14218,18 +13467,6 @@
     "energy.dll"
    ],
    "store": null
-  },
-  {
-   "id": 61568090,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 61571619,
@@ -14585,18 +13822,6 @@
    "store": null
   },
   {
-   "id": 61756467,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61756482,
    "name": null,
    "modules": [
@@ -14607,18 +13832,6 @@
      "priority": "Security (9)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 61756631,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -14714,18 +13927,6 @@
    ]
   },
   {
-   "id": 61797061,
-   "name": "Print_PlatformStabilizationFixes_2026_Wave4",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 61798161,
    "name": "DisableRecalcOverMonitorSleep",
    "modules": [
@@ -14733,13 +13934,7 @@
     "win32kbase.sys",
     "win32kfull.sys"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 61812512,
@@ -14756,13 +13951,7 @@
     "LanguageOverlayServer.dll",
     "SettingsHandlers_Language.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 61821722,
@@ -15289,18 +14478,6 @@
    "store": null
   },
   {
-   "id": 62061341,
-   "name": null,
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 62073226,
    "name": "AutoSR_AppStatusResFix",
    "modules": [
@@ -15627,13 +14804,7 @@
     "mfsvr.dll",
     "msvproc.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 62223604,
@@ -15958,18 +15129,6 @@
    ]
   },
   {
-   "id": 62353204,
-   "name": "TouchpadFeedbackSuppression2",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 62362074,
    "name": "BitLockerSteelixBugFixes",
    "modules": [
@@ -16136,13 +15295,7 @@
    "modules": [
     "SettingsHandlers_Flights3.dll"
    ],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "store": null
   },
   {
    "id": 62418438,
@@ -16295,18 +15448,6 @@
     "SystemSettings.dll"
    ],
    "store": null
-  },
-  {
-   "id": 62576270,
-   "name": "ApplyWindowActionConvergence2",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
   },
   {
    "id": 62578031,
@@ -16812,18 +15953,6 @@
    ]
   },
   {
-   "id": 62829766,
-   "name": "AgentId",
-   "modules": [],
-   "store": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
    "id": 62832182,
    "name": null,
    "modules": [
@@ -17158,42 +16287,6 @@
  "nameLost": [],
  "storeChanged": [
   {
-   "id": 33393253,
-   "name": "AsyncWallpaperTranscode",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 38123866,
-   "name": "FixEntityItemAccessibilityViewRaw",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 39543558,
-   "name": "AudioDeadLockFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 42399068,
    "name": "CleanEnergyCharging",
    "old": [
@@ -17230,30 +16323,6 @@
    ]
   },
   {
-   "id": 45832080,
-   "name": "ChangeMachinePasswordViaKerb",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 46151993,
-   "name": "Containment_UUS_Tailored_Download_And_Install_46151993",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 48148527,
    "name": "NXT_WindowsHelloForBusiness",
    "old": [
@@ -17286,41 +16355,6 @@
      "priority": "ImageOverride (15)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 51578581,
-   "name": "AppExAliasAbsPath",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 52536226,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -17379,53 +16413,6 @@
    ]
   },
   {
-   "id": 54824278,
-   "name": "Location_Fix_OverrideToast",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 55045381,
-   "name": "Containment_UUS_UUPRemoteProcess_55045381",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 55090619,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
    "id": 55482158,
    "name": null,
    "old": [
@@ -17442,54 +16429,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 55593022,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 55715118,
-   "name": "FixMicaAfterContrastTheme",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 55943815,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 56414822,
-   "name": "Firewall_BugFixes_25D_Indirect_Strings_Delay_Load",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 56457799,
@@ -17558,18 +16497,6 @@
    ]
   },
   {
-   "id": 56920839,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 57156807,
    "name": null,
    "old": [
@@ -17634,30 +16561,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 57467795,
-   "name": "CXHBaseTrustCapabilityCheckRemoval",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ]
-  },
-  {
-   "id": 57512414,
-   "name": "M365CopilotPinning",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 57739723,
@@ -17932,18 +16835,6 @@
    ]
   },
   {
-   "id": 58761460,
-   "name": "Bugfix_58761460",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 58937591,
    "name": null,
    "old": [
@@ -17998,18 +16889,6 @@
    ]
   },
   {
-   "id": 59128595,
-   "name": "Servicing_XVPSWMediaTypeFallback",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 59158808,
    "name": null,
    "old": [
@@ -18044,18 +16923,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 59162572,
-   "name": "WUListAccessibilityFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 59210767,
@@ -18166,18 +17033,6 @@
    ]
   },
   {
-   "id": 59665809,
-   "name": "MANMSIF",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 59724890,
    "name": null,
    "old": [
@@ -18194,18 +17049,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 59734106,
-   "name": "H264_PreserveLowLatency_2607",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 59735701,
@@ -18258,43 +17101,6 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 59872186,
-   "name": "InkingWinMLReplat",
-   "old": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Disabled (1)",
-     "type": "Override (0)",
-     "variant": "2"
-    },
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageOverride (15)",
-     "state": "Disabled (1)",
-     "type": "Override (0)",
-     "variant": "2"
-    }
-   ]
-  },
-  {
-   "id": 59880971,
-   "name": "ParentalControlsNotice",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -18407,65 +17213,6 @@
    ]
   },
   {
-   "id": 60192063,
-   "name": "Servicing_CPDUsabilityCheck",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Disabled (1)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60245057,
-   "name": "H264_Core_Decoder_Logging_2606",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 60369042,
-   "name": "CompositionMagnifier",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 60454642,
-   "name": "WhqlOnlyAllowEnforcementSwitch",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 60483902,
    "name": null,
    "old": [
@@ -18484,18 +17231,6 @@
    ]
   },
   {
-   "id": 60496766,
-   "name": "CustomMetadataInvalidateUAFFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 60512386,
    "name": "NXTCredProvHostObjectRefactor",
    "old": [
@@ -18512,18 +17247,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 60565610,
-   "name": "HotpatchLicense_ClipDLS",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 60682682,
@@ -18580,30 +17303,6 @@
    ]
   },
   {
-   "id": 60770424,
-   "name": "AppBarDesktopIconOverlay",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 60830407,
-   "name": "YieldInputQueue3",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 60846336,
    "name": null,
    "old": [
@@ -18636,41 +17335,6 @@
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60918128,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ],
-   "new": [
-    {
-     "priority": "ImageDefault (0)",
-     "state": "Enabled (2)",
-     "type": "Override (0)"
-    }
-   ]
-  },
-  {
-   "id": 60960189,
-   "name": "OobeHostParentalControlNotice",
-   "old": null,
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Enabled (2)",
-     "type": "Experiment (1)"
     }
    ]
   },
@@ -18709,18 +17373,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 61102681,
-   "name": "SettingsFontsTabNavFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 61154045,
@@ -18789,30 +17441,6 @@
    ]
   },
   {
-   "id": 61273983,
-   "name": "Servicing_ReturnCBSGPRRErrors",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 61286585,
-   "name": "Servicing_BatteryTestExempt",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 61331880,
    "name": "WinAct",
    "old": [
@@ -18849,18 +17477,6 @@
    ]
   },
   {
-   "id": 61456009,
-   "name": "PackagedComElevationSupport_v2",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 61465695,
    "name": null,
    "old": [
@@ -18879,18 +17495,6 @@
    ]
   },
   {
-   "id": 61504011,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 61595625,
    "name": null,
    "old": [
@@ -18907,18 +17511,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 61609689,
-   "name": "CacheValidatedSchemaCollection",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 61609823,
@@ -18973,18 +17565,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 61662867,
-   "name": "Containment_ImproveEndOfServiceStatusPerformance",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 61664618,
@@ -19061,18 +17641,6 @@
    ]
   },
   {
-   "id": 61771250,
-   "name": "FixSlideshowFirstSwitchOnFreshProfile",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 61825274,
    "name": "CAM_Mcp_PolicyEnforcement",
    "old": [
@@ -19130,42 +17698,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 61918249,
-   "name": "Bugfix_61918249",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 61951993,
-   "name": "Cplat_SFI_NTLM_Removal",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 61995402,
-   "name": "SettingsAppNotificationManagerShutdownFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 62041628,
@@ -19240,30 +17772,6 @@
    ]
   },
   {
-   "id": 62229736,
-   "name": "HardenAppxOSIMExtensionModulesLocking",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 62295249,
-   "name": "WhiteFlashOnIndividualConflictsDialog",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 62298234,
    "name": null,
    "old": [
@@ -19303,11 +17811,6 @@
    "id": 62321685,
    "name": null,
    "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
     {
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
@@ -19359,18 +17862,6 @@
    ]
   },
   {
-   "id": 62542487,
-   "name": "FixPauseEndTimeClamp",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 62542691,
    "name": "NXTWatermarkHelloPlacement",
    "old": [
@@ -19387,18 +17878,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62615041,
-   "name": "Dwm_FreeDesktopOnDestroy",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 62658964,
@@ -19419,18 +17898,6 @@
    ]
   },
   {
-   "id": 62724339,
-   "name": "Capture_DisplayCaptureRootRebind",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
    "id": 62761302,
    "name": null,
    "old": [
@@ -19447,18 +17914,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62900396,
-   "name": "CacheShellServiceHostProxy",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 62920762,
@@ -19495,42 +17950,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 62939125,
-   "name": null,
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 62952458,
-   "name": "OptimizeDeleteProfileForNeverLoggedIn",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
-  },
-  {
-   "id": 62961321,
-   "name": "EnableReadAccess",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 63145069,
@@ -19804,18 +18223,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 63625898,
-   "name": "Servicing_XInputRemoveHang",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 63663734,
@@ -20153,18 +18560,6 @@
      "type": "Override (0)"
     }
    ]
-  },
-  {
-   "id": 64107774,
-   "name": "Servicing_AhcIndirectDataAccessFix",
-   "old": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ],
-   "new": null
   },
   {
    "id": 64152173,

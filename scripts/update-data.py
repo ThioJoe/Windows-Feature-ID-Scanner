@@ -318,6 +318,25 @@ def trace_only(f):
     return 'trace' in f and not f.get('modules') and not f.get('declaredIn') and 'store' not in f
 
 
+def rollout_entry(config):
+    """Whether a feature store entry is the rollout service's (priority Service): Windows writes those after it checks in with Microsoft,
+    for features Microsoft is rolling out to a share of PCs or testing, so which ones a VM gets depends on the day and on chance, not on
+    the build."""
+    return str(config.get('priority', '')).startswith('Service')
+
+
+def as_built(f):
+    """The feature as the build itself has it, for comparing builds and first seen: without the rollout service's feature store entries,
+    or None if nothing else knows it (no binary's symbols, no other feature store entry, no feature trace)."""
+    store = [c for c in f.get('store', []) if not rollout_entry(c)]
+    if len(store) == len(f.get('store', [])):
+        return f
+    out = {k: v for k, v in f.items() if k != 'store'}
+    if store:
+        out['store'] = store
+    return out if out.get('modules') or out.get('declaredIn') or 'store' in out or 'trace' in out else None
+
+
 def merge_trace(old, new):
     """A feature's trace entry with what another trace saw added: the newer's values first, then the older's that it doesn't have"""
     out = {}
@@ -484,8 +503,8 @@ def store_signature(feat):
 
 
 def diff_builds(old, new):
-    of = {f['id']: f for f in old['features']}
-    nf = {f['id']: f for f in new['features']}
+    of = {f['id']: f for f in map(as_built, old['features']) if f}
+    nf = {f['id']: f for f in map(as_built, new['features']) if f}
     added = [nf[i] for i in sorted(set(nf) - set(of)) if not trace_only(nf[i])]  # (A trace sees what's checked while it runs, not what's new)
     removed = [of[i] for i in sorted(set(of) - set(nf)) if not trace_only(of[i])]
     renamed, newly_named, name_lost, store_changed, default_changed = [], [], [], [], []
@@ -623,7 +642,8 @@ def regenerate(data_dir):
         seen = first_seen.setdefault(arch, {})
         day = release_order(b)[0]
         for f in b['features']:
-            if trace_only(f):
+            f = as_built(f)
+            if not f or trace_only(f):
                 continue
             first = seen.setdefault(str(f['id']), (day, []))
             if first[0] == day:

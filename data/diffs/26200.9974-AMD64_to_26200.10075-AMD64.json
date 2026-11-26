@@ -1256,6 +1256,14 @@
    "store": null
   },
   {
+   "id": 62961321,
+   "name": "EnableReadAccess",
+   "modules": [
+    "Windows.StateRepository.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62978983,
    "name": "Servicing_MSRC125552",
    "modules": [
@@ -3137,6 +3145,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 64107774,
+   "name": "Servicing_AhcIndirectDataAccessFix",
+   "modules": [
+    "ahcache.sys"
+   ],
+   "store": null
   },
   {
    "id": 64108433,
@@ -7699,6 +7715,15 @@
    "store": null
   },
   {
+   "id": 54267669,
+   "name": "WUSARebaseMultiMSU",
+   "modules": [
+    "UpdateAgent.dll",
+    "updateagent.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 54293478,
    "name": "Containment_UUS_FixLeakCServiceRegulator_54293478",
    "modules": [
@@ -8786,6 +8811,14 @@
    "store": null
   },
   {
+   "id": 57715548,
+   "name": "ComboBoxSelectionBoxValue",
+   "modules": [
+    "SettingsCoreUi.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 57723278,
    "name": "Containment_UUS_HandleNullUserToken_57723278",
    "modules": [
@@ -8977,6 +9010,14 @@
      "type": "Override (0)"
     }
    ]
+  },
+  {
+   "id": 57984728,
+   "name": null,
+   "modules": [
+    "twinui.pcshell.dll"
+   ],
+   "store": null
   },
   {
    "id": 58007572,
@@ -9370,6 +9411,15 @@
    "name": "CDVAFAG",
    "modules": [
     "FREUserInterface.dll"
+   ],
+   "store": null
+  },
+  {
+   "id": 58570746,
+   "name": "Servicing_ISRStatsInTriageDumps",
+   "modules": [
+    "ntkrla57.exe",
+    "ntoskrnl.exe"
    ],
    "store": null
   },
@@ -12266,6 +12316,15 @@
    "store": null
   },
   {
+   "id": 61820493,
+   "name": "Servicing_LPAndFodSingleSessionInstall",
+   "modules": [
+    "LanguageOverlayServer.dll",
+    "SettingsHandlers_Language.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 61821722,
    "name": null,
    "modules": [
@@ -13425,6 +13484,14 @@
    "store": null
   },
   {
+   "id": 62414851,
+   "name": "Flighting_FixUiCapabilitiesNotSet",
+   "modules": [
+    "SettingsHandlers_Flights3.dll"
+   ],
+   "store": null
+  },
+  {
    "id": 62418438,
    "name": null,
    "modules": [
@@ -14323,10 +14390,6 @@
    "name": "WinActZeroStateMabDocked"
   },
   {
-   "id": 62961321,
-   "name": "EnableReadAccess"
-  },
-  {
    "id": 63145069,
    "name": "CDSREM"
   },
@@ -14349,10 +14412,6 @@
   {
    "id": 63738354,
    "name": "WinActPhoneLinkActionsDocked"
-  },
-  {
-   "id": 64107774,
-   "name": "Servicing_AhcIndirectDataAccessFix"
   },
   {
    "id": 64152173,
@@ -14462,23 +14521,12 @@
    "name": null,
    "old": [
     {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
      "type": "Override (0)"
     }
    ],
-   "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    }
-   ]
+   "new": null
   },
   {
    "id": 53060104,
@@ -15968,22 +16016,12 @@
    "name": null,
    "old": [
     {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
-    {
      "priority": "ImageDefault (0)",
      "state": "Enabled (2)",
      "type": "Override (0)"
     }
    ],
    "new": [
-    {
-     "priority": "Service (4)",
-     "state": "Disabled (1)",
-     "type": "Experiment (1)"
-    },
     {
      "priority": "ImageDefault (0)",
      "state": "Disabled (1)",
