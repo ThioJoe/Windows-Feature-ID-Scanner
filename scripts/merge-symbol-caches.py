@@ -143,7 +143,7 @@ def main():
     total = sum(line(k, e) for k, e in plain.items())
     keep, kept, left_out = set(), [], []
     for path in [p for p in usage_of if p not in builds] + [newest[b] for b in sorted(newest)]:
-        more = usage_of[path] - keep
+        more = (usage_of[path] & merged.keys()) - keep  # (Not the PDBs prune() left out)
         add = sum(line(k, merged[k]) - line(k, plain[k]) for k in more)
         if total + add > LIMIT:
             left_out.append(path)
