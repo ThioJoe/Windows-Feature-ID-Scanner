@@ -100,8 +100,11 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-option[aria-selected=true] { box-shadow: inset 3px 0 0 var(--accent); }
 .picker-option[aria-selected=true] .picker-main { color: var(--accent); font-weight: 600; }
 /* The build the other compare picker has, which can't be picked in this one too (app.js) */
-.picker-option[aria-disabled=true] { cursor: not-allowed; opacity: .3; }
-.picker-option.taken .picker-main { font-weight: 600; }  /* (Bold, though greyed out) */
+.picker-option[aria-disabled=true] { cursor: not-allowed; }
+.picker-option[aria-disabled=true] > * { opacity: .3; }
+/* The other's build: marked like the one picked, in grey, and bold though greyed out */
+.picker-option.taken { background: var(--panel); box-shadow: inset 3px 0 0 var(--muted); }
+.picker-option.taken .picker-main { font-weight: 600; }
 .picker-tag { padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-size: 11px; }
 .picker-footer {
   position: sticky; bottom: -6px; margin: 6px 0 -6px; padding: 6px 12px;
