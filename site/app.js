@@ -327,13 +327,14 @@ const UPDATE_TYPES = {
 const updateTypeTitle = (type) => UPDATE_TYPES[String(type || '').split(' ').pop()] || '';
 const UPDATE_TYPES_LEGEND = '<b>B</b> monthly security update (second Tuesday) · <b>D</b> optional preview (fourth week) · <b>OOB</b> out-of-band';
 
-// A build's update (e.g. 2026-10 B), shown in the build picker: stored with the build (data/index.json), else from the list of released
-// builds, which has Insider builds' release dates instead
+// A build's update (e.g. 2026-10 B), shown in the build picker with its release date instead of the month where that's known (2026-10-14 B):
+// stored with the build (data/index.json), else from the list of released builds, which has Insider builds' release dates instead
+const datedType = (type, date) => (type && date ? `${date} ${type.replace(/^\d{4}-\d{2}\s*/, '')}` : type || '');
 function releaseTag(b) {
-  if (b.release && b.release.type) return b.release.type;
+  if (b.release && b.release.type) return datedType(b.release.type, b.release.date);
   if (b.insiderChannel && b.release && b.release.date) return b.release.date;
   if (!releases) return '';
-  for (const v of releases.windows11) for (const r of v.releases) if (r.build === b.build) return r.type || '';
+  for (const v of releases.windows11) for (const r of v.releases) if (r.build === b.build) return datedType(r.type, r.date);
   for (const c of releases.insider) for (const r of c.releases) if ((r.builds || [r.build]).includes(b.build)) return r.date || '';
   return '';
 }
