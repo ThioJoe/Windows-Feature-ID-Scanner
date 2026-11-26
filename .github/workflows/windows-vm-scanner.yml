@@ -120,7 +120,7 @@ jobs:
       # The 26H2 base image, if an earlier scan saved it in the Actions cache (scan-in-vm.ps1 checks its hash before using it)
       - name: Restore the 26H2 base image
         if: ${{ matrix.build.version == '26H2' && !matrix.build.channel }}
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: D:\vmscan\image-cache
           key: base-image-26H2-${{ github.run_id }}
@@ -144,7 +144,7 @@ jobs:
       # A 26H2 base image this scan downloaded (scan-in-vm.ps1 gives the key), for the next scans; kept whatever happened to the scan
       - name: Save the 26H2 base image
         if: ${{ always() && steps.vm.outputs.image-cache-key != '' }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: D:\vmscan\image-cache
           key: ${{ steps.vm.outputs.image-cache-key }}
