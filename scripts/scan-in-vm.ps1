@@ -185,10 +185,15 @@ function Get-UpdateCatalogLinks([string]$updateId) {
 
 function Get-CumulativeUpdate {
     # The download links of the target cumulative update's files. The same files serve 24H2, 25H2 and 26H2; take the entry for the target version.
-    # The catalog's search can leave an entry out for a while (a 25H2 scan once found no entry for KB5132057, while the 26H2 scan started at
-    # the same time found its own), so it's asked again before giving up.
+    # The catalog's search can leave an entry out for a while (a 25H2 scan twice found no entry for KB5132057, while the 26H2 scan started at
+    # the same time found its own), so it's asked again, and from the second time on another version's entry for the update will do.
     for ($attempt = 1; ; $attempt++) {
-        $entry = Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' -and $_.Title -match "version $Version" } | Select-Object -First 1
+        $found = @(Search-UpdateCatalog $Kb | Where-Object { $_.Title -match 'x64-based' })
+        $entry = $found | Where-Object { $_.Title -match "version $Version" } | Select-Object -First 1
+        if (-not $entry -and $attempt -ge 2) {
+            $entry = $found | Where-Object { $_.Title -match 'version (24H2|25H2|26H2)\b' } | Select-Object -First 1
+            if ($entry) { Log "The Microsoft Update Catalog's search has no x64 $Version entry for $Kb; its files are the same as this one's" }
+        }
         if ($entry -or $attempt -ge 5) { break }
         Log "The Microsoft Update Catalog's search has no x64 $Version entry for $Kb; asking again in a minute"
         Start-Sleep -Seconds 60
