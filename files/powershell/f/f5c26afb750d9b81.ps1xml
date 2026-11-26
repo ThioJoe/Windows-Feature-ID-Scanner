@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+<ViewDefinitions>
+    <View>
+      <Name>OS Configuration Information</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Management.OsConfiguration.OsConfigurationInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+               <PropertyName>SourceId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>FriendlyName</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+</ViewDefinitions>
+</Configuration>

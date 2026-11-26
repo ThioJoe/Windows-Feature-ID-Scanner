@@ -1,0 +1,278 @@
+{
+  "$schema": "schemas/SettingsExtensions.Schema.1.2.0.json",
+  "resources": {
+    "path": "resources",
+    "scope": "accountExperiences",
+    "languages": ["af-ZA", "am-ET", "ar-SA", "as-IN", "az-Latn-AZ", "bg-BG", "bn-IN", "bs-Latn-BA", "ca-ES", "ca-Es-VALENCIA", "cs-CZ", "cy-GB", "da-DK", "de-DE", "el-GR", "en-GB", "en-US", "es-ES", "es-MX", "et-EE", "eu-ES", "fa-IR", "fi-FI", "fil-PH", "fr-CA", "fr-FR", "ga-IE", "gd-gb", "gl-ES", "gu-IN", "he-IL", "hi-IN", "hr-HR", "hu-HU", "hy-AM", "id-ID", "is-IS", "it-IT", "ja-JP", "ka-GE", "kk-KZ", "km-KH", "kn-IN", "ko-KR", "kok-IN", "lb-LU", "lo-LA", "lt-LT", "lv-LV", "mi-NZ", "mk-MK", "ml-IN", "mr-IN", "ms-MY", "mt-MT", "nb-NO", "ne-NP", "nl-NL", "nn-NO", "or-IN", "pa-IN", "pl-PL", "pt-BR", "pt-PT", "quz-PE", "ro-RO", "ru-RU", "sk-SK", "sl-SI", "sq-AL", "sr-Cyrl-BA", "sr-Cyrl-RS", "sr-Latn-RS", "sv-SE", "ta-IN", "te-IN", "th-TH", "tr-TR", "tt-RU", "ug-CN", "uk-UA", "ur-PK", "uz-Latn-UZ", "vi-VN", "zh-CN", "zh-TW"]
+  },
+  "addedPages": [
+    {
+      "_comment": "pageId and pageGroupId must match the Accounts page group defined in SystemSettings (SettingsPageGroupAccounts)",
+      "pageId": "SettingsPageGroupAccounts_Home",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "isGroupPage": true,
+      "nextPageId": "",
+      "uri": "ms-settings:account",
+      "experienceId": "AccountExperiences",
+      "componentName": "AppAccount-AE",
+      "extensionId": "AccountExperiences.Account",
+      "controlName": "AccountPageView",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences",
+      "displayName": "Account_PageTitle",
+      "description": "AccountPageDescription",
+      "glyph": "\uE77B",
+      "glyphFontFamily": "Settings Fluent Icons",
+      "iconImagePath": "assets\\microsoft.png",
+      "searchData": [
+        {
+          "description": "AccountPageSearchDataDescription1",
+          "keywords": "AccountPageSearchDataKeywords1"
+        },
+        {
+          "description": "AccountPageSearchDataDescription2",
+          "keywords": "AccountPageSearchDataKeywords2"
+        },
+        {
+          "description": "AccountPageSearchDataDescription3",
+          "keywords": "AccountPageSearchDataKeywords3"
+        },
+        {
+          "description": "AccountPageSearchDataDescription4",
+          "keywords": "AccountPageSearchDataKeywords4"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 61473141,
+          "default": "disabled"
+        }
+      }
+    },
+    {
+      "pageId": "SettingsPageMyDevices",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "uri": "ms-settings:linkeddevices",
+      "experienceId": "AccountExperiences",
+      "componentName": "AppAccount-AE",
+      "extensionId": "AccountExperiences.Account",
+      "controlName": "LinkedDevicesSectionView",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences",
+      "displayName": "Account_LinkedDevices_Title",
+      "glyph": "\uE975",
+      "searchData": [
+        {
+          "description": "Account_LinkedDevices_SearchDescription",
+          "keywords": "Account_LinkedDevices_SearchKeywords"
+        }
+      ],
+      "conditions": {
+        "velocityKey": {
+          "externalParentId": 61473141,
+          "id": 62437734,
+          "default": "disabled"
+        }
+      }
+    }
+  ],
+  "hiddenPages": [],
+  "addedHomeCards": [
+    {
+      "cardId": "SubscriptionCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeM365Card-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "M365Card",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 4.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472418,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "StorageCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeStorageCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "StorageCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 17.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472419,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "AccountCheckupCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeAccountCheckupCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "AccountCheckupCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 6.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472420,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "SignedOutCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeSignedOutCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "SignedOutCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 20.0,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472421,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "XboxSubscriptionCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeXboxCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "XboxCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 3.0,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472422,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "CopilotSubscriptionCard",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeCopilotCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "CopilotCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 4.0,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "externalParentId": 60851392,
+          "id": 61472423,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "SignedOutCard_Enterprise_AAD",
+      "experienceId": "AccountExperiences",
+      "componentName": "HomeCommercialSignedOutCard-AE",
+      "extensionId": "AccountExperiences.Home",
+      "controlName": "CommercialSignedOutCard",
+      "extensionCategory": "com.microsoft.windows.extensions.xaml.accountexperiences.home",
+      "rank": 20.0,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["AAD"]
+        },
+        "product": {
+          "include": [
+            "PROFESSIONAL",
+            "PRO_WORKSTATION",
+            "PROFESSIONAL_N",
+            "PRO_WORKSTATION_N",
+            "PRO_CHINA",
+            "PRO_SINGLE_LANGUAGE",
+            "ENTERPRISE",
+            "ENTERPRISEG",
+            "ENTERPRISE_N",
+            "ENTERPRISEGN",
+            "ENTERPRISE_EVALUATION",
+            "ENTERPRISE_N_EVALUATION",
+            "ENTERPRISE_S",
+            "ENTERPRISE_S_N",
+            "ENTERPRISE_S_EVALUATION",
+            "ENTERPRISE_S_N_EVALUATION"
+          ]
+        },
+        "velocityKey": {
+          "id": 62131508,
+          "externalParentId": 60851392,
+          "default": "enabled"
+        }
+      }
+    }
+  ],
+  "updatedHomeCards": [
+    {
+      "cardId": "SystemSettings_Home_Recommended",
+      "rank": 18
+    },
+    {
+      "cardId": "SystemSettings_HomepageCard_Personalization",
+      "rank": 6
+    },
+    {
+      "cardId": "SystemSettings_Home_BluetoothDevices",
+      "rank": 12
+    }
+  ]
+}

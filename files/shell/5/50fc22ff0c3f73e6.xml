@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:wincap2="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/2">
+  <!-- Please keep all appxmanifest files in sync, aside from the minor necessary changes that exist. -->
+  <!-- moapp\AppxManifest.xml, moapp\VSAppxManifest.xml -->
+  <!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in FilePicker.appxsetup.man
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+  <Identity Name="1527c705-839a-4832-9118-54d4Bd6a0c89"
+            Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="10.0.19640.1000"
+            ProcessorArchitecture="neutral"
+            ResourceId="neutral" />
+  <!-- Note: This element is required by the package to be deployed on the phone. This doesn't seem to affect the package when installed on the desktop-->
+  <mp:PhoneIdentity PhoneProductId="1527c705-839a-4832-9118-54d4Bd6a0c89" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Properties>
+    <DisplayName>ms-resource:AppxManifest_DisplayName</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\SquareTile44x44.png</Logo>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="Microsoft.Windows.FilePicker" Executable="FilePicker.exe" EntryPoint="FilePicker.App">
+      <uap:VisualElements DisplayName="ms-resource:AppxManifest_DisplayName" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\SquareTile44x44.png" Description="ms-resource:AppxManifest_Description" BackgroundColor="transparent" AppListEntry="none">
+        <uap:DefaultTile Wide310x150Logo="Assets\SquareTile310x150.png" Square71x71Logo="Assets\SquareTile71x71.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="black" />
+      </uap:VisualElements>
+      <Extensions>
+        <wincap2:Extension Category="windows.internal.filePickerExperience" />
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal"
+                    MinVersion="10.0.0.0"
+                    MaxVersionTested="12.0.0.0" />
+  </Dependencies>
+</Package>

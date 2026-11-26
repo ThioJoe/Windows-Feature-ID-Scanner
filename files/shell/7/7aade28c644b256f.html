@@ -1,0 +1,167 @@
+<!--saved from url = (0014)about:internet-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="./templateStyle.css">
+    </head>
+    <body onclick="focusOnDontRun()" "onload="focusOnDontRun()">
+        <div id="MainWrapperID" class="MainWrapper">
+            <head1 class="MainHeaderClass" id="MainHeaderField"></head1>
+            <br>
+            <head2 class="DescriptionClass" id="Description"></head2>
+            <br>
+            <button id="more" class="moreClass" onclick="action(); ">
+            </button>
+            <br>
+            <div class="moreInfoTable" id="container">
+                <table class="infoClass" value="Table" id="moreInfoTableID" style="table-layout: fixed; ">
+                    <tr>
+                        <td class="rows">
+                            <label id="AppField"></label>
+                        </td>
+                        <td class="appName">
+                            <label id="AppNameField"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="PublisherField"></label>
+                        </td>
+                        <td>
+                            <label id="PublisherNameField"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <label class="mylab" id="check">
+                <input type='checkbox' onclick="validate();">
+                <span></span>
+            </label>
+            <font face="Segoe UI light" color="white"><label class="checkBoxText" id="checkText"></label></font>
+            </label>
+            <div class="runDontrun" align="right">
+                <table class="runDontrunTable" cellpadding="20">
+                    <tr>
+                        <td>
+                            <button class="runInput" id="togglerRun" onclick="javascript:window.external.notify('run');" />      
+                        </td>
+                        <td>
+                            <button class="runOrLaunchInput" id="toggler" onclick="runOrLaunchUrl()" />               
+                        </td>
+                        <td>
+                            <button class="dontRunInput" id="togglee" onclick="javascript:window.external.notify('norun');"  />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script srctype="text/javascript">
+            var hidden = false;
+            document.getElementById('togglee').style.visibility = 'visible';
+            var checkBoxTicked = true;
+            window.external.notify('prepop');
+            var globalTemplateNum = -1;
+            var globalLaunchUrl = false;
+            
+            function focusOnDontRun()
+            {
+                document.getElementById('togglee').focus();
+            }
+            
+            //If a url is provided, make sure the entire document knows so we can render accordingly
+            function urlProvided(launchUrl)
+            {
+                if(launchUrl == "1")
+                {
+                    globalLaunchUrl = true;
+                }
+            }
+            
+            //Make sure the "run" button has the right behaviour based on whether or not a url was provided
+            function runOrLaunchUrl()
+            {
+                //If a url was provided, make sure we launch url instead of running
+                if(globalLaunchUrl === true)
+                {
+                    window.external.notify('launchUrl');
+                }
+                else
+                {
+                    window.external.notify('run');
+                }
+            }
+            
+            //Change behaviour of buttons/labels based on template
+            function changeTemplate(templateNum)
+            {
+                globalTemplateNum = templateNum;
+                if(globalTemplateNum == "0")
+                {
+                    document.getElementById('moreInfoTableID').style.visibility = 'hidden';
+                    document.getElementById('more').style.visibility = 'visible';
+                    document.getElementById('check').setAttribute('style','visibility:hidden');
+                    document.getElementById('moreInfoTableID').style.visibility = 'false';
+                    document.getElementById('checkText').setAttribute('style','visibility:hidden');
+                }
+                else if (globalTemplateNum == "1")
+                {
+                    document.getElementById('more').style.visibility = 'hidden';
+                    document.getElementById('moreInfoTableID').style.visibility = 'visible';
+                    document.getElementById('check').setAttribute('style','visibility:visible');
+                    document.getElementById('moreInfoTableID').style.visibility = 'visible';
+                    document.getElementById('checkText').setAttribute('style','visibility:visible');
+                }
+            }
+            
+            function populate(x)
+            {
+                var myjson = JSON.parse(x);
+                for(var key in myjson)
+                {
+                    var val = myjson[key];
+                    var element = document.getElementById(key);
+                    if(element !== null)
+                    {
+                        document.getElementById(key).innerHTML = val;
+                    }
+                }
+            }
+            
+            //When user clicks "More Info", hide the "More Info" and show the  "Run anyway"
+            function action() 
+            {
+                document.getElementById('more').style.visibility = 'hidden';
+                document.getElementById('togglee').style.visibility = 'visible';
+                //If a url is provided, make sure we show the third button
+                if(globalLaunchUrl === true)
+                {
+                    document.getElementById('togglerRun').style.visibility = 'visible';
+                }
+                document.getElementById('toggler').style.visibility = 'visible';
+                document.getElementById('moreInfoTableID').style.visibility = 'visible';
+            }
+
+            function validate() 
+            {
+                if(checkBoxTicked)
+                {
+                    document.getElementById('toggler').style.visibility= 'visible';
+                    document.getElementById('toggler').style.display = 'inline';
+                }
+                else
+                {
+                    document.getElementById('toggler').style.display = 'none';
+                }
+                    checkBoxTicked = !checkBoxTicked;
+            }
+            
+            function changeBackground(color)
+            {
+                document.body.style.background = color;
+            }
+        </script>
+    </body>
+</html>

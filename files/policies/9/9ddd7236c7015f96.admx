@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0">
+    <policyNamespaces>
+        <target prefix="UserManager" namespace="Microsoft.Policies.UserManager" />
+        <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+    </policyNamespaces>
+    <resources minRequiredRevision="1.0" />
+    <categories>
+        <category name="UserManager_Category" displayName="$(string.UserManager_Category)">
+            <parentCategory ref="windows:WindowsComponents" />
+        </category>
+    </categories>
+    <policies>
+        <policy name="DisableDigitalSafetyAgeAPIs" class="Machine"
+                displayName="$(string.DisableDigitalSafetyAgeAPIs)"
+                explainText="$(string.DisableDigitalSafetyAgeAPIs_Explain)"
+                key="System\CurrentControlSet\Services\UserManager\Parameters"
+                valueName="DisableDigitalSafetyAgeAPIs">
+            <parentCategory ref="UserManager_Category" />
+            <supportedOn ref="windows:SUPPORTED_Windows_11_0_24H2" />
+            <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
+        </policy>
+        <policy name="DefaultDigitalSafetyAgeGroup" class="Machine"
+                displayName="$(string.DefaultDigitalSafetyAgeGroup)"
+                explainText="$(string.DefaultDigitalSafetyAgeGroup_Explain)"
+                presentation="$(presentation.DefaultDigitalSafetyAgeGroup)"
+                key="System\CurrentControlSet\Services\UserManager\Parameters"
+                valueName="DefaultDigitalSafetyAgeGroup">
+            <parentCategory ref="UserManager_Category" />
+            <supportedOn ref="windows:SUPPORTED_Windows_11_0_24H2" />
+            <elements>
+                <enum id="DefaultDigitalSafetyAgeGroup_Dropdown" valueName="DefaultDigitalSafetyAgeGroup">
+                    <item displayName="$(string.AgeGroup_Under10)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.AgeGroup_10to12)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.AgeGroup_13to15)">
+                        <value>
+                            <decimal value="3" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.AgeGroup_16to17)">
+                        <value>
+                            <decimal value="4" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.AgeGroup_18Plus)">
+                        <value>
+                            <decimal value="5" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+        <policy name="DefaultDigitalSafetyVerificationStatus" class="Machine"
+                displayName="$(string.DefaultDigitalSafetyVerificationStatus)"
+                explainText="$(string.DefaultDigitalSafetyVerificationStatus_Explain)"
+                presentation="$(presentation.DefaultDigitalSafetyVerificationStatus)"
+                key="System\CurrentControlSet\Services\UserManager\Parameters"
+                valueName="DefaultDigitalSafetyVerificationStatus">
+            <parentCategory ref="UserManager_Category" />
+            <supportedOn ref="windows:SUPPORTED_Windows_11_0_24H2" />
+            <elements>
+                <enum id="DefaultDigitalSafetyVerificationStatus_Dropdown" valueName="DefaultDigitalSafetyVerificationStatus">
+                    <item displayName="$(string.VerificationStatus_Verified)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.VerificationStatus_Unverified)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+    </policies>
+</policyDefinitions>

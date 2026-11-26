@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <!--
+
+  //
+  // StorageBusDisk
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Windows.Storage.StorageBusCache.StorageBusDisk</Name>
+    <Members>
+      <AliasProperty>
+        <Name>DiskNumber</Name>
+        <ReferencedMemberName>Number</ReferencedMemberName>
+      </AliasProperty>
+  </Members>
+  </Type>
+  <!--
+
+  //
+  // StorageBusBinding
+  //
+    public enum CacheStoreBindingAttribute
+    {
+        Default                     = 0x00000000,
+        Enabled                     = 0x00000001,
+        Disable_Read_Cache          = 0x00000002,
+        Disable_Read_Ahead_Cache    = 0x00000004,
+        Disable_Write_Cache         = 0x00000008,
+        Delay_Destage               = 0x00000010
+    }
+  -->
+  <Type>
+    <Name>Microsoft.Windows.Storage.StorageBusCache.StorageBusBinding</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Attributes</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.Attributes)
+        {
+        # 0x04 skipped - disable read cache is always on / obsoleted by VRC
+        { $_ -eq 0 }      { "Default"; break }
+        { $_ -band 0x01 } { "Enabled" }
+        { $_ -band 0x02 } { "ReadCacheDisabled" }
+        { $_ -band 0x08 } { "WriteCacheDisabled" }
+        { $_ -band 0x10 } { "DelayDestage" }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <!--
+
+  //
+  // ClusPortDeviceInformation
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/wmi/ClusPortDeviceInformation</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>DeviceState</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["DeviceState"].Value)
+        {
+        0 { "Disconnected"; break; }
+        1 { "Paused"; break; }
+        2 { "Draining"; break; }
+        3 { "Active"; break; }
+        4 { "Removed"; break; }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceAttribute</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["DeviceAttribute"].Value)
+        {
+        { $_ -band 0x00000001 } { "Virtual" }
+        { $_ -band 0x00000002 } { "Orphan" }
+        { $_ -band 0x00000004 } { "Hybrid" }
+        { $_ -band 0x00000008 } { "Solid" }
+        { $_ -band 0x00000010 } { "Incomplete" }
+        { $_ -band 0x00000020 } { "Scheduler" }
+        { $_ -band 0x00000040 } { "IncompleteSupport" }
+        { $_ -band 0x00000080 } { "Hidden" }
+        { $_ -band 0x00000100 } { "Resilient" }
+        { $_ -band 0x00000200 } { "Paused" }
+        { $_ -band 0x00000400 } { "BlockReadWrite" }
+        { $_ -band 0x00000800 } { "Attention" }
+        { $_ -band 0x00001000 } { "HasCachePartition" }
+        { $_ -band 0x00002000 } { "SchedulerEnabled" }
+        { $_ -band 0x00004000 } { "Partition" }
+        { $_ -band 0x00008000 } { "BlockWrite" }
+        { $_ -band 0x00010000 } { "VolatileReadCache" }
+        { $_ -band 0x00020000 } { "Slow" }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceType</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["DeviceType"].Value)
+        {
+        0 { "Disk"; break; }
+        1 { "Enclosure"; break; }
+        2 { "StorageScaleUnit"; break }
+        3 { "Pool"; break }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>Number</Name>
+        <ReferencedMemberName>DeviceNumber</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Attributes</Name>
+        <ReferencedMemberName>DeviceAttribute</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+  <!--
+
+  //
+  // ClusPortPathInformation
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/wmi/ClusPortPathInformation</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>PathState</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["PathState"].Value)
+        {
+        0 { "Disconnected"; break; }
+        1 { "Paused"; break; }
+        2 { "Draining"; break; }
+        3 { "Active"; break; }
+        4 { "Removed"; break; }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <!--
+
+  //
+  // ClusBFltPathInformation
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/wmi/ClusBfltPathInformation</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Attributes</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["Attributes"].Value)
+        {
+        { $_ -band 0x00000001 } { "Virtual" }
+        { $_ -band 0x00000002 } { "Orphan" }
+        { $_ -band 0x00000004 } { "Hybrid" }
+        { $_ -band 0x00000008 } { "Solid" }
+        { $_ -band 0x00000010 } { "Incomplete" }
+        { $_ -band 0x00000020 } { "Scheduler" }
+        { $_ -band 0x00000040 } { "IncompleteSupport" }
+        { $_ -band 0x00000080 } { "Hidden" }
+        { $_ -band 0x00000100 } { "Resilient" }
+        { $_ -band 0x00000200 } { "Paused" }
+        { $_ -band 0x00000400 } { "BlockReadWrite" }
+        { $_ -band 0x00000800 } { "Attention" }
+        { $_ -band 0x00001000 } { "HasCachePartition" }
+        { $_ -band 0x00002000 } { "SchedulerEnabled" }
+        { $_ -band 0x00004000 } { "Partition" }
+        { $_ -band 0x00008000 } { "BlockWrite" }
+        { $_ -band 0x00010000 } { "VolatileReadCache" }
+        { $_ -band 0x00020000 } { "Slow" }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>BusType</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["BusType"].Value)
+        {
+        0 { "Unknown" }
+        1 { "SCSI" }
+        2 { "ATAPI" }
+        3 { "ATA" }
+        4 { "1394" }
+        5 { "SSA" }
+        6 { "Fibre Channel" }
+        7 { "USB" }
+        8 { "RAID" }
+        9 { "iSCSI" }
+        10 { "SAS" }
+        11 { "SATA" }
+        12 { "SD" }
+        13 { "MMC" }
+        14 { "Virtual" }
+        15 { "File Backed Virtual" }
+        16 { "Spaces" }
+        17 { "NVMe" }
+        18 { "SCM" }
+        19 { "UFS" }
+        Default { "Unknown" }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceType</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["DeviceType"].Value)
+        {
+        0 { "Disk"; break; }
+        1 { "Enclosure"; break; }
+        2 { "StorageScaleUnit"; break }
+        3 { "Pool"; break }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PathType</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["PathType"].Value)
+        {
+        0 { "ReadWrite" }
+        1 { "ReadOnly" }
+        2 { "Engaged" }
+        3 { "Maintenance" }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>PathId</Name>
+        <ReferencedMemberName>Id</ReferencedMemberName>
+      </AliasProperty>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+        "{0:x8}" -f $this.psBase.CimInstanceProperties["Status"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DeviceNumber</Name>
+        <GetScriptBlock>
+        $n = $this.psBase.CimInstanceProperties["DeviceNumber"].Value
+        if ($n -ne [Uint32]::MaxValue) {
+            $n
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>Number</Name>
+        <ReferencedMemberName>DeviceNumber</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+  <!--
+
+  //
+  // CluBfltCacheStoreInformation
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/wmi/ClusBfltCacheStoreInformation</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+        switch ($this.psBase.CimInstanceProperties["Status"].Value)
+        {
+        0 { "STATUS_SUCCESS" }
+        0x0000103 { "STATUS_PENDING" }
+        0x0000101 { "STATUS_ALERTED" }
+        default { "0x{0:x8}" -f $this.psBase.CimInstanceProperties["Status"].Value }
+        }
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+</Types>

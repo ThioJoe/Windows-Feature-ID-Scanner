@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">   
+  <Class ClassName="ROOT\Microsoft\Windows\SMBWitness\MSFT_SmbWitnessClient">
+    <Version>1.0</Version>
+    <DefaultNoun>SmbWitnessClient</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters>
+        <QueryableProperties>
+          <Property PropertyName="ClientName">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata IsMandatory="false" Position="1" ValueFromPipelineByPropertyName="true" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="State">
+            <Type PSType="SmbWitnessClient.State" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Flags">
+            <Type PSType="SmbWitnessClient.Flags" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+      </GetCmdletParameters>
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" HelpUri="http://go.microsoft.com/fwlink/?LinkID=241966" Aliases="gsmbw"/>
+      </GetCmdlet>
+    </InstanceCmdlets>
+      <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="Move" ConfirmImpact="High" HelpUri="http://go.microsoft.com/fwlink/?LinkID=241967" Aliases="msmbw Move-SmbClient"/>
+        <Method MethodName="MoveClient">
+          <ReturnValue>
+            <Type PSType="uint32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="ClientName">
+              <Type PSType="string" />
+              <CmdletParameterMetadata IsMandatory="true" Position="0" />
+            </Parameter>
+            <Parameter ParameterName="DestinationNode">
+              <Type PSType="string" />
+              <CmdletParameterMetadata IsMandatory="true" Position="1" />
+            </Parameter>
+            <Parameter ParameterName="NetworkName">
+              <Type PSType="string" />
+              <CmdletParameterMetadata IsMandatory="false" Position="2" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+
+  <Enums>
+      <Enum EnumName="SmbWitnessClient.State" UnderlyingType="System.UInt32">
+          <Value Name="Unknown" Value="0" />
+          <Value Name="Connected" Value="1" />
+          <Value Name="Registered" Value="2" />
+          <Value Name="RequestedNotifications" Value="3" />
+          <Value Name="Cancelled" Value="4" />
+          <Value Name="Disconnected" Value="5" />
+      </Enum>
+      <Enum EnumName="SmbWitnessClient.Flags" UnderlyingType="System.UInt32" BitwiseFlags="true">
+          <Value Name="Invalid" Value="0" />
+          <Value Name="NetworkName" Value="1" />
+          <Value Name="ShareName" Value="2" />
+          <Value Name="MultiChannel" Value="4" />
+      </Enum>
+  </Enums>
+
+</PowerShellMetadata>

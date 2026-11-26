@@ -1,0 +1,78 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "style": "default",
+  "selectAction": {
+    "type": "Action.OpenUrl",
+    "title": "${ButtonContent}",
+    "verb": "secondary-url-clicked",
+    "url": "ms-discoverwidget://?size=Small"
+  },
+  "body": [
+    {
+      "type": "ColumnSet",
+      "verticalContentAlignment": "top",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "${if($host.hostTheme == \"light\" || $host.hostTheme == \"highcontrastlight\", lightImage, darkImage)}",
+              "size": "Medium",
+              "height": "60px",
+              "width": "60px",
+              "altText": "Feature icon"
+            }
+          ],
+          "verticalContentAlignment": "top"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "spacing": "large",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "${Title}",
+              "weight": "Bolder",
+              "size": "default",
+              "wrap": true,
+              "maxLines": 2
+            },
+            {
+              "type": "TextBlock",
+              "text": "${SubTitle}",
+              "wrap": true,
+              "size": "Small",
+              "spacing": "None",
+              "maxLines": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$when": "${ButtonContent != ''}",
+      "type": "Container",
+      "spacing": "default",
+      "verticalContentAlignment": "bottom",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "${ButtonContent}",
+          "color": "Accent",
+          "horizontalAlignment": "${ButtonAlignment}",
+          "weight": "default",
+          "size": "small"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "small"
+    }
+  ]
+}

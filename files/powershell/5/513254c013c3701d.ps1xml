@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+<ViewDefinitions>
+    <View>
+      <Name>Physical persistent memory device</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Storage.PersistentMemory.Management.PmemPhysicalDevice</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Persistent memory size</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Volatile memory size</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+               <PropertyName>DeviceId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>DeviceType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>HealthStatus</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>OperationalStatus</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>PhysicalLocation</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>FirmwareRevision</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>FruId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <!-- {0:0.##} formats the size with up to 2 decimal places -->
+                <ScriptBlock>"{0:0.##}" -f ($_.PersistentMemorySizeInBytes / 1GB) + " GB"</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    if ($_.VolatileMemorySizeInBytes -eq $null) {
+                        "Unknown"
+                    } else {
+                        "{0:0.##}" -f ($_.VolatileMemorySizeInBytes / 1GB) + " GB"
+                    }
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+</ViewDefinitions>
+</Configuration>

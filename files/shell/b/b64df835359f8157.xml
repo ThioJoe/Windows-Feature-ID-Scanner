@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
+    IgnorableNamespaces="uap uap6"
+    >
+  <!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in CameraBarcodeScannerPreview.AppxSetup.man
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+  <Identity
+      Name="Windows.CBSPreview"
+      Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+      Version="10.0.19580.1000"
+      ResourceId="neutral"
+      />
+  <Properties>
+    <DisplayName>ms-resource:DisplayName</DisplayName>
+    <Description>ms-resource:Description</Description>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17049.0" MaxVersionTested="10.0.17049.0"/>
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+  <Applications>
+    <Application
+        Id="Microsoft.Windows.CBSPreview"
+        Executable="CameraBarcodeScannerPreview.exe"
+        EntryPoint="CameraBarcodeScannerPreview.App"
+        >
+      <uap:VisualElements
+          DisplayName="Windows Barcode Preview"
+          Square150x150Logo="Assets\Square150x150Logo.png"
+          Square44x44Logo="Assets\Square44x44Logo.png"
+          Description="Windows Barcode Preview"
+          BackgroundColor="transparent"
+          AppListEntry="none"
+          >
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap6:Extension Category="windows.barcodeScannerProvider">
+          <uap6:BarcodeScannerProvider DisplayName="decoder" SupportsVideoPreview="true" />
+        </uap6:Extension>
+        <uap6:Extension Category="windows.barcodeScannerPreviewProvider" />
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <DeviceCapability Name="webcam" />
+  </Capabilities>
+</Package>

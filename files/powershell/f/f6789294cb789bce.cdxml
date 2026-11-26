@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root/standardcimv2/MSFT_NetFirewallHyperVPort" ClassVersion="1.0.0">
+    <Version>1.0.0.0</Version>
+    <DefaultNoun>NetFirewallHyperVPort</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="GetAll">
+        <QueryableProperties>
+          <Property PropertyName="SwitchName">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="PortName">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="VMCreatorId">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="InterfaceGuid">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="PartitionGuid">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Constrained">
+            <Type PSType="NetSecurity.ConstrainedInterfaceType" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Profile">
+            <Type PSType="NetSecurity.Profile" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="NetworkType">
+            <Type PSType="NetSecurity.NetworkType" />
+            <RegularQuery>
+              <CmdletParameterMetadata CmdletParameterSets="ByQuery" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+        <QueryOptions>
+          <Option OptionName="All">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+    </InstanceCmdlets>
+  </Class>
+  <Enums>
+    <Enum EnumName="NetSecurity.ConstrainedInterfaceType" UnderlyingType="uint16">
+      <Value Name="NotConstrained" Value="0" />
+      <Value Name="Constrained" Value="1" />
+    </Enum>
+    <Enum EnumName="NetSecurity.Profile" UnderlyingType="uint16" BitwiseFlags="true">
+      <Value Name="Any" Value="0" />
+      <Value Name="Public" Value="4" />
+      <Value Name="Private" Value="2" />
+      <Value Name="Domain" Value="1" />
+      <Value Name="NotApplicable" Value="65535" />
+    </Enum>
+    <Enum EnumName="NetSecurity.NetworkType" UnderlyingType="uint16">
+      <Value Name="Unknown" Value="0" />
+      <Value Name="FSE" Value="1" />
+      <Value Name="NAT" Value="2" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

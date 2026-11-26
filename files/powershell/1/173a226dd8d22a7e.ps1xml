@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>InstalledLanguage</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.LanguagePackManagement.Powershell.Commands.InstalledLanguage</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Width>8</Width>
+            <Label>Language</Label>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>15</Width>
+            <Label>Language Packs</Label>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>70</Width>
+            <Label>Language Features</Label>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>LanguageId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LanguagePacks</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LanguageFeatures</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+            <Wrap/>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

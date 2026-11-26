@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Vpci-VirtualDevice-DDA-merged-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Vpci-VirtualDevice-DDA-merged" releaseType="Feature Pack">
+    <update name="f7f13b0ce40ee170b7c52a6ebee32004" restart="required">
+      <driver inf="wpcip.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpcip.inf" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2a0d045a1e814f83878264631a502e08">
+      <component>
+        <assemblyIdentity name="HyperV-Vpci-VirtualDevice-DDA-merged-Deployment" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

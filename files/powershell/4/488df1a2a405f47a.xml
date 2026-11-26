@@ -1,0 +1,753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems xmlns="http://msh" schema="maml">
+
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>ConvertTo-ProcessMitigationPolicy</command:name>
+<command:verb>ConvertTo</command:verb>
+<command:noun>ProcessMitigationPolicy</command:noun>
+<maml:description><maml:para>Converts an mitigation policy file formats.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Converts an EMET policy file or pinning rule file to a new Windows 10 format.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>ConvertTo-ProcessMitigationPolicy</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="f"><maml:name>EMETFilePath</maml:name>
+<maml:Description><maml:para>File that either contains cert pinning rules or an existing EMET process mitigation configuration file.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="o"><maml:name>OutputFilePath</maml:name>
+<maml:Description><maml:para>Resulting new Windows10 process mitigation/pinning rules format.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="f"><maml:name>EMETFilePath</maml:name>
+<maml:Description><maml:para>File that either contains cert pinning rules or an existing EMET process mitigation configuration file.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="o"><maml:name>OutputFilePath</maml:name>
+<maml:Description><maml:para>Resulting new Windows10 process mitigation/pinning rules format.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; ConvertTo-ProcessMitigationPolicy -EMETFile policy.xml -Output result.xml</dev:code>
+<dev:remarks><maml:para>Converts EMET file policy.xml to result.xml, may also generate a CI file CI-result.xml if necessary.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks></command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Get-ProcessMitigation</command:name>
+<command:verb>Get</command:verb>
+<command:noun>ProcessMitigation</command:noun>
+<maml:description><maml:para>Gets the current process mitigation settings, either from the registry, from a running process, or saves all to a XML.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Gets all process mitigation settings either by process name (either running or from -Registry), or by process ID. Can also save all settings to an XML file.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Get-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="f"><maml:name>FullPolicy</maml:name>
+<maml:Description><maml:para>Returns every processes' current mitigation settings in the registry
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-ProcessMitigation</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none"><maml:name>Id</maml:name>
+<maml:Description><maml:para>Process Id to retrieve current running process mitigation settings from
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+<dev:type><maml:name>Int32[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-ProcessMitigation</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="n"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Current process name to get current running (Or from registry) process mitigation settings from one (Can be more than one instance)
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="r"><maml:name>RunningProcesses</maml:name>
+<maml:Description><maml:para>Pull the current process mitigation settings from a running instance instead of the registry.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="o"><maml:name>RegistryConfigFilePath</maml:name>
+<maml:Description><maml:para>File to save the current registry process mitigation configuration to
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="s"><maml:name>System</maml:name>
+<maml:Description><maml:para>Pulls the current system defaults for process mitigations.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="f"><maml:name>FullPolicy</maml:name>
+<maml:Description><maml:para>Returns every processes' current mitigation settings in the registry
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none"><maml:name>Id</maml:name>
+<maml:Description><maml:para>Process Id to retrieve current running process mitigation settings from
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+<dev:type><maml:name>Int32[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="n"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Current process name to get current running (Or from registry) process mitigation settings from one (Can be more than one instance)
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="o"><maml:name>RegistryConfigFilePath</maml:name>
+<maml:Description><maml:para>File to save the current registry process mitigation configuration to
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="r"><maml:name>RunningProcesses</maml:name>
+<maml:Description><maml:para>Pull the current process mitigation settings from a running instance instead of the registry.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="s"><maml:name>System</maml:name>
+<maml:Description><maml:para>Pulls the current system defaults for process mitigations.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.Int32[]</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -Name notepad.exe -RunningProcess</dev:code>
+<dev:remarks><maml:para>Gets the current settings on all running instances of notepad.exe
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 2</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -Name notepad.exe</dev:code>
+<dev:remarks><maml:para>Gets the current settings in the registry for notepad.exe
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 3</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -Id 1304</dev:code>
+<dev:remarks><maml:para>Gets the current settings for the running process with pid 1304
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 4</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -RegistryConfigFilePath settings.xml</dev:code>
+<dev:remarks><maml:para>Gets the all process mitigation settings from the registry and saves them to the xml file settings.xml
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 5</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -FullPolicy</dev:code>
+<dev:remarks><maml:para>Gets all policies for all processes set in the registry.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 6</maml:title>
+<dev:code>PS C:\&gt; Get-ProcessMitigation -System</dev:code>
+<dev:remarks><maml:para>Gets the current system process mitigation defaults stored in the registry.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 7</maml:title>
+<dev:code>PS C:\&gt; Get-Process notepad | Get-ProcessMitigation</dev:code>
+<dev:remarks><maml:para>Gets the current process mitigation settings for all running instances of notepad.exe
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks></command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Set-ProcessMitigation</command:name>
+<command:verb>Set</command:verb>
+<command:noun>ProcessMitigation</command:noun>
+<maml:description><maml:para>Commands to enable and disable process mitigations or set them in bulk from an XML file.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Used to turn on and off various process mitigation settings. Can also apply (Or Validate) an XML file to apply settings for many processes at once.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Set-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Name of the process to apply mitigation settings to. Can be in the format "notepad" or "notepad.exe"
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="d"><maml:name>Disable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to disable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">DEP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EmulateAtlThunks</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ForceRelocate</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">RequireInfo</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BottomUp</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">HighEntropy</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictHandle</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableWin32kSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableFsctlSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFsctlSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ExtensionPoint</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditDynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">CFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SuppressExports</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictCFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockNonMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AllowStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnforceModuleDepencySigning</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableNonSystemFonts</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">FontAuditOnly</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFont</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockRemoteImages</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockLowLabel</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">PreferSystem32</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditImageLoad</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableExportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilterPlus</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableExportAddressFilterPlus</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableImportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableImportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopStackPivot</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableRopStackPivot</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopCallerCheck</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableRopCallerCheck</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopSimExec</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditEnableRopSimExec</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOPTelemetry</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">TerminateOnHeapError</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisallowChildProcessCreation</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditChildProcess</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStack</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStackStrictMode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditUserShadowStack</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>EAFModules</maml:name>
+<maml:Description><maml:para>Modules to be added to the EAF+ mitigation.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="e"><maml:name>Enable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to enable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">DEP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EmulateAtlThunks</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ForceRelocate</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">RequireInfo</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BottomUp</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">HighEntropy</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictHandle</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableWin32kSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableFsctlSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFsctlSystemCalls</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ExtensionPoint</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditDynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">CFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SuppressExports</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictCFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockNonMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AllowStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnforceModuleDepencySigning</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableNonSystemFonts</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">FontAuditOnly</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFont</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockRemoteImages</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockLowLabel</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">PreferSystem32</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditImageLoad</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilterPlus</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableImportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopStackPivot</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopCallerCheck</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopSimExec</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOPTelemetry</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">TerminateOnHeapError</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisallowChildProcessCreation</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditChildProcess</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStack</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStackStrictMode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditUserShadowStack</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="f"><maml:name>Force</maml:name>
+<maml:Description><maml:para>Overrides a system setting either on or off depending on the level this is set at. Will force "on"/"off" all mitigations provided in the -Enable list
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">on</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">off</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">notset</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Remove</maml:name>
+<maml:Description><maml:para>Removes a mitigation entry from the registry.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="r"><maml:name>Reset</maml:name>
+<maml:Description><maml:para>Resets a specific mitigation entry to defer.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Set-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="d"><maml:name>Disable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to disable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">DEP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EmulateAtlThunks</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ForceRelocate</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">RequireInfo</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BottomUp</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">HighEntropy</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictHandle</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ExtensionPoint</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditDynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">CFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SuppressExports</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictCFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockNonMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AllowStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnforceModuleDepencySigning</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableNonSystemFonts</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">FontAuditOnly</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFont</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockRemoteImages</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockLowLabel</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">PreferSystem32</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditImageLoad</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilterPlus</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableImportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopStackPivot</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopCallerCheck</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopSimExec</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOPTelemetry</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">TerminateOnHeapError</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisallowChildProcessCreation</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditChildProcess</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStack</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStackStrictMode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditUserShadowStack</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>EAFModules</maml:name>
+<maml:Description><maml:para>Modules to be added to the EAF+ mitigation.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="e"><maml:name>Enable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to enable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">DEP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EmulateAtlThunks</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ForceRelocate</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">RequireInfo</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BottomUp</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">HighEntropy</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictHandle</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSystemCall</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">ExtensionPoint</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditDynamicCode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">CFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SuppressExports</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">StrictCFG</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockNonMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AllowStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditMicrosoftSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditStoreSigned</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnforceModuleDepencySigning</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisableNonSystemFonts</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">FontAuditOnly</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditFont</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockRemoteImages</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">BlockLowLabel</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">PreferSystem32</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditImageLoad</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableExportAddressFilterPlus</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableImportAddressFilter</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopStackPivot</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopCallerCheck</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">EnableRopSimExec</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditSEHOP</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">SEHOPTelemetry</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">TerminateOnHeapError</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">DisallowChildProcessCreation</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditChildProcess</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStack</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">UserShadowStackStrictMode</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">AuditUserShadowStack</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="f"><maml:name>Force</maml:name>
+<maml:Description><maml:para>Overrides a system setting either on or off depending on the level this is set at. Will force "on"/"off" all mitigations provided in the -Enable list
+</maml:para>
+</maml:Description>
+<command:parameterValueGroup><command:parameterValue required="false" variableLength="false">on</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">off</command:parameterValue>
+<command:parameterValue required="false" variableLength="false">notset</command:parameterValue>
+</command:parameterValueGroup>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Remove</maml:name>
+<maml:Description><maml:para>Removes a mitigation entry from the registry.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="r"><maml:name>Reset</maml:name>
+<maml:Description><maml:para>Resets a specific mitigation entry to defer.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="s"><maml:name>System</maml:name>
+<maml:Description><maml:para>Used to configure system defaults rather than individual apps.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Set-ProcessMitigation</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="v"><maml:name>IsValid</maml:name>
+<maml:Description><maml:para>Set to check the given XML file for validity. Requires local .xsd
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="x"><maml:name>PolicyFilePath</maml:name>
+<maml:Description><maml:para>An XML file with mitigation settings for many processes that is applied to the registry
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="d"><maml:name>Disable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to disable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>EAFModules</maml:name>
+<maml:Description><maml:para>Modules to be added to the EAF+ mitigation.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="e"><maml:name>Enable</maml:name>
+<maml:Description><maml:para>Comma separated list of mitigations to enable. Disable list takes priority over enable list. If specified in both, it will be disabled.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="f"><maml:name>Force</maml:name>
+<maml:Description><maml:para>Overrides a system setting either on or off depending on the level this is set at. Will force "on"/"off" all mitigations provided in the -Enable list
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="v"><maml:name>IsValid</maml:name>
+<maml:Description><maml:para>Set to check the given XML file for validity. Requires local .xsd
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none"><maml:name>Name</maml:name>
+<maml:Description><maml:para>Name of the process to apply mitigation settings to. Can be in the format "notepad" or "notepad.exe"
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="x"><maml:name>PolicyFilePath</maml:name>
+<maml:Description><maml:para>An XML file with mitigation settings for many processes that is applied to the registry
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Remove</maml:name>
+<maml:Description><maml:para>Removes a mitigation entry from the registry.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="r"><maml:name>Reset</maml:name>
+<maml:Description><maml:para>Resets a specific mitigation entry to defer.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="s"><maml:name>System</maml:name>
+<maml:Description><maml:para>Used to configure system defaults rather than individual apps.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt;  set-ProcessMitigation -Name Notepad.exe -Enable SEHOP -Disable MandatoryASLR</dev:code>
+<dev:remarks><maml:para>Gets the current process mitigation for "notepad.exe" from the registry and then enables SEHOP, and disables MandatoryASLR.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 2</maml:title>
+<dev:code>PS C:\&gt; set-ProcessMitigation -PolicyFilePath settings.xml</dev:code>
+<dev:remarks><maml:para>Applies all settings inside settings.xml
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 3</maml:title>
+<dev:code>PS C:\&gt; set-ProcessMitigation -PolicyFilePath settings.xml -IsValid</dev:code>
+<dev:remarks><maml:para>Checks if the given file is a valid settings.xml, requires local .xsd
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks></command:relatedLinks>
+</command:command>
+</helpItems>

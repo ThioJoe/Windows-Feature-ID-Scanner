@@ -1,0 +1,40 @@
+<!--
+*   Module Name: NetworkSwitchManager.types.ps1xml
+*
+*   Description: Network switch manager module types file
+*
+*   Copyright (c) Microsoft Corporation. All rights reserved.
+-->
+<Types>
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_GlobalEthernetSwitchSettingData</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>ElementName</ReferencedMemberName>
+            </AliasProperty>
+        </Members>
+    </Type>
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#CIM_NetworkVLAN</Name>
+        <Members>
+            <AliasProperty>
+                <Name>Name</Name>
+                <ReferencedMemberName>ElementName</ReferencedMemberName>
+            </AliasProperty>
+        </Members>
+    </Type>
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#CIM_IPProtocolEndpoint</Name>
+        <Members>
+            <AliasProperty>
+                <Name>IPAddress</Name>
+                <ReferencedMemberName>IPv4Address</ReferencedMemberName>
+            </AliasProperty>
+            <AliasProperty>
+                <Name>SubnetAddress</Name>
+                <ReferencedMemberName>SubnetMask</ReferencedMemberName>
+            </AliasProperty>
+        </Members>
+    </Type>
+</Types>

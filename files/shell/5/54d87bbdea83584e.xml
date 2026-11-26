@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package 
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+    xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10"
+    xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+    IgnorableNamespaces="uap wincap mobile mp">
+  <!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in BioEnrollment.AppxSetup.man
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+  <Identity Name="Microsoft.BioEnrollment" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.19587.1000" />
+  <mp:PhoneIdentity PhoneProductId="01293C37-72EC-3C8B-0EB3-1DE4F7D0CDC4" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde" />
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+    
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0" />
+    <PackageDependency Name="Microsoft.UI.Xaml.CBS" MinVersion="2.42007.9001.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+    
+  <Resources>
+      <Resource Language="en-us"/>
+  </Resources>
+    
+  <Applications>
+    <Application Id="App" Executable="BioEnrollmentHost.exe" EntryPoint="BioEnrollmentHost.App">
+      <uap:VisualElements AppListEntry="none" DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <!-- This will block Bio Enrollment from being projected onto the big screen in Wizard-Tinman mode. -->
+        <mobile:Extension Category="windows.mobileMultiScreenProperties">
+            <mobile:MobileMultiScreenProperties RestrictToInternalScreen="true"/>
+        </mobile:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+<Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <!-- #AppHosting: This is where each experience is registered -->
+        <Path>BioEnrollmentUI.dll</Path>
+
+        <!-- #AppHosting: The string between '.' and '_XamlTypeInfo' HAS to be in lower case -->
+        <ActivatableClass ActivatableClassId="BioEnrollmentUI.bioenrollmentui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+
+        <!-- #AppHosting: Each navigatable page must be listed here, as navigation is global -->
+        <ActivatableClass ActivatableClassId="BioEnrollmentUI.Host.HostFrame" ThreadingModel="both"/>
+
+        <ActivatableClass ActivatableClassId="BioEnrollmentUI.Host.ResourceLoader" ThreadingModel="both"/>
+
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Windows.System.Profile.RetailInfo.dll</Path>
+        <ActivatableClass ActivatableClassId="RetailDemo.Internal.WindowsHelloHelper" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+  <Capabilities>
+      <wincap:Capability Name="userSigninSupport" />
+      <wincap:Capability Name="biometricSystem" />
+      <DeviceCapability Name="webcam" />
+      <DeviceCapability Name="microphone" />
+  </Capabilities>
+</Package>

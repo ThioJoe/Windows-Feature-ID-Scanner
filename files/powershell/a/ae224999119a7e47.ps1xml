@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+<ViewDefinitions>
+    <View>
+      <Name>Persistent memory disk</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Storage.PersistentMemory.Management.PmemDisk</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Size</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+               <PropertyName>DiskNumber</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <!-- {0:#.##} formats the size with up to 2 decimal places -->
+               <ScriptBlock>"{0:#.##}" -f ($_.SizeInBytes / 1GB) + " GB"</ScriptBlock>
+              </TableColumnItem>  
+              <TableColumnItem>
+               <PropertyName>HealthStatus</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>AtomicityType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>CanBeRemoved</PropertyName>
+              </TableColumnItem> 
+              <TableColumnItem>
+               <PropertyName>PhysicalDeviceIds</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <PropertyName>UnsafeShutdownCount</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+</ViewDefinitions>
+</Configuration>

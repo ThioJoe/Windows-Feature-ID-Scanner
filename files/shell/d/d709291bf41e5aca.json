@@ -1,0 +1,1164 @@
+[
+  {
+    "id": "WelcomePage",
+    "type": "welcomePage",
+    "title": "ナレーターのクイック スタートへようこそ (1/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このガイドでは、ナレーターの基本的な使い方を説明します。 ナレーターは、画面上の要素に関する情報を PC 内のナビゲーションに使用できるように、画面上にある要素を音声で読み上げます。 ナレーターのオンとオフを切り替えるには、<bold>Windows ロゴ</bold> キーを押しながら <bold>Ctrl</bold> キーと <bold>Enter</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このガイドについては、自動的にすべてのページの読み上げが行われます。 読み上げを停止するには、<bold>Ctrl</bold> キーを押します。 次に、ナレーターを中断した箇所から読み上げを再開するには、<bold>上方向キー</bold>または<bold>下方向キー</bold>を使用します。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "次の画面に移動するには、<bold>[ガイドを開始する]</bold> ボタンの位置で <bold>Enter</bold> キーを押します。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "StartButton",
+        "type": "Button",
+        "accessKey": "S",
+        "text": "ガイドを開始する",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "ナレーター ホームに移動",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "SecondWelcomePage",
+    "type": "secondWelcomePage",
+    "title": "ナレーターのクイック スタートへようこそ (1/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "おかえりなさい。 このガイドの再表示が必要になった場合には、ナレーターの設定で [ナレーター ホームを開く] を選択し、[クイック スタート] を選択してください。 完全なナレーター ガイドを参照できるリンクもあります。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このガイドをもう一度読むには、<bold>[続きからガイドを再開]</bold> ボタンで <bold>Enter</bold> キーを押してください。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーターのオンとオフを切り替えるには、<bold>Windows ロゴ</bold> キーを押しながら <bold>Ctrl</bold> キーと <bold>Enter</bold> キーを押します。 読み上げを停止するには、<bold>Ctrl</bold> キーを押します。 次に、ナレーターを中断した箇所から読み上げを再開するには、<bold>上方向キー</bold>または<bold>下方向キー</bold>を使用します。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "ResumeButton",
+        "type": "Button",
+        "accessKey": "R",
+        "text": "続きからガイドを再開",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Resume",
+          "targetId": ""
+        }
+      },
+      {
+        "id": "StartOverButton",
+        "type": "Button",
+        "accessKey": "S",
+        "text": "やり直す",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "ナレーター ホームに移動",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ExploreKeyboardPage",
+    "type": "normalPage",
+    "title": "キーボードの使用 (2/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このガイドでは、便利なキーボード ショートカットとナレーター コマンドについて説明します。 読み上げは次のように行われます。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>無変換 + 1</bold>."
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "これは、<bold>無変換</bold>キーを押しながら数字 <bold>1</bold> のキーを押すという意味です。 このショートカットを使用すると、入力の学習を有効にすることができます。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "入力の学習を有効にしてキーボードのキーを押すと、ナレーターがそのキーの名前と、そのキーに関連付られているナレーター コマンドを読み上げます。 無効にするには、<bold>無変換</bold> キーを長押ししながら、数字 <bold>1</bold> のキーを押します。"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このガイドでは、ほかにも多数のコマンドをご紹介します。 \n          <bold>無変換 + F1</bold> キーを押すと、すべてのナレーター コマンドを表示できます。"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>[次へ]</bold> ボタンの位置で <bold>Enter</bold> キーを押して次の画面に移動します。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "WelcomePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ScanModePage",
+    "type": "normalPage",
+    "title": "スキャン モード (3/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "スキャン モードはナレーターの機能の 1 つです。このモードでは、限られたキーを使用して画面上を移動できます。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "スキャン モードは、無効にしたのでなければ既に有効になっています。 これを無効または有効にする練習を行うには、<bold>無変換 + Space</bold> キーを押します。 このコマンドを使用すると、どのモードを使用中であるかがわかるように、短い通知音が鳴ります。 このガイドの他の部分では、常に有効にしておいてください。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "スキャン モードが有効であれば、<bold>上方向キー</bold>と<bold>下方向キー</bold>を使用して、ページ内のさまざまな部分を読むことができます。 リンクやボタンなど使いたいものの位置に来たら、そこで <bold>Enter</bold> キーを押してください。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ReadingWordsPage",
+    "type": "normalPage",
+    "title": "単語と文字の読み上げ (4/13)​​",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>左方向キー</bold>と<bold>右方向キー</bold>を使うと、単語内の個々の文字を確認できます。 これは、スペル チェックの実行に適した方法です。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "単語を 1 つずつ読み上げるには、<bold>Ctrl + 左方向キー</bold>または<bold>Ctrl + 右方向キー</bold>を押します。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "この操作を今すぐ実際に試すことも、次の画面に移動することもできます。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "HeadingsPage",
+    "type": "normalPage",
+    "title": "見出し (5/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ページ内のさまざまなセクションに移動するには、<bold>上方向キー</bold>と<bold>下方向キー</bold>を使う以外に、見出しを使う方法があります。 見出しレベルによる読み上げの例をいくつかご確認ください。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level1",
+        "text": "これは、ページ タイトルによく使われる見出しレベル 1 です。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "これは、ページ内のセクション見出しによく使われる見出しレベル 2 です。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "次の見出しに移動するには、<bold>H</bold> キーを押します。 前の見出しに戻るには、<bold>Shift + H</bold> キーを押します。 場合によっては、このページでそれを行う必要があります。"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "この操作を今すぐ実際に試すことも、次の画面に移動することもできます。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "LandmarksPage",
+    "type": "normalPage",
+    "title": "ランドマーク (6/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ランドマークとは、ページ内やアプリ内に含まれている類似のパーツを入れたコンテナーのようなもので、ユーザーはこれらに直接移動することができます。 ランドマークは、ボタンやテキスト ブロックなどの類似要素をグループ化したものである場合と、検索ボックスなどの単一要素ある場合があります。 ランドマークは、Web でとても一般的です。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ランドマークには、大きく分けて次の 3 種類があります。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナビゲーション ランドマークは、アプリのさまざまな部分への移動に使用します。 このページの <bold>[次へ]</bold> ボタンと <bold>[戻る]</bold> ボタンもナビゲーション ランドマークに含まれます。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "メイン ランドマークは、アプリのコンテンツです。 内容は、このページのメイン ランドマークの一部です。"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "検索ランドマークは通常、検索ボックスです。 これについては、また後で説明します。"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "次のランドマークに移動するには、<bold>D</bold> キーを押します。 前のランドマークに戻るには、<bold>Shift + D</bold> キーを押します。 場合によっては、このページでそれを行う必要があります。"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "この操作を今すぐ実際に試すことも、次の画面に移動することもできます。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "EnteringTextPage",
+    "type": "normalPage",
+    "title": "テキストの入力 (7/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "テキスト ボックスはページ上にある、自分でテキストを入力できる場所です。 フォームには、多数のテキスト ボックスがあります。 テキスト ボックス内に入ると、スキャン モードは自動的に無効になります。 "
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "入力を終えたら、<bold>下方向キー</bold>を使って次に進むことができます。 複数行のテキスト ボックスでは、ボックスから出るために<bold>下方向キー</bold>を押す操作が何度か必要になる場合もあります。 テキスト ボックスから出ると、スキャン モードがまた有効になります。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "下に、1 行のテキスト ボックスがあります。 テキストを入力してみてください。"
+      },
+      {
+        "id": "TextBox",
+        "type": "TextBox",
+        "accessKey": "T",
+        "header": "これは、テキスト ボックスのラベルです。",
+        "text": "テキスト ボックス内に入りました。入力を開始できます。",
+        "isDefaultFocus": true
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ControlsPage",
+    "type": "normalPage",
+    "title": "ボタン、チェック ボックス、その他のコントロール (8/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "コントロールを使うと、アクションを実行し、項目を選択できます。 このガイドの<bold>[次へ]</bold> ボタンと <bold>[戻る]</bold> ボタンはコントロールの一種です。 このページでは、何種類かのコントロールを試します。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "コントロール間を移動するには、<bold>上方向キー</bold>と<bold>下方向キー</bold>を押すか、<bold>Tab</bold> または <bold>Shift + Tab</bold> を押してください。 \n          <bold>Tab</bold> キーを使うと、ナレーターなどのスクリーン リーダーを使っていないときでもコントロール間を移動できます。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "場合によっては、<bold>上方向キー</bold>と<bold>下方向キー</bold>を押すと、コントロールの一覧内での移動になることもあります。 目的の選択肢に移動したら、<bold>Enter</bold> キーを押します。 \n          <bold>Enter</bold> キーは、トグル ボタンやチェック ボックスなど、2 つの状態のみを持つコントロールにも使うことができます。"
+      },
+      {
+        "id": "CheckBox",
+        "type": "CheckBox",
+        "accessKey": "",
+        "text": "これは、チェック ボックスのテキスト ラベルです",
+        "isDefaultFocus": true,
+        "checked": false,
+        "action": {
+          "type": "",
+          "targetId": ""
+        }
+      },
+      {
+        "id": "ComboBox",
+        "type": "ComboBox",
+        "accessKey": "",
+        "header": "これは、コンボ ボックスのテキスト ラベルです",
+        "isDefaultFocus": false,
+        "option": [
+          "– 大陸を選択してください –",
+          "アフリカ",
+          "南極",
+          "アジア",
+          "オーストラリア",
+          "ヨーロッパ",
+          "北アメリカ",
+          "南アメリカ"
+        ],
+        "selectedItem": 1
+      },
+      {
+        "id": "ToggleSwitch",
+        "type": "ToggleSwitch",
+        "accessKey": "",
+        "header": "これは、トグルのテキスト ラベルです",
+        "isDefaultFocus": false,
+        "checked": false
+      },
+      {
+        "id": "SearchBox",
+        "type": "AutoSuggestBox",
+        "accessKey": "",
+        "header": "これは、検索ボックスのテキスト ラベルです",
+        "text": "大陸の名前を入力してください",
+        "isDefaultFocus": false,
+        "option": [
+          "アフリカ",
+          "南極",
+          "アジア",
+          "オーストラリア",
+          "ヨーロッパ",
+          "北アメリカ",
+          "南アメリカ"
+        ],
+        "action": {
+          "type": "",
+          "targetId": ""
+        }
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NarratorKeyPage",
+    "type": "normalPage",
+    "title": "ナレーター キー (9/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "お気づきのように、<bold>無変換</bold>キーは多くのナレーター コマンドに不可欠なキーです。 ナレーターで使用する場合は、<bold>無変換</bold>キーを<bold>ナレーター</bold> キーとも呼びます。 \n          <bold>Insert</bold> キーを<bold>ナレーター</bold> キーとして使用することもできます。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "このため、<bold>ナレーター</bold> キーを使用するコマンドを見かけたら、<bold>無変換</bold>キーまたは <bold>Insert</bold> キーを使用できることを覚えておいてください。 この先は、<bold>ナレーター</bold> キーのことをコマンド内でそのまま \"<bold>ナレーター</bold>\" と呼びます。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NarratorCommandsPage",
+    "type": "normalPage",
+    "title": "重要なナレーター コマンド (10/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ここでは、ナレーターでの読み上げ対象や方法をカスタマイズするためのナレーター コマンドを紹介します。 次のようなものがあります。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーター音声のスピードを速くするには、<bold>ナレーター + プラス記号 (+)</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーター音声のスピードを遅くするには、<bold>ナレーター + マイナス記号 (-)</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "現在の項目を読み上げるには、<bold>ナレーター + Tab</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ウィンドウのタイトルを読み上げるには、<bold>ナレーター + T</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ウィンドウの先頭に移動するには、<bold>ナレーター + Home</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ウィンドウの末尾に移動するには、<bold>ナレーター + End</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph8",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "現在の位置から読み上げるには、<bold>ナレーター + R</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph9",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ウィンドウの先頭から読み上げるには、<bold>ナレーター + W</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph10",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーター コマンドの一覧を参照するには、<bold>ナレーター + F1</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph11",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーターの設定を開くには、<bold>Windows ロゴ キー + Ctrl + N</bold> キーを押します。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TryWebpagePage",
+    "type": "normalPage",
+    "title": "試してみる: Web ページ内の移動 (11/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "これまでに学習した内容の練習として、サンプル Web ページ内を移動してみましょう。 Web ページ内に入ると、ナレーターの読み上げコマンドおよびナビゲーション コマンドはすべて、Web ページのコンテンツ内の移動に使用されます。 これにより、画面上の情報すべてではなく、Web ページ内の情報に意識を集中できます。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ここで、使用できる操作を復習しておきましょう。"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ページ内を上または下へ移動するには、<bold>上方向キー</bold>または<bold>下方向キー</bold>を押します。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "個々のテキスト文字を確認するには、<bold>左方向キー</bold>または<bold>右方向キー</bold>を押します。"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "単語を 1 つずつ読み上げるには、<bold>Ctrl + 左方向キー</bold>または<bold>Ctrl + 右方向キー</bold>を押します。"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "見出しから見出しへ移動するには、<bold>H</bold> キーまたは <bold>Shift + H</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ランドマークからランドマークへ移動するには、<bold>D</bold> キーまたは <bold>Shift + D</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph8",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "アドレス バーに移動するには、<bold>Alt + D</bold> キーまたは <bold>Ctrl + L</bold> キーを押します。"
+      },
+      {
+        "id": "Paragraph9",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ナレーターが「検索するか、Web アドレスを入力し、編集」と言ったら、「more」と入力します。候補の一覧が表示されます。 \n          <bold>上方向キー</bold>と<bold>下方向キー</bold>を押してオプション間を移動し、<bold>Enter</bold> キーを押して選択します。 どのオプションでも、移動先は同じ Web ページです。"
+      },
+      {
+        "id": "Paragraph10",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "この操作を行うと、サンプル Web ページのコンテンツ領域内に移動します。 \n          <bold>上方向キー</bold>と<bold>下方向キー</bold>、コマンド、見出しおよびランドマーク ナビゲーションを実行した場合の移動範囲が常に Web ページのコンテンツ領域内であることがわかります。 Edge などの Web ブラウザーを使用した場合も、ナレーターでのエクスペリエンスは同様です。"
+      },
+      {
+        "id": "Paragraph11",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "クイック スタートで移動を開始するには、<bold>上方向キー</bold>や<bold>下方向キー</bold>の代わりに <bold>Tab</bold> キーまたは <bold>Shift + Tab</bold> キーを押して Web ページの外へ移動します。 Web ページの外に出ると、ナレーターは、画面上にあるすべての情報を読み上げる動作に戻ります。"
+      },
+      {
+        "id": "AddressAutoSuggestBox",
+        "type": "AutoSuggestBox",
+        "accessKey": "D",
+        "header": "これは、検索ボックスのラベルです",
+        "text": "検索または Web アドレスを入力",
+        "isDefaultFocus": true,
+        "option": [
+          "www.morevegetablesplease.com",
+          "morevegetablesplease.com",
+          "morevegetablesplease"
+        ],
+        "action": {
+          "type": "Show",
+          "targetId": "SampleWebView"
+        }
+      },
+      {
+        "id": "SampleWebView",
+        "type": "WebView",
+        "accessKey": "",
+        "text": "<!doctype html><htmldir='ltr' ><head><metacharset='utf-8' /><title>もっと多くの野菜を</title><linkrel='stylesheet' type='text/css' href='https://compass-ssl.microsoft.com/assets/4d/93/4d9396db-7872-4cd8-bc54-d6696a226fc3.css?n=style-v3.css' /><scripttype='text/javascript' src='https://compass-ssl.microsoft.com/assets/d1/46/d146a37b-5991-4024-8a2c-52a9b5837a38.js?n=script-v2.js' > </script></head><body><header><divclass='header-near' >良い生活は、 良い野菜から</div><divclass='header-center' ><imgclass='site-logo' src='https://compass-ssl.microsoft.com/assets/d2/e1/d2e1a179-1361-4be3-b843-edf60624d2c7.png?n=logo.png' alt='More Veggies Please logo' /></div><divclass='header-far' ></div></header><divclass='banner' ><divclass='banner-overlay' ><divclass='banner-text' ><spanclass='banner-text-inner' ><spanclass='tagline' >ささっと作れてヘルシー</span><spanclass='subtext-l0' >バジルとフレッシュ モッツァレラを使った伝統的なピッツァ マルゲリータ</span><spanclass='subtext-l1' >調理時間</span><spanclass='subtext-l2' >25 分</span></span></div></div></div><divclass='content' ><p>ピッツァ マルゲリータはピザ料理の基本で、生地の薄さが特徴です。 生地が厚すぎると、この伝統料理のシンプルな持ち味が失われかねません。 重要なのはバランスです。どれか 1 種類の具材や味に偏らないよう注意して、 シンプルな材料をうまく調和させます。\n      </p><div><fieldset><legend><h2>材料</h2></legend><label><inputclass='checkbox' type='checkbox' />お湯 1 と 1/3 カップ</label><label><inputclass='checkbox' type='checkbox' />ドライ イースト 小さじ 2 と 1/4</label><label><inputclass='checkbox' type='checkbox' />砂糖 小さじ 1</label><label><inputclass='checkbox' type='checkbox' />強力粉 2 と 1/2 カップ</label><label><inputclass='checkbox' type='checkbox' />全粒小麦粉 2 カップ</label><label><inputclass='checkbox' type='checkbox' />オリーブ オイル 大さじ 3 少々</label><label><inputclass='checkbox' type='checkbox' />塩 小さじ 3/4</label><label><inputclass='checkbox' type='checkbox' />にんにく 2 かけ</label><label><inputclass='checkbox' type='checkbox' />ローマ トマト (完熟) 4 個</label><label><inputclass='checkbox' type='checkbox' />生バジル 少々</label><label><inputclass='checkbox' type='checkbox' />塩/こしょう お好みで</label><label><inputclass='checkbox' type='checkbox' />打ち粉用の小麦粉 分量外</label></fieldset><buttonclass='selectAll' >すべての材料を選択</button></div><h2>ピザ生地 (ナポリ風)</h2><olclass='step-list' ><li><spanclass='step-list-item-text' >大きなボウルに常温よりやや温かい程度のお湯、ドライ イースト、砂糖を入れてかき混ぜ、イーストが溶けるまで置きます (3 〜 5 分)。</span></li><li><spanclass='step-list-item-text' ><imgsrc='https://compass-ssl.microsoft.com/assets/96/19/9619484a-5b1e-4e5c-a391-c0be28e7a9b1.jpg?n=dough.jpg' alt='dough' />パン用などの強力粉、全粒小麦粉、塩を合わせ、生地がまとまるまで混ぜます。 この生地は通常のパン生地よりも柔らかめになります。 これを 5 分ほど寝かせます。</span></li><li><spanclass='step-list-item-text' >打ち粉をした台に生地を取り出します。 滑らかになり弾力が出るまで、生地をこねます (通常は約 10 分)。</span></li><li><spanclass='step-list-item-text' >大きなボウルに、オリーブ オイル (約大さじ 2) を入れます。 このボウルに生地を入れ、表面が完全にオリーブ オイルで覆われるまで、生地の上下を何度か返します。 大きなボウルに、オリーブ オイル (約大さじ 2) を入れます。 このボウルに生地を入れ、表面が完全にオリーブ オイルで覆われるまで、生地の上下を何度か返します。</span></li><li><spanclass='step-list-item-text' >ラップまたは清潔なタオルでボウルを覆って寝かせます。 できれば、暖かくて湿度が低く、風の当たらない場所に置きます。 生地が倍の大きさになったら準備完了です (約 1 時間)。</span></li></ol><p><imgsrc='https://cxcs.microsoft.net/api/ja-jp/404' alt='' /></p><h2>ミニマリストのマルゲリータ</h2><olclass='step-list' ><li><spanclass='step-list-item-text' >伝統的なナポリ ピッツァは、ピザ ストーンの輻射熱で焼き上げます。 オーブンの下 3 分の 1 の部分にある棚にストーンを置き、500°F に予熱します。 その温度になったら、オーブン内で 20 分以上、ストーンに熱を吸収させます。</span></li><li><spanclass='step-list-item-text' >生地を半分に分け、打ち粉をした台に置きます。 それぞれを 12 インチの円形に伸ばします。</span></li><li><spanclass='step-list-item-text' ><imgsrc='https://compass-ssl.microsoft.com/assets/89/42/894236f4-966b-4a09-951f-88afdb14264c.jpg?n=tomatoes.jpg' alt='tomatoes' />伸ばした生地に具材を置きます。 伝統的な具材としては、スライスしたローマ トマトやモッツァレラ チーズなどがあります。 ソースを加える場合は、\"Better than Mom's Pizza Sauce\" (ママのピザ ソースよりおいしい) のレシピを試してみてください (新鮮なトマトとバジルで、伝統を超える味が実現します)。</span></li><li><spanclass='step-list-item-text' >トマトにオリーブ オイルを回しがけ、ちぎったバジルをふりかけます。 バジルの風味を楽しむには、ピザをオーブンに入れる直前にちぎってください。</span></li><li><spanclass='step-list-item-text' >生地をピザ ストーンに移すには、打ち粉をしたピザ ピールを使います。 ピザ ストーンはオーブンに入れたままにします。非常に熱くなるため 扱いに注意してください。</span></li><li><spanclass='step-list-item-text' >生地を焼きます。 生地がふくらむまでには長くて 2 分、焦げ目がつくまでには長くて 5 分程度です。 注意深く監視し、オーブンから取り出すタイミングを見極めます。</span></li><li><spanclass='step-list-item-text' >オーブンから生地を取り出します。 オリーブ オイル大さじ 1 をニンニクと合わせ、飾りと風味の仕上げとして、生地の外周に刷毛で塗ります。 5 分ほどさましてからテーブルに出します。</span></li></ol></div></body></html>"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NavigatingAppsPage",
+    "type": "normalPage",
+    "title": "アプリ間のナビゲーション (12/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ここに示す方法は、ナレーターなどのスクリーン リーダーを使用しているかどうかに関係なく使うことができます。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "アプリの切り替え"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "複数のアプリが開いている場合は、<bold>Alt + Tab</bold> キーを押してアプリを切り替えることができます。 必要なアプリが見つかるまで、<bold>Alt</bold> キーを押しながら <bold>Tab</bold> キーを何度か押す必要がある場合もあります。 このページでショートカットを試す場合も、<bold>Alt + Tab</bold> キーを押してこのガイドに戻ることができます。"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "アプリの検索"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows ロゴ キー</bold>を押すと、スタート メニューが開き、タスク バーの検索ボックスを使うことができます。 検索ボックスで目的のアプリ名を入力して検索します。 次に、<bold>上方向キー</bold>と<bold>下方向キー</bold>を使ってオプション間を移動し、<bold>Enter</bold> キーを押して選択します。"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "アプリの終了"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "アプリを閉じるには、<bold>Alt + F4</bold> キーを押します。 この操作の前に、<bold>Fn</bold> キーが必要になることもあります。"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "次へ",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "SummaryPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "SummaryPage",
+    "type": "summaryPage",
+    "title": "ガイドのまとめ (13/13)",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "お疲れさまでした。 ガイドはこれで終わりですが、 お役に立てたでしょうか。 各セクションをもう一度確認するには、下のリンクをご利用ください。"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "さらに詳しい情報については、<hyperlink id='UserGuideLink' url='https://go.microsoft.com/fwlink/p/?linkid=873381'>ナレーター ユーザー ガイド</hyperlink>をご覧ください。"
+      },
+      {
+        "id": "LinkWelcomePage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "ナレーターへようこそ (1/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "WelcomePage"
+        }
+      },
+      {
+        "id": "LinkExploreKeyboardPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "キーボードの使用 (2/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "LinkScanModePage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "スキャン モード (3/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      },
+      {
+        "id": "LinkReadingWordsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "単語と文字の読み上げ (4/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      },
+      {
+        "id": "LinkHeadingsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "見出し (5/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      },
+      {
+        "id": "LinkLandmarksPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "ランドマーク (6/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      },
+      {
+        "id": "LinkExnteringTextPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "テキストの入力 (7/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      },
+      {
+        "id": "LinkControlsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "ボタン、チェック ボックス、その他のコントロール (8/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      },
+      {
+        "id": "LinkNarratorKeyPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "ナレーター キー (9/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      },
+      {
+        "id": "LinkNarratorCommandsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "重要なナレーター コマンド (10/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      },
+      {
+        "id": "LinkWebviewPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "試してみる: Web ページ内の移動 (11/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      },
+      {
+        "id": "LinkNavigatingAppsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "アプリ間のナビゲーション (12/13)",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "戻る",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "ナレーター ホームに移動",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  }
+]

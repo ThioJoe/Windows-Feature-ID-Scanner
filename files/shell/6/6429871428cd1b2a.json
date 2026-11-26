@@ -1,0 +1,43 @@
+{
+  "GETSTARTED": {
+    "mode": "LinearFlow",
+    "start": "LandingPage",
+    "reconnectHandlerId": "NetworkError",
+    "LandingPage": {
+        "nodeId": "LandingPage",
+        "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+        "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+        "internetRequired": true,
+        "backwardButtonEnabled": false,
+        "defaultId": "UserIntent",
+        "measureId": 40424633
+    },
+    "UserIntent": {
+        "nodeId": "UserIntent",
+        "url": "https://sdx.microsoft.com/getstarted/userintent/index.html",
+        "urlint": "https://sdx.microsoft-int.com/getstarted/userintent/index.html",
+        "internetRequired": true,
+        "visibility": false,
+        "defaultId": "OutroPersonalize",
+        "measureId": 40427237
+    },
+    "OutroPersonalize": {
+        "nodeId": "OutroPersonalize",
+        "url": "https://sdx.microsoft.com/getstarted/outropersonalize/index.html",
+        "urlint": "https://sdx.microsoft-int.com/getstarted/outropersonalize/index.html",
+        "internetRequired": true,
+        "forwardButtonEnabled": false,
+        "measureId": 50780284
+    },
+    "NetworkError": {
+        "nodeId": "NetworkError",
+        "localXaml": "NetworkError",
+        "excludeFromBackstack": true,
+        "measureId": 40426665
+    }
+  },
+  "WWWE": {
+    "mode": "SinglePage",
+    "url": "https://www.microsoft.com/en-us/getting-started?ep=1207&form=M1001G&es=223&cs=126061895"
+  }
+}

@@ -1,0 +1,151 @@
+body {
+    height: 100%;
+    animation: mymove 20s infinite;
+    background-color: %BACKGROUNDCOLOR%; /*blue = #0066CC red = #FF0000 lightgreen = #33CC33*/
+    cursor: default;
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+    font: Segoe UI;
+}
+div.MainWrapper {
+    height: 100%;
+    margin: 20px 0 0 20px;
+    padding-bottom: 35px;
+    width: 645px;
+    word-wrap: break-word;
+    position:relative;
+}
+div.moreInfoTable {
+    visibility: hidden; 
+    font-size:0.94em;
+}
+head1.MainHeaderClass {
+    margin: 0 0 0 0px;
+    color: %TEXTCOLOR%; 
+    font-family:"Segoe UI light";
+    font-size:1.66em;
+    font-weight:bold;
+}
+head2.DescriptionClass {
+    margin: 0 0 0 2px;
+    color: %TEXTCOLOR%; 
+    font-family:"Segoe UI light";
+    font-size:0.94em;
+    font-weight:normal;
+}
+table.infoTable {
+    width: 600px;
+    word-wrap: break-word;
+}
+.moreInfoTable {
+    margin: 0 0 0 -11px;
+}
+button.moreClass {
+    font-family:"Segoe UI light";
+    font-size:0.95em;
+    margin: 0 0 0 -4px;
+    opacity: 0.65;
+    background-color: #4093E6;
+    border-style: none;
+    color: %MOREINFOCOLOR%;
+    background-color: transparent;
+    cursor:pointer;
+}
+TD {
+    padding-left: 10px;
+    color: %TEXTCOLOR%;
+}
+div.runDontrun {
+    position: absolute;
+    top:145px;
+    right:0;
+    visibility: visible;
+}
+button.runInput {
+    margin: 0 -7px 0 0;
+    visibility: hidden;
+    transition: .5s ease;
+    display: block;
+    width: 112px;
+    height: 35px;
+    background-color: #0064AE;
+    border-style: solid;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+button.runOrLaunchInput {
+    margin: 0 -8px 0 0;
+    visibility: hidden;
+    transition: .5s ease;
+    display: block;
+    width: 112px;
+    height: 35px;
+    background-color: %RUNCOLOR%;
+    border-style: solid;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+button.dontRunInput {
+    visibility: hidden;
+    transition: .5s ease;
+    display: block;
+    width: 94px;
+    height: 35px;
+    visibility: false;
+    border-style: solid;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    background-color: %DONTRUNCOLOR%;
+}
+.runInput:hover {
+    background: #277AB5;
+}
+.runOrLaunchInput:hover {
+    background: %RUNHOVERCOLOR%;
+}
+.dontRunInput:hover {
+    background: %DONTRUNHOVERCOLOR%;
+}
+input[type="checkbox"] {
+}
+label input {
+    display: none;/* <-- hide the default checkbox */
+}
+label span {
+    /* style the artificial checkbox */
+    height: 10px;
+    width: 10px;
+    border: 1px solid white;
+    display: inline-block;
+    position: relative;
+}
+[type=checkbox]:checked + span:before {
+    /* style its checked state..with a ticked icon */
+    content: '\2714';
+    position: absolute;
+    top: -5px;
+    left: 0;
+}
+label.mylab {
+    visibility: hidden;
+    font-family:"Segoe UI light";
+    color:white;
+    cursor: pointer;
+}
+label.checkBoxText {
+    font-family:"Segoe UI light";
+    color:white;
+    cursor: pointer;
+    font-size:0.94em;
+}
+table {
+    font-family:"Segoe UI light";
+}

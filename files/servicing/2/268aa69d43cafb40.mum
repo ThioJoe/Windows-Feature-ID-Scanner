@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetFx4-WCF-US-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft .NET Framework 4 WCF US Components for en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-WCF-US-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="WCF Services" displayName="WCF Services" name="WCF-Services45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Windows Communication Foundation (WCF) Activation uses Windows Process Activation Service to invoke applications remotely over the network by using protocols such as HTTP, Message Queuing, TCP, and named pipes. Consequently, applications can start and stop dynamically in response to incoming work items, resulting in application hosting that is more robust, manageable, and efficient." DisplayName="WCF Services" Id="420" InstallWithParentByDefault="true" Parent="NET-Framework-45-Core" Type="Feature" UniqueName="NET-WCF-Services45">
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+      </applicable>
+    </update>
+    <update description="HTTP Activation" displayName="HTTP Activation" name="WCF-HTTP-Activation45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="HTTP Activation supports process activation via HTTP. Applications that use HTTP Activation can start and stop dynamically in response to work items that arrive over the network via HTTP." DisplayName="HTTP Activation" Id="421" InstallWithParentByDefault="true" Parent="NET-WCF-Services45" Type="Feature" UniqueName="NET-WCF-HTTP-Activation45">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-45-Extended" />
+            <ServerComponent UniqueName="NET-Framework-45-ASPNET" />
+            <ServerComponent UniqueName="Web-Asp-Net45" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-HTTP-Activation45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="WCF-Services45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+      </applicable>
+    </update>
+    <update description="TCP Activation" displayName="TCP Activation" name="WCF-TCP-Activation45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="TCP Activation supports process activation via TCP. Applications that use TCP Activation can start and stop dynamically in response to work items that arrive over the network via TCP." DisplayName="TCP Activation" Id="424" InstallWithParentByDefault="true" Parent="NET-WCF-Services45" Type="Feature" UniqueName="NET-WCF-TCP-Activation45">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-45-Extended" />
+            <ServerComponent UniqueName="NET-WCF-TCP-PortSharing45" />
+            <ServerComponent UniqueName="NET-Framework-45-ASPNET" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-TCP-Activation45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="WCF-Services45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="WCF-TCP-PortSharing45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+      </applicable>
+    </update>
+    <update description="Named Pipe Activation" displayName="Named Pipe Activation" name="WCF-Pipe-Activation45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Named Pipes Activation supports process activation via named pipes. Applications that use Named Pipes Activation can start and stop dynamically in response to work items that arrive over the network via named pipes." DisplayName="Named Pipe Activation" Id="423" InstallWithParentByDefault="true" Parent="NET-WCF-Services45" Type="Feature" UniqueName="NET-WCF-Pipe-Activation45">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-45-Extended" />
+            <ServerComponent UniqueName="NET-Framework-45-ASPNET" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-Pipe-Activation45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="WCF-Services45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+      </applicable>
+    </update>
+    <update description="Message Queuing (MSMQ) Activation" displayName="Message Queuing (MSMQ) Activation" name="WCF-MSMQ-Activation45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Message Queuing Activation supports process activation via Message Queuing. Applications that use Message Queuing Activation can start and stop dynamically in response to work items that arrive over the network via Message Queuing." DisplayName="Message Queuing (MSMQ) Activation" Id="422" InstallWithParentByDefault="true" Parent="NET-WCF-Services45" Type="Feature" UniqueName="NET-WCF-MSMQ-Activation45">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-45-Extended" />
+            <ServerComponent UniqueName="NET-Framework-45-ASPNET" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+            <ServerComponent UniqueName="MSMQ-Server" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-MSMQ-Activation45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="WCF-Services45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+    </update>
+    <update description="TCP Port Sharing" displayName="TCP Port Sharing" name="WCF-TCP-PortSharing45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="TCP Port Sharing allows multiple net.tcp applications to share a single TCP port. Consequently, these applications can coexist on the same physical computer in separate, isolated processes, while sharing the network infrastructure required to send and receive traffic over a TCP port, such as port 808." DisplayName="TCP Port Sharing" Id="425" InstallWithParentByDefault="true" Parent="NET-WCF-Services45" Type="Feature" UniqueName="NET-WCF-TCP-PortSharing45">
+          <Deploys>
+            <Update Name="WCF-TCP-PortSharing45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="WCF-Services45" />
+        </detectUpdate>
+      </applicable>
+    </update>
+  </package>
+</assembly>

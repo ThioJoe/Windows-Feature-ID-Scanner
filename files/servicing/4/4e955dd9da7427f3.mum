@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetFx4-US-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft .NET Framework 4.0 US_en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-US-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description=".NET Framework 4.8" displayName=".NET Framework 4.8" name="NetFx4">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description=".NET Framework 4.8 provides a comprehensive and consistent programming model for quickly and easily building and running applications that are built for various platforms including desktop PCs, Servers, smart phones and the public and private cloud." DisplayName=".NET Framework 4.8" Id="418" Type="Feature" UniqueName="NET-Framework-45-Core">
+          <Deploys>
+            <Update Name="NetFx4" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="NetFx4" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx4-Deployment-LanguagePack" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description=".NET Framework 4.8 Extended" displayName=".NET Framework 4.8 Extended" name="NetFx4Extended">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description=".NET Framework 4.8 Extended" DisplayName=".NET Framework 4.8 Extended" Id="419" InstallWithParentByDefault="true" Parent="NET-Framework-45-Core" Type="Feature" UniqueName="NET-Framework-45-Extended">
+          <Deploys>
+            <Update Name="NetFx4Extended" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="NetFx4Extended" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx4Extended-Deployment-LanguagePack" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="ASP.NET 4.8" displayName="ASP.NET 4.8" name="NetFx4Extended-ASPNET45">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description=".NET Framework ASP.NET 4.8" DisplayName="ASP.NET 4.8" Id="429" InstallWithParentByDefault="true" Parent="NET-Framework-45-Core" Type="Feature" UniqueName="NET-Framework-45-ASPNET">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-45-Extended" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="NetFx4Extended-ASPNET45" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx4ASPNET-Deployment-LanguagePack" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description=".NET Framework 4.8 Advanced Services" displayName=".NET Framework 4.8 Advanced Services" name="NetFx4-AdvSrvs">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description=".NET Framework 4.8 Advanced Services" DisplayName=".NET Framework 4.8 Advanced Services" Id="450" Type="Feature" UniqueName="NET-Framework-45-AdvSrvs">
+          <Deploys>
+            <Update Name="NetFx4-AdvSrvs" />
+          </Deploys>
+          <Version Major="4" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="NetFx4-AdvSrvs" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx-Advanced-Services-Deployment-LanguagePack" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+  
+    <!--
+    Manual versioning is used for this app.
+    Appx version should be in sync with version used for the app name in AssignedAccessLockApp.AppxSetup.man
+    See https://osgwiki.com/wiki/System_Apps#Servicing
+    -->
+    <Identity
+        Name="Microsoft.Windows.AssignedAccessLockApp"
+        Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+        Version="1000.25128.1000.0"
+        ResourceId="neutral"
+        />
+
+    <mp:PhoneIdentity PhoneProductId="b84f4722-313e-4f85-8f41-cf5417c9c5cb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+    <Properties>
+        <DisplayName>ms-resource:PackageDisplayName</DisplayName>
+        <Description>ms-resource:PackageDescription</Description>
+        <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+        <Logo>Assets\StoreLogo.png</Logo>
+    </Properties>
+
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    </Dependencies>
+
+    <Resources>
+        <Resource Language="en-us"/>
+    </Resources>
+
+    <Applications>
+        <Application
+            EntryPoint="AssignedAccessLockApp.App"
+            Executable="AssignedAccessLockApp.exe"
+            Id="App"
+            >
+            <uap:VisualElements
+                Description="ms-resource:PackageDescription"
+                DisplayName="ms-resource:PackageDisplayName"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                BackgroundColor="#0078D7"
+                AppListEntry="none">
+                <uap:SplashScreen BackgroundColor="#0078D7" Image="Assets\SplashScreen.png" />
+            </uap:VisualElements>
+            <Extensions>
+                <uap:Extension Category="windows.lockScreen" />
+            </Extensions>
+        </Application>
+    </Applications>
+</Package>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>OOBE Group Policies</displayName>
+  <description>Policies defined to manage OOBE settings via Group Policy Management services.</description>
+  <resources>
+    <stringTable>
+      <string id="OOBECategory_DisplayName">OOBE</string>
+      <string id="OOBECategory_Explain">Configure certain OOBE-related settings</string>
+
+      <string id="DisablePrivacyExperience">Don't launch privacy settings experience on user logon</string>
+      <string id="DisablePrivacyExperience_Explain">When logging into a new user account for the first time or after an upgrade in some scenarios, that user may be presented with a screen or series of screens that prompts the user to choose privacy settings for their account. Enable this policy to prevent this experience from launching.
+
+If this policy is enabled, the privacy experience will not launch for newly-created user accounts or for accounts that would have been prompted to choose their privacy settings after an upgrade.
+
+If this policy is disabled or not configured, then the privacy experience may launch for newly-created user accounts or for accounts that should be prompted to choose their privacy settings after an upgrade.</string>
+
+      <string id="AllowOOBEUpdates">Allow Updates in OOBE</string>
+      <string id="AllowOOBEUpdates_Explain">This policy allows you to configure whether a new device gets critical updates during the out-of-box experience.
+
+If you disable or do not configure this policy, new devices will not receive critical updates during the out-of-box experience.
+
+If you enable the policy, new devices will receive the latest approved critical updates during the out-of-box experience.
+
+Notes:
+This policy does not control the zero-day patch (ZDP) updates page in OOBE.
+
+If you have paused quality updates through Windows quality update deferrals and pause policies, no quality updates will be delivered during the out-of-box experience.
+      </string>
+
+      <string id="ConfigureOOBEUpdatesSkipTimer">Configure when users can skip quality updates during OOBE</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_Explain">This policy controls when users see the option to skip quality updates during the out-of-box-experience.
+
+The value specifies how many minutes Windows waits after the quality update process starts before showing the skip option. You can set the following values for this policy:
+
+• Immediately
+• Show after 15 minutes
+• Show after 20 minutes
+• Show after 30 minutes
+• Show after 45 minutes
+• Show after 60 minutes
+
+If you disable or do not configure this policy, Windows shows the skip option 10 minutes after the quality update process starts.
+
+Note:
+
+Windows doesn't show the skip option while critical drivers are installing.
+      </string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_Immediately">Immediately</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_15Minutes">Show after 15 minutes</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_20Minutes">Show after 20 minutes</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_30Minutes">Show after 30 minutes</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_45Minutes">Show after 45 minutes</string>
+      <string id="ConfigureOOBEUpdatesSkipTimer_60Minutes">Show after 60 minutes</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="ConfigureOOBEUpdatesSkipTimer">
+        <dropdownList refId="ConfigureOOBEUpdatesSkipTimer_Enum" noSort="true" defaultItem="0">Choose when the skip option is shown:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

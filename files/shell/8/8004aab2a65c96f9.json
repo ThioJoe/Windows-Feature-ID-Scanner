@@ -1,0 +1,424 @@
+{
+  "$schema": "schemas/SettingsExtensions.Schema.1.2.0.json",
+  "addedPages": [
+    {
+      "pageId": "SettingsPageAccountsPicture",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "uri": "ms-settings:yourinfo",
+      "glyph": "\uE779",
+      "glyphFontFamily": "Segoe Fluent Icons",
+      "displayName": "AIProfileImageDisplayName",
+      "description": "AIProfileImageDescription",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "AppAccountProfile",
+      "searchData": [
+        {
+          "description": "AIProfileImageSearchDataDescription1",
+          "keywords": "AIProfileImageSearchDataKeywords1"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 45189370,
+          "default": "disabled"
+        }
+      }
+    },
+    {
+      "pageId": "SettingsPageYourMicrosoftAccount",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "nextPageId": "",
+      "uri": "ms-settings:account",
+      "glyph": "\uEC6A",
+      "glyphFontFamily": "Settings Fluent Icons",
+      "iconImagePath": "assets\\microsoft.png",
+      "displayName": "AccountPageDisplayName",
+      "description": "AccountPageDescription",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "AppAccount",
+      "searchData": [
+        {
+          "description": "AccountPageSearchDataDescription1",
+          "keywords": "AccountPageSearchDataKeywords1"
+        },
+        {
+          "description": "AccountPageSearchDataDescription2",
+          "keywords": "AccountPageSearchDataKeywords2"
+        },
+        {
+          "description": "AccountPageSearchDataDescription3",
+          "keywords": "AccountPageSearchDataKeywords3"
+        },
+        {
+          "description": "AccountPageSearchDataDescription4",
+          "keywords": "AccountPageSearchDataKeywords4"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 36594186,
+          "default": "enabled",
+          "isExclude": true
+        }
+      }
+    },
+    {
+      "$comment": "This addedPage entry is identical to the one above with the same pageId except that it changes the displayName.",
+      "pageId": "SettingsPageGroupAccounts_Home",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "nextPageId": "",
+      "uri": "ms-settings:account",
+      "glyph": "\uEC6A",
+      "glyphFontFamily": "Settings Fluent Icons",
+      "iconImagePath": "assets\\microsoft.png",
+      "displayName": "SDXAccountPageDisplayName",
+      "description": "AccountPageDescription",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "AppAccount",
+      "searchData": [
+        {
+          "description": "AccountPageSearchDataDescription1",
+          "keywords": "AccountPageSearchDataKeywords1"
+        },
+        {
+          "description": "AccountPageSearchDataDescription2",
+          "keywords": "AccountPageSearchDataKeywords2"
+        },
+        {
+          "description": "AccountPageSearchDataDescription3",
+          "keywords": "AccountPageSearchDataKeywords3"
+        },
+        {
+          "description": "AccountPageSearchDataDescription4",
+          "keywords": "AccountPageSearchDataKeywords4"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 36594186,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "pageId": "SettingsPageHome",
+      "pageGroupId": "SettingsPageGroupHome",
+      "nextPageId": "",
+      "uri": "ms-settings:home",
+      "glyph": "\uE80F",
+      "glyphFontFamily": "Settings Fluent Icons",
+      "iconImagePath": "assets\\microsoft.png",
+      "displayName": "HomePageDisplayName",
+      "description": "HomePageDescription",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "AppHome",
+      "searchData": [
+        {
+          "description": "HomePageSearchDataDescription1",
+          "keywords": "HomePageSearchDataKeywords1"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 43256492,
+          "default": "disabled"
+        }
+      }
+    },
+    {
+      "pageId": "SettingsPageMyDevices",
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "previousPageId": "",
+      "uri": "ms-settings:linkeddevices",
+      "glyph": "\uE975",
+      "glyphFontFamily": "Settings Fluent Icons",
+      "iconImagePath": "assets\\microsoft.png",
+      "displayName": "LinkedDevicesEntryName",
+      "description": "LinkedDevicesDescription",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "AppDevices",
+      "groupName": "OtherDevicesGroupName",
+      "searchData": [
+        {
+          "description": "LinkedDevicesEntryName",
+          "keywords": "LinkedDevicesSearchDataKeywords1"
+        },
+        {
+          "description": "LinkedDevicesEntryName",
+          "keywords": "LinkedDevicesSearchDataKeywords2"
+        }
+      ],
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        }
+      }
+    }
+  ],
+  "hiddenPages": [
+    {
+      "pageGroupId": "SettingsPageGroupAccounts",
+      "conditions": {
+        "velocityKey": {
+          "id": 36594186,
+          "default": "enabled"
+        },
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        }
+      }
+    },
+    {
+      "pageGroupId": "SettingsPageGroupHome",
+      "conditions": {
+        "velocityKey": {
+          "id": 43256492,
+          "default": "disabled"
+        },
+        "userAccountKind": {
+          "include": ["Local", "MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        }
+      }
+    }
+  ],
+  "addedHomeCards": [
+    {
+      "cardId": "StorageCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeStorageCard",
+      "rank": 17.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 44030564,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "SubscriptionCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeSubscriptionCard",
+      "rank": 4.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 44059374,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "SubscriptionCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeSubscriptionHigherRankedCard",
+      "rank": 17.8,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        }
+      }
+    },
+    {
+      "cardId": "CopilotSubscriptionCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeCopilotSubscriptionCard",
+      "rank": 4,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 47942561,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "XboxSubscriptionCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeXboxSubscriptionCard",
+      "rank": 3,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 44565828,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "AccountCheckupCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeAccountCheckupCard",
+      "rank": 6.5,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["MSA"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 44121479,
+          "default": "enabled"
+        }
+      }
+    },
+    {
+      "cardId": "SignedOutCard",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeSignedOutCard",
+      "rank": 20,
+      "componentEvaluatesApplicability": false,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 48907919,
+          "default": "disabled",
+          "isExclude": true
+        }
+      }
+    },
+    {
+      "cardId": "SignedOutCard_SecondPlace",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "HomeSignedOutCard",
+      "rank": 17.8,
+      "componentEvaluatesApplicability": false,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["Local"]
+        },
+        "product": {
+          "include": ["PROFESSIONAL", "PRO_WORKSTATION", "PROFESSIONAL_N", "PRO_WORKSTATION_N", "PRO_CHINA", "PRO_SINGLE_LANGUAGE", "CORE", "CORE_N", "CORE_COUNTRYSPECIFIC", "CORE_SINGLELANGUAGE"]
+        },
+        "velocityKey": {
+          "id": 48907919,
+          "default": "disabled"
+        }
+      }
+    },
+    {
+      "cardId": "SignedOutCard_Enterprise_AAD",
+      "experienceId": "Windows.Settings.Account",
+      "componentName": "CommercialSignedOutCard",
+      "rank": 20,
+      "componentEvaluatesApplicability": true,
+      "conditions": {
+        "userAccountKind": {
+          "include": ["AAD"]
+        },
+        "product": {
+          "include": [
+            "PROFESSIONAL",
+            "PRO_WORKSTATION",
+            "PROFESSIONAL_N",
+            "PRO_WORKSTATION_N",
+            "PRO_CHINA",
+            "PRO_SINGLE_LANGUAGE",
+            "ENTERPRISE",
+            "ENTERPRISEG",
+            "ENTERPRISE_N",
+            "ENTERPRISEGN",
+            "ENTERPRISE_EVALUATION",
+            "ENTERPRISE_N_EVALUATION",
+            "ENTERPRISE_S",
+            "ENTERPRISE_S_N",
+            "ENTERPRISE_S_EVALUATION",
+            "ENTERPRISE_S_N_EVALUATION"
+          ]
+        },
+        "velocityKey": {
+          "id": 53473397,
+          "externalParentId": 53281237,
+          "default": "enabled"
+        }
+      }
+    }
+  ],
+  "updatedHomeCards": [
+    {
+      "cardId": "SystemSettings_Home_Recommended",
+      "rank": 18
+    },
+    {
+      "cardId": "SystemSettings_HomepageCard_Personalization",
+      "rank": 6
+    },
+    {
+      "cardId": "SystemSettings_Home_BluetoothDevices",
+      "rank": 12
+    }
+  ],
+  "resources": {
+    "path": "assets\\strings",
+    "scope": "SettingsExtensionsMetadata",
+    "languages": ["af-ZA","am-ET","ar-SA","as-IN","az-Latn-AZ","bg-BG","bn-IN","bs-Latn-BA","ca-ES","ca-Es-VALENCIA","cs-CZ","cy-GB","da-DK","de-DE","el-GR","en-GB","en-US","es-ES","es-MX","et-EE","eu-ES","fa-IR","fi-FI","fil-PH","fr-CA","fr-FR","ga-IE","gd-gb","gl-ES","gu-IN","he-IL","hi-IN","hr-HR","hu-HU","hy-AM","id-ID","is-IS","it-IT","ja-JP","ka-GE","kk-KZ","km-KH","kn-IN","kok-IN","ko-KR","lb-LU","lo-LA","lt-LT","lv-LV","mi-NZ","mk-MK","ml-IN","mr-IN","ms-MY","mt-MT","nb-NO","ne-NP","nl-NL","nn-NO","or-IN","pa-IN","pl-PL","pt-BR","pt-PT","quz-PE","ro-RO","ru-RU","sk-SK","sl-SI","sq-AL","sr-Cyrl-BA","sr-Cyrl-RS","sr-Latn-RS","sv-SE","ta-IN","te-IN","th-TH","tr-TR","tt-RU","ug-CN","uk-UA","ur-PK","uz-Latn-UZ","vi-VN","zh-CN","zh-TW"]
+  }
+}

@@ -1,0 +1,39 @@
+<div class="Container">
+    <div class="content" id="oobeLightFrameView">
+        <backstack-chrome-breadcrumb></backstack-chrome-breadcrumb>
+        <div class="graphic halfSection" role="img" data-bind="attr: {'aria-label': document.title}">
+            <div id="animation"></div>
+        </div>
+        <!-- light frame progress -->
+        <oobe-light-progress class="app-content"> </oobe-light-progress>
+        <!-- light frame content -->
+        <div class="controls halfSection" id="_view"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between">
+        <!-- This wrapper div ensures that even when .gamepadLegend isn't visible (display:none), the .footerView alignment is unaffected. -->
+        <div>
+            <div class="gamepadLegend" data-bind="visible: showGamepadLegend, attr: {'aria-label': gamepadButtonAAccName}">
+                <div class="f-bottomBar icon icon-buttonA">
+                    <!-- Glyph -->
+                    <span aria-hidden="true"></span>
+                    <!-- Label -->
+                    <span aria-hidden="true" data-bind="text: gamepadButtonAText"></span>
+                </div>
+                <div class="f-bottomBar icon icon-buttonB" data-bind="visible: showGamepadBButton, attr: {'aria-label': gamepadButtonBAccName}">
+                    <!-- Glyph -->
+                    <span aria-hidden="true"></span>
+                    <!-- Label -->
+                    <span aria-hidden="true" data-bind="text: gamepadButtonBText"></span>
+                </div>
+            </div>
+        </div>
+        <!-- light frame footer which only shows up for desktop -->
+        <!-- footer webview is inserted in next element via code, to avoid having an extraneous webview from KnockoutJS precreating templates and duplicating their DOM trees into the real page -->
+        <!-- ko if: showLightFooter -->
+        <div class="footerView" data-bind="addFooterWebView: true"></div>
+        <!-- /ko -->
+    </div>
+</div>
+
+
+

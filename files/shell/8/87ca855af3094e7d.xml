@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:deployment="http://schemas.microsoft.com/appx/manifest/deployment/windows10" IgnorableNamespaces="deployment">
+  <Identity Name="Microsoft.Windows.AugLoop.CBS" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" ProcessorArchitecture="x64" Version="1.1126.2131.0" />
+  <Properties>
+    <Framework>true</Framework>
+    <DisplayName>Microsoft.Windows.AugLoop.CBS</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Description>Microsoft Windows AugLoop CBS</Description>
+    <Logo>logo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.22621.0" MaxVersionTested="12.0.0.0" />
+  </Dependencies>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10">
+      <InProcessServer>
+        <Path>Microsoft.Windows.AugLoop.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.Client.AuthTokenType" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.Client.ServerAuthenticationState" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.Client.SessionCreationOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.Endpoint" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.EntityAction" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.EntityActionDataBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.GenericAnnotationBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.JoinWorkflowExecutionDelegate" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.LocalWorkflows.ML.FeaturesOutputView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.LocalWorkflows.ML.StringFeature" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.LocalWorkflows.ML.TagFeature" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.LocalWorkflows.ML.Type" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.MainSubDocumentBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.ModelAnnotationResult" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.OptionalString" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.SuggestedAction" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.TextTileBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.TextTileSegment" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.WorkflowEngine" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.WorkflowEngineSettings" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.WorkflowExecutionDelegate" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AugLoop.WorkflowSessionEngine" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+</Package>

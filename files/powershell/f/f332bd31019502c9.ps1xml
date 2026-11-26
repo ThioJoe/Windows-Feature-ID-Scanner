@@ -1,0 +1,65 @@
+<Configuration>
+<SelectionSets>
+  <SelectionSet>
+    <Name>SmbWitnessClientEntryType</Name>
+    <Types>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#root\Microsoft\Windows\SMBWitness\MSFT_SmbWitnessClient</TypeName>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_SmbWitnessClient</TypeName>
+    </Types>
+  </SelectionSet>
+</SelectionSets>
+<ViewDefinitions>
+  <View>
+    <Name>SmbWitnessClientTableView</Name>
+    <ViewSelectedBy>
+      <SelectionSetName>SmbWitnessClientEntryType</SelectionSetName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Label>Client Computer Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Witness Node Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>File Server Node Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Network Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Share Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Client State</Label>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>ClientName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>WitnessNodeName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>FileServerNodeName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>NetworkName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>ShareName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>State</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View> 
+</ViewDefinitions>
+</Configuration>

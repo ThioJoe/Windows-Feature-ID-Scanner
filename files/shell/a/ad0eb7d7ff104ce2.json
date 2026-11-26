@@ -1,0 +1,102 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Container",
+      "verticalContentAlignment": "top",
+      "items": [
+        {
+          "type": "Image",
+          "url": "${if($host.hostTheme == \"light\" || $host.hostTheme == \"highcontrastlight\", lightImage, darkImage)}",
+          "altText": "Feature image",
+          "horizontalAlignment": "center",
+          "height": "120px",
+          "width": "120px"
+        },
+        {
+          "type": "Image",
+          "url": "${image}",
+          "size": "Stretch",
+          "altText": "Feature image"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "spacing": "none",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "${Title}",
+                  "weight": "Bolder",
+                  "size": "default",
+                  "wrap": true,
+                  "maxLines": 1,
+                  "spacing": "default",
+                  "separator": false,
+                  "horizontalAlignment": "left"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "${SubTitle}",
+                  "fontType": "Default",
+                  "wrap": true,
+                  "spacing": "small",
+                  "maxLines": 3,
+                  "horizontalAlignment": "left"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "$when": "${SecondaryLinkContent != ''}",
+          "type": "Container",
+          "spacing": "${ButtonContent == '' ? 'extraLarge' : 'medium'}",
+          "items": [
+            {
+              "type": "RichTextBlock",
+              "horizontalAlignment": "center",
+              "inlines": [
+                {
+                  "type": "TextRun",
+                  "text": "${SecondaryLinkContent}",
+                  "color": "Accent",
+                  "underline": true,
+                  "selectAction": {
+                    "type": "Action.OpenUrl",
+                    "verb": "secondary-url-clicked",
+                    "url": "ms-discoverwidget://?size=Medium"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "verticalContentAlignment": "bottom",
+      "height": "stretch"
+    },
+    {
+      "type": "Container",
+      "spacing": "large"
+    },
+    {
+      "type": "Container",
+      "spacing": "small"
+    }
+  ]
+}

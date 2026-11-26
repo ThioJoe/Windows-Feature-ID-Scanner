@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetFx3-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft .NET Framework 3.0" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description=".NET Framework 3.5 (includes .NET 2.0 and 3.0)" displayName=".NET Framework 3.5 (includes .NET 2.0 and 3.0)" name="NetFx3">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3" FWLink="http://go.microsoft.com/fwlink/?LinkId=296822" />
+      <selectable disposition="absent">
+        <detectNone default="false" />
+      </selectable>
+      <capability>
+        <capabilityIdentity name="NetFX3" />
+      </capability>
+    </update>
+    <update description=".NET Framework Shared MOF Client" displayName=".NET Framework Shared MOF Client" name="NetFxSharedMOF-Client-For-NetFx3">
+      <applicable disposition="staged">
+        <detectUpdate>
+          <update name="NetFx3" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-NetFx-Shared-MOF-Client" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update description="HTTP Namespace" displayName="HTTP Namespace" name="NetFxShared-WCF-HttpNamespace-For-NetFx3">
+      <applicable disposition="staged">
+        <detectUpdate>
+          <update name="NetFx3" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-NetFx-Shared-WCF-HttpNamespace" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update description="Windows Communication Foundation Shared" displayName="Windows Communication Foundation Shared" name="Microsoft-Windows-Shared-WCF-Deployment">
+      <applicable disposition="staged">
+        <detectUpdate>
+          <update name="NetFx3" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx-Shared-WCF-Deployment" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

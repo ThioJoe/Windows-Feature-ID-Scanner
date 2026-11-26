@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    IgnorableNamespaces="uap mp">
+    <!--
+        Manual versioning is used for this app.
+        Appx version should be in sync with version used for the app name in Microsoft-Xbox-GameCallableUI.AppxSetup.man
+        See https://osgwiki.com/wiki/System_Apps#Servicing
+    -->
+  <Identity Name="Microsoft.XboxGameCallableUI" Version="1000.25128.1000.0" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" ResourceId="neutral"/>
+  <mp:PhoneIdentity PhoneProductId="de9d70cf-5071-46b9-8612-facc1a70fd4d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  
+  <Properties>
+    <DisplayName>ms-resource:PkgDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="0.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-US"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="Microsoft.XboxGameCallableUI" Executable="XBox.TCUI.exe" EntryPoint="XBox.TCUI.App">
+      <uap:VisualElements DisplayName="ms-resource:PkgDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:PkgDisplayName" BackgroundColor="#464646" AppListEntry="none">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="xbox-tcui" />
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>GamingTcuiHelpers.dll</Path>
+        <ActivatableClass ActivatableClassId="GamingUI.XboxLive.InternalHelpers.GamingBrokerHelpers" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="GamingUI.XboxLive.InternalHelpers.GamingStorageHelpers" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

@@ -1,0 +1,15 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="BrokerPlugin.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BrokerPlugin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wv2standalone="using:WebView2Standalone.Controls"
+    mc:Ignorable="d" Background="White"                                            >
+    <Grid>
+        <wv2standalone:WebView2 x:Name="webView2"></wv2standalone:WebView2>
+        <ProgressRing x:Name="LoadingRing" IsActive="True" Height="50" Width="50" Background="Transparent" Foreground="#FF1E90FF"/>
+    </Grid>
+</Page>
+

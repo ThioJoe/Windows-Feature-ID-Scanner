@@ -1,0 +1,1576 @@
+[
+  {
+    "id": "WelcomePage",
+    "type": "welcomePage",
+    "title": "WelcomePage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "WelcomePage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "WelcomePage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "WelcomePage_Paragraph3_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "StartButton",
+        "type": "Button",
+        "accessKey": "S",
+        "text": "WelcomePage_StartButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "WelcomePage_HomeButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "SecondWelcomePage",
+    "type": "secondWelcomePage",
+    "title": "SecondWelcomePage_TitleText",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "SecondWelcomePage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "SecondWelcomePage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "SecondWelcomePage_Paragraph3_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "ResumeButton",
+        "type": "Button",
+        "accessKey": "R",
+        "text": "SecondWelcomePage_ResumeButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Resume",
+          "targetId": ""
+        }
+      },
+      {
+        "id": "StartOverButton",
+        "type": "Button",
+        "accessKey": "S",
+        "text": "SecondWelcomePage_StartOverButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "SecondWelcomePage_HomeButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ExploreKeyboardPage",
+    "type": "normalPage",
+    "title": "ExploreKeyboardPage_TitleText",
+    "content": [
+      {
+        "id": "ExploreKeyboardPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph1_Text"
+      },
+      {
+        "id": "ExploreKeyboardPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph2_Text"
+      },
+      {
+        "id": "ExploreKeyboardPage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph3_Text"
+      },
+      {
+        "id": "ExploreKeyboardPage_Paragraph4_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph4_Text"
+      },
+      {
+        "id": "ExploreKeyboardPage_Paragraph5_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph5_Text"
+      },
+      {
+        "id": "ExploreKeyboardPage_Paragraph6_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ExploreKeyboardPage_Paragraph6_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "ExploreKeyboardPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "WelcomePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "ExploreKeyboardPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ScanModePage",
+    "type": "normalPage",
+    "title": "ScanModePage_Title",
+    "content": [
+      {
+        "id": "ScanModePage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ScanModePage_Paragraph1_Text"
+      },
+      {
+        "id": "ScanModePage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ScanModePage_Paragraph2_Text"
+      },
+      {
+        "id": "ScanModePage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ScanModePage_Paragraph3_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "ScanModePage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "ScanModePage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ReadingWordsPage",
+    "type": "normalPage",
+    "title": "ReadingWordsPage_Title",
+    "content": [
+      {
+        "id": "ReadingWordsPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ReadingWordsPage_Paragraph1_Text"
+      },
+      {
+        "id": "ReadingWordsPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ReadingWordsPage_Paragraph2_Text"
+      },
+      {
+        "id": "ReadingWordsPage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ReadingWordsPage_Paragraph3_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "ReadingWordsPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "ReadingWordsPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "HeadingsPage",
+    "type": "normalPage",
+    "title": "HeadingsPage_Title",
+    "content": [
+      {
+        "id": "HeadingsPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "HeadingsPage_Paragraph1_Text"
+      },
+      {
+        "id": "HeadingsPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level1",
+        "text": "HeadingsPage_Paragraph2_Text"
+      },
+      {
+        "id": "HeadingsPage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "HeadingsPage_Paragraph3_Text"
+      },
+      {
+        "id": "HeadingsPage_Paragraph4_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "HeadingsPage_Paragraph4_Text"
+      },
+      {
+        "id": "HeadingsPage_Paragraph5_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "HeadingsPage_Paragraph5_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "HeadingsPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "HeadingsPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "LandmarksPage",
+    "type": "normalPage",
+    "title": "LandmarksPage_Title",
+    "content": [
+      {
+        "id": "LandmarksPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph1_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph2_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph3_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph4_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph4_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph5_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph5_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph6_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph6_Text"
+      },
+      {
+        "id": "LandmarksPage_Paragraph7_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "LandmarksPage_Paragraph7_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "LandmarksPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "LandmarksPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "EnteringTextPage",
+    "type": "normalPage",
+    "title": "EnteringTextPage_Title",
+    "content": [
+      {
+        "id": "EnteringTextPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "EnteringTextPage_Paragraph1_Text"
+      },
+      {
+        "id": "EnteringTextPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "EnteringTextPage_Paragraph2_Text"
+      },
+      {
+        "id": "EnteringTextPage_Paragraph3_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "EnteringTextPage_Paragraph3_Text"
+      },
+      {
+        "id": "TextBox",
+        "type": "TextBox",
+        "accessKey": "T",
+        "header": "EnteringTextPage_TextBox_Header",
+        "text": "EnteringTextPage_TextBox_Text",
+        "isDefaultFocus": true
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "EnteringTextPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "EnteringTextPage_NextButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ControlsPage",
+    "type": "normalPage",
+    "title": "ControlsPage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ControlsPage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ControlsPage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "ControlsPage_Paragraph3_Text"
+      },
+      {
+        "id": "CheckBox",
+        "type": "CheckBox",
+        "accessKey": "",
+        "text": "ControlsPage_CheckBox_Text",
+        "isDefaultFocus": true,
+        "checked": false,
+        "action": {
+          "type": "",
+          "targetId": ""
+        }
+      },
+      {
+        "id": "ComboBox",
+        "type": "ComboBox",
+        "accessKey": "",
+        "header": "ControlsPage_ComboBox_Header",
+        "isDefaultFocus": false,
+        "option": [
+          "ContinentChoose_Name",
+          "Africa_Name",
+          "Antarctica_Name",
+          "Asia_Name",
+          "Australia_Name",
+          "Europe_Name",
+          "NorthAmerica_Name",
+          "SouthAmerica_Name"
+        ],
+        "selectedItem": 1
+      },
+      {
+        "id": "ToggleSwitch",
+        "type": "ToggleSwitch",
+        "accessKey": "",
+        "header": "ControlsPage_ToggleSwitch_Header",
+        "isDefaultFocus": false,
+        "checked": false
+      },
+      {
+        "id": "SearchBox",
+        "type": "AutoSuggestBox",
+        "accessKey": "",
+        "header": "ControlsPage_SearchBox_Header",
+        "text": "ControlsPage_SearchBox_Text",
+        "isDefaultFocus": false,
+        "option": [
+          "Africa_Name",
+          "Antarctica_Name",
+          "Asia_Name",
+          "Australia_Name",
+          "Europe_Name",
+          "NorthAmerica_Name",
+          "SouthAmerica_Name"
+        ],
+        "action": {
+          "type": "",
+          "targetId": ""
+        }
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "ControlsPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "ControlsPage_NextButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NarratorKeyPage",
+    "type": "normalPage",
+    "title": "NarratorKeyPage_Title",
+    "content": [
+      {
+        "id": "NarratorKeyPage_Paragraph1_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorKeyPage_Paragraph1_Text"
+      },
+      {
+        "id": "NarratorKeyPage_Paragraph2_Text",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorKeyPage_Paragraph2_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "NarratorKeyPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "NarratorKeyPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NarratorCommandsPage",
+    "type": "normalPage",
+    "title": "NarratorCommandsPage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph3_Text"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph4_Text"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph5_Text"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph6_Text"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph7_Text"
+      },
+      {
+        "id": "Paragraph8",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph8_Text"
+      },
+      {
+        "id": "Paragraph9",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph9_Text"
+      },
+      {
+        "id": "Paragraph10",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph10_Text"
+      },
+      {
+        "id": "Paragraph11",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NarratorCommandsPage_Paragraph11_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "NarratorCommandsPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "NarratorCommandsPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "TryWebpagePage",
+    "type": "normalPage",
+    "title": "TryWebpagePage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph3_Text"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph4_Text"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph5_Text"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph6_Text"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph7_Text"
+      },
+      {
+        "id": "Paragraph8",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph8_Text"
+      },
+      {
+        "id": "Paragraph9",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph9_Text"
+      },
+      {
+        "id": "Paragraph10",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph10_Text"
+      },
+      {
+        "id": "Paragraph11",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "TryWebpagePage_Paragraph11_Text"
+      },
+      {
+        "id": "AddressAutoSuggestBox",
+        "type": "AutoSuggestBox",
+        "accessKey": "D",
+        "header": "TryWebpagePage_AddressAutoSuggestBox_Header",
+        "text": "TryWebpagePage_AddressAutoSuggestBox_Text",
+        "isDefaultFocus": true,
+        "option": [
+          "Website1",
+          "Website2",
+          "Website3"
+        ],
+        "action": {
+          "type": "Show",
+          "targetId": "SampleWebView"
+        }
+      },
+      {
+        "id": "SampleWebView",
+        "type": "WebView",
+        "accessKey": "",
+        "text": "TryWebpagePage_SampleWebView_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "TryWebpagePage_BackButton_Text",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "TryWebpagePage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "TryWebpagePage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "NavigatingAppsPage",
+    "type": "normalPage",
+    "title": "NavigatingAppsPage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NavigatingAppsPage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "NavigatingAppsPage_Paragraph2_Text"
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NavigatingAppsPage_Paragraph3_Text"
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "NavigatingAppsPage_Paragraph4_Text"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NavigatingAppsPage_Paragraph5_Text"
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "Level2",
+        "text": "NavigatingAppsPage_Paragraph6_Text"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "NavigatingAppsPage_Paragraph7_Text"
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "NavigatingAppsPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      },
+      {
+        "id": "NextButton",
+        "type": "Button",
+        "accessKey": "N",
+        "text": "NavigatingAppsPage_NextButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "SummaryPage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "SummaryPage",
+    "type": "summaryPage",
+    "title": "SummaryPage_Title",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "SummaryPage_Paragraph1_Text"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "SummaryPage_Paragraph2_Text"
+      },
+      {
+        "id": "LinkWelcomePage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkWelcomePage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "WelcomePage"
+        }
+      },
+      {
+        "id": "LinkExploreKeyboardPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkExploreKeyboardPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ExploreKeyboardPage"
+        }
+      },
+      {
+        "id": "LinkScanModePage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkScanModePage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ScanModePage"
+        }
+      },
+      {
+        "id": "LinkReadingWordsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkReadingWordsPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ReadingWordsPage"
+        }
+      },
+      {
+        "id": "LinkHeadingsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkHeadingsPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "HeadingsPage"
+        }
+      },
+      {
+        "id": "LinkLandmarksPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkLandmarksPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "LandmarksPage"
+        }
+      },
+      {
+        "id": "LinkExnteringTextPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkExnteringTextPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "EnteringTextPage"
+        }
+      },
+      {
+        "id": "LinkControlsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkControlsPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "ControlsPage"
+        }
+      },
+      {
+        "id": "LinkNarratorKeyPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkNarratorKeyPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorKeyPage"
+        }
+      },
+      {
+        "id": "LinkNarratorCommandsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkNarratorCommandsPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorCommandsPage"
+        }
+      },
+      {
+        "id": "LinkWebviewPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkWebviewPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "TryWebpagePage"
+        }
+      },
+      {
+        "id": "LinkNavigatingAppsPage",
+        "type": "HyperlinkButton",
+        "accessKey": "",
+        "text": "SummaryPage_LinkNavigatingAppsPage_Text",
+        "url": "",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      }
+    ],
+    "navigation": [
+      {
+        "id": "BackButton",
+        "type": "Button",
+        "accessKey": "B",
+        "text": "SummaryPage_BackButton_Text",
+        "isDefaultFocus": false,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NavigatingAppsPage"
+        }
+      },
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "SummaryPage_HomeButton_Text",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  },
+  {
+    "id": "WhatsNewPage",
+    "type": "WhatsNewPage",
+    "title": "What’s new in Narrator",
+    "content": [
+      {
+        "id": "Paragraph1",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Version released in 2022"
+      },
+      {
+        "id": "Paragraph2",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "This release is all about making Narrator easier to use on the web and while interacting with Windows. To give Microsoft feedback, press Narrator + Alt + F while Narrator is running."
+      },
+      {
+        "id": "Paragraph3",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Tip: The Narrator key is a modifier key in the Narrator commands. Both the Caps lock key and the Insert key serve as your Narrator key by default. For more information on the <hyperlink id='CompleteGuide' url='https://support.microsoft.com/windows/complete-guide-to-narrator-e4397a0d-ef4f-b386-d8ae-c172f109bdb1?msclkid=aea72d38a53611ec830da916028a39fe#WindowsVersion=Windows_11'>Narrator key, go to Chapter 2: Narrator Basics</hyperlink> or <hyperlink id='AppendixB' url='https://support.microsoft.com/windows/appendix-b-narrator-keyboard-commands-and-touch-gestures-8bdab3f4-b3e9-4554-7f28-8b15bd37410a#WindowsVersion=Windows_11'>Appendix B: Narrator keyboard commands and touch gestures</hyperlink>."
+      },
+      {
+        "id": "Paragraph4",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level1",
+        "text": "More Natural Narrator Voices"
+      },
+      {
+        "id": "Paragraph5",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "With more natural voices, Narrator users can enjoy scenarios like browsing the web, reading, authoring mail, and more. Natural Narrator voices use modern, on-device text to speech and once downloaded are supported without an internet connection. Narrator provides three U.S. English natural voices. These include two female voices, “Jenny” and “Aria,” and one male voice, “Guy”."
+      },
+      {
+        "id": "Paragraph6",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "Install Natural Voices"
+      },
+      {
+        "id": "Paragraph7",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Narrator will announce that more natural voices are available when you open Narrator. To add the new voices:"
+      },
+      {
+        "id": "Paragraph8",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "1. Select <bold>Install now</bold> on the announcement window to go to Narrator Settings."
+      },
+      {
+        "id": "Paragraph9",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "2. Select the <bold>Add</bold> button under the <bold>Add natural voices</bold> section."
+      },
+      {
+        "id": "Paragraph10",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "3. Select the voice you want to install. You can install all voices, but you must install them separately."
+      },
+      {
+        "id": "Paragraph11",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "4. To hear a preview of the voice, select <bold>Preview</bold>."
+      },
+      {
+        "id": "Paragraph12",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "5. Select <bold>Install</bold> to start the download of the selected voice."
+      },
+      {
+        "id": "Paragraph13",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level1",
+        "text": "New and changed Keyboard commands to control Speech"
+      },
+      {
+        "id": "Paragraph14",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "New Narrator Keyboard Commands"
+      },
+      {
+        "id": "Paragraph15",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "It is now easier for Narrator users to switch between voices to better support common tasks like reading and navigating."
+      },
+      {
+        "id": "Paragraph16",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Newly added Narrator keyboard commands include:"
+      },
+      {
+        "id": "Paragraph17",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Alt + Minus sign (-)</bold> – Move to the previous Narrator voice."
+      },
+      {
+        "id": "Paragraph18",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Alt + Plus sign (+)</bold> – Move to the next Narrator voice."
+      },
+      {
+        "id": "Paragraph19",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "Updated keyboard commands"
+      },
+      {
+        "id": "Paragraph20",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Changes have been made to the keyboard commands used to manipulate Narrator’s punctuation reading behavior:"
+      },
+      {
+        "id": "Paragraph21",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Alt + Left Bracket ([)</bold> – Move to the previous punctuation reading mode."
+      },
+      {
+        "id": "Paragraph22",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Alt + Right Bracket (])</bold> – Move to the next punctuation reading mode."
+      },
+      {
+        "id": "Paragraph23",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level1",
+        "text": "Web Improvements"
+      },
+      {
+        "id": "Paragraph24",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "A collection of improvements has been made to web browsing with Microsoft Edge and Narrator. These include:"
+      },
+      {
+        "id": "Paragraph25",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "You will have a more consistent navigation experience with Narrator. This includes improvements in heading navigation, a more consistent scan mode navigation experience where scan mode is less likely to loop between items, and a more consistent hyperlink reading experience when navigating forwards and backwards."
+      },
+      {
+        "id": "Paragraph26",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "When you encounter a dialog box on the web, Narrator will help you stay focused within the dialog box and prevent navigation to the content that’s behind it."
+      },
+      {
+        "id": "Paragraph27",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Typing in edit fields, such as the address bar, is now easier because Narrator scan mode will now turn off faster. Specifically, if you press Ctrl + L to jump to the address bar, you should be able to start typing immediately because scan mode will turn off sooner. This improvement will also help when filling in form fields such as typing your name and address in different edit boxes."
+      },
+      {
+        "id": "Paragraph28",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Deleting text in edit fields is now easier. Narrator will now read the character that the cursor position is at after a character has been deleted. In other words, if the cursor is on the “h” of “hello” and you press delete, Narrator will speak “e.” In addition, if you need to cut a large set of text with Control + X, Narrator will confirm that the text has been cut. You will notice this in Edge and in all apps where you can edit, such as Notepad, Outlook, Microsoft Word, and others."
+      },
+      {
+        "id": "Paragraph29",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "When backspacing, Narrator will now more consistently announce when you’re deleting characters with Backspace."
+      },
+      {
+        "id": "Paragraph30",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Additional support for web standards has been added. These include:"
+      },
+      {
+        "id": "Paragraph31",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "You can have Narrator read the current item (e.g., current page, current time etc.)."
+      },
+      {
+        "id": "Paragraph32",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Web form fields such as radio buttons and edit fields that are marked as being mandatory will be announced as required when being used."
+      },
+      {
+        "id": "Paragraph33",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "When you need to sort a table on the web, Narrator will announce the sort order you’ve selected (e.g., ascending, descending)."
+      },
+      {
+        "id": "Paragraph34",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Improvements have been made to the way lists are read. This includes the proper reading of list levels and accurate list indices. Narrator will also announce the state of a checkbox that is contained inside of a list."
+      },
+      {
+        "id": "Paragraph35",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Improved navigating using links."
+      },
+      {
+        "id": "Paragraph36",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Using the Tab key to move through links on a webpage and pressing Enter will always take you to the link destination."
+      },
+      {
+        "id": "Paragraph37",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "It is now also easier to know when an item is selected in a tree view control."
+      },
+      {
+        "id": "Paragraph38",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level1",
+        "text": "New or notable commands"
+      },
+      {
+        "id": "Paragraph39",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "New Touch Gestures"
+      },
+      {
+        "id": "Paragraph40",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "Narrator provides a way of dismissing menus or simulating the Escape key. Simply triple-tap with 2 fingers to perform this function."
+      },
+      {
+        "id": "Paragraph41",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "New Commonly used Keyboard Shortcuts in Windows 11"
+      },
+      {
+        "id": "Paragraph42",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + A</bold>: Open Quick Settings"
+      },
+      {
+        "id": "Paragraph43",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + C</bold>: Open Teams chat"
+      },
+      {
+        "id": "Paragraph44",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + N</bold>: Open notification center"
+      },
+      {
+        "id": "Paragraph45",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + W</bold>: Open Widgets"
+      },
+      {
+        "id": "Paragraph46",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Ctrl + E</bold>: Open search in most apps"
+      },
+      {
+        "id": "Paragraph47",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Ctrl + F</bold>: Open search in the Windows store"
+      },
+      {
+        "id": "Paragraph48",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "level2",
+        "text": "Commonly Used keyboard shortcuts for Narrator and Accessibility"
+      },
+      {
+        "id": "Paragraph49",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Ctrl + D</bold>: Get the webpage source of a link"
+      },
+      {
+        "id": "Paragraph50",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + S</bold>: Get a webpage summary"
+      },
+      {
+        "id": "Paragraph51",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + S twice quickly</bold>: Get the webpage summary and popular links dialog box"
+      },
+      {
+        "id": "Paragraph52",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + H</bold>: Turn on or off Outlook column header reading"
+      },
+      {
+        "id": "Paragraph53",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Narrator + Alt + F</bold>: Give feedback on Narrator"
+      },
+      {
+        "id": "Paragraph54",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + Plus sign (+)</bold>: Open Magnifier"
+      },
+      {
+        "id": "Paragraph55",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "<bold>Windows logo key + U</bold>: Open the Accessibility settings"
+      },
+      {
+        "id": "Paragraph56",
+        "type": "TextBlock",
+        "accessKey": "",
+        "headingLevel": "none",
+        "text": "For a list of the keyboard shortcuts you can use in Windows, refer to <hyperlink id='KeyboardShortcutsInWindows' url='https://support.microsoft.com/windows/dcc61a57-8ff0-cffe-9796-cb9706c75eec'>Keyboard shortcuts in Windows</hyperlink>. For a list of keyboard shortcuts in Windows apps, refer to <hyperlink id='KeyboardShortcutsInApps' url='https://support.microsoft.com/windows/139014e7-177b-d1f3-eb2e-7298b2599a34'>Keyboard shortcuts in apps</hyperlink>. For a list of keyboard shortcuts in other Windows assistive technologies, refer to <hyperlink id='keyboardShortcutsForAccessibility' url='https://support.microsoft.com/windows/021bcb62-45c8-e4ef-1e4f-41b8c1fc87fd'>Windows keyboard shortcuts for accessibility</hyperlink>."
+      }
+    ],
+    "navigation": [
+      {
+        "id": "HomeButton",
+        "type": "Button",
+        "accessKey": "H",
+        "text": "Go to Narrator Home",
+        "isDefaultFocus": true,
+        "action": {
+          "type": "Navigate",
+          "targetId": "NarratorHomePage"
+        }
+      }
+    ]
+  }
+]

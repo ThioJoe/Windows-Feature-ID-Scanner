@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:build="http://schemas.microsoft.com/developer/appx/2015/build" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:uap15="http://schemas.microsoft.com/appx/manifest/uap/windows10/15" xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10" IgnorableNamespaces="uap rescap build">
+  <Identity Name="Microsoft.AIFabric.CBS.1.6" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.6.955.100" ProcessorArchitecture="x64" />
+  <mp:PhoneIdentity PhoneProductId="9c553c4d-ef1a-45de-b6ee-d5feeb0b7eed" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Microsoft.AIFabric.CBS.1.6</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>windows.png</Logo>
+    <Framework>true</Framework>
+    <Description>Microsoft AIFabric CBS (1.6.955.100 x64)</Description>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26000.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="EN-US" />
+  </Resources>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Vision.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Vision.TextRecognizer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Vision.TextRecognizerOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Vision.ScreenRegionDetector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Vision.Experimental.TableRecognizerOptions" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Graphics.Imaging.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Imaging.ImageBuffer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.ImageScaler" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.ImageSegmenter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.ImageObjectExtractor" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.ParallaxCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.DepthMapCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Imaging.ImageObjectRemover" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SemanticSearch.CBS.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.EmbeddingsSerializer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.ImageSearchEmbeddingsCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticTextEmbeddingsCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.QueryParameters" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.QueryProcessor" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.QueryBlockList" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.TextEmbeddingsGenerator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.ImageEmbeddingsGenerator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.Tokenizer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticTextIndexStore" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticTextIndexStoreOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticImageIndexStore" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticImageIndexStoreOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.TextEmbeddingsOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.SemanticQueryOptions" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <!-- HACK until we know the right place to put the activation stuff for Microsoft.Asg.SemanticIndex.AiFabric.Compatibility -->
+        <Path>Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.EmbeddingsSerializer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.ImageSearchEmbeddingsCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.RegisterEmbeddingModelFactoryResult" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticTextEmbeddingsCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.TextEmbeddingsGenerator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.ImageEmbeddingsGenerator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticTextIndexStore" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticTextIndexStoreOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticImageIndexStore" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticImageIndexStoreOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.TextEmbeddingsOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Asg.SemanticIndex.AiFabric.Compatibility.SemanticQueryOptions" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SemanticSearch.Public.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.SemanticSearch.EmbeddingVector" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Workloads.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Workloads.WorkloadManager" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Workloads.Internal.CacheManagerInternal" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.AI.ContentModeration.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.ContentModeration.TextContentModeration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.ContentModeration.ImageContentModeration" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Private.CacheManagement.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Private.CacheManagement.ModelCacheManager" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.AI.Generative.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.ImageLLMAdapterCreator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.ImageDescriptionGenerator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.ImageDescriptionResult" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.LanguageModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.LanguageModelResponse" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Generative.Internal.SettingsModel" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.proxyStub">
+      <ProxyStub ClassId="4321F616-6804-40F2-B584-B0D7708A720D">
+        <Path>SessionHandleIPCProxyStub.dll</Path>
+        <Interface InterfaceId="2B54FB34-8041-4505-9F31-7FB3BA0D6255" Name="ISessionHandleIPC" />
+      </ProxyStub>
+    </Extension>
+    <Extension Category="windows.activatableClass.proxyStub">
+      <ProxyStub ClassId="4321F616-6804-40F2-B584-B0D7708A720D">
+        <Path>SessionHandleIPCProxyStub.dll</Path>
+        <Interface InterfaceId="EBF3748D-1EF9-4B89-BA13-65D2B9EC04F0" Name="ISessionEventHandleIPC" />
+      </ProxyStub>
+    </Extension>
+  </Extensions>
+</Package>

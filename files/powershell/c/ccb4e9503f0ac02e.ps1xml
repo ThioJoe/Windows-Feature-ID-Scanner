@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/HardwareManagement/MSFT_PCSVDevice</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+          $cimValue = $this.PSBase.CimInstanceProperties['EnabledState'].Value
+          if ($cimValue -eq $null)
+          {
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.PcsvDevice.State]::Unknown
+          }
+          else
+          {
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.PcsvDevice.State]$cimValue
+          }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Name</Name>
+        <GetScriptBlock>
+          $this.PSBase.CimSystemProperties['ServerName'].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+</Types>

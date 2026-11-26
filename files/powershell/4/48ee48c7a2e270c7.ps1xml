@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+<ViewDefinitions>
+    <View>
+      <Name>Persistent memory dedicated memory</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Storage.PersistentMemory.Management.PmemDedicatedMemory</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Size</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+               <PropertyName>DeviceNumber</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+               <!-- {0:#.##} formats the size with up to 2 decimal places -->
+               <ScriptBlock>"{0:#.##}" -f ($_.SizeInBytes / 1GB) + " GB"</ScriptBlock>
+              </TableColumnItem>  
+              <TableColumnItem>
+               <PropertyName>Initialized</PropertyName>
+              </TableColumnItem> 
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+</ViewDefinitions>
+</Configuration>

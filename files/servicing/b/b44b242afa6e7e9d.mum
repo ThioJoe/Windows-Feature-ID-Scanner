@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Containers-Client-Manager-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Containers-Client-Manager" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Containers-ApplicationGuard-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Containers-DisposableClientVM-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Container-Professional-Metadata-Wrapper-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Container-Win3CtrRuntime-Metadata-Wrapper-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="ae52bb48fa5631c5896ae2d8120c7605">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-Manager-merged-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="81d9aa3b9a4be9f1b377c851354b190c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-ApplicationGuard-Shared-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e26a7a99c5a9f87f301ffee30ba241b3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-Shared-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="83e65bf65ed379294a3e1df8f96e6ee8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Feature-ApplicationGuard-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2a274b4c5fdd3bbda0f90c2e463c4b3c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-KernelInt-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="30a07f82d4d1dc363ce72b08a210f946">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-KernelInt-VirtualDevice-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="00c24e1543e0327674c37c49d8bf25e2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Hyper-V-Hypervisor-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ebf9ad8732e63307d94ced23a76a1e2f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Containers-Client-Manager-Shared-Package" version="10.0.26100.1742" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b290b2e2812b89c95d997d7479fefb89">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Onecore-SPP-VirtualDevice-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7561d20e460c00c04aa336904d2eb550">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-UtilityVm-SetupAgent-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

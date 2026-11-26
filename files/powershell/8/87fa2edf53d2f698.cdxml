@@ -1,0 +1,2447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+    <Class ClassName="root\Microsoft\Windows\Defender\MSFT_MpPreference" ClassVersion="1.0">
+        <Version>1.0</Version>
+        <DefaultNoun>MpPreference</DefaultNoun>
+        <InstanceCmdlets>
+            <GetCmdletParameters DefaultCmdletParameterSet="DefaultSet">
+            </GetCmdletParameters>
+        </InstanceCmdlets>
+
+        <StaticCmdlets>
+            <Cmdlet>
+                <CmdletMetadata Verb="Set" />
+                <Method MethodName="Set">
+                    <ReturnValue>
+                        <Type PSType="System.Int32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="ExclusionPath">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionExtension">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionProcess">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionIpAddress">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RealTimeScanDirection">
+                            <Type PSType="MpPreference.ScanDirection" />
+                            <CmdletParameterMetadata Aliases="rtsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Both</AllowedValue>
+                                    <AllowedValue>Incoming</AllowedValue>
+                                    <AllowedValue>Outcoming</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="QuarantinePurgeItemsAfterDelay">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="qpiad">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemediationScheduleDay">
+                            <Type PSType="MpPreference.Day" />
+                            <CmdletParameterMetadata Aliases="rsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Everyday</AllowedValue>
+                                    <AllowedValue>Sunday</AllowedValue>
+                                    <AllowedValue>Monday</AllowedValue>
+                                    <AllowedValue>Tuesday</AllowedValue>
+                                    <AllowedValue>Wednesday</AllowedValue>
+                                    <AllowedValue>Thursday</AllowedValue>
+                                    <AllowedValue>Friday</AllowedValue>
+                                    <AllowedValue>Saturday</AllowedValue>
+                                    <AllowedValue>Never</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemediationScheduleTime">
+                            <Type PSType="System.DateTime" />
+                            <CmdletParameterMetadata Aliases="rst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionConfiguredState">
+                            <Type PSType="MpPreference.NetworkBehaviorProtectionConfiguredState" />
+                            <CmdletParameterMetadata Aliases="repcs">
+                                <ValidateSet>
+                                    <AllowedValue>NotConfigured</AllowedValue>
+                                    <AllowedValue>Block</AllowedValue>
+                                    <AllowedValue>Audit</AllowedValue>
+                                    <AllowedValue>Off</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionMaxBlockTime">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="repmbt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionAggressiveness">
+                            <Type PSType="MpPreference.Aggressiveness" />
+                            <CmdletParameterMetadata Aliases="repa">
+                                <ValidateSet>
+                                    <AllowedValue>Low</AllowedValue>
+                                    <AllowedValue>Medium</AllowedValue>
+                                    <AllowedValue>High</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="repe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionConfiguredState">
+                            <Type PSType="MpPreference.NetworkBehaviorProtectionConfiguredState" />
+                            <CmdletParameterMetadata Aliases="bfpcs">
+                                <ValidateSet>
+                                    <AllowedValue>NotConfigured</AllowedValue>
+                                    <AllowedValue>Block</AllowedValue>
+                                    <AllowedValue>Audit</AllowedValue>
+                                    <AllowedValue>Off</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionMaxBlockTime">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="bfpmbt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionAggressiveness">
+                            <Type PSType="MpPreference.Aggressiveness" />
+                            <CmdletParameterMetadata Aliases="bfpa">
+                                <ValidateSet>
+                                    <AllowedValue>Low</AllowedValue>
+                                    <AllowedValue>Medium</AllowedValue>
+                                    <AllowedValue>High</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="bfpe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionLocalNetworkBlocking">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="bfplnb">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionSkipLearningPeriod">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="bfpslp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingAdditionalActionTimeOut">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="raat">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingCriticalFailureTimeOut">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="rcto">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingNonCriticalTimeOut">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="rncto">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ServiceHealthReportInterval">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="shri">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportDynamicSignatureDroppedEvent">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="rdsde">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanAvgCPULoadFactor">
+                            <Type PSType="System.Byte" />
+                            <CmdletParameterMetadata Aliases="saclf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CheckForSignaturesBeforeRunningScan">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="csbr">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanPurgeItemsAfterDelay">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="spiad">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanOnlyIfIdleEnabled">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="soiie">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanParameters">
+                            <Type PSType="MpPreference.ScanType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>QuickScan</AllowedValue>
+                                    <AllowedValue>FullScan</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleDay">
+                            <Type PSType="MpPreference.Day" />
+                            <CmdletParameterMetadata Aliases="scsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Everyday</AllowedValue>
+                                    <AllowedValue>Sunday</AllowedValue>
+                                    <AllowedValue>Monday</AllowedValue>
+                                    <AllowedValue>Tuesday</AllowedValue>
+                                    <AllowedValue>Wednesday</AllowedValue>
+                                    <AllowedValue>Thursday</AllowedValue>
+                                    <AllowedValue>Friday</AllowedValue>
+                                    <AllowedValue>Saturday</AllowedValue>
+                                    <AllowedValue>Never</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleQuickScanTime">
+                            <Type PSType="System.DateTime" />
+                            <CmdletParameterMetadata Aliases="scsqst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleTime">
+                            <Type PSType="System.DateTime" />
+                            <CmdletParameterMetadata Aliases="scst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThrottleForScheduledScanOnly">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="tfsso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureFirstAuGracePeriod">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="sigfagp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureAuGracePeriod">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="sigagp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureDefinitionUpdateFileSharesSources">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="sigdufss">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureDisableUpdateOnStartupWithoutEngine">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="sigduoswo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureFallbackOrder">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="sfo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SharedSignaturesPath">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="ssp SecurityIntelligenceLocation ssl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SharedSignaturesPathUpdateAtScheduledTimeOnly">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="sspsch SecurityIntelligenceLocationUpdateAtScheduledTimeOnly">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureScheduleDay">
+                            <Type PSType="MpPreference.Day" />
+                            <CmdletParameterMetadata Aliases="sigsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Everyday</AllowedValue>
+                                    <AllowedValue>Sunday</AllowedValue>
+                                    <AllowedValue>Monday</AllowedValue>
+                                    <AllowedValue>Tuesday</AllowedValue>
+                                    <AllowedValue>Wednesday</AllowedValue>
+                                    <AllowedValue>Thursday</AllowedValue>
+                                    <AllowedValue>Friday</AllowedValue>
+                                    <AllowedValue>Saturday</AllowedValue>
+                                    <AllowedValue>Never</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureScheduleTime">
+                            <Type PSType="System.DateTime" />
+                            <CmdletParameterMetadata Aliases="sigst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureUpdateCatchupInterval">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="siguci">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureUpdateInterval">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="sigui">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureBlobUpdateInterval">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="sigbui">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureBlobFileSharesSources">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="sigbfs">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MeteredConnectionUpdates">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="mcupd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowNetworkProtectionOnWinServer">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="anpws">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDatagramProcessing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="ddtgp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableConvertWarnToBlock">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="ecwtb">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCpuThrottleOnIdleScans">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MAPSReporting">
+                            <Type PSType="MpPreference.MAPSReportingType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                    <AllowedValue>Basic</AllowedValue>
+                                    <AllowedValue>Advanced</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SubmitSamplesConsent">
+                            <Type PSType="MpPreference.SubmitSamplesConsentType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>AlwaysPrompt</AllowedValue>
+                                    <AllowedValue>SendSafeSamples</AllowedValue>
+                                    <AllowedValue>NeverSend</AllowedValue>
+                                    <AllowedValue>SendAllSamples</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableAutoExclusions">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dae">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisablePrivacyMode">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dpm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RandomizeScheduleTaskTimes">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="rstt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SchedulerRandomizationTime">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="srt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableBehaviorMonitoring">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dbm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableIntrusionPreventionSystem">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dips">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableIOAVProtection">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dioavp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRealtimeMonitoring">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="drtm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScriptScanning">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dscrptsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableArchiveScanning">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="darchsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCatchupFullScan">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dcfsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCatchupQuickScan">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dcqsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableEmailScanning">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="demsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRemovableDriveScanning">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="drdsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRestorePoint">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="drp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScanningMappedNetworkDrivesForFullScan">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dsmndfsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScanningNetworkFiles">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dsnf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ApplyDisableNetworkScanningToIOAV">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="adsnftioav">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UILockdown">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Ids">
+                            <Type PSType="int64[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaci">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Actions">
+                            <Type PSType="MpPreference.ThreatAction[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaca">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UnknownThreatDefaultAction">
+                            <Type PSType="MpPreference.ThreatAction" />
+                            <CmdletParameterMetadata Aliases="unktdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="LowThreatDefaultAction">
+                            <Type PSType="MpPreference.ThreatAction" />
+                            <CmdletParameterMetadata Aliases="ltdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ModerateThreatDefaultAction">
+                            <Type PSType="MpPreference.ThreatAction" />
+                            <CmdletParameterMetadata Aliases="mtdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="HighThreatDefaultAction">
+                            <Type PSType="MpPreference.ThreatAction" />
+                            <CmdletParameterMetadata Aliases="htdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SevereThreatDefaultAction">
+                            <Type PSType="MpPreference.ThreatAction" />
+                            <CmdletParameterMetadata Aliases="stdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="cim:operationOption:Force">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata PSName="Force">
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableBlockAtFirstSeen">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dbaf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PUAProtection">
+                            <Type PSType="MpPreference.PUAProtectionType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                    <AllowedValue>Enabled</AllowedValue>
+                                    <AllowedValue>AuditMode</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CloudBlockLevel">
+                            <Type PSType="MpPreference.CloudBlockLevelType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Default</AllowedValue>
+                                    <AllowedValue>Moderate</AllowedValue>
+                                    <AllowedValue>High</AllowedValue>
+                                    <AllowedValue>HighPlus</AllowedValue>
+                                    <AllowedValue>ZeroTolerance</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CloudExtendedTimeout">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="cloudextimeout">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableNetworkProtection">
+                            <Type PSType="MpPreference.ASRRuleActionType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                    <AllowedValue>Enabled</AllowedValue>
+                                    <AllowedValue>AuditMode</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableControlledFolderAccess">
+                            <Type PSType="MpPreference.ControlledFolderAccessType" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                    <AllowedValue>Enabled</AllowedValue>
+                                    <AllowedValue>AuditMode</AllowedValue>
+                                    <AllowedValue>BlockDiskModificationOnly</AllowedValue>
+                                    <AllowedValue>AuditDiskModificationOnly</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionOnlyExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessAllowedApplications">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessProtectedFolders">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Ids">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Actions">
+                            <Type PSType="MpPreference.ASRRuleActionType[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLowCpuPriority">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="elcp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableFileHashComputation">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="efhc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableFullScanOnBatteryPower">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="efsobp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyPacUrl">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="ppurl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyServer">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata Aliases="proxsrv">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyBypass">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="proxbps">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ForceUseProxyOnly">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="fupo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableTlsParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dtlsp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableFtpParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dftpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableHttpParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dhttpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDnsParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="ddnsp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDnsOverTcpParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="ddnstcpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableSshParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dsshp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PlatformUpdatesChannel">
+                            <Type PSType="MpPreference.UpdatesChannelType" />
+                            <CmdletParameterMetadata Aliases="puc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>NotConfigured</AllowedValue>
+                                    <AllowedValue>Beta</AllowedValue>
+                                    <AllowedValue>Preview</AllowedValue>
+                                    <AllowedValue>Staged</AllowedValue>
+                                    <AllowedValue>Broad</AllowedValue>
+                                    <AllowedValue>Delayed</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EngineUpdatesChannel">
+                            <Type PSType="MpPreference.UpdatesChannelType" />
+                            <CmdletParameterMetadata Aliases="euc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>NotConfigured</AllowedValue>
+                                    <AllowedValue>Beta</AllowedValue>
+                                    <AllowedValue>Preview</AllowedValue>
+                                    <AllowedValue>Staged</AllowedValue>
+                                    <AllowedValue>Broad</AllowedValue>
+                                    <AllowedValue>Delayed</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DefinitionUpdatesChannel">
+                            <Type PSType="MpPreference.DefinitionUpdatesChannelType" />
+                            <CmdletParameterMetadata Aliases="duc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>NotConfigured</AllowedValue>
+                                    <AllowedValue>Staged</AllowedValue>
+                                    <AllowedValue>Broad</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableGradualRelease">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dgr">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowNetworkProtectionDownLevel">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="anpdl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowDatagramProcessingOnWinServer">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="adpows">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableDnsSinkhole">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="ednss">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableInboundConnectionFiltering">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dicf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRdpParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="drdpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableNetworkProtectionPerfTelemetry">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dnppt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="TrustLabelProtectionStatus">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="tlps">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowSwitchToAsyncInspection">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="astai">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleOffset">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="scso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableTDTFeature">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dtdtf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableTamperProtection">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dtp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableSmtpParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dsmtpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableQuicParsing">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dquicp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="NetworkProtectionReputationMode">
+                            <Type PSType="System.UInt32" />
+                            <CmdletParameterMetadata Aliases="nprepmode">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableUdpSegmentationOffload">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="euso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableUdpReceiveOffload">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="euro">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="IntelTDTEnabled">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="itdte">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions_Id">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="OobeEnableRtpAndSigUpdate">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="oobers">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PerformanceModeStatus">
+                            <Type PSType="MpPreference.PerformanceModeStatusType" />
+                            <CmdletParameterMetadata Aliases="pms">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Enabled</AllowedValue>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="QuickScanIncludeExclusions">
+                            <Type PSType="MpPreference.QuickScanIncludeExclusionsType" />
+                            <CmdletParameterMetadata Aliases="qsie">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                                <ValidateSet>
+                                    <AllowedValue>Disabled</AllowedValue>
+                                    <AllowedValue>ScanRtpExclusions</AllowedValue>
+                                </ValidateSet>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCacheMaintenance">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dcm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoveScanningThreadPoolCap">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="rstpc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCoreServiceECSIntegration">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dcsei">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCoreServiceTelemetry">
+                            <Type PSType="System.Boolean" />
+                            <CmdletParameterMetadata Aliases="dcst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                    </Parameters>
+                </Method>
+            </Cmdlet>
+            <Cmdlet>
+                <CmdletMetadata Verb="Add" />
+                <Method MethodName="Add">
+                    <ReturnValue>
+                        <Type PSType="System.Int32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="ExclusionPath">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionExtension">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionProcess">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionIpAddress">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Ids">
+                            <Type PSType="int64[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaci">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Actions">
+                            <Type PSType="MpPreference.ThreatAction[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaca">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionOnlyExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessAllowedApplications">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessProtectedFolders">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Ids">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Actions">
+                            <Type PSType="MpPreference.ASRRuleActionType[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions_Id">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="repe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="bfpe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="cim:operationOption:Force">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata PSName="Force">
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                    </Parameters>
+                </Method>
+             </Cmdlet>
+            <Cmdlet>
+                <CmdletMetadata Verb="Remove" />
+                <Method MethodName="Remove" >
+                    <ReturnValue>
+                        <Type PSType="System.Int32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="ExclusionPath">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionExtension">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionProcess">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExclusionIpAddress">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RealTimeScanDirection">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rtsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="QuarantinePurgeItemsAfterDelay">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="qpiad">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemediationScheduleDay">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemediationScheduleTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionConfiguredState">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="repcs">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionMaxBlockTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="repmbt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionAggressiveness">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="repa">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoteEncryptionProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="repe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionConfiguredState">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="bfpcs">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionMaxBlockTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="bfpmbt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionAggressiveness">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="bfpa">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata Aliases="bfpe">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionLocalNetworkBlocking">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="bfplnb">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BruteForceProtectionSkipLearningPeriod">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="bfpslp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingAdditionalActionTimeOut">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="raat">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingCriticalFailureTimeOut">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rcto">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportingNonCriticalTimeOut">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rncto">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ServiceHealthReportInterval">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="shri">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ReportDynamicSignatureDroppedEvent">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rdsde">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanAvgCPULoadFactor">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="saclf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CheckForSignaturesBeforeRunningScan">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="csbr">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanPurgeItemsAfterDelay">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="spiad">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanOnlyIfIdleEnabled">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="soiie">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanParameters">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleDay">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="scsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleQuickScanTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="scsqst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="scst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThrottleForScheduledScanOnly">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="tfsso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureFirstAuGracePeriod">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigfagp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureAuGracePeriod">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigagp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureDefinitionUpdateFileSharesSources">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigdufss">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureDisableUpdateOnStartupWithoutEngine">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigduoswo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureFallbackOrder">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sfo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SharedSignaturesPath">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ssp SecurityIntelligenceLocation ssl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SharedSignaturesPathUpdateAtScheduledTimeOnly">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sspsch SecurityIntelligenceLocationUpdateAtScheduledTimeOnly">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureScheduleDay">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigsd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureScheduleTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureUpdateCatchupInterval">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="siguci">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureUpdateInterval">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigui">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureBlobUpdateInterval">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigbui">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SignatureBlobFileSharesSources">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="sigbfs">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MeteredConnectionUpdates">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="mcupd">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowNetworkProtectionOnWinServer">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="anpws">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDatagramProcessing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ddtgp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableConvertWarnToBlock">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ecwtb">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCpuThrottleOnIdleScans">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MAPSReporting">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SubmitSamplesConsent">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableAutoExclusions">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dae">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisablePrivacyMode">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dpm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RandomizeScheduleTaskTimes">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rstt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SchedulerRandomizationTime">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="srt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableBehaviorMonitoring">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dbm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableIntrusionPreventionSystem">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dips">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableIOAVProtection">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dioavp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRealtimeMonitoring">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="drtm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScriptScanning">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dscrptsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableArchiveScanning">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="darchsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCatchupFullScan">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dcfsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCatchupQuickScan">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dcqsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableEmailScanning">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="demsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRemovableDriveScanning">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="drdsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRestorePoint">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="drp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScanningMappedNetworkDrivesForFullScan">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dsmndfsc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableScanningNetworkFiles">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dsnf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ApplyDisableNetworkScanningToIOAV">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="adsnftioav">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UILockdown">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Ids">
+                            <Type PSType="int64[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaci">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ThreatIDDefaultAction_Actions">
+                            <Type PSType="MpPreference.ThreatAction[]" />
+                            <CmdletParameterMetadata Aliases="tiddefaca">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UnknownThreatDefaultAction">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="unktdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="LowThreatDefaultAction">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ltdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ModerateThreatDefaultAction">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="mtdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="HighThreatDefaultAction">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="htdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SevereThreatDefaultAction">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="stdefac">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableBlockAtFirstSeen">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dbaf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PUAProtection">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CloudBlockLevel">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CloudExtendedTimeout">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="cloudextimeout">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableNetworkProtection">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableControlledFolderAccess">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionOnlyExclusions">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessAllowedApplications">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ControlledFolderAccessProtectedFolders">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Ids">
+                            <Type PSType="System.String[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_Actions">
+                            <Type PSType="MpPreference.ASRRuleActionType[]" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLowCpuPriority">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="elcp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableFileHashComputation">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="efhc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableFullScanOnBatteryPower">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="efsobp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyPacUrl">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ppurl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyServer">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="proxsrv">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ProxyBypass">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="proxbps">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ForceUseProxyOnly">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="fupo">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableTlsParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dtlsp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableFtpParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dftpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableHttpParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dhttpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDnsParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ddnsp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableDnsOverTcpParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ddnstcpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableSshParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dsshp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PlatformUpdatesChannel">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="puc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EngineUpdatesChannel">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="euc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DefinitionUpdatesChannel">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="duc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableGradualRelease">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dgr">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowNetworkProtectionDownLevel">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="anpdl">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowDatagramProcessingOnWinServer">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="adpows">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableDnsSinkhole">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="ednss">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableInboundConnectionFiltering">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dicf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableRdpParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="drdpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableNetworkProtectionPerfTelemetry">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dnppt">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="TrustLabelProtectionStatus">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="tlps">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AllowSwitchToAsyncInspection">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="astai">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ScanScheduleOffset">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="scso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableTDTFeature">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dtdtf">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableSmtpParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dsmtpp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableQuicParsing">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dquicp">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="NetworkProtectionReputationMode">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="nprepmode">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableUdpSegmentationOffload">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="euso">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableUdpReceiveOffload">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="euro">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>			
+                        <Parameter ParameterName="IntelTDTEnabled">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="itdte">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions_Id">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AttackSurfaceReductionRules_RuleSpecificExclusions">
+                            <Type PSType="System.String" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="OobeEnableRtpAndSigUpdate">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="oobers">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="PerformanceModeStatus">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="pms">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="QuickScanIncludeExclusions">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="qsie">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCacheMaintenance">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dcm">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="cim:operationOption:Force">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata PSName="Force">
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RemoveScanningThreadPoolCap">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="rstpc">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCoreServiceECSIntegration">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dcsei">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCoreServiceTelemetry">
+                            <Type PSType="switch" />
+                            <CmdletParameterMetadata Aliases="dcst">
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                    </Parameters>
+                </Method>
+            </Cmdlet>            
+        </StaticCmdlets>
+    </Class>
+    <Enums>
+        <Enum EnumName="MpPreference.MAPSReportingType" UnderlyingType="System.Byte">
+            <Value Name="Disabled" Value="0" />
+            <Value Name="Basic" Value="1" />
+            <Value Name="Advanced" Value="2" />
+        </Enum>
+        <Enum EnumName="MpPreference.SubmitSamplesConsentType" UnderlyingType="System.Byte">
+            <Value Name="AlwaysPrompt" Value="0" />
+            <Value Name="SendSafeSamples" Value="1" />
+            <Value Name="NeverSend" Value="2" />
+            <Value Name="SendAllSamples" Value="3" />
+        </Enum>
+        <Enum EnumName="MpPreference.Day" UnderlyingType="System.Byte">
+            <Value Name="Everyday" Value="0" />
+            <Value Name="Sunday" Value="1" />
+            <Value Name="Monday" Value="2" />
+            <Value Name="Tuesday" Value="3" />
+            <Value Name="Wednesday" Value="4" />
+            <Value Name="Thursday" Value="5" />
+            <Value Name="Friday" Value="6" />
+            <Value Name="Saturday" Value="7" />
+            <Value Name="Never" Value="8" />
+        </Enum>
+        <Enum EnumName="MpPreference.ScanType" UnderlyingType="System.Byte">
+            <Value Name="QuickScan" Value="1" />
+            <Value Name="FullScan" Value="2" />
+        </Enum>
+        <Enum EnumName="MpPreference.ScanDirection" UnderlyingType="System.Byte">
+            <Value Name="Both" Value="0" />
+            <Value Name="Incoming" Value="1" />
+            <Value Name="Outcoming" Value="2" />
+        </Enum>
+        <Enum EnumName="MpPreference.ThreatSeverity" UnderlyingType="System.Byte">
+            <Value Name="Unknown" Value="0" />
+            <Value Name="Low" Value="1" />
+            <Value Name="Moderate" Value="2" />
+            <Value Name="High" Value="4" />
+            <Value Name="Severe" Value="5" />
+        </Enum>
+        <Enum EnumName="MpPreference.ThreatAction" UnderlyingType="System.Byte">            
+            <Value Name="Clean" Value="1" />
+            <Value Name="Quarantine" Value="2" />
+            <Value Name="Remove" Value="3" />
+            <Value Name="Allow" Value="6" />
+            <Value Name="UserDefined" Value="8" />
+            <Value Name="NoAction" Value="9" />
+            <Value Name="Block" Value="10" />
+        </Enum>
+        <Enum EnumName="MpPreference.PUAProtectionType" UnderlyingType="System.Byte">
+           <Value Name="Disabled" Value="0" />
+           <Value Name="Enabled" Value="1" />
+           <Value Name="AuditMode" Value="2" />
+        </Enum>
+        <Enum EnumName="MpPreference.CloudBlockLevelType" UnderlyingType="System.Byte">
+            <Value Name="Default" Value="0" />
+            <Value Name="Moderate" Value="1" />
+            <Value Name="High" Value="2" />
+            <Value Name="HighPlus" Value="4" />
+            <Value Name="ZeroTolerance" Value="6" />
+        </Enum>
+        <Enum EnumName="MpPreference.ASRRuleActionType" UnderlyingType="System.Byte">
+            <Value Name="Disabled" Value="0" />
+            <Value Name="Enabled" Value="1" />
+            <Value Name="AuditMode" Value="2" />
+            <Value Name="NotConfigured" Value="5" />
+            <Value Name="Warn" Value="6" />
+        </Enum>
+        <Enum EnumName="MpPreference.ControlledFolderAccessType" UnderlyingType="System.Byte">
+            <Value Name="Disabled" Value="0" />
+            <Value Name="Enabled" Value="1" />
+            <Value Name="AuditMode" Value="2" />
+            <Value Name="BlockDiskModificationOnly" Value="3" />
+            <Value Name="AuditDiskModificationOnly" Value="4" />
+        </Enum>
+        <Enum EnumName="MpPreference.UpdatesChannelType" UnderlyingType="System.Byte">
+           <Value Name="NotConfigured" Value="0" />
+           <Value Name="Beta" Value="2" />
+           <Value Name="Preview" Value="3" />
+           <Value Name="Staged" Value="4" />
+           <Value Name="Broad" Value="5" />
+           <Value Name="Delayed" Value="6" />
+        </Enum>
+        <Enum EnumName="MpPreference.DefinitionUpdatesChannelType" UnderlyingType="System.Byte">
+           <Value Name="NotConfigured" Value="0" />
+           <Value Name="Staged" Value="4" />
+           <Value Name="Broad" Value="5" />
+        </Enum>
+        <!-- PerformanceModeStatus is an inversion of DisableAsyncScanOnOpen, so Enabled = 0 -->
+        <Enum EnumName="MpPreference.PerformanceModeStatusType" UnderlyingType="System.Byte">
+           <Value Name="Enabled" Value="0" />
+           <Value Name="Disabled" Value="1" />
+        </Enum>
+        <Enum EnumName="MpPreference.QuickScanIncludeExclusionsType" UnderlyingType="System.Byte">
+           <Value Name="Disabled" Value="0" />
+           <Value Name="ScanRtpExclusions" Value="1" />
+        </Enum>
+        <Enum EnumName="MpPreference.NetworkBehaviorProtectionConfiguredState" UnderlyingType="System.Byte">
+           <Value Name="NotConfigured" Value="0" />
+           <Value Name="Block" Value="1" />
+           <Value Name="Audit" Value="2" />
+           <Value Name="Off" Value="4" />
+        </Enum>
+        <Enum EnumName="MpPreference.Aggressiveness" UnderlyingType="System.Byte">
+           <Value Name="Low" Value="0" />
+           <Value Name="Medium" Value="1" />
+           <Value Name="High" Value="2" />
+        </Enum>
+    </Enums>
+</PowerShellMetadata>
+
+<!-- SIG # Begin signature block -->
+<!-- MIIlvAYJKoZIhvcNAQcCoIIlrTCCJakCAQExDzANBglghkgBZQMEAgEFADB5Bgor -->
+<!-- BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG -->
+<!-- KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAybXe89TDpJ8Vq -->
+<!-- kXg+4fAcaGYW2zF17fIyIQi1USwwqqCCCugwggUJMIID8aADAgECAhMzAAAFGEGE -->
+<!-- Ga3LrSlPAAAAAAUYMA0GCSqGSIb3DQEBCwUAMIGEMQswCQYDVQQGEwJVUzETMBEG -->
+<!-- A1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWlj -->
+<!-- cm9zb2Z0IENvcnBvcmF0aW9uMS4wLAYDVQQDEyVNaWNyb3NvZnQgV2luZG93cyBQ -->
+<!-- cm9kdWN0aW9uIFBDQSAyMDExMB4XDTI1MDYxOTE4MTE0M1oXDTI2MDYxNzE4MTE0 -->
+<!-- M1owcDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcT -->
+<!-- B1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEaMBgGA1UE -->
+<!-- AxMRTWljcm9zb2Z0IFdpbmRvd3MwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK -->
+<!-- AoIBAQDXeaoFqNxLMYhDuSokIgTqjFclV+qvSJSdKHZ8M32vXzC4c8iUt4fJq0+w -->
+<!-- fWsCsVdTKPUig+WQBs/yyECuQ/SbcA6UNm/x4fYPDXcgLBpsY+fhKAqtjb4eVC1e -->
+<!-- 2/vD5PTkkKcRkc2NhczTkWTG8M6nteUMf63u2uvuMXC2OO3UZLKn97WVrQPlumsW -->
+<!-- Ctl36J1EpXd/QicpO2qvf/dA+CboAaByxXp2OyTXMLGxsJraY9tK/ZnSLKM/N0ic -->
+<!-- uw5v+ZAXsy4tobspyeumcjyGCvdx7gbSBlMkanzSfweMQV2mR1/NElrGEYrJ4LOJ -->
+<!-- oW6TAInFC9Et18/J93MNuJu5lTLlAgMBAAGjggGFMIIBgTAfBgNVHSUEGDAWBgor -->
+<!-- BgEEAYI3CgMGBggrBgEFBQcDAzAdBgNVHQ4EFgQU4XjUj9Hr1H4uFknn8NSggnzy -->
+<!-- QJMwVAYDVR0RBE0wS6RJMEcxLTArBgNVBAsTJE1pY3Jvc29mdCBJcmVsYW5kIE9w -->
+<!-- ZXJhdGlvbnMgTGltaXRlZDEWMBQGA1UEBRMNMjI5ODc5KzUwNTMzNjAfBgNVHSME -->
+<!-- GDAWgBSpKQI5jhbEl3jNkPmeT5rhfFWvUzBXBgNVHR8EUDBOMEygSqBIhkZodHRw -->
+<!-- Oi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NybC9NaWNXaW5Qcm9QQ0EyMDEx -->
+<!-- XzIwMTEtMTAtMTkuY3JsJTIwMGEGCCsGAQUFBwEBBFUwUzBRBggrBgEFBQcwAoZF -->
+<!-- aHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jZXJ0cy9NaWNXaW5Qcm9Q -->
+<!-- Q0EyMDExXzIwMTEtMTAtMTkuY3J0MAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEL -->
+<!-- BQADggEBADvctOhXNvjwSzI2S1bJaj4gYuAHan2S4ARCRT7yEurSsD1ZmicL1w4O -->
+<!-- 5yqxsgyvX6F1zNhZ5rsdVqEc2HV7WX+3xTIWQm9ukiWvxJlX5GVXiz5a0EnMjojz -->
+<!-- kSMQEE0OLPbqz8dO4reFvSY4VPNFkuKHg4GekpHj6WJ38+2PpWnPUu1PEtfs+vAi -->
+<!-- e0tO9N7YeIk9InSSmGGsd5tIECtHQhGq0dvP/BzHUwy0FI+COIojWJ3zcfKPtjrT -->
+<!-- gPln8NqT7WpwKjvsbUieSbf2oC28TlH6O3lPFNmDBYv0OYiMZs/R2qi4bJzkVg+i -->
+<!-- pbpYGx20E9ov+zF0MZYzvtTiDXj/xQkwggXXMIIDv6ADAgECAgphB3ZWAAAAAAAI -->
+<!-- MA0GCSqGSIb3DQEBCwUAMIGIMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGlu -->
+<!-- Z3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBv -->
+<!-- cmF0aW9uMTIwMAYDVQQDEylNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRo -->
+<!-- b3JpdHkgMjAxMDAeFw0xMTEwMTkxODQxNDJaFw0yNjEwMTkxODUxNDJaMIGEMQsw -->
+<!-- CQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9u -->
+<!-- ZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMS4wLAYDVQQDEyVNaWNy -->
+<!-- b3NvZnQgV2luZG93cyBQcm9kdWN0aW9uIFBDQSAyMDExMIIBIjANBgkqhkiG9w0B -->
+<!-- AQEFAAOCAQ8AMIIBCgKCAQEA3Qy7ouQuCePnxfeWabwAIb1pMzPvrQTLVIDuBoO7 -->
+<!-- xSCE2ffSi/M4sKukrS18YnkF/+NKPwQ1IHDjxOdr4JzANnXpijHdjXDl3De1dEaW -->
+<!-- KFuHYCMsv9xHpWf3USeecusHpsm5HjtTNXzl0+wnuYcc/rnJIwlvqEaRwW6WPEHT -->
+<!-- y6M/XQJqTexpHyUoXDb//UMVCpTgGbTP38IS4sJbJ+4neDCLWyoJayKJU2AWLMBo -->
+<!-- HVO67EnznWGMhWgJc0RdfaJUK9159xXPNV1sHCtczrycI4tvbrUm2TYTw0/WJ665 -->
+<!-- MjtBkizhx8136KpUTvdcCwSHZbRDGKiy4G0Zd+xaJPpIAwIDAQABo4IBQzCCAT8w -->
+<!-- EAYJKwYBBAGCNxUBBAMCAQAwHQYDVR0OBBYEFKkpAjmOFsSXeM2Q+Z5PmuF8Va9T -->
+<!-- MBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMB -->
+<!-- Af8EBTADAQH/MB8GA1UdIwQYMBaAFNX2VsuP6KJcYmjRPZSQW9fOmhjEMFYGA1Ud -->
+<!-- HwRPME0wS6BJoEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNvbS9wa2kvY3JsL3By -->
+<!-- b2R1Y3RzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNybDBaBggrBgEFBQcBAQRO -->
+<!-- MEwwSgYIKwYBBQUHMAKGPmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kvY2Vy -->
+<!-- dHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3J0MA0GCSqGSIb3DQEBCwUAA4IC -->
+<!-- AQAU/HxxUaV5wm6y7zk+vDxSD24rPxATc/6oaNBIpjRNipYFJu4xRpBhedb/OC5F -->
+<!-- a/TA5Si42h2PitsJ1xrHTAo2ZmqM7BvXBJCoGBekm7niQDI2dsTBWsa/5ATA6hbT -->
+<!-- rMNo72Ks3VRsUDBYput8/pSnTo707HyGc1fCUiFzNFrzo4pWyATaBwnt+IvjzvR+ -->
+<!-- jq7w9guKCPs/yR1yf1O4675j4OM9MWWwgeXyrM0WpJ89qLGbwkLQkIRfVB3/ieq6 -->
+<!-- HUeQb7BzTkGfQJ9f5aEqshGRc4ohKPDO3nM5Xz6rXGDs3wMQqNMJ6fT2loW2f1GI -->
+<!-- ZkcZjaKwEj2BKmgFd7uRTGJ7tsEHx7p6hzQDDktiepnpyvzOSjfJLaRXfBz+Pdy4 -->
+<!-- D1r61sSzAoUCOuqz2W7kaSE33oHR9nUZBWfTk1deKRs5yO4t4c3kRXNb0NLOeqsW -->
+<!-- GYJGWNBenYGzZ69sNfK85T8k4jWiCnUG9hhWmdR4LNEFG+vQiAGdqhDxBd+6fixj -->
+<!-- twabIyHE+Xhs4lgXBjYrkRIDzKTZ8i26+ZSdQO0YRfHOilxrPqsD03AYKgpq4F9H -->
+<!-- 0dVjCjLyr9c2HypwWuVCWQhxS1e6foOB8CE89BzBxbmQkw6IRZOG6bEgmb6Yy8WV -->
+<!-- pF1i1qBjCCC9dRB3fT3zRbmfl5/LV4BvM6kEz3ekYhxZfjGCGiowghomAgEBMIGc -->
+<!-- MIGEMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH -->
+<!-- UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMS4wLAYDVQQD -->
+<!-- EyVNaWNyb3NvZnQgV2luZG93cyBQcm9kdWN0aW9uIFBDQSAyMDExAhMzAAAFGEGE -->
+<!-- Ga3LrSlPAAAAAAUYMA0GCWCGSAFlAwQCAQUAoIGuMBkGCSqGSIb3DQEJAzEMBgor -->
+<!-- BgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3 -->
+<!-- DQEJBDEiBCASjglM20REvMI3L6NNO/1OBJJv6PCsemnZL+dk+mnKzDBCBgorBgEE -->
+<!-- AYI3AgEMMTQwMqAUgBIATQBpAGMAcgBvAHMAbwBmAHShGoAYaHR0cDovL3d3dy5t -->
+<!-- aWNyb3NvZnQuY29tMA0GCSqGSIb3DQEBAQUABIIBAAb51xms7PCsGjCHW3yTIU+v -->
+<!-- G7H/C1Zm2Mgi+5IcZ6czL6Lw23LftSFreZX2L2bErg6HMsUwJEQ8YPDTUlcWwfnU -->
+<!-- CixZSK3K62oCyW9sYcqXjiY8X5uC6cCzPo0nn2D4EbBcXtWscaa8xgjxcX9YOu98 -->
+<!-- xPqtrgfjQpzq/TATUOXocIH8nB5IUKGnZ3tnVmb6p/SQjsRNJumWPLGNYXCKkEZ6 -->
+<!-- 13jT4/wK2wccDAOt4852BY+FAWjRguWcXQAwnauagZSCn4YjOaolto8Dv9DSDjeA -->
+<!-- xrVtiF8zpmxHrxbaoBfYYgFesn2irkaypG37OXKXH28bS1EIMhUXQHmlMKihp3Wh -->
+<!-- ghetMIIXqQYKKwYBBAGCNwMDATGCF5kwgheVBgkqhkiG9w0BBwKggheGMIIXggIB -->
+<!-- AzEPMA0GCWCGSAFlAwQCAQUAMIIBWgYLKoZIhvcNAQkQAQSgggFJBIIBRTCCAUEC -->
+<!-- AQEGCisGAQQBhFkKAwEwMTANBglghkgBZQMEAgEFAAQg/4QHUeQqLVtkLY55sPUd -->
+<!-- J4W6YT8m6C4xFDBr3/ymVxsCBmikdEeAgxgTMjAyNTA4MjMwOTI4MTIuNjQ0WjAE -->
+<!-- gAIB9KCB2aSB1jCB0zELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24x -->
+<!-- EDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlv -->
+<!-- bjEtMCsGA1UECxMkTWljcm9zb2Z0IElyZWxhbmQgT3BlcmF0aW9ucyBMaW1pdGVk -->
+<!-- MScwJQYDVQQLEx5uU2hpZWxkIFRTUyBFU046NDMxQS0wNUUwLUQ5NDcxJTAjBgNV -->
+<!-- BAMTHE1pY3Jvc29mdCBUaW1lLVN0YW1wIFNlcnZpY2WgghH7MIIHKDCCBRCgAwIB -->
+<!-- AgITMwAAAfr7O0TTdzPG0wABAAAB+jANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQG -->
+<!-- EwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwG -->
+<!-- A1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQg -->
+<!-- VGltZS1TdGFtcCBQQ0EgMjAxMDAeFw0yNDA3MjUxODMxMTFaFw0yNTEwMjIxODMx -->
+<!-- MTFaMIHTMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UE -->
+<!-- BxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMS0wKwYD -->
+<!-- VQQLEyRNaWNyb3NvZnQgSXJlbGFuZCBPcGVyYXRpb25zIExpbWl0ZWQxJzAlBgNV -->
+<!-- BAsTHm5TaGllbGQgVFNTIEVTTjo0MzFBLTA1RTAtRDk0NzElMCMGA1UEAxMcTWlj -->
+<!-- cm9zb2Z0IFRpbWUtU3RhbXAgU2VydmljZTCCAiIwDQYJKoZIhvcNAQEBBQADggIP -->
+<!-- ADCCAgoCggIBAMoWVQTNz2XAXxKQH+3yCIcoMGFVT+uFEnmW0pUUd6byXm72tC0A -->
+<!-- g1uOcjq7acCKRsgxl/hGwmx4UuU3eCdGJXPN87SxG20A+zOpKkdF4/p/NnBrHv0J -->
+<!-- zB9FkWS58IICXXp6UOlHIjOJzGGb3UI8mwOKnoznvWNO9yZV791SG3ZEB9iRsk/K -->
+<!-- Afy7Lzy/5AJyeOaECKe0see0T0P9Duqmsidkia8HIwPGrjHQJ2SjosRZc6KKIe0s -->
+<!-- snCOwRDR06ZFSq0VeWHpUb1jU4NaR+BAtijtm8bATdt27THk72RYnhiK/g/Jn9ZU -->
+<!-- ELNB7f7TDlXWodeLe2JPsZeT+E8N8XwBoB7L7GuroK8cJik019ZKlx+VwncN01Xi -->
+<!-- gmseiVfsoDOYtTa6CSsAQltdT8ItM/5IvdGXjul3xBPZgpyZu+kHMYt7Z1v2P92b -->
+<!-- pikOl/4lSCaOy5NGf6QE0cACDasHb86XbV9oTiYm+BkfIrNm6SpLNOBrq38Hlj5/ -->
+<!-- c+o2OxgQvo7PKUsBnsK338IAGzSpvNmQxb6gRkEFScCB0l6Y5Evht/XsmDhtq3CC -->
+<!-- wSA5c1MzBRSWzYebQ79xnidxCrwuLzUgMbRn2hv5kISuN2I3r7Ae9i6LlO/K8bTY -->
+<!-- bjF0s2h6uXxYht83LGB2muPsPmJjK4UxMw+EgIrId+QY6Fz9T9QreFWtAgMBAAGj -->
+<!-- ggFJMIIBRTAdBgNVHQ4EFgQUY4xymy+VlepHdOiqHEB6YSvVP78wHwYDVR0jBBgw -->
+<!-- FoAUn6cVXQBeYl2D9OXSZacbUzUZ6XIwXwYDVR0fBFgwVjBUoFKgUIZOaHR0cDov -->
+<!-- L3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jcmwvTWljcm9zb2Z0JTIwVGltZS1T -->
+<!-- dGFtcCUyMFBDQSUyMDIwMTAoMSkuY3JsMGwGCCsGAQUFBwEBBGAwXjBcBggrBgEF -->
+<!-- BQcwAoZQaHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jZXJ0cy9NaWNy -->
+<!-- b3NvZnQlMjBUaW1lLVN0YW1wJTIwUENBJTIwMjAxMCgxKS5jcnQwDAYDVR0TAQH/ -->
+<!-- BAIwADAWBgNVHSUBAf8EDDAKBggrBgEFBQcDCDAOBgNVHQ8BAf8EBAMCB4AwDQYJ -->
+<!-- KoZIhvcNAQELBQADggIBALhWwqKxa76HRvmTSR92Pjc+UKVMrUFTmzsmBa4HBq8a -->
+<!-- ujFGuMi5sTeMVnS9ZMoGluQTmd8QZT2O1abn+W+Xmlz+6kautcXjq193+uJBoklq -->
+<!-- EYvRCWsCVgsyX1EEU4Qy+M8SNqWHNcJz6e0OveWx6sGdNnmjgbnYfyHxJBntDn4+ -->
+<!-- iEt6MmbCT9cmrXJuJAaiB+nW9fsHjOKuOjYQHwH9O9MxehfiKVB8obTG0IOfkB3z -->
+<!-- rsgc67euwojCUinCd5zFcnzZZ7+sr7bWMyyt8EvtEMCVImy2CTCOhRnErkcSpauk -->
+<!-- YzoSvS90Do4dFQjNdaxzNdWZjdHriW2wQlX0BLnzizZBvPDBQlDRNdEkmzPzoPwm -->
+<!-- 05KNDOcG1b0Cegqiyo7R0qHqABj3nl9uH+XD2Mk3CpWzOi6FHTtj+SUnSObNSRfz -->
+<!-- p+i4lE+dGnaUbLWWo22BHl/ze0b0m5J9HYw9wb09jn91n/YCHmkCB279Sdjvz+UD -->
+<!-- j0IlaPPtACpujNEyjnbooYSsQLf+mMpNexb90SHY0+sIi9qkSBLIDiad3yC8OJkE -->
+<!-- T7t7KUX2pEqEHuTdHuB1hX/FltmS9PnPN0M4d1bRDyOmNntgTv3loU2GyGx6amA3 -->
+<!-- wLQGLWmCHXvO2cplxtzDtsFI4S/R70kM46KrqvjqFJr3wVHAdnuS+kAhzuqkzu1q -->
+<!-- MIIHcTCCBVmgAwIBAgITMwAAABXF52ueAptJmQAAAAAAFTANBgkqhkiG9w0BAQsF -->
+<!-- ADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcT -->
+<!-- B1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAGA1UE -->
+<!-- AxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTAwHhcN -->
+<!-- MjEwOTMwMTgyMjI1WhcNMzAwOTMwMTgzMjI1WjB8MQswCQYDVQQGEwJVUzETMBEG -->
+<!-- A1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWlj -->
+<!-- cm9zb2Z0IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFt -->
+<!-- cCBQQ0EgMjAxMDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOThpkzn -->
+<!-- tHIhC3miy9ckeb0O1YLT/e6cBwfSqWxOdcjKNVf2AX9sSuDivbk+F2Az/1xPx2b3 -->
+<!-- lVNxWuJ+Slr+uDZnhUYjDLWNE893MsAQGOhgfWpSg0S3po5GawcU88V29YZQ3MFE -->
+<!-- yHFcUTE3oAo4bo3t1w/YJlN8OWECesSq/XJprx2rrPY2vjUmZNqYO7oaezOtgFt+ -->
+<!-- jBAcnVL+tuhiJdxqD89d9P6OU8/W7IVWTe/dvI2k45GPsjksUZzpcGkNyjYtcI4x -->
+<!-- yDUoveO0hyTD4MmPfrVUj9z6BVWYbWg7mka97aSueik3rMvrg0XnRm7KMtXAhjBc -->
+<!-- TyziYrLNueKNiOSWrAFKu75xqRdbZ2De+JKRHh09/SDPc31BmkZ1zcRfNN0Sidb9 -->
+<!-- pSB9fvzZnkXftnIv231fgLrbqn427DZM9ituqBJR6L8FA6PRc6ZNN3SUHDSCD/AQ -->
+<!-- 8rdHGO2n6Jl8P0zbr17C89XYcz1DTsEzOUyOArxCaC4Q6oRRRuLRvWoYWmEBc8pn -->
+<!-- ol7XKHYC4jMYctenIPDC+hIK12NvDMk2ZItboKaDIV1fMHSRlJTYuVD5C4lh8zYG -->
+<!-- NRiER9vcG9H9stQcxWv2XFJRXRLbJbqvUAV6bMURHXLvjflSxIUXk8A8FdsaN8cI -->
+<!-- FRg/eKtFtvUeh17aj54WcmnGrnu3tz5q4i6tAgMBAAGjggHdMIIB2TASBgkrBgEE -->
+<!-- AYI3FQEEBQIDAQABMCMGCSsGAQQBgjcVAgQWBBQqp1L+ZMSavoKRPEY1Kc8Q/y8E -->
+<!-- 7jAdBgNVHQ4EFgQUn6cVXQBeYl2D9OXSZacbUzUZ6XIwXAYDVR0gBFUwUzBRBgwr -->
+<!-- BgEEAYI3TIN9AQEwQTA/BggrBgEFBQcCARYzaHR0cDovL3d3dy5taWNyb3NvZnQu -->
+<!-- Y29tL3BraW9wcy9Eb2NzL1JlcG9zaXRvcnkuaHRtMBMGA1UdJQQMMAoGCCsGAQUF -->
+<!-- BwMIMBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNV -->
+<!-- HRMBAf8EBTADAQH/MB8GA1UdIwQYMBaAFNX2VsuP6KJcYmjRPZSQW9fOmhjEMFYG -->
+<!-- A1UdHwRPME0wS6BJoEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNvbS9wa2kvY3Js -->
+<!-- L3Byb2R1Y3RzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNybDBaBggrBgEFBQcB -->
+<!-- AQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kv -->
+<!-- Y2VydHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3J0MA0GCSqGSIb3DQEBCwUA -->
+<!-- A4ICAQCdVX38Kq3hLB9nATEkW+Geckv8qW/qXBS2Pk5HZHixBpOXPTEztTnXwnE2 -->
+<!-- P9pkbHzQdTltuw8x5MKP+2zRoZQYIu7pZmc6U03dmLq2HnjYNi6cqYJWAAOwBb6J -->
+<!-- 6Gngugnue99qb74py27YP0h1AdkY3m2CDPVtI1TkeFN1JFe53Z/zjj3G82jfZfak -->
+<!-- Vqr3lbYoVSfQJL1AoL8ZthISEV09J+BAljis9/kpicO8F7BUhUKz/AyeixmJ5/AL -->
+<!-- aoHCgRlCGVJ1ijbCHcNhcy4sa3tuPywJeBTpkbKpW99Jo3QMvOyRgNI95ko+ZjtP -->
+<!-- u4b6MhrZlvSP9pEB9s7GdP32THJvEKt1MMU0sHrYUP4KWN1APMdUbZ1jdEgssU5H -->
+<!-- LcEUBHG/ZPkkvnNtyo4JvbMBV0lUZNlz138eW0QBjloZkWsNn6Qo3GcZKCS6OEua -->
+<!-- bvshVGtqRRFHqfG3rsjoiV5PndLQTHa1V1QJsWkBRH58oWFsc/4Ku+xBZj1p/cvB -->
+<!-- QUl+fpO+y/g75LcVv7TOPqUxUYS8vwLBgqJ7Fx0ViY1w/ue10CgaiQuPNtq6TPmb -->
+<!-- /wrpNPgkNWcr4A245oyZ1uEi6vAnQj0llOZ0dFtq0Z4+7X6gMTN9vMvpe784cETR -->
+<!-- kPHIqzqKOghif9lwY1NNje6CbaUFEMFxBmoQtB1VM1izoXBm8qGCA1YwggI+AgEB -->
+<!-- MIIBAaGB2aSB1jCB0zELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24x -->
+<!-- EDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlv -->
+<!-- bjEtMCsGA1UECxMkTWljcm9zb2Z0IElyZWxhbmQgT3BlcmF0aW9ucyBMaW1pdGVk -->
+<!-- MScwJQYDVQQLEx5uU2hpZWxkIFRTUyBFU046NDMxQS0wNUUwLUQ5NDcxJTAjBgNV -->
+<!-- BAMTHE1pY3Jvc29mdCBUaW1lLVN0YW1wIFNlcnZpY2WiIwoBATAHBgUrDgMCGgMV -->
+<!-- APeGfm1CZ/pysAbyCOrINDcu2jw2oIGDMIGApH4wfDELMAkGA1UEBhMCVVMxEzAR -->
+<!-- BgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1p -->
+<!-- Y3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWljcm9zb2Z0IFRpbWUtU3Rh -->
+<!-- bXAgUENBIDIwMTAwDQYJKoZIhvcNAQELBQACBQDsU4+jMCIYDzIwMjUwODIzMDA1 -->
+<!-- MzU1WhgPMjAyNTA4MjQwMDUzNTVaMHQwOgYKKwYBBAGEWQoEATEsMCowCgIFAOxT -->
+<!-- j6MCAQAwBwIBAAICKLowBwIBAAICEmowCgIFAOxU4SMCAQAwNgYKKwYBBAGEWQoE -->
+<!-- AjEoMCYwDAYKKwYBBAGEWQoDAqAKMAgCAQACAwehIKEKMAgCAQACAwGGoDANBgkq -->
+<!-- hkiG9w0BAQsFAAOCAQEAc8wSGOc9onWGQv2E9dnS6lFx1ML6mzDOWgjbtDrCmOJU -->
+<!-- COmAUEfD48vOuubzP0SQIzb5gc79PeT2Y7vOU3B+Z5gvM2sW8QHTal4qg1bugbK7 -->
+<!-- fXDe6DZRBk4pF2K0bUzqhOaD6ZLfMapHU+C/ZsTrUFwU3LYFAysA5ERFvtw/7iep -->
+<!-- pmqieN/OlFRSisJzurL8zBBtokyVmsy/hUmZABGBhIbHDkoi2dPCwNLUNEjHSIZJ -->
+<!-- jb5S9hDpLb2ppLSty4euzsdJLoSrgwEZXzG0vJD03ukLnIpTD0Dr6dJ3agxAk5HR -->
+<!-- FHeWPWOOUeiCp42NQ7619tWOwypCSye1EkEdlMMcYDGCBA0wggQJAgEBMIGTMHwx -->
+<!-- CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRt -->
+<!-- b25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1p -->
+<!-- Y3Jvc29mdCBUaW1lLVN0YW1wIFBDQSAyMDEwAhMzAAAB+vs7RNN3M8bTAAEAAAH6 -->
+<!-- MA0GCWCGSAFlAwQCAQUAoIIBSjAaBgkqhkiG9w0BCQMxDQYLKoZIhvcNAQkQAQQw -->
+<!-- LwYJKoZIhvcNAQkEMSIEIBLL7NHevioQMGcbE7G5MQeJXNSimqNq+KEZ38lBdjdx -->
+<!-- MIH6BgsqhkiG9w0BCRACLzGB6jCB5zCB5DCBvQQgffJ/LcmvPgdo41P3aSUSMB8B -->
+<!-- x6XKOaIDUrWKHG5DnlYwgZgwgYCkfjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMK -->
+<!-- V2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0 -->
+<!-- IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0Eg -->
+<!-- MjAxMAITMwAAAfr7O0TTdzPG0wABAAAB+jAiBCArwuCZXdPROgJ3DL2wt3rz6ZOf -->
+<!-- KgE0WYJMvqvY2J4M7zANBgkqhkiG9w0BAQsFAASCAgDGbChgdmgw5dldy0KFvpzo -->
+<!-- d1fTiealtL3TwVY4DsdqmgxbJVjIvcFNzpJmTJ6UrVKmHdvOCGhHfUcGbRYu+so/ -->
+<!-- Uyv9eed1qidY9KY4iim8z7xkwIq2E6qPkRao0D5Lvp+EBAKTsibIAMJSHDrtebxI -->
+<!-- BDswCP2qvHhj/xUsDXG8DtMFQY0PYlZOYpmy2Om+N66Ez2/QUEZ4MFwMT5aFCl5v -->
+<!-- F7GaqDp5nEMOd7CUZ7FYNmZaH9iljZA1K/MOlgFZVS26Wf+16yXGOgZUGGvUACTy -->
+<!-- rNFH7arDOZMAx1iYHu0FUFLSt8Khp1cBaZAhCW6rx7sH02ypOvHvX/rRnZre/zau -->
+<!-- 5hdIL73q0Xy29PRlZxDwUdrEDAHXmsncnep/rAhtbfHTjFwL9clEhqvf2V0C9auL -->
+<!-- KkuYXUwGRTL9kM1Mk8hYe5jziyEDuL4EqwFFRI1sruUHNPRBL90ja/opFlo2tEuf -->
+<!-- VVtsa0LHQCqJ/VzFVlZcuL6wFK51i70S7UlCDQ1yRVZz7d4cqppMQCjV+SKPH9FD -->
+<!-- agw13HoH0gHhaE4WMZisUPSWWTNI69ls/uZDCHHmJYkCQz+IFldvQEogaklpGeUe -->
+<!-- q8Ss1/ofN1D8fhgT8pFRwjgSgDMytP/notFoN11pCnNwgG/3NP0xnuVPiagR8N27 -->
+<!-- 8y7yB6pwghx7xV81l3BQXQ== -->
+<!-- SIG # End signature block -->

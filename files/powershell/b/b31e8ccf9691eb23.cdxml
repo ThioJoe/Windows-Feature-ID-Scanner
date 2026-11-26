@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root/standardcimv2/MSFT_NetFirewallDynamicKeywordAddress" ClassVersion="1.0.0">
+    <Version>1.0.0.0</Version>
+    <DefaultNoun>NetFirewallDynamicKeywordAddress</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="GetAll">
+        <QueryableProperties>
+          <Property PropertyName="Id">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata CmdletParameterSets="ById" IsMandatory="true" Position="0" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+        <QueryOptions>
+          <Option OptionName="All">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+          <Option OptionName="PolicyStore">
+            <Type PSType="string" />
+            <CmdletParameterMetadata />
+          </Option>
+          <Option OptionName="AllAutoResolve">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+          <Option OptionName="AllNonAutoResolve">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata CmdletParameterSets="GetAll" />
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+        <Method MethodName="cim:DeleteInstance" />
+      </Cmdlet>
+    </InstanceCmdlets>
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="New" ConfirmImpact="Medium" />
+        <Method MethodName="cim:CreateInstance">
+          <Parameters>
+            <Parameter ParameterName="Id">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Id" />
+            </Parameter>
+            <Parameter ParameterName="Keyword">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Keyword" />
+            </Parameter>
+            <Parameter ParameterName="Addresses">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Addresses" />
+            </Parameter>
+            <Parameter ParameterName="AutoResolve">
+              <Type PSType="boolean" />
+              <CmdletParameterMetadata PSName="AutoResolve" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Update" />
+        <Method MethodName="UpdateDynamicKeywordAddress">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Id">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Id" />
+            </Parameter>
+            <Parameter ParameterName="Addresses">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="Addresses" />
+            </Parameter>
+            <Parameter ParameterName="Append">
+              <Type PSType="boolean" />
+              <CmdletParameterMetadata PSName="Append" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+  <Enums>
+    <Enum EnumName="NetSecurity.PolicyStoreType" UnderlyingType="uint16">
+      <Value Name="None" Value="0" />
+      <Value Name="Local" Value="1" />
+      <Value Name="GroupPolicy" Value="2" />
+      <Value Name="Dynamic" Value="3" />
+      <Value Name="Generated" Value="4" />
+      <Value Name="Hardcoded" Value="5" />
+      <Value Name="MDM" Value="6" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

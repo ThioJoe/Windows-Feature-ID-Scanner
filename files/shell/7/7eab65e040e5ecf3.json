@@ -1,0 +1,60 @@
+{
+  "GETSTARTED.mplussettings": {
+    "mode": "LinearFlow",
+    "start": "GSBrowserSettings",
+    "reconnectHandlerId": "NetworkError",
+    "GSBrowserSettings": {
+      "nodeId": "GSBrowserSettings",
+      "url": "https://sdx.microsoft.com/getstarted/gsbrowsersettings/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/gsbrowsersettings/index.html",
+      "internetRequired": true,
+      "forwardButtonEnabled": false,
+      "backwardButtonEnabled": false,
+      "defaultId": "UserIntent",
+      "measureId": 63331999
+    },
+    "UserIntent": {
+      "nodeId": "UserIntent",
+      "url": "https://sdx.microsoft.com/getstarted/userintent/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/userintent/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "backwardButtonEnabled": false,
+      "defaultId": "GSPCBackup",
+      "measureId": 63332111
+    },
+    "GSPCBackup": {
+      "nodeId": "GSPCBackup",
+      "url": "https://sdx.microsoft.com/getstarted/gspcbackup/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/gspcbackup/index.html",
+      "internetRequired": true,
+      "backwardButtonEnabled": false,
+      "defaultId": "Pinning",
+      "measureId": 63332082
+    },
+    "Pinning": {
+      "nodeId": "Pinning",
+      "url": "https://sdx.microsoft.com/getstarted/pinning/index.htm",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/pinning/index.htm",
+      "internetRequired": true,
+      "backwardButtonEnabled": false,
+      "defaultId": "OutroPersonalize",
+      "measureId": 63332143
+    },
+    "OutroPersonalize": {
+      "nodeId": "OutroPersonalize",
+      "url": "https://sdx.microsoft.com/getstarted/outropersonalize/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/outropersonalize/index.html",
+      "internetRequired": true,
+      "forwardButtonEnabled": false,
+      "backwardButtonEnabled": false,
+      "measureId": 50780284
+    },
+    "NetworkError": {
+      "nodeId": "NetworkError",
+      "localXaml": "NetworkError",
+      "excludeFromBackstack": true,
+      "measureId": 40426665
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    IgnorableNamespaces="uap mp">
+    <!--
+        Manual versioning is used for this app.
+        Appx version should be in sync with version used for the app name in Microsoft-Windows-AppRep-ChxApp.AppxSetup.man
+        See https://osgwiki.com/wiki/System_Apps#Servicing
+    -->
+    <Identity
+        ProcessorArchitecture="neutral"
+        Name="Microsoft.Windows.Apprep.ChxApp"
+        Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+        Version="1000.25128.1000.0"
+        ResourceId="neutral" />
+    <Properties>
+        <DisplayName>ms-resource:DisplayName</DisplayName>
+        <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+        <Logo>Assets\StoreLogo.png</Logo>
+    </Properties>
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    </Dependencies>
+    <Resources>
+        <Resource Language="en-us" />
+    </Resources>
+    <Applications>
+        <Application
+            Id="App"
+            Executable="CHXSmartScreen.exe"
+            EntryPoint="CHXSmartScreen.App">
+            <uap:VisualElements
+                DisplayName="ms-resource:DisplayName"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="ms-resource:DisplayName"
+                AppListEntry="none"
+                BackgroundColor="#5D5D5D">
+                <uap:SplashScreen Image="Assets\SplashScreen.png" />
+            </uap:VisualElements>
+                <uap:ApplicationContentUriRules>  
+                    <uap:Rule Type="include" Match="https://microsoft.com*" />  
+                </uap:ApplicationContentUriRules>  
+            <Extensions>
+                <uap:Extension Category="windows.protocol">
+                    <uap:Protocol Name="ms-apprep" ReturnResults="optional">
+                        <uap:DisplayName>Windows Defender SmartScreen</uap:DisplayName>
+                    </uap:Protocol>
+                </uap:Extension>
+            </Extensions>
+        </Application>
+    </Applications>
+    <Capabilities>
+        <Capability Name="internetClient" />
+    </Capabilities>
+</Package>

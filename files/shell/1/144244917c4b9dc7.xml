@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package 
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+    xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10"
+    xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+    xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+    xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+    xmlns:uap17="http://schemas.microsoft.com/appx/manifest/uap/windows10/17"
+    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+    IgnorableNamespaces="uap wincap mobile mp uap3 uap5 uap17 rescap">
+  <!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in OOBENetworkCaptivePortal.AppxSetup.man
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+  <Identity Name="Microsoft.Windows.OOBENetworkCaptivePortal" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.26569.1000" />
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+    
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="12.0.0.0"/>
+  </Dependencies>
+
+  <Capabilities>
+      <wincap:Capability Name="dependencyTarget"/>
+      <Capability Name="internetClient" />
+      <rescap:Capability Name="windowsHelloCredentialAccess" />
+  </Capabilities>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+    
+  <Applications>
+    <Application Id="App" Executable="OOBENetworkCaptivePortal.exe" EntryPoint="OOBENetworkCaptivePortal.App">
+        <uap:VisualElements AppListEntry="none" DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646">
+            <uap:SplashScreen Image="Assets\SplashScreen.png" uap5:Optional="true"/>
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-oobenetwork" ReturnResults="optional">
+              <uap:DisplayName>Captive Portal Flow</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="OOBENetworkCaptivePortalExtensions" DisplayName="Extension Metadata">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>OOBENetworkCaptivePortalExtensionsAlias</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.webexperiencehost" Id="OOBENetworkCaptivePortalExtensions" DisplayName="Microsoft Windows Extensions">
+            <uap3:Properties>
+              <Classes>
+                <WindowsUdk.System.UserProfile.UserOnboardingExtensionFactory>OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalControlExtensionFactory</WindowsUdk.System.UserProfile.UserOnboardingExtensionFactory>
+              </Classes>
+              <MetadataProviders>
+                <Provider>OOBENetworkCaptivePortalExtensions.oobenetworkcaptiveportalextensions_XamlTypeInfo.XamlMetaDataProvider</Provider>
+              </MetadataProviders>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.windowsoobeapphost.system" Id="OOBENetworkCaptivePortalExtensions" DisplayName="Microsoft Windows Extensions">
+            <uap3:Properties>
+              <!-- Feature_NetworkUXDesktopAppSupport -->
+              <VelocityId Stage="DisabledByDefault">61126251</VelocityId>
+              <Classes>
+                <WindowsUdk.System.UserProfile.UserOnboardingExtensionFactory>OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalControlExtensionFactory</WindowsUdk.System.UserProfile.UserOnboardingExtensionFactory>
+              </Classes>
+              <MetadataProviders>
+                <Provider>OOBENetworkCaptivePortalExtensions.oobenetworkcaptiveportalextensions_XamlTypeInfo.XamlMetaDataProvider</Provider>
+              </MetadataProviders>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>OOBENetworkCaptivePortalExtensions.dll</Path>
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.oobenetworkcaptiveportalextensions_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalControlExtensionFactory" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalControlExtension" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalApp" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.NetworkCaptivePortalMainPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.Converters.BooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="OOBENetworkCaptivePortalExtensions.Converters.InverseBooleanToVisibilityConverter" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <uap17:Extension Category="windows.packageExtension">
+      <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="OOBENetworkCaptivePortalExtensions" DisplayName="Extension Package">
+        <uap17:Properties>
+          <PackageAliases>
+            <PackageAlias>OOBENetworkCaptivePortalExtensionsAlias</PackageAlias>
+          </PackageAliases>
+        </uap17:Properties>
+      </uap17:PackageExtension>
+    </uap17:Extension>
+  </Extensions>
+</Package>

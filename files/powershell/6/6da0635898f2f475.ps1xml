@@ -1,0 +1,1477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <ViewDefinitions>
+
+    <!-- View for displaying the AppMitigations object -->
+    <View>
+      <Name>AppMitigations</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Samples.PowerShell.Commands.AppMitigations</TypeName>
+      </ViewSelectedBy>
+
+	  <Controls>
+
+        <!-- Control for displaying the DEPPolicy -->
+        <Control>
+          <Name>depControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EmulateAtlThunks                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EmulateAtlThunks</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override DEP                       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideDEP</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+	  
+	    <!-- Control for displaying the ASLRPolicy -->
+	    <Control>
+          <Name>aslrControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BottomUp                           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BottomUp</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override BottomUp                  : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideBottomUp</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>ForceRelocateImages                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>ForceRelocateImages</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>RequireInfo                        : </Text>
+				  <ExpressionBinding>
+					<PropertyName>RequireInfo</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ForceRelocate             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideForceRelocateImages</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>HighEntropy                        : </Text>
+				  <ExpressionBinding>
+					<PropertyName>HighEntropy</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override High Entropy              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideHighEntropy</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the StrictHandlePolicy -->
+	    <Control>
+          <Name>strictHandleControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override StrictHandle              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideStrictHandle</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the SystemCallPolicy -->
+	    <Control>
+          <Name>systemCallControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Text>DisableWin32kSystemCalls           : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>DisableWin32kSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Audit                              : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Audit</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Override SystemCall                : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>OverrideSystemCall</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>DisableFsctlSystemCalls            : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>DisableFsctlSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditFsctlSystemCalls              : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditFsctlSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Override FsctlSystemCall           : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>OverrideFsctlSystemCall</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the ExtensionPointPolicy -->
+	    <Control>
+          <Name>extensionPointControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisableExtensionPoints             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisableExtensionPoints</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ExtensionPoint            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideExtensionPoint</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the DynamicCodePolicy -->
+	    <Control>
+          <Name>dynamicCodeControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BlockDynamicCode                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockDynamicCode</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AllowThreadsToOptOut               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AllowThreadsToOptOut</PropertyName>
+				  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override DynamicCode               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideDynamicCode</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the CFGPolicy -->
+	    <Control>
+          <Name>CFGControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>SuppressExports                    : </Text>
+				  <ExpressionBinding>
+					<PropertyName>SuppressExports</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override CFG                       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideCFG</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>StrictControlFlowGuard             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>StrictControlFlowGuard</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override StrictCFG                 : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideStrictCFG</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the BinarySignaturePolicy -->
+	    <Control>
+          <Name>binarySignatureControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>MicrosoftSignedOnly                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>MicrosoftSignedOnly</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AllowStoreSignedBinaries           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AllowStoreSignedBinaries</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EnforceModuleDependencySigning     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnforceModuleDependencySigning</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditMicrosoftSignedOnly           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditStoreSigned                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditStoreSigned</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditEnforceModuleDependencySigning: </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnforceModuleDependencySigning</PropertyName>
+				  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Override MicrosoftSignedOnly       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideMicrosoftSignedOnly</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override DependencySigning         : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnforceModuleDependencySigning</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the FontDisablePolicy -->
+	    <Control>
+          <Name>fontDisableControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisableNonSystemFonts              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisableNonSystemFonts</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override FontDisable               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideFontDisable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the ImageLoadPolicy -->
+	    <Control>
+          <Name>imageLoadControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BlockRemoteImageLoads              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockRemoteImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditRemoteImageLoads              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditRemoteImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override BlockRemoteImages         : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideBlockRemoteImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>BlockLowLabelImageLoads            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockLowLabelImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditLowLabelImageLoads            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditLowLabelImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override BlockLowLabel             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideBlockLowLabel</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>PreferSystem32                     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>PreferSystem32</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditPreferSystem32                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditPreferSystem32</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override PreferSystem32            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverridePreferSystem32</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the Payload Policy -->
+	    <Control>
+          <Name>payloadControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>EnableExportAddressFilter          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableExportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableExportAddressFilter     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableExportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ExportAddressFilter       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableExportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EnableExportAddressFilterPlus      : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableExportAddressFilterPlus</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableExportAddressFilterPlus : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableExportAddressFilterPlus</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ExportAddressFilterPlus   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableExportAddressFilterPlus</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EAFModules                         : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EAFModules</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EnableImportAddressFilter          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableImportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableImportAddressFilter     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableImportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ImportAddressFilter       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableImportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopStackPivot                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopStackPivot</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopStackPivot           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopStackPivot</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override EnableRopStackPivot       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableRopStackPivot</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopCallerCheck               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopCallerCheck          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override EnableRopCallerCheck      : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopSimExec                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopSimExec</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopSimExec              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopSimExec</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override EnableRopSimExec          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideEnableRopSimExec</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the SEHOP Policy -->
+	    <Control>
+          <Name>SEHOPControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>TelemetryOnly                      : </Text>
+				  <ExpressionBinding>
+					<PropertyName>TelemetryOnly</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override SEHOP                     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideSEHOP</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the Heap Policy -->
+	    <Control>
+          <Name>HeapControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>TerminateOnError                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>TerminateOnError</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override HEAP                      : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideHeap</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the Child Process Policy -->
+	    <Control>
+          <Name>ChildProcessControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisallowChildProcessCreation       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisallowChildProcessCreation</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Override ChildProcess              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>OverrideChildProcess</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+
+        <!-- Control for displaying the User Shadow Stack Policy -->
+        <Control>
+          <Name>UserShadowStackControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Text>UserShadowStack                    : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStack</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>UserShadowStackStrictMode          : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStackStrictMode</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditUserShadowStack               : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditUserShadowStack</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Override UserShadowStack           : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>OverrideUserShadowStack</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+      </Controls>
+
+	<!-- Main display for AppMitigations -->
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+
+            <!-- Display properties from the AppMitigations Object -->
+            <CustomItem>
+              <Text>ProcessName                      : </Text>
+              <ExpressionBinding>
+                <PropertyName>ProcessName</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>Source                           : </Text>
+              <ExpressionBinding>
+                <PropertyName>Source</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>Id                               : </Text>
+              <ExpressionBinding>
+                <PropertyName>Id</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <NewLine/>
+              <Text>DEP:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Dep</PropertyName>
+                    <CustomControlName>depControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ASLR:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>aslr</PropertyName>
+                    <CustomControlName>aslrControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>StrictHandle:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>strictHandle</PropertyName>
+                    <CustomControlName>strictHandleControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>System Call:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>SystemCall</PropertyName>
+                    <CustomControlName>systemCallControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ExtensionPoint:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>extensionPoint</PropertyName>
+                    <CustomControlName>extensionPointControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>DynamicCode:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>dynamicCode</PropertyName>
+                    <CustomControlName>dynamicCodeControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>CFG:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>cfg</PropertyName>
+                    <CustomControlName>CFGControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>BinarySignature:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>binarySignature</PropertyName>
+                    <CustomControlName>binarySignatureControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>FontDisable:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>fontDisable</PropertyName>
+                    <CustomControlName>fontDisableControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ImageLoad:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>imageLoad</PropertyName>
+                    <CustomControlName>imageLoadControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>Payload:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Payload</PropertyName>
+                    <CustomControlName>payloadControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>SEHOP:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Sehop</PropertyName>
+                    <CustomControlName>SEHOPControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>Heap:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Heap</PropertyName>
+                    <CustomControlName>HeapControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>Child Process:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>ChildProcess</PropertyName>
+                    <CustomControlName>ChildProcessControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>User Shadow Stack:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStack</PropertyName>
+                    <CustomControlName>UserShadowStackControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+	
+    </View>
+    <!-- View for displaying the ProcessMitigations object -->
+    <View>
+      <Name>ProcessMitigations</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Samples.PowerShell.Commands.ProcessMitigations</TypeName>
+      </ViewSelectedBy>
+
+	  <Controls>
+
+        <!-- Control for displaying the DEPPolicy -->
+        <Control>
+          <Name>depControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EmulateAtlThunks                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EmulateAtlThunks</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+	  
+	    <!-- Control for displaying the ASLRPolicy -->
+	    <Control>
+          <Name>aslrControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BottomUp                           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BottomUp</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>ForceRelocateImages                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>ForceRelocateImages</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>RequireInfo                        : </Text>
+				  <ExpressionBinding>
+					<PropertyName>RequireInfo</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>HighEntropy                        : </Text>
+				  <ExpressionBinding>
+					<PropertyName>HighEntropy</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the StrictHandlePolicy -->
+	    <Control>
+          <Name>strictHandleControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the SystemCallPolicy -->
+	    <Control>
+          <Name>systemCallControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Text>DisableWin32kSystemCalls           : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>DisableWin32kSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Audit                              : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Audit</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>DisableFsctlSystemCalls            : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>DisableFsctlSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditFsctlSystemCalls              : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditFsctlSystemCalls</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the ExtensionPointPolicy -->
+	    <Control>
+          <Name>extensionPointControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisableExtensionPoints             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisableExtensionPoints</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the DynamicCodePolicy -->
+	    <Control>
+          <Name>dynamicCodeControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BlockDynamicCode                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockDynamicCode</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AllowThreadsToOptOut               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AllowThreadsToOptOut</PropertyName>
+				  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the CFGPolicy -->
+	    <Control>
+          <Name>CFGControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>Enable                             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Enable</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>SuppressExports                    : </Text>
+				  <ExpressionBinding>
+					<PropertyName>SuppressExports</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>StrictControlFlowGuard             : </Text>
+				  <ExpressionBinding>
+					<PropertyName>StrictControlFlowGuard</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the BinarySignaturePolicy -->
+	    <Control>
+          <Name>binarySignatureControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>MicrosoftSignedOnly                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>MicrosoftSignedOnly</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AllowStoreSignedBinaries           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AllowStoreSignedBinaries</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditMicrosoftSignedOnly           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditStoreSigned                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditStoreSigned</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the FontDisablePolicy -->
+	    <Control>
+          <Name>fontDisableControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisableNonSystemFonts              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisableNonSystemFonts</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+		
+		<!-- Control for displaying the ImageLoadPolicy -->
+	    <Control>
+          <Name>imageLoadControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>BlockRemoteImageLoads              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockRemoteImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditRemoteImageLoads              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditRemoteImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>BlockLowLabelImageLoads            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>BlockLowLabelImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditLowLabelImageLoads            : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditLowLabelImageLoads</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>PreferSystem32                     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>PreferSystem32</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>AuditPreferSystem32                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditPreferSystem32</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the Payload Policy -->
+	    <Control>
+          <Name>payloadControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>EnableExportAddressFilter          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableExportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableExportAddressFilter     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableExportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EnableExportAddressFilterPlus      : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableExportAddressFilterPlus</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableExportAddressFilterPlus : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableExportAddressFilterPlus</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>EnableImportAddressFilter          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableImportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableImportAddressFilter     : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableImportAddressFilter</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopStackPivot                : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopStackPivot</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopStackPivot           : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopStackPivot</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopCallerCheck               : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopCallerCheck          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>EnableRopSimExec                   : </Text>
+				  <ExpressionBinding>
+					<PropertyName>EnableRopSimExec</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+				  <Text>AuditEnableRopCallerCheck          : </Text>
+				  <ExpressionBinding>
+					<PropertyName>AuditEnableRopCallerCheck</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+        
+        <!-- Control for displaying the Child Process Policy -->
+	    <Control>
+          <Name>ChildProcessControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+				  <Text>DisallowChildProcessCreation       : </Text>
+				  <ExpressionBinding>
+					<PropertyName>DisallowChildProcessCreation</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                  <Text>Audit                              : </Text>
+				  <ExpressionBinding>
+					<PropertyName>Audit</PropertyName>
+				  </ExpressionBinding>
+				  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+
+      <!-- Control for displaying the SEHOP Policy -->
+	    <Control>
+        <Name>SEHOPControl</Name>
+        <CustomControl>
+          <CustomEntries>
+            <CustomEntry>
+              <CustomItem>
+        <Text>Enable                             : </Text>
+        <ExpressionBinding>
+        <PropertyName>Enable</PropertyName>
+        </ExpressionBinding>
+        <NewLine/>
+              </CustomItem>
+            </CustomEntry>
+          </CustomEntries>
+        </CustomControl>
+      </Control>
+
+        <!-- Control for displaying the User Shadow Stack Policy -->
+        <Control>
+          <Name>UserShadowStackControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Text>UserShadowStack                    : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStack</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>UserShadowStackStrictMode          : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStackStrictMode</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditUserShadowStack               : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditUserShadowStack</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>SetContextIpValidation             : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>SetContextIpValidation</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditSetContextIpValidation        : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditSetContextIpValidation</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>BlockNonCetBinaries                : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>BlockNonCetBinaries</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>BlockNonCetBinariesNonEhcont       : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>BlockNonCetBinariesNonEhcont</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <Text>AuditBlockNonCetBinaries           : </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AuditBlockNonCetBinaries</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+      </Controls>
+
+	<!-- Main display for ProcessMitigations -->
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+
+            <!-- Display properties from the ProcessMitigations Object -->
+            <CustomItem>
+              <Text>ProcessName                      : </Text>
+              <ExpressionBinding>
+                <PropertyName>ProcessName</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>Source                           : </Text>
+              <ExpressionBinding>
+                <PropertyName>Source</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>Id                               : </Text>
+              <ExpressionBinding>
+                <PropertyName>Id</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <NewLine/>
+              <Text>DEP:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Dep</PropertyName>
+                    <CustomControlName>depControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ASLR:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>aslr</PropertyName>
+                    <CustomControlName>aslrControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>StrictHandle:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>strictHandle</PropertyName>
+                    <CustomControlName>strictHandleControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>System Call:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>SystemCall</PropertyName>
+                    <CustomControlName>systemCallControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ExtensionPoint:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>extensionPoint</PropertyName>
+                    <CustomControlName>extensionPointControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>DynamicCode:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>dynamicCode</PropertyName>
+                    <CustomControlName>dynamicCodeControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>CFG:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>cfg</PropertyName>
+                    <CustomControlName>CFGControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>BinarySignature:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>binarySignature</PropertyName>
+                    <CustomControlName>binarySignatureControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>FontDisable:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>fontDisable</PropertyName>
+                    <CustomControlName>fontDisableControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+			  <NewLine/>
+              <Text>ImageLoad:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>imageLoad</PropertyName>
+                    <CustomControlName>imageLoadControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>Payload:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Payload</PropertyName>
+                    <CustomControlName>payloadControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>SEHOP:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>Sehop</PropertyName>
+                    <CustomControlName>SEHOPControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>Child Process:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>ChildProcess</PropertyName>
+                    <CustomControlName>ChildProcessControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+              <NewLine/>
+              <Text>User Shadow Stack:</Text>
+              <NewLine/>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <PropertyName>UserShadowStack</PropertyName>
+                    <CustomControlName>UserShadowStackControl</CustomControlName>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+	
+    </View>
+  </ViewDefinitions>
+</Configuration>

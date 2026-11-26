@@ -1,0 +1,2490 @@
+{
+  "IntentMappings": [
+    {
+      "id": "Task.VolumeUp",
+      "phrases": [
+        "Augmenter [{Articles}] volume"
+      ]
+    },
+    {
+      "id": "Task.VolumeDown",
+      "phrases": [
+        "Diminuer [{Articles}] volume"
+      ]
+    },
+    {
+      "id": "Task.VolumeMute",
+      "phrases": [
+        "Couper [{Articles}] son",
+        "Couper [{Articles}] volume",
+        "Mettre en sourdine [{Articles}] [audio|volume]"
+      ]
+    },
+    {
+      "id": "Task.VolumeUnmute",
+      "phrases": [
+        "Activer [{Articles}] son",
+        "Activer [{Articles}] volume",
+        "Rétablir [{Articles}] son [audio|volume]"
+      ]
+    },
+    {
+      "id": "Task.Maximize",
+      "phrases": [
+        "{Maximize}",
+        "{Maximize} [{Articles}] {Application.Any}",
+        "{Maximize} [{Articles}] [ceci|cette] [{Optional.Application.Words}]"
+      ]
+    },
+    {
+      "id": "Task.Minimize",
+      "phrases": [
+        "{Minimize}",
+        "{Minimize} [{Articles}] {Application.Any}",
+        "{Minimize} [{Articles}] [ceci|cette] {Optional.Application.Words}"
+      ]
+    },
+    {
+      "id": "Task.Restore",
+      "phrases": [
+        "Restaurer",
+        "Restaurer [{Articles}] {Application.Any}",
+        "Restaurer [{Articles}] [ceci|cette] {Optional.Application.Words}"
+      ]
+    },
+    {
+      "id": "Task.Close",
+      "phrases": [
+        "Fermer [{Articles}] {Application.Any}",
+        "Fermer [{Articles}] {Optional.Application.Words}",
+        "Quitter [{Articles}] {Application.Any}",
+        "Quitter [{Articles}] {Optional.Application.Words}",
+        "Fermer [{Close}]"
+      ]
+    },
+    {
+      "id": "Task.ShowDesktop",
+      "phrases": [
+        "Minimiser toutes les fenêtres",
+        "Réduire toutes les fenêtres",
+        "Aller [à] [sur] [{Articles}] bureau",
+        "Afficher [sur] [{Articles}] bureau",
+        "Aller à l'accueil"
+      ]
+    },
+    {
+      "id": "Task.ListAllWindows",
+      "phrases": [
+        "Lister [toutes les|toutes] fenêtres",
+        "Afficher [toutes les|toutes] fenêtres",
+        "Lister [toutes les|toutes] applications",
+        "Afficher [toutes les|toutes] applications",
+        "Basculer vers [toutes les|toutes] applications",
+        "Afficher le sélecteur de tâches"
+      ]
+    },
+    {
+      "id": "Task.Move",
+      "phrases": [
+        "ancrer [{Articles}] {Optional.Application.Words} [à] [{Articles}] {Move.Direction}",
+        "ancrer [{Articles}] {Application.Any} [à] [{Articles}] {Move.Direction}",
+        "ancrer {Application.Any}"
+      ]
+    },
+    {
+      "id": "Task.RotateScreen",
+      "phrases": [
+        "pivoter l'écran [à {Orientation} | à {.any}]"
+      ]
+    },
+    {
+      "id": "Task.OnScreenKeyboard",
+      "phrases": [
+        "{OnScreenKeyboard.State} clavier à l'écran"
+      ]
+    },
+    {
+      "id": "Task.TouchKeyboard.Show",
+      "phrases": [
+        "Afficher le clavier [tactile]"
+      ]
+    },
+    {
+      "id": "Task.TouchKeyboard.Hide",
+      "phrases": [
+        "Masquer le clavier [tactile]"
+      ]
+    },
+    {
+      "id": "Task.Screenshot",
+      "phrases": [
+        "[Prendre|Capturer] une capture d'écran"
+      ]
+    },
+    {
+      "id": "Task.Open.StartMenu",
+      "phrases": [
+        "Ouvrir [le] menu Démarrer"
+      ]
+    },
+    {
+      "id": "Task.Open.SearchMenu",
+      "phrases": [
+        "Ouvrir la recherche",
+        "Ouvrir [le] menu de recherche"
+      ]
+    },
+    {
+      "id": "Task.Open.VoiceAccessSettings",
+      "phrases": [
+        "Ouvrir les paramètres [de] {VoiceAccess.Name}",
+        "Ouvrir les paramètres de Voice Access"
+      ]
+    },
+    {
+      "id": "Task.Open",
+      "phrases": [
+        "Ouvrir [{Articles}] {Application.Any}",
+        "Afficher [{Articles}] {Application.Any}",
+        "Afficher",
+        "Ouvrir"
+      ]
+    },
+    {
+      "id": "Task.Start",
+      "phrases": [
+        "Démarrer [{Articles}] {Application.Any}",
+        "Démarrer"
+      ]
+    },
+    {
+      "id": "Task.SwitchApp",
+      "phrases": [
+        "Basculer vers [{Articles}] {Application.Any}",
+        "Basculer vers"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.Close",
+      "phrases": [
+        "Fermer {VoiceAccess.Name}",
+        "Quitter {VoiceAccess.Name}",
+        "Quitter l'accessibilité vocale",
+        "Arrêter {VoiceAccess.Name}",
+        "désactiver {VoiceAccess.Name}"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.Off",
+      "phrases": [
+        "Désactiver le microphone"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.On",
+      "phrases": [
+        "Réactiver le son",
+        "Activer le son",
+        "Écoutez moi",
+        "Réveil de la commande vocale",
+        "Réveil de la l'accès vocal",
+        "Réveil vocal",
+        "Activer Voice Access",
+        "Désactiver Silence"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.Sleep",
+      "phrases": [
+        "Couper le son",
+        "Arrêt vocal",
+        "Mise en veille vocale",
+        "Sommeil vocal",
+        "Mise en veille de l'accès vocal",
+        "Sommeil de l'accès vocal",
+        "Désactiver Voice Access",
+        "Silence"
+      ]
+    },
+    {
+      "id": "Task.ShowAllCommands",
+      "phrases": [
+        "Voir les commandes",
+        "Afficher [toutes] les commandes",
+        "Afficher la liste des commandes",
+        "Ouvrir la liste des commandes",
+        "Que puis je dire"
+      ]
+    },
+    {
+      "id": "Task.OpenTutorial",
+      "phrases": [
+        "Ouvrir le guide [de] [{VoiceAccess.Name}]",
+        "Ouvrir le guide de Voice Access",
+        "Ouvrir le tutoriel",
+        "Démarrer le tutoriel",
+        "Lancer le tutoriel"
+      ]
+    },
+    {
+      "id": "Task.Open.VoiceAccessHelp",
+      "phrases": [
+        "Ouvrir l'aide [de] [{VoiceAccess.Name}]"
+      ]
+    },
+    {
+      "id": "Task.Overlay.HideNumbers",
+      "phrases": [
+        "Masquer les numéros",
+        "Masquer [la|le] numéro",
+        "Masquer les nombres",
+        "Masquer les nombre",
+        "Masquer nombres",
+        "Masquer nombre",
+        "Masquer numéros",
+        "Cacher les numéros",
+        "Cacher le numéro"
+      ]
+    },
+    {
+      "id": "Task.Grid.Show",
+      "phrases": [
+        "Grille de la souris",
+        "Afficher la grille",
+        "Afficher la grille des {Overlay.Scope}",
+        "Afficher la grille de la {Overlay.Scope}",
+        "Afficher [{Articles}] {Grid} [de] [la] {Overlay.Scope}",
+        "Afficher {Grid} {Optional.Words} {Overlay.Application.Any}"
+      ]
+    },
+    {
+      "id": "Task.Grid.DrillDown",
+      "phrases": [
+        "{Grid} [de] [la] [souris] {builtin.number}",
+        "{Grid} [de] [la] [souris] {unrecognized.number}"
+      ]
+    },
+    {
+      "id": "Task.Overlay.ShowNumbers",
+      "phrases": [
+        "Afficher les numéros",
+        "Afficher le numéro",
+        "Afficher [{Articles}] {Numbers} [{Overlay.Scope}]",
+        "Afficher [{Articles}] {Numbers} [{Optional.Words}] [{Articles}] [la|de] {Overlay.Application.Any}"
+      ]
+    },
+    {
+      "id": "Task.Mouse.Click",
+      "phrases": [
+        "[souris] {Click} [{Optional.Words}] {builtin.number}",
+        "[souris] {Click} [{Optional.Words}] {unrecognized.number}",
+        "[souris] {Move.Direction} {Click} [{Optional.Words}] {builtin.number}",
+        "[souris] {Move.Direction} {Click} [{Optional.Words}] {unrecognized.number}",
+        "[souris] {Tuple} {Click} [{Optional.Words}] {builtin.number}",
+        "[souris] {Tuple} {Click} [{Optional.Words}] {unrecognized.number}",
+        "[souris] {Click} [{Optional.Words}] [{Articles}] {ControlName.Any}",
+        "[souris] {Move.Direction} {Click} [{Optional.Words}] [{Articles}] {ControlName.Any}",
+        "[souris] {Tuple} {Click} [{Optional.Words}] [{Articles}] {ControlName.Any}",
+        "[souris] {Move.Direction} {Click}",
+        "[souris] {Tuple} {Click}",
+        "[souris] {Click}",
+        "[souris] {Move.Direction} {Click} {Optional.ControlNames}",
+        "[souris] {Tuple} {Click} {Optional.ControlNames}",
+        "[souris] {Click} {Optional.ControlNames}"
+      ]
+    },
+    {
+      "id": "Task.Grid.Mark",
+      "phrases": [
+        "Marquer [{builtin.number}]",
+        "Marquer [{unrecognized.number}]"
+      ]
+    },
+    {
+      "id": "Task.Grid.Drag",
+      "phrases": [
+        "Faire glisser ici",
+        "glisser [ici]"
+      ]
+    },
+    {
+      "id": "Task.Grid.Hide",
+      "phrases": [
+        "Masquer [la] grille",
+        "Cacher la grille",
+        "Cacher les chiffres",
+        "Fermer la grille"
+      ]
+    },
+    {
+      "id": "Task.Focus",
+      "phrases": [
+        "[se] Déplacer [vous] vers [{Articles}] {Focus.Name}",
+        "[se] Déplacez [vous] vers [{Articles}] {Focus.Name}",
+        "Déplacer {Optional.Words} {Move.Direction}",
+        "[se] Déplacer [vous] [vers] {Optional.Words} {Move.Direction}",
+        "[se] Déplacez [vous] [vers] {Optional.Words} {Move.Direction}",
+        "déplacer [vous] vers",
+        "Déplacez [vous] vers"
+      ]
+    },
+    {
+      "id": "Task.InvokeControl",
+      "phrases": [
+        "{Invoke.Actions} [sur|la] {ControlName.Any}"
+      ]
+    },
+    {
+      "id": "Task.MoveSlider",
+      "phrases": [
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction}",
+        "Déplacer {SliderName.Any} {Move.Direction}",
+        "Déplacer [{Articles}] {Slider.Optional} vers {Move.Direction}",
+        "Déplacer [{Articles}] {SliderName.Any} vers {Move.Direction}",
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction}",
+        "Déplacer [{Articles}] {SliderName.Any} {Move.Direction}",
+        "Déplacer {Slider.Optional} vers {Move.Direction}",
+        "Déplacer {SliderName.Any} vers {Move.Direction}",
+        "Déplacer {Slider.Optional} {Move.Direction} {builtin.number} fois",
+        "Déplacer {Slider.Optional} {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {SliderName.Any} {Move.Direction} {builtin.number} fois",
+        "Déplacer {SliderName.Any} {Move.Direction} {unrecognized.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} vers {Move.Direction} {builtin.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} vers {Move.Direction} {unrecognized.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} vers {Move.Direction} {builtin.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} vers {Move.Direction} {unrecognized.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction} {builtin.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction} {unrecognized.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} {Move.Direction} {builtin.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {Slider.Optional} vers {Move.Direction} {builtin.number} fois",
+        "Déplacer {Slider.Optional} vers {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {SliderName.Any} vers {Move.Direction} {builtin.number} fois",
+        "Déplacer {SliderName.Any} vers {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {Slider.Optional} vers {Move.Direction} par {builtin.number} fois",
+        "Déplacer {Slider.Optional} vers {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer {SliderName.Any} vers {Move.Direction} par {builtin.number} fois",
+        "Déplacer {SliderName.Any} vers {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction} par {builtin.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} {Move.Direction} par {builtin.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} vers {Move.Direction} par {builtin.number} fois",
+        "Déplacer [{Articles}] {Slider.Optional} vers {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} vers {Move.Direction} par {builtin.number} fois",
+        "Déplacer [{Articles}] {SliderName.Any} vers {Move.Direction} par {unrecognized.number} fois"
+      ]
+    },
+    {
+      "id": "Task.Scroll",
+      "phrases": [
+        "[Faire] défiler [vers] [le|la] {Move.Direction}",
+        "[Faire] défiler {Move.Direction} [de] {builtin.number} lignes",
+        "[Faire] défiler {Move.Direction} [de] {unrecognized.number} lignes",
+        "[Faire] défiler {Move.Direction} [de] {builtin.number} lignes",
+        "[Faire] défiler {Move.Direction} [de] {unrecognized.number} lignes",
+        "[Faire] défiler {Move.State}",
+        "[Faire] défiler {builtin.number} lignes {Move.Direction}",
+        "[Faire] défiler {unrecognized.number} lignes {Move.Direction}",
+        "[Faire] défiler {.any}",
+        "[Faire] défiler"
+      ]
+    },
+    {
+      "id": "Task.Scroll.StartScrolling",
+      "phrases": [
+        "Démarrer le défilement",
+        "Démarrer le défilement {Move.Direction}",
+        "Continuer le défilement",
+        "Continuer le défilement {Move.Direction}",
+        "{Commencer|Commencez} à faire défiler [vers] [le|la] {Move.Direction}"
+      ]
+    },
+    {
+      "id": "Task.Scroll.StopScrolling",
+      "phrases": [
+        "Arrêter le défilement",
+        "Arrêter de [faire] défiler"
+      ]
+    },
+    {
+      "id": "Task.Scroll.AcceleratedCommands",
+      "phrases": [
+        "{Scroll.to} [la|le] {Scroll.RightEdge}",
+        "{Scroll.to} [la|le] {Scroll.LeftEdge}",
+        "{Page.Up}",
+        "{Page.Down}",
+        "{Page.Start}",
+        "{Page.End}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.SelectFrom",
+      "phrases": [
+        "{select.names} {ControlName.Any:début} à travers {ControlName.Any:fin}",
+        "{select.names} {from} {ControlName.Any:début} à {ControlName.Any:fin}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Uppercase",
+      "phrases": [
+        "{Uppercase} {ControlName.Any}",
+        "{Uppercase} [{Articles}] {Dictation.Scope}",
+        "{Uppercase} cette {Dictation.Scope}",
+        "{Uppercase} ceci {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{Uppercase} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{Uppercase} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {Direction} {Dictation.Scope}",
+        "{Uppercase} [{Articles}] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Uppercase} [{ControlName.Any}]",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Uppercase} [{Articles}] {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Uppercase} [{Articles}] {builtin.number} [de|le] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Uppercase} [{Articles}] {unrecognized.number} [de|le] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Uppercase} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Select",
+      "phrases": [
+        "{select.names} {ControlName.Any}",
+        "{select.names} [{Articles}] {Dictation.Scope}",
+        "{select.names} [ce|ceci|cette] {Dictation.Scope}",
+        "{select.names} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{select.names} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{select.names} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{select.names} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{select.names} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{select.names} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{select.names} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{select.names} [{Articles}] {Direction} {Dictation.Scope}",
+        "{select.names} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Spell.Show",
+      "phrases": [
+        "{Spell.Out}",
+        "{Spell.That}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Correct",
+      "phrases": [
+        "Corriger {ControlName.Any}",
+        "Corriger [le] {Dictation.Scope}",
+        "Corriger cette {Dictation.Scope}",
+        "Corriger [le] {builtin.ordinal} {Dictation.Scope}",
+        "Corriger [le] {Direction} {builtin.number} {Dictation.Scope}",
+        "Corriger [le] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "Corriger [le] {Direction} {Dictation.Scope}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Bold",
+      "phrases": [
+        "{Bold} {ControlName.Any}",
+        "{Bold} [{Articles}] {Dictation.Scope}",
+        "{Bold} [ça|ce|ceci|cette] {Dictation.Scope}",
+        "{Bold} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Bold} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Bold} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Bold} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Bold} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{Bold} [{Articles}] {Direction} {Dictation.Scope}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Italicize",
+      "phrases": [
+        "{Italicize} {ControlName.Any}",
+        "{Italicize} [{Articles}] {Dictation.Scope}",
+        "{Italicize} [ça|ce|ceci|cette] {Dictation.Scope}",
+        "{Italicize} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{Italicize} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{Italicize} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {Direction} {Dictation.Scope}",
+        "{Italicize} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Underline",
+      "phrases": [
+        "{Underline} {ControlName.Any}",
+        "{Underline} [{Articles}] {Dictation.Scope}",
+        "{Underline} cette {Dictation.Scope}",
+        "{Underline} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Underline} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Underline} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Underline} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{Underline} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{Underline} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Underline} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{Underline} [{Articles}] {Direction} {Dictation.Scope}",
+        "{Underline} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Capitalize",
+      "phrases": [
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{ControlName.Any}]",
+        "{Capitalize} {ControlName.Any}",
+        "{Capitalize} [{Articles}] {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} {Dictation.Scope}",
+        "{Capitalize} cette {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{Capitalize} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{Capitalize} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{Articles}] {builtin.number} [de|le] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{Articles}] {unrecognized.number} [de|le] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{Articles}] {builtin.number} [de|le] {Direction} {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{Articles}] {unrecognized.number} [de|le] {Direction} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {Direction} {Dictation.Scope}",
+        "{Capitalize} [{Articles}] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Capitalize} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Lowercase",
+      "phrases": [
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Lowercase} [{ControlName.Any}]",
+        "{Lowercase} [{Articles}] {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Lowercase} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{Lowercase} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{Lowercase} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Lowercase} [{Articles}] {builtin.number} [de|le] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Lowercase} [{Articles}] {unrecognized.number} [de|le] {Dictation.Scope} {Direction}",
+        "{Lowercase} [{Articles}] {Direction} {Dictation.Scope}",
+        "{Lowercase} [{Articles}] {Dictation.Scope} {Direction}",
+        "Mettre [tout] [ça|ce|ceci|cette|cela] {Lowercase} [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Copy",
+      "phrases": [
+        "Copier {ControlName.Any}",
+        "Copier [{Articles}] {Dictation.Scope}",
+        "Copier [ce|ceci|cette] {Dictation.Scope}",
+        "Copier [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "Copier [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "Copier [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "Copier [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "Copier [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "Copier [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "Copier [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "Copier [{Articles}] {Direction} {Dictation.Scope}",
+        "Copier [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Cut",
+      "phrases": [
+        "Couper {ControlName.Any}",
+        "Couper [{Articles}] {Dictation.Scope}",
+        "Couper [ce|ceci|cette] {Dictation.Scope}",
+        "Couper [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "Couper [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "Couper [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "Couper [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "Couper [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "Couper [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "Couper [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "Couper [{Articles}] {Direction} {Dictation.Scope}",
+        "Couper [{Articles}] {Dictation.Scope} {Direction}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Delete",
+      "phrases": [
+        "{delete.names} {ControlName.Any}",
+        "{delete.names} [{Articles}] {Dictation.Scope}",
+        "{delete.names} [ce|ceci|cette] {Dictation.Scope}",
+        "{delete.names} [{Articles}] {builtin.ordinal} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Direction} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Direction} {builtin.number} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Direction} {unrecognized.number} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {builtin.number} {Dictation.Scope} {Direction}",
+        "{delete.names} [{Articles}] {unrecognized.number} {Dictation.Scope} {Direction}",
+        "{delete.names} [{Articles}] {builtin.number} {Direction} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {unrecognized.number} {Direction} {Dictation.Scope}",
+        "{delete.names} [{Articles}] {Dictation.Scope} {Direction}",
+        "{delete.names} [{Articles}] {Direction} {Dictation.Scope}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Type",
+      "phrases": [
+        "taper {Dictation.Text.Any}",
+        "taper"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Goto",
+      "phrases": [
+        "Déplacer vers {Direction} de {Dictation.Scope}",
+        "Aller à {Direction} de {Dictation.Scope}",
+        "Déplacer {Move.Direction} {builtin.number} fois",
+        "Déplacer {Move.Direction} {unrecognized.number} fois",
+        "Aller {Move.Direction} {builtin.number} fois",
+        "Aller {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {Move.Direction} {builtin.number}",
+        "Déplacer {Move.Direction} {unrecognized.number}",
+        "Aller {Move.Direction} {builtin.number}",
+        "Aller {Move.Direction} {unrecognized.number}",
+        "Déplacer {Move.Direction}",
+        "Aller {Move.Direction}",
+        "Déplacer {Move.Direction} {builtin.number} fois",
+        "Déplacer {Move.Direction} {unrecognized.number} fois",
+        "Aller {Move.Direction} {builtin.number} fois",
+        "Aller {Move.Direction} {unrecognized.number} fois",
+        "Déplacer {Move.Direction} de {Dictation.Scope}",
+        "Aller {Move.Direction} de {Dictation.Scope}",
+        "Déplacer {Move.Direction} par {builtin.number} {Dictation.Scope}",
+        "Déplacer {Move.Direction} par {unrecognized.number} {Dictation.Scope}",
+        "Aller {Move.Direction} par {builtin.number} {Dictation.Scope}",
+        "Aller {Move.Direction} par {unrecognized.number} {Dictation.Scope}",
+        "Déplacer vers le {Direction} de {Dictation.Scope}",
+        "Déplacer vers le {Direction} de la {Dictation.Scope}",
+        "Aller à la {Direction} de {Dictation.Scope}",
+        "Aller à la {Direction} de la {Dictation.Scope}",
+        "Déplacer {Move.Direction} par {builtin.number} fois",
+        "Déplacer {Move.Direction} par {unrecognized.number} fois",
+        "Aller {Move.Direction} par {builtin.number} fois",
+        "Aller {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer vers {Move.Direction} par {builtin.number} fois",
+        "Déplacer vers {Move.Direction} par {unrecognized.number} fois",
+        "Aller à {Move.Direction} par {builtin.number} fois",
+        "Aller à {Move.Direction} par {unrecognized.number} fois",
+        "Déplacer {Move.Direction} par {Dictation.Scope}",
+        "Aller {Move.Direction} par {Dictation.Scope}",
+        "Déplacer {Move.Direction} par une {Dictation.Scope}",
+        "Aller {Move.Direction} par une {Dictation.Scope}",
+        "Déplacer vers {Direction} de la {Dictation.Scope}",
+        "Aller à {Direction} de la {Dictation.Scope}",
+        "Déplacer {Move.Direction} par {builtin.number}",
+        "Déplacer {Move.Direction} par {unrecognized.number}",
+        "Aller {Move.Direction} par {builtin.number}",
+        "Aller {Move.Direction} par {unrecognized.number}",
+        "Aller {Direction} {ControlName.Any}",
+        "Déplacer {Direction} {ControlName.Any}",
+        "Insérer {Direction} {ControlName.Any}",
+        "{movement.types} [au] [à] [la] {Direction} [du|de la] {ControlName.Any}",
+        "{movement.types} [au] [à] [la] {Move.Direction} [du|de la] {ControlName.Any}",
+        "{movement.types} [au] [à] [la] {Move.Direction} {builtin.number} [du|de la] {Dictation.Scope}",
+        "{movement.types} [au] [à] [la] {Move.Direction} {unrecognized.number} [du|de la] {Dictation.Scope}",
+        "{movement.types} [au] [à] [la] {Move.Direction} {builtin.number} [du|de la] {Dictation.Scope}",
+        "{movement.types} [au] [à] [la] {Move.Direction} {unrecognized.number} [du|de la] {Dictation.Scope}"
+      ]
+    },
+    {
+      "id": "Task.Undo",
+      "phrases": [
+        "annuler [ça|ce|ceci|cette|cela|la dernière action]"
+      ]
+    },
+    {
+      "id": "Task.Redo",
+      "phrases": [
+        "refaire [ça|ce|ceci|cette|cela]",
+        "Rétablir cela",
+        "Rétablir ça"
+      ]
+    },
+    {
+      "id": "Task.Fast",
+      "phrases": [
+        "rapide",
+        "plus rapide"
+      ]
+    },
+    {
+      "id": "Task.MoveDirection",
+      "phrases": [
+        "{Move.Direction}"
+      ]
+    },
+    {
+      "id": "Task.Slow",
+      "phrases": [
+        " lent",
+        "plus lent"
+      ]
+    },
+    {
+      "id": "Task.Common.GoTo",
+      "phrases": [
+        "aller à {Any.Entity}"
+      ]
+    },
+    {
+      "id": "Task.Stop",
+      "phrases": [
+        "arrêter cela",
+        "arrêter ceci",
+        "arrêter"
+      ]
+    },
+    {
+      "id": "Task.Hide",
+      "phrases": [
+        "cacher",
+        "concealer",
+        "masquer"
+      ]
+    },
+    {
+      "id": "Task.Dismiss",
+      "phrases": [
+        "rejeter",
+        "Rejetez",
+        "échapper"
+      ]
+    },
+    {
+      "id": "Task.Cancel",
+      "phrases": [
+        "annuler"
+      ]
+    },
+    {
+      "id": "Task.Mouse.StopMoving",
+      "phrases": [
+        "arrêter [{Articles}] mouvement de [la] souris",
+        "arrêter le mouvement",
+        "arrêter le déplacement",
+        "arrêter de bouger",
+        "arrêter [de] {Mouse.Movement.Type} [la] souris"
+      ]
+    },
+    {
+      "id": "Task.Mouse.Movements",
+      "phrases": [
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} {builtin.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} {unrecognized.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} {builtin.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} {unrecognized.number}",
+        "{Mouse.Movement.Type} {Move.State}",
+        "{Mouse.Movement.Type} {Mouse} {Move.State}",
+        "{Mouse.Movement.Type} {Mouse} {Move.Direction} {Move.State}",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} {Move.State}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} {Move.State}",
+        "{Mouse.Movement.Type} {Mouse} {Move.Direction}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} [de] {Move.State}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} [de] {builtin.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} [de] {unrecognized.number}",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} {builtin.number}",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} {unrecognized.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} par {Move.State}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {builtin.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {unrecognized.number}",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} par {builtin.number}",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} par {unrecognized.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} par {builtin.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} par {unrecognized.number}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} par {builtin.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} par {unrecognized.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {builtin.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {unrecognized.number} fois",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} par {builtin.number} fois",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} par {unrecognized.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {builtin.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} par {unrecognized.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} {builtin.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.Direction} {unrecognized.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} {builtin.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction} {unrecognized.number} fois",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} {builtin.number} fois",
+        "{Mouse.Movement.Type} {Mouse} [à|vers] {Move.Direction} {unrecognized.number} fois",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} {Move.State}",
+        "{Mouse.Movement.Type} [{Articles}] {Mouse} [à|vers] {Move.Direction}",
+        "{Mouse.Movement.Type} {Mouse} {.any}",
+        "{Mouse.Movement.Type} {Mouse}"
+      ]
+    },
+    {
+      "id": "Task.Hold",
+      "phrases": [
+        "maintenir {Special.Keyboard.Keys}",
+        "maintenir {Keyboard.Keys}",
+        "maintenir {HoldDown} {Special.Keyboard.Keys}",
+        "maintenir {HoldDown} {Keyboard.Keys}",
+        "{Press} et maintenir [la] [touche] {Special.Keyboard.Keys}",
+        "{Press} et maintenir [la] [touche] {Keyboard.Keys}",
+        "maintenir"
+      ]
+    },
+    {
+      "id": "Task.Press",
+      "phrases": [
+        "{Press} sur {Special.Keyboard.Keys}",
+        "{Press} sur {Keyboard.Keys}",
+        "{Press}",
+        "{Press.Keys}"
+      ]
+    },
+    {
+      "id": "Task.Release",
+      "phrases": [
+        "relâcher [la] [touche] {Special.Keyboard.Keys}",
+        "Relâchez [la] [touche] {Special.Keyboard.Keys}",
+        "relâcher [la] [touche] {Keyboard.Keys}",
+        "Relâchez [la] [touche] {Keyboard.Keys}",
+        "relâcher [les touches]",
+        "Relâchez [les touches]"
+      ]
+    },
+    {
+      "id": "Task.Paste",
+      "phrases": [
+        "Coller [ça|cela|ici]"
+      ]
+    },
+    {
+      "id": "Task.Save",
+      "phrases": [
+        "Enregistrer"
+      ]
+    },
+    {
+      "id": "Task.SelectAll",
+      "phrases": [
+        "{select.names} tout",
+        "tout {select.names}",
+        "{select.names} le document"
+      ]
+    },
+    {
+      "id": "Task.Undo",
+      "phrases": [
+        "Annuler"
+      ]
+    },
+    {
+      "id": "Task.UnselectThat",
+      "phrases": [
+        "désélectionner cela",
+        "effacer la sélection"
+      ]
+    },
+    {
+      "id": "Task.Copy",
+      "phrases": [
+        "Copier"
+      ]
+    },
+    {
+      "id": "Task.Cut",
+      "phrases": [
+        "Couper"
+      ]
+    },
+    {
+      "id": "Task.Default.Mode",
+      "phrases": [
+        "[passer en] mode par défaut",
+        "mode normal",
+        "mode dictée et commandes",
+        "passer en mode normal",
+        "passer en mode dictée et commandes"
+      ]
+    },
+    {
+      "id": "Task.Command.Mode",
+      "phrases": [
+        "[passer en] mode commande",
+        "[passer en] mode commandes [uniquement]"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Mode",
+      "phrases": [
+        "[passer en] mode dictée [uniquement]"
+      ]
+    },
+    {
+      "id": "Task.WebSearch.BingSearch",
+      "phrases": [
+        "Rechercher sur Bing pour [des] {Search.Phrase}"
+      ]
+    },
+    {
+      "id": "Task.WebSearch.GoogleSearch",
+      "phrases": [
+        "Rechercher sur Google pour [des] {Search.Phrase}"
+      ]
+    },
+    {
+      "id": "Task.WebSearch.YouTubeSearch",
+      "phrases": [
+        "Rechercher sur YouTube pour [des] {Search.Phrase}"
+      ]
+    },
+    {
+      "id": "Task.Browser.AddressBar",
+      "phrases": [
+        "Aller à la barre d'adresse"
+      ]
+    },
+    {
+      "id": "Task.Browser.BookmarkPage",
+      "phrases": [
+        "Mettre en signet cette page",
+        "Ajouter aux favoris"
+      ]
+    },
+    {
+      "id": "Task.Browser.CloseBrowser",
+      "phrases": [
+        "Quitter le navigateur"
+      ]
+    },
+    {
+      "id": "Task.Browser.CloseDeveloperTools",
+      "phrases": [
+        "Quitter les outils de développement"
+      ]
+    },
+    {
+      "id": "Task.Browser.CloseSearchBox",
+      "phrases": [
+        "Quitter la boîte de recherche",
+        "fermer la boîte de recherche"
+      ]
+    },
+    {
+      "id": "Task.Browser.Downloads",
+      "phrases": [
+        "Afficher les téléchargements",
+        "Ouvrir les téléchargements"
+      ]
+    },
+    {
+      "id": "Task.Browser.DuplicateTab",
+      "phrases": [
+        "Dupliquer cet onglet",
+        "Dupliquer l'onglet",
+        "Dupliquer l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.ExitContextMenu",
+      "phrases": [
+        "Quitter le menu contextuel"
+      ]
+    },
+    {
+      "id": "Task.Browser.ExitFullScreen",
+      "phrases": [
+        "Quitter le mode plein écran"
+      ]
+    },
+    {
+      "id": "Task.Browser.FindOnPage",
+      "phrases": [
+        "Trouver {FindWord} sur la page",
+        "Trouver {FindWord} sur cette page",
+        "Trouver {FindWord}"
+      ]
+    },
+    {
+      "id": "Task.Browser.FullScreen",
+      "phrases": [
+        "Plein écran",
+        "Activer le mode plein écran"
+      ]
+    },
+    {
+      "id": "Task.Browser.GoBack",
+      "phrases": [
+        "Revenir en arrière",
+        "retourner [en arrière]"
+      ]
+    },
+    {
+      "id": "Task.Browser.GoForward",
+      "phrases": [
+        "Avancer",
+        "Aller de l'avant"
+      ]
+    },
+    {
+      "id": "Task.Browser.GoHome",
+      "phrases": [
+        "Aller à la page d'accueil"
+      ]
+    },
+    {
+      "id": "Task.Browser.History",
+      "phrases": [
+        "Afficher l'historique"
+      ]
+    },
+    {
+      "id": "Task.Browser.MoveTabToNewWindow",
+      "phrases": [
+        "Déplacer l'onglet vers une nouvelle fenêtre",
+        "Déplacer l'anglais vers une nouvelle fenêtre",
+        "Déplacer cet onglet vers une nouvelle fenêtre"
+      ]
+    },
+    {
+      "id": "Task.Browser.MuteTab",
+      "phrases": [
+        "Muter cet onglet",
+        "Muter l'onglet",
+        "Muter l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.NewPrivateWindow",
+      "phrases": [
+        "[Ouvrir] [une] nouvelle fenêtre privée",
+        "[Ouvrir] [une] nouvelle fenêtre de navigation privée"
+      ]
+    },
+    {
+      "id": "Task.Browser.NewTab",
+      "phrases": [
+        "Nouvel onglet",
+        "Créer [un] nouvel onglet",
+        "ouvrir [un] nouvel onglet",
+        "ajouter [un] nouvel onglet"
+      ]
+    },
+    {
+      "id": "Task.Browser.NewWindow",
+      "phrases": [
+        "Ouvrir [une] nouvelle fenêtre"
+      ]
+    },
+    {
+      "id": "Task.Browser.NextWord",
+      "phrases": [
+        "Mot suivant"
+      ]
+    },
+    {
+      "id": "Task.Browser.GoToNthTab",
+      "phrases": [
+        "Aller à l'onglet {Tab Locator}",
+        "Passer à l'onglet {Tab Locator}",
+        "Basculer vers l'onglet {Tab Locator}",
+        "Aller à l'anglais {Tab Locator}",
+        "Passer à l'anglais {Tab Locator}",
+        "Basculer vers l'anglais {Tab Locator}"
+      ]
+    },
+    {
+      "id": "Task.Browser.RearrangeTabs",
+      "phrases": [
+        "Déplacer l'onglet [de] {Tab Locator} vers [la] {Move.Direction}",
+        "Déplacer l'anglais [de] {Tab Locator} vers [la] {Move.Direction}"
+      ]
+    },
+    {
+      "id": "Task.Browser.CloseTab",
+      "phrases": [
+        "Fermer les onglets [à] {Tab Locator}",
+        "Fermer l'onglet [à] {Tab Locator}",
+        "Fermer l'anglais [à] {Tab Locator}",
+        "Fermer les onglets à {Tab Locator}",
+        "fermer l'onglet",
+        "fermer l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.OpenBookMarkPage",
+      "phrases": [
+        "Afficher la page des signets",
+        "ouvrir la page des favoris",
+        "ouvrir la page des signets"
+      ]
+    },
+    {
+      "id": "Task.Browser.OpenDeveloperTools",
+      "phrases": [
+        "Afficher les outils de développement"
+      ]
+    },
+    {
+      "id": "Task.Browser.OpenInNewTab",
+      "phrases": [
+        "Ouvrir {Open.Link} dans [un] nouvel onglet"
+      ]
+    },
+    {
+      "id": "Task.Browser.OpenSearchBox",
+      "phrases": [
+        "Afficher la boîte de recherche"
+      ]
+    },
+    {
+      "id": "Task.Browser.PinTab",
+      "phrases": [
+        "Épingler cet onglet",
+        "Épingler l'onglet",
+        "Épingler l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.PreviouslyClosedTab",
+      "phrases": [
+        "Afficher l'onglet précédemment fermé",
+        "Afficher l'anglais précédemment fermé",
+        "Ouvrir l'onglet précédemment fermé",
+        "Ouvrir l'anglais précédemment fermé"
+      ]
+    },
+    {
+      "id": "Task.Browser.PreviousWord",
+      "phrases": [
+        "Mot précédent"
+      ]
+    },
+    {
+      "id": "Task.Browser.RefreshPage",
+      "phrases": [
+        "Actualiser [cette|la] page"
+      ]
+    },
+    {
+      "id": "Task.Browser.UnmuteTab",
+      "phrases": [
+        "Activer le son de cet onglet",
+        "Activer le son de l'onglet",
+        "Activer le son de l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.UnpinTab",
+      "phrases": [
+        "Détacher cet onglet",
+        "détacher l'onglet",
+        "détacher l'anglais"
+      ]
+    },
+    {
+      "id": "Task.Browser.ZoomIn",
+      "phrases": [
+        "Zoomer"
+      ]
+    },
+    {
+      "id": "Task.Browser.ZoomOut",
+      "phrases": [
+        "Dézoomer"
+      ]
+    },
+    {
+      "id": "Task.Browser.ShowContextMenu",
+      "phrases": [
+        "Afficher le {ContextMenu} sur {Context.Menu.Region}",
+        "Afficher le menu contextuel"
+      ]
+    },
+    {
+      "id": "None",
+      "phrases": [
+        "{builtin.number}",
+        "{unrecognized.number}"
+      ]
+    },
+    {
+      "id": "Task.DeleteAll",
+      "phrases": [
+        "Supprimer tout"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Caps",
+      "phrases": [
+        "{Cap} {Dictation.Text.Any}",
+        "{Cap}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.NospaceThat",
+      "phrases": [
+        "Sans espace cela",
+        "Pas des Space cela",
+        "pas de Space cela",
+        "Pas d'espace cela",
+        "Pasd'espace cela",
+        "Supprimer [les] espaces"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Nospace",
+      "phrases": [
+        "{No Space} {Dictation.Text.Any}",
+        "{No Space}"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Literal",
+      "phrases": [
+        "{Literal} {Dictation.Text.Any}",
+        "{Literal}"
+      ]
+    },
+    {
+      "id": "Task.Grid.DrillDown",
+      "phrases": [
+        "{Grid} [de] [la] [souris] [{Phonetic.Symbols}] {builtin.number}",
+        "{Grid} [de] [la] [souris] [{Phonetic.Symbols}] {unrecognized.number}"
+      ]
+    },
+    {
+      "id": "None",
+      "phrases": [
+        "{Phonetic.Symbols}"
+      ]
+    }
+  ],
+  "IntentMappings_VoiceAccessLockScreen": [
+    {
+      "id": "Task.SecureDesktop.Hello",
+      "phrases": [
+        "Bonjour"
+      ]
+    }
+  ],
+  "IntentMappings_VoiceAccessSignInScreen": [
+    {
+      "id": "Task.ShowPassword",
+      "phrases": [
+        "Afficher le mot de passe"
+      ]
+    }
+  ],
+  "IntentMappings_VAFundamentalsSupport": [
+    {
+      "id": "Task.SearchApp",
+      "phrases": [
+        "rechercher un {Application.Any}",
+        "recherche de {Application.Any}",
+        "recherchez le {Application.Any}",
+        "rechercher des fenêtres pour le {Application.Any}",
+        "Rechercher un {Application.Any} dans les fenêtres",
+        "{Application.Any} de recherche"
+      ]
+    }
+  ],
+  "IntentMappings_VAUserPhraseAdditions": [
+    {
+      "id": "Task.Vocabulary.Add",
+      "phrases": [
+        "Ajouter au vocabulaire",
+        "Ajouter au dictionnaire"
+      ]
+    }
+  ],
+  "IntentMappings_Setting": [
+    {
+      "id": "Task.Setting.Invoke",
+      "phrases": [
+        "{Setting.Action.On} {Setting.Name}",
+        "{Setting.Action.Off} {Setting.Name}",
+        "{Setting.Action.Set} {Setting.Name} [à] {Setting.Value}"
+      ]
+    }
+  ],
+  "IntentMappings_CommandHelpRecognitionFix": [
+    {
+      "id": "Task.Command.Mode",
+      "phrases": [
+        "Passe en mode commandes"
+      ]
+    },
+    {
+      "id": "Task.Common.GoTo",
+      "phrases": [
+        "Accédez à {Any.Entity}"
+      ]
+    },
+    {
+      "id": "Task.Default.Mode",
+      "phrases": [
+        "Mets en mode par défaut"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Capitalize",
+      "phrases": [
+        "Mettre la première lettre de {ControlName.Any} en majuscule",
+        "Mettre {ControlName.Any} en majuscule"
+      ]
+    },
+    {
+      "id": "Task.Dictation.Goto",
+      "phrases": [
+        "Va à {Move.Direction} {builtin.number} fois"
+      ]
+    },
+    {
+      "id": "Task.Dictation.NospaceThat",
+      "phrases": [
+        "Aucun espace",
+        "aucun espace qui"
+      ]
+    },
+    {
+      "id": "Task.Dismiss",
+      "phrases": [
+        "Ignorer"
+      ]
+    },
+    {
+      "id": "Task.Grid.Drag",
+      "phrases": [
+        "Faire glisser"
+      ]
+    },
+    {
+      "id": "Task.Grid.Mark",
+      "phrases": [
+        "Marque"
+      ]
+    },
+    {
+      "id": "Task.ListAllWindows",
+      "phrases": [
+        "Affiche le sélecteur de tâches",
+        "Répertorier toutes les fenêtres"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Change.Capitalization.Reading.Mode",
+      "phrases": [
+        "Modifier le mode de lecture des majuscules"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Change.The.Level.Of.Verbosity",
+      "phrases": [
+        "Modifier le niveau de verbosité"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Exit",
+      "phrases": [
+        "Arrêter le Narrateur",
+        "Désactivation du narrateur",
+        "Quitter le narrateur"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Find",
+      "phrases": [
+        "Recherche du Narrateur"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Find.Next",
+      "phrases": [
+        "Narrateur rechercher suivant"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Find.Previous",
+      "phrases": [
+        "Le Narrateur a trouvé le précédent"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Hear.Formatting.Attributes",
+      "phrases": [
+        "Entendre les attributs de mise en forme",
+        "Narrateur, écoute les attributs de mise en forme",
+        "Lis la mise en forme",
+        "Lis les attributs de mise en forme",
+        "Mise en forme de lecture du Narrateur",
+        "Narrateur, lis les attributs de mise en forme"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Image.Link.Description",
+      "phrases": [
+        "Décrire l'image",
+        "Fournis une description de l'image",
+        "Fournis une description du lien",
+        "Narrateur, fournis une description de l'image",
+        "Narrateur, fournis une description du lien",
+        "Narrateur, décris l'image",
+        "Décrire cette image"
+      ]
+    },
+    {
+      "id": "Task.Narrator.List.All.Headings",
+      "phrases": [
+        "Liste de tous les titres du Narrateur"
+      ]
+    },
+    {
+      "id": "Task.Narrator.List.All.Links",
+      "phrases": [
+        "Le Narrateur répertorie tous les liens"
+      ]
+    },
+    {
+      "id": "Task.Narrator.List.Landmark",
+      "phrases": [
+        "Le Narrateur répertorie tous les points de repère",
+        "Répertorie tous les points de repère"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Move.To.First.Item.In.Window",
+      "phrases": [
+        "Accéder au premier élément de la fenêtre",
+        "Narrateur, déplace vers le premier élément de la fenêtre"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Move.To.Last.Item.In.Window",
+      "phrases": [
+        "Accéder au dernier élément de la fenêtre",
+        "Narrateur, déplace vers le dernier élément de la fenêtre"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Outlook.Headers.On.Off",
+      "phrases": [
+        "Le Narrateur lit les en-têtes de colonne dans Outlook",
+        "active les en-têtes Outlook",
+        "Narrateur, active les en-têtes Outlook",
+        "Le Narrateur ne lit pas les en-têtes de colonne dans Outlook",
+        "désactive les en-têtes Outlook",
+        "Le Narrateur désactive les en-têtes Outlook",
+        "Le Narrateur arrête de lire les en-têtes de colonne dans Outlook"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Previous.Group.Of.Formatting.Attributes",
+      "phrases": [
+        "Groupe précédent d'attributs de mise en forme",
+        "Narrateur, groupe précédent d'attributs de mise en forme"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Primary.Action",
+      "phrases": [
+        "Action principale"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.Document",
+      "phrases": [
+        "Lire le document",
+        "Narrateur, lis le document"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.From.Beginning",
+      "phrases": [
+        "Lis à partir du début"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.From.Focus",
+      "phrases": [
+        "Lis à partir du focus"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.Selection",
+      "phrases": [
+        "Lire la sélection",
+        "Narrateur, lis la sélection"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.The.Current.Item",
+      "phrases": [
+        "Lire l'élément actif"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Read.Window.Title",
+      "phrases": [
+        "Lire le titre de la fenêtre"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Secondary.Action",
+      "phrases": [
+        "Action secondaire"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Speed.Down",
+      "phrases": [
+        "Parler plus lentement",
+        "Vitesse vers le bas",
+        "Narrateur, ralentis",
+        "Narrateur, parle plus lentement"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Speed.Up",
+      "phrases": [
+        "Parler plus rapidement",
+        "Accélérer",
+        "Narrateur, va plus vite",
+        "Narrateur, parle plus rapidement"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Spell.Selection",
+      "phrases": [
+        "Épelle la sélection",
+        "Narrateur, épelle la sélection"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Start",
+      "phrases": [
+        "Activer le Narrateur",
+        "Activation du narrateur"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Stop.Reading",
+      "phrases": [
+        "Arrêter la lecture"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Toggle.Scanmode",
+      "phrases": [
+        "Mode d'analyse activé",
+        "Numérisation activée",
+        "Activer le mode d'analyse",
+        "Mode d'analyse du Narrateur activé",
+        "Mode d'analyse désactivé",
+        "Numérisation désactivée",
+        "Désactiver le mode d'analyse",
+        "Mode d'analyse du Narrateur désactivé"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Volume.Down",
+      "phrases": [
+        "Volume du Narrateur vers le bas",
+        "Baisser le volume"
+      ]
+    },
+    {
+      "id": "Task.Narrator.Volume.Up",
+      "phrases": [
+        "Augmenter le volume du Narrateur",
+        "Monter le volume"
+      ]
+    },
+    {
+      "id": "Task.Open",
+      "phrases": [
+        "Affiche {Application.Any}"
+      ]
+    },
+    {
+      "id": "Task.Open.VoiceAccessHelp",
+      "phrases": [
+        "Ouvrir l'aide d'accès Voice"
+      ]
+    },
+    {
+      "id": "Task.Open.VoiceAccessSettings",
+      "phrases": [
+        "Ouvrir les paramètres d'accès vocal"
+      ]
+    },
+    {
+      "id": "Task.OpenTutorial",
+      "phrases": [
+        "Ouvrir le guide d'accès Voice"
+      ]
+    },
+    {
+      "id": "Task.Overlay.ShowNumbers",
+      "phrases": [
+        "Affiche les numéros"
+      ]
+    },
+    {
+      "id": "Task.Redo",
+      "phrases": [
+        "Rétablis ça"
+      ]
+    },
+    {
+      "id": "Task.Release",
+      "phrases": [
+        "Libérer"
+      ]
+    },
+    {
+      "id": "Task.SearchApp",
+      "phrases": [
+        "Rechercher {Application.Any}"
+      ]
+    },
+    {
+      "id": "Task.ShowDesktop",
+      "phrases": [
+        "Va au bureau",
+        "Allez à l'accueil"
+      ]
+    },
+    {
+      "id": "Task.Slow",
+      "phrases": [
+        "Moins vite"
+      ]
+    },
+    {
+      "id": "Task.UnselectThat",
+      "phrases": [
+        "Désélectionne ça"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.Close",
+      "phrases": [
+        "Désactivation de Voice Access",
+        "Quitte Voice Access"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.On",
+      "phrases": [
+        "Sortie de veille de l'accès vocal"
+      ]
+    },
+    {
+      "id": "Task.VoiceAccess.Sleep",
+      "phrases": [
+        "Veille de l'accès vocal"
+      ]
+    }
+  ],
+  "EntityMappings": [
+    {
+      "id": "Dictation.Scope",
+      "values": {
+        "that": "ce",
+        "page": "page",
+        "character": "caractère",
+        "word": "mot",
+        "line": "ligne",
+        "paragraph": "paragraphe",
+        "pages": "pages",
+        "characters": "caractères",
+        "words": "mots",
+        "lines": "lignes",
+        "paragraphs": "paragraphes",
+        "selection": "sélection"
+      }
+    },
+    {
+      "id": "Cap",
+      "values": {
+        "Cap": "majuscule",
+        "Caps": "majuscules",
+        "Cap_v1": "Maj"
+      }
+    },
+    {
+      "id": "No Space",
+      "values": {
+        "No Space": "Pas des Space",
+        "Nospace": "pas de Space",
+        "NoSpace_v1": "Pas d'Espace",
+        "Nospace_v2": "Pasd'Espace"		
+      }
+    },
+    {
+      "id": "Literal",
+      "values": {
+        "Literal": "Littéral"
+      }
+    },
+    {
+      "id": "Direction",
+      "values": {
+        "next": "suivant",
+        "next_v1": "suivants",
+        "next_v2": "suivantes",
+        "previous": "précédent",
+        "previous_v1": "précédents",
+        "previous_v2": "précédentes",
+        "start": "démarrer",
+        "beginning": "début",
+        "end": "fin",
+        "last": "dernier",
+        "last_v1": "dernières",
+        "after": "après",
+        "before": "avant",
+        "back": "retour",
+        "backward": "en arrière",
+        "forward": "avant",
+        "backwards": "en arrière",
+        "forwards": "avant"
+      }
+    },
+    {
+      "id": "Maximize",
+      "values": {
+        "Maximize": "Maximiser",
+        "Maximize_v1": "Agrandir"
+      }
+    },
+    {
+      "id": "Minimize",
+      "values": {
+        "Minimize": "Minimiser",
+        "Minimise": "Minimiser",
+        "Hide": "Cacher",
+        "Hide_v1": "Masquer"
+      }
+    },
+    {
+      "id": "Close",
+      "values": {
+        "Close": "Fermer",
+        "Quit": "Quitter",
+        "Exit": "Quitter"
+      }
+    },
+    {
+      "id": "Italicize",
+      "values": {
+        "Italicize": "Mettre en italique",
+        "Italicise": "Mettre en italique",
+        "Italicized": "mis en italique",
+        "Italicised": "mis en italique",
+        "Italicizethat": "Mettre ceci en italique"
+      }
+    },
+    {
+      "id": "Capitalize",
+      "values": {
+        "Capitalize": "capitaliser",
+        "Capitalise": "capitaliser"
+      }
+    },
+    {
+      "id": "Bold",
+      "values": {
+        "Bold": "Gras",
+        "Bold face": "Gras",
+        "Boldface": "Gras",
+        "Bold.": "Gras.",
+        "Bold,": "Gras,",
+        "Boldthat": "Mettre en gras"
+      }
+    },
+    {
+      "id": "Uppercase",
+      "values": {
+        "Uppercase": "majuscules",
+        "Uppercase_v1": "majuscule",
+        "Upper case": "En majuscules",
+        "Upper case_v1": "En majuscules pour les",
+        "all caps": "toutes majuscules",
+        "Uppercase_v2": "Mettre en minuscules",
+        "Uppercase_v3": "Mettre en minuscule"
+      }
+    },
+    {
+      "id": "Lowercase",
+      "values": {
+        "Lowercase": "minuscules",
+		"Lowercase_v1": "minuscule",
+        "Lower case": "En minuscules",
+		"Lowercase_v2": "Mettre en minuscules",
+		"Lowercase_v3": "Mettre en minuscule",
+        "Lower case_v1": "En minuscules pour les",
+        "no caps": "pas de majuscules"
+      }
+    },
+    {
+      "id": "Underline",
+      "values": {
+        "Underline": "Souligner",
+        "Under line": "Souligner"
+      }
+    },
+    {
+      "id": "Click",
+      "values": {
+        "Click": "Cliquez",
+        "Click.": "Cliquez.",
+        "Click,": "Cliquez,",
+        "Click_v1": "Cliquer",
+        "Click_v2": "Clic",
+        "Click_v3": "Click",
+        "Tap": "Taper",
+        "Tap.": "Taper.",
+        "Tap,": "Taper,"
+      }
+    },
+    {
+      "id": "Press",
+      "values": {
+        "Press": "Appuyez",
+        "Press_v1": "Appuyer",
+        "Press_v1.": "Appuyer.",		
+        "Press_v1 .": "Appuyer .",
+        "Press.": "Appuyez.",
+        "Press .": "Appuyez .",
+        "Press,": "Appuyez,"
+      }
+    },	
+    {
+      "id": "Optional.ControlNames",
+      "values": {
+        "here": "ici"
+      }
+    },
+    {
+      "id": "Mouse.Movement.Type",
+      "values": {
+        "copy drag": "copier glisser",
+        "drag": "glisser",
+        "move": "déplacer",
+        "copy dragging": "copier glisser",
+        "dragging": "glisser",
+        "dragging_v1": "Faire glisser",
+        "moving": "déplacer"
+      }
+    },
+    {
+      "id": "Orientation",
+      "values": {
+        "landscape": "paysage",
+        "landscape flipped": "paysage inversé",
+        "portrait": "portrait",
+        "portrait flipped": "portrait inversé"
+      }
+    },
+    {
+      "id": "Tuple",
+      "values": {
+        "double": "double",
+        "triple": "triple"
+      }
+    },
+    {
+      "id": "Numbers",
+      "values": {
+        "numbers": "nombres",
+        "number": "nombre",
+        "numbers_v1": "numéros",
+        "number_v1": "nombre"		
+      }
+    },
+    {
+      "id": "HoldDown",
+      "values": {
+        "down": "enfoncer"
+      }
+    },
+    {
+      "id": "ContextMenu",
+      "values": {
+        "context menu": "menu contextuel"
+      }
+    },
+    {
+      "id": "Grid",
+      "values": {
+        "grid": "grille"
+      }
+    },
+    {
+      "id": "Slider.Optional",
+      "values": {
+        "slider": "curseur"
+      }
+    },
+    {
+      "id": "Page.Up",
+      "values": {
+        "page up": "page précédente"
+      }
+    },
+    {
+      "id": "Page.Down",
+      "values": {
+        "page down": "page suivante"
+      }
+    },
+    {
+      "id": "Spell.That",
+      "values": {
+        "spell that": "épeler cela"
+      }
+    },
+    {
+      "id": "Spell.Out",
+      "values": {
+        "spell out": "épeler",
+        "spellout": "épeler ça",
+        "spellout_v1": "Épeler ça"
+      }
+    },
+    {
+      "id": "Page.Start",
+      "values": {
+        "document start": "début du document",
+        "go to page start": "aller au début de la page",
+        "go to start of the document": "aller au début du document",
+        "go to the start of document": "aller au début du document",
+        "go to start of document": "aller au début du document",
+        "page start": "début de la page",
+        "start of the document": "début du document",
+        "start of document": "début du document",
+        "go to top": "aller en haut",
+        "go to beginning": "aller au début",
+        "move to top": "aller en haut",
+        "move to beginning": "aller au début",
+        "go to top of document": "aller en haut du document",
+        "go to beginning of document": "aller au début du document",
+        "move to top of document": "aller en haut du document",
+        "move to beginning of document": "aller au début du document",
+        "scroll to top": "défiler vers le haut",
+        "go to the beginning of document": "aller au début du document",
+        "go to the beginning of the document": "aller au début du document",
+        "scroll to the top": "défiler vers le haut",
+        "go to beginning of the document": "aller au début du document",
+        "move to start of the document": "aller au début du document",
+        "move to the start of document": "aller au début du document",
+        "move to start of document": "aller au début du document",
+        "move to beginning of the document": "aller au début du document",
+        "move to the beginning of document": "aller au début du document"
+      }
+    },
+    {
+      "id": "Page.End",
+      "values": {
+        "go to page end": "aller à la fin de la page",
+        "go to the end of the document": "aller à la fin du document",
+        "go to end of the document": "aller à la fin du document",
+        "go to the end of document": "aller à la fin du document",
+        "go to end of document": "aller à la fin du document",
+        "page end": "fin de la page",
+        "document end": "fin du document",
+        "end of the document": "fin du document",
+        "end of document": "fin du document",
+        "go to bottom": "aller en bas",
+        "go to end": "aller à la fin",
+        "move to bottom of document": "aller en bas du document",
+        "move to end of the document": "aller à la fin du document",
+        "move to end of document": "aller à la fin du document",
+        "go to bottom of document": "aller en bas du document",
+        "move to bottom": "aller en bas",
+        "move to end": "aller à la fin",
+        "scroll to bottom": "défiler vers le bas",
+        "scroll to the bottom": "défiler vers le bas"
+      }
+    },
+    {
+      "id": "Scroll.LeftEdge",
+      "values": {
+        "scroll to left edge": "bord gauche",
+        "scroll to left corner": "coin gauche"
+      }
+    },
+    {
+      "id": "Scroll.RightEdge",
+      "values": {
+        "scroll to right edge": "bord droit",
+        "scroll to right corner": "coin droit"
+      }
+    },
+    {
+      "id": "Overlay.Scope",
+      "values": {
+        "everywhere": "partout",
+        "here": "ici",
+        "window": "fenêtre"
+      }
+    },
+    {
+      "id": "Optional.Application.Words",
+      "values": {
+        "this window": "cette fenêtre",
+        "browser": "navigateur",
+        "this": "cette",
+        "window": "fenêtre",
+        "it": "cela"
+      }
+    },
+    {
+      "id": "Optional.Words",
+      "values": {
+        "on": "sur",
+        "to": "à",
+        "in": "dans"
+      }
+    },
+    {
+      "id": "Articles",
+      "values": {
+        "the": "le",
+        "the_v1": "la",
+        "the_v2": "les",
+        "the_v3": "un",
+        "the_v4": "une",
+        "the_v5": "des"
+      }
+    },
+    {
+      "id": "Mouse",
+      "values": {
+        "mouse": "souris"
+      }
+    },
+    {
+      "id": "OnScreenKeyboard.State",
+      "values": {
+        "minimize": "Minimiser",
+        "close": "fermer",
+        "hide": "cacher",
+        "show": "afficher",
+        "open": "ouvrir"
+      }
+    },
+    {
+      "id": "Move.State",
+      "values": {
+        "fast": "rapide",
+        "slow": "lent",
+        "faster": "plus rapide",
+        "slower": "plus lent"
+      }
+    },
+    {
+      "id": "Move.Direction",
+      "values": {
+        "bottom left": "bas gauche",
+        "bottom right": "bas droite",
+        "bottom left_v1": "en bas à gauche",
+        "bottom right_v1": "en bas à droite",
+        "down": "bas",
+        "downv1": "vers le bas",
+        "left": "gauche",
+        "middle": "milieu",
+        "right": "droite",
+        "top left": "haut gauche",
+        "top right": "haut droite",
+        "left_v1": "à gauche",
+        "middle_v1": "au milieu",
+        "right_v1": "à droite",
+        "top left_v1": "en haut à gauche",
+        "top right_v1": "en haut à droite",
+        "up": "haut",
+        "up_v1": "vers le haut",
+        "backward": "en arrière",
+        "forward": "avant",
+        "forward_v1": "en avant",
+        "back": "retour",
+        "right.": "droite.",
+        "left.": "gauche.",
+        "right_v2": "droite",
+        "right_v3": "droit"
+      }
+    },
+    {
+      "id": "Context.Menu.Region",
+      "values": {
+        "tab": "onglet",
+        "window": "fenêtre"
+      }
+    },
+    {
+      "id": "Invoke.Actions",
+      "values": {
+        "check": "cocher",
+        "check_v1": "Cochez",		
+        "choose": "choisir",
+        "uncheck": "décocher",
+        "uncheck_v1": "décochez",		
+        "unchoose": "déchoisir",
+        "toggle": "basculer",
+        "toggle_v1": "Basculez",		
+        "expand": "développer",
+        "expand_v1": "développez",		
+        "collapse": "réduire",
+        "flip": "retourner",
+        "Activate": "Activez",
+        "Activate_v1": "Activer"
+      }
+    },
+    {
+      "id": "Special.Keyboard.Keys",
+      "values": {
+        "exclamation point": "point d'exclamation",
+        "at sign": "arobase",
+        "pound sign": "symbole livre",
+        "number sign": "dièse",
+        "dollar sign": "symbole dollar",
+        "percent sign": "pour cent",
+        "and sign": "et",
+        "open  parenthesis": "parenthèse ouvrante",
+        "open parens": "parenthèses ouvrantes",
+        "left parenthesis": "parenthèse gauche",
+        "left parens": "parenthèses gauches",
+        "close parenthesis": "parenthèse fermante",
+        "close parens": "parenthèses fermantes",
+        "right parenthesis": "parenthèse droite",
+        "right parens": "parenthèses droites",
+        "minus sign": "signe moins",
+        "open brackets": "crochets ouvrants",
+        "open square brackets": "crochets ouvrants carrés",
+        "left bracket": "crochet gauche",
+        "left square bracket": "crochet carré gauche",
+        "close brackets": "crochets fermants",
+        "close square brackets": "crochets fermants carrés",
+        "right bracket": "crochet droit",
+        "right square bracket": "crochet carré droit",
+        "close bracket": "crochet fermant",
+        "grave accent": "accent grave",
+        "full stop": "point",
+        "forward slash": "barre oblique",
+        "back space": "retour arrière",
+        "space bar": "barre d'espace",
+        "caps lock": "verrouillage majuscules",
+        "cap lock": "verrouillage majuscules",
+        "print screen": "impression d'écran",
+        "scroll lock": "verrouillage défilement",
+        "page up": "page précédente",
+        "page down": "page suivante",
+        "right arrow": "flèche droite",
+        "left arrow": "flèche gauche",
+        "down arrow": "flèche bas",
+        "up arrow": "flèche haut",
+        "num lock": "verrouillage numérique",
+        "number lock": "verrouillage numérique",
+        "f one": "F un",
+        "f 1": "F 1",
+        "function one": "fonction un",
+        "function 1": "fonction 1",
+        "f two": "F deux",
+        "f 2": "F 2",
+        "function two": "fonction deux",
+        "function 2": "fonction 2",
+        "f three": "F trois",
+        "f 3": "F 3",
+        "function three": "fonction trois",
+        "function 3": "fonction 3",
+        "f four": "F quatre",
+        "f 4": "F 4",
+        "function four": "fonction quatre",
+        "function 4": "fonction 4",
+        "f five": "F cinq",
+        "f 5": "F 5",
+        "function five": "fonction cinq",
+        "function 5": "fonction 5",
+        "f six": "F six",
+        "f 6": "F 6",
+        "function six": "fonction six",
+        "function 6": "fonction 6",
+        "f seven": "F sept",
+        "f 7": "F 7",
+        "function seven": "fonction sept",
+        "function 7": "fonction 7",
+        "f eight": "F huit",
+        "f 8": "F 8",
+        "function eight": "fonction huit",
+        "function 8": "fonction 8",
+        "f nine": "F neuf",
+        "f 9": "F 9",
+        "function nine": "fonction neuf",
+        "function 10": "fonction dix",
+        "f ten": "F dix",
+        "f 10": "F 10",
+        "function eleven": "fonction onze",
+        "function 11": "fonction 11",
+        "f eleven": "F onze",
+        "f 11": "F 11",
+        "function twelve": "fonction douze",
+        "function 12": "fonction 12",
+        "f twelve": "F douze",
+        "f 12": "F 12"
+      }
+    },
+    {
+      "id": "Press.Keys",
+      "values": {
+        "enter": "entrée",
+        "delete": "supprimer",
+        "tab": "tabulation",
+        "backspace": "retour arrière"
+      }
+    },
+    {
+      "id": "from",
+      "values": {
+        "from": "de"
+      }
+    },
+    {
+      "id": "VoiceAccess.Name",
+      "values": {
+        "VoiceAccess_V1": "l'accessibilité vocale",
+        "VoiceAccess_V2": "Voice Access",
+        "VoiceAccess_V3": "Voice Excel",
+        "VoiceAccess_V4": "l'accès vocal"
+      }
+    },
+    {
+      "id": "Scroll.to",
+      "values": {
+        "Scrollto_V1": "Faire défiler jusqu'à",
+        "Scrollto_V2": "défiler jusqu'au"
+      }
+    },	
+    {
+      "id": "movement.types",
+      "values": {
+        "insert": "Insérer",
+        "move": "Déplacer",
+        "Go": "Aller",
+        "toplace": "Placer",
+        "tomoveback": "Reculer",
+        "tomoveforward": "Avancer"
+      }
+    },
+    {
+      "id": "select.names",
+      "values": {
+        "select_v1": "Sélectionner",
+        "select_v2": "Sélectionnez"
+      }
+    },
+    {
+      "id": "delete.names",
+      "values": {
+        "delete_v1": "Supprimer",
+        "delete_v2": "Effacer"
+      }
+    },
+    {
+      "id": "unrecognized.number",
+      "values": {
+        "1": "Une",
+        "1_v1": "Un",
+        "2": "Deux",
+        "3": "Trois",
+        "4": "Quatre",
+        "5": "Cinq",
+        "6": "Six",
+        "7": "Sept",
+        "8": "Huit",
+        "9": "Neuf"
+      }
+    }
+  ],
+  "EntityMappings_VAMultiMonitorOverlaysSupport": [
+    {
+      "id": "Phonetic.Symbols",
+      "values": {
+        "alpha": "alpha",
+        "bravo": "bravo",
+        "charlie": "charlie",
+        "delta": "delta",
+        "echo": "écho",
+        "foxtrot": "foxtrot",
+        "golf": "golf",
+        "hotel": "hôtel",
+        "india": "india",
+        "juliet": "juliette",
+        "kilo": "kilo",
+        "lima": "lima",
+        "mike": "mike",
+        "november": "november",
+        "oscar": "oscar",
+        "papa": "papa",
+        "quebec": "québec",
+        "romeo": "roméo",
+        "sierra": "sierra",
+        "tango": "tango",
+        "uniform": "uniforme",
+        "victor": "victor",
+        "whiskey": "whisky",
+        "xray": "xray",
+        "yankee": "yankee",
+        "zulu": "zoulou",
+        "A": "A",
+        "B": "B",
+        "C": "C",
+        "D": "D",
+        "E": "E",
+        "F": "F",
+        "G": "G",
+        "H": "H",
+        "I": "I",
+        "J": "J",
+        "K": "K",
+        "L": "L",
+        "M": "M",
+        "N": "N",
+        "O": "O",
+        "P": "P",
+        "Q": "Q",
+        "R": "R",
+        "S": "S",
+        "T": "T",
+        "U": "U",
+        "V": "V",
+        "W": "W",
+        "X": "X",
+        "Y": "Y",
+        "Z": "Z"
+      }
+    }
+  ],
+  "EntityMappings_VA_DictationSentenceSupport": [
+    {
+      "id": "Dictation.Scope",
+      "values": {
+        "sentence": "phrase",
+        "sentences": "phrases"
+      }
+    }
+  ],
+  "EntityMappings_Setting": [
+    {
+      "id": "Setting.Action.On",
+      "values": {
+        "activer": "activer",
+        "allumer": "allumer",
+        "démarrer": "démarrer"
+      }
+    },
+    {
+      "id": "Setting.Action.Off",
+      "values": {
+        "désactiver": "désactiver",
+        "éteindre": "éteindre",
+        "arrêter": "arrêter"
+      }
+    },
+    {
+      "id": "Setting.Action.Set",
+      "values": {
+        "définir": "définir",
+        "sélectionner": "sélectionner",
+        "changer": "changer",
+        "choisir": "choisir"
+      }
+    }
+  ],
+  "PhraseList": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "Ouvrir Edge",
+    "Ouvrir Word",
+    "Ouvrir l'Explorateur de fichiers",
+    "Afficher le bureau",
+    "Mode commande",
+    "Mode dictée",
+    "Mode par défaut",
+    "Passer en mode par défaut",
+    "Passer en mode commande",
+    "Passer en mode dictée",
+    "Déplacer la souris vers le haut",
+    "Cliquez en gras",
+    "Cliquez pour coller",
+    "Cliquez en souligné",
+    "Cliquez en italique",
+    "Appuyez sur Échap",
+    "Appuyez à droite",
+    "Appuyez à gauche",
+    "Appuyez vers le haut",
+    "Appuyez vers le bas",
+    "Arobase",
+    "arobase",
+    "Réveil de la commande vocale",
+    "Réveil vocal",
+    "Arrêt vocal",
+    "Mise en veille de la commande vocale",
+    "Désactiver le son",
+    "Couper le son",
+    "Éteindre le microphone",
+    "Cliquez sur le chien",
+    "Cliquez sur le chat",
+    "Cliquez sur la parole animale",
+    "Cliquez sur suivant",
+    "Cliquez sur le guide de démarrage",
+    "Mettez en gras ceci",
+    "Sélectionnez cela",
+    "Supprimez cela",
+    "Gras cela",
+    "Désélectionnez cela",
+    "Copiez cela",
+    "Coupez cela",
+    "Maximiser la fenêtre",
+    "Minimiser la fenêtre",
+    "Fermer la fenêtre",
+    "Afficher les numéros",
+    "Afficher les numéros ici",
+    "Afficher les numéros dans la barre des tâches",
+    "Masquer les numéros",
+    "Afficher la grille",
+    "Afficher la grille ici",
+    "Masquer la grille",
+    "Faites glisser",
+    "Marquez",
+    "Cliquez",
+    "glisser",
+    "Touchez",
+    "Cliquez",
+    "Touchez",
+    "Cliquez avec le bouton droit",
+    "Double cliquez",
+    "Double tapez",
+    "Cliquez sur suivant",
+    "Cliquez sur précédent",
+    "Cliquez sur retour",
+    "Tapez sur retour",
+    "Cliquez sur huit",
+    "Cliquez sur quatre",
+    "Rapide",
+    "Plus rapide",
+    "Droite",
+    "Annuler",
+    "Rejeter",
+    "Masquer",
+    "Fermer"
+  ]
+}

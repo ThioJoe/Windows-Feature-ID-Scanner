@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="ROOT/StandardCimv2/MSFT_NetAdapterDataPathConfigurationSettingData" ClassVersion="1.0.0">
+    <Version>1.0</Version>
+    <DefaultNoun>NetAdapterDataPathConfiguration</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="ByName">
+        <QueryableProperties>
+          <Property PropertyName="Name">
+            <Type PSType ="string"/>
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata PSName="Name" Position="0" Aliases="ifAlias InterfaceAlias" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByName"/>
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="InterfaceDescription">
+            <Type PSType ="string"/>
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata PSName="InterfaceDescription" IsMandatory="true" Aliases="ifDesc InstanceID" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByInstanceID"/>
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="Profile">
+            <Type PSType ="string"/>
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata PSName="Profile" IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByName ByInstanceID"/>
+            </RegularQuery>
+          </Property>
+          <Property PropertyName="ProfileSource">
+            <Type PSType ="uint32"/>
+            <RegularQuery>
+              <CmdletParameterMetadata PSName="ProfileSource" CmdletParameterSets="ByName ByInstanceID"/>
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+        <QueryOptions>
+          <Option OptionName="IncludeHidden">
+            <Type PSType="System.Management.Automation.SwitchParameter"/>
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+      <Cmdlet>
+       <CmdletMetadata Verb="Set" ConfirmImpact="Medium"/>
+          <Method MethodName="cim:ModifyInstance">
+          <Parameters>
+            <Parameter ParameterName="Profile">
+              <Type PSType="string" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+          </Parameters>
+        </Method>
+        <GetCmdletParameters DefaultCmdletParameterSet="ByName">
+          <QueryableProperties>
+            <Property PropertyName="Name">
+              <Type PSType ="string"/>
+              <RegularQuery AllowGlobbing="true">
+                <CmdletParameterMetadata PSName="Name" Position="0" IsMandatory="true" Aliases="ifAlias InterfaceAlias" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByName" />
+              </RegularQuery>
+            </Property>
+            <Property PropertyName="InterfaceDescription">
+              <Type PSType ="string"/>
+              <RegularQuery AllowGlobbing="true" >
+                <CmdletParameterMetadata PSName="InterfaceDescription" IsMandatory="true" Aliases="ifDesc InstanceID" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByInstanceID" />
+              </RegularQuery>
+            </Property>
+          </QueryableProperties>
+          <QueryOptions>
+            <Option OptionName="IncludeHidden">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+            </Option>
+          </QueryOptions>
+        </GetCmdletParameters>
+      </Cmdlet>
+    </InstanceCmdlets>
+  </Class>
+    <Enums>
+    <Enum EnumName="NetAdapterDataPathConfiguration.ProfileSource" UnderlyingType="System.UInt32">
+      <Value Name="BuiltIn" Value="1" />
+      <Value Name="Custom" Value="2" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

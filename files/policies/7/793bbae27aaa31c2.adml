@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2023 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ReFS group policy</displayName>
+  <description>Group policy settings for ReFS</description>
+  <resources>
+    <stringTable>
+      <string id="ReFS">ReFS</string>
+      <string id="EnableDevDrive">Enable dev drive</string>
+      <string id="EnableDevDriveText">Dev drive or developer volume is a volume optimized for performance of developer scenarios. A developer volume allows an administrator to choose file system filters that are attached on the volume.
+
+Disabling this setting will disallow creation of new developer volumes, existing developer volumes will mount as regular volumes.
+
+If this setting is not configured the default policy is to enable developer volumes while allowing antivirus filter to attach on a deveveloper volume.  Further, if not configured, a local administrator can choose to not have antivirus filter attached to a developer volume.
+
+A reboot is required for this setting to take effect.</string>
+      <string id="ModeOff">Off</string>
+      <string id="ModeAudit">Audit only</string>
+      <string id="ModeBlock">Block</string>
+      <string id="BlockRemovableDeviceMount">Control mounting ReFS volumes on removable devices</string>
+      <string id="BlockRemovableDeviceMountText">Controls whether ReFS volumes are allowed to mount on removable devices. ReFS is not a supported configuration on removable devices.
+
+Block refuses the mount and records an event in the System log.
+
+Audit only allows the mount and records the same event, so the effect of enabling this policy can be assessed before it is enforced.
+
+Off performs no auditing and no blocking.
+
+For a Storage Spaces volume the check applies to the physical disks backing the pool, not to the space itself.
+
+If this policy setting is not configured, the local setting on this computer is used. If no local setting exists, the default behavior for this version of Windows is used.
+
+ReFS reads this setting when it loads, so a restart is required before a change applies. The setting is then evaluated each time a volume mounts, so a volume that is already mounted keeps its current state until it is dismounted and mounted again.</string>
+    </stringTable>
+
+    <presentationTable>
+      <presentation id="EnableDevDriveOptions">
+        <checkBox refId="DevDriveAllowAntivirusFilter" defaultChecked="true">Let antivirus filter protect dev drives</checkBox>
+      </presentation>
+      <presentation id="BlockRemovableDeviceMountOptions">
+        <dropdownList refId="BlockRemovableDeviceMountMode" defaultItem="0">Action for ReFS volumes on removable devices</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

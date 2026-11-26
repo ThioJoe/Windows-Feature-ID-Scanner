@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- *******************************************************************
+
+Module Name: MSFT_NetAdapterUso.Format.ps1xml
+
+Description: Output Format file for MSFT_NetAdapterUso cmdlets
+
+Author:
+
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+******************************************************************** -->
+<Configuration>
+  <ViewDefinitions>
+  <View>
+    <Name>MSFT_NetAsapterUso_TableView</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetAdapterUsoSettingData</TypeName>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_NetAdapterUsoSettingData</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>30</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>12</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>12</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Name</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>IPv4Enabled</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>IPv6Enabled</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>MSFT_NetAsapterUso_ListView</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetAdapterUsoSettingData</TypeName>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_NetAdapterUsoSettingData</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>Name</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>InterfaceDescription</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>IPv4Enabled</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>IPv6Enabled</PropertyName>
+            </ListItem>
+            <ListItem>
+              <label>IPv4MaxOffloadSizeSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv4MaxOffloadSizeSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv4MinSegmentCountSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv4MinSegmentCountSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv4SubMssFinalSegmentSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv4SubMssFinalSegmentSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv6MaxOffLoadSizeSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv6MaxOffLoadSizeSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv6MinSegmentCountSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv6MinSegmentCountSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv6SubMssFinalSegmentSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv6SubMssFinalSegmentSupported</ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <label>IPv6IpExtensionHeadersSupported</label>
+              <ScriptBlock>$_.UdpSegmentationOffloadHardwareCapabilities.IPv6IpExtensionHeadersSupported</ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  </ViewDefinitions>
+</Configuration>

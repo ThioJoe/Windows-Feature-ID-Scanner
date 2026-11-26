@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetFx3-WCF-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft .NET Framework 3.0 WCF Components" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-Server-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Core-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Windows Communication Foundation HTTP Activation" displayName="Windows Communication Foundation HTTP Activation" name="WCF-HTTP-Activation">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="HTTP Activation supports process activation via HTTP. Applications that use HTTP Activation can start and stop dynamically in response to work items that arrive over the network via HTTP." DisplayName="HTTP Activation" Id="222" InstallWithParentByDefault="false" Parent="NET-Framework-Features" Type="Feature" UniqueName="NET-HTTP-Activation">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-Core" />
+            <ServerComponent UniqueName="Web-Net-Ext" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-NET-Environment" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-HTTP-Activation" />
+          </Deploys>
+          <Version Major="3" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="staged">
+        <detectUpdate>
+          <parent name="NetFx3" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-NetFxExtensibility" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-NetFxEnvironment" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="WCF-HTTP-Activation-Deployment" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Windows Communication Foundation Non-HTTP Activation" displayName="Windows Communication Foundation Non-HTTP Activation" name="WCF-NonHTTP-Activation">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Non-HTTP Activation supports process activation via Message Queuing, TCP and named pipes. Applications that use Non-HTTP Activation can start and stop dynamically in response to work items that arrive over the network via Message Queuing, TCP and named pipes." DisplayName="Non-HTTP Activation" Id="223" InstallWithParentByDefault="false" Parent="NET-Framework-Features" Type="Feature" UniqueName="NET-Non-HTTP-Activ">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="NET-Framework-Core" />
+            <ServerComponent UniqueName="WAS-Process-Model" />
+            <ServerComponent UniqueName="WAS-NET-Environment" />
+            <ServerComponent UniqueName="WAS-Config-APIs" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="WCF-NonHTTP-Activation" />
+          </Deploys>
+          <Version Major="3" Minor="5" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="staged">
+        <detectUpdate>
+          <parent name="NetFx3" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ProcessModel" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-NetFxEnvironment" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="WAS-ConfigurationAPI" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="WCF-NonHTTP-Activation-Deployment" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

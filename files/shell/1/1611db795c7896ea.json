@@ -1,0 +1,14 @@
+{
+  "_comment": "App Remoting package policy for Cross Device Resume (non-partner phone apps streamed to the PC via Phone Link). 'heroPackageIds' are the default-ON apps: when an App Remoting intent arrives for a hero with no AppRemotingListing row yet, the row is materialised ON, while every other non-partner app defaults OFF. The hero set is checksum-locked with the os.2020 Settings reader (PR 16579151) and the CrossDeviceResume writer; keep all copies identical. 'excludedPackageIds' are suppressed from the App Remoting taskbar flow even when otherwise eligible (non-partner, toggle on); this is in addition to partner-app precedence, since partner apps resume via their own dedicated toggle and are excluded by AppDetails.json membership. Seed and maintain the exclusion list from the spec / PM. All ids are raw Android package names.",
+  "heroPackageIds": [
+    "com.tencent.mm",
+    "jp.naver.line.android",
+    "com.zhiliaoapp.musically",
+    "com.ss.android.ugc.trill",
+    "com.snapchat.android",
+    "com.instagram.android",
+    "com.google.android.youtube"
+  ],
+  "excludedPackageIds": [
+  ]
+}

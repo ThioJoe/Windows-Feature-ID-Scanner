@@ -1,0 +1,64 @@
+{
+    "GETSTARTED": {
+        "start": "LandingPage",
+        "notifyOnFirstVisible": true,
+        "useBackstackForBackNavigation": true,
+        "reconnectHandler": {
+            "handlerCxid": "NetworkError",
+            "frequency": "Always"
+        },
+        "frameName": "oobe-light-frame",
+        "personality": "CloudExperienceHost.Personality.LiteWhite",
+        "blockLateWebAppCalls": true,
+        "blockEarlyExit": true,
+        "LandingPage": {
+            "cxid": "LandingPage",
+            "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+            "internetRequired": true,
+            "disableErrorPageOnFailure": true,
+            "backwardButtonEnabled": false,
+            "successID": "UserIntent",
+            "failID": "UserIntent",
+            "measureId": 40424633
+        },
+        "UserIntent": {
+            "cxid": "UserIntent",
+            "url": "https://sdx.microsoft.com/getstarted/userintent/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/userintent/index.html",
+            "internetRequired": true,
+            "disableErrorPageOnFailure": true,
+            "successID": "OutroPersonalize",
+            "failID": "OutroPersonalize",
+            "cancelID": "OutroPersonalize",
+            "visibility": false,
+            "measureId": 40427237
+        },
+        "OutroPersonalize": {
+            "cxid": "OutroPersonalize",
+            "url": "https://sdx.microsoft.com/getstarted/outropersonalize/index.html",
+            "urlint": "https://sdx.microsoft-int.com/getstarted/outropersonalize/index.html",
+            "forwardButtonEnabled": false,
+            "internetRequired": true,
+            "disableErrorPageOnFailure": true,
+            "canExitCxh": true,
+            "measureId": 50780284
+        },
+        "NetworkError": {
+            "cxid": "NetworkError",
+            "url": "ms-appx-web:///webapps/guidedsetup/network/index.html",
+            "disableBackNavigationToNode": true,
+            "successID": "GSInPlaceResume",
+            "failID": "OutroPersonalize",
+            "disableErrorPageOnFailure": true,
+            "measureId": 40426665
+        },
+        "GSInPlaceResume": {
+            "cxid": "GSInPlaceResume",
+            "launcher": "js:InPlaceResume",
+            "failID": "OutroPersonalize",
+            "disableBackNavigationToNode": true,
+            "measureId": 40426734
+        }
+    }
+}

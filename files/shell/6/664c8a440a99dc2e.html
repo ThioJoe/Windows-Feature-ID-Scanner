@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<!--
+  engine.html - headless harness for the in-process speed-test engine.
+
+  Loaded by the in-proc engine host via the localhost virtual-host mapping
+  (https://localhost/engine.html -> the NetworkSpeedTestSDK folder). It renders
+  no UI; the DOM exists only to give the Ookla SDK a window to run in. Every SDK
+  callback is forwarded to the native host as a single-line JSON object via
+  chrome.webview.postMessage (captured by engine-module-shim.js). The native
+  host validates each line before any value is used.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Baseline CSP delivered via meta. script-src 'self' blocks inline/injected
+     script; connect-src is permissive (http/https/ws/wss) because the Ookla
+     test-server fleet spans many ISP/CDN domains returned at runtime by the
+     SDK's config endpoint and cannot be enumerated at build time. The engine
+     runs in an isolated WebView2 process. frame-ancestors is omitted because it
+     is ignored when delivered via meta (and the isolated host cannot be
+     framed). -->
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self';
+    connect-src 'self' http: https: ws: wss:;
+    style-src 'none';
+    img-src 'none';
+    object-src 'none';
+    base-uri 'none';
+    form-action 'none';">
+<title>SpeedTestEngine</title>
+</head>
+<body>
+<!-- No content: the SDK needs no render target. Load order matters:
+       1. engine-module-shim.js - declares module.exports for the SDK's CJS
+          bundle and captures chrome.webview.postMessage into a tamper-proof
+          closure before any third-party code runs.
+       2. speedtest-js-sdk.js   - the Ookla SDK bundle (assigns module.exports).
+       3. engine-shim.js        - drives the SDK and forwards every signal.
+     All scripts are same-origin external (authorized by script-src 'self'). -->
+<script src="engine-module-shim.js"></script>
+<script src="speedtest-js-sdk.js"></script>
+<script src="engine-shim.js"></script>
+</body>
+</html>

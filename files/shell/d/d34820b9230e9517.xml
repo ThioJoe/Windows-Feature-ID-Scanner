@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities">
+
+  <!--
+        Manual versioning is used for this app.
+        Appx version should be in sync with version used for the app name in PinningConfirmationDialog.AppxSetup.man
+        See https://osgwiki.com/wiki/System_Apps#Servicing
+    -->
+  <Identity Name="Microsoft.Windows.PinningConfirmationDialog"
+            Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1000.25140.1001.0"/>
+  <mp:PhoneIdentity PhoneProductId="FF5A3110-8E5B-4C28-A09B-99A91D506651" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Properties>
+    <DisplayName>PinningConfirmationDialog</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+        Executable="PinningConfirmationDialog.exe"
+        EntryPoint="PinningConfirmationDialog.App">
+      <uap:VisualElements
+          AppListEntry="none" 
+          DisplayName="PinningConfirmationDialog"
+          Square150x150Logo="Assets\Logo.png"
+          Square44x44Logo="Assets\SmallLogo.png"
+          Description="PinningConfirmationDialog"
+          BackgroundColor="#464646">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0"/>
+  </Dependencies>
+
+</Package>

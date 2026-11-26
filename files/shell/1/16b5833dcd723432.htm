@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/css/ui-light.css" rel="stylesheet" />
+    <link href="/css/app.css" rel="stylesheet" />
+
+    <script language="javascript">
+    window.onload = function() {
+        var textIds = ["errorCode", "errorLocation", "errorTitle", "errorText", "finishButton"];
+
+        var QSTokens = location.search.split("?")[1].split("&");
+        var QSArgs = {};
+
+        for (var i = 0; i < QSTokens.length; i++) {
+            var name = QSTokens[i].split("=")[0];
+            var value = QSTokens[i].split("=")[1];
+            if ( QSArgs[name] == undefined ) {
+                // Input uses url-form-encoding, so need to replace '+' with space first.
+                value = value.replace(/\+/g, " ");
+                QSArgs[name] = decodeURIComponent(value);
+            }
+        }
+
+        for (var i = 0; i < textIds.length; i++) {
+            var field = textIds[i];
+            var text = QSArgs[field];
+            if (text != undefined) {
+                document.getElementById(field).innerText = text;
+            }
+        }
+    };
+    </script>
+</head>
+<body>
+    <div class="control-app">
+        <div class="app-content">
+            <div class="control-page">
+                <div class="page-body">
+                    <div class="body-header">
+                        <h2>
+                            <span id="errorTitle" aria-live="assertive">We can't connect you.</span>
+                        </h2>
+                    </div>
+                    <div class="body-container">
+                        <div class="container-content">
+                            <p>
+                                <span id="errorText" aria-live="assertive" role="alert">Looks like we can't connect to one of our services right now. Please try again later, or contact your helpdesk if the issue persists.</span>
+                            </p>
+                            <p style="opacity: 0.5;">
+                                <span id="errorCode" aria-live="polite"></span>
+                            </p>
+                            <p style="opacity: 0.5;">
+                                <span id="errorLocation" aria-live="polite"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <div class="footer-buttons template-buttonGroup" role="group">
+                        <button type="button" onclick="window.location='about:blank'" id="finishButton" class="win-button control-button button_primary" autofocus style="margin-top: -10px;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

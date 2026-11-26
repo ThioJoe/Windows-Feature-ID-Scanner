@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root/Microsoft/Windows/HardwareManagement/MSFT_PCSVDevice">
+    <Version>1.0</Version>
+    <DefaultNoun>PcsvDevice</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="ByNoConnectionParams">
+        <QueryOptions>
+          <Option OptionName="TargetAddress">
+            <Type PSType="string" />
+            <CmdletParameterMetadata Aliases="CN ComputerName IpAddress" IsMandatory="true" Position="1" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="Credential">
+            <Type PSType="PSCredential" />
+            <CmdletParameterMetadata IsMandatory="true" Position="2" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="ManagementProtocol">
+            <Type PSType="PcsvDevice.ManagementProtocol" />
+            <CmdletParameterMetadata Aliases="MP" IsMandatory="true" Position="3" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="Port">
+            <Type PSType="uint16" />
+            <CmdletParameterMetadata IsMandatory="false" Position="4" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="Authentication">
+            <Type PSType="PcsvDevice.Authentication" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="UseSSL">
+            <Type PSType="Switch" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="SkipCACheck">
+            <Type PSType="Switch" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="SkipCNCheck">
+            <Type PSType="Switch" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="SkipRevocationCheck">
+            <Type PSType="Switch" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+            </CmdletParameterMetadata>
+          </Option>
+          <Option OptionName="TimeoutSec">
+            <Type PSType="uint32" />
+            <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName ByNoConnectionParams" >
+            </CmdletParameterMetadata>
+          </Option>
+        </QueryOptions>
+      </GetCmdletParameters>
+
+      <!-- Get-PcsvDevice -->
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" />
+        <GetCmdletParameters DefaultCmdletParameterSet="ByNoConnectionParams">
+          <QueryOptions>
+            <Option OptionName="TargetAddress">
+              <Type PSType="string" />
+              <CmdletParameterMetadata Aliases="CN ComputerName IpAddress" IsMandatory="true" Position="1" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="Credential">
+              <Type PSType="PSCredential" />
+              <CmdletParameterMetadata IsMandatory="true" Position="2"  ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="ManagementProtocol">
+              <Type PSType="PcsvDevice.ManagementProtocol" />
+              <CmdletParameterMetadata Aliases="MP" IsMandatory="true" Position="3" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="Port">
+              <Type PSType="uint16" />
+              <CmdletParameterMetadata IsMandatory="false" Position="4" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="Authentication">
+              <Type PSType="PcsvDevice.Authentication" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="UseSSL">
+              <Type PSType="Switch" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="SkipCACheck">
+              <Type PSType="Switch" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="SkipCNCheck">
+              <Type PSType="Switch" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="SkipRevocationCheck">
+              <Type PSType="Switch" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName" >
+              </CmdletParameterMetadata>
+            </Option>
+            <Option OptionName="TimeoutSec">
+              <Type PSType="uint32" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByComputerName ByNoConnectionParams" >
+              </CmdletParameterMetadata>
+            </Option>
+          </QueryOptions>
+        </GetCmdletParameters>
+      </GetCmdlet>
+
+      <!-- Start-PcsvDevice -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Start" ConfirmImpact="Medium" />
+        <Method MethodName="RequestStateChange">
+          <Parameters>
+            <Parameter ParameterName="RequestedState" DefaultValue="2">
+              <Type PSType="uint16" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Stop-PcsvDevice -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Stop" ConfirmImpact="High" />
+        <Method MethodName="RequestStateChange">
+          <Parameters>
+            <Parameter ParameterName="RequestedState" DefaultValue="3">
+              <Type PSType="PcsvDevice.PossibleShutdownTypes" />
+              <CmdletParameterMetadata IsMandatory="false" PSName="ShutdownType"/>
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Restart-PcsvDevice -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Restart" ConfirmImpact="High" />
+        <Method MethodName="RequestStateChange">
+          <Parameters>
+            <Parameter ParameterName="RequestedState" DefaultValue="11">
+              <Type PSType="uint16" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Set-PcsvDeviceBootConfiguration -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" Noun="PcsvDeviceBootConfiguration" ConfirmImpact="Medium" />
+        <Method MethodName="ChangeBootConfiguration">
+          <Parameters>
+            <Parameter ParameterName="OneTimeBootSource">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="OneTimeBootSource" Aliases="OT NextBoot" Position="1" IsMandatory="false" />
+            </Parameter>
+            <Parameter ParameterName="PersistentBootSource">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata PSName="PersistentBootSource" Aliases="PT Persistent" Position="2" IsMandatory="false" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Set-PcsvDeviceNetworkConfiguration -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" Noun="PcsvDeviceNetworkConfiguration" ConfirmImpact="Medium" />
+        <Method MethodName="ChangeNetworkConfiguration">
+          <Parameters>
+            <Parameter ParameterName="IPv4AddressOrigin">
+              <Type PSType="PcsvDevice.PossibleIPv4Origins" />
+              <CmdletParameterMetadata PSName="IPv4AddressOrigin" Position ="1" IsMandatory="true" />
+            </Parameter>
+            <Parameter ParameterName="IPv4Address">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="IPv4Address" IsMandatory="false" />
+            </Parameter>
+            <Parameter ParameterName="IPv4DefaultGateway">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="IPv4DefaultGateway" IsMandatory="false" />
+            </Parameter>
+            <Parameter ParameterName="IPv4SubnetMask">
+              <Type PSType="string" />
+              <CmdletParameterMetadata PSName="IPv4SubnetMask" IsMandatory="false" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Set-PcsvDeviceUserPassword -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" Noun="PcsvDeviceUserPassword" ConfirmImpact="High" />
+        <Method MethodName="ChangeUserPassword">
+          <Parameters>
+            <Parameter ParameterName="CurrentCredential">
+              <Type PSType="PSCredential" />
+              <CmdletParameterMetadata PSName="CurrentCredential" Position ="1" IsMandatory="true" />
+            </Parameter>
+            <Parameter ParameterName="NewPassword">
+              <Type PSType="System.Security.SecureString" />
+              <CmdletParameterMetadata PSName="NewPassword" Position ="2" IsMandatory="true" />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <!-- Clear-PcsvDeviceLog -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Clear" Noun="PcsvDeviceLog" ConfirmImpact="High" />
+        <Method MethodName="ClearLog" />
+      </Cmdlet>
+
+      <!-- Get-PcsvDeviceLog -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Get" Noun="PcsvDeviceLog" />
+        <Method MethodName="ReadLog">
+            <Parameters>
+                <Parameter ParameterName ="LogRecords">
+                    <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/HardwareManagement/MSFT_PCSVLogRecord" />
+                    <CmdletOutputMetadata />
+                </Parameter>
+            </Parameters>
+        </Method>
+      </Cmdlet>
+        
+    </InstanceCmdlets>
+    <CmdletAdapterPrivateData>
+      <Data Name="QueryDialect">None</Data>
+    </CmdletAdapterPrivateData>
+  </Class>
+  <Enums>
+    <Enum EnumName="PcsvDevice.ManagementProtocol" UnderlyingType="uint16">
+      <Value Name="WSMan" Value="1" />
+      <Value Name="IPMI" Value="2" />
+    </Enum>
+    <Enum EnumName="PcsvDevice.Authentication" UnderlyingType="uint16">
+      <Value Name="Default" Value="0" />
+      <Value Name="Basic" Value="1" />
+      <Value Name="Digest" Value="2" />
+    </Enum>
+    <Enum EnumName="PcsvDevice.State" UnderlyingType="System.UInt16">
+      <Value Name="Unknown" Value="0" />
+      <Value Name="Other" Value="1" />
+      <Value Name="Enabled" Value="2" />
+      <Value Name="Disabled" Value="3" />
+      <Value Name="ShutDown" Value="4" />
+      <Value Name="NoChange" Value="5" />
+      <Value Name="Offline" Value="6" />
+      <Value Name="Test" Value="7" />
+      <Value Name="Deferred" Value="8" />
+      <Value Name="Quiesce" Value="9" />
+      <Value Name="Reboot" Value="10" />
+      <Value Name="Reset" Value="11" />
+      <Value Name="NotApplicable" Value="12" />
+    </Enum>
+    <Enum EnumName="PcsvDevice.PossibleShutdownTypes" UnderlyingType="System.UInt16">
+      <Value Name="Forced" Value="3" />
+      <Value Name="Graceful" Value="4" />
+    </Enum>
+    <Enum EnumName="PcsvDevice.PossibleIPv4Origins" UnderlyingType="System.UInt16">
+      <Value Name="Static" Value="3" />
+      <Value Name="DHCP" Value="4" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package 
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+    xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10"
+    xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+    IgnorableNamespaces="uap wincap mobile mp">
+  <!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in CredDialogHost.AppxSetup.man
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+  <Identity Name="Microsoft.CredDialogHost" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.19595.1001" />
+  <mp:PhoneIdentity PhoneProductId="1a0a22a1-bc7b-4583-9403-fd6ad7219d4a" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde" />
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+    
+  <Dependencies>
+  <!--
+  Using MaxVersionTested="12.0.0.0" instead of build.version to make it work with manual versioning validation.
+  build.version would make manifest change with every build.
+  -->
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0"/>
+  </Dependencies>
+    
+  <Resources>
+      <Resource Language="en-us"/>
+  </Resources>
+    
+  <Applications>
+    <Application Id="App" Executable="CredDialogHost.exe" EntryPoint="CredDialogHost.App">
+      <uap:VisualElements AppListEntry="none" DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <uap:Capability Name="enterpriseAuthentication" />
+    <wincap:Capability Name="shellExperience" />
+    <wincap:Capability Name="userSigninSupport" />
+  </Capabilities>
+</Package>

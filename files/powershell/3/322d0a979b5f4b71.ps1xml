@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- *******************************************************************
+
+Module Name: MSFT_NetAdapterDataPathConfiguration.Format.ps1xml
+
+Description: Output Format file for MSFT_NetAdapterDataPathConfiguration cmdlets
+
+Author:
+
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+******************************************************************** -->
+<Configuration>
+  <ViewDefinitions>
+  <View>
+    <Name>MSFT_NetAdapterDataPathConfiguration_TableView</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetAdapterDataPathConfigurationSettingData</TypeName>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_NetAdapterDataPathConfigurationSettingData</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+        <label>Name</label>
+          <Width>50</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+        <label>Profile</label>
+          <Width>50</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+        <label>ProfileSource</label>
+          <Width>20</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Name</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>Profile</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>ProfileSource</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>MSFT_NetAdapterDataPathConfiguration_ListView</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetAdapterDataPathConfigurationSettingData</TypeName>
+      <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_NetAdapterDataPathConfigurationSettingData</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <label>Name</label>
+              <PropertyName>Name</PropertyName>
+            </ListItem>
+            <ListItem>
+              <label>InterfaceDescription</label>
+              <PropertyName>InterfaceDescription</PropertyName>
+            </ListItem>
+            <ListItem>
+              <label>Profile</label>
+              <PropertyName>Profile</PropertyName>
+            </ListItem>
+            <ListItem>
+              <label>ProfileSource</label>
+              <PropertyName>ProfileSource</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  </ViewDefinitions>
+</Configuration>

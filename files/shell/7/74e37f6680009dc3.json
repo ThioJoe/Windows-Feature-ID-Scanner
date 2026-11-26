@@ -1,0 +1,169 @@
+{
+  "$id": "https://microsoft.com/1.0.0/windows-searchbox-dynamic-content.schema.json",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "description": "Schema for Windows search box dynamic content",
+  "definitions": {
+    "uri": {
+      "type": "string",
+      "pattern": "^[^:/?#]+://[^/?#]*[^?#]*(\\?([^#]*))?(#(.*))?$"
+    }
+  },
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1.([0-9]+)\\.([0-9]+)$"
+    },
+    "expirationTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "telemetryId": {
+      "type": "string"
+    },
+    "content": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "taskbarSearchBox": {
+          "type": "object",
+          "minProperties": 1,
+          "properties": {
+            "gleam": {
+              "type": "object",
+              "properties": {
+                "altText": {
+                  "type": "string"
+                },
+                "dimensionEnum": {
+                  "type": "string",
+                  "enum": [
+                    "30x36",
+                    "30x60"
+                  ]
+                },
+                "invokeAction": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [ "searchHome" ]
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [ "launchUri" ]
+                        },
+                        "uri": { "$ref": "#/definitions/uri" }
+                      },
+                      "required": [
+                        "type",
+                        "uri"
+                      ]
+                    }
+                  ]
+                },
+                "tooltip": {
+                  "type": "string"
+                },
+                "hoverAction": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [ "searchHome" ]
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [ "showTooltip" ]
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "oneOf": [
+                {
+                  "properties": {
+                    "iconUrl": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "properties": {
+                        "light": {
+                          "$ref": "#/definitions/uri"
+                        },
+                        "dark": {
+                          "$ref": "#/definitions/uri"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "iconUrl"
+                  ]
+                },
+                {
+                  "properties": {
+                    "iconData": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "properties": {
+                        "light": {
+                          "type": "string"
+                        },
+                        "dark": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "iconData"
+                  ]
+                }
+              ],
+              "required": [
+                "altText",
+                "dimensionEnum"
+              ]
+            },
+            "input": {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "placeholderText": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "telemetryId",
+    "content"
+  ]
+}

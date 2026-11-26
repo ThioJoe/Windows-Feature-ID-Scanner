@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <!--WinJS references-->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/scoobe/js/scoobeoutro-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content no-scroll">
+            <common-header params="title: title, subtitle: subHeaderText"></common-header>
+            <!-- ko ifnot: isLiteWhitePersonality -->
+            <div class="icon-container">
+                <img id="scoobe-outro-final-image" src="/webapps/scoobe/media/scoobe-outro.svg" data-bind="attr:{'aria-label': imageName}" />
+            </div>
+            <!-- /ko -->
+        </div>
+        <div class="scoobe-button-group">
+            <common-footer params="flexStartButtons: $root.flexStartButtons, flexEndButtons: $root.flexEndButtons"></common-footer>
+        </div>
+    </div>
+</body>
+</html>

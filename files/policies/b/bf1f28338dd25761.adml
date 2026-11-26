@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+    <displayName>User Manager Policy</displayName>
+    <description>Policy settings for the Windows User Manager component.</description>
+    <resources>
+        <stringTable>
+            <string id="UserManager_Category">User Manager</string>
+            <string id="DisableDigitalSafetyAgeAPIs">Disable Digital Safety Age APIs</string>
+            <string id="DisableDigitalSafetyAgeAPIs_Explain">
+This policy setting controls whether applications can query user age information through the Digital Safety Age APIs in Windows.System.User:
+- GetUserAgeRangeAsync (age bracket)
+- GetAgeVerificationStatusAsync (age verification status)
+
+If you enable this policy setting, these Digital Safety Age APIs will return benign fallback values without querying the user's Microsoft Account. GetUserAgeRangeAsync returns an unknown range, and GetAgeVerificationStatusAsync returns NotApplicable.
+
+If you disable or do not configure this policy setting, the Digital Safety Age APIs will function normally, allowing applications with the userAccountInformation capability to query age information for the current user.
+
+Note: This policy applies to all users on the device. Individual API default-value policies (e.g., DefaultDigitalSafetyAgeGroup) are ignored when this policy is enabled.
+            </string>
+            <string id="DefaultDigitalSafetyAgeGroup">Set Default Digital Safety Age Group</string>
+            <string id="DefaultDigitalSafetyAgeGroup_Explain">
+This policy setting allows you to configure a system-wide default age group that the Digital Safety Age APIs will return for all users on this device, instead of querying each user's Microsoft Account.
+
+If you enable this policy setting and select an age group, the GetUserAgeRangeAsync API will return the selected age group for all users, bypassing the Microsoft Account lookup.
+
+If you disable or do not configure this policy setting, the APIs will query each user's Microsoft Account for their actual age range.
+
+Note: If both this policy and "Disable Digital Safety Age APIs" are enabled, the disable policy takes precedence and GetUserAgeRangeAsync returns an unknown range.
+            </string>
+            <string id="AgeGroup_Under10">Under 10 (ages 0-9)</string>
+            <string id="AgeGroup_10to12">10 to 12</string>
+            <string id="AgeGroup_13to15">13 to 15</string>
+            <string id="AgeGroup_16to17">16 to 17</string>
+            <string id="AgeGroup_18Plus">18 and older</string>
+            <string id="DefaultDigitalSafetyVerificationStatus">Set Default Digital Safety Age Verification Status</string>
+            <string id="DefaultDigitalSafetyVerificationStatus_Explain">
+This policy setting allows you to configure a system-wide default age verification status that the GetAgeVerificationStatusAsync API will return for all users on this device, instead of querying each user's Microsoft Account.
+
+If you enable this policy setting and select a verification status, the GetAgeVerificationStatusAsync API will return the selected status for all users, bypassing the Microsoft Account lookup.
+
+If you disable or do not configure this policy setting, the API will query each user's Microsoft Account for their actual age verification status.
+
+Note: If both this policy and "Disable Digital Safety Age APIs" are enabled, the disable policy takes precedence and GetAgeVerificationStatusAsync returns NotApplicable.
+            </string>
+            <string id="VerificationStatus_Verified">Verified (organization has verified user ages)</string>
+            <string id="VerificationStatus_Unverified">Unverified (users are not age-verified)</string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="DefaultDigitalSafetyAgeGroup">
+                <dropdownList refId="DefaultDigitalSafetyAgeGroup_Dropdown" noSort="true" defaultItem="0">Select default age group:</dropdownList>
+            </presentation>
+            <presentation id="DefaultDigitalSafetyVerificationStatus">
+                <dropdownList refId="DefaultDigitalSafetyVerificationStatus_Dropdown" noSort="true" defaultItem="0">Select default verification status:</dropdownList>
+            </presentation>
+        </presentationTable>
+    </resources>
+</policyDefinitionResources>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+
+        <View>
+            <Name>BcdEntryInfo</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Windows.Bcd.Cmdlets.BcdExtensions.BcdEntryInfo</TypeName>
+            </ViewSelectedBy>
+            <CustomControl>
+                <CustomEntries>
+                    <CustomEntry>
+                        <CustomItem>
+                            <ExpressionBinding>
+                                <ScriptBlock>
+                                    $newline = [Environment]::NewLine
+                                    $header = $_.Header.ToString()
+                                    $identifierLabel = [Microsoft.Windows.Bcd.Cmdlets.BcdExtensions.CmdletUtil]::GetElementIdentifierLabel()
+                                    $underlineChar = '-'
+                                    $underline = $underlineChar * $header.Length
+
+                                    $tableData = @([PSCustomObject]@{
+                                                        Name = $identifierLabel;
+                                                        Value = $_.FriendlyIdentifier
+                                                        })
+
+                                    ForEach($el in $_.Elements) {
+                                        $tableData += [PSCustomObject]@{ Name = $el.Name; Value = $el.Value }
+                                    }
+
+                                    $tableOutput = ($tableData | Format-Table -HideTableHeaders -Wrap | Out-String)
+                                    $tableOutput = $tableOutput.Trim("`r`n".ToCharArray())
+
+                                    $header + $newline + $underline + $newline + $tableOutput
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                        </CustomItem>
+                    </CustomEntry>
+                </CustomEntries>
+            </CustomControl>
+        </View>
+
+        <View>
+            <Name>BcdStoreInfo</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Windows.Bcd.Cmdlets.BcdExtensions.BcdStoreInfo</TypeName>
+            </ViewSelectedBy>
+            <Controls>
+                <Control>
+                    <Name>BcdEntryInfo</Name>
+                    <CustomControl>
+                        <CustomEntries>
+                            <CustomEntry>
+                                <CustomItem>
+                                    <Frame>
+                                        <CustomItem>
+                                            <ExpressionBinding>
+                                                <ScriptBlock>
+                                                    $newline = [Environment]::NewLine
+                                                    $underlineChar = '-'
+                                                    $output = ""
+                                                    $identifierLabel = [Microsoft.Windows.Bcd.Cmdlets.BcdExtensions.CmdletUtil]::GetElementIdentifierLabel()
+
+                                                    ForEach($entry in $_.Entries) {
+                                                        $header = $entry.Header.ToString()
+
+                                                        $underline = $underlineChar * $header.Length
+
+                                                        $tableData = @([PSCustomObject]@{
+                                                                            Name = $identifierLabel;
+                                                                            Value = $entry.FriendlyIdentifier
+                                                                            })
+
+                                                        ForEach($el in $entry.Elements) {
+                                                            $tableData += [PSCustomObject]@{ Name = $el.Name; Value = $el.Value }
+                                                        }
+
+                                                        $tableOutput = ($tableData | Format-Table -HideTableHeaders -Wrap | Out-String)
+                                                        $tableOutput = $tableOutput.Trim("`r`n".ToCharArray())
+
+
+                                                        $output += ($newline + $header + $newline + $underline + $newline + $tableOutput + $newline)
+                                                    }
+
+                                                    $output.Trim("`r`n".ToCharArray())
+                                                </ScriptBlock>
+                                            </ExpressionBinding>
+                                        </CustomItem>
+                                    </Frame>
+                                </CustomItem>
+                            </CustomEntry>
+                        </CustomEntries>
+                    </CustomControl>
+                </Control>
+            </Controls>
+            <CustomControl>
+                <CustomEntries>
+                    <CustomEntry>
+                        <CustomItem>
+                            <ExpressionBinding>
+                                <CustomControlName>BcdEntryInfo</CustomControlName>
+                            </ExpressionBinding>
+                        </CustomItem>
+                    </CustomEntry>
+                </CustomEntries>
+            </CustomControl>
+        </View>
+
+    </ViewDefinitions>
+</Configuration>

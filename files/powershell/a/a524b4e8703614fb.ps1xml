@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. -->
+<!-- Used only for structured -PassThru results; default reports are unformatted strings. -->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>UopLogCollectionResult</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Windows.Update.UopLogCollectionResult</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Text>UOP provider logs: </Text>
+              <ExpressionBinding><PropertyName>Status</PropertyName></ExpressionBinding>
+              <Text> (</Text>
+              <ExpressionBinding><PropertyName>EventCount</PropertyName></ExpressionBinding>
+              <Text> events)</Text>
+              <NewLine />
+              <Text>Log: </Text>
+              <ExpressionBinding><PropertyName>LogPath</PropertyName></ExpressionBinding>
+              <NewLine />
+              <ExpressionBinding>
+                <ScriptBlock>if ($_.CspLogPath) { 'CSP log: ' + $_.CspLogPath + [Environment]::NewLine }</ScriptBlock>
+              </ExpressionBinding>
+              <ExpressionBinding>
+                <ScriptBlock>if ($_.ReportingLogPath) { 'Reporting log: ' + $_.ReportingLogPath + [Environment]::NewLine }</ScriptBlock>
+              </ExpressionBinding>
+              <ExpressionBinding>
+                <ScriptBlock>if ($_.PSObject.Properties['CspTextLogPaths']) { @(foreach ($path in $_.CspTextLogPaths) { 'CSP text: ' + $path + [Environment]::NewLine }) -join '' }</ScriptBlock>
+              </ExpressionBinding>
+              <ExpressionBinding>
+                <ScriptBlock>if ($_.BundlePath) { 'Diagnostics: ' + $_.BundlePath + [Environment]::NewLine }</ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

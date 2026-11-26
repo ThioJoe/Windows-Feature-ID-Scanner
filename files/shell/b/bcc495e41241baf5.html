@@ -1,0 +1,18 @@
+﻿<div class="scroll-view" role="group">
+    <div class="list" role="listbox" tabIndex="0" aria-multiselectable="false" aria-required="true" data-bind="event: { focus: onListFocus, focusin: onListFocusIn, focusout: onListFocusOut }, attr: { 'aria-label': listAccessibleName }">
+        <!-- ko foreach: items -->
+        <!-- Old behavior (remove when Feature_WoahNarratorSelectedFix is fully enabled):
+             aria-selected is a boolean that Knockout removes when false, causing Narrator to announce
+             "selected" on focused items due to listbox single-select semantics in WebView2/Chromium.
+             New behavior (Feature_WoahNarratorSelectedFix):
+             Explicitly set aria-selected="false" on unselected items so Narrator announces "not selected". -->
+        <div class="list-item md" tabIndex="-1" role="option" data-bind="click: $parent.selectedItem,
+             event: { keyup: $parent.onItemKeyUp, keydown: $parent.onItemKeyDown, focus: $parent.selectionFollowsFocus ? $parent.selectedItem : null },
+             attr: { 'aria-selected': $parent.WoahNarratorSelectedFix() ? String($parent.selectedItem() == $data) : $parent.selectedItem() == $data },
+             css: { selected: $parent.selectedItem() == $data }">
+            <!-- ko template: { nodes: $componentTemplateNodes, data: $data } -->
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

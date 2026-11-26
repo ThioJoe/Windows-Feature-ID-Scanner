@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap mp">
+  <Identity Name="Windows.PrintDialog"
+    Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Version="6.2.3.0"
+    ResourceId="neutral" />
+  <mp:PhoneIdentity PhoneProductId="0D32EEB1-32F0-40DA-8558-CEA6FCBEC4A4" PhonePublisherId="55E54717-F5C7-4A3B-B0EA-77784A1D69C3" />
+  <Properties>
+    <DisplayName>ms-resource:DisplayName</DisplayName>
+    <Description>ms-resource:Description</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal"
+      MinVersion="10.0.0.0"
+      MaxVersionTested="12.0.0.0" />
+    <PackageDependency Name="Microsoft.UI.Xaml.CBS" MinVersion="2.62101.13001.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="Microsoft.Windows.PrintDialog"
+      Executable="PrintDialog.exe"
+      EntryPoint="PrintDialog!Microsoft.Windows.PrintDialog">
+      <uap:VisualElements DisplayName="ms-resource:DisplayName" Description="ms-resource:Description"
+        Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"/>
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-print-addprinter">
+            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:DisplayName>Add a printer</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-print-printjobs">
+            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:DisplayName>Print job action center</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <!-- internetClient is needed for spooler RPC calls. -->
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

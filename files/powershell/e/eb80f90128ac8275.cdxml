@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+
+  <Class ClassName="ROOT/Microsoft/Windows/SMB/MSFT_SmbComponent">
+    <Version>1.0</Version>   
+    <DefaultNoun>SmbComponent</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters DefaultCmdletParameterSet="DefaultSet">
+      </GetCmdletParameters>
+    </InstanceCmdlets>
+      <!--
+
+      //
+      // Remove-SMBComponents
+      //
+
+      -->
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="High" HelpUri="" Aliases="rsmbc"/>
+        <Method MethodName="RemoveSmbComponent">
+          <ReturnValue>
+            <Type PSType="uint32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Name">
+              <Type PSType="string[]" />
+              <CmdletParameterMetadata IsMandatory="true" Position="1">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+</PowerShellMetadata>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Client-EmbeddedExp-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-EmbeddedExp" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Client-ShellLauncher-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="118dd2182807e7ae9eaa1bc2b5dcfa82">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-IoTUAP-ShellExt-Tools-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="dc476ab58250d025541c25c48b130e31">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-AssignedAccessCsp-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Client-EmbeddedBootExp" displayName="Unbranded Boot" description="Suppresses Windows elements that appear when Windows starts, resumes or encounters unrecovered errors">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-DeviceLockdown" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-BootExp-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d286883cdcd03290034aaa800278db45">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-DialogBlocking-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Client-EmbeddedLogon" displayName="Custom Logon" description="Enables customized logon experiences">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-DeviceLockdown" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-EmbeddedLogon-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Client-KeyboardFilter" displayName="Keyboard Filter" description="Enables controls to suppress undesirable key presses or key combinations">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-DeviceLockdown" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilter-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d7acd3fa293a6cf62d5b6043e35b0958">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilter-Core-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Client-UnifiedWriteFilter" displayName="Unified Write Filter" description="Installs services and tools to protect physical media from write operations">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-DeviceLockdown" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-UnifiedWriteFilter-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="bb79a1b238fe9101197a044064c13bb3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Shell-CustomShellHost-Package" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--inclusive common css-->
+    <link href="/webapps/inclusiveOobe/css/inclusive-common.css" rel="stylesheet">
+
+    <!--oobe hello css-->
+    <link href="/webapps/inclusiveOobe/css/oobeHello.css" rel="stylesheet">
+
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobehello-nth-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <script type="text/html" id="custom-content-value-messaging-template">
+        <div class="common-container two-column non-interactive value-messaging-item-container">
+            <div class="list-item container-icon value-messaging-item-icon" role="presentation">
+                <i data-bind="attr:{'aria-hidden': true, 'class': $data.icon}"></i>
+            </div>
+            <div class="list-item container-text value-messaging-item-text">
+                <div class="value-messaging-item-title" aria-level="2" role="heading" data-bind="text: $data.heading"></div>
+                <div class="value-messaging-item-content" data-bind="text: $data.content"></div>
+            </div>
+        </div>
+    </script>
+
+    <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction, visible: contentContainerVisibility">
+        <!-- ko if: !$root.learnMoreVisible() -->
+        <div class="container-content">
+            <oobe-header id="oobeHeader" params="title: title, subtitle: subtitle"></oobe-header>
+
+            <!-- ko if: !$root.isConfirmationPageVisible() -->
+            <div class="content-box scrollable">
+                <div class="text-content">
+                    <div data-bind="template: { name: 'custom-content-value-messaging-template', foreach: valueMessagingParagraphs }"></div>
+                </div>
+                
+                <!-- ko if: isMultiChoice -->
+                <p>
+                    <a id="helloSwitchHyperlink" class="link" href="#" style="font-weight:600; font-size:16px;" data-bind="click: onSwitchEnrollmentKindClick, text: switchEnrollmentKindText"></a>
+                </p>
+                <!-- /ko -->
+                <a id="helloLearnMoreLink" class="link" href="#" style="font-size:16px;" data-bind="click: onLearnMoreClick, text: resourceStrings.HelloLearnMoreLinkText"></a>
+            </div>
+            <!-- /ko -->
+
+        </div>
+        <oobe-footer id="helloFlexEndButtons" params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+        <!-- /ko -->
+        <div class="container-content" data-bind="visible: $root.learnMoreVisible">
+            <oobe-header params="title: resourceStrings.HelloLearnMoreLinkText"></oobe-header>
+            <div class="iframe-row med-iframe">
+                <!-- remove { src: $root.learnMoreWebSource } from attr during Feature_OobeHostPostMSAFlowMigration removal -->
+                <iframe id="hello-learnmore-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" data-bind="iframeContent: {dir:document.documentElement.dir, focusBody: true, frameTitle: resourceStrings.HelloLearnMoreLinkText }, attr: { src: $root.learnMoreWebSource, 'aria-label': resourceStrings.HelloLearnMoreLinkText }"></iframe>
+            </div>
+            <div id="learnMoreFooter">
+                <oobe-button params="buttonText: flexEndButtonsLearnMore.buttonText, isPrimaryButton: true, buttonClickHandler: flexEndButtonsLearnMore.buttonClickHandler, disableControl: flexEndButtonsLearnMore.disableControl"></oobe-button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

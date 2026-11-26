@@ -1,0 +1,42 @@
+﻿<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="root\wmi\ClusPortDeviceInformation">
+    <Version>1.0.0.0</Version>
+    <DefaultNoun>StorageBusClientDevice</DefaultNoun>
+    <InstanceCmdlets>
+      <GetCmdletParameters/>
+       <GetCmdlet>
+        <CmdletMetadata Verb="Get" HelpUri="http://link.to.online.help"/>
+         <GetCmdletParameters DefaultCmdletParameterSet="ByDeviceState">
+          <QueryableProperties>
+            <Property PropertyName="DeviceState">
+              <Type PSType="StorageBusClientDevice.DeviceState"/>
+              <RegularQuery>
+                <CmdletParameterMetadata IsMandatory="false" Position="0" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByDeviceState"/>
+              </RegularQuery>
+            </Property>
+            <Property PropertyName="DeviceType">
+              <Type PSType="StorageBusClientDevice.DeviceType"/>
+              <RegularQuery>
+                <CmdletParameterMetadata IsMandatory="false" Position="0" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByDeviceType"/>
+              </RegularQuery>
+            </Property>
+          </QueryableProperties>
+        </GetCmdletParameters>
+      </GetCmdlet>           
+     </InstanceCmdlets>
+  </Class>
+  <Enums>
+    <Enum EnumName="StorageBusClientDevice.DeviceState" UnderlyingType="System.UInt32">
+      <Value Name="Disconnected" Value="0"/>
+      <Value Name="Paused" Value="1"/>
+      <Value Name="Draining" Value="2"/>
+      <Value Name="Active" Value="3"/>
+      <Value Name="Removed" Value="4"/>
+    </Enum>
+    <Enum EnumName="StorageBusClientDevice.DeviceType" UnderlyingType="System.UInt32">
+      <Value Name="Disk" Value="0"/>
+      <Value Name="Enclosure" Value="1"/>
+      <Value Name="StorageScaleUnit" Value="2"/>
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

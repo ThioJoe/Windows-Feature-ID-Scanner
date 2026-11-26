@@ -1,0 +1,7 @@
+<!-- Split into two <div>s to avoid conflicts between aria-live and role="switch".The outer div acts as a live region 
+     that listens for aria-label changes on the inner toggle, ensuring consistent announcements across all interaction types.-->
+<div aria-live="polite" aria-relevant="text" aria-atomic="true"> 
+     <div data-bind="winToggleSwitch:{contentHeader: contentHeader, title: titleText, labelOff: labelOffText, labelOn: labelOnText, checked : checkedValue, isLastInAGroup : isLastInAGroupValue}, 
+                attr: { 'aria-label': currentAccDescription, 'role': 'switch' }">
+     </div>
+</div>
