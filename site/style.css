@@ -79,6 +79,8 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-columns { display: flex; }
 .picker-columns > .picker-section { flex: 1 1 auto; }
 .picker-section + .picker-section { border-left: 1px solid var(--border); }
+/* A column shorter than the list stays at its top while a longer one scrolls, instead of scrolling out of view */
+.picker-section-body { position: sticky; top: 0; }
 /* Stacked where two columns don't fit */
 @media (max-width: 520px) {
   .picker-columns { flex-direction: column; }

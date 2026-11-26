@@ -201,7 +201,7 @@ class BuildPicker extends HTMLElement {
     this.items = [];
     let html = '<div class="picker-columns">';
     for (const s of sections) {
-      html += `<div class="picker-section"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
+      html += `<div class="picker-section"><div class="picker-section-body"><div class="picker-section-label" aria-hidden="true">${esc(s.label)}${s.note ? ` <span>${esc(s.note)}</span>` : ''}</div>`;
       for (const g of s.groups) {
         // A group's notes: a bulleted line each on its info icon, and plain sentences for screen readers
         const notes = g.notes || [];
@@ -217,7 +217,7 @@ class BuildPicker extends HTMLElement {
         }
         html += '</div>';
       }
-      html += '</div>';
+      html += '</div></div>';
     }
     html += '</div>';
     const all = this.hasAttribute('data-show-all')
@@ -312,7 +312,7 @@ class BuildPicker extends HTMLElement {
     this.active = o;
     o.classList.add('active');
     this.list.setAttribute('aria-activedescendant', o.id);
-    if (scroll === 'center') this.list.scrollTop = o.offsetTop - (this.list.clientHeight - o.offsetHeight) / 2;
+    if (scroll === 'center') this.list.scrollTop += o.getBoundingClientRect().top - this.list.getBoundingClientRect().top - (this.list.clientHeight - o.offsetHeight) / 2;
     else if (scroll === 'nearest') o.scrollIntoView({ block: 'nearest' });
   }
 
