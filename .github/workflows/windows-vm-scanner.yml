@@ -165,8 +165,8 @@ jobs:
           $key = "$($summary.fullBuild)-$($summary.architecture)"
           $buildFolder = "output/Windows-Build-$key"
           New-Item -ItemType Directory -Force -Path $buildFolder | Out-Null
-          Copy-Item -Path vm-output\* -Destination $buildFolder -Recurse -Force
-          Get-ChildItem -Path $buildFolder -Recurse
+          Move-Item -Path vm-output\* -Destination $buildFolder -Force  # (A move: the resource data can be tens of thousands of files)
+          Get-ChildItem -Path $buildFolder -Recurse | Where-Object { $_.FullName -notmatch '\\resources\\' }  # (Not the resource data's files)
           echo "BUILD_FOLDER=$buildFolder" >> $env:GITHUB_ENV
           echo "BUILD_KEY=$key" >> $env:GITHUB_ENV
 

@@ -1553,6 +1553,14 @@ def main():
               gzip.compress(json.dumps(index, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8'), 9, mtime=0),
               replace=True)
 
+    # What was written, counted from the folder: worker processes that found the same new image at the same time each counted it
+    counts, sizes = collections.Counter(), collections.Counter()
+    for folder, _, names in os.walk(store.root):
+        for name in names:
+            rel = os.path.relpath(os.path.join(folder, name), store.root).replace(os.sep, '/')
+            if not rel.startswith('builds/') and not name.endswith('.tmp'):
+                counts[rel.split('/', 1)[0]] += 1
+                sizes[rel.split('/', 1)[0]] += os.path.getsize(os.path.join(folder, name))
     summary = {'build': args.build, 'files': len(files), 'fileVersions': len(entries), 'listed': len(listed), 'errors': errors[:200],
                'errorCount': len(errors), 'new': dict(sorted(counts.items())), 'newBytes': dict(sorted(sizes.items())),
                'seconds': round(time.time() - started)}
