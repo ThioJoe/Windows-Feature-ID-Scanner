@@ -44,6 +44,16 @@ const loadResIndex = (key) => resCached(resCaches.index, key, async () => JSON.p
 const loadPart = (hash) => resCached(resCaches.parts, hash, async () => (await assetFetch(`parts/${hash.slice(0, 2)}/${hash}.json`)).json());
 const loadRegistry = (hash) => resCached(resCaches.registry, hash, async () => (await assetFetch(`registry/${hash.slice(0, 2)}/${hash}.json`)).json());
 const loadFileList = (key) => resCached(resCaches.files, key, async () => parseFileList(await assetGzText(`builds/${encodeURIComponent(key)}/files.csv.gz`)));
+// derived/images.json (analyze-images.py, when the site is published): for each kind of image, the hashes of those whose files differ
+// from another's but whose pixels are the same, mapped to one of them, and those that are almost all white, which are shown on a
+// darker checkerboard (both empty where it's missing, as when testing the site)
+let imageInfo = { samePixels: {}, light: {} }, imageInfoLoad = null;
+const loadImageInfo = () => imageInfoLoad || (imageInfoLoad = getJson('images.json', DERIVED).catch(() => ({})).then((d) => {
+  imageInfo = { samePixels: d.samePixels || {}, light: Object.fromEntries(Object.entries(d.light || {}).map(([k, v]) => [k, new Set(v)])) };
+  return imageInfo;
+}));
+const samePixelsAs = (kind, hash) => (imageInfo.samePixels[kind] || {})[hash] || hash;
+const lightImage = (kind, hash) => Boolean(imageInfo.light[kind] && imageInfo.light[kind].has(hash));
 
 // What a file is matched across builds by: its path in lower case (Windows doesn't tell paths apart by case), without what changes in
 // folder names when what's in them is updated: the hash a driver package's folder in the driver store is named with
@@ -97,26 +107,27 @@ const changeColumn = { title: 'Change', value: (r) => r.change, sortKey: (r) => 
 const textCell = (s) => (s === null || s === undefined ? '<span class="muted">(none)</span>' : `<span class="res-text">${esc(s)}</span>`);
 
 const imageUrl = (kind, w, h, hash, ext) => `${ASSETS}${kind}/${w}x${h}/${hash[0]}/${hash}.${ext || 'png'}`;
-const imgHtml = (src, title, max) => `<img class="res-img" loading="lazy" src="${esc(src)}" title="${esc(title)}" alt="" style="max-width:${max}px;max-height:${max}px">`;
+const imgHtml = (src, title, max, light) => `<img class="res-img${light ? ' light' : ''}" loading="lazy" src="${esc(src)}" title="${esc(title)}" alt="" style="max-width:${max}px;max-height:${max}px">`;
 // An icon's or cursor's images: [width, height, bits, hash, (hotspot x, y)]; its preview is the largest
 const largestImage = (images) => (images || []).reduce((m, x) => (!m || x[0] * x[1] > m[0] * m[1] || (x[0] * x[1] === m[0] * m[1] && x[2] > m[2]) ? x : m), null);
 const imagePreview = (kind, images, max = 48) => {
   const x = largestImage(images);
-  return x ? imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, max) : '<span class="muted">(none)</span>';
+  return x ? imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, max, lightImage(kind, x[3])) : '<span class="muted">(none)</span>';
 };
-// The old and new images of an icon or cursor in two rows, a column for each size and bit depth, so that the same size lines up (a
-// cell is empty where one of them doesn't have it)
-const imageGrid = (kind, before, after, marked = () => false) => {
+// The old and new images of an icon or cursor in two rows, a column for each size and bit depth (those in `only`, a set of keys, when
+// it's given), so that the same size lines up
+const imageGrid = (kind, before, after, only) => {
   const key = (x) => `${x[0]}x${x[1]}x${x[2]}`;
   const sizes = new Map();
   [before, after].forEach((list, side) => (list || []).forEach((x) => {
+    if (only && !only.has(key(x))) return;
     if (!sizes.has(key(x))) sizes.set(key(x), { x, sides: [[], []] });
     sizes.get(key(x)).sides[side].push(x);
   }));
   const columns = [...sizes.values()].sort((p, q) => p.x[0] * p.x[1] - q.x[0] * q.x[1] || p.x[2] - q.x[2])
     .flatMap(({ sides }) => Array.from({ length: Math.max(sides[0].length, sides[1].length) }, (_, i) => [sides[0][i], sides[1][i]]));
   // (Where only the other has the size, a box the size of its image that says so)
-  const cell = (x, other) => (x ? `<td><span class="res-size${marked(x) ? ' changed' : ''}">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96)}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span></td>`
+  const cell = (x, other) => (x ? `<td><span class="res-size">${imgHtml(imageUrl(kind, x[0], x[1], x[3]), `${x[0]}×${x[1]}, ${x[2]}-bit`, 96, lightImage(kind, x[3]))}<br>${x[0]}×${x[1]}<span class="muted">, ${x[2]}-bit</span></span></td>`
     : `<td><span class="res-size"><span class="res-none" style="width:${Math.min(other[0], 96)}px;height:${Math.min(other[1], 96)}px" title="No ${other[0]}×${other[1]}, ${other[2]}-bit image">none</span><br>&nbsp;</span></td>`);
   const row = (label, side, list) => `<tr><th>${label}</th>${list && list.length ? columns.map((c) => cell(c[side], c[1 - side])).join('') : `<td colspan="${columns.length}" class="muted">(none)</td>`}</tr>`;
   return `<div class="res-grid-wrap"><table class="res-grid">${row('Old', 0, before)}${row('New', 1, after)}</table></div>`;
@@ -282,37 +293,50 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   // the file, with a 1×1 image in each. Those are left out where neither build has more than a placeholder, so a real icon that
   // replaces one, or that one replaces, still shows.
   const placeholder = (images) => !images || (images.length > 0 && images.every((x) => x[0] <= 1 && x[1] <= 1));
-  const leftOut = { icons: [], cursors: [] };
+  const sizeKey = (x) => `${x[0]}x${x[1]}x${x[2]}`;
+  const leftOut = { icons: { placeholder: [], samePixels: [] }, cursors: { placeholder: [], samePixels: [] } };
   const groupRows = (part, kind) => Promise.all(changes.filter((c) => partChanged(c, part)).map(async (c) => {
-    const [o, n] = await loadBoth(c, part);
-    return objectDiff(o, n).map((r) => ({ ...r, path: c.path, kind })).filter((r) => matchesQ(r.path, r.key));
+    const [[o, n]] = await Promise.all([loadBoth(c, part), loadImageInfo()]);
+    const rows = objectDiff(o, n).map((r) => ({ ...r, path: c.path, kind })).filter((r) => matchesQ(r.path, r.key));
+    // A changed icon's variations whose files differ but whose pixels are the same count as unchanged
+    for (const r of rows.filter((x) => x.change === 'changed')) {
+      const after = new Map(r.new.map((x) => [sizeKey(x), x[3]]));
+      r.samePixels = new Set(r.old.filter((x) => after.has(sizeKey(x)) && after.get(sizeKey(x)) !== x[3] && samePixelsAs(kind, after.get(sizeKey(x))) === samePixelsAs(kind, x[3])).map(sizeKey));
+    }
+    return rows;
   })).then((x) => x.flat().filter((r) => {
-    if (!placeholder(r.old) || !placeholder(r.new)) return true;
-    leftOut[kind].push(r);
+    if (placeholder(r.old) && placeholder(r.new)) leftOut[kind].placeholder.push(r);
+    else if (r.change === 'changed' && !changedVariations(r).size) leftOut[kind].samePixels.push(r);
+    else return true;
     return false;
   }));
-  const placeholderNote = (kind) => () => {
-    const rows = leftOut[kind];
-    if (!rows.length) return '';
-    const files = [...new Set(rows.map((r) => fileName(r.path)))].sort();
-    return `Not counted: ${fmt(rows.length)} ${kind === 'icons' ? 'icon' : 'cursor'}${rows.length === 1 ? '' : 's'} whose only image is a 1×1 placeholder ` +
-      `(in ${esc(files.slice(0, 5).join(', '))}${files.length > 5 ? ` and ${fmt(files.length - 5)} more files` : ''}). Programs built from Chromium's code ` +
-      "keep a 1×1 image in the places of the icons they don't use, since Windows refers to an icon by its position in the file.";
-  };
-  // A changed icon's images that differ (by size and bits), so its preview is one that changed rather than its largest
-  const sizeKey = (x) => `${x[0]}x${x[1]}x${x[2]}`;
-  const differing = (r) => {
-    if (r.change !== 'changed') return [r.old, r.new];
-    const o = new Map(r.old.map((x) => [sizeKey(x), x[3]])), n = new Map(r.new.map((x) => [sizeKey(x), x[3]]));
-    const oc = r.old.filter((x) => n.get(sizeKey(x)) !== x[3]), nc = r.new.filter((x) => o.get(sizeKey(x)) !== x[3]);
-    return [oc.length ? oc : r.old, nc.length ? nc : r.new];
+  const leftOutNote = (kind) => () => {
+    const count = (rows) => `${fmt(rows.length)} ${kind === 'icons' ? 'icon' : 'cursor'}${rows.length === 1 ? '' : 's'}`;
+    const files = (rows) => {
+      const names = [...new Set(rows.map((r) => fileName(r.path)))].sort();
+      return esc(names.slice(0, 5).join(', ')) + (names.length > 5 ? ` and ${fmt(names.length - 5)} more files` : '');
+    };
+    const { placeholder: p, samePixels: s } = leftOut[kind];
+    return [p.length ? `Not counted: ${count(p)} whose only image is a 1×1 placeholder (in ${files(p)}). Programs built from Chromium's code ` +
+        "keep a 1×1 image in the places of the icons they don't use, since Windows refers to an icon by its position in the file." : '',
+      s.length ? `Not counted: ${count(s)} whose images have the same pixels as before, only stored in PNG files compressed differently (in ${files(s)}).` : '']
+      .filter(Boolean).join('<br>');
   };
   // The variations (an image of one size and bit depth) the change is in: all of an added or removed icon's, those of a changed icon
-  // that were added, removed or changed
+  // that were added, removed or changed (not those whose files differ but whose pixels are the same)
   const changedVariations = (r) => {
     const pairs = (list) => new Set((list || []).map((x) => `${sizeKey(x)}:${x[3]}`));
     const o = pairs(r.old), n = pairs(r.new);
-    return new Set([...(r.old || []).filter((x) => !n.has(`${sizeKey(x)}:${x[3]}`)), ...(r.new || []).filter((x) => !o.has(`${sizeKey(x)}:${x[3]}`))].map(sizeKey));
+    const keys = new Set([...(r.old || []).filter((x) => !n.has(`${sizeKey(x)}:${x[3]}`)), ...(r.new || []).filter((x) => !o.has(`${sizeKey(x)}:${x[3]}`))].map(sizeKey));
+    (r.samePixels || []).forEach((k) => keys.delete(k));
+    return keys;
+  };
+  // A changed icon's variations that changed, so that its preview is one of them rather than its largest
+  const differing = (r) => {
+    if (r.change !== 'changed') return [r.old, r.new];
+    const keys = changedVariations(r);
+    const oc = r.old.filter((x) => keys.has(sizeKey(x))), nc = r.new.filter((x) => keys.has(sizeKey(x)));
+    return [oc.length ? oc : r.old, nc.length ? nc : r.new];
   };
   const variationsText = (r) => {
     const all = new Set([...(r.old || []), ...(r.new || [])].map(sizeKey)).size;
@@ -324,35 +348,47 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     { title: 'Variations', value: variationsText, sortKey: (r) => changedVariations(r).size, cls: 'mods' },
     { title: 'Old', value: () => '', html: (r) => imagePreview(kind, differing(r)[0]), cls: 'res-cell' },
     { title: 'New', value: () => '', html: (r) => imagePreview(kind, differing(r)[1]), cls: 'res-cell' }];
+  // A changed icon's details show the variations that changed, and say how many didn't
   const groupDetail = (kind) => async (r) => {
-    // (Outlined only where some of them changed, not all)
-    const changed = r.change === 'changed' ? changedVariations(r) : new Set();
-    const keys = changed.size < new Set([...(r.old || []), ...(r.new || [])].map(sizeKey)).size ? changed : new Set();
-    const marked = (x) => keys.has(sizeKey(x));
-    return `<div class="res-detail">${imageGrid(kind, r.old, r.new, marked)}` +
-      `<p class="muted">${keys.size ? 'Outlined: the variations that changed. ' : ''}${esc(r.path)}</p></div>`;
+    const only = r.change === 'changed' ? changedVariations(r) : null;
+    const all = new Set([...(r.old || []), ...(r.new || [])].map(sizeKey)).size;
+    const same = r.samePixels ? r.samePixels.size : 0;
+    const unchanged = only && only.size < all ? `${fmt(all - only.size)} of ${fmt(all)} variations unchanged` +
+      (same ? ` (${fmt(same)} of them stored in a PNG file compressed differently, with the same pixels)` : '') : '';
+    return `<div class="res-detail">${imageGrid(kind, r.old, r.new, only)}` +
+      `${unchanged ? `<p class="muted">${unchanged}</p>` : ''}<p class="muted">${esc(r.path)}</p></div>`;
   };
-  await sub('icons', 'Icons', groupRows('icons', 'icons'), groupColumns('icons'), groupDetail('icons'), placeholderNote('icons'));
-  await sub('cursors', 'Cursors in executables', groupRows('cursors', 'cursors'), groupColumns('cursors'), groupDetail('cursors'), placeholderNote('cursors'));
+  await sub('icons', 'Icons', groupRows('icons', 'icons'), groupColumns('icons'), groupDetail('icons'), leftOutNote('icons'));
+  await sub('cursors', 'Cursors in executables', groupRows('cursors', 'cursors'), groupColumns('cursors'), groupDetail('cursors'), leftOutNote('cursors'));
 
-  // Bitmaps and other images in executables
+  // Bitmaps and other images in executables (left out: a changed one whose file differs but whose pixels are the same)
+  const sameImages = [];
   const imageRows = Promise.all(changes.filter((c) => partChanged(c, 'bitmaps') || partChanged(c, 'images')).map(async (c) => {
-    const [ob, nb] = await loadBoth(c, 'bitmaps');
-    const [oi, ni] = await loadBoth(c, 'images');
+    const [[ob, nb], [oi, ni]] = await Promise.all([loadBoth(c, 'bitmaps'), loadBoth(c, 'images'), loadImageInfo()]);
     const bitmaps = objectDiff(ob, nb).map((r) => ({ ...r, kind: 'bitmaps' }));
     const images = objectDiff(oi, ni).map((r) => ({ ...r, kind: 'images' }));
     return [...bitmaps, ...images].map((r) => ({ ...r, path: c.path })).filter((r) => matchesQ(r.path, r.key));
-  })).then((x) => x.flat());
+  })).then((x) => x.flat().filter((r) => {
+    const same = r.change === 'changed' && r.old[0] === r.new[0] && r.old[1] === r.new[1] && samePixelsAs(r.kind, r.old[2]) === samePixelsAs(r.kind, r.new[2]);
+    if (same) sameImages.push(r);
+    return !same;
+  }));
   const resourceImage = (r, x) => {
     if (!x) return '<span class="muted">(none)</span>';
     const [w, h, hash, ext] = x;
-    return ext === 'svg' ? imgHtml(`${ASSETS}images/svg/${hash[0]}/${hash}.svg`, 'SVG', 96) : imgHtml(imageUrl(r.kind, w, h, hash, ext), `${w}×${h}`, 96);
+    return ext === 'svg' ? imgHtml(`${ASSETS}images/svg/${hash[0]}/${hash}.svg`, 'SVG', 96) : imgHtml(imageUrl(r.kind, w, h, hash, ext), `${w}×${h}`, 96, lightImage(r.kind, hash));
+  };
+  const sameImagesNote = () => {
+    if (!sameImages.length) return '';
+    const names = [...new Set(sameImages.map((r) => fileName(r.path)))].sort();
+    return `Not counted: ${fmt(sameImages.length)} image${sameImages.length === 1 ? '' : 's'} with the same pixels as before, only stored in a file compressed ` +
+      `differently (in ${esc(names.slice(0, 5).join(', '))}${names.length > 5 ? ` and ${fmt(names.length - 5)} more files` : ''}).`;
   };
   await sub('bitmaps', 'Bitmaps and images in executables', imageRows, [changeColumn,
     { title: 'File', value: (r) => fileName(r.path), html: fileCell, cls: 'name' },
     { title: 'ID', value: (r) => r.key, cls: 'id' },
     { title: 'Old', value: () => '', html: (r) => resourceImage(r, r.old), cls: 'res-cell' },
-    { title: 'New', value: () => '', html: (r) => resourceImage(r, r.new), cls: 'res-cell' }]);
+    { title: 'New', value: () => '', html: (r) => resourceImage(r, r.new), cls: 'res-cell' }], undefined, sameImagesNote);
 
   // UI text: string and message tables, dialogs and menus
   const dialogText = (d) => (d ? [d.title, ...(d.controls || []).map((x) => x[2]).filter((t) => t && !t.startsWith('#'))].filter(Boolean).join(' · ') : null);

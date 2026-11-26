@@ -46,6 +46,30 @@ jobs:
           rm -rf _site/data/builds/*/details.json _site/data/builds/*/super-god-mode _site/data/builds/*/symbols.json _site/data/builds/*/trace.json _site/data/symbol-cache*.json
           python3 scripts/build-site-data.py --data data --out _site/derived
 
+      # The images of the resource data in the assets branch whose files differ but whose pixels are the same, so that a comparison doesn't
+      # count a PNG that was only compressed again as a changed image, and those that are almost all white, which the site shows on a darker
+      # checkerboard (analyze-images.py). Without them, the site compares the files, and every image has the usual checkerboard.
+      - name: Check out the images of the resource data
+        id: assets
+        continue-on-error: true
+        uses: actions/checkout@v7
+        with:
+          ref: assets
+          path: assets
+          sparse-checkout: |
+            icons
+            cursors
+            bitmaps
+            images
+
+      - name: Analyze the images
+        if: steps.assets.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python3 -m venv "$RUNNER_TEMP/images-venv"
+          "$RUNNER_TEMP/images-venv/bin/pip" install -q pillow
+          "$RUNNER_TEMP/images-venv/bin/python" scripts/analyze-images.py --assets assets --out _site/derived/images.json
+
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site

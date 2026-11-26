@@ -9,6 +9,8 @@
   --added: #1a7f37;
   --removed: #cf222e;
   --changed: #9a6700;
+  --checker-light-1: #8c959f;  /* The checkerboard behind an image that's almost all white (analyze-images.py) */
+  --checker-light-2: #afb8c1;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -22,6 +24,8 @@
     --added: #3fb950;
     --removed: #f85149;
     --changed: #d29922;
+    --checker-light-1: #30363d;  /* (The usual one, which is dark already) */
+    --checker-light-2: transparent;
   }
 }
 * { box-sizing: border-box; }
@@ -245,6 +249,7 @@ footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--borde
 footer a { color: var(--accent); }
 /* Resource data: images on a checkerboard, so transparency shows */
 .res-img { vertical-align: middle; image-rendering: auto; background: repeating-conic-gradient(var(--border) 0% 25%, transparent 0% 50%) 50% / 12px 12px; }
+.res-img.light { background: repeating-conic-gradient(var(--checker-light-1) 0% 25%, var(--checker-light-2) 0% 50%) 50% / 12px 12px; }
 td.res-cell { white-space: nowrap; }
 .res-glyph { font-size: 32px; line-height: 1.2; }
 .res-text { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -255,5 +260,4 @@ td.res-cell { white-space: nowrap; }
 .res-grid th { position: static; background: none; cursor: auto; vertical-align: middle; padding-left: 0; }
 .res-grid td { text-align: center; vertical-align: bottom; }
 .res-size { display: inline-block; text-align: center; font-size: 11px; }
-.res-size.changed { outline: 2px solid var(--changed); outline-offset: 2px; border-radius: 4px; }
 .res-none { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; min-width: 32px; min-height: 32px; border: 2px dotted color-mix(in srgb, var(--muted) 55%, transparent); border-radius: 6px; background: color-mix(in srgb, var(--border) 45%, transparent); color: var(--muted); font-size: 10px; }
