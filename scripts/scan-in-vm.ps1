@@ -449,6 +449,30 @@ function Get-VmBuild {
     }
 }
 
+# Microsoft's image can leave Windows' servicing with a restart pending (CBS RebootPending) from the VM's first start on, which no restart
+# clears and a cumulative update's restart does (26H2's 26300.9974 image: the image hasn't the flag, and Windows sets it at the first
+# start). Until something is installed with DISM, the restarts and the checks leave it out: nothing waits for a restart. Kept in the
+# work folder for separate steps.
+$ImageRebootPendingFile = Join-Path $WorkDir 'image-reboot-pending.txt'
+$script:ImageRebootPending = Test-Path $ImageRebootPendingFile
+
+function Save-ImageRebootPending {
+    # At the VM's first start from a new disk
+    $script:ImageRebootPending = [bool](Invoke-InVM -Retry { Test-Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending' })
+    if ($script:ImageRebootPending) {
+        Set-Content $ImageRebootPendingFile 'RebootPending since the first start'
+        Log "Windows' servicing shows a restart pending from the first start on, as Microsoft's image leaves it; it isn't counted until an update is installed with DISM"
+    } else {
+        Remove-Item $ImageRebootPendingFile -ErrorAction SilentlyContinue
+    }
+}
+
+function Clear-ImageRebootPending {
+    # Before the restart after an install with DISM, whose restart can be pending too
+    Remove-Item $ImageRebootPendingFile -ErrorAction SilentlyContinue
+    $script:ImageRebootPending = $false
+}
+
 function Restart-ScanVM([switch]$AnyPending) {
     # Restarted from inside, so Windows finishes installing updates the way it does on any PC. Installing a cumulative update can take
     # more than one restart (Windows' servicing restarts the VM again by itself, even after it has signed in), so this waits until the
@@ -465,10 +489,11 @@ function Restart-ScanVM([switch]$AnyPending) {
     while ((Get-Date) -lt $deadline) {
         Start-Sleep -Seconds 30
         try {
-            $state = Invoke-InVM {
+            $state = Invoke-InVM -arguments $script:ImageRebootPending {
+                param($imageRebootPending)
                 $cbs = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing'
                 @{ Boot = (Get-CimInstance Win32_OperatingSystem -ErrorAction Stop).LastBootUpTime
-                   Pending = (Test-Path "$cbs\RebootPending") -or (Test-Path "$cbs\RebootInProgress") -or (Test-Path "$cbs\PackagesPending") }
+                   Pending = ((Test-Path "$cbs\RebootPending") -and -not $imageRebootPending) -or (Test-Path "$cbs\RebootInProgress") -or (Test-Path "$cbs\PackagesPending") }
             }
         } catch {
             # Shutting down, or not up yet. Until the VM has shut down, this can still reach the instance from before the restart.
@@ -1033,6 +1058,7 @@ Write-Log 'installing __FILE__ with DISM'
 Write-Result $LASTEXITCODE
 '@).Replace('__FILE__', $cumulative.name)
         if ($result -notin '0', '3010') { throw "Installing the cumulative update $($cumulative.name) failed: $result" }  # 3010: done, restart needed
+        Clear-ImageRebootPending
         Restart-ScanVM
         Set-VmNetwork
         Log "VM build after the cumulative update: $(Get-VmBuild)"
@@ -1054,6 +1080,7 @@ Write-Result ($results -join '; ')
         Log "Installed: $result"
         $done = @($result -split '; ' | Where-Object { $_ -match ': (0|3010)$' })  # 3010: done, restart needed
         if ($done.Count -ne $others.Count) { throw "Installing the $InsiderChannel channel's packages failed: $result" }
+        Clear-ImageRebootPending
         Restart-ScanVM
         Set-VmNetwork
     }
@@ -1300,24 +1327,27 @@ function Test-VmInstallation([string[]]$kbs) {
     if ($ExpectedBuild -and $build -ne $ExpectedBuild) { throw "The VM is at build $build, not $ExpectedBuild" }
     $ubr = [int]$build.Split('.')[1]
     $query = {
+        param($imageRebootPending)
         $packages = @(Get-WindowsPackage -Online)
         $cbs = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing'
+        $rebootPending = Test-Path "$cbs\RebootPending"
         @{ Rollups = @($packages | Where-Object { $_.PackageName -like 'Package_for_RollupFix~*' -and "$($_.PackageState)" -eq 'Installed' } | ForEach-Object { $_.PackageName })
            Unfinished = @($packages | Where-Object { "$($_.PackageState)" -in 'InstallPending', 'UninstallPending', 'PartiallyInstalled' } | ForEach-Object { "$($_.PackageName) ($($_.PackageState))" })
-           RestartPending = (Test-Path "$cbs\RebootPending") -or (Test-Path "$cbs\PackagesPending") -or (Test-Path "$cbs\RebootInProgress")
+           RestartPending = ($rebootPending -and -not $imageRebootPending) -or (Test-Path "$cbs\PackagesPending") -or (Test-Path "$cbs\RebootInProgress")
+           ImageRestartPending = $rebootPending -and $imageRebootPending  # (As Microsoft's image leaves it; see $script:ImageRebootPending)
            Packages = $packages.Count }
     }
-    $servicing = Invoke-InVM -Retry $query
+    $servicing = Invoke-InVM -Retry -arguments $script:ImageRebootPending $query
     if ($servicing.RestartPending -or $servicing.Unfinished) {
         # Windows' setup leaves servicing work for the first restart, as on a new PC; a restart has to finish it
         Log 'Windows has servicing work pending until a restart; restarting the VM first'
         Restart-ScanVM
         Set-VmNetwork
-        $servicing = Invoke-InVM -Retry $query
+        $servicing = Invoke-InVM -Retry -arguments $script:ImageRebootPending $query
     }
     # The cumulative update's package is named after the build it brings, in the shared base build (26100.9818 for 26300.9818)
     $rollup = @($servicing.Rollups | Where-Object { $_ -match "~~\d+\.$ubr\." })
-    Log "Servicing: $($servicing.Packages) packages; cumulative update package $(if ($rollup) { $rollup[0] } else { 'missing' }); $($servicing.Unfinished.Count) unfinished; restart pending: $($servicing.RestartPending)"
+    Log "Servicing: $($servicing.Packages) packages; cumulative update package $(if ($rollup) { $rollup[0] } else { 'missing' }); $($servicing.Unfinished.Count) unfinished; restart pending: $($servicing.RestartPending)$(if ($servicing.ImageRestartPending) { ' (not counting the one Microsoft''s image leaves pending)' })"
 
     $health = (Invoke-VmTask 'ScanHealth' -timeoutMinutes 150 -script @'
 try {
@@ -1582,8 +1612,10 @@ if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageK
 if ($Step -in 'All', 'Download', 'Install', 'Verify' -and $Kb) { $updateUrls = Get-CumulativeUpdate }  # A version's first release can be its enablement package alone
 if ($Step -in 'All', 'Disk') { New-ScanDisk $esd $insiderImage | Out-Null }
 if ($Step -in 'All', 'VM', 'Install', 'FeatureUpdate', 'Updates', 'Apps', 'Verify', 'Scan', 'Trace', 'Resources') {
+    $firstStart = -not (Get-VM -Name $VmName -ErrorAction SilentlyContinue)  # (New-ScanDisk removes the VM of the old disk)
     Start-ScanVM
     $script:VmSession = Wait-ScanVM
+    if ($firstStart) { Save-ImageRebootPending }
     Set-VmNetwork
     Log "VM build: $(Get-VmBuild)"
 }
@@ -1593,6 +1625,7 @@ if ($Step -in 'All', 'Install' -and $updateUrls) {
         Log "The VM is at build $current already"
     } else {
         Install-CumulativeUpdate $updateUrls
+        Clear-ImageRebootPending
         Restart-ScanVM
         Set-VmNetwork
         Log "VM build after the cumulative update: $(Get-VmBuild)"
@@ -1602,6 +1635,7 @@ if ($Step -in 'All', 'FeatureUpdate') {
     if ($InsiderChannel) {
         Install-InsiderBuild
     } elseif (Install-TargetVersion) {
+        Clear-ImageRebootPending
         Restart-ScanVM
         Set-VmNetwork
     }

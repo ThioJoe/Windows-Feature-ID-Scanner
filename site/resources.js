@@ -137,6 +137,10 @@ function fileGroup(path) {
   return 'Shell UI files';
 }
 
+// Folders of apps that update themselves (Edge, Copilot, the Store's apps): what they hold depends on when the build's VM ran, not on the build
+const SELF_UPDATING = ['program files (x86)\\microsoft\\edge', 'program files (x86)\\microsoft\\copilot\\', 'program files (x86)\\microsoft\\temp\\', 'program files\\windowsapps\\'];
+const selfUpdating = (key) => SELF_UPDATING.some((s) => key.startsWith(s));
+
 // The compare view's resource sections. Adds nothing once isCurrent() says a newer render has started.
 async function renderResourcesCompare(out, a, b, q, isCurrent) {
   const entryOf = (key) => (index.builds.find((x) => x.key === key) || {}).resources;
@@ -366,14 +370,15 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     const [la, lb] = await Promise.all([loadFileList(a.key), loadFileList(b.key)]);
     if (!isCurrent()) return;
     const rows = [];
-    for (const [k, f] of lb) if (!la.has(k)) rows.push({ change: 'added', path: f.path, size: f.size });
-    for (const [k, f] of la) if (!lb.has(k)) rows.push({ change: 'removed', path: f.path, size: f.size });
+    for (const [k, f] of lb) if (!la.has(k) && !selfUpdating(k)) rows.push({ change: 'added', path: f.path, size: f.size });
+    for (const [k, f] of la) if (!lb.has(k) && !selfUpdating(k)) rows.push({ change: 'removed', path: f.path, size: f.size });
     let changed = 0;
-    for (const [k, f] of lb) if (la.has(k) && la.get(k).hash !== f.hash) changed++;
+    for (const [k, f] of lb) if (la.has(k) && la.get(k).hash !== f.hash && !selfUpdating(k)) changed++;
     const shown = rows.filter((r) => matchesQ(r.path));
     shown.forEach((r, i) => { r.id = i; });
     allSec.querySelector('.count').innerHTML = `<span class="added">${fmt(shown.filter((r) => r.change === 'added').length)} added</span>, ` +
       `<span class="removed">${fmt(shown.filter((r) => r.change === 'removed').length)} removed</span> (and ${fmt(changed)} changed)`;
+    allSec.insertAdjacentHTML('beforeend', '<p class="muted">Not counted: Edge, Copilot and the Store\'s apps (Program Files\\WindowsApps), which update themselves, so what they have depends on when the build was scanned.</p>');
     renderTable(allSec, shown, [changeColumn,
       { title: 'Path', value: (r) => r.path, html: (r) => `<span class="res-path">${esc(r.path)}</span>`, cls: 'sgm' },
       { title: 'Size', value: (r) => (r.size === '' ? null : Number(r.size)), html: (r) => (r.size === '' ? '' : fmt(r.size)), cls: 'mods' }]);
