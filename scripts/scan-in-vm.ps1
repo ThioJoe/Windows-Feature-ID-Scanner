@@ -105,8 +105,27 @@ function Get-ProductsCatalogs {
         if ($digest -ne $file.Digest) { throw "SHA-256 mismatch ($digest, expected $($file.Digest))" }
         $cabs += $cab
     } catch { Log "Couldn't get the current catalog from Windows Update ($($_.Exception.Message)); using the older one only" }
+    foreach ($older in $OlderProductsCatalogs) {
+        try {
+            $cab = Join-Path $WorkDir (Split-Path $older.Url -Leaf)
+            Save-Url $older.Url $cab
+            $hash = (Get-FileHash $cab -Algorithm SHA256).Hash
+            if ($hash -ne $older.Sha256) { throw "SHA-256 mismatch ($hash)" }
+            $cabs += $cab
+        } catch { Log "Couldn't get the older catalog $(Split-Path $older.Url -Leaf) ($($_.Exception.Message))" }
+    }
     return $cabs
 }
+
+# The tool's catalogs of 24H2 from September and October 2024, which Microsoft still has, with images of 26100.1742 (the build 24H2 came
+# out with for all PCs) and 26100.2033: a 24H2 build older than the image in the current catalogs (26100.4349, June 2025) can start from
+# one of them. Each is checked against its SHA-256 (the catalogs aren't signed, the tool's current ones neither).
+$OlderProductsCatalogs = @(
+    @{ Url = 'https://download.microsoft.com/download/6/2/b/62b47bc5-1b28-4bfa-9422-e7a098d326d4/products_Win11_20240916.cab'
+       Sha256 = 'D086BAD6A9E6012158DBD7EE1D7EC8D1B3085EDC559B8A6ACD170E81CDF6922F' }
+    @{ Url = 'https://download.microsoft.com/download/6/2/b/62b47bc5-1b28-4bfa-9422-e7a098d326d4/products-Win11-20241004.cab'
+       Sha256 = '2201BCCDFB68908EA5E9D543D32E1BAC1BF2EE9ED7CDD05C1B50478A7D2DB36C' }
+)
 
 function Get-BaseImage {
     # Every image file in the catalogs, with its hash; the newest image whose base build isn't past the target version's (an image of
