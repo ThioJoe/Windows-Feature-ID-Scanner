@@ -319,10 +319,20 @@ try {
     Write-Host "Opening targets as $user (time limit $TargetMinutes min)"
     $deadline = (Get-Date).AddMinutes($TargetMinutes + 10)
     $done = $false
+    $reported = Get-Date
     while (-not $done -and (Get-Date) -lt $deadline) {
         Start-Sleep -Seconds 15
         $done = (Test-Path $targetLog) -and [bool](Select-String -Path $targetLog -Pattern '^"end",' -Quiet)
         if (-not $done -and (Get-ScheduledTask -TaskName $task).State -ne 'Running') { break }
+        if (-not $done -and ((Get-Date) - $reported).TotalMinutes -ge 3) {
+            # How far the targets are, every few minutes: each is in their log once it's closed
+            $reported = Get-Date
+            try {
+                $rows = @(Import-Csv $targetLog -ErrorAction Stop | Where-Object { $_.kind -ne 'start' })
+                $failed = @($rows | Where-Object { $_.error }).Count
+                if ($rows) { Write-Host "Targets opened so far: $($rows.Count)$(if ($failed) { " ($failed with an error)" }); the latest: $($rows[-1].kind) $($rows[-1].label)" }
+            } catch { }  # (Being written to just then)
+        }
     }
     if (-not $done) {
         $why = Get-Content "$targetLog.error" -Raw -ErrorAction SilentlyContinue
