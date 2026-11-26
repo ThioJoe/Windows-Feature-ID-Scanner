@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:build="http://schemas.microsoft.com/developer/appx/2015/build" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:uap15="http://schemas.microsoft.com/appx/manifest/uap/windows10/15" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" IgnorableNamespaces="uap rescap build uap10 uap15">
+  <Identity Name="Microsoft.WindowsWorkload.CBS" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.2611.1231.0" ProcessorArchitecture="x64" />
+  <mp:PhoneIdentity PhoneProductId="85298A2D-2BB7-44D2-910A-8530F82C94D4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Microsoft.WindowsWorkload.CBS</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>windows.png</Logo>
+    <Framework>false</Framework>
+    <uap15:DependencyTarget>true</uap15:DependencyTarget>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26000.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="EN-US" />
+  </Resources>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Extensions>
+    <!-- CBS VPack: OOP server registrations for SessionManager and SessionHost.
+         Broker registration is NOT included (deferred to a future phase). -->
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Workloads.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Workloads.WorkloadManager" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Workloads.Internal.CacheManagerInternal" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <!-- SessionManager.1 in-process servers, copied from the
+         WindowsWorkload.SessionManager.1 package. Required for metadata-based
+         marshalling when sessions run out-of-proc. -->
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Private.Workloads.SessionManager.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Private.Workloads.SessionManagerInProc.SessionManager" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.Private.Workloads.SessionHost.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Private.Workloads.SessionHostInProc.SessionHost" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.outOfProcessServer">
+      <OutOfProcessServer ServerName="Microsoft.Windows.Private.Workloads.SessionManager" uap5:IdentityType="activateAsActivator">
+        <Path>WorkloadsSessionManager.exe</Path>
+        <Instancing>singleInstance</Instancing>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Private.Workloads.SessionManager.SessionManager" />
+      </OutOfProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.outOfProcessServer">
+      <OutOfProcessServer ServerName="Microsoft.Windows.Private.Workloads.SessionHost" uap5:IdentityType="activateAsActivator">
+        <Path>WorkloadsSessionHost.exe</Path>
+        <Instancing>multipleInstances</Instancing>
+        <ActivatableClass ActivatableClassId="Microsoft.Windows.Private.Workloads.SessionHost.SessionHost" />
+      </OutOfProcessServer>
+    </Extension>
+  </Extensions>
+</Package>

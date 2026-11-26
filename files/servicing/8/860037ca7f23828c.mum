@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Windows-ContainerOS-Printing-NoShell-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Windows-ContainerOS-Printing-NoShell-WOW64-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Windows-ContainerOS-Printing-NoShell-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="280a92fe8216a0b6f7a3fefdb8439557">
+      <component>
+        <assemblyIdentity name="ntprint.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="x86" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="33518ebe98b4d13617381940ca597a73">
+      <component>
+        <assemblyIdentity name="prnms003.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="x86" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="65fe26f42839ea7a33ba2610663ed015">
+      <component>
+        <assemblyIdentity name="Windows-ContainerOS-Printing-NoShell-WOW64-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="c0db571443da58391df2672ace0e1344">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-Core-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

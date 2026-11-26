@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="https://support.microsoft.com/help/5136956" creationTimeStamp="2026-11-17T15:03:21Z" lastUpdateTimeStamp="2026-11-17T15:03:21Z">
+  <assemblyIdentity name="Microsoft-Windows-DirectoryServices-ADAM-Client-FOD-Package-Wrapper" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5136956" releaseType="Security Update" restart="possible">
+    <parent revisionCompare="GE" integrate="standalone" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-DirectoryServices-ADAM-Client-FOD-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="Microsoft-Windows-DirectoryServices-ADAM-Client-FOD-Package_neutral_PACKAGE">
+      <package integrate="liberate">
+        <assemblyIdentity name="Microsoft-Windows-DirectoryServices-ADAM-Client-FOD-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

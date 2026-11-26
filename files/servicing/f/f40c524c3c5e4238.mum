@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-WindowsCore-HardwareAccelerators-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-WindowsCore-HardwareAccelerators" releaseType="Feature Pack">
+    <update name="101f763cd34a387edf58de1e6c841710">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-HardwareAccelerators-ClassExtension-Package" version="10.0.26100.3037" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="aa045a3cd5d8b43805b8548641496602">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-HardwareAccelerators-Core-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,1808 @@
+{
+  "commandListPage": [
+    {
+      "header": "Administrar el acceso por voz y el micrófono",
+      "description": "Los comandos aquí te ayudan a operar la interfaz de usuario de acceso de voz, la configuración, las opciones de ayuda y los modos de acceso de voz.",
+      "commands": [
+        {
+          "command": "Reactivación del acceso de voz",
+          "description": "Dile al acceso por voz que es el momento de escuchar.",
+          "variation1": "Reactivar audio"
+        },
+        {
+          "command": "Suspensión del acceso de voz",
+          "description": "Poner el acceso de voz en suspensión. Tendrás que reactivar el acceso por voz de nuevo para usarlo.",
+          "variation1": "Silenciar"
+        },
+        {
+          "command": "Desactivar el micrófono",
+          "description": "Desactiva el micrófono de acceso de voz. Para volver a encenderlo, mantén presionado el botón del micrófono"
+        },
+        {
+          "command": "Cerrar el acceso de voz",
+          "description": "Cerrar el acceso de voz. Reiniciar el acceso de voz desde Inicio o Configuración para volverlo a usar",
+          "variation1": "Desactivar el acceso de voz",
+          "variation2": "Detener el acceso de voz",
+          "variation3": "Salir del acceso de voz",
+          "variation4": "Salir del acceso de voz"
+        },
+        {
+          "command": "Qué puedo decir",
+          "description": "Abre una lista de todos los comandos de acceso de voz que te ayudarán mientras trabajas con el acceso de voz para realizar diferentes tareas.",
+          "variation1": "Mostrar todos los comandos",
+          "variation2": "Mostrar los comandos",
+          "variation3": "Mostrar lista de comandos"
+        },
+        {
+          "command": "Abrir configuración de acceso de voz",
+          "description": "Accede a la configuración de acceso por voz en la esquina superior derecha de la barra de acceso de voz."
+        },
+        {
+          "command": "Abrir la ayuda del acceso de voz",
+          "description": "Obtenga acceso a la ayuda de acceso por voz en la esquina superior derecha de la barra de acceso de voz."
+        },
+        {
+          "command": "Abrir guía de acceso de voz",
+          "description": "Abre la guía interactiva de acceso de voz para que practiques trabajar con diferentes comandos de voz."
+        },
+        {
+          "command": "Modo de comandos",
+          "description": "Cambiar al modo de solo comandos. No podrás dictar texto, solo podrás proporcionar comandos",
+          "variation1": "Cambiar al modo de comandos"
+        },
+        {
+          "command": "Modo de dictado",
+          "description": "Cambiar al modo de dictado. Solo podrás dictar texto, no proporcionar órdenes",
+          "variation1": "Cambiar al modo de dictado"
+        },
+        {
+          "command": "Modo predeterminado",
+          "description": "A menos que realices cambios, este es el modo en que se aplica automáticamente el acceso de voz. Puedes usar comandos y dictar texto (en campos editables)",
+          "variation1": "Cambiar al modo predeterminado"
+        }
+      ]
+    },
+    {
+      "header": "Interactuar con aplicaciones",
+      "description": "Con el acceso por voz, hay varias formas de controlar la ventana activa actual y de trabajar con varias aplicaciones y ventanas. Puede abrir y cerrar aplicaciones, cambiar entre ventanas abiertas, controlar y desplazarse por una ventana.",
+      "commands": [
+        {
+          "command": "Abrir <app name>",
+          "description": "Abre una aplicación en tu PC.",
+          "parameters": "Donde <app name> es cualquier aplicación válida en el equipo.",
+          "variation1": "Iniciar <app name>",
+          "variation2": "Mostrar <app name>",
+          "example1": "Abrir Edge",
+          "example2": "Iniciar Word",
+          "example3": "Mostrar configuración"
+        },
+        {
+          "command": "Cerrar <app name>",
+          "description": "Cierre una aplicación abierta que haya abierto con el nombre de la aplicación.",
+          "parameters": "Donde <app name> ya está abierto en el equipo.",
+          "variation1": "Cerrar ventana",
+          "variation2": "Cerrar esta ventana",
+          "variation3": "Salir de <app name>",
+          "variation4": "Salir de <app name>",
+          "example1": "Cerrar Edge",
+          "example2": "Cerrar ventana",
+          "example3": "Salir de Word",
+          "example4": "Salir de la configuración"
+        },
+        {
+          "command": "Cambiar a <app name>",
+          "description": "Cambia a otra aplicación abierta. Si hay varias ventanas abiertas, obtendrá la opción de elegir la ventana exacta que desee.",
+          "parameters": "Donde <app name> ya está abierto en el equipo.",
+          "variation1": "Ir a <app name>",
+          "example1": "Cambiar a Edge",
+          "example2": "Ir a Excel"
+        },
+        {
+          "command": "Minimizar <app name>",
+          "description": "Minimizar ventana de una aplicación específica.",
+          "parameters": "Donde <app name> ya está abierto en el equipo.",
+          "variation1": "Ocultar <app name>",
+          "example1": "Minimizar Edge",
+          "example2": "Ocultar Word"
+        },
+        {
+          "command": "Minimizar ventana",
+          "description": "Minimizar la ventana de la aplicación en la que estás trabajando.",
+          "variation1": "Minimizar esto",
+          "variation2": "Minimizar la ventana",
+          "variation3": "Minimizar esta ventana",
+          "variation4": "Ocultar esto",
+          "variation5": "Ocultar la ventana",
+          "variation6": "Ocultar esta ventana"
+        },
+        {
+          "command": "Maximizar <app name>",
+          "description": "Maximiza la ventana de una aplicación específica.",
+          "parameters": "Donde <app name> ya está abierto en el equipo.",
+          "example1": "Maximizar Edge",
+          "example2": "Maximizar Word"
+        },
+        {
+          "command": "Maximizar ventana",
+          "description": "Maximiza la ventana de la aplicación en la que estás trabajando.",
+          "variation1": "Maximizar esto",
+          "variation2": "Maximizar la ventana",
+          "variation3": "Maximizar esta ventana"
+        },
+        {
+          "command": "Restaurar <app name>",
+          "description": "Devuelve la ventana de la aplicación que mencionaste a su estado anterior.",
+          "parameters": "Donde <app name> ya está abierto en el equipo.",
+          "example1": "Restaurar Edge"
+        },
+        {
+          "command": "Restaurar ventana",
+          "description": "Devuelve la ventana de la aplicación que estás usando a su estado anterior.",
+          "variation1": "Restaurar eso",
+          "variation2": "Restaurar la ventana",
+          "variation3": "Restaurar ventana"
+        },
+        {
+          "command": "Desplazar <scroll direction>",
+          "description": "Activa un solo desplazamiento con la rueda del mouse en la dirección que indiques que vaya.",
+          "parameters": "La dirección de desplazamiento puede ser izquierda, derecha, arriba, abajo.",
+          "example1": "Desplazar hacia arriba",
+          "example2": "Desplazar hacia abajo",
+          "example3": "Desplazar a la izquierda",
+          "example4": "Desplazar a la derecha"
+        },
+        {
+          "command": "Iniciar desplazamiento <scroll direction>",
+          "description": "Realiza un desplazamiento continuo en la dirección en la que se te indica. La acción de desplazamiento se detiene con el comando \"Detener desplazamiento\".",
+          "parameters": "La dirección de desplazamiento puede ser izquierda, derecha, arriba, abajo.",
+          "example1": "Empezar a desplazar hacia la izquierda",
+          "example2": "Iniciar desplazamiento hacia abajo"
+        },
+        {
+          "command": "Detener desplazamiento",
+          "description": "Detener una acción de desplazamiento continuo.",
+          "variation1": "Detener",
+          "variation2": "Cancelar"
+        },
+        {
+          "command": "Desplazarse hasta <point>",
+          "description": "Desplázate hasta los bordes lejanos de la ventana.",
+          "parameters": "El punto puede ser superior, inferior, borde izquierdo o derecho."
+        },
+        {
+          "command": "Mostrar conmutador de tareas",
+          "description": "Abrir conmutador de tareas.",
+          "variation1": "Mostrar conmutador de tareas",
+          "variation2": "Enumerar todas las ventanas",
+          "variation3": "Mostrar todas las ventanas"
+        },
+        {
+          "command": "Ir al escritorio",
+          "description": "Regresa el foco al escritorio.",
+          "variation1": "Ir al escritorio",
+          "variation2": "Ir al inicio",
+          "variation3": "Minimizar todas las ventanas"
+        },
+        {
+          "command": "Buscar <x> en <search engine>",
+          "description": "Usa el explorador para buscar.",
+          "parameters": "Motor de búsqueda puede ser bing, google, youtube.\n<x> puede ser cualquier consulta de búsqueda.",
+          "variation1": "Buscar <x> en <search engine>",
+          "example1": "Buscar chocolates en Bing"
+        },
+        {
+          "command": "Acoplar ventana a <direction>",
+          "description": "Ajusta la ventana a la dirección en la que se le indica que vaya.",
+          "parameters": "La dirección puede ser izquierda, derecha, superior izquierda, superior derecha, inferior izquierda, inferior derecha",
+          "variation1": "Acoplar ventana a <direction>",
+          "variation2": "Ajustar la ventana a <direction>",
+          "example1": "Acoplar ventana a la derecha",
+          "example2": "Acoplar ventana a la izquierda"
+        }
+      ]
+    },
+    {
+      "header": "Interactuar con controles",
+      "description": "Use el acceso de voz para interactuar con los elementos de la pantalla por el nombre del elemento.",
+      "commands": [
+        {
+          "command": "Haz clic en el <item name>",
+          "description": "Haga clic con el botón primario en un elemento de la pantalla.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "variation1": "Pulsa <item name>",
+          "example1": "Haz clic en Inicio",
+          "example2": "Pulsar archivo"
+        },
+        {
+          "command": "Hacer doble clic en <item name>",
+          "description": "Haga doble clic en un elemento de la pantalla.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Doble clic en la Papelera de reciclaje",
+          "example2": "Haz doble clic en Edge"
+        },
+        {
+          "command": "Mover a <item name>",
+          "description": "Mueve el mouse a un elemento específico de la pantalla.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Mover a la papelera de reciclaje",
+          "example2": "Mover a Edge"
+        },
+        {
+          "command": "Descartar",
+          "description": "Cerrar cualquier menú o mensaje flotante."
+        },
+        {
+          "command": "Comprobar <item name>",
+          "description": "Selecciona una casilla específica.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Comprobar el inicio del acceso de voz"
+        },
+        {
+          "command": "Desactiva <item name>",
+          "description": "Anula la selección de una casilla específica.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Desactiva el inicio del acceso de voz"
+        },
+        {
+          "command": "Expandir <item name>",
+          "description": "Expande cualquier elemento del menú.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Expandir tamaño de fuente"
+        },
+        {
+          "command": "Alternar <item name>",
+          "description": "Activa o desactiva un elemento con el botón de alternancia proporcionado.",
+          "parameters": "El nombre del elemento es el nombre que se muestra en la pantalla.",
+          "example1": "Alternar luz nocturna"
+        },
+        {
+          "command": "Mover control deslizante <direction> <distance> veces",
+          "description": "Mueve un control deslizante en la dirección que le indiques para una distancia específica.",
+          "parameters": "La dirección es izquierda, derecha, arriba, abajo\nDistancia es el número de unidades por las que desea mover el control deslizante.",
+          "example1": "Mover brillo a la derecha 5 veces"
+        },
+        {
+          "command": "Buscar <word>",
+          "description": "Buscar directamente en Windows Search. Puede aprovechar la búsqueda de Windows para encontrar fácilmente cualquier aplicación, archivo o contenido web."
+        }
+      ]
+    },
+    {
+      "header": "Interactuar con superposiciones",
+      "description": "El acceso de voz ofrece superposiciones de números, lo que es una forma estupenda de interactuar con los elementos de la pantalla si no estás seguro del nombre. También hay una superposición de cuadrícula para ayudarte a mover con precisión el puntero del mouse a cualquier ubicación de la pantalla.",
+      "commands": [
+        {
+          "command": "Mostrar números",
+          "description": "Los números aparecerán en todos los elementos interactivos de la pantalla. Después, diga estos números para interactuar con elementos específicos.",
+          "variation1": "Mostrar números en todas partes"
+        },
+        {
+          "command": "Mostrar números aquí",
+          "description": "Los números aparecerán en todos los elementos interactivos de la aplicación que está usando. Después, diga estos números para interactuar con elementos específicos."
+        },
+        {
+          "command": "Mostrar números en <app name>",
+          "description": "Los números aparecerán en todos los elementos interactivos de la aplicación que mencionaste.",
+          "example1": "Mostrar números en Edge",
+          "example2": "Mostrar números en Word"
+        },
+        {
+          "command": "Mostrar números en la barra de tareas",
+          "description": "Los números aparecerán en todos los elementos interactivos de la barra de tareas."
+        },
+        {
+          "command": "Ocultar números",
+          "description": "Quitar las etiquetas numeradas de la pantalla.",
+          "variation1": "Cancelar",
+          "variation2": "Descartar"
+        },
+        {
+          "command": "Cancelar",
+          "description": "Quitar las etiquetas numeradas de la pantalla.\nCancelar se puede usar para descartar superposiciones de números y superposiciones de cuadrícula.",
+          "variation1": "Descartar",
+          "variation2": "Ocultar números"
+        },
+        {
+          "command": "Hacer clic en <number>",
+          "description": "Haz clic en el elemento numerado.",
+          "parameters": "El número corresponde a la etiqueta numerada cuando hay superposiciones en la pantalla.",
+          "variation1": "<number>",
+          "example1": "Haz clic en 5",
+          "example2": "Haz clic en 21",
+          "example3": "Haz clic en 2 1"
+        },
+        {
+          "command": "<number>",
+          "description": "En el caso de superposiciones de número, este comando hará clic en el elemento numerado. En el caso de la superposición de la cuadrícula, use el número de la cuadrícula para guiar el puntero del mouse hasta esa ubicación. La superposición de cuadrícula se volverá a dibujar en este punto en la ubicación del puntero del mouse.",
+          "example1": "5",
+          "example2": "3 1",
+          "example3": "31"
+        },
+        {
+          "command": "Mostrar cuadrícula",
+          "description": "Se dibuja una cuadrícula de 3*3 en la pantalla. Puede usar las coordenadas de la cuadrícula para mover el mouse en una dirección específica.",
+          "variation1": "Mostrar cuadrícula en todas partes",
+          "variation2": "Mostrar cuadrícula de ventana"
+        },
+        {
+          "command": "Mostrar cuadrícula aquí",
+          "description": "Se dibuja una cuadrícula de 3*3 en la aplicación en la que está trabajando. Puede usar las coordenadas de la cuadrícula para mover el mouse en una dirección específica."
+        },
+        {
+          "command": "Ocultar cuadrícula",
+          "description": "Quitar superposición de cuadrícula.",
+          "variation1": "Cancelar",
+          "variation2": "Descartar"
+        },
+        {
+          "command": "<monitor>",
+          "description": "Una vez que active la superposición de cuadrícula en una configuración de varias pantallas, puede cambiar rápidamente el foco a otra pantalla mediante el alfabeto o el fonético en el comando. Por ejemplo, puede decir \"B\" o \"Tiempo\" para mover el foco a la pantalla con la etiqueta \"B\".",
+          "parameters": "el monitor se corresponde con el alfabeto de etiquetas de las otras pantallas al invocar la cuadrícula",
+          "example1": "S",
+          "example2": "Opacidad (Alpha)",
+          "example3": "B",
+          "example4": "Bravo"
+        },
+        {
+          "command": "Cuadrícula de mouse <number> <number> <number> <number> <number>",
+          "description": "Use varias coordenadas de la cuadrícula en un comando para guiar el puntero en pantalla hasta la ubicación final. Puede usar hasta 5 instrucciones a la vez.",
+          "example1": "Cuadrícula de mouse 345",
+          "example2": "Cuadrícula de mouse 12345"
+        },
+        {
+          "command": "Cuadrícula del mouse <monitor> <number> <number> <number> <number> <number>",
+          "description": "Use la referencia de monitor y varias coordenadas de la cuadrícula en un comando para guiar el puntero en pantalla hasta la ubicación final.",
+          "parameters": "el monitor se corresponde con el alfabeto de etiquetas de las otras pantallas al invocar la cuadrícula",
+          "example1": "Cuadrícula de mouse A 345",
+          "example2": "Cuadrícula de mouse Bravo 12345"
+        },
+        {
+          "command": "Deshacer",
+          "description": "Volver al estado anterior de la cuadrícula.",
+          "variation1": "Deshacer eso"
+        },
+        {
+          "command": "Deshacer eso",
+          "description": "Volver al estado anterior de la cuadrícula.",
+          "variation1": "Deshacer"
+        },
+        {
+          "command": "Marca",
+          "description": "Marca el objeto que quieres arrastrar. Si no se especifica ningún número, el valor predeterminado es que el centro (5) de la cuadrícula esté marcado.\nLa cuadrícula se vuelve a dibujar automáticamente cuando se marca un elemento y puede usar la cuadrícula para desplazarse hasta donde desea quitar el elemento."
+        },
+        {
+          "command": "Marcar <number>",
+          "description": "Marca el objeto que quieras arrastrar. El marcado se produce en el <number> del estado actual de la cuadrícula. \nLa cuadrícula se vuelve a dibujar automáticamente cuando se marca un elemento y puedes usar la cuadrícula para navegar hasta donde quieras soltar el elemento.",
+          "example1": "Marcar 5",
+          "example2": "Marcar 9"
+        },
+        {
+          "command": "Arrastrar",
+          "description": "Arrastre un objeto marcado previamente a una nueva ubicación. El valor predeterminado es que el elemento se arrastre al centro del estado actual de la cuadrícula. Marque primero un objeto antes de usar este comando."
+        }
+      ]
+    },
+    {
+      "header": "Control del ratón y el teclado",
+      "description": "Con el acceso por voz, puedes usar el teclado con comandos de voz. Esta es una excelente forma de usar accesos directos en sus aplicaciones favoritas. Puede presionar una sola tecla o una combinación de teclas, presionar una tecla varias veces o presionar y mantener presionadas las teclas. El acceso por voz también ofrece diferentes formas de controlar el mouse para hacer clic, mover y arrastrar el puntero del mouse en la pantalla.",
+      "commands": [
+        {
+          "command": "Hacer clic",
+          "description": "Haz clic con el botón izquierdo en la ubicación del puntero del ratón. Para hacer clic en un elemento concreto de la pantalla, usa el comando \"hacer clic en <item>\".",
+          "variation1": "Pulsar",
+          "variation2": "Clic izquierdo"
+        },
+        {
+          "command": "Hacer clic con el botón derecho",
+          "description": "Haz clic con el botón derecho en la ubicación del puntero del ratón. Para hacer clic con el botón derecho en un elemento concreto de la pantalla, usa el comando \"hacer clic con el botón derecho en <item>\"."
+        },
+        {
+          "command": "Doble clic",
+          "description": "Haz doble clic en la ubicación del puntero del mouse. Para hacer doble clic en un elemento en pantalla, usa el comando \"Doble clic <item>\"."
+        },
+        {
+          "command": "Triple clic",
+          "description": "Haga tres clics en la ubicación del puntero del mouse."
+        },
+        {
+          "command": "Presiona <key1> <key2>....",
+          "description": "Presiona una tecla o combinación de teclas.",
+          "parameters": "Donde key1, key2, etc. son teclas del teclado. \nPara las teclas Retroceso, Entrar, Tabulador y Eliminar, también puedes dar solo el nombre de la clave como comando",
+          "variation1": "Presione <key1>",
+          "variation2": "Presiona <key1> y <key2>",
+          "variation3": "Presionar <key1> más <key2>",
+          "example1": "Presionar Escape",
+          "example2": "Presionar Mayús B",
+          "example3": "Presiona Mayús más B",
+          "example4": "Presiona Mayús y B",
+          "example5": "Retroceso",
+          "example6": "Entrar",
+          "example7": "Eliminar",
+          "example8": "Tabulador"
+        },
+        {
+          "command": "Presiona <key> <count> veces",
+          "description": "Presione una tecla el número de veces que diga.",
+          "parameters": "Donde la tecla es válida en el teclado y el recuento es el número de veces que quieres presionar la tecla.",
+          "example1": "Presiona la tecla TAB 3 veces"
+        },
+        {
+          "command": "Mantener presionado <key>",
+          "description": "Presiona y mantén pulsada una tecla. La tecla se libera cuando usas el comando \"Liberar\" o \"Liberar <key>\".",
+          "parameters": "Donde la clave es válida en el teclado.",
+          "example1": "Mantener presionada la tecla Mayús"
+        },
+        {
+          "command": "Liberar <key>",
+          "description": "Suelte la tecla que se mantiene presionada.",
+          "parameters": "Donde la clave es válida en el teclado.",
+          "variation1": "Liberar",
+          "example1": "Libera Mayús"
+        },
+        {
+          "command": "Mover mouse <direction>",
+          "description": "Mueve el puntero del mouse continuamente en la dirección en la que le indiques que vaya.",
+          "parameters": "Donde la dirección es: arriba/abajo/izquierda/derecha/superior izquierda/superior derecha/inferior izquierda/inferior derecha",
+          "example1": "Mover el mouse abajo",
+          "example2": "Mueve el mouse a la parte superior izquierda"
+        },
+        {
+          "command": "Mueve el mouse <direction> <distance>",
+          "description": "Mueve el puntero del mouse continuamente en la dirección en la que le indicas que vaya a una distancia específica.",
+          "parameters": "Donde la dirección es: arriba/abajo/izquierda/derecha/superior izquierda/superior derecha/inferior izquierda/inferior derecha\nDistancia es el número de unidades que desea mover el puntero del mouse.",
+          "example1": "Mover el mouse hacia abajo 5",
+          "example2": "Mover el mouse hacia abajo a la derecha 7"
+        },
+        {
+          "command": "Arrastrar mouse <direction>",
+          "description": "Arrastra el mouse es una orden específica.",
+          "parameters": "La dirección puede ser arriba, abajo, izquierda, derecha, superior izquierda, superior derecha, inferior izquierda o inferior derecha.",
+          "example1": "Arrastrar el mouse hacia arriba",
+          "example2": "Arrastra el mouse abajo a la derecha"
+        },
+        {
+          "command": "Mover <speed>",
+          "description": "Aumenta o disminuye la velocidad del movimiento del puntero del mouse. Esto se puede aplicar al mover o arrastrar el puntero del mouse en una dirección determinada.",
+          "parameters": "Donde la velocidad deseada es más rápida o lenta.",
+          "variation1": "Rápido",
+          "variation2": "Más lento",
+          "example1": "Mover más rápido",
+          "example2": "Más lento"
+        },
+        {
+          "command": "Dejar de moverse",
+          "description": "Detener el movimiento del puntero del mouse.",
+          "variation1": "Detener"
+        }
+      ]
+    },
+    {
+      "header": "Dictar texto",
+      "description": "Con el acceso de voz, puedes dictar texto e insertar símbolos y caracteres especiales usando solo comandos de voz.",
+      "commands": [
+        {
+          "command": "<text>",
+          "description": "Dictar texto e insertar símbolos y caracteres especiales en un cuadro de texto.",
+          "parameters": "Donde el texto puede ser cualquier frase, carácter especial y se pueden insertar símbolos.",
+          "example1": "Hola, buenos días",
+          "example2": "Prueba"
+        },
+        {
+          "command": "Dictar <text>",
+          "description": "Dicta una palabra en un cuadro de texto. Esto se puede usar para cualquier combinación de texto, incluido el texto que se podría interpretar mediante el acceso de voz como un comando. ",
+          "parameters": "Donde el texto puede ser cualquier frase, carácter especial y se pueden insertar símbolos.",
+          "variation1": "Escribir <voice access command>",
+          "example1": "Dictar suspensión de acceso de voz",
+          "example2": "Escribir borde abierto"
+        },
+        {
+          "command": "Mostrar teclado táctil",
+          "description": "Si tienes que escribir palabras complicadas de difícil pronunciación, como nombres o palabras que se pronuncian igual, pero se escriben de forma diferente (por ejemplo, \"hola\" y \"ola\"), puedes usar el acceso de voz para abrir el teclado táctil para escribir. También puedes usar el teclado táctil para escribir números pin, direcciones de correo electrónico e insertar emojis. También puedes usar el teclado táctil para escribir números pin, direcciones de correo electrónico e insertar emojis.",
+          "variation1": "Mostrar teclado"
+        },
+        {
+          "command": "Ocultar teclado táctil",
+          "description": "Cuando hayas terminado de usar el teclado táctil, usa este comando para cerrarlo.",
+          "variation1": "Ocultar teclado"
+        },
+        {
+          "command": "Deletrea eso",
+          "description": "Corrija las palabras mal escritas. Este comando abrirá el teclado táctil."
+        },
+        {
+          "command": "Corregir eso",
+          "description": "Corrija una frase seleccionada o la última frase dictada. Este comando abrirá el teclado táctil."
+        },
+        {
+          "command": "Corregir <text>",
+          "description": "Corrija las palabras mal escritas. Este comando abrirá el teclado táctil.",
+          "parameters": "Donde texto puede ser cualquier frase.",
+          "example1": "Corregir noche",
+          "example2": "Corregir serie"
+        },
+        {
+          "command": "Poner en mayúsculas <text>",
+          "description": "Inserta texto en el cursor y coloca en mayúscula la primera letra de cada palabra.",
+          "parameters": "Donde texto es lo que se debe insertar.",
+          "variation1": "Mayúsculas <text>",
+          "example1": "Poner en mayúsculas hola mundo",
+          "example2": "Poner en mayúsculas hola mundo "
+        },
+        {
+          "command": "sin espacio <text>",
+          "description": "Inserta texto en el cursor sin ningún espacio en blanco antes del texto.",
+          "parameters": "Donde texto es lo que se debe insertar.",
+          "variation1": "sin espacio <text>",
+          "example1": "sin espacio Donald's"
+        },
+        {
+          "command": "Literal <número/símbolo>",
+          "description": "Inserta números y símbolos como palabras habladas, omitiendo el formato automático. Por ejemplo, decir \"Literal 5\" inserta \"Cinco\" en lugar de hacer clic en el número de superposición 5, y decir \"Literal punto\" inserta la palabra \"punto\" en lugar del símbolo \".\".",
+          "parameters": "Donde el número o símbolo es lo que se debe insertar como texto hablado.",
+          "variation1": "Literal <número/símbolo>",
+          "example1": "Literal 5",
+          "example2": "Literal punto"
+        }
+      ]
+    },
+    {
+      "header": "Seleccionar texto",
+      "description": "Al usar el acceso por voz para dictar texto para crear documentos, puede usar comandos de voz para seleccionar texto y editar el texto seleccionado. Puede seleccionar el texto que ha dictado en último lugar, un fragmento de texto específico o seleccionar varios caracteres, palabras, líneas o párrafos.",
+      "commands": [
+        {
+          "command": "Seleccionar eso",
+          "description": "Seleccionar el último texto que ha dictado."
+        },
+        {
+          "command": "Seleccionar todo",
+          "description": "Seleccionar todo el texto de un cuadro de texto."
+        },
+        {
+          "command": "Seleccionar <text>",
+          "description": "Seleccione un fragmento de texto específico en un cuadro de texto.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto.",
+          "example1": "Seleccionar Hola mundo"
+        },
+        {
+          "command": "Selecciona desde <text1> hasta <text2>",
+          "description": "Seleccionar todo el texto del primer fragmento de texto que digas hasta el segundo fragmento de texto que digas en un cuadro de texto.",
+          "parameters": "Donde text1 y text2 son cualquier frase en orden en el cuadro de texto.",
+          "variation1": "seleccionar <text1> hasta <text2>",
+          "example1": "Seleccionar desde perro rápido hasta lento",
+          "example2": "Seleccionar perro rápido hasta lento"
+        },
+        {
+          "command": "Seleccionar palabra",
+          "description": "Selecciona la palabra actual en el cursor de texto.",
+          "variation1": "Seleccionar esta palabra"
+        },
+        {
+          "command": "Seleccionar línea",
+          "description": "Selecciona la línea actual a partir del cursor de texto.",
+          "variation1": "Seleccionar esta línea"
+        },
+        {
+          "command": "Seleccionar párrafo",
+          "description": "Selecciona el párrafo actual a partir del cursor de texto.",
+          "variation1": "Seleccionar este párrafo"
+        },
+        {
+          "command": "Seleccionar el carácter anterior",
+          "description": "Selecciona el carácter anterior de la posición del cursor de texto.",
+          "variation1": "Seleccionar último carácter"
+        },
+        {
+          "command": "Seleccionar carácter siguiente",
+          "description": "Selecciona el siguiente carácter de la posición del cursor de texto."
+        },
+        {
+          "command": "Seleccionar palabra anterior",
+          "description": "Selecciona la palabra anterior de la posición del cursor de texto.",
+          "variation1": "Seleccionar la última palabra"
+        },
+        {
+          "command": "Seleccionar la palabra siguiente",
+          "description": "Selecciona la palabra siguiente desde la posición del cursor de texto."
+        },
+        {
+          "command": "Seleccionar la línea anterior",
+          "description": "Selecciona la línea anterior de la posición del cursor de texto.",
+          "variation1": "Seleccionar la última línea"
+        },
+        {
+          "command": "Seleccionar la línea siguiente",
+          "description": "Selecciona la línea siguiente desde la posición del cursor de texto."
+        },
+        {
+          "command": "Seleccionar el párrafo anterior",
+          "description": "Selecciona el párrafo anterior desde la posición del cursor de texto.",
+          "variation1": "Seleccionar el último párrafo"
+        },
+        {
+          "command": "Seleccionar el párrafo siguiente",
+          "description": "Selecciona el párrafo siguiente desde la posición del cursor de texto."
+        },
+        {
+          "command": "Seleccionar los <count> caracteres anteriores",
+          "description": "Selecciona el número anterior de caracteres que le indiques empezando desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres.",
+          "variation1": "Seleccionar los últimos <count> caracteres",
+          "variation2": "Seleccionar de nuevo <count> caracteres ",
+          "variation3": "Seleccionar <count> caracteres hacia atrás",
+          "example1": "Seleccionar los cuatro caracteres anteriores",
+          "example2": "Seleccionar los últimos cuatro caracteres"
+        },
+        {
+          "command": "Seleccionar los siguientes <count> caracteres",
+          "description": "Selecciona el siguiente número de caracteres que indique, empezando desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres.",
+          "variation1": "Seleccionar <count> caracteres hacia adelante",
+          "example1": "Seleccionar los cinco caracteres siguientes"
+        },
+        {
+          "command": "Seleccionar <count> palabras anteriores",
+          "description": "Seleccionar el número anterior de palabras que le indiques a partir de la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras.",
+          "variation1": "Seleccionar las últimas <count> palabras",
+          "variation2": "Volver a seleccionar <count> palabras ",
+          "variation3": "Seleccionar <count> palabras hacia atrás",
+          "example1": "Seleccionar las cuatro palabras anteriores",
+          "example2": "Seleccionar las últimas cuatro palabras"
+        },
+        {
+          "command": "Seleccionar las siguientes <count> palabras",
+          "description": "Selecciona el siguiente número de palabras que le indiques, empezando desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras.",
+          "variation1": "Seleccionar <count> palabras hacia adelante",
+          "example1": "Seleccionar las dos palabras siguientes"
+        },
+        {
+          "command": "Seleccionar <count> líneas anteriores",
+          "description": "Seleccione el número anterior de líneas que le indica que empiecen desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas.",
+          "variation1": "Seleccionar las últimas <count> líneas",
+          "variation2": "Volver a seleccionar <count> líneas ",
+          "variation3": "Seleccionar <count> líneas hacia atrás",
+          "example1": "Seleccionar las dos líneas anteriores ",
+          "example2": "Seleccionar las dos últimas líneas"
+        },
+        {
+          "command": "Seleccionar las siguientes <count> líneas",
+          "description": "Selecciona el siguiente número de líneas que le indiques a partir de la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas.",
+          "variation1": "Seleccionar líneas <count> hacia adelante",
+          "example1": "Seleccionar las cuatro líneas siguientes"
+        },
+        {
+          "command": "Seleccionar los <count> párrafos anteriores",
+          "description": "Selecciona el número anterior de párrafos que indiques empezando desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos.",
+          "variation1": "Seleccionar los últimos <count> párrafos",
+          "variation2": "Seleccionar de nuevo <count> párrafos",
+          "variation3": "Seleccionar <count> párrafos hacia atrás ",
+          "example1": "Seleccionar los dos párrafos anteriores",
+          "example2": "Seleccionar los dos últimos párrafos"
+        },
+        {
+          "command": "Seleccionar los <count> párrafos siguientes",
+          "description": "Selecciona el siguiente número de párrafos que indiques empezando desde la posición del cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos.",
+          "variation1": "Seleccionar <count> párrafos adelante",
+          "example1": "Seleccionar los dos párrafos siguientes"
+        },
+        {
+          "command": "Anula la selección de esa opción",
+          "description": "Borra el texto seleccionado.",
+          "variation1": "Borrar selección"
+        }
+      ]
+    },
+    {
+      "header": "Editar texto",
+      "description": "Use los comandos de acceso de voz para editar el texto en el que está trabajando. Puede eliminar texto, cortar, copiar y pegar texto con comandos de voz directos.",
+      "commands": [
+        {
+          "command": "Eliminar eso",
+          "description": "Elimina el texto seleccionado o el último texto dictado.",
+          "variation1": "Tachar eso",
+          "variation2": "Borrar eso"
+        },
+        {
+          "command": "Eliminar <text>",
+          "description": "Eliminar un fragmento de texto específico de un cuadro de texto.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto.",
+          "example1": "Eliminar hola mundo"
+        },
+        {
+          "command": "Eliminar todo",
+          "description": "Elimina todo el texto de un cuadro de texto."
+        },
+        {
+          "command": "Eliminar palabra",
+          "description": "Elimina la palabra actual en el cursor de texto.",
+          "variation1": "Eliminar esta palabra"
+        },
+        {
+          "command": "Eliminar línea",
+          "description": "Eliminar la línea actual en el cursor de texto.",
+          "variation1": "Eliminar esta línea"
+        },
+        {
+          "command": "Eliminar párrafo",
+          "description": "Eliminar el párrafo actual en el cursor de texto.",
+          "variation1": "Eliminar este párrafo"
+        },
+        {
+          "command": "Eliminar el carácter anterior",
+          "description": "Elimina un carácter anterior del cursor de texto.",
+          "variation1": "Eliminar el último carácter"
+        },
+        {
+          "command": "Eliminar el carácter siguiente",
+          "description": "Elimina el carácter siguiente al cursor de texto."
+        },
+        {
+          "command": "Eliminar la palabra anterior",
+          "description": "Elimina la palabra anterior del cursor de texto.",
+          "variation1": "Eliminar la última palabra"
+        },
+        {
+          "command": "Eliminar la palabra siguiente",
+          "description": "Elimina la palabra siguiente al cursor de texto."
+        },
+        {
+          "command": "Eliminar la línea anterior",
+          "description": "Eliminar la línea anterior en el cursor de texto.",
+          "variation1": "Eliminar la última línea"
+        },
+        {
+          "command": "Eliminar la línea siguiente",
+          "description": "Elimina la línea siguiente en el cursor de texto."
+        },
+        {
+          "command": "Eliminar párrafo anterior",
+          "description": "Elimina el párrafo anterior de la posición del cursor",
+          "variation1": "Eliminar último párrafo"
+        },
+        {
+          "command": "Eliminar párrafo siguiente",
+          "description": "Elimina el párrafo siguiente en el cursor de texto."
+        },
+        {
+          "command": "Eliminar <count> caracteres anteriores",
+          "description": "Elimina la <count> anterior de caracteres de la posición del cursor.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "variation1": "Eliminar los últimos <count> caracteres",
+          "example1": "Eliminar los dos caracteres anteriores",
+          "example2": "Eliminar los dos últimos caracteres"
+        },
+        {
+          "command": "Eliminar los siguientes <count> caracteres",
+          "description": "Elimina los <count> caracteres siguientes en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "example1": "Eliminar los dos caracteres siguientes"
+        },
+        {
+          "command": "Eliminar las <count> palabras anteriores",
+          "description": "Elimina las <count> palabras anteriores en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Eliminar las últimas <count> palabras",
+          "example1": "Eliminar las cinco palabras anteriores",
+          "example2": "Eliminar las últimas cinco palabras"
+        },
+        {
+          "command": "Eliminar las siguientes <count> palabras",
+          "description": "Elimine las siguientes <count> palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Eliminar las cinco palabras siguientes"
+        },
+        {
+          "command": "Eliminar <count> líneas anteriores",
+          "description": "Elimina las <count> líneas anteriores en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Eliminar las últimas <count> líneas",
+          "example1": "Eliminar las cuatro líneas anteriores",
+          "example2": "Eliminar las últimas cuatro líneas"
+        },
+        {
+          "command": "Eliminar las <count> líneas siguientes",
+          "description": "Elimina las <count> líneas siguientes en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Eliminar las cuatro líneas siguientes"
+        },
+        {
+          "command": "Eliminar <count> párrafos anteriores",
+          "description": "Elimina los <count> párrafos anteriores en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Eliminar los últimos <count> párrafos",
+          "example1": "Eliminar los tres párrafos anteriores",
+          "example2": "Eliminar los últimos tres párrafos"
+        },
+        {
+          "command": "Eliminar los <count> párrafos siguientes",
+          "description": "Elimine los siguientes <count> párrafos en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Eliminar los tres párrafos siguientes"
+        },
+        {
+          "command": "Cortar eso",
+          "description": "Corta el texto seleccionado o el último texto dictado."
+        },
+        {
+          "command": "Cortar palabra anterior",
+          "description": "Corta la palabra anterior en el cursor de texto.",
+          "variation1": "Cortar la última palabra"
+        },
+        {
+          "command": "Cortar palabra siguiente",
+          "description": "Corta la palabra siguiente en el cursor de texto."
+        },
+        {
+          "command": "Cortar línea anterior",
+          "description": "Corta la línea anterior en el cursor de texto.",
+          "variation1": "Cortar la última línea"
+        },
+        {
+          "command": "Cortar la línea siguiente",
+          "description": "Corta la línea siguiente en el cursor de texto."
+        },
+        {
+          "command": "Cortar párrafo anterior",
+          "description": "Corta el párrafo anterior de la posición del cursor.",
+          "variation1": "Cortar el último párrafo"
+        },
+        {
+          "command": "Cortar el párrafo siguiente",
+          "description": "Corta el párrafo siguiente en el cursor de texto."
+        },
+        {
+          "command": "Cortar <count> caracteres anteriores",
+          "description": "Corta el número anterior de caracteres en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "variation1": "Cortar últimos <count> caracteres",
+          "example1": "Cortar los dos caracteres anteriores",
+          "example2": "Cortar los dos últimos caracteres"
+        },
+        {
+          "command": "Cortar los siguientes <count> caracteres",
+          "description": "Corta el siguiente número de caracteres en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "example1": "Cortar los dos caracteres siguientes"
+        },
+        {
+          "command": "Cortar las <count> palabras anteriores",
+          "description": "Corta el número anterior de palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Cortar las últimas <count> palabras",
+          "example1": "Cortar las cinco palabras anteriores",
+          "example2": "Cortar las últimas cinco palabras"
+        },
+        {
+          "command": "Cortar las siguientes <count> palabras",
+          "description": "Corta el siguiente número de palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Cortar las cinco palabras siguientes"
+        },
+        {
+          "command": "Cortar las <count> líneas anteriores",
+          "description": "Corta el número anterior de líneas en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Cortar las <count> últimas líneas",
+          "example1": "Cortar las tres líneas anteriores",
+          "example2": "Cortar las tres últimas líneas"
+        },
+        {
+          "command": "Cortar las <count> líneas siguientes",
+          "description": "Corta el siguiente número de líneas en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Cortar las cuatro líneas siguientes"
+        },
+        {
+          "command": "Cortar los <count> párrafos anteriores",
+          "description": "Corta el número anterior de párrafos en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Cortar los últimos <count> párrafos",
+          "example1": "Cortar los cuatro párrafos anteriores",
+          "example2": "Cortar los últimos cuatro párrafos"
+        },
+        {
+          "command": "Cortar los <count> párrafos siguientes",
+          "description": "Corta el siguiente número de párrafo en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Cortar los tres párrafos siguientes"
+        },
+        {
+          "command": "Copiar eso",
+          "description": "Copia el texto seleccionado o el último texto dictado."
+        },
+        {
+          "command": "Copiar palabra anterior",
+          "description": "Copia la palabra anterior en el cursor de texto.",
+          "variation1": "Copiar la última palabra"
+        },
+        {
+          "command": "Copiar la palabra siguiente",
+          "description": "Copia la palabra siguiente en el cursor de texto."
+        },
+        {
+          "command": "Copiar línea anterior",
+          "description": "Copia la línea anterior en el cursor de texto.",
+          "variation1": "Copiar la última línea"
+        },
+        {
+          "command": "Copiar la línea siguiente",
+          "description": "Copia la línea siguiente desde la posición del cursor."
+        },
+        {
+          "command": "Copiar el párrafo anterior",
+          "description": "Copia el párrafo anterior en el cursor de texto.",
+          "variation1": "Copiar el último párrafo"
+        },
+        {
+          "command": "Copiar párrafo siguiente",
+          "description": "Copia el párrafo siguiente en el cursor de texto."
+        },
+        {
+          "command": "Copiar los <count> caracteres anteriores",
+          "description": "Copia el número anterior de caracteres en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "variation1": "Copiar los últimos <count> caracteres",
+          "example1": "Copiar los dos caracteres anteriores",
+          "example2": "Copiar los dos últimos caracteres"
+        },
+        {
+          "command": "Copiar los siguientes <count> caracteres",
+          "description": "Copia el siguiente número de caracteres en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de caracteres",
+          "example1": "Copiar los dos caracteres siguientes"
+        },
+        {
+          "command": "Copiar las <count> palabras anteriores",
+          "description": "Copia el número anterior de palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Copiar las últimas <count> palabras",
+          "example1": "Copiar las cinco palabras anteriores",
+          "example2": "Copiar las últimas cinco palabras"
+        },
+        {
+          "command": "Copiar las siguientes <count> palabras",
+          "description": "Copia el siguiente número de palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Copiar las cinco palabras siguientes"
+        },
+        {
+          "command": "Copiar las <count> líneas anteriores",
+          "description": "Copia el número anterior de líneas en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Copiar las últimas <count> líneas",
+          "example1": "Copiar las tres líneas anteriores",
+          "example2": "Copiar las tres últimas líneas"
+        },
+        {
+          "command": "Copiar las siguientes <count> líneas",
+          "description": "Copia el siguiente número de líneas en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Copiar las cuatro líneas siguientes"
+        },
+        {
+          "command": "Copiar párrafos <count> anteriores",
+          "description": "Copia el número anterior de párrafos en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Copiar los <count> últimos párrafos",
+          "example1": "Copiar los cuatro párrafos anteriores",
+          "example2": "Copiar los últimos cuatro párrafos"
+        },
+        {
+          "command": "Copiar los <count> párrafos siguientes",
+          "description": "Copia el siguiente número de párrafo en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Copiar los tres párrafos siguientes"
+        },
+        {
+          "command": "Pegar",
+          "description": "Pegar texto en un cuadro de texto.",
+          "variation1": "Pegar aquí",
+          "variation2": "Pegarlo"
+        },
+        {
+          "command": "Deshacerlo",
+          "description": "Deshacer o revertir la acción anterior.",
+          "variation1": "Deshacer",
+          "example1": "Deshacerlo",
+          "example2": "Deshacer"
+        },
+        {
+          "command": "Rehacer eso",
+          "description": "Rehacer o restaurar la acción anterior."
+        }
+      ]
+    },
+    {
+      "header": "Aplicar formato al texto",
+      "description": "Use los comandos de acceso de voz para dar formato al texto en el que está trabajando. Puede hacer distintas acciones como negrita, cursiva, subrayado, cambiar mayúsculas y minúsculas y poner en mayúscula todo el texto con comandos de voz directos.",
+      "commands": [
+        {
+          "command": "No colocar espacio en eso",
+          "description": "Quitar todos los espacios en blanco del texto seleccionado o del último texto dictado.",
+          "variation1": "no dejar espacios"
+        },
+        {
+          "command": "Poner eso en negrita",
+          "description": "Aplica formato en negrita al texto seleccionado o al último texto dictado."
+        },
+        {
+          "command": "Poner eso en cursiva",
+          "description": "Aplicar formato de cursiva al texto seleccionado o al último texto dictado "
+        },
+        {
+          "command": "Subraya que",
+          "description": "Subrayar el texto seleccionado o el último texto dictado."
+        },
+        {
+          "command": "Negrita <text>",
+          "description": "Aplica formato de negrita a un fragmento de texto específico.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto",
+          "variation1": "Poner en negrita <text>",
+          "example1": "Hola mundo en negrita",
+          "example2": "Hola mundo en negrita"
+        },
+        {
+          "command": "Aplicar cursiva a <text>",
+          "description": "Aplica formato de cursiva a un fragmento de texto específico.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto",
+          "example1": "Poner en cursiva \"hola mundo\""
+        },
+        {
+          "command": "Subrayar <text>",
+          "description": "Subrayar un fragmento de texto específico.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto",
+          "example1": "Subrayar hola mundo"
+        },
+        {
+          "command": "Poner en mayúsculas eso",
+          "description": "Poner en mayúscula la primera letra del texto seleccionado o el último texto dictado.",
+          "variation1": "Limitar eso"
+        },
+        {
+          "command": "Poner en mayúsculas eso",
+          "description": "Poner en mayúscula todas las letras del texto seleccionado o del último texto dictado."
+        },
+        {
+          "command": "Poner en minúsculas eso",
+          "description": "Convierte todas las letras del texto seleccionado o del último texto dictado en minúsculas."
+        },
+        {
+          "command": "Poner en mayúsculas la primera letra de <word>",
+          "description": "Poner en mayúscula la primera letra de un texto específico.",
+          "parameters": "Dónde está presente la palabra dentro del cuadro de texto",
+          "example1": "Poner en mayúsculas la primera letra de hola"
+        },
+        {
+          "command": "Poner <text> en mayúsculas",
+          "description": "Poner en mayúscula todas las letras de un texto específico.",
+          "parameters": "Donde el texto está presente en tu cuadro de texto",
+          "example1": "Poner hola en mayúsculas"
+        },
+        {
+          "command": "Poner <text> en minúsculas",
+          "description": "Cambia todas las letras de un texto a minúsculas.",
+          "parameters": "Donde el texto está presente en tu cuadro de texto",
+          "example1": "Poner en minúsculas hola"
+        },
+        {
+          "command": "Poner en mayúsculas la primera letra de las <count> palabras anteriores",
+          "description": "Poner en mayúsculas la primera letra de las <count> palabras anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Poner en mayúsculas la primera letra de las <count> últimas palabras",
+          "example1": "Poner en mayúsculas la primera letra de las dos palabras anteriores",
+          "example2": "Poner en mayúsculas las dos últimas palabras"
+        },
+        {
+          "command": "Poner en mayúsculas las <count> palabras anteriores",
+          "description": "Poner en mayúsculas todas las letras de las <count> palabras anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Poner en mayúsculas las últimas <count> palabras",
+          "example1": "Poner en mayúscula las cinco palabras anteriores",
+          "example2": "Poner en mayúsculas las últimas cinco palabras"
+        },
+        {
+          "command": "Poner en minúscula las <count> palabras anteriores",
+          "description": "Poner en minúscula todas las letras de las <count> palabras anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "variation1": "Poner en minúsculas las últimas <count> palabras",
+          "example1": "Poner en minúsculas las tres palabras anteriores",
+          "example2": "Últimas tres palabras en minúsculas"
+        },
+        {
+          "command": "Poner en mayúsculas la primera letra de las <count> líneas anteriores",
+          "description": "Poner en mayúsculas la primera letra de las <count> líneas anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Poner en mayúsculas la primera letra de las <count> últimas líneas",
+          "example1": "Poner en mayúsculas la primera letra de las dos líneas anteriores",
+          "example2": "Poner en mayúsculas la primera letra de las dos últimas líneas"
+        },
+        {
+          "command": "Poner en mayúsculas las <count> líneas anteriores",
+          "description": "Poner en mayúsculas todas las letras de las <count> líneas anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Poner en mayúsculas las últimas <count> líneas",
+          "example1": "Poner en mayúscula las cinco líneas anteriores",
+          "example2": "Poner en mayúsculas las últimas cinco líneas"
+        },
+        {
+          "command": "Poner en minúscula las <count> líneas anteriores",
+          "description": "Poner en minúscula todas las letras de las <count> líneas anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "variation1": "Poner en minúscula las últimas <count> líneas",
+          "example1": "Poner en minúsculas las tres líneas anteriores",
+          "example2": "Poner en minúsculas las tres últimas líneas"
+        },
+        {
+          "command": "Poner en mayúsculas la primera letra de los <count> párrafos anteriores",
+          "description": "Poner en mayúsculas la primera letra de los <count> párrafos anteriores donde se encuentra el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Poner en mayúscula la primera letra de los <count> últimos párrafos",
+          "example1": "Poner en mayúsculas la primera letra de los dos párrafos anteriores",
+          "example2": "Poner en mayúsculas la primera letra de los dos últimos párrafos"
+        },
+        {
+          "command": "Poner en mayúsculas los últimos <count> párrafos",
+          "description": "Poner en mayúsculas todas las letras de los <count> párrafos anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Poner en mayúsculas los <count> últimos párrafos",
+          "example1": "Poner en mayúsculas los cinco párrafos anteriores",
+          "example2": "Poner en mayúsculas los últimos cinco párrafos"
+        },
+        {
+          "command": "Poner en minúscula los <count> párrafos anteriores",
+          "description": "Poner en minúscula todas las letras de los <count> párrafos anteriores al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "variation1": "Poner en mayúsculas los <count> últimos párrafos",
+          "example1": "Poner en minúsculas los tres párrafos anteriores",
+          "example2": "Poner en minúscula los tres últimos párrafos"
+        },
+        {
+          "command": "Poner en mayúsculas la primera letra de las siguientes <count> palabras",
+          "description": "Poner en mayúsculas la primera letra de las <count> palabras siguientes al cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Poner en mayúsculas las dos palabras siguientes"
+        },
+        {
+          "command": "Mayúsculas siguiente <count> de palabras",
+          "description": "Poner en mayúsculas todas las letras de las siguientes <count> palabras en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Poner en mayúsculas las siguientes cinco palabras"
+        },
+        {
+          "command": "Poner en mayúsculas las <count> palabras siguientes",
+          "description": "Poner en minúsculas todas las letras de las <count> palabras siguientes en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de palabras",
+          "example1": "Tres palabras siguientes en minúsculas"
+        },
+        {
+          "command": "Poner en mayúsculas las siguientes <count> líneas",
+          "description": "Pon en mayúsculas la primera letra de las <count> líneas siguientes donde se encuentra el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Poner en mayúsculas las dos líneas siguientes"
+        },
+        {
+          "command": "Poner en mayúsculas las siguientes <count> líneas",
+          "description": "Poner en mayúsculas todas las letras de las siguientes <count> líneas donde se encuentra el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Poner en mayúsculas las cinco líneas siguientes"
+        },
+        {
+          "command": "Poner en minúsculas las siguientes <count> líneas",
+          "description": "Poner en minúsculas todas las letras de las siguiente <count> líneas en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de líneas",
+          "example1": "Poner en minúsculas las tres siguientes líneas"
+        },
+        {
+          "command": "Poner en mayúsculas los siguientes <count> párrafos",
+          "description": "Poner en mayúsculas la primera letra de los siguientes <count> párrafos en el cursor de texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Poner en mayúsculas los dos párrafos siguientes"
+        },
+        {
+          "command": "Poner en mayúsculas los <count> párrafos siguientes",
+          "description": "Poner en mayúsculas todas las letras de los <count> párrafos siguientes donde se encuentra el cursor del texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Cinco párrafos siguientes en mayúsculas"
+        },
+        {
+          "command": "Poner en minúsculas los <count> párrafos siguientes",
+          "description": "Poner en minúsculas todas las letras de los <count> párrafos siguientes desde donde se encuentra el cursor del texto.",
+          "parameters": "Donde <count> hace referencia al número de párrafos",
+          "example1": "Tres párrafos siguientes en minúsculas"
+        }
+      ]
+    },
+    {
+      "header": "Navegar por el texto",
+      "description": "Use comandos de acceso de voz para mover el cursor a una ubicación específica del documento o cuadro de texto. Puede mover el cursor por un número determinado de palabras, líneas o párrafos, o moverlo antes o después de un fragmento de texto específico.",
+      "commands": [
+        {
+          "command": "Nueva línea",
+          "description": "Inserta una nueva línea y coloca el cursor al principio de la nueva línea."
+        },
+        {
+          "command": "Nuevo párrafo",
+          "description": "Inserta un nuevo párrafo y coloca el cursor al principio del nuevo párrafo."
+        },
+        {
+          "command": "Mover antes de <text>",
+          "description": "Coloque el cursor delante de un texto específico.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto.",
+          "variation1": "Insertar antes de <text>",
+          "example1": "Mover antes de hola ",
+          "example2": "Insertar antes de hola"
+        },
+        {
+          "command": "Mover después de <text>",
+          "description": "Colocar el cursor después de un texto específico.",
+          "parameters": "Donde el texto es cualquier frase del cuadro de texto.",
+          "variation1": "Insertar después de <text>",
+          "example1": "Mover después de hola",
+          "example2": "Insertar después de hola"
+        },
+        {
+          "command": "Ir a la parte superior",
+          "description": "Colocar el cursor al principio de un documento o cuadro de texto.",
+          "variation1": "Ir al principio del documento",
+          "variation2": "Ir al inicio del documento",
+          "variation3": "Mover a la parte superior",
+          "variation4": "Mueva al principio del documento",
+          "variation5": "Mover al principio del documento"
+        },
+        {
+          "command": "Ir a la parte inferior",
+          "description": "Colocar el cursor al final de un cuadro de texto o documento.",
+          "variation1": "Ir al final",
+          "variation2": "Ir al final del documento",
+          "variation3": "Ir a la parte inferior",
+          "variation4": "Mover al final",
+          "variation5": "Mover al final del documento",
+          "variation6": "Mover a la parte inferior"
+        },
+        {
+          "command": "Ir al principio de la palabra",
+          "description": "Colocar el cursor al principio de una palabra.",
+          "variation1": "Ir al principio de la palabra",
+          "variation2": "Mover al principio de la palabra",
+          "variation3": "Mover al principio de la palabra"
+        },
+        {
+          "command": "Ir al final de la palabra",
+          "description": "Colocar el cursor al final de una palabra.",
+          "variation1": "Mover al final de la palabra"
+        },
+        {
+          "command": "Ir al principio de la línea",
+          "description": "Colocar el cursor al principio de una línea.",
+          "variation1": "Ir al inicio de la línea",
+          "variation2": "Mover al principio de la línea",
+          "variation3": "Mover al principio de la línea"
+        },
+        {
+          "command": "Ir al final de la línea",
+          "description": "Colocar el cursor al final de una línea.",
+          "variation1": "Mover al final de la línea"
+        },
+        {
+          "command": "Ir al principio del párrafo",
+          "description": "Colocar el cursor al principio de un párrafo.",
+          "variation1": "Ir al principio del párrafo",
+          "variation2": "Ir al principio del párrafo",
+          "variation3": "Mover al principio del párrafo"
+        },
+        {
+          "command": "Ir al final del párrafo",
+          "description": "Colocar el cursor al final de un párrafo.",
+          "variation1": "Mover al final del párrafo"
+        },
+        {
+          "command": "Mover <direction> <count> veces",
+          "description": "Mover el cursor el número deseado de pasos.",
+          "parameters": "Donde la dirección puede ser izquierda, derecha, arriba o abajo.\nRecuento es el número de pasos.",
+          "variation1": "Ir <direction> <count> veces",
+          "example1": "Mover a la derecha 3 veces",
+          "example2": "Bajar 2 veces"
+        },
+        {
+          "command": "Mover a la izquierda <count> caracteres",
+          "description": "Mueve el cursor el número deseado de caracteres hacia la izquierda.",
+          "parameters": "Donde el recuento es el número de caracteres.",
+          "variation1": "Ir a la izquierda <count> caracteres ",
+          "variation2": "Retroceder <count> caracteres ",
+          "variation3": "Desplazarse hacia atrás <count> caracteres",
+          "variation4": "Retroceder <count> caracteres",
+          "variation5": "Retroceder <count> caracteres",
+          "example1": "Mover tres caracteres a la izquierda",
+          "example2": "Ir tres caracteres a la izquierda"
+        },
+        {
+          "command": "Mover a la derecha <count> caracteres",
+          "description": "Mueve hacia la derecha el cursor el número de caracteres que quieras.",
+          "parameters": "Donde el recuento es el número de caracteres.",
+          "variation1": "Ir hacia la derecha <count> caracteres",
+          "variation2": "Avanzar <count> caracteres",
+          "variation3": "Avanzar <count> caracteres",
+          "example1": "Mover tres caracteres a la derecha",
+          "example2": "Ir a la derecha tres caracteres"
+        },
+        {
+          "command": "Mover a la izquierda <count> palabras",
+          "description": "Mover el cursor el número deseado de palabras a la izquierda.",
+          "parameters": "Donde el recuento es el número de palabras.",
+          "variation1": "Ir a la izquierda <count> palabras ",
+          "variation2": "Retroceder <count> palabras ",
+          "variation3": "Retroceder <count> palabras",
+          "variation4": "Volver <count> palabras",
+          "variation5": "Retroceder <count> palabras",
+          "example1": "Mover dos palabras a la izquierda",
+          "example2": "Ir dos palabras hacia la izquierda"
+        },
+        {
+          "command": "Mover a la derecha <count> palabras",
+          "description": "Mueva el cursor hacia la derecha el número deseado de palabras.",
+          "parameters": "Donde el recuento es el número de palabras.",
+          "variation1": "Ir a la derecha <count> palabras ",
+          "variation2": "avanzar <count> palabras ",
+          "variation3": "Avanzar <count> palabras",
+          "example1": "Mover dos palabras a la derecha",
+          "example2": "Ir a la derecha dos palabras"
+        },
+        {
+          "command": "Mover <count> líneas hacia arriba",
+          "description": "Subir el cursor el número deseado de líneas.",
+          "parameters": "Donde el recuento es el número de líneas.",
+          "variation1": "Subir <count> líneas",
+          "example1": "Subir cinco líneas",
+          "example2": "Subir cuatro líneas"
+        },
+        {
+          "command": "Bajar <count> líneas",
+          "description": "Bajar el cursor el número deseado de líneas.",
+          "parameters": "Donde el recuento es el número de líneas.",
+          "variation1": "Bajar líneas <count>",
+          "example1": "Bajar cinco líneas",
+          "example2": "Bajar cuatro líneas"
+        },
+        {
+          "command": "Mover <count> párrafos hacia arriba",
+          "description": "Subir el cursor el número deseado de párrafos.",
+          "parameters": "Donde el recuento es el número de párrafos.",
+          "variation1": "Subir <count> párrafos",
+          "example1": "Moverse un párrafo hacia arriba",
+          "example2": "Subir 3 párrafos"
+        },
+        {
+          "command": "Mover <count> párrafos hacia abajo",
+          "description": "Mueva el cursor hacia abajo el número deseado de párrafos.",
+          "parameters": "Donde el recuento es el número de párrafos.",
+          "variation1": "Bajar <count> párrafos",
+          "example1": "Moverse un párrafo hacia abajo",
+          "example2": "Bajar 2 párrafos"
+        },
+        {
+          "command": "Mover al principio de la selección",
+          "description": "Colocar el cursor al principio del texto seleccionado.",
+          "variation1": "Ir al principio de la selección"
+        },
+        {
+          "command": "Ir al final de la selección",
+          "description": "Colocar el cursor al final del texto seleccionado.",
+          "variation1": "Ir al final de la selección"
+        }
+      ]
+    },
+    {
+      "header": "Accesos directos de voz",
+      "description": "Ahorre tiempo creando sus propios accesos directos de comandos de voz para una o una serie de acciones.",
+      "commands": []
+    },
+    {
+      "header": "Comandos del Narrador",
+      "description": "Usa comandos de acceso de voz para controlar el Narrador.",
+      "commands": [
+        {
+          "command": "Iniciar narrador",
+          "description": "Dile al Narrador que se active y empiece a leer.",
+          "variation1": "Activar Narrador ",
+          "variation2": "Activar Narrador ",
+          "variation3": "Narrador activado"
+        },
+        {
+          "command": "Detener Narrador",
+          "description": "Dile al Narrador que se desactive y deje de leer.",
+          "variation1": "Desactivar Narrador ",
+          "variation2": "Desactivar narrador ",
+          "variation3": "Narrador desactivado",
+          "variation4": "Salir del Narrador"
+        },
+        {
+          "command": "Silencio",
+          "description": "Dile al Narrador que deje de leer.",
+          "variation1": "Detener lectura"
+        },
+        {
+          "command": "Hablar más rápido",
+          "description": "Dile al Narrador que hable más rápido aumentando la velocidad de la voz.",
+          "variation1": "Acelerar",
+          "variation2": "Narrador acelera",
+          "variation3": "Narrador habla más rápido",
+          "variation4": "Aumentar la velocidad del Narrador"
+        },
+        {
+          "command": "Hablar más lento",
+          "description": "Dile al narrador que hable más lentamente disminuyendo la velocidad de voz.",
+          "variation1": "Bajar velocidad",
+          "variation2": "Narrador disminuye la velocidad",
+          "variation3": "Narrador habla más lento",
+          "variation4": "Reducir la velocidad del Narrador"
+        },
+        {
+          "command": "Modo de examen activado",
+          "description": "Dile al Narrador que active el modo de examen.",
+          "variation1": "Examinar activado",
+          "variation2": "Activar el modo de examen",
+          "variation3": "Narrador modo de examen activado"
+        },
+        {
+          "command": "Modo de examen desactivado",
+          "description": "Dile al Narrador que desactive el modo de examen.",
+          "variation1": "Examinar desactivado",
+          "variation2": "Desactivar el modo de examen",
+          "variation3": "Narrador modo de examen desactivado"
+        },
+        {
+          "command": "Acción principal",
+          "description": "Haz clic en la acción principal."
+        },
+        {
+          "command": "Acción secundaria",
+          "description": "Hacer clic en acción secundaria."
+        },
+        {
+          "command": "Leer el siguiente <block of text>",
+          "description": "El Narrador lee el siguiente bloque de texto, es decir, párrafo, línea, palabra o carácter",
+          "example1": "Leer el párrafo siguiente",
+          "example2": "Leer la línea siguiente",
+          "example3": "Leer la palabra siguiente",
+          "example4": "Leer el carácter siguiente"
+        },
+        {
+          "command": "Leer <block of text> anterior",
+          "description": "El Narrador lee el bloque anterior de texto, es decir, párrafo, línea, palabra o carácter",
+          "example1": "Leer el párrafo anterior",
+          "example2": "Leer la línea anterior",
+          "example3": "Leer la palabra anterior",
+          "example4": "Leer el carácter anterior"
+        },
+        {
+          "command": "Siguiente título <number>",
+          "description": "Desplazar el foco del cursor al siguiente encabezado <number>",
+          "example1": "Siguiente título 1",
+          "example2": "Siguiente encabezado 2",
+          "example3": "Siguiente título 3",
+          "example4": "Siguiente título 4",
+          "example5": "Siguiente encabezado 5",
+          "example6": "Siguiente título 6",
+          "example7": "Siguiente título 7",
+          "example8": "Siguiente título 8",
+          "example9": "Siguiente título 9"
+        },
+        {
+          "command": "Título anterior <number>",
+          "description": "Desplazar el foco del cursor al encabezado anterior <number>",
+          "example1": "Encabezado anterior 1",
+          "example2": "Título anterior 2",
+          "example3": "Título anterior 3",
+          "example4": "Título anterior 4",
+          "example5": "Título anterior 5",
+          "example6": "Título anterior 6",
+          "example7": "Título anterior 7",
+          "example8": "Título anterior 8",
+          "example9": "Título anterior 9"
+        },
+        {
+          "command": "Leer desde el foco",
+          "description": "Narrador lee desde el foco"
+        },
+        {
+          "command": "Leer desde el principio",
+          "description": "Narrador lee desde el principio"
+        },
+        {
+          "command": "Leer desde <block of text>",
+          "description": "El Narrador lee del bloque de texto mencionado, es decir, párrafo, línea, palabra, carácter, oración",
+          "example1": "Leer desde oración",
+          "example2": "Leer desde línea",
+          "example3": "Leer desde palabra",
+          "example4": "Leer desde carácter"
+        },
+        {
+          "command": "Leer <block of text>",
+          "description": "Narrador lee el bloque de texto en el foco",
+          "example1": "Leer párrafo",
+          "example2": "Línea de lectura",
+          "example3": "Leer palabra",
+          "example4": "Leer carácter"
+        },
+        {
+          "command": "Leer la página siguiente",
+          "description": "Narrador lee desde la página siguiente"
+        },
+        {
+          "command": "Leer la página anterior",
+          "description": "Narrador lee desde la página anterior"
+        },
+        {
+          "command": "Siguiente <control>",
+          "description": "Desplazar el foco al siguiente control, es decir, botón, cuadro combinado, cuadro de edición, campo de formulario, etc.",
+          "example1": "Botón Siguiente",
+          "example2": "Siguiente cuadro combinado",
+          "example3": "Siguiente cuadro de edición",
+          "example4": "Campo siguiente del formulario",
+          "example5": "Siguiente vínculo",
+          "example6": "Siguiente botón de radio",
+          "example7": "Siguiente casilla"
+        },
+        {
+          "command": "Siguiente punto de referencia",
+          "description": "Desplazar el foco al siguiente punto de referencia"
+        },
+        {
+          "command": "Siguiente encabezado",
+          "description": "Desplazar el foco al siguiente encabezado"
+        },
+        {
+          "command": "Siguiente elemento",
+          "description": "Desplazar el foco al siguiente elemento"
+        },
+        {
+          "command": "Anterior <control>",
+          "description": "Desplazar el foco al control anterior, es decir, botón, cuadro combinado, cuadro de edición, campo de formulario, etc.",
+          "example1": "Botón Anterior",
+          "example2": "Cuadro combinado anterior",
+          "example3": "Cuadro de edición anterior",
+          "example4": "Campo de formulario anterior",
+          "example5": "Vínculo anterior",
+          "example6": "Botón de radio anterior",
+          "example7": "Casilla anterior"
+        },
+        {
+          "command": "Punto de referencia anterior",
+          "description": "Desplazar el foco al punto de referencia anterior"
+        },
+        {
+          "command": "Título anterior",
+          "description": "Desplazar el foco al título anterior"
+        },
+        {
+          "command": "Elemento anterior",
+          "description": "Desplazar el foco al elemento anterior"
+        },
+        {
+          "command": "Tabla anterior",
+          "description": "Desplazar el foco a la tabla anterior"
+        },
+        {
+          "command": "Narrador enumera todos los puntos de referencia",
+          "description": "Comando para anunciar todos los puntos de referencia ",
+          "example1": "Enumerar todos los puntos de referencia"
+        },
+        {
+          "command": "Narrador buscar",
+          "description": "Usa el Narrador para encontrar lo que necesitas en la web, en las aplicaciones y en los documentos"
+        },
+        {
+          "command": "Narrador buscar siguiente",
+          "description": "Comando para enfocar y leer el siguiente resultado"
+        },
+        {
+          "command": "Narrador buscar anterior",
+          "description": "Comando para centrarse y leer el resultado anterior"
+        },
+        {
+          "command": "Narrador enumera todos los vínculos",
+          "description": "Comando para anunciar la lista de todos los vínculos de una página"
+        },
+        {
+          "command": "Narrador enumera todos los títulos",
+          "description": "Comando para anunciar la lista de todos los encabezados de una página"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Narrador lee los encabezados de columna en outlook",
+          "description": "Comando para leer encabezados de columna en Outlook",
+          "variation1": "activar los encabezados de outlook",
+          "variation2": "activar los encabezados de outlook",
+          "variation3": "Narrador activa los encabezados de outlook",
+          "variation4": "Narrador activa los encabezados de outlook"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Narrador no leas encabezados de columna en Outlook",
+          "description": "Comando para detener la lectura de encabezados de columna en Outlook",
+          "variation1": "desactivar los encabezados de outlook",
+          "variation2": "desactivar los encabezados de outlook",
+          "variation3": "Narrador desactiva los encabezados de outlook",
+          "variation4": "Narrador desactiva los encabezados de outlook",
+          "variation5": "Narrador deja de leer encabezados de columna en outlook"
+        },
+        {
+          "command": "Leer título de ventana",
+          "description": "Anunciar el título de la ventana"
+        },
+        {
+          "command": "Leer elemento actual",
+          "description": "Anunciar el elemento actual en el foco"
+        },
+        {
+          "command": "Cambiar el nivel de detalle",
+          "description": "Comando para cambiar el nivel de detalle del Narrador"
+        },
+        {
+          "command": "Escuchar atributos de formato",
+          "description": "Comando para que el Narrador anuncie atributos de formato del elemento en el foco",
+          "variation1": "Narrador escuchar los atributos de formato",
+          "variation2": "Leer formato",
+          "variation3": "Leer atributos de formato",
+          "variation4": "Narrador formato de lectura",
+          "variation5": "Narrador lee los atributos de formato"
+        },
+        {
+          "command": "Grupo anterior de atributos de formato",
+          "description": "Comando para anunciar atributos de formato del grupo anterior",
+          "variation1": "Narrador grupo anterior de atributos de formato"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Cambiar el modo de lectura de mayúsculas",
+          "description": "Comando para cambiar la forma en que el Narrador anuncia texto en mayúsculas"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Narrador subir volumen",
+          "description": "Dile al Narrador que aumente el volumen de la voz del Narrador",
+          "variation1": "Subir volumen"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Narrador bajar volumen",
+          "description": "Dile al Narrador que reduzca el volumen de la voz del Narrador",
+          "variation1": "Bajar volumen"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Describir imagen",
+          "description": "Dile al Narrador que describa la imagen enfocada",
+          "variation1": "Proporcionar descripción de la imagen",
+          "variation2": "Proporcionar descripción del vínculo",
+          "variation3": "Narrador proporciona descripción de la imagen",
+          "variation4": "Narrador proporciona la descripción del vínculo",
+          "variation5": "Narrador describe la imagen",
+          "variation6": "Describa la imagen",
+          "variation7": "Describir esta imagen"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Leer selección",
+          "description": "Dile al Narrador que lea el texto seleccionado",
+          "variation1": "Narrador lee la selección"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Selección ortográfica",
+          "description": "Dile al Narrador que deletree el texto seleccionado",
+          "variation1": "Narrador selección ortográfica"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Leer el documento",
+          "description": "Dile al Narrador que lea el documento.",
+          "variation1": "Narrador lee el documento"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Ir al primer elemento en la ventana",
+          "description": "Indica al Narrador que mueva el foco al primer elemento de una ventana.",
+          "variation1": "Narrador ir al primer elemento en la ventana"
+        },
+        {
+          "velocity": "Feature_VoiceAccessScreenReaderIntegration",
+          "command": "Desplazarse al último elemento en una ventana",
+          "description": "Dile al Narrador que mueva el foco al último elemento de una ventana.",
+          "variation1": "Narrador ir al último elemento en una ventana"
+        }
+      ]
+    }
+  ],
+  "landingPageCommands": {
+    "header": "Comandos de acceso de voz",
+    "description": "Esta categoría de comandos ayudará al usuario a encontrar los comandos de acceso de voz más usados.",
+    "commands": [
+      {
+        "command": "Reactivación del acceso de voz",
+        "category": "Administrar el acceso por voz y el micrófono"
+      },
+      {
+        "command": "Suspensión del acceso de voz",
+        "category": "Administrar el acceso por voz y el micrófono"
+      },
+      {
+        "command": "Qué puedo decir",
+        "category": "Administrar el acceso por voz y el micrófono"
+      },
+      {
+        "command": "Abre <app name>",
+        "category": "Interactuar con aplicaciones"
+      },
+      {
+        "command": "Cerrar <app name>",
+        "category": "Interactuar con aplicaciones"
+      },
+      {
+        "command": "Maximizar ventana",
+        "category": "Interactuar con aplicaciones"
+      },
+      {
+        "command": "Haz clic en <item name>",
+        "category": "Interactuar con controles"
+      },
+      {
+        "command": "Desplazar <scroll direction>",
+        "category": "Interactuar con aplicaciones"
+      },
+      {
+        "command": "Mostrar números",
+        "category": "Interactuar con superposiciones"
+      },
+      {
+        "command": "Mostrar cuadrícula",
+        "category": "Interactuar con superposiciones"
+      },
+      {
+        "command": "Cancelar",
+        "category": "Interactuar con superposiciones"
+      },
+      {
+        "command": "<text>",
+        "category": "Dictar texto"
+      },
+      {
+        "command": "Muestra el teclado táctil",
+        "category": "Dictar texto"
+      },
+      {
+        "command": "Presionar <key1> <key2>....",
+        "category": "Control del mouse y teclado"
+      },
+      {
+        "command": "Corregir eso",
+        "category": "Dictar texto"
+      },
+      {
+        "command": "Eliminar <text>",
+        "category": "Editar texto"
+      },
+      {
+        "command": "Elimina eso",
+        "category": "Editar texto"
+      },
+      {
+        "command": "Negrita que",
+        "category": "aplicar formato al texto"
+      },
+      {
+        "command": "Seleccionar eso",
+        "category": "Seleccionar texto"
+      },
+      {
+        "command": "Ir a la parte inferior",
+        "category": "Navegar por el texto"
+      }
+    ]
+  }
+}

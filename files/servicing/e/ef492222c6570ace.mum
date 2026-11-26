@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Windows WiFi Client Intel Netwtw02 Networking Driver" displayName="Intel Netwtw02 WiFi Networking Driver" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Wifi-Client-Intel-Netwtw02-FOD-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="510" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="en-US" displayName="Intel Netwtw02 WiFi Networking Driver" description="Windows WiFi Client Intel Netwtw02 Networking Driver" />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.Wifi.Client.Intel.Netwtw02" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="acce9166b4bc34e8c065dff8c8b34655" restart="required">
+      <driver inf="netwtw02.inf" ranking="normal">
+        <assemblyIdentity name="dual_netwtw02.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

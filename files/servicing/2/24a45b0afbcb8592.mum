@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5127690" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5127690" creationTimeStamp="2026-10-09T17:08:17Z" lastUpdateTimeStamp="2026-10-09T17:08:17Z">
+  <assemblyIdentity name="Package_23_for_KB5127690" version="10.0.9363.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5127690" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="staged">
+      <assemblyIdentity name="Microsoft-Windows-Presentation-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+        <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerWebEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5127690-1170_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-PresentationFramework" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-PresentationFramework" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="9e73379a277ccd821ad1a5914c5e37cc" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1171_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Printing" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="System.Printing" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="6b7318d8608dc98fb2777045c876e0bc" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1172_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-PenIMC" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-PenIMC" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f92f2075b1ae226961301faa712cf742" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1173_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-WindowsBase" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-WindowsBase" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f3e0b508a30f759575ab47f969992059" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1174_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-PresentationHostDLL" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-PresentationHostDLL" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f86462e3049749921b978e357177155e" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1175_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="PresentationCore" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="PresentationCore" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="8239f12d3a12a0ac6cb2ac8ebebf2981" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1176_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WindowsBase" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="1744b4e59bab478b0fd3f2dad950afe3" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1177_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-ReachFramework" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-ReachFramework" version="10.0.27000.398" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="10947ba5c075b4536c02fc6358de58ba" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1178_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WPF-PresentationNative" version="10.0.27000.351" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="WPF-PresentationNative" version="10.0.27000.351" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="a2ff10c7be701d41237c0e5f4abd2d93" version="10.0.27000.351" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1179_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="PresentationFramework" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="35a6105b442fbaf480cb2e0e4ee93b55" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1180_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="ReachFramework" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="cf1caf3576255805337a4e85dbbd4d47" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

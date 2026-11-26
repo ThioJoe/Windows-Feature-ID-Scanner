@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package02" version="10.0.26100.4349" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package02" releaseType="Feature Pack">
+    <update name="ea76cf9b6bc4340eaf876faee09e747c">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment020" version="10.0.26100.4349" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="23E9D84ECD2E097D5CED60F4F1F54FD5EF928830850CD87C187FDD82ED59E3EA" restart="required">
+      <driver inf="netvwifibus.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwifibus.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="74B35C0090AD377AA215DE3CEE373684236526E5AFE7D69BCDB7B5587E015A41" restart="required">
+      <driver inf="netvwififlt.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwififlt.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="A457581C3C519693A42DE0C3651373B051F27B16575C2E18AF35F79EA5669A30" restart="required">
+      <driver inf="netvwifimp.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwifimp.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

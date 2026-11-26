@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Guest-Storage-Filter-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Guest-Storage-Filter-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-Guest-Storage-Filter-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="3414af602782fca94cf38f4f7bb36bb3">
+      <component>
+        <assemblyIdentity name="wstorflt.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="bb274c1ead49257191c3960d5c2eca87">
+      <component>
+        <assemblyIdentity name="HyperV-Guest-Storage-Filter-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="625694f5cbbf8340c1caf10c8a54c1e9">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-KMCL-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

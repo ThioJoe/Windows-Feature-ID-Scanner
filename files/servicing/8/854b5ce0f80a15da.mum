@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04110" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package04110" releaseType="Feature Pack">
+    <update name="9f5edb296b1a97fd6d453e3d702653bf">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment041100" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="A2AE92FD925C8F9DB7094BA503683F1B5DBC1EA2531B1BB24B9ED7CB99DE6C88" restart="required">
+      <driver inf="mshidumdf.inf" ranking="normal">
+        <assemblyIdentity name="dual_mshidumdf.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5DAA2140B179C5E0254CECCDDBD48EE7924A5EE08ABD1142325C125FB5655A5C">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Storage-Tiering-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

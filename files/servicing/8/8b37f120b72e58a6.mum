@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package01112030" version="10.0.26100.9168" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package01112030" releaseType="Feature Pack">
+    <update name="8F61636DA7ACEAF8487D153A08E01558781480258AFCCD74D2DC1FFD72D53BB0">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-PDC-merged-Deployment" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="E99425F7825E40A6F4A7AD705BA7EFD0379ABFFC90747CD2C56BF49D302FC87B" restart="required">
+      <driver inf="netrasa.inf" ranking="normal">
+        <assemblyIdentity name="dual_netrasa.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="304211D5BDEFB30A80C7884CB455ECFD2CD2C26B2C6D55A8D6B086B0A704F1A2" restart="required">
+      <driver inf="netrast.inf" ranking="normal">
+        <assemblyIdentity name="dual_netrast.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="F5E3533FCE1641D0D1F4BE973D1C381DE723D5E3ACE27F39F94061B0BBA618A5" restart="required">
+      <driver inf="netavpna.inf" ranking="normal">
+        <assemblyIdentity name="dual_netavpna.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D06D30325A587F292830835496860D56B7F869CFF337AABD05069BBF4A0F6DF3" restart="required">
+      <driver inf="netsstpa.inf" ranking="normal">
+        <assemblyIdentity name="dual_netsstpa.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="43c7fb854422e5b88a5f7797fdb8c6ad">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-ApiSetSchema-Package" version="10.0.26100.3912" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5066c590c5acf44ea756519ebdf8b58c">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-PDC-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

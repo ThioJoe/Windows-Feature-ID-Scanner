@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MultiPoint-Connector-Package" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MultiPoint-Connector" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="MultiPoint-Connector" displayName="MultiPoint Connector" description="Allows your computer to be monitored and managed by the MultiPoint Manager and MultiPoint Dashboard apps.">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Allows your computer to be monitored and managed by the MultiPoint Manager and MultiPoint Dashboard apps." DisplayName="MultiPoint Connector" Id="1002" Type="Feature" UniqueName="MultiPoint-Connector">
+          <MutualExclusion>
+            <MutualExclusionGroup Name="MultiPoint" />
+          </MutualExclusion>
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+    </update>
+    <update name="MultiPoint-Connector-Services" displayName="MultiPoint Connector Services" description="Allows your computer to be monitored and managed by the MultiPoint Manager and MultiPoint Dashboard apps.">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Allows your computer to be monitored and managed by the MultiPoint Manager and MultiPoint Dashboard apps." DisplayName="MultiPoint Connector Services" Id="1028" InstallWithParentByDefault="true" Parent="MultiPoint-Connector" Type="Feature" UniqueName="MultiPoint-Connector-Services" />
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MultiPoint-Connector" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="MultiPoint-Connector-Opt-Package" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MultiPoint-Tools" displayName="MultiPoint Manager and MultiPoint Dashboard" description="GUI tools for managing MultiPoint.">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="GUI tools for managing MultiPoint." DisplayName="MultiPoint Manager and MultiPoint Dashboard" Id="1029" Parent="MultiPoint-Connector" Type="Feature" UniqueName="MultiPoint-Tools">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="MultiPoint-Connector-Services" />
+          </NonAncestorDependencies>
+          <Relationships>
+            <OptionalCompanionFor Type="RSAT" UniqueName="MultiPoint-Connector-Services" />
+          </Relationships>
+          <MutualExclusion>
+            <MutualExclusionGroup Name="Essentials Framework" />
+          </MutualExclusion>
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MultiPoint-Connector" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="MultiPoint-Tools-Opt-Package" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MultiPoint-Help-Package" displayName="MultiPoint help files" description="MultiPoint Help Package">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MultiPoint-Tools" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="MultiPoint-Help-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+  xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
+  IgnorableNamespaces="uap mp wincap uap7">
+  <Identity Name="Microsoft.LockApp" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.28000.3571"/>
+  <!-- This should be the same ID as the pre-UAP Phone app, this ensures that the upgrade from older build/phone8/phone8.1 -->
+  <!-- will receive the new App as an update, rather than a duplicate. -->
+  <mp:PhoneIdentity PhoneProductId="cdd63e31-9307-4ccb-ab62-1ffa5721b503" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.28000.3571" />
+    <PackageDependency Name="Microsoft.UI.Xaml.CBS" MinVersion="2.62101.13001.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="WindowsDefaultLockScreen" Executable="LockApp.exe" EntryPoint="LockApp.App">
+      <uap:VisualElements DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#000000" AppListEntry="none">
+        <uap:SplashScreen BackgroundColor="#000000" Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.lockScreen" />
+        <Extension Category="windows.preInstalledConfigTask" EntryPoint="LockSpotlight.BackgroundTask.Configuration" />
+        <Extension Category="windows.updateTask" EntryPoint="LockSpotlight.BackgroundTask.UpdateTask" />
+        <Extension Category="windows.backgroundTasks" EntryPoint="LockSpotlight.BackgroundTask.RefreshTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="LockSpotlight.BackgroundTask.Maintenance">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="LockSpotlight.BackgroundTask.OnlineIdChange">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="LockSpotlight.BackgroundTask.AppServiceRefresh">
+          <uap3:AppService Name="com.microsoft.lockspotlightrefresh" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="LockSpotlight.BackgroundTask.EventReport">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <wincap:Capability Name="targetedContent" />
+    <wincap:Capability Name="lockScreenCreatives" />
+    <wincap:Capability Name="packageContents" />
+    <wincap:Capability Name="cortanaSettings" /> <!-- for LockAppBrokerBaseTrust to access cortana registry -->
+    <wincap:Capability Name="shellExperience" /> <!-- for access to WaitableExplorerProcessHandle -->
+    <uap7:Capability Name="globalMediaControl" />
+    <rescap:Capability Name="packageQuery"/>
+    <wincap:Capability Name="cloudStore" />
+    <rescap:Capability Name="activitySystem" />
+    <Capability Name="privateNetworkClientServer"/> <!-- for CDMLite -->
+    <wincap:Capability Name="dependencyTarget"/> <!-- for CDMLite -->
+    <rescap:Capability Name="smbios"/> <!-- for CDMLite -->
+  </Capabilities>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>LockSearchAPI.dll</Path>
+        <ActivatableClass ActivatableClassId="LockSearchAPI.SearchApp" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>LockSpotlight.dll</Path>
+        <ActivatableClass ActivatableClassId="LockSpotlight.LockSpotlightProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.RefreshTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.Configuration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.OnlineIdChange" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.UpdateTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.Maintenance" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.AppServiceRefresh" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="LockSpotlight.BackgroundTask.EventReport" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+</Package>

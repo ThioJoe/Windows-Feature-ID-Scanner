@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-IsolatedUserMode-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-IsolatedUserMode" releaseType="Feature Pack">
+    <update name="af827abb8ec022f86ebf4d823fcaf26f">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-IsolatedUserMode-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="7e7fa8d91536558e98b3500bb4475284">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-IsolatedUserMode-Common-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5362157f93a622801a1ef3433c9604a4">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-IsolatedUserMode-Events-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2fbbf83d05fe324cbadbb3a8324ca7cd">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-IsolatedUserMode-Other-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-HVSI-WOW64-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-HVSI-WOW64" releaseType="Feature Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-HVSI-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="ec409597a8d4c4b3d8374ed35bb622a9">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Containers-Server-For-Application-Guard" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-ApplicationGuard-WOW64-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b4cd346523d1c4f58139bbbd81152ace">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Guest-Gated-WOW64-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for ServicingStack 10.0.26100.4193" displayName="Servicing Stack 10.0.26100.4193" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="" creationTimeStamp="2025-05-20T06:20:01Z" lastUpdateTimeStamp="2025-05-20T06:20:01Z">
+  <assemblyIdentity name="Package_for_ServicingStack_4193" version="26100.4193.1.5" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5059502" applicabilityEvaluation="deep" releaseType="Update" restart="possible" selfUpdate="true" permanence="permanent">
+    <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerDatacenterNanoEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-UtilityVMEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-WinVOSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-WNCEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-WinPE-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="Wrapper-08FD23C0556CAA325A131086515B58213D00FFC6A1611CE05E2C39378C698818_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-08FD23C0556CAA325A131086515B58213D00FFC6A1611CE05E2C39378C698818" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-2583CBE45B11C92CFE0873C6C18AF83ED3B5EBCE5E41060E4A771A412B87FF35_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-2583CBE45B11C92CFE0873C6C18AF83ED3B5EBCE5E41060E4A771A412B87FF35" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-30A3D78FCFF02421FF4F26426D85591C2F8F85D9CFE2E08AF508FACB3DE68679_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-30A3D78FCFF02421FF4F26426D85591C2F8F85D9CFE2E08AF508FACB3DE68679" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-46E704BA5A8527F95D5D08203DA2F9160A72FE1507D6607F718EAE2C5B80E05B_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-46E704BA5A8527F95D5D08203DA2F9160A72FE1507D6607F718EAE2C5B80E05B" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-4AE571ECD35A4678C207EA26AF96BD55FB22506C96B29532108088A13ADCDF30_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-4AE571ECD35A4678C207EA26AF96BD55FB22506C96B29532108088A13ADCDF30" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-4DC209EF31049506EF81F5041E351A5A0AF6DD22D479EA2BC5EC8A7D0F3330A8_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-4DC209EF31049506EF81F5041E351A5A0AF6DD22D479EA2BC5EC8A7D0F3330A8" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-4DD611D85577A44188F241D96DD20E562118D91C9BD4755C730BE1789BDFA21E_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-4DD611D85577A44188F241D96DD20E562118D91C9BD4755C730BE1789BDFA21E" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-5686E4454879E702EC88CFA1A689FEB16003E3D047C3C500F499DB59DCEA219E_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-5686E4454879E702EC88CFA1A689FEB16003E3D047C3C500F499DB59DCEA219E" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-648F84D8CD6AF62C0C644DBCDBC1A3C29953A0A3267392C4DA8A194A0E83289C_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-648F84D8CD6AF62C0C644DBCDBC1A3C29953A0A3267392C4DA8A194A0E83289C" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-689E3B1FD1EDF30CCB73EE62658DE98C108483E745CD7C3B2037E1840DE7A608_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-689E3B1FD1EDF30CCB73EE62658DE98C108483E745CD7C3B2037E1840DE7A608" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-6A9A923BB8AFE923BDE86B4816058C114793BF120E4BE29375D56F4B210E473D_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-6A9A923BB8AFE923BDE86B4816058C114793BF120E4BE29375D56F4B210E473D" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-6B1CCBFEE8F0166F602CA1BA75E4BF593D49E1AFECD7EC93A2DF120ADFD20C1D_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-6B1CCBFEE8F0166F602CA1BA75E4BF593D49E1AFECD7EC93A2DF120ADFD20C1D" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-73771624337C3AAD9B1EB9E7D42DD4A71C4F113CD394945819EF6584CEF2C8F7_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-73771624337C3AAD9B1EB9E7D42DD4A71C4F113CD394945819EF6584CEF2C8F7" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-865DBED21E128C07177865B0A05D64C782854AE326CB48C9D4980A6BC4038137_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-865DBED21E128C07177865B0A05D64C782854AE326CB48C9D4980A6BC4038137" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-8BBB1FFBD03EA2B13A6A0619CB61540DF5894B8D8E7324758FDE6C40C16E8578_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-8BBB1FFBD03EA2B13A6A0619CB61540DF5894B8D8E7324758FDE6C40C16E8578" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-929A8331F6CF9C07A03D2D9E5C897C4950A98C90CBF3D49BBBE19F1977ADB1AE_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-929A8331F6CF9C07A03D2D9E5C897C4950A98C90CBF3D49BBBE19F1977ADB1AE" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-C0C427C3FEF5D0173A8F457ED5AA1DADFD15B8AF486A8102F9A5A3316DE0E521_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-C0C427C3FEF5D0173A8F457ED5AA1DADFD15B8AF486A8102F9A5A3316DE0E521" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-C3265AE26352987E848DDBF0774E8BB965218322D2660B0ADABC2E906F09C3BE_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-C3265AE26352987E848DDBF0774E8BB965218322D2660B0ADABC2E906F09C3BE" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-C89E66E843DBB9BC95BEAECA6739D6BB94D50565D27A5C010714E5D1ECA89E31_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-C89E66E843DBB9BC95BEAECA6739D6BB94D50565D27A5C010714E5D1ECA89E31" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-C96CE512A5F926C424AD3DAE770A4402E0F9D70064C803758EC78C38F8012482_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-C96CE512A5F926C424AD3DAE770A4402E0F9D70064C803758EC78C38F8012482" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-CB7F75E0B19B9463DDD8E190923061036C752C9ABC03C60E05064DEEB4048BFC_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-CB7F75E0B19B9463DDD8E190923061036C752C9ABC03C60E05064DEEB4048BFC" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-D99D46B351ED0E6EAC995561F9EAA3DC42F29EC911AC5079FA3FCD2E0A64E3BC_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-D99D46B351ED0E6EAC995561F9EAA3DC42F29EC911AC5079FA3FCD2E0A64E3BC" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-D9E3537A1BA2431EE6AC4A783F38301117E38F19D50733A118B9E5F0EC46F638_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-D9E3537A1BA2431EE6AC4A783F38301117E38F19D50733A118B9E5F0EC46F638" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-EB7EE2BBDE8E3753E428D25CC59E025288410CA325DDF31C9D1AB68D2BF94FE5_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-EB7EE2BBDE8E3753E428D25CC59E025288410CA325DDF31C9D1AB68D2BF94FE5" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-EBE86175515C6294F038FB83D5EB80BF165353C291A1E62375F5819F59B33686_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-EBE86175515C6294F038FB83D5EB80BF165353C291A1E62375F5819F59B33686" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-EFAC56B3F95622128A0560025F29F499E42FF5CEB3B67022CB429443FD49ECA4_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-EFAC56B3F95622128A0560025F29F499E42FF5CEB3B67022CB429443FD49ECA4" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Wrapper-F48BE572AB07FF4A8F20FF80CCAF613CC5CA4567A33042DAAF42887F89F74691_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Wrapper-F48BE572AB07FF4A8F20FF80CCAF613CC5CA4567A33042DAAF42887F89F74691" version="10.0.26100.4193" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <mum2:packageExtended xmlns:mum2="urn:schemas-microsoft-com:asm.v3" completelyOfflineCapable="undetermined" packageSize="71347059" />
+  </package>
+</assembly>

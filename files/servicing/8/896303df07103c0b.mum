@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package" releaseType="Feature Pack">
+    <update name="C75AF4F1D162B74DB166C0E9AB1E571060F18F56417622D8217E77565ED0B01F">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Desktop-Required-ClientOnly-removable-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6FD39D303B4E03B6CBD2104DB873D664A42DA2E1952339F89AE13F98EDAAD6BE">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment0" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="DB14D408B3FEA8FC73BF7017F887D933D0F33B703DABFBEBEB7D273589EA0120" restart="required">
+      <driver inf="dc1-controller.inf" ranking="normal">
+        <assemblyIdentity name="dual_dc1-controller.inf" version="10.0.28000.3382" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="FF42DB5A8A628C3E25B86D05A4ECA9D49D9DA8F078E81A943543AA76FDEC8C34" restart="required">
+      <driver inf="hidgamepad.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidgamepad.inf" version="10.0.28000.3382" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5D376F367D44815B283EF9C25F9D4EFA42ADE8D3A53F096B24F64E1B051C0B9B" restart="required">
+      <driver inf="xboxgip.inf" ranking="normal">
+        <assemblyIdentity name="dual_xboxgip.inf" version="10.0.28000.3382" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D55BDDD5E2E6C090CA671BB22931ECC4E48431B1FC7A1321A8B2C6ADB5235DF0" restart="required">
+      <driver inf="xboxgipsynthetic.inf" ranking="normal">
+        <assemblyIdentity name="dual_xboxgipsynthetic.inf" version="10.0.28000.2665" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="95A856A568DBB8545F4C05B8B4503E4D8F1C8204305038495A3C955BEB6F8452" restart="required">
+      <driver inf="xinputhid.inf" ranking="normal">
+        <assemblyIdentity name="dual_xinputhid.inf" version="10.0.28000.3531" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="C98E092681D03D89F63726728ABE05E1323065304D822B2361BAE33DA90C6B8E" restart="required">
+      <driver inf="xusb22.inf" ranking="normal">
+        <assemblyIdentity name="dual_xusb22.inf" version="10.0.28000.3442" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="DCC4F6487DEE3682609CAC57E5A0164E79D5D06D4D03F3AB54059237B452F409" restart="required">
+      <driver inf="c_midi.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_midi.inf" version="10.0.28000.2556" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="C90B631963EFC51CC14E6BDEBDCB56C642F7C40050870D1D4E23E077DB5AB3BE" restart="required">
+      <driver inf="usbmidi2.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbmidi2.inf" version="10.0.28000.3531" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="A90452A882506FEA24542D1F9FFEB15A35F70B58E7A3A0E44E9EA584D5F46AC8">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-User-Choice-Protection-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="CD75166C2F080B6A035D48C4DB05A605385DB024C1C5D89EE91D4754F9570B65" restart="required">
+      <driver inf="VocaEffectPack-Extension.inf" ranking="force">
+        <assemblyIdentity name="dual_VocaEffectPack-Extension.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="73768CF3B70C54014A51DF188197D171E1D213873DC652C7919286F61A5283E8">
+      <package integrate="hidden">
+        <assemblyIdentity name="Multimedia-AudioCore-Full-removable-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7D858D8D2B2F9886258021AEE7CFD0F6DAD59237B1DA65A32CEBCC16BD386A7E">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package00" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="FB23C0441947D053721E61CE9AEA7B1C2BF9760E3BE4D84A53624D1A4A6EBB1E">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package01" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="FC27DD294A1E48F01AEF4542F0848BF1DC93BBCF18A455410FF24868B8101026">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-PrintToPDFServices-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9DF2A88E11F37D7F8C076F25C0548647E04E819F48712038BF896652EEE63EB2">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package02" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="76DB3257601EA274D2CABAC9AED9E0439A120FE253FA7876B031E8548DF23239">
+      <package integrate="hidden">
+        <assemblyIdentity name="UserExperience-Recall-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="555015C169AB1FDFC38D8BA0E92D2933346F6CA8520560E3940D205C1A580602">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package03" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="876e3a9374d8c15b14905ad3d4d63d3c">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

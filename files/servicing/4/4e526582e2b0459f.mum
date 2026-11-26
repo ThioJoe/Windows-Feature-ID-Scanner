@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Storage-VSP-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Storage-VSP" releaseType="Feature Pack">
+    <update name="60337c6116bffe17332fdbe78f28bc61" restart="required">
+      <driver inf="wstorvsp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wstorvsp.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="fa84c7683bb218cce7af9715b9bf4cc1">
+      <component>
+        <assemblyIdentity name="HyperV-Storage-VSP-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="a49340fbb0fb93024c3fb1ba6f3700ae">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-VmBus-Host-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

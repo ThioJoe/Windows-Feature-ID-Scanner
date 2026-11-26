@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables functionality required on Win3 to support MSIX deployment, capabilities, device access, app activation, and background tasks." displayName="Support for Packaged Universal Windows Applications" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-PackagedUniversalApps-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-PackagedUniversalApps-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win3-PackagedUniversalApps-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="29d98b56cbad454687d45c14a44cf194">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppActivation-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="dd2d3ecddc42e1abba185c59ce3f4432">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppActivation-Background-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="8dbb27e366a28175396865e4b7f2e056">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppProcessManagement-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d291d63e92c26d870ef2fdf4920ca8eb">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-CapabilityAccess-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="34a81aad5d978a14bb75705f45228d05">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-MSIX-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b9e093f6f0fa8bf6aa6d9e9ed872957c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-MSIX-RuntimeDependencies-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="fde3e8e0a4d7c348d4c2aa00550a0815">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-CapabilityAccess-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ff64d9e4e4ae6e631e6f931f7b3e95d4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-COM-OLE-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="665794f04a20873b478f16991c3aba80">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-DeviceAccess-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="44d64904ac0588e7775d01be23e143d1">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-MSIX-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

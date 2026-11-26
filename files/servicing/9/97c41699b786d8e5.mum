@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package02" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package02" releaseType="Feature Pack">
+    <update name="ea76cf9b6bc4340eaf876faee09e747c">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment020" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="100CDD5A0643839BF5730404B0F42F3C66E351CA0DD5CB80E94CB242C3F3AAAD">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-System-Counters-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="C4FFDEA5DEECFD2D2F00B5ED6FBD8EE6473C6E182CC020DDF29F4ADF5B1E2847" restart="required">
+      <driver inf="netvwifibus.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwifibus.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="C4C5DC7C7268432BEE538D52165EB7AB0F259EBD30E15E3E027076B02D5BEF91" restart="required">
+      <driver inf="netvwififlt.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwififlt.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1F701E1F3CDA46976FE2A344AC5B98C9128AEC8D2B633EFFE224F82B5D7B2475" restart="required">
+      <driver inf="netvwifimp.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwifimp.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Printing-PrintToPDFServices-Package" version="10.0.26100.4484" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Printing-PrintToPDFServices" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.26100.4484" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.4484" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Printing-PrintToPDFServices-Features" displayName="Microsoft Print to PDF" description="Provides binaries on the system for creating the Microsoft Print to PDF Print Queue">
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-PrintToPDF-Opt-Package" version="10.0.26100.4484" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

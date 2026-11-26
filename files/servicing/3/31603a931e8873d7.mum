@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0411" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0411" releaseType="Feature Pack">
+    <update name="9D077FB7B2B964DE311956EBF577964EB913CB0B2CF6F1806125989E1FDBCE28">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04110" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="F03447105C049AD5063799A35E2713EA29F75CECB821FBA04CC5C32B9033B03D" restart="required">
+      <driver inf="bthpan.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthpan.inf" version="10.0.28000.3542" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2FB9FBBD9099053F464F922958BCBE941038F785E5D81EB8A27AA29F1544B14E">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-DriverVerifier-Tools-Package" version="10.0.28000.3032" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6931EF89E4BDAC9E8706E50B8258255C46AD9C5BB5E2FE3ACA04CFDD12F1E56E" restart="required">
+      <driver inf="miradisp.inf" ranking="normal">
+        <assemblyIdentity name="dual_miradisp.inf" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="844D370892488444CDC2D608A305BA85F8EA27AE2A7F2934F8C1919F62BFEF22" restart="required">
+      <driver inf="vdrvroot.inf" ranking="normal">
+        <assemblyIdentity name="dual_vdrvroot.inf" version="10.0.28000.2912" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="A72127B95AB9E5F2763BEDCCAB3B7995AC897E35431EB38A906A21C341FF45F7" restart="required">
+      <driver inf="vhdmp.inf" ranking="normal">
+        <assemblyIdentity name="dual_vhdmp.inf" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

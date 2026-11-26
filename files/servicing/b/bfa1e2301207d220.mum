@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5049622" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5049622" creationTimeStamp="2024-12-04T02:25:54Z" lastUpdateTimeStamp="2024-12-04T02:25:54Z">
+  <assemblyIdentity name="Package_4_for_KB5049622" version="10.0.9294.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5049622" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="staged">
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-OnDemand-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+        <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerWebEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5049622-103_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx35Linq-VB_Compiler_Orcas" version="10.0.27000.360" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="NetFx35Linq-VB_Compiler_Orcas" version="10.0.27000.360" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="50b5d13f0b4ccc0688d45ae509a215e4" version="10.0.27000.360" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-104_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx35Linq-System.Web.Extensions" version="10.0.27000.351" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="NetFx35Linq-System.Web.Extensions" version="10.0.27000.351" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7eecbd282d03c880328b9dff9eeb6d1a" version="10.0.27000.351" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-105_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Web.Extensions" version="10.0.27000.351" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="204e4125dbc5452a84d20bb64c6a5afa" version="10.0.27000.351" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

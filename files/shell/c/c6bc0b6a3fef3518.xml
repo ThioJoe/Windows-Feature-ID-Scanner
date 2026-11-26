@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities">
+  <!-- There are three appxmanifest files. One for normal deployment, one for PPI/surface Hub, and another for deployment from visual studio. Please keep all three in sync, -->
+  <!-- aside from the minor necessary changes that exist. moapp\AppxManifest.xml, moapp\VSAppxManifest.xml -->
+  <Identity Name="F46D4000-FD22-4DB4-AC8E-4E1DDDE828FE"
+            Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="10.0.28000.7"
+            ResourceId="neutral" />  
+  <mp:PhoneIdentity PhoneProductId="F46D4000-FD22-4DB4-AC8E-4E1DDDE828FE" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>ms-resource:AppxManifest_DisplayName</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="AddSuggestedFoldersToLibraryDialog.exe" EntryPoint="AddSuggestedFoldersToLibraryDialog.App">
+      <uap:VisualElements AppListEntry="none" DisplayName="ms-resource:AppxManifest_DisplayName" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ms-resource:AppxManifest_Description" BackgroundColor="transparent">
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <wincap:Capability Name="applicationDefaults" />
+  </Capabilities>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal"
+                    MinVersion="10.0.0.0"
+                    MaxVersionTested="10.0.28000.7" />
+  </Dependencies>
+</Package>

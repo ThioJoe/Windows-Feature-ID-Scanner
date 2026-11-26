@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) Microsoft Corporation  -->
+<policyDefinitions
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    revision="1.0"
+    schemaVersion="1.0"
+    xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="QuickMachineRecovery" namespace="Microsoft.Policies.QuickMachineRecovery" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2"
+                  displayName="$(string.SUPPORTED_Windows_Server_2025_Windows_11_0_24H2)" />
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="QuickMachineRecovery" displayName="$(string.QuickMachineRecovery)">
+      <parentCategory ref="windows:System" />
+    </category>
+  </categories>
+  <policies>
+
+    <!--
+      CloudRemediation
+      Controls whether the recovery engine is permitted to download and apply cloud-sourced
+      remediation content during a Quick Machine Recovery attempt.
+      Registry: HKLM\SOFTWARE\Policies\Microsoft\Windows\AutoRemediation  REG_DWORD "CloudRemediation"
+    -->
+    <policy
+        name="CloudRemediation"
+        class="Machine"
+        clientExtension="{8D4B2F9A-6E3C-4A71-B5D8-2F9C7E1A3B60}"
+        displayName="$(string.CloudRemediation)"
+        explainText="$(string.CloudRemediation_help)"
+        key="SOFTWARE\Policies\Microsoft\Windows\AutoRemediation"
+        valueName="CloudRemediation">
+      <parentCategory ref="QuickMachineRecovery" />
+      <supportedOn ref="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+
+    <!--
+      AutoRemediation
+      Controls whether the recovery engine is permitted to automatically apply remediations after
+      boot failures. Needs to be paired with CloudRemediation to allow automatic application of cloud-sourced remediations.
+      Registry: HKLM\SOFTWARE\Policies\Microsoft\Windows\AutoRemediation  REG_DWORD "AutoRemediation"
+    -->
+    <policy
+        name="AutoRemediation"
+        class="Machine"
+        clientExtension="{8D4B2F9A-6E3C-4A71-B5D8-2F9C7E1A3B60}"
+        displayName="$(string.AutoRemediation)"
+        explainText="$(string.AutoRemediation_help)"
+        key="SOFTWARE\Policies\Microsoft\Windows\AutoRemediation"
+        valueName="AutoRemediation">
+      <parentCategory ref="QuickMachineRecovery" />
+      <supportedOn ref="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+
+    <!--
+      RetryInterval
+      Sets the interval in minutes between successive Quick Machine Recovery retry attempts.
+      Set to 0 to attempt recovery once with no retries.
+      Registry: HKLM\SOFTWARE\Policies\Microsoft\Windows\AutoRemediation  REG_DWORD "WaitInterval"
+    -->
+    <policy
+        name="RetryInterval"
+        class="Machine"
+        clientExtension="{8D4B2F9A-6E3C-4A71-B5D8-2F9C7E1A3B60}"
+        displayName="$(string.RetryInterval)"
+        explainText="$(string.RetryInterval_help)"
+        presentation="$(presentation.RetryInterval)"
+        key="SOFTWARE\Policies\Microsoft\Windows\AutoRemediation">
+      <parentCategory ref="QuickMachineRecovery" />
+      <supportedOn ref="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2" />
+      <elements>
+        <decimal id="RetryIntervalValue" valueName="WaitInterval" minValue="0" maxValue="4320" />
+      </elements>
+    </policy>
+
+    <!--
+      TotalWaitTime
+      Sets the total time in minutes the recovery engine will spend across all retry attempts
+      before giving up and booting normally.
+      Registry: HKLM\SOFTWARE\Policies\Microsoft\Windows\AutoRemediation  REG_DWORD "TotalWaitTime"
+    -->
+    <policy
+        name="TotalWaitTime"
+        class="Machine"
+        clientExtension="{8D4B2F9A-6E3C-4A71-B5D8-2F9C7E1A3B60}"
+        displayName="$(string.TotalWaitTime)"
+        explainText="$(string.TotalWaitTime_help)"
+        presentation="$(presentation.TotalWaitTime)"
+        key="SOFTWARE\Policies\Microsoft\Windows\AutoRemediation">
+      <parentCategory ref="QuickMachineRecovery" />
+      <supportedOn ref="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2" />
+      <elements>
+        <decimal id="TotalWaitTimeValue" valueName="TotalWaitTime" minValue="1" maxValue="4320" />
+      </elements>
+    </policy>
+
+  </policies>
+</policyDefinitions>

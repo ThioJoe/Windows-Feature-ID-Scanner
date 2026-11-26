@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-KernelInt-VSP-merged-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-KernelInt-VSP-merged" releaseType="Feature Pack">
+    <update name="fad9a979533a316d3913803a56ac1054" restart="required">
+      <driver inf="wvkrnlintvsp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wvkrnlintvsp.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

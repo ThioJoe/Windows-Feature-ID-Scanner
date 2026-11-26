@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Feature-VirtualMachinePlatform-Client-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Feature-VirtualMachinePlatform-Client" releaseType="Feature Pack" targetPartition="mainos" binaryPartition="false">
+    <update name="bb3d7c7e31910ba859226343f9eccd94">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-SDN-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c653bcfad1073e77e8b842acbad1f86a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Compute-Host-VirtualMachines-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="26e6e61e5485464e2311e5a21170e074">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Compute-System-VmDirect-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="fc0f6e6182f5ed0e574287743c7c34f3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Networking-Containers-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

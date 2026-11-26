@@ -1,0 +1,150 @@
+﻿#layoutView {
+    margin: auto;
+}
+
+#layoutViewTable {
+    font-family: Consolas, monospace;
+    display: table;
+    overflow: hidden;
+}
+
+/* Need to explicitly override the CSS selector from domExplorer.css
+** .BPT-HorizontalPane-Right-Content > div > *:not(.BPT-Toolbar)
+** in our special #layout-offset-layer selector case.
+*/
+#layout-offset-layer {
+    font-family: inherit;
+}
+
+div.Layout-Box {
+    margin: auto;
+    width: 23em;
+    height: 100%;
+    padding: 0%;
+    border: 0px;
+}
+
+div.BPT-Layout-Layer {
+    display: table-cell;
+    padding: .1em 1px;
+    text-align: center;
+    border-top: 1px solid #84ACDD;
+    border-left: 1px solid #84ACDD;
+    border-bottom: 1px solid #84ACDD;
+    border-right: 1px solid #84ACDD;
+    white-space: nowrap;
+}
+
+div.BPT-Layout-Top, div.BPT-Layout-Bottom {
+    font-family: inherit;
+    text-align: center;
+    padding: 0.2em;
+    height: 1em;
+}
+
+div.BPT-Layout-Left-Outer-Cell {
+    display: table-cell;
+    font-family: inherit;
+    height: 1.4em;
+    max-width: 1.4em;
+    min-width: 1.4em;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 1.4em;
+}
+
+div.BPT-Layout-Left-Coord {
+    font-family: inherit;
+    height: 1.4em;
+    left: -3.3em;
+    position: relative;
+    width: 1px;
+}
+
+div.BPT-Layout-Left {
+    display: inline-block;
+    font-family: inherit;
+    height: 1.4em;
+    line-height: 1.4em;
+    position: relative;
+    text-align: center;
+    transform: rotate(-90deg);
+    width: 8em;
+}
+
+div.BPT-Layout-Right-Outer-Cell {
+    display: table-cell;
+    font-family: inherit;
+    height: 1.4em;
+    max-width: 1.4em;
+    min-width: 1.4em;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 1.4em;
+}
+
+div.BPT-Layout-Right-Coord {
+    font-family: inherit;
+    height: 1.4em;
+    left: -3.3em;
+    position: relative;
+    width: 0;
+}
+
+div.BPT-Layout-Right {
+    display: inline-block;
+    font-family: inherit;
+    height: 1.4em;
+    line-height: 1.4em;
+    position: relative;
+    text-align: center;
+    transform: rotate(-90deg);
+    width: 8em;
+}
+
+div.BPT-Layout-Label {
+    font-family: inherit;
+    display: block;
+    font-size: .85em;
+    padding: 0px 5px;
+    width: 0px;
+    height: 0px;
+    overflow: visible;
+    color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+}
+
+#layout-offset-layer {
+    background-color: TRANSPARENT; /*[{plugin-elements-layout-offset-layer-bg-color}]*/
+    border-color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+    color: TRANSPARENT; /*[{plugin-contextmenu-color}]*/
+}
+
+#layout-margin-layer {
+    background-color: TRANSPARENT; /*[{plugin-elements-layout-margin-layer-bg-color}]*/
+    border-color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+    color: TRANSPARENT; /*[{plugin-contextmenu-color}]*/
+}
+
+#layout-border-layer {
+    background-color: TRANSPARENT; /*[{plugin-elements-layout-border-layer-bg-color}]*/
+    border-color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+    color: TRANSPARENT; /*[{plugin-contextmenu-color}]*/
+}
+
+#layout-padding-layer {
+    background-color: TRANSPARENT; /*[{plugin-elements-layout-padding-layer-bg-color}]*/
+    border-color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+    color: TRANSPARENT; /*[{plugin-contextmenu-color}]*/
+}
+
+#layout-size-layer {
+    background-color: TRANSPARENT; /*[{plugin-elements-layout-size-layer-bg-color}]*/
+    border-color: TRANSPARENT; /*[{plugin-font-editor-color}]*/
+    color: TRANSPARENT; /*[{plugin-contextmenu-color}]*/
+    height: 2em;
+    line-height: 2em;
+    min-width: 10em;
+    vertical-align: middle;
+}

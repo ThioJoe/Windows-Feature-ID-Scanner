@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-EventLog-Service-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-EventLog-Service-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-OneCore-EventLog-Service-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="b9141ed9fe4eb513ef85cc56345e82ce">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-EventLog-Service-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="6e22b96f9325aa48613c17638e4ee57d">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-EventLog-Api-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9a79626537acd63415addc9fa01573ee">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-EventLog-CommandLine-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="15dca52c8603d5e8b4a3b6eb69e0a641">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-TraceDataHelper-DecodingResources-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

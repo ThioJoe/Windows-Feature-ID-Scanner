@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-EditionPack-Professional-WOW64-removable-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-EditionPack-Professional-WOW64-removable" releaseType="Feature Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-EditionPack-Professional-removable-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="0c18076bbca3ccee26f004137a9f003b">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Microsoft-Windows-AppManagement-UEV" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-AppManagement-UEV-WOW64-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

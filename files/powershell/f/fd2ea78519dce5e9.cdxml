@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+    <Class ClassName="ROOT/Microsoft/Windows/SMB/MSFT_SmbClientConfiguration">
+        <Version>1.0</Version>
+        
+        <DefaultNoun>SmbClientConfiguration</DefaultNoun>
+        <StaticCmdlets>
+            <!--
+
+            //
+            // Get-SmbClient
+            //
+
+            -->
+            <Cmdlet>
+                <CmdletMetadata Verb="Get" ConfirmImpact="Medium" HelpUri="http://go.microsoft.com/fwlink/?LinkID=241944" Aliases="gsmbcc"/>
+                <Method MethodName="GetConfiguration">
+                    <ReturnValue>
+                        <Type PSType="uint32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="Output">
+                            <Type PSType="Microsoft.Management.Infrastructure.CimInstance" />
+                            <CmdletOutputMetadata />
+                        </Parameter>
+                    </Parameters>
+                </Method>
+            </Cmdlet>
+
+
+            <!--
+
+            //
+            // Reset-SmbClient
+            //
+
+            -->
+            <Cmdlet>
+                <CmdletMetadata Verb="Reset" ConfirmImpact="High" HelpUri="" Aliases="rsmbcc"/>
+                <Method MethodName="ResetConfiguration">
+                    <ReturnValue>
+                        <Type PSType="uint32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="Output">
+                            <Type PSType="Microsoft.Management.Infrastructure.CimInstance" />
+                            <CmdletOutputMetadata />
+                        </Parameter>
+                        <Parameter ParameterName="All">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AuditInsecureGuestLogon">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AuditServerDoesNotSupportEncryption">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AuditServerDoesNotSupportSigning">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BlockNTLM">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BlockNTLMServerExceptionList">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CompressibilitySampling">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ConnectionCountPerRssNetworkInterface">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheEntriesMax">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheEntrySizeMax">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheLifetime">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCompression">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisabledSMBQUICServerExceptionList">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DormantFileLimit">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableBandwidthThrottling">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableByteRangeLockingOnReadOnlyFiles">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLargeMtu">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLoadBalanceScaleOut">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableMailslots">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableMultiChannel">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableSMBQUIC">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EncryptionCiphers">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExtendedSessionTimeout">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileInfoCacheEntriesMax">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileInfoCacheLifetime">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileNotFoundCacheEntriesMax">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileNotFoundCacheLifetime">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ForceSMBEncryptionOverQuic">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="InvalidAuthenticationCacheLifetime">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="KeepConn">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MaxCmds">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MaximumConnectionCountPerServer">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="OplocksDisabled">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RequestCompression">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RequireEncryption">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SessionTimeout">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SkipCertificateCheck">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="Smb2DialectMax">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="Smb2DialectMin">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UseOpportunisticLocking">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="WindowSizeThreshold">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata>
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="cim:operationOption:Force">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata PSName="Force">
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                    </Parameters>
+                </Method>
+            </Cmdlet>
+
+
+            <!--
+
+            //
+            // Set-SmbClient
+            //
+
+            -->
+
+            <Cmdlet>
+                <CmdletMetadata Verb="Set" ConfirmImpact="High" HelpUri="http://go.microsoft.com/fwlink/?LinkID=241961" Aliases="ssmbcc"/>
+                <Method MethodName="SetConfiguration">
+                    <ReturnValue>
+                        <Type PSType="uint32" />
+                        <CmdletOutputMetadata>
+                            <ErrorCode />
+                        </CmdletOutputMetadata>
+                    </ReturnValue>
+                    <Parameters>
+                        <Parameter ParameterName="AuditInsecureGuestLogon">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AuditServerDoesNotSupportEncryption">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="AuditServerDoesNotSupportSigning">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BlockNTLM">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="BlockNTLMServerExceptionList">
+                            <Type PSType="string" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CompressibilitySamplingSize">
+                            <Type PSType="Uint64" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="CompressibleThreshold">
+                            <Type PSType="Uint64" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ConnectionCountPerRssNetworkInterface">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheEntriesMax">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheEntrySizeMax">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DirectoryCacheLifetime">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisableCompression">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DisabledSMBQUICServerExceptionList">
+                            <Type PSType="string" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="DormantFileLimit">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableBandwidthThrottling">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableByteRangeLockingOnReadOnlyFiles">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableCompressibilitySampling">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableInsecureGuestLogons">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLargeMtu">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableLoadBalanceScaleOut">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableMailslots">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableMultiChannel">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableSecuritySignature">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EnableSMBQUIC">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="EncryptionCiphers">
+                            <Type PSType="string" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ExtendedSessionTimeout">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileInfoCacheEntriesMax">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileInfoCacheLifetime">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileNotFoundCacheEntriesMax">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="FileNotFoundCacheLifetime">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="ForceSMBEncryptionOverQuic">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="InvalidAuthenticationCacheLifetime">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="KeepConn">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MaxCmds">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="MaximumConnectionCountPerServer">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="OplocksDisabled">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RequestCompression">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RequireEncryption">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="RequireSecuritySignature">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SessionTimeout">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="SkipCertificateCheck">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="Smb2DialectMax">
+                            <Type PSType="SmbClientConfiguration.Smb2DialectMax" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="Smb2DialectMin">
+                            <Type PSType="SmbClientConfiguration.Smb2DialectMin" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="UseOpportunisticLocking">
+                            <Type PSType="bool" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="WindowSizeThreshold">
+                            <Type PSType="Uint32" />
+                            <CmdletParameterMetadata>
+                                <ValidateNotNull />
+                                <ValidateNotNullOrEmpty />
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                        <Parameter ParameterName="cim:operationOption:Force">
+                            <Type PSType="System.Management.Automation.SwitchParameter" />
+                            <CmdletParameterMetadata PSName="Force">
+                            </CmdletParameterMetadata>
+                        </Parameter>
+                    </Parameters>
+                </Method>
+            </Cmdlet>
+        </StaticCmdlets>
+    </Class>
+
+    <Enums>
+        <Enum EnumName="SmbClientConfiguration.Smb2DialectMax" UnderlyingType="System.UInt32">
+            <Value Name="SMB202" Value="514" />
+            <Value Name="SMB210" Value="528" />
+            <Value Name="SMB300" Value="768" />
+            <Value Name="SMB302" Value="770" />
+            <Value Name="SMB311" Value="785" />
+            <Value Name="None" Value="65536" />
+        </Enum>
+        <Enum EnumName="SmbClientConfiguration.Smb2DialectMin" UnderlyingType="System.UInt32">
+            <Value Name="None" Value="0" />
+            <Value Name="SMB202" Value="514" />
+            <Value Name="SMB210" Value="528" />
+            <Value Name="SMB300" Value="768" />
+            <Value Name="SMB302" Value="770" />
+            <Value Name="SMB311" Value="785" />
+        </Enum>
+    </Enums>
+
+</PowerShellMetadata>

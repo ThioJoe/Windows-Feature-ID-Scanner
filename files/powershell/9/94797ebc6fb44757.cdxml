@@ -1,0 +1,647 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ================================================== -->
+<!--                                                    -->
+<!--   Copyright (C) Microsoft. All rights reserved.    -->
+<!--                                                    -->
+<!-- ================================================== -->
+
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="Root/Microsoft/Windows/Wdac/MSFT_WdacBidTraceTask" ClassVersion="1.0">
+    <Version>1.0</Version>
+    <DefaultNoun>WdacBidTrace</DefaultNoun>
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="Disable" DefaultCmdletParameterSet="InputObject" ConfirmImpact="Medium" />
+        <Method MethodName="DisableByAllApp" CmdletParameterSet="AllApp">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="IncludeAllApplications">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="DisableByFolder" CmdletParameterSet="Folder">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Folder">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationFolder" IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="DisableByInputObject" CmdletParameterSet="InputObject">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="InputObject">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletParameterMetadata Aliases="BidTrace" IsMandatory="true" Position="0" ValueFromPipeline="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="DisableByPath" CmdletParameterSet="Path">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Path">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationPath" IsMandatory="true" Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ProcessId">
+              <Type PSType="System.UInt32" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Enable" DefaultCmdletParameterSet="InputObject" ConfirmImpact="Medium" />
+        <Method MethodName="EnableByAllApp" CmdletParameterSet="AllApp">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="IncludeAllApplications">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="EnableByFolder" CmdletParameterSet="Folder">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Folder">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationFolder" IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="EnableByInputObject" CmdletParameterSet="InputObject">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="InputObject">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletParameterMetadata Aliases="BidTrace" IsMandatory="true" Position="0" ValueFromPipeline="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="EnableByPath" CmdletParameterSet="Path">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Path">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationPath" IsMandatory="true" Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ProcessId">
+              <Type PSType="System.UInt32" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Get" DefaultCmdletParameterSet="Path" />
+        <Method MethodName="GetByAllApp" CmdletParameterSet="AllApp">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="IncludeAllApplications">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="GetByFolder" CmdletParameterSet="Folder">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Folder">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationFolder" IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="GetByPath" CmdletParameterSet="Path">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Path">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Aliases="ApplicationPath" Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ProcessId">
+              <Type PSType="System.UInt32" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+</PowerShellMetadata>
+
+<!-- SIG # Begin signature block -->
+<!-- MIIl8QYJKoZIhvcNAQcCoIIl4jCCJd4CAQExDzANBglghkgBZQMEAgEFADB5Bgor -->
+<!-- BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG -->
+<!-- KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAWDzuRGCi8e5XD -->
+<!-- lrkT3wnHYqOvQsmBtqAMyErAXsXYBaCCCwMwggU0MIIEHKADAgECAhMzAAAAFqEp -->
+<!-- oMGHAvRPAAAAAAAWMA0GCSqGSIb3DQEBCwUAMGwxCzAJBgNVBAYTAlVTMR4wHAYD -->
+<!-- VQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBX -->
+<!-- aW5kb3dzIFByb2R1Y3Rpb24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYwHhcNMjYw -->
+<!-- ODA2MTc0OTE5WhcNMjcwODA1MTc0OTE5WjBwMQswCQYDVQQGEwJVUzETMBEGA1UE -->
+<!-- CBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9z -->
+<!-- b2Z0IENvcnBvcmF0aW9uMRowGAYDVQQDExFNaWNyb3NvZnQgV2luZG93czCCASIw -->
+<!-- DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJmzos/KQLr21FzDeScugLqSZQuB -->
+<!-- mUHvCnZHO2acXsGITYJxSzhoqzOvWXpTwgjiYBKwRL2eECPQk6FLWHkpCc72r0PR -->
+<!-- kyqfEFdQ6pgK8coG7/xo0FY1d5I3kS3VdwhV1lKEiIZdOWJ/t/JKQqHWjQzLxjnM -->
+<!-- Ehc5qm+nmSC4ZxQu6WDK2VTb7r2qIvIwGdsx38KfoUaUW8Tm+ftTDitLlpqXpfHq -->
+<!-- ECdEDFBca4bizkcuHRov0ZNdv637YdyMYmWpzQH6pZlC7yzhbERn/+FWHA22IpXb -->
+<!-- ikqZ460/uTVSjVWbas2YiPQnej2AOqCn/0ciAAI5tXME5O+uok4wqVFQBOsCAwEA -->
+<!-- AaOCAckwggHFMB8GA1UdJQQYMBYGCisGAQQBgjcKAwYGCCsGAQUFBwMDMB0GA1Ud -->
+<!-- DgQWBBRLj+4yIda8MMrJjoM47E+KccZrPjBUBgNVHREETTBLpEkwRzEtMCsGA1UE -->
+<!-- CxMkTWljcm9zb2Z0IElyZWxhbmQgT3BlcmF0aW9ucyBMaW1pdGVkMRYwFAYDVQQF -->
+<!-- Ew0yMjk4NzkrNTA4OTg3MB8GA1UdIwQYMBaAFOfKJCr66qKUtVoWB+Zqacw1k3C8 -->
+<!-- MHcGA1UdHwRwMG4wbKBqoGiGZmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lv -->
+<!-- cHMvY3JsL01pY3Jvc29mdCUyMFdpbmRvd3MlMjBQcm9kdWN0aW9uJTIwUENBJTIw -->
+<!-- MjAyNiUyMFJTQTIwNDgtU0hBMjU2LmNybDCBhAYIKwYBBQUHAQEEeDB2MHQGCCsG -->
+<!-- AQUFBzAChmhodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01p -->
+<!-- Y3Jvc29mdCUyMFdpbmRvd3MlMjBQcm9kdWN0aW9uJTIwUENBJTIwMjAyNiUyMFJT -->
+<!-- QTIwNDgtU0hBMjU2LmNydDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IB -->
+<!-- AQAfMxLtQOYr2jBXFR5KukWpIJj/Y8jjbjBFHlDwv+frBLLup9wMy/zbxAzpjOVz -->
+<!-- VFP2M+kWGPjfcVLFFHylUrfAMUKUALA6HDSDys2EIFxuFTGSLTklp/QHBez6OKE3 -->
+<!-- 5ayA4vqD2Q4SENzakxFlveZFFD8xM5bXmXXdwRFF1U9QoF8QXCis0EAJkEYUuoMH -->
+<!-- QpeOiMGgm7b6/rvii9oYDMn1/f3RIiH6Iaq8ADaf1YpCqVdCpSdb1F+AmNNAJsaP -->
+<!-- AZJaF6KNZ8og/wsidKLLMxnT+qlcSYwzUTDvJYN7LhtnNYG6N5pC/P4MquVMGhk2 -->
+<!-- 92CkK+w0EirB49+X/NwQktQCMIIFxzCCA6+gAwIBAgITMwAAAB7pNSvshgFUFQAA -->
+<!-- AAAAHjANBgkqhkiG9w0BAQsFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldh -->
+<!-- c2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBD -->
+<!-- b3Jwb3JhdGlvbjEyMDAGA1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUg -->
+<!-- QXV0aG9yaXR5IDIwMTAwHhcNMjYwODA0MTkzOTE1WhcNMzEwODA0MTk0OTE1WjBs -->
+<!-- MQswCQYDVQQGEwJVUzEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMT0w -->
+<!-- OwYDVQQDEzRNaWNyb3NvZnQgV2luZG93cyBQcm9kdWN0aW9uIFBDQSAyMDI2IFJT -->
+<!-- QTIwNDgtU0hBMjU2MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApMZe -->
+<!-- 82jAXg4ate5zqU+Tj14yuORQ6z7lETN2fqGvoqQcclelvX7NSXJxtDc0QpW5DPMa -->
+<!-- 9aUEVFS73cxbfJeReeFcfHH1kltXrzQVIEiAEISP67hKXR6/si4JNrb++FxDPcJg -->
+<!-- 11OI37SSubSkZBD+S2c/uQtajuykrizFWjL0oXfYqkCcYUn8SjdOp6TuojJzMgn0 -->
+<!-- B711x5vywd/cVf4mm/3k2IDPqfJWC75+5jGiL4+7eKZBjck52f+iiWP1ahwniuPd -->
+<!-- 3s1kemrW13xJe5Qs6vrDT67866ETsr/zgtGVI5dOQCxQ04qn82LnSx1RWcsc7Rl/ -->
+<!-- 7Dqja+QCJGkHT9a+5QIDAQABo4IBQzCCAT8wEAYJKwYBBAGCNxUBBAMCAQAwHQYD -->
+<!-- VR0OBBYEFOfKJCr66qKUtVoWB+Zqacw1k3C8MBkGCSsGAQQBgjcUAgQMHgoAUwB1 -->
+<!-- AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MB8GA1UdIwQYMBaA -->
+<!-- FNX2VsuP6KJcYmjRPZSQW9fOmhjEMFYGA1UdHwRPME0wS6BJoEeGRWh0dHA6Ly9j -->
+<!-- cmwubWljcm9zb2Z0LmNvbS9wa2kvY3JsL3Byb2R1Y3RzL01pY1Jvb0NlckF1dF8y -->
+<!-- MDEwLTA2LTIzLmNybDBaBggrBgEFBQcBAQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6 -->
+<!-- Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kvY2VydHMvTWljUm9vQ2VyQXV0XzIwMTAt -->
+<!-- MDYtMjMuY3J0MA0GCSqGSIb3DQEBCwUAA4ICAQBhPerrXYM3sv/O84BFY9gQykq2 -->
+<!-- S3T3Wi110PtO80dBsZsFfkuuWCeY4oD6LbLJ4NxgVc6asZsBo/Xtsz76ZNK5ezeq -->
+<!-- N+ieuFaj1GaAA3G7ZvayOMrtHVwnyUbTZ1qdlG1qnOe4xRBji+BnFnZffB0OnqR4 -->
+<!-- Fl6Ydkjx8VxbarZq8Dsf9A8IaiNyr5+ZLnNyeDWiVLJNv7f+Q7+3009BzpckNy4Z -->
+<!-- 4adeaKkYFM8pF6w2JCQsaq6kztfO3iXmPr5bvbFju/KnZOwFfSruARIWg5AhANYP -->
+<!-- aZjZMWSvQES/Ez/dQCzA7xxWwAeCLkqw7BP/I+g7V2c0c8UYMROXE5iztChSTymT -->
+<!-- VeHPEcmr2GnFhll8mSbshwdnNi/a4rzFF5gWcfFVh3o7q0WL7Qpfd0XgimYFBP/F -->
+<!-- kxrmA+akK9mC1/5SRCSNe0IZQqmtBIyA2yD3E4ijyUAvrRHl42mFRE8+MHOi4+GW -->
+<!-- cPt8CWkIJbPE59aUzrw8gZTDMgEcx2WconLvTbpG+k1Dv6W6Dd/GoUMJo3x9WKex -->
+<!-- kiApSs/twhj9UguA3LGa2pQBj2YrRk8I73j0f805QdWPwrOLRYmGggJXvY2+GLiN -->
+<!-- ltRAAN7PYv5c4owHpkLNjYo/ZwIwMe20aQ3MDI5LSEjZxDgZPR3Uu72jThVgzlxO -->
+<!-- jrKeKiBdfmXTQYSNLjGCGkQwghpAAgEBMIGDMGwxCzAJBgNVBAYTAlVTMR4wHAYD -->
+<!-- VQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBX -->
+<!-- aW5kb3dzIFByb2R1Y3Rpb24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYCEzMAAAAW -->
+<!-- oSmgwYcC9E8AAAAAABYwDQYJYIZIAWUDBAIBBQCggfowGQYJKoZIhvcNAQkDMQwG -->
+<!-- CisGAQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIFrgF6r3nJDffOvGHH43hdtiWo34 -->
+<!-- 9qgij/SFaxK1/yknMFAGCisGAQQBgjcKAxwxQgxARTk4OTJCNzEzOUMzRUY4Qjgx -->
+<!-- MjFDODUwRTQ5RkEyNUQ4NDRGRjMxOEZCRDM3M0UyQjYzNkNGMTFGOTRGMzU2MjBa -->
+<!-- BgorBgEEAYI3AgEMMUwwSqAkgCIATQBpAGMAcgBvAHMAbwBmAHQAIABXAGkAbgBk -->
+<!-- AG8AdwBzoSKAIGh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS93aW5kb3dzMA0GCSqG -->
+<!-- SIb3DQEBAQUABIIBADPUk8BAtt5ncXXc4Lwdenf2TjnSGJvu3C1Bj6gn4TIm4t4/ -->
+<!-- Kc7fbkXbQ7iXQ30LH1mVvhkzSTV25GnVaHGyuqv+ScKtqPgB+NpdwNyPBPrjsTId -->
+<!-- 4xM2QscWJ00pRlZEN6WhNo8VAQ34oOwO6wcSow9oGgjYQGYqlWk4jhaouc2tVrvV -->
+<!-- 1+zu2j4U/qeZNiEsu4nFpGCWkZTPAvOtIIT88Xv5HPwZp48xcNoLe42RKM4nFyjS -->
+<!-- K7NB/DniMao8DFOBMGzLPQgF+GavZFpkuyib9wcN6kQRnQANiGX1X2j7q7MROn/2 -->
+<!-- wDIzkkpzdi8qnR/M/rgt2tSoZnDAUN1xVaLmtjWhgheUMIIXkAYKKwYBBAGCNwMD -->
+<!-- ATGCF4Awghd8BgkqhkiG9w0BBwKgghdtMIIXaQIBAzEPMA0GCWCGSAFlAwQCAQUA -->
+<!-- MIIBUgYLKoZIhvcNAQkQAQSgggFBBIIBPTCCATkCAQEGCisGAQQBhFkKAwEwMTAN -->
+<!-- BglghkgBZQMEAgEFAAQgbhpQ/bMK8Y8VGv86X/PlazlExrjxgdbdWQGJvq+jKTAC -->
+<!-- Bmq1JhztwxgTMjAyNjEwMTAxMTE2MDMuODk5WjAEgAIB9KCB0aSBzjCByzELMAkG -->
+<!-- A1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQx -->
+<!-- HjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjElMCMGA1UECxMcTWljcm9z -->
+<!-- b2Z0IEFtZXJpY2EgT3BlcmF0aW9uczEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNO -->
+<!-- OkE5MzUtMDNFMC1EOTQ3MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBT -->
+<!-- ZXJ2aWNloIIR6jCCByAwggUIoAMCAQICEzMAAAIn1cCDw7EuVy0AAQAAAicwDQYJ -->
+<!-- KoZIhvcNAQELBQAwfDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24x -->
+<!-- EDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlv -->
+<!-- bjEmMCQGA1UEAxMdTWljcm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTAwHhcNMjYw -->
+<!-- MjE5MTk0MDA0WhcNMjcwNTE3MTk0MDA0WjCByzELMAkGA1UEBhMCVVMxEzARBgNV -->
+<!-- BAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jv -->
+<!-- c29mdCBDb3Jwb3JhdGlvbjElMCMGA1UECxMcTWljcm9zb2Z0IEFtZXJpY2EgT3Bl -->
+<!-- cmF0aW9uczEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNOOkE5MzUtMDNFMC1EOTQ3 -->
+<!-- MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNlMIICIjANBgkq -->
+<!-- hkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4sVstXwzki+Ko9wNaWncvnpSAy8Jxd1L -->
+<!-- i8ySDlsBh3BIK8ccLZ8r4lCA5pscpU1JdbvtqwT6ds0+AcMEIbxmiaRMarzy5QxZ -->
+<!-- W35kn5SiPOnhaqH4me4/DU0TuJe8BoPTY5vprjWrk3BVtqnXyIyhPedDpK5vTJzD -->
+<!-- hmMvn4mzWHcUz0T6tU+DC2St7N73TMjBDpXXDkJEiqcQ+v9RpOoDpgrtioCPH9Hs -->
+<!-- er2MZyg5fVtDi0hGv+svNqCG7JvtUAYnzkOO8VikxtQpr7Rq/OS8wO+fzAHFJkcO -->
+<!-- f6H/6hE9FBVdVrpTHCayOgwEgLDQjQfuli66LbgWQI/lTJam5+UTGekOCGOycGgI -->
+<!-- iF4e1Y8a58FDmGRvFhBoX6wPfHYvuyxJ/QKr7xDshvlEHI1YQgmzBl4oCV0gKXsn -->
+<!-- lrqQrA9I4EDDQsXweQSwQ1sYHWN3SQRD4MX5IEw0CwYILVb9neQmMRyoCCLQeGyO -->
+<!-- Xkm+Y5CBtlqLZxXrU9JXoKcPxKM8H9/WqOrRDWNtXlViM0cPxrJr8I2EBer1a8Tg -->
+<!-- 9KRlbH6hhfLN1T3mO4SNk8RxTKjQNCAf2tjS2OyU8WACgD/9dRCWbe8W6gyzIA9W -->
+<!-- A3RhMxqUIo5t5wDwi9gnmz/45rvdGmydluNucoJRh0yP5wga8EqX0QoMM63xXpSW -->
+<!-- gijOvt+WhX8CAwEAAaOCAUkwggFFMB0GA1UdDgQWBBTS1ufDeDBkhurne41qoE/d -->
+<!-- qK30XjAfBgNVHSMEGDAWgBSfpxVdAF5iXYP05dJlpxtTNRnpcjBfBgNVHR8EWDBW -->
+<!-- MFSgUqBQhk5odHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NybC9NaWNy -->
+<!-- b3NvZnQlMjBUaW1lLVN0YW1wJTIwUENBJTIwMjAxMCgxKS5jcmwwbAYIKwYBBQUH -->
+<!-- AQEEYDBeMFwGCCsGAQUFBzAChlBodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtp -->
+<!-- b3BzL2NlcnRzL01pY3Jvc29mdCUyMFRpbWUtU3RhbXAlMjBQQ0ElMjAyMDEwKDEp -->
+<!-- LmNydDAMBgNVHRMBAf8EAjAAMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMIMA4GA1Ud -->
+<!-- DwEB/wQEAwIHgDANBgkqhkiG9w0BAQsFAAOCAgEAKp3LneD0gtbXm9h+p0bsu7A4 -->
+<!-- iitdxVyYq1QeE38I3aNjG/kC+I+8Gf5OBvT9AgDR2Raw0HCtFRQ08rK2LvGdAIWt -->
+<!-- eGnA2T7MiKD7wBkUYWhxLn+zXJEY5H2v8paNSsiCPI2y/TfbCQKgTy/FeBTQY5Y7 -->
+<!-- /tRhwzsNdu62c+WUkz6AD29kgNL+cg4HKVDH8YJT8qenJzz6EKU7Q/ThsfA8Jtj/ -->
+<!-- qNUz8QSMuiNE/UWrrpaIFQrysH5X3i03CgL50htawo3q0l5lNQzVzrAA/27K0o4G -->
+<!-- 1+ZgGw+100TBf72sAFhEhXJ/wY44s8XlmW9NGmEpZCQNq1bRZTDOPNWlVl3QG1zz -->
+<!-- +Uc1Ilk5YMh3/xu5QsR2FhiGbgdd092iOmPJhIJ/6LuNGohSaPK9PotD+RnTZ3lr -->
+<!-- cYkdAjClH5KPubP+93MHtVn6fASl2tu9HInFUGrBX+bEVe6RZvle3zUV8Aru2p0z -->
+<!-- poGu+szu/9rfszpYm76YU/kOmXfgdqmLEp+MQWmPmMx6Z8nC1uXLycoT8QQnG9aE -->
+<!-- WH4UcwgA29rrSNhLRgo3Nj9oouC8keEDG/5/HDsHi/SKlUyis81ZPs2ScVd766eC -->
+<!-- 8rkF8NDt9JWugXB3TQAAAfVAvN87NxvXfgJSH2SzPe7TFDSlo2waSIqxcei0wxV1 -->
+<!-- bWUHe4asy2Aco24x9LowggdxMIIFWaADAgECAhMzAAAAFcXna54Cm0mZAAAAAAAV -->
+<!-- MA0GCSqGSIb3DQEBCwUAMIGIMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGlu -->
+<!-- Z3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBv -->
+<!-- cmF0aW9uMTIwMAYDVQQDEylNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRo -->
+<!-- b3JpdHkgMjAxMDAeFw0yMTA5MzAxODIyMjVaFw0zMDA5MzAxODMyMjVaMHwxCzAJ -->
+<!-- BgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25k -->
+<!-- MR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1pY3Jv -->
+<!-- c29mdCBUaW1lLVN0YW1wIFBDQSAyMDEwMIICIjANBgkqhkiG9w0BAQEFAAOCAg8A -->
+<!-- MIICCgKCAgEA5OGmTOe0ciELeaLL1yR5vQ7VgtP97pwHB9KpbE51yMo1V/YBf2xK -->
+<!-- 4OK9uT4XYDP/XE/HZveVU3Fa4n5KWv64NmeFRiMMtY0Tz3cywBAY6GB9alKDRLem -->
+<!-- jkZrBxTzxXb1hlDcwUTIcVxRMTegCjhuje3XD9gmU3w5YQJ6xKr9cmmvHaus9ja+ -->
+<!-- NSZk2pg7uhp7M62AW36MEBydUv626GIl3GoPz130/o5Tz9bshVZN7928jaTjkY+y -->
+<!-- OSxRnOlwaQ3KNi1wjjHINSi947SHJMPgyY9+tVSP3PoFVZhtaDuaRr3tpK56KTes -->
+<!-- y+uDRedGbsoy1cCGMFxPLOJiss254o2I5JasAUq7vnGpF1tnYN74kpEeHT39IM9z -->
+<!-- fUGaRnXNxF803RKJ1v2lIH1+/NmeRd+2ci/bfV+AutuqfjbsNkz2K26oElHovwUD -->
+<!-- o9Fzpk03dJQcNIIP8BDyt0cY7afomXw/TNuvXsLz1dhzPUNOwTM5TI4CvEJoLhDq -->
+<!-- hFFG4tG9ahhaYQFzymeiXtcodgLiMxhy16cg8ML6EgrXY28MyTZki1ugpoMhXV8w -->
+<!-- dJGUlNi5UPkLiWHzNgY1GIRH29wb0f2y1BzFa/ZcUlFdEtsluq9QBXpsxREdcu+N -->
+<!-- +VLEhReTwDwV2xo3xwgVGD94q0W29R6HXtqPnhZyacaue7e3PmriLq0CAwEAAaOC -->
+<!-- Ad0wggHZMBIGCSsGAQQBgjcVAQQFAgMBAAEwIwYJKwYBBAGCNxUCBBYEFCqnUv5k -->
+<!-- xJq+gpE8RjUpzxD/LwTuMB0GA1UdDgQWBBSfpxVdAF5iXYP05dJlpxtTNRnpcjBc -->
+<!-- BgNVHSAEVTBTMFEGDCsGAQQBgjdMg30BATBBMD8GCCsGAQUFBwIBFjNodHRwOi8v -->
+<!-- d3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL0RvY3MvUmVwb3NpdG9yeS5odG0wEwYD -->
+<!-- VR0lBAwwCgYIKwYBBQUHAwgwGQYJKwYBBAGCNxQCBAweCgBTAHUAYgBDAEEwCwYD -->
+<!-- VR0PBAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8wHwYDVR0jBBgwFoAU1fZWy4/oolxi -->
+<!-- aNE9lJBb186aGMQwVgYDVR0fBE8wTTBLoEmgR4ZFaHR0cDovL2NybC5taWNyb3Nv -->
+<!-- ZnQuY29tL3BraS9jcmwvcHJvZHVjdHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMu -->
+<!-- Y3JsMFoGCCsGAQUFBwEBBE4wTDBKBggrBgEFBQcwAoY+aHR0cDovL3d3dy5taWNy -->
+<!-- b3NvZnQuY29tL3BraS9jZXJ0cy9NaWNSb29DZXJBdXRfMjAxMC0wNi0yMy5jcnQw -->
+<!-- DQYJKoZIhvcNAQELBQADggIBAJ1VffwqreEsH2cBMSRb4Z5yS/ypb+pcFLY+Tkdk -->
+<!-- eLEGk5c9MTO1OdfCcTY/2mRsfNB1OW27DzHkwo/7bNGhlBgi7ulmZzpTTd2YurYe -->
+<!-- eNg2LpypglYAA7AFvonoaeC6Ce5732pvvinLbtg/SHUB2RjebYIM9W0jVOR4U3Uk -->
+<!-- V7ndn/OOPcbzaN9l9qRWqveVtihVJ9AkvUCgvxm2EhIRXT0n4ECWOKz3+SmJw7wX -->
+<!-- sFSFQrP8DJ6LGYnn8AtqgcKBGUIZUnWKNsIdw2FzLixre24/LAl4FOmRsqlb30mj -->
+<!-- dAy87JGA0j3mSj5mO0+7hvoyGtmW9I/2kQH2zsZ0/fZMcm8Qq3UwxTSwethQ/gpY -->
+<!-- 3UA8x1RtnWN0SCyxTkctwRQEcb9k+SS+c23Kjgm9swFXSVRk2XPXfx5bRAGOWhmR -->
+<!-- aw2fpCjcZxkoJLo4S5pu+yFUa2pFEUep8beuyOiJXk+d0tBMdrVXVAmxaQFEfnyh -->
+<!-- YWxz/gq77EFmPWn9y8FBSX5+k77L+DvktxW/tM4+pTFRhLy/AsGConsXHRWJjXD+ -->
+<!-- 57XQKBqJC4822rpM+Zv/Cuk0+CQ1ZyvgDbjmjJnW4SLq8CdCPSWU5nR0W2rRnj7t -->
+<!-- fqAxM328y+l7vzhwRNGQ8cirOoo6CGJ/2XBjU02N7oJtpQUQwXEGahC0HVUzWLOh -->
+<!-- cGbyoYIDTTCCAjUCAQEwgfmhgdGkgc4wgcsxCzAJBgNVBAYTAlVTMRMwEQYDVQQI -->
+<!-- EwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3Nv -->
+<!-- ZnQgQ29ycG9yYXRpb24xJTAjBgNVBAsTHE1pY3Jvc29mdCBBbWVyaWNhIE9wZXJh -->
+<!-- dGlvbnMxJzAlBgNVBAsTHm5TaGllbGQgVFNTIEVTTjpBOTM1LTAzRTAtRDk0NzEl -->
+<!-- MCMGA1UEAxMcTWljcm9zb2Z0IFRpbWUtU3RhbXAgU2VydmljZaIjCgEBMAcGBSsO -->
+<!-- AwIaAxUAIx86rYT8DtBg3JAzAOseeJSIjCqggYMwgYCkfjB8MQswCQYDVQQGEwJV -->
+<!-- UzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UE -->
+<!-- ChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGlt -->
+<!-- ZS1TdGFtcCBQQ0EgMjAxMDANBgkqhkiG9w0BAQsFAAIFAO50ERswIhgPMjAyNjEw -->
+<!-- MTAwMTE5MjNaGA8yMDI2MTAxMTAxMTkyM1owdDA6BgorBgEEAYRZCgQBMSwwKjAK -->
+<!-- AgUA7nQRGwIBADAHAgEAAgIK2TAHAgEAAgIT9DAKAgUA7nVimwIBADA2BgorBgEE -->
+<!-- AYRZCgQCMSgwJjAMBgorBgEEAYRZCgMCoAowCAIBAAIDB6EgoQowCAIBAAIDAYag -->
+<!-- MA0GCSqGSIb3DQEBCwUAA4IBAQAYumQ2HibADuqAB/2EJJGafbch2Varmh0nrlyW -->
+<!-- UKW0Sm20dyqe8hZRl8KC9Y/KCeORGIU1pdm3Icj4fAInSGHFvO2n9ciguVpYM02M -->
+<!-- KFGbJU35odIFW96g+Hd7eFvvm7q/gxSHofxOoWkPj7fLCsYqYLkgOvvfdvJ/tJsL -->
+<!-- k6nlyrXvFYadEdOMY4rbsgOsQvyhmai8E4PJ36PIlHz4nQ1+kvnMQ0mNiQH47/w6 -->
+<!-- AnNdysfobDKFU2j2cJAoG8l8qK3GVtXpm4iNEAxH4btLhRFSLQVohTMejYjKM20c -->
+<!-- eHsOzASRRtg//tSed9GAQgpg5JK4HCgIB0swT1AbB2+LpfaiMYIEDTCCBAkCAQEw -->
+<!-- gZMwfDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcT -->
+<!-- B1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UE -->
+<!-- AxMdTWljcm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTACEzMAAAIn1cCDw7EuVy0A -->
+<!-- AQAAAicwDQYJYIZIAWUDBAIBBQCgggFKMBoGCSqGSIb3DQEJAzENBgsqhkiG9w0B -->
+<!-- CRABBDAvBgkqhkiG9w0BCQQxIgQgg/yMmJBZ3mv9avCmVdNtZqGU666YQt/LqTXE -->
+<!-- KgheTXswgfoGCyqGSIb3DQEJEAIvMYHqMIHnMIHkMIG9BCDl5wEaNaFSHDiySg6p -->
+<!-- RNGnav42fU13ZZ11kXFxk4QRcjCBmDCBgKR+MHwxCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1pY3Jvc29mdCBUaW1lLVN0YW1w -->
+<!-- IFBDQSAyMDEwAhMzAAACJ9XAg8OxLlctAAEAAAInMCIEIGFLeFxO6PwcHqwo6hH1 -->
+<!-- DLVcUif0i7WzRtjgto5wFqBpMA0GCSqGSIb3DQEBCwUABIICAAs7W2n7yW0BrWtf -->
+<!-- HmCO3xH7of8yo0+FarYDEkkjLF8NTaYA9a5CAh4OzCHLhBnx9V9JIuWHHHQ2WXrm -->
+<!-- FryC6DpnuK5Vre2XV2HTiNNEsRrc8aHnwHtIzq6pgMXP0ntRJoPGeSaK7TF5TiI/ -->
+<!-- YsCGi4tMTSi9tQchdGGS0riU4Nv5NYGITC+q2tdciQILYmFqyhvyuiqLDlPWfAqv -->
+<!-- quZr/At1uEXdI61Yj8/4bptuCHe79AUD8NqL9KsbkeUYVU1F9TMZJUFdzhfsyVga -->
+<!-- +QQVg/nShSkUROTSbGUMg26zCvWYI1oeOiu3oo/fBDIJG5aDYbibGTn41twpGrdF -->
+<!-- 5jXVrOIPFin2V4NGUvH9sQeA1wr83qCkkcVAMe0nTO7PYRq9eL7Kl1+K+KxRxuPL -->
+<!-- mqBt7oBnaeb+pfRrKxwale6ScH82Thx4SSW4bpJhdqep8+RPrXmZ61kPGPcake0S -->
+<!-- rKrTOz68gs5yu9RecIemUqNnj/FuBvXPVD0zv11GwmIzRjdo5fgZYrDs3iuyw2kY -->
+<!-- blSc3QyKt12nEHLJcFwpnd6NCS6ZPCEELjdsJXqOWQuHn0sqIMy3HQ8Rspmp35M9 -->
+<!-- +t+IXDpXuxta84bkw2MB7gfa3Q91mLpCIWF0rOX0SpluRl1oNhBEs29Nazs3rzpi -->
+<!-- 8u8i2qW1Ki+v72TC8xIKBKYrc2Jy -->
+<!-- SIG # End signature block -->

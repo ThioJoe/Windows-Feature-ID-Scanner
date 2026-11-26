@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+    xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10"
+    xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+    IgnorableNamespaces="uap wincap mobile uap3">
+
+  <Identity Name="Microsoft.AsyncTextService"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="10.0.29712.1000"
+            ProcessorArchitecture="neutral"/>
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Resources>
+      <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App" Executable="Microsoft.AsyncTextService.exe" EntryPoint="AsyncTextService.App">
+      <uap:VisualElements AppListEntry="none" DisplayName="ms-resource:AppDisplayName" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ms-resource:AppDescription" BackgroundColor="black">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtensionHost">
+            <uap3:AppExtensionHost>
+            <uap3:Name>com.microsoft.sticker.extension</uap3:Name>
+            </uap3:AppExtensionHost>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0"/>
+  </Dependencies>
+
+  <Capabilities>
+    <uap:Capability Name="contacts" />
+  </Capabilities>
+
+</Package>

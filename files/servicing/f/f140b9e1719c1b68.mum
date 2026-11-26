@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PAW-Feature-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-PAW-Feature" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Hyper-V-ClientEdition-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Hyper-V-ServerAzureEdition-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Hyper-V-ServerEdition-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Hyper-V-ServerHyperCoreEdition-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-CoreSystemServer-HyperV-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-SecureStartup-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-SecureStartup-Basic-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-SecureStartup-OC-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-SecureStartup-OC-SC-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="HostGuardian" displayName="Guarded Host" description="Enables the device to create and run Shielded Virtual Machine using remote attestation.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Microsoft-Hyper-V" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="Microsoft-Hyper-V-Hypervisor" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="Microsoft-Hyper-V-Services" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="BitLocker" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-PAW-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

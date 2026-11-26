@@ -1,0 +1,431 @@
+{
+  "manifest_version": "0.3",
+  "name": "troubleshooting-mcp-server",
+  "display_name": "Troubleshooting MCP Server",
+  "version": "0.1.2",
+  "description": "Prototype MCP server for Windows troubleshooting.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "TroubleshootingPrototype"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "get_camera_diagnostics",
+      "description": "Gets camera diagnostics information."
+    },
+    {
+      "name": "get_number_of_cameras",
+      "description": "Gets the number of cameras connected to the system."
+    },
+    {
+      "name": "get_number_of_cameras_mock",
+      "description": "Mock method that always returns a single camera."
+    },
+    {
+      "name": "has_more_than_one_bluetooth_radio",
+      "description": "Checks if there is more than one Bluetooth radio present (excluding radios with Unknown status)."
+    },
+    {
+      "name": "is_bluetooth_absolute_volume_disabled",
+      "description": "Checks if Bluetooth absolute volume is disabled."
+    },
+    {
+      "name": "is_bluetooth_blocked_by_policy",
+      "description": "Checks if Bluetooth is blocked by Windows policy."
+    },
+    {
+      "name": "set_bluetooth_absolute_volume_disabled",
+      "description": "Sets whether Bluetooth absolute volume is disabled. Requires the Bluetooth Broker service to be running."
+    },
+    {
+      "name": "ensure_bluetooth_service_running",
+      "description": "Ensures the Bluetooth service is running. Checks the current status and starts the service if it is not running."
+    },
+    {
+      "name": "is_bluetooth_hands_free_protocol_endpoint_active",
+      "description": "Checks if there is an active Bluetooth Hands Free Protocol (HFP) audio endpoint."
+    },
+    {
+      "name": "is_bluetooth_on",
+      "description": "Checks if the Bluetooth radio is currently turned on."
+    },
+    {
+      "name": "is_bluetooth_phantom",
+      "description": "Checks if Bluetooth radios are in a phantom or error state."
+    },
+    {
+      "name": "is_bluetooth_radio_present",
+      "description": "Checks if any Bluetooth radio hardware is present."
+    },
+    {
+      "name": "is_bluetooth_radio_state_ok",
+      "description": "Checks if any Bluetooth radio has OK status."
+    },
+    {
+      "name": "is_cold_reboot_needed_for_bluetooth_radio",
+      "description": "Checks if a system cold reboot is needed to recover phantom Bluetooth radios."
+    },
+    {
+      "name": "reset_camera_services",
+      "description": "Resets camera services."
+    },
+    {
+      "name": "start_camera_logging_session",
+      "description": "Starts a camera logging session."
+    },
+    {
+      "name": "was_bluetooth_present",
+      "description": "Checks if the system has Bluetooth presence history."
+    }
+  ],
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "troubleshooting-mcp-server",
+            "version": "0.1.2"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "get_camera_diagnostics",
+              "description": "Gets camera diagnostics information.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "name": "start_camera_logging_session",
+              "description": "Starts a camera logging session.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "name": "is_bluetooth_hands_free_protocol_endpoint_active",
+              "description": "Checks if there is an active Bluetooth Hands Free Protocol (HFP) audio endpoint.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "get_number_of_cameras",
+              "description": "Gets the number of cameras connected to the system.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "name": "has_more_than_one_bluetooth_radio",
+              "description": "Checks if there is more than one Bluetooth radio present (excluding radios with Unknown status).",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "is_bluetooth_phantom",
+              "description": "Checks if Bluetooth radios are in a phantom or error state.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "get_number_of_cameras_mock",
+              "description": "Mock method that always returns a single camera.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "name": "is_bluetooth_radio_present",
+              "description": "Checks if any Bluetooth radio hardware is present.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "is_cold_reboot_needed_for_bluetooth_radio",
+              "description": "Checks if a system cold reboot is needed to recover phantom Bluetooth radios.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "reset_camera_services",
+              "description": "Resets camera services.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "name": "is_bluetooth_radio_state_ok",
+              "description": "Checks if any Bluetooth radio has OK status.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "was_bluetooth_present",
+              "description": "Checks if the system has Bluetooth presence history.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "is_bluetooth_absolute_volume_disabled",
+              "description": "Checks if Bluetooth absolute volume is disabled.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "is_bluetooth_on",
+              "description": "Checks if the Bluetooth radio is currently turned on.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "is_bluetooth_blocked_by_policy",
+              "description": "Checks if Bluetooth is blocked by Windows policy.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "set_bluetooth_absolute_volume_disabled",
+              "description": "Sets whether Bluetooth absolute volume is disabled. Requires the Bluetooth Broker service to be running.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "disabled": {
+                    "type": "boolean",
+                    "description": "True to disable absolute volume, false to enable it."
+                  }
+                },
+                "required": [
+                  "disabled"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "success"
+                ]
+              }
+            },
+            {
+              "name": "ensure_bluetooth_service_running",
+              "description": "Ensures the Bluetooth service is running. Checks the current status and starts the service if it is not running.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "success"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Networking-Containers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Networking-Containers-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-Networking-Containers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="9526a9fceb05ecd687285bada07a4823">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Server-HNS-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2cfa4a6c59c90af1b8677a7499f6cd6c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Networking-Containers-Server-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="238533ad0f9fe227a9576940cda8dc39">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-WindowsCore-Network-FlowSteering-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

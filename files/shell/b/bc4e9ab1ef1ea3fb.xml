@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities">
+	<Identity Name="Microsoft.Windows.ShellExperienceHost" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.28000.3442" ResourceId="neutral"/>
+	<Properties>
+		<DisplayName>ms-resource:PkgDisplayName</DisplayName>
+		<PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+	</Properties>
+	<Resources>
+		<Resource Language="en-us"/>
+	</Resources>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.28000.3442"/>
+		<PackageDependency  Name="Microsoft.UI.Xaml.CBS" MinVersion="2.62101.13001.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"/>
+	</Dependencies>
+	<Applications>
+		<Application Id="App" Executable="ShellExperienceHost.exe" EntryPoint="ShellExperienceHost.App">
+			<uap:VisualElements DisplayName="ms-resource:AppName/Text" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646" AppListEntry="none">
+				<uap:SplashScreen Image="Assets\SplashScreen.png"/>
+			</uap:VisualElements>
+			<uap:ApplicationContentUriRules>
+				<!-- UAP ApplicationContentUriRules are added here from the .appxfragment files -->
+				<uap:Rule Match="http://microsoft.com/thisisasitethatdoesntexist" Type="include" WindowsRuntimeAccess="none"/>
+			</uap:ApplicationContentUriRules>
+			<Extensions>
+				<!-- UAP extensions are added here from the .appxfragment files -->
+				<uap:Extension Category="windows.shareTarget">
+					<uap:ShareTarget>
+						<uap:SupportedFileTypes>
+							<uap:SupportsAnyFileType/>
+						</uap:SupportedFileTypes>
+						<uap:DataFormat>Text</uap:DataFormat>
+						<uap:DataFormat>Bitmap</uap:DataFormat>
+						<uap:DataFormat>Html</uap:DataFormat>
+						<uap:DataFormat>WebLink</uap:DataFormat>
+						<uap:DataFormat>ApplicationLink</uap:DataFormat>
+						<uap:DataFormat>Uri</uap:DataFormat>
+						<uap:DataFormat>Rtf</uap:DataFormat>
+						<uap:DataFormat>UserActivityJsonArray</uap:DataFormat>
+					</uap:ShareTarget>
+				</uap:Extension>
+				<Extension  Category="windows.backgroundTasks" EntryPoint="ActionCenter.ToastNotificationBackgroundTask">
+					<BackgroundTasks>
+						<Task Type="systemEvent"/>
+						<!-- Custom system trigger (WNF notifications) -->
+						<Task Type="timer"/>
+					</BackgroundTasks>
+				</Extension>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="ms-actioncenter">
+						<uap:DisplayName>Action Center</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
+				<Extension  Category="windows.backgroundTasks" EntryPoint="ActionCenter.ToastNotificationBackgroundTask">
+					<BackgroundTasks>
+						<Task Type="systemEvent"/>
+						<!-- Custom system trigger (WNF notifications) -->
+						<Task Type="timer"/>
+					</BackgroundTasks>
+				</Extension>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="ms-meetnowflyout">
+						<uap:DisplayName>Meet Now Flyout</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
+				<Extension  Category="windows.backgroundTasks" EntryPoint="SharePickerUI.ToastClearerBackgroundTask">
+					<BackgroundTasks>
+						<Task Type="systemEvent"/>
+					</BackgroundTasks>
+				</Extension>
+				<uap:Extension Category="windows.appService" EntryPoint="SharePickerUI.ToastClearerRegistrationService">
+					<uap:AppService Name="SharePickerUI.ToastClearerRegistration"/>
+				</uap:Extension>
+				<uap:Extension Category="windows.appService" EntryPoint="SharePickerUI.PeopleSuggestionsRegistrationService">
+					<uap:AppService Name="SharePickerUI.PeopleSuggestions"/>
+				</uap:Extension>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="ms-penworkspace">
+						<uap:DisplayName>Pen Workspace</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
+				<uap:Extension Category="windows.appService" EntryPoint="PenWorkspace.SketchpadMigrator">
+					<uap:AppService Name="ms-penworkspace-sketchpadmigration"/>
+				</uap:Extension>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="ms-insights">
+						<uap:DisplayName>Insights</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
+			</Extensions>
+		</Application>
+		<Application Id="FullTrustApp" Executable="ShellExperienceHost.exe" EntryPoint="ShellExperienceHost.App" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="windowsApp">
+			<uap:VisualElements DisplayName="ms-resource:AppName/Text" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646" AppListEntry="none">
+				<uap:SplashScreen Image="Assets\SplashScreen.png"/>
+			</uap:VisualElements>
+			<uap:ApplicationContentUriRules>
+				<!-- UAP ApplicationContentUriRules are added here from the .appxfragment files -->
+				<uap:Rule Match="http://microsoft.com/thisisasitethatdoesntexist" Type="include" WindowsRuntimeAccess="none"/>
+			</uap:ApplicationContentUriRules>
+			<Extensions>
+				<!-- UAP extensions are added here from the .appxfragment files -->
+				<uap:Extension Category="windows.shareTarget">
+					<uap:ShareTarget>
+						<uap:SupportedFileTypes>
+							<uap:SupportsAnyFileType/>
+						</uap:SupportedFileTypes>
+						<uap:DataFormat>Text</uap:DataFormat>
+						<uap:DataFormat>Bitmap</uap:DataFormat>
+						<uap:DataFormat>Html</uap:DataFormat>
+						<uap:DataFormat>WebLink</uap:DataFormat>
+						<uap:DataFormat>ApplicationLink</uap:DataFormat>
+						<uap:DataFormat>Uri</uap:DataFormat>
+						<uap:DataFormat>Rtf</uap:DataFormat>
+						<uap:DataFormat>UserActivityJsonArray</uap:DataFormat>
+					</uap:ShareTarget>
+				</uap:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
+	<Capabilities>
+		<wincap:Capability Name="shellExperience"/>
+		<!-- Required CustomCapability for running ShellExperienceHost as a MediumIL process with FullTrustApp support -->
+		<!-- Capabilities are added here from the .appxfragment files -->
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="activitySystem"/>
+		<wincap:Capability Name="cloudStore"/>
+		<wincap:Capability Name="cortanaSettings"/>
+		<wincap:Capability Name="packageContents"/>
+		<wincap:Capability Name="targetedContent"/>
+		<wincap:Capability Name="userAccountInformation"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="bluetoothDeviceSettings"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="packageQuery"/>
+		<wincap:Capability Name="internetClient"/>
+		<wincap:Capability Name="location"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="cellularDeviceControl"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="cellularDeviceIdentity"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="networkDeviceSettings"/>
+		<uap7:Capability xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7" Name="globalMediaControl"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="appointmentsSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="enterpriseCloudSSO"/>
+		<wincap:Capability Name="visualElementsSystem"/>
+		<wincap:Capability Name="activityData"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="chatSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="contactsSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="emailSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="phoneCallHistorySystem"/>
+		<uap:Capability Name="sharedUserCertificates"/>
+		<uap3:Capability xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Name="remoteSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="runFullTrust"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="storeAppInstall"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="broadFileSystemAccess"/>
+		<Capability  Name="privateNetworkClientServer"/>
+		<wincap:Capability Name="dependencyTarget"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="inputInjection"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="userDataAccountSetup"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="userWebAccounts"/>
+		<uap:Capability Name="picturesLibrary"/>
+		<uap4:CustomCapability Name="Microsoft.coreAppActivation_8wekyb3d8bbwe"/>
+		<DeviceCapability  Name="bluetooth"/>
+		<DeviceCapability  Name="radios"/>
+		<DeviceCapability  Name="webcam"/>
+		<DeviceCapability  Name="wiFiControl"/>
+	</Capabilities>
+	<Extensions>
+		<!-- Extensions are added here from the .appxfragment files -->
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>Windows.UI.Shell.SharedUtilities.dll</Path>
+				<!-- ImportPath= Windows.UI.Shell.SharedUtilities -->
+				<ActivatableClass ActivatableClassId="SharedUtilities.ApplicationResourceLoader" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharedUtilities.LocalizationService" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharedUtilities.DeviceFamilyTrigger" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>Windows.UI.ActionCenter.dll</Path>
+				<!-- ImportPath= ActionCenter -->
+				<ActivatableClass ActivatableClassId="ActionCenter.actioncenter_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="STA"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ClearAllButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ClockCalendarView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.FocusSessionControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.NotificationCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.MobileMainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ToastView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.GroupTitleView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.GroupView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ItemView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.GroupViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ItemViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.NotificationCenterViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ToastCenterPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ToastCenterViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ToastCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ExpandCollapseButtonHost" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ControlCenterViewHost" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ActionCenter.ToastNotificationBackgroundTask" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>Windows.UI.QuickActions.dll</Path>
+				<!-- ImportPath= QuickActions -->
+				<!-- Updates in this classes needs to be updated in: %SDXROOT%\shellcommon\shell\Windows.UI.Shell\NetworkUX\dll -->
+				<ActivatableClass ActivatableClassId="QuickActions.quickactions_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="STA"/>
+				<ActivatableClass ActivatableClassId="QuickActions.AdvancedPageInfo" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.AccessibleGroupItemContainer" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.EditModeContainer" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.PaginatedGridView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickActionControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickActionTemplates" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickToggleButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickToggleButtonDesktop" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickToggleButtonDesktopWinuiFluent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.QuickActionTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.StudioEffectsDropdown" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.StudioEffectsNavigationControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.StudioEffectsToggle" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.TypedTemplate" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ViewModel.ViewModelContext" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ViewModel.QuickActionViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ViewModel.QuickActionUtilities" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.InvokeQuickActionCommand" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.ExpandCollapseButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.ControlCenterViewModelContext" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.ControlCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.PaginatedControlCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.LegacyControlCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.ControlCenterViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.FullScreenPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.QuickActionGroup" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.PaginatedQuickActionGroup" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.QuickActionLayout" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.PaginatedQuickActionLayout" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.MigrationManager" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.MigrationResult" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.FrameWithContentChanged" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.QuickActionGroupTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.PlaybackControls.MediaTransportControls" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.PlaybackControls.MediaTransportControlsViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.StudioEffectsAudioPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.StudioEffectsCameraPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickActions.ControlCenter.LayoutSettings" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>ClockFlyoutExperience.dll</Path>
+				<!-- ImportPath= ClockFlyoutExperience -->
+				<ActivatableClass ActivatableClassId="ClockFlyoutExperience.clockflyoutexperience_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyoutExperience.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyoutExperience.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyoutExperience.AgendaView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Models.ChineseLunarDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Models.LunarSettingsManager" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Utilities.CalendarGeneralHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Utilities.CalendarDayGeneralHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Utilities.ColorUtilityHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.Utilities.LunarCalendarHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.ViewModels.ClockCollectionViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ClockFlyout.ViewModels.ClockCollectionViewModel2" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>JumpViewUI.dll</Path>
+				<!-- ImportPath= JumpViewUI -->
+				<ActivatableClass ActivatableClassId="JumpViewUI.jumpviewui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.FlyoutControlHost" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.FocusHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.JumpListControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.JumpListListView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.TaskbarJumpListFrame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.TaskbarMeetNow2Frame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.TaskbarMeetNowFrame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.ToolTipBehavior" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="JumpViewUI.ToolTipViewModel" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>MtcUvc.dll</Path>
+				<!-- ImportPath= MtcUvc -->
+				<ActivatableClass ActivatableClassId="MtcUvc.mtcuvc_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="MtcUvc.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="MtcUvc.View.MtcUvcView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="MtcUvc.View.FocusHelper" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>WindowsInternal.People.PeoplePicker.dll</Path>
+				<!-- ImportPath= WindowsInternal.People.PeoplePicker -->
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.BooleanToObjectConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.InverseBooleanConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.ButtonControlContent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.peoplepicker_control_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.JumplistItemControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.QueryPromptControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.GalResultsControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.SuggestionControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.HighlightedTextBlock" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.PeoplePickerControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.ContactListView" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>NetworkUX.dll</Path>
+				<!-- ImportPath= NetworkUX -->
+				<ActivatableClass ActivatableClassId="NetworkUX.networkux_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ViewContext" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ControlCenterWiFiL2Page" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ControlCenterMBBL2Page" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ControlCenterVPNL2Page" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ControlCenterSpeedTestL2Page" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.OOBEMainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.CollapsedWhenNotNullOrEmptyConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.CollapsedWhenNullOrEmptyConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.MediaTypeToGlyphConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.OOBEEsimDiscoveryPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.OOBEMultivariantPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.OOBEProfilePropertiesPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.ViewModel.SettingEntry" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.AutoTooltipHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.DefaultButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.EntityListItemControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.FocusHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.ListViewHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.SettingsListView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.BooleanToVisibilityConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.AutomationIdConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.NegatedBooleanToVisibilityConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.NegatedBooleanToDoubleConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.ResourceLoaderConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.ConnectivityToPreCFEConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.CustomResourceLoader" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="NetworkUX.View.InternetConnectivityToSubtitleConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.UI.NetworkUX.WiFiUXViewProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.UI.NetworkUX.MBBUXViewProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.UI.NetworkUX.VPNUXViewProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.UI.NetworkUX.SpeedTestUXViewProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.UI.NetworkUX.XamlRuntimeSiteProvider" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>SharePickerUI.dll</Path>
+				<!-- ImportPath= SharePickerUI -->
+				<ActivatableClass ActivatableClassId="SharePickerUI.sharepickerui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.CopyToClipboardItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ErrorMessage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.GetMoreAppsButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePicker" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePickerFrame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePromotedItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToApps" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToDevices" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToDevicesSection" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareDeviceItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToPeople" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePeoplePicker" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShowDeviceName" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ToastClearerBackgroundTask" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ToastClearerRegistrationService" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.PeopleSuggestionsRegistrationService" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.TwoLinesTextBlock" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.InlineCompose" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.BadgedPersonPicture" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.MeControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.OverflowMenu" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareSuggestedContactItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ModalInlineCompose" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.OneDriveShare" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToDevicesExpanded" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShimmerControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.PreviewComponent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.CloudShareComponent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareFailedComponent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareShimmerItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareCustomAction" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.PhotoEditAction" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.CompressAction" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareSearchItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToAppsSwitcher" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.CustomInfoBanner" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>DevicesFlowUI.dll</Path>
+				<!-- ImportPath= SEHDevicesFlowUI -->
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.devicesflowui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ConnectableDevicesControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.DevicesFlowFrame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.DevicesFlowFrameRepaint" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.DisconnectConnectedDeviceControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.AudioSharingDeviceControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.TemplatesRepaint" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.AudioSharingPageTemplates" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.DevicesFlowTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.DisplayTopologyListTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.DeviceObjectTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.DeviceGlyphTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.CeremonyTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.BatteryTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.ExpandedBatteryTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.AdvancedPageLauncherTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.BluetoothDeviceTileSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.ViewModel.UnpairedDeviceListTemplateSelector" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.ListViewItemClickCommand" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.AutomationPropertyHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.FocusHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.DefaultButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.MenuFlyoutOnFocusCommand" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.AutoScrollViewerHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.AutoTooltipHelper" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="DevicesFlowUI.View.GridRepeater" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Windows.Internal.DevicesFlowUI.DevicesFlowViewProvider" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>BatteryFlyoutExperience.dll</Path>
+				<!-- ImportPath= BatteryFlyoutExperience -->
+				<ActivatableClass ActivatableClassId="BatteryFlyoutExperience.batteryflyoutexperience_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="BatteryFlyoutExperience.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="BatteryFlyoutExperience.MainPage" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>InputDial.dll</Path>
+				<!-- ImportPath= InputDial -->
+				<ActivatableClass ActivatableClassId="InputDial.inputdial_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="InputDial.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="InputDial.MainPage" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>VirtualTouchpadUI.dll</Path>
+				<!-- ImportPath= VirtualTouchpadUI -->
+				<ActivatableClass ActivatableClassId="VirtualTouchpadUI.virtualtouchpadui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="VirtualTouchpadUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="VirtualTouchpadUI.Views.VirtualTouchpad" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>ImeStatusNotification.dll</Path>
+				<!-- ImportPath= ImeStatusNotification -->
+				<ActivatableClass ActivatableClassId="ImeStatusNotification.imestatusnotification_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ImeStatusNotification.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ImeStatusNotification.Views.ImeStatusNotificationUI" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ImeStatusNotification.Views.ImeMode" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ImeStatusNotification.Views.JapaneseImeModeViewModel" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>QuickConnectUI.dll</Path>
+				<!-- ImportPath= QuickConnectUI -->
+				<ActivatableClass ActivatableClassId="QuickConnectUI.quickconnectui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickConnectUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="QuickConnectUI.QuickConnectFrame" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>PenWorkspace.dll</Path>
+				<!-- ImportPath= PenWorkspace -->
+				<ActivatableClass ActivatableClassId="PenWorkspace.penworkspace_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.PenDetachMainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.PenDetachHomeButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.PenWorkspaceAppItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PenWorkspace.SketchpadMigrator" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>Insights.dll</Path>
+				<!-- ImportPath= Insights -->
+				<ActivatableClass ActivatableClassId="Insights.insights_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Insights.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Insights.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="Insights.InsightsProtocolActivationHandler" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>Windows.UI.SoftLanding.dll</Path>
+				<!-- ImportPath= SoftLanding -->
+				<ActivatableClass ActivatableClassId="SoftLanding.softlanding_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingApp" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingMainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingItemViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingItemView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingCenterViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.SoftLandingCenterView" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SoftLanding.StarRating" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+	</Extensions>
+</Package>

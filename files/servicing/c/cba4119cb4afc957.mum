@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Base-Tools-Sysmon-OptionalFeature-Package" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Base-Tools-Sysmon-OptionalFeature" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Sysmon" displayName="Sysmon" description="Enables the Sysmon tool that monitors and logs specified system activity to the Windows event log">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Enables the Sysmon tool that monitors and logs specified system activity to the Windows event log" DisplayName="Sysmon" Id="1337" Type="Feature" UniqueName="Sysmon">
+          <Deploys>
+            <Update Name="Sysmon" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Base-Tools-Sysmon-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Sysmon-Service">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="Sysmon" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Base-Tools-Sysmon-Service-Package" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Allows file synchronization with a configured file server." displayName="Work Folders Client" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-EnterpriseClientSync-Host-FOD-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="901" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+        <mum2:DismOptions Visibility="hidden" />
+      </mum2:OptionalFeatures>
+      <mum2:DetachedOC />
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-EnterpriseClientSync-Host-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="ar-SA" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="bg-BG" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="cs-CZ" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="da-DK" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="de-DE" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="el-GR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="en-GB" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="en-US" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="es-ES" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="es-MX" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="et-EE" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="fi-FI" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="fr-CA" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="fr-FR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="he-IL" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="hr-HR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="hu-HU" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="it-IT" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="ja-JP" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="ko-KR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="lt-LT" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="lv-LV" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="nb-NO" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="nl-NL" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="pl-PL" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="qps-plocm" displayName="‏‏أبع[Work Folders Client]לף" description="‏‏أبع[Allows file synchronization with a configured file server.]לף" />
+      <string language="qps-ploc" displayName="[yd0B7][Ŵõгк ₣øłďéřŝ €ĺįеŋт !!! !]" description="[EQ4Jq][Ąĺļόẃş ƒíℓε šулĉħяóŉιżаťϊòй ώíťĥ ā сοńƒíġųŕêđ ƒιŀё šěřνèя. !!! !!! !!! !!! ]" />
+      <string language="pt-BR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="pt-PT" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="ro-RO" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="ru-RU" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="sk-SK" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="sl-SI" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="sr-Latn-RS" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="sv-SE" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="th-TH" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="tr-TR" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="uk-UA" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="zh-CN" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+      <string language="zh-TW" displayName="Work Folders Client" description="Allows file synchronization with a configured file server." />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Windows.WorkFolders.Client" />
+      </capability>
+      <satelliteInfo>
+        <require type="arch" value="wow64" />
+        <require type="language" value="*" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="WorkFolders-Client-Content">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="WorkFolders-Client" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseClientSync-Host-Opt-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

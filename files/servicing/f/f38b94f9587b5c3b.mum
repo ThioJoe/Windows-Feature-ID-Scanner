@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Helium-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Helium-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="OneCore.Helium" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-OneCore-Helium-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="bd2b37e33f0ea1c963131c53ea8d1446">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Helium-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="c8642921b9111531823c4bb277aa3179">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CimFS-UnionFS-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

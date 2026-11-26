@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Containers-Guest-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Containers-Guest" releaseType="Feature Pack">
+    <update name="66eae93c56fb3282161b637c17f2a342">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Containers-Guest-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="d3e2543f0dfd3a0cd9ea24d228634943">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Containers-Guest-Shared-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

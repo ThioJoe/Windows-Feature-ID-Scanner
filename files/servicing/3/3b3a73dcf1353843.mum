@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-CorePC-HyperV-Guest-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-CorePC-HyperV-Guest-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-CorePC-HyperV-Guest-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="d95a06c82d9bf6024f30a7394d694814">
+      <component>
+        <assemblyIdentity name="vca.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="a3d4fe1dcd3f34bf148afc57176eef87">
+      <component>
+        <assemblyIdentity name="vrd.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5beef9ffc749f0b7e07dd52adcad0d61">
+      <component>
+        <assemblyIdentity name="wgencounter.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="024cae6f73f91be0c32541b64055c883">
+      <component>
+        <assemblyIdentity name="wvmic.inf-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="7bf4f7fd3545f45c406d3764c3c2459f">
+      <component>
+        <assemblyIdentity name="Microsoft-CorePC-HyperV-Guest-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="eb92a3fb8837d2ff7edf9e9bc9b4e727">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-CrashDump-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7dc3fbacd11b36ab624b15ac98c259e9">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-KernelInt-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c464f80aa40ed9050157dd6764c397d8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-Networking-Synthetic-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7b9320d355f335e5e823ce318a9032d5">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-Storage-Synthetic-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="48d5617fc33003e470f135b66012d718">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-TimeSync-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="102bd6fb79713fae1f534cda6beffb83">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-VmBus-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b223b3d766776a1466214f6dc10abcc1">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Guest-Vpci-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5c582a67c1337c8f7b0b998ffcec634e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-HvSocket-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5651dd9cb91dfc9e5a10da3349c04cbc">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Undocked-Hypervisor-WINHV-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

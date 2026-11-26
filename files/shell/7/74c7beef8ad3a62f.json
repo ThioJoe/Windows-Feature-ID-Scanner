@@ -1,0 +1,282 @@
+{
+  "manifest_version": "0.3",
+  "name": "magnifier-mcp-server",
+  "display_name": "Magnifier MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for performing Magnifier operations.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "Magnifier"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "resources": {
+              "listChanged": true
+            },
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "magnifier-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "get_magnifier_accessibility_info",
+              "description": "Provides information about Windows Magnifier accessibility features and shortcuts. Returns detailed instructions and keyboard shortcuts for magnifier features including read aloud functionality and screen summarization. Use this tool when users ask about magnifier read aloud shortcuts, voice settings, screen summarization, or how to use the advanced accessibility features. Supports both read aloud controls and screen summarization functionality.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "featureType": {
+                    "description": "The accessibility feature to get information about. Options: 'read-aloud' for reading related info and shortcuts, 'screen-summarization' for screen summary functionality",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "featureType"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "Success": {
+                    "type": "boolean"
+                  },
+                  "ShortcutInfo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "name": "close_magnifier",
+              "description": "Close Windows Magnifier if it is currently running. This tool safely terminates the Windows Magnifier application and all its associated processes. It will close the magnifier regardless of which mode it was running in (Docked, Full Screen, or Lens mode). The tool uses the official Windows method to gracefully shut down the magnifier, ensuring no data loss or system instability. If the magnifier is not currently running, the tool will report that no action was needed. This is useful when users want to completely disable screen magnification or when troubleshooting magnifier-related issues. After closing, users can restart the magnifier using Windows + Plus (+) key or through the SetMagnifierConfiguration tool.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "Success": {
+                    "type": "boolean"
+                  },
+                  "CloseInfo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "name": "set_magnifier_configuration",
+              "description": "Configure Windows Magnifier with all available settings and then apply the configuration for which the user requests. You can perform all the settings change related to magnifier and enable user to view their screen as per input. If the user does not specify any mode, set the default mode value to 0. For zoom operations: use 'zoomIn' or 'zoomOut' for relative changes with 'zoomType' and 'zoomIncrement'. Language interpretation guide: RELATIVE OPERATIONS: 'zoom by 2x' or 'zoom by 2 times' = zoomIn:true zoomType:'multiply' zoomIncrement:2.0, 'zoom by 25%' or 'zoom by +25%' = zoomIn:true zoomType:'add' zoomIncrement:0.25, 'zoom by 200%' or 'zoom by +200%' = zoomIn:true zoomType:'add' zoomIncrement:2.0, ABSOLUTE PERCENTAGE: 'zoom to 150%' or 'zoom in to 150%' = magnificationFactor:1.5, ABSOLUTE MULTIPLIERS: 'zoom to double' or 'zoom to two times' = zoomIn:true zoomType:'absolute' zoomIncrement:2.0, 'zoom to triple' or 'zoom to three times' = zoomIn:true zoomType:'absolute' zoomIncrement:3.0, 'zoom to half' = zoomIn:true zoomType:'absolute' zoomIncrement:0.5. Key indicators: 'by X×'/'by X times'=multiply, 'by X%'/'by +X%'=add, 'to X%'=magnificationFactor, 'to double/triple/half/X times'=absolute. The tool will use the current magnification level from Windows registry and then apply the requested changes accordingly. Use 'magnificationFactor' for absolute target values - this does not change the zoom increment registry setting. Set the value for zoom increment to -1f in the cases where user has not specified it in the prompt, it will be picked from the users's current setting. After performing all the actions, suggest user some of the shortcuts related to that setting in magnifier.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "magnificationFactor": {
+                    "description": "Magnification factor (must be 1.0 or greater and less than 16.0, where 1.0 = 100%, 2.0 = 200%, etc.)",
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "default": -1
+                  },
+                  "mode": {
+                    "description": "Magnifier mode: 1 = Docked, 2 = Full Screen, 3 = Lens.",
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "default": -1
+                  },
+                  "invertColors": {
+                    "description": "Enable color inversion: 1 to invert colors, 0 for normal colors",
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "default": -1
+                  },
+                  "smoothEdges": {
+                    "description": "Enable smooth edges: 1 to smooth screen edges, 0 to disable",
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "default": -1
+                  },
+                  "zoomType": {
+                    "description": "Zoom type: 'multiply' for multiplicative scaling (for example, 'by 2×'), 'add' for additive percentage ('for example, by +25%, by 200%'). 'absolute' for multipliers of the current('for example, to double' = 2.0, 'to half'=0.5) and for absolute targets (for example, 'to 150%'), use magnificationFactor instead. Set the default zoomType to add if user does not specify anything.",
+                    "type": "string"
+                  },
+                  "zoomIncrement": {
+                    "description": "Zoom increment: For 'add': percentage points as decimal (for example, 3.0 for +300%, 0.25 for +25%). For 'multiply': multiplier value(for example, 2.0 = 2x). For 'absolute': multiplier of current (for example, 2.0 for double, 0.5 for half). In case no value is specified by the user we use the value in windows registry, do not change the value of this parameter in that case",
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "default": -1
+                  },
+                  "zoomIn": {
+                    "description": "Set to true to zoom in by the zoom increment amount",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "default": false
+                  },
+                  "zoomOut": {
+                    "description": "Set to true to zoom out by the zoom increment amount",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "default": false
+                  },
+                  "region": {
+                    "description": "Magnify a predefined region. Predefined regions are TopLeft, TopRight, BottomRight, BottomLeft, Top, Right, Bottom, Left, Center. If no region is specified then keep this parameter empty so that magnifier does not move un-necessarily.",
+                    "type": "string"
+                  }
+                }
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "Success": {
+                    "type": "boolean"
+                  },
+                  "AppliedConfiguration": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "MagnificationFactor": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "Mode": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "InvertColors": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "SmoothEdges": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "ZoomIncrement": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "Region": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "PreviousConfiguration": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "MagnificationFactor": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "Mode": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "InvertColors": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "SmoothEdges": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "ZoomIncrement": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "Region": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "Shortcuts": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

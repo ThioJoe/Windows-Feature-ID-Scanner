@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-RemoteAssistance-Client-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-RemoteAssistance-Client-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-RemoteAssistance-Client-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="RemoteAssistance" displayName="Remote Assistance" description="Lets you invite a friend to connect to your computer and help you with problems">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Remote Assistance enables you (or a support person) to help users with PC issues or questions. You can view and get control of the user's desktop to troubleshoot and fix problems. Users can also ask for help from friends or co-workers." DisplayName="Remote Assistance" Id="42" Type="Feature" UniqueName="Remote-Assistance">
+          <Version Major="8" Minor="0" />
+        </ServerComponent>
+      </mum2:customInformation>
+    </update>
+    <update name="a0195e949e2c66a476f4463d39ad9087">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-RemoteAssistance-Client-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NFS-ClientSKU-Package" version="10.0.26100.8117" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-NFS-ClientSKU-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-NFS-ClientSKU-Package" version="10.0.26100.8117" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="ServicesForNFS-ClientOnly" displayName="Services for NFS" description="Allows you to access files using the Network File System (NFS) protocol."></update>
+    <update name="ClientForNFS-Infrastructure" displayName="Client for NFS" description="Enables this computer to gain access to files on UNIX-based computers">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Client for NFS enables this computer to access files on UNIX-based NFS servers. When installed, you can configure a computer to connect to UNIX NFS shares that allow anonymous access." DisplayName="Client for NFS" Id="438" Type="Feature" UniqueName="NFS-Client">
+          <Deploys>
+            <Update Name="ServicesForNFS-ClientOnly" />
+            <Update Name="ClientForNFS-Infrastructure" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-ClientForNFS-Infrastructure-OptGroup-Package" version="10.0.26100.8117" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="NFS-Administration" displayName="Administrative Tools" description="Tools for managing Services for NFS on local and remote computers">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-NFS-Administration-D-Opt-Package" version="10.0.26100.8117" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

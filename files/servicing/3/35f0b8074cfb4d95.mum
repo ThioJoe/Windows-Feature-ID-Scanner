@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0415" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0415" releaseType="Feature Pack">
+    <update name="3FC0385BC8EB664DE9C393992871EE86A99F49926DD5437BA913173E10921943" restart="required">
+      <driver inf="eyegazeioctl.inf" ranking="normal">
+        <assemblyIdentity name="dual_eyegazeioctl.inf" version="10.0.26100.8521" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="E85FA4F3A3C92EFB489D0CCCBE07E3AE0345659027D15026012D0BC80AED48FB">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-Accessibility-merged-Deployment" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="9c24352ea60c14b0fcfb74d5a9790a85">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package041520" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

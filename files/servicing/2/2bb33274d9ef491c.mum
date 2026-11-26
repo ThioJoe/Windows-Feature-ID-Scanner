@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables online setup flows on a bootable, non-serviceable edition." displayName="Bootable Edition support to enable online setup flows" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-BootableEdition-OnlineSetupEnabled-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-BootableEdition-OnlineSetupEnabled" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win0-BootableEdition-Feature" />
+        <mum2:feature name="Microsoft-Win3-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="9c5ae2e40af9457613391e8f75f83d48">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Online-Setup-State-Full-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

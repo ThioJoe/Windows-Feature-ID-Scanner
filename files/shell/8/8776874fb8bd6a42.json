@@ -1,0 +1,106 @@
+{
+  "manifest_version": "0.3",
+  "name": "applaunch-mcp-server",
+  "display_name": "App Launch MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for launching apps.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "AppLaunch"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "applaunch-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "launch_application",
+              "description": "Launches the specified application using its AppId. Use GetInstalledApplications first to see available applications and their AppIds.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "appId": {
+                    "description": "AppId of the application to launch",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "appId"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "get_installed_applications",
+              "description": "Get all installed applications for the user in the system.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "AppId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

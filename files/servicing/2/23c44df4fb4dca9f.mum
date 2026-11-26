@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package041020" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package041020" releaseType="Feature Pack">
+    <update name="f87079b2b8870a007b9ce4d259355f3b">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment0410200" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="0049EAEDBE704975E103621AF4121B3ECA00DD1745D24E759D1A4784624F179B" restart="required">
+      <driver inf="usbser.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbser.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="8B9040EB4CCCE5D2489110CC74FDC3EDE7C492E2885596DB215C2EED7A9A5914">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Graphics-DXCore-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6aeaf7d6cadc007fe3750cd0f1dad546">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Graphics-Required-Core-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d8b3ecd5975be99fbac06b0c5c8a372b">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04102030" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

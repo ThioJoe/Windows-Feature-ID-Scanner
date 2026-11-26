@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Math Input Control and Recognizer" displayName="Math Recognizer" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-TabletPCMath-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="486" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="installed" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="MathRecognizer" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="2f75ef3e006f6239db4f72fae3edaa2a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Shared-Ink-Directory-Package-drivers-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="4aca50bea8d2bb807bbc60de81983244">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-TabletPCMath-Base-Package" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="90a9f079a71011d6e4fc975cad519c73">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-TabletPCMath-Package" version="10.0.26100.8115" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,592 @@
+{
+  "manifest_version": "0.3",
+  "name": "systeminfo-mcp-server",
+  "display_name": "System Info MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for getting system information.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "SystemInfo"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "get_high_resource_processes",
+      "description": "Get list of processes consuming high system resources (CPU, memory, handles)"
+    },
+    {
+      "name": "get_maintenance_status",
+      "description": "Get system maintenance status including pending Windows Updates, PnP devices with configuration errors, and Windows Defender health (scan status, real-time protection, reboot requirements)"
+    },
+    {
+      "name": "get_performance_metrics",
+      "description": " Get the latest snapshot of system performance metrics including CPU usage, memory, disk activity"
+    },
+    {
+      "name": "get_performance_optimization_status",
+      "description": "Get system performance optimization status including pagefile configuration and power management settings for improving system performance and power efficiency"
+    },
+    {
+      "name": "get_system_overview",
+      "description": "Get comprehensive system information including CPU, memory, disk, and uptime for troubleshooting"
+    }
+  ],
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "systeminfo-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "get_system_overview",
+              "description": "Get comprehensive system information including CPU, memory, disk, and uptime for troubleshooting",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  },
+                  "computerInfo": {
+                    "type": "object",
+                    "properties": {
+                      "osVersion": {
+                        "type": "string"
+                      },
+                      "is64Bit": {
+                        "type": "boolean"
+                      },
+                      "logicalProcessors": {
+                        "type": "integer"
+                      },
+                      "physicalCores": {
+                        "type": "integer"
+                      },
+                      "logicalCores": {
+                        "type": "integer"
+                      },
+                      "processorPackages": {
+                        "type": "integer"
+                      },
+                      "processorType": {
+                        "type": "integer"
+                      },
+                      "architecture": {
+                        "type": "string"
+                      },
+                      "uptime": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "memory": {
+                    "type": "object",
+                    "properties": {
+                      "totalPhysicalMemory": {
+                        "type": "string"
+                      },
+                      "availablePhysicalMemory": {
+                        "type": "string"
+                      },
+                      "totalVirtualMemory": {
+                        "type": "string"
+                      },
+                      "availableVirtualMemory": {
+                        "type": "string"
+                      },
+                      "totalPhysicalBytes": {
+                        "type": "integer"
+                      },
+                      "availablePhysicalBytes": {
+                        "type": "integer"
+                      },
+                      "totalVirtualBytes": {
+                        "type": "integer"
+                      },
+                      "availableVirtualBytes": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "diskInfo": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "driveName": {
+                          "type": "string"
+                        },
+                        "driveType": {
+                          "type": "string"
+                        },
+                        "totalSize": {
+                          "type": "string"
+                        },
+                        "freeSpace": {
+                          "type": "string"
+                        },
+                        "usedSpace": {
+                          "type": "string"
+                        },
+                        "percentUsed": {
+                          "type": "number"
+                        },
+                        "totalBytes": {
+                          "type": "integer"
+                        },
+                        "freeBytes": {
+                          "type": "integer"
+                        },
+                        "usedBytes": {
+                          "type": "integer"
+                        },
+                        "isReady": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "friendlyName": {
+                          "type": "string"
+                        },
+                        "diskKind": {
+                          "type": "string"
+                        },
+                        "busType": {
+                          "type": "string"
+                        },
+                        "rawBusType": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  "accelerators": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "vendorName": {
+                          "type": "string"
+                        },
+                        "vendorId": {
+                          "type": "integer"
+                        },
+                        "deviceId": {
+                          "type": "integer"
+                        },
+                        "dedicatedMemoryBytes": {
+                          "type": "integer"
+                        },
+                        "sharedMemoryBytes": {
+                          "type": "integer"
+                        },
+                        "driverVersion": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "biosInfo": {
+                    "type": "string"
+                  },
+                  "powerInfo": {
+                    "type": "object",
+                    "properties": {
+                      "acLineStatus": {
+                        "type": "string"
+                      },
+                      "batteryLifePercent": {
+                        "type": "integer"
+                      },
+                      "batteryLifeTime": {
+                        "type": "string"
+                      },
+                      "batteryLifeTimeMinutes": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "get_high_resource_processes",
+              "description": "Get list of processes consuming high system resources (CPU, memory, handles)",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "description": "Maximum number of processes to return",
+                    "type": "integer",
+                    "default": 10
+                  },
+                  "sortBy": {
+                    "description": "Sort criteria: 'memory', 'cpu', or 'handles'",
+                    "type": "string",
+                    "default": "memory"
+                  }
+                }
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  },
+                  "sortedBy": {
+                    "type": "string"
+                  },
+                  "totalProcesses": {
+                    "type": "integer"
+                  },
+                  "limit": {
+                    "type": "integer"
+                  },
+                  "processes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "pid": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "cpu": {
+                          "type": "number"
+                        },
+                        "memoryMB": {
+                          "type": "number"
+                        },
+                        "handles": {
+                          "type": "integer"
+                        },
+                        "startTime": {
+                          "type": "string"
+                        },
+                        "windowTitle": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "get_performance_optimization_status",
+              "description": "Get system performance optimization status including pagefile configuration and power management settings for improving system performance and power efficiency",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  },
+                  "pagefile": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "pagefilePath": {
+                        "type": "string"
+                      },
+                      "allPagefilePaths": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "allocatedMB": {
+                        "type": "integer"
+                      },
+                      "currentUsageMB": {
+                        "type": "integer"
+                      },
+                      "peakUsageMB": {
+                        "type": "integer"
+                      },
+                      "systemCommitTotalMB": {
+                        "type": "integer"
+                      },
+                      "systemCommitLimitMB": {
+                        "type": "integer"
+                      },
+                      "systemCommitUsagePercent": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "powerManager": {
+                    "type": "object",
+                    "properties": {
+                      "energySaverStatus": {
+                        "type": "string"
+                      },
+                      "batteryStatus": {
+                        "type": "string"
+                      },
+                      "powerSupplyStatus": {
+                        "type": "string"
+                      },
+                      "remainingChargePercent": {
+                        "type": "integer"
+                      },
+                      "remainingDischargeTime": {
+                        "type": "string"
+                      },
+                      "powerPlanName": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "powerPlanName"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "name": "get_performance_metrics",
+              "description": " Get the latest snapshot of system performance metrics including CPU usage, memory, disk activity",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  },
+                  "cpu": {
+                    "type": "object",
+                    "properties": {
+                      "usagePercent": {
+                        "type": "number"
+                      },
+                      "cpuClockDetails": {
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "timestamp": {
+                            "type": "string"
+                          },
+                          "logicalCores": {
+                            "type": "integer"
+                          },
+                          "averageCurrentMhz": {
+                            "type": "number"
+                          },
+                          "peakMaxMhz": {
+                            "type": "integer"
+                          },
+                          "mhzLimit": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "memory": {
+                    "type": "object",
+                    "properties": {
+                      "availableMB": {
+                        "type": "number"
+                      },
+                      "usagePercent": {
+                        "type": "number"
+                      },
+                      "totalMB": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "disk": {
+                    "type": "object",
+                    "properties": {
+                      "bytesPerSecond": {
+                        "type": "number"
+                      },
+                      "activityLevel": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "processes": {
+                    "type": "object",
+                    "properties": {
+                      "totalCount": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "get_maintenance_status",
+              "description": "Get system maintenance status including pending Windows Updates, PnP devices with configuration errors, and Windows Defender health (scan status, real-time protection, reboot requirements)",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  },
+                  "pendingUpdatesCount": {
+                    "type": "integer"
+                  },
+                  "pendingUpdates": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "msrcSeverity": {
+                          "type": "string"
+                        },
+                        "autoSelectOnWebSites": {
+                          "type": "boolean"
+                        },
+                        "isDownloaded": {
+                          "type": "boolean"
+                        },
+                        "isInstalled": {
+                          "type": "boolean"
+                        },
+                        "kbArticleIds": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "pnpErrorDevices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "deviceInstanceId": {
+                          "type": "string"
+                        },
+                        "configManagerErrorCode": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  "defenderHealth": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "realtimeProtectionState": {
+                        "type": "string"
+                      },
+                      "lastQuickScanAgeDays": {
+                        "type": "string"
+                      },
+                      "lastFullScanAgeDays": {
+                        "type": "string"
+                      },
+                      "lastQuickScanStartTime": {
+                        "type": "string"
+                      },
+                      "lastQuickScanEndTime": {
+                        "type": "string"
+                      },
+                      "lastFullScanStartTime": {
+                        "type": "string"
+                      },
+                      "lastFullScanEndTime": {
+                        "type": "string"
+                      },
+                      "rebootRequired": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "automaticUpdates": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "managedByPolicy": {
+                        "type": "boolean"
+                      },
+                      "policySource": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

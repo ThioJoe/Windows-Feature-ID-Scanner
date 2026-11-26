@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5127690" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5127690" creationTimeStamp="2026-10-09T17:08:15Z" lastUpdateTimeStamp="2026-10-09T17:08:15Z">
+  <assemblyIdentity name="Package_10_for_KB5127690" version="10.0.9363.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5127690" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="staged">
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-Server-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-WCF-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+        <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerWebEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5127690-554_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.ServiceModel.Ref" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="4c1b74b464f0aceffa8d8608c899fd68" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-555_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-SMDiagnostics" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="c49c86b18d8ed223e9dea17226b55c33" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-556_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="SMDiagnostics" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="08691abd8ffe7cb11e57bab07fcf7b62" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-557_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Runtime.Serialization" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="a6042ae42b1fab27b3b65276fce461a3" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-558_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.WasHosting" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="b41c7e0bcbd8a36dc144f5a617b8eb12" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-559_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="SMSvcHost" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7da27cd749c9967a70fe956879782510" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-560_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Runtime.Serialization.Ref" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2a0cca9229af5b9c1e569c0b54870dd8" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-561_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.ServiceModel" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="28e0f81fdaee5e16a7656cd7f9772329" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-562_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.IdentityModel" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="fc3e9ef78be53e95cb8095031d1b6c02" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-563_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.Ref" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="bfcc4f2bfc0a9dab9126fac16aab25f1" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-564_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.IdentityModel" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="25dba36b874f9a25968e4857caf9f6cc" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-565_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-M_SVC_MON_SUP_DLL" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="9bbcf7913a3220a1d49665595e92b4c0" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-566_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel" version="10.0.27000.398" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="4fee684d94c4ded587b57f08a6dd4bca" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-567_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-SMSvcHost" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="ac1659511b78753d0d232c127e2593b7" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-568_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.Runtime.Serialization" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="14c2701c5d5b6426c573700a358b70cc" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-569_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.ServiceModel.WasHosting" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="537598315b5ce0c6e36a3e26d20e2391" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-570_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WCF-System.Runtime.Serialization.Ref" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="24080817aaf6defe08365953e8700d47" version="10.0.27000.398" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

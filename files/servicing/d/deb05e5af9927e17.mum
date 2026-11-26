@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="The classic system Notepad, for editing text files when newer versions of the Notepad app are not available." displayName="Notepad (system)" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Notepad-System-FoD-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Notepad-System-FoD-en-US" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="432" />
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.Notepad.System" version="1.0" language="en-US" />
+      </capability>
+      <satelliteInfo>
+        <applyTo type="language" value="en-US" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="c2432f9082aad2171caf6a9347572056">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-Notepad-System-FoD-Deployment-LanguagePack" version="10.0.26100.8457" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

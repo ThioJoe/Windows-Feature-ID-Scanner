@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Quick Machine Recovery</displayName>
+  <description>Group Policy settings for Quick Machine Recovery (QMR).</description>
+  <resources>
+    <stringTable>
+
+      <!-- Category -->
+      <string id="QuickMachineRecovery">Quick Machine Recovery</string>
+
+      <!-- CloudRemediation -->
+      <string id="CloudRemediation">Enable Cloud Remediation</string>
+      <string id="CloudRemediation_help">This policy setting controls whether the Quick Machine Recovery engine is permitted to download and apply cloud-sourced remediation content when attempting to recover a failing system.
+
+If you enable this policy setting, the recovery engine may contact Microsoft's cloud services to retrieve and apply targeted remediation packages.
+
+If you disable this policy setting, cloud-based remediation is not used. Recovery will rely solely on locally available resources.
+
+If you do not configure this policy setting, the behavior is determined by local settings, if set, or by the built-in default for this edition.
+      </string>
+
+      <!-- AutoRemediation -->
+      <string id="AutoRemediation">Enable Auto Remediation</string>
+      <string id="AutoRemediation_help">This policy setting controls whether the Quick Machine Recovery engine is permitted to automatically apply local (non-cloud) remediation packages when attempting to recover a failing system. If you enable this policy setting, the recovery engine may apply locally cached remediation packages without requiring user interaction.
+
+If you disable this policy setting, automatic application of local remediation packages is suppressed.
+
+If you do not configure this policy setting, the behavior is determined by local settings, if set, or by the built-in default for this edition.
+      </string>
+
+      <!-- RetryInterval -->
+      <string id="RetryInterval">Set Recovery Retry Interval</string>
+      <string id="RetryInterval_help">This policy setting specifies the interval, in minutes, between successive Quick Machine Recovery retry attempts.
+
+If you enable this policy setting, enter the desired retry interval in minutes in the options box. A value of 0 causes the recovery engine to attempt recovery exactly once with no retries.
+
+Valid range: 0 to 4320 minutes (0 to 72 hours).
+
+If you disable or do not configure this policy setting, the retry interval is determined by local settings, if set, or by the built-in default (0 minutes — single attempt, no retries).
+      </string>
+
+      <!-- TotalWaitTime -->
+      <string id="TotalWaitTime">Set Total Recovery Wait Time</string>
+      <string id="TotalWaitTime_help">This policy setting specifies the maximum total time, in minutes, that the Quick Machine Recovery engine will spend across all recovery attempts before abandoning recovery and allowing the system to boot normally (or enter the standard recovery environment).
+
+If you enable this policy setting, enter the desired total wait time in minutes in the options box.
+
+Valid range: 1 to 4320 minutes (1 minute to 72 hours).
+
+If you disable or do not configure this policy setting, the total wait time is determined by local settings, if set, or by the built-in default (180 minutes).
+      </string>
+
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2">At least Windows Server 2025, Windows 11 24H2</string>
+    </stringTable>
+    <presentationTable>
+
+      <presentation id="RetryInterval">
+        <decimalTextBox refId="RetryIntervalValue" defaultValue="0">Retry interval (minutes):</decimalTextBox>
+      </presentation>
+
+      <presentation id="TotalWaitTime">
+        <decimalTextBox refId="TotalWaitTimeValue" defaultValue="180">Total wait time (minutes):</decimalTextBox>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

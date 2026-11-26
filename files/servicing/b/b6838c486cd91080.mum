@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MSMQ-Client-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MSMQ-Client" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-NanoServer-IIS-Internal-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-AddOn-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Core-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="MSMQ-Container" displayName="Microsoft Message Queue (MSMQ) Server" description="Microsoft Message Queue (MSMQ) Server.">
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+    </update>
+    <update name="MSMQ-DCOMProxy" displayName="MSMQ DCOM Proxy" description="The DCOM proxy feature enables MSMQ applications to use MSMQ DCOM API to connect to a remote MSMQ Server.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Container" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-dcomproxy-Opt-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Server" displayName="Microsoft Message Queue (MSMQ) Server Core" description="This feature installs the core components of MSMQ which enables you to perform basic Message queuing functions. This feature is a minimum requirement.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Container" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-server-Opt-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-COM-MSMQ-package">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-COM-MSMQ-Package" version="10.0.26100.7920" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-ADIntegration" displayName="MSMQ Active Directory Domain Services Integration" description="Active Directory Domain Services Integration feature enables publishing of queue properties to Active Directory Domain Services, out-of-the-box authentication and encryption of messages using certificates registered in Active Directory Domain Services, and routing of messages across Windows sites. This feature becomes operational only when the computer joins a domain.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-adintegration-Opt-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-HTTP" displayName="MSMQ HTTP Support" description="The HTTP Support feature allows you to expose a queue to the internet such that applications can send messages to the queue using HTTP protocol. This feature requires Internet Information Server.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-StaticContent" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-DefaultDocument" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-DirectoryBrowsing" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-HttpErrors" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-HttpRedirect" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-HttpLogging" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-LoggingLibraries" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-RequestMonitor" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-HttpTracing" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-HttpCompressionStatic" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-ISAPIExtensions" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-Metabase" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-http-Opt-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-MMC" displayName="MSMQ Management Tools" description="MSMQ Management Tools">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MSMQ-MMC-OptGroup-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Multicast" displayName="Multicasting Support" description="The Multicast support feature enables you to send messages to a Multicast IPAddress. Queues can be associated with a Multicast IPAddress. Messages sent to a Multicast IPAddress will be delivered to the queues that are associated with that IPAddress.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-multicast-Opt-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Runtime" displayName="MSMQ Runtime components" description="MSMQ Runtime components">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-runtime-Opt-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Triggers" displayName="MSMQ Triggers" description="Message Queue Triggers enables the invocation of a COM component or an executable depending on the filters that you define for the incoming messages in a given queue.">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="MSMQ-Server" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-triggers-Opt-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

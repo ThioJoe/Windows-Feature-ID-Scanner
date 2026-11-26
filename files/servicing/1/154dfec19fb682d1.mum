@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-WinMgmt-Core-WOW64-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="e7b2617a3318dd7f730a1de52baf0130">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-WOW64-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="913b10159fb8cd6e3af64059f294772f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-WinMgmt-WMIv2-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="de8a8ddec9468d401e299ecb292ed39e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-WMI-Providers-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="90396b519e29f8c09795556d798cef18">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WINOMI-Group-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

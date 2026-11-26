@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/learnmore-page.js" src="/lib/require.js"></script>
+    <style>
+        .learnmore-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-align: start;
+        }
+
+            .learnmore-layout .content-header {
+                flex-shrink: 0;
+                padding-bottom: 64px;
+            }
+
+            .learnmore-layout .body-header h1 {
+                font-size: 1.75rem;
+                font-weight: 500;
+                line-height: 2rem;
+            }
+
+            .learnmore-layout .eula-iframe {
+                flex: 1 1 auto;
+                width: 100%;
+                min-height: 0;
+                border: 2px solid rgba(255,255,255,0.6);
+                border-radius: 4px;
+                box-shadow: 0px 2px 4px rgba(0,0,0,0.04);
+                box-sizing: border-box;
+            }
+
+            @media (forced-colors: active) {
+                .learnmore-layout .eula-iframe {
+                    border: 1px solid ButtonText;
+                }
+            }
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content learnmore-layout">
+            <div class="content-header">
+                <div class="body-header">
+                    <h1 data-bind="text: title"></h1>
+                </div>
+            </div>
+            <iframe id="learnMoreIFrame" class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" data-bind="iframeContent: {dir:document.documentElement.dir, focusBody: true, frameTitle: title}, attr: { 'aria-label': title }"></iframe>
+        </div>
+        <div class="button-group space-between" style="padding-top: 24px;">
+            <div class="align-self-end">
+                <!-- ko foreach: flexEndButtons -->
+                <button type="button" class="win-button" data-bind="text: buttonText, css: { button_primary: isPrimaryButton, button_secondary: !isPrimaryButton }, click: buttonClickHandler, disable: disableControl"></button>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MinWin-WOW-WOW64-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MinWin-WOW-WOW64" releaseType="Feature Pack">
+    <update name="3f615d23f23a2127cd1d142b59110299">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-MinWin-WOW-WOW64-Deployment" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="6e82647718b95500ab86b9684896d3d2">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Ntdll-WOW64-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

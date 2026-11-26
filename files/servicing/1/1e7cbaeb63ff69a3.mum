@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Windows WiFi Client Ralink Netr28x Networking Driver" displayName="Ralink Netr28x WiFi Networking Driver" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Wifi-Client-Ralink-Netr28x-FOD-Package" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="523" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.Wifi.Client.Ralink.Netr28x" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="c2de7e2048c5001eaa23a5b030b83f88" restart="required">
+      <driver inf="netr28x.inf" ranking="normal">
+        <assemblyIdentity name="dual_netr28x.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

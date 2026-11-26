@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ <html>
+    <head>
+        <title>F12 Dev Tools</title>
+        <link id="pluginCss" rel="stylesheet" href="/23/frontend/host/api/data/plugin.css" type="text/css" data-plugin-theme="true" />
+        <link rel="stylesheet" type="text/css" href="/23/f12host/f12host.css" />
+        <script src="/23/f12host/uwp.bundle.js"></script>
+        <script src="/23/common/common.bundle.js"></script>
+        <script src="/23/f12host/f12host.js"></script>
+    </head>
+    <body>
+        <div id="quickOpenDialogContainer"></div>
+        <div class="oneWpcIFrames">
+            <button id="startF12button" style="display:none;">Start F12</button>
+            <div id="header"></div>
+            <div id="toolIframes"></div>
+            <div id="consoleSplitter"></div>
+            <div id="popup" style="display:none;"></div>
+        </div>
+        <div id="perf">
+            <div id="perfTab">
+                <div id="perfBadge">
+                    <div id="perfBadgeCount"></div>
+                </div>
+            </div>
+            <div id="perfHUD">
+                <div id="perfHeader">
+                    <h3>F12 Performance</h3>
+                    <div id="perfClose"></div>
+                </div>
+                <div id="perfData"></div>
+            </div>
+        </div>
+    </body>
+</html>

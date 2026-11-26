@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Install Simple TCPIP services" displayName="Simple TCPIP services (i.e. echo, daytime etc)" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-SimpleTCP-FOD-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="900" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+        <mum2:DismOptions Visibility="hidden" />
+      </mum2:OptionalFeatures>
+      <mum2:DetachedOC />
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-SimpleTCP-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Windows.SimpleTCP.Content" />
+      </capability>
+      <satelliteInfo>
+        <require type="language" value="*" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="SimpleTCP-Content">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="SimpleTCP" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-SimpleTCP-Opt-Package" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

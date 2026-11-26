@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Vpci-VSP-Package" version="10.0.26100.4066" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Vpci-VSP-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-Vpci-VSP-Package" version="10.0.26100.4061" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="6f7604dd265b6a1e0139d3216c4aa436">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Vpci-VSP-merged-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b744c4787cfc2d7ce039b8132722463c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-VmBus-Host-Package" version="10.0.26100.4066" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

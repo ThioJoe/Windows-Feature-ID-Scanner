@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package02" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package02" releaseType="Feature Pack">
+    <update name="9eaa8ef9c71bec97536af232dd9623a7">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment020" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="B0441D2D95C0DBF0C4B2E815FBD27753DBE9ECA8292FB6B831FC4FD5479FB27E" restart="required">
+      <driver inf="termbus.inf" ranking="normal">
+        <assemblyIdentity name="dual_termbus.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="F6D7CDFAA54FF5FBA17783C281185243FDED0E033208675418D5DD5B960CFECA" restart="required">
+      <driver inf="termkbd.inf" ranking="normal">
+        <assemblyIdentity name="dual_termkbd.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D5C2AA04CB285983CFF670E5BF3ED1775B819FC4EDF21C43FD90ABFE275B8F1E" restart="required">
+      <driver inf="termmou.inf" ranking="normal">
+        <assemblyIdentity name="dual_termmou.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-GenericDrivers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-CoreSystem-GenericDrivers" releaseType="Feature Pack">
+    <update name="39d70f36a2a2f47ed1007365a06b697e" restart="required">
+      <driver inf="devmap.inf" ranking="normal">
+        <assemblyIdentity name="dual_devmap.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="ef8cdb4959a01b82e8be84fdb9ab8030" restart="required">
+      <driver inf="uiomap.inf" ranking="normal">
+        <assemblyIdentity name="dual_uiomap.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="978ccb5132e18463e74ee7aaa564dc3f">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-GenericDrivers-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

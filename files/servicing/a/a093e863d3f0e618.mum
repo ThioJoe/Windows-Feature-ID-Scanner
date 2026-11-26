@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TerminalServices-UsbRedirector-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-TerminalServices-UsbRedirector" releaseType="Feature Pack" restart="required">
+    <update name="95cb289717c6633fafe9bae9f755fb99" restart="required">
+      <driver inf="tsusbhub.inf" ranking="normal">
+        <assemblyIdentity name="dual_tsusbhub.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="bdeb37dd65f1114a40fc4d7d697fbf98">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-TerminalServices-UsbRedirector-Deployment" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

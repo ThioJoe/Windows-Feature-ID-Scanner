@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Processor-Drivers-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Kernel-Package-Processor-Drivers" releaseType="Feature Pack">
+    <update name="0378ca094841fa2202f786d8236898ee" restart="required">
+      <driver inf="cpu.inf" ranking="normal">
+        <assemblyIdentity name="dual_cpu.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

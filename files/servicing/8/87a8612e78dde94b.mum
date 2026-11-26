@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0415" version="10.0.26100.4343" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0415" releaseType="Feature Pack">
+    <update name="4f048d29b328fa62f53960089e55d84b" restart="required">
+      <driver inf="eyegazeioctl.inf" ranking="normal">
+        <assemblyIdentity name="dual_eyegazeioctl.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="d0a1b3654329c57332669db52a958b33">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04150" version="10.0.26100.4343" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="CE8C814D79AE5604C69AF9B4CDD646EB284E26D9EFEC24CEC15371EF0D37560A">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-MinstoreEvents-Package" version="10.0.26100.3912" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="FC6F1D69DBB6AF539219A8841F274DAAB3E6ED666696664E0B59CA77F5965584" restart="required">
+      <driver inf="bthprint.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthprint.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6E159B264056516480105DD2DFD4A9E0B24EE88B6CFF3E6EAB58C53C3648F893" restart="required">
+      <driver inf="bthspp.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthspp.inf" version="10.0.26100.2161" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature contains the minimal composition for edition product data and version information." displayName="Edition build, layer and version information" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win0-Product-Data-WOW64-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win0-Product-Data-WOW64-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win0-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win0-Product-Data-WOW64-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="47faa1a9c3f1935bf68f291ffe3455d2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="64cc431884b8f75b4647b788885f2960">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BaseBuildRevisionNumber-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="4dadc659c4c005210d3b6dff6fe6fa5b">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BuildLayers-OneCoreUAP-BuildInfo-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7ea472fb051d370ef167cd7a78194163">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BuildLayers-OneCoreUAP-VersionInfo-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="fd606d7991bbe159acff8501367028fc">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-ControlsFolder-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c6dbffb88a8992105178ed37f74119ee">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-DisplayVersion-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b2cec9b0ec118dd0f12974a9137e4d67">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-Legacy-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="907a2394847b1d31e005c294794323f0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-SoftwareType-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="df41bdd24f9e1e9f44d70906be713bd7">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-VersionInfo-Dynamic-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="839eee345ded5e6ea1367ff17f6b993e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-VersionInfo-Static-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

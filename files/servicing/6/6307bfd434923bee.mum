@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Runlevel-Win0-merged-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Runlevel-Win0-merged" releaseType="Feature Pack">
+    <update name="6d46840a5bdaa3a4d1b427ae4c0ebf25" restart="required">
+      <driver inf="uefi.inf" ranking="normal">
+        <assemblyIdentity name="dual_uefi.inf" version="10.0.28000.3393" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="e3dfd1e7559c30afe01ae701fac1f0c8" restart="required">
+      <driver inf="c_usbfn.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_usbfn.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1801fae1f1bf72501071d92665080211" restart="required">
+      <driver inf="compdev.inf" ranking="normal">
+        <assemblyIdentity name="dual_compdev.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="a40255d1fde6e8ae7553e1b3adece80a" restart="required">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <driver inf="kdnic.inf" ranking="normal">
+        <assemblyIdentity name="dual_kdnic.inf" version="10.0.28000.2912" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="f5fb8ca12b827a6bac919b569c94ddab">
+      <component>
+        <assemblyIdentity name="Runlevel-Win0-merged-Deployment" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

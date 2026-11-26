@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5127690" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5127690" creationTimeStamp="2026-10-09T17:08:16Z" lastUpdateTimeStamp="2026-10-09T17:08:16Z">
+  <assemblyIdentity name="Package_16_for_KB5127690" version="10.0.9363.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5127690" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-NetFx-Shared-Typelibs" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+        <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerWebEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5127690-1103_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-system_enterpriseservices_tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-system_enterpriseservices_tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="9d28c6b1c0399506b75b2184be548f43" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1104_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-Scripting_Engine_TLB" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-Scripting_Engine_TLB" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="e26783f4f514f4cd0078e254fb1d6b0f" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1105_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="mscoree.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="mscoree.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="8c51cb0484a078c6d9b16d331fe29010" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1106_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="System.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2df6e4fb37d79f7fc6ebd420a0ba8c6e" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1107_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYSTEM_DRAWING_TLB" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYSTEM_DRAWING_TLB" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="1af4ff77b370a7fc66727651f4070891" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1108_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Windows.Forms.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="System.Windows.Forms.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="07308ce98090bbe5cd216363f3c116eb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1109_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="mscorlib.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="mscorlib.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="6a6730da5a4dc4fd88d657ca194fa1c7" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1110_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="Microsoft.JScript.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="Microsoft.JScript.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f7f7e5edace0bc30fc15a6b0c024d399" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1111_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscoree_tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscoree_tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="321cb77e8dc1026a80762449e707423c" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1112_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.EnterpriseServices.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="System.EnterpriseServices.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="99dd3c37d26e8246185d4c9f2bd08f21" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1113_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorlib_tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorlib_tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="516281a5530f53563926f80e16da2b26" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1114_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYSTEM_TLB" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYSTEM_TLB" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="203e4a3104b8862421d30f31278c044a" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1115_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYS_WINDOWS_FORMS_TLB" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYS_WINDOWS_FORMS_TLB" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="ed3742dd61e43452f13104498ed3930f" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127690-1116_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Drawing.tlb" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+          <assemblyIdentity name="System.Drawing.tlb" version="4.0.15920.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d110c464546dad218a3035eb26964613" version="4.0.15920.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

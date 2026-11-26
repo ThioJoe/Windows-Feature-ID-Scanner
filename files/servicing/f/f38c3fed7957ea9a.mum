@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Play audio and video files on your local machine and on the Internet." displayName="Windows Media Player Legacy (App)" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-MediaPlayer-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MediaPlayer-en-US" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="367" />
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Media.WindowsMediaPlayer" version="12.0" language="en-US" />
+      </capability>
+      <satelliteInfo>
+        <applyTo type="language" value="en-US" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="782f2bbbb2cd50806ea03522afe5a5c0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MediaPlayer-Payload-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

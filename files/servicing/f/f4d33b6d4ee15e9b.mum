@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package04" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package04" releaseType="Feature Pack">
+    <update name="9bc60138240446a2fe2be9de60d5fadf" restart="required">
+      <driver inf="rdcameradriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_rdcameradriver.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="ead9afcf8d62f753874d8c7b7c94b320" restart="required">
+      <driver inf="rdpbus.inf" ranking="normal">
+        <assemblyIdentity name="dual_rdpbus.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="34bae8ae374dc969b18d6fbe0a65a2e4">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment040" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

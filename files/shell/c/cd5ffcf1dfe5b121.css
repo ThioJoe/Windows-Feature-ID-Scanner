@@ -1,0 +1,148 @@
+﻿.BPT-ScriptErrorMessageIcon {
+    background-image: url('images/i_error.png');   /*[url({plugin-image-icon-dom-explorer-error})]*/
+    background-repeat: no-repeat;
+    background-size: 18px 54px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    margin-top: 6px;
+}
+
+.BPT-Toolbar .selectElementButton .buttonIcon {
+    background-image: url('images/i_inspect.png');  /*[url({plugin-image-icon-dom-explorer-inspect})]*/
+}
+
+.BPT-Toolbar .showLayoutButton .buttonIcon {
+    background-image: url('images/i_show_layout.png');  /*[url({plugin-image-icon-dom-explorer-show-layout})]*/
+}
+
+.BPT-Toolbar .refreshButton .buttonIcon {
+    background-image: url('images/i_refresh.png');  /*[url({plugin-image-icon-dom-explorer-refresh})]*/
+}
+
+body.xamlWindow .BPT-Toolbar .BPT-button.colorPickerButton .buttonIcon {
+    background-image: url("../common/images/colorPicker/sliderButton.png"); /*[url({plugin-common-image-colorpicker-slider-button})]*/
+}
+
+.BPT-Toolbar .BPT-button.accessibilityButton .buttonIcon {
+    background-image: url("images/accessibility.png"); /*[url({plugin-common-image-accessibility-button})]*/
+}
+
+.accessibilityToggle {
+    background-size: 10px 10px;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+}
+
+.accessibilityToggle.nodeCollapsed {
+    background-image: url('../common/images/itemCollapsedIcon.png'); /*[url({vs-image-icon-tree-collapsed})]*/
+}
+
+.accessibilityToggle.nodeExpanded {
+    background-image: url('../common/images/itemExpandedIcon.png'); /*[url({vs-image-icon-tree-expanded})]*/
+}
+
+.accessibilityNodeChildless {
+    margin-left: 10px;
+}
+
+.no-lines-grid .slick-cell {
+    border: none;
+ }
+
+.accessibilityProperties {
+    font-family: "Segoe UI", Arial, sans-serif; /*[{plugin-font-family} , Arial, sans-serif]*/
+    font-size: 12px; /*[{plugin-font-size}]*/
+ }
+
+ .accessibilityProperties.accessibilityPropertyName {
+    margin-left: 8px;
+    color: TRANSPARENT; /*[{plugin-font-editor-html-attribute-name-color}]*/
+    font-weight: normal; /*[{plugin-font-editor-html-attribute-name-weight}]*/
+ }
+
+ .accessibilityProperties.accessibilityPropertyValue {
+    color: TRANSPARENT; /*[{plugin-font-editor-html-attribute-value-color}]*/
+    font-weight: normal; /*[{plugin-font-editor-html-attribute-value-weight}]*/
+ }
+
+ .accessibilityProperties.accessibilityPropertyError {
+    padding: 10px;
+ }
+
+#accessibilityView {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+.slick-cell.active {
+    background: rgba(51, 153, 255, 0.18); /*[{plugin-font-editor-selected-background-color rgba(0.18)}]*/
+    margin-top: -1px;
+    margin-bottom: -1px;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-color: TRANSPARENT; /*[{plugin-font-editor-selected-border-color}]*/
+}
+
+#accessibilityPropertiesGridContainer {
+    height: 100%;
+}
+
+#accessibilityTreeViewContainer {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+#accessibilityTreeViewHeader {
+    padding-left: 10px;
+    vertical-align: text-bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    color: TRANSPARENT; /*[{plugin-tab-header-color}]*/
+}
+
+.accessibilityTreeData {
+    font-family: "Consolas", Lucida Console, monospace, "Segoe UI Symbol"; /*[{plugin-font-editor} , Lucida Console, monospace, "Segoe UI Symbol"]*/
+}
+
+.accessibilityTreeData.accessibilityRole {
+    color: TRANSPARENT; /*[{plugin-font-editor-html-element-color}]*/
+    font-weight: normal; /*[{plugin-font-editor-html-element-weight}]*/
+}
+
+.accessibilityTreeData.accessibilityName {
+    color: TRANSPARENT; /*[{plugin-font-editor-html-attribute-value-color}]*/
+    font-weight: normal; /*[{plugin-font-editor-html-attribute-value-weight}]*/
+}
+
+.slick-header-column.ui-state-default.slickHeaderHidden {
+    height: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+#accessibilityPropertiesFilterButton.filterActive {
+    background-position-y: 36px;
+    color: TRANSPARENT; /*[{f12-toolbar-button-selected-text-color}]*/
+    background-color: TRANSPARENT; /*[{f12-toolbar-button-selected-color}]*/
+    border-color: TRANSPARENT; /*[{f12-toolbar-button-selected-border-color}]*/
+}
+
+#accessibilityPropertiesFilterButton {
+    margin-top: 5px;
+    background-position-x: -1px;
+    position: absolute;
+    right: 18px;
+    background-size: 27px 54px;
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+    background-image: url('../common/images/i_filtering_options.png'); /*[url({plugin-common-image-filter-button})]*/
+}

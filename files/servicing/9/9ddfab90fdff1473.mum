@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Printing-Foundation-Starter-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Printing-Foundation-Starter-Package_en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-Printing-Foundation-Starter-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Enable fax and scan tasks on this computer" displayName="Print and Document Services" name="Printing-Foundation-Starter-Features">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Printing-Foundation-Starter-Features" />
+        </detectUpdate>
+      </applicable>
+    </update>
+  </package>
+</assembly>

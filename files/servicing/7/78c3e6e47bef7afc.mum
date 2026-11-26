@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Connectivity-HID-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Connectivity-HID" releaseType="Feature Pack">
+    <update name="d98ae2f797ac13f3f3696dc62e600047" restart="required">
+      <driver inf="hidvhf.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidvhf.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6a39b47062687136fbed2c64066d29eb" restart="required">
+      <driver inf="input.inf" ranking="normal">
+        <assemblyIdentity name="dual_input.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="4c79c20fe6cf4f6fa48b300590567647" restart="required">
+      <driver inf="mshidkmdf.inf" ranking="normal">
+        <assemblyIdentity name="dual_mshidkmdf.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="a9d9a0f68cd75b4d1879a88ff0aeb572" restart="required">
+      <driver inf="mshidumdf.inf" ranking="normal">
+        <assemblyIdentity name="dual_mshidumdf.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6d278b41d2fab8d9475ce5e2c1a22a64">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Connectivity-HID-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

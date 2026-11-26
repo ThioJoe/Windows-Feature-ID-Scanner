@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" 
+         IgnorableNamespaces="mp uap wincap">
+
+  <Identity Name="Microsoft.Windows.ContentDeliveryManager" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.28000.7" ResourceId="neutral"/>
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+    
+  <Applications>
+    <Application Id="App">
+      <uap:VisualElements 
+        DisplayName="ms-resource:AppDisplayName" 
+        Description="ms-resource:AppDescription" 
+        Square150x150Logo="Images\Logo.png" 
+        Square44x44Logo="Images\SmallLogo.png" 
+        BackgroundColor="transparent"
+        AppListEntry="none">
+        <uap:LockScreen Notification="badge" BadgeLogo="Images\BadgeLogo.png" />
+        <uap:SplashScreen Image="Images\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.RegistrationTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- OEMPreInstall trigger (called by the logon framework) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.ServicingTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- ServicingComplete trigger -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.RefreshCacheTask">
+          <BackgroundTasks>
+            <Task Type="timer" />                 <!-- Alarm trigger (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.HandleNewCreativesTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Background transfer completion group trigger (downloads completed) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.UpdatePlacementTask">
+          <BackgroundTasks>
+            <Task Type="timer" />                 <!-- Alarm trigger (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.MaintenanceTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Maintenance trigger (periodic health check) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.CustomEventListenerTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Custom system trigger (WNF notifications) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.NotificationChannelTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- SessionConnected trigger (MSA change) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.ProcessCreativeEventsTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Custom system trigger (WNF notifications) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.ProcessCreativeEventsBatterySaverOverrideTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Custom system trigger (WNF notifications) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.RemediateContentTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Custom system trigger (WNF notifications) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.EnableMonitoringTask">
+          <BackgroundTasks>
+            <Task Type="timer" />                 <!-- Alarm trigger (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.WatchdogTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+            <!-- Alarm trigger (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.RawNotificationChannelRegistrationTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Internet available trigger -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.RawNotificationHandlerTask">
+          <BackgroundTasks>
+            <Task Type="pushNotification" />      <!-- Push notification trigger -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.FlushPlacementsEventCacheTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+            <!-- Alarm trigger (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category = "windows.backgroundTasks" EntryPoint = "ContentDeliveryManager.Background.NotificationEventListenerTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Notification Manager Event Listener -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="ContentDeliveryManager.Background.TriggerManagerTimerTask">
+          <BackgroundTasks>
+            <Task Type="timer" />                 <!-- Trigger Manager timer (scheduling) -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category = "windows.backgroundTasks" EntryPoint = "ContentDeliveryManager.Background.TriggerManagerSystemEventTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />           <!-- Trigger Manager Event Listener -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category = "windows.backgroundTasks" EntryPoint = "ContentDeliveryManager.Background.ProcessMobilityActivitiesTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <!-- Trigger Manager Event Listener -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category = "windows.backgroundTasks" EntryPoint = "ContentDeliveryManager.Background.ManageMobilityProcessingTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <!-- Trigger Manager Event Listener -->
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.preInstalledConfigTask" EntryPoint="ContentDeliveryManager.Background.ConfigurationTask" />
+        <uap:Extension Category="windows.appService" EntryPoint="ContentDeliveryManager.Background.AppServiceTask">
+          <uap:AppService Name="microsoft-contentdeliverymanager" />
+        </uap:Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="ContentDeliveryManager.Background.PhoneBrokerAppServiceTask">
+          <uap3:AppService Name="microsoft-content-phonebroker" SupportsRemoteSystems="true" />
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ContentDeliveryManager.Background.dll</Path>
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.RegistrationTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ConfigurationTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.RefreshCacheTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.HandleNewCreativesTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.UpdatePlacementTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.MaintenanceTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ServicingTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.AppServiceTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.CustomEventListenerTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.NotificationChannelTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.FlushPlacementsEventCacheTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.RawNotificationChannelRegistrationTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.RawNotificationHandlerTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ProcessCreativeEventsTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ProcessCreativeEventsBatterySaverOverrideTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.RemediateContentTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.EnableMonitoringTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.WatchdogTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.NotificationEventListenerTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.TriggerManagerTimerTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.TriggerManagerSystemEventTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ProcessMobilityActivitiesTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.ManageMobilityProcessingTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentDeliveryManager.Background.PhoneBrokerAppServiceTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ContentManagementSDK.dll</Path>
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.Placement" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.AssetInfo" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.PlacementConfig" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.PlacementCacheConfig" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.Settings" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.PlacementIdMode" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ContentManagementSDK.SelectionModeNames" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <wincap:Capability Name="applicationDefaults" />
+    <wincap:Capability Name="cloudStore" />
+    <wincap:Capability Name="targetedContent" />
+    <wincap:Capability Name="lockScreenCreatives" />
+    <wincap:Capability Name="shellExperience" />
+    <wincap:Capability Name="visualElementsSystem" />
+    <wincap:Capability Name="storeAppInstall" />
+    <wincap:Capability Name="storeLicenseManagement" />
+    <rescap:Capability Name="featureStagingInfo" />
+    <rescap:Capability Name="activitySystem" />
+    <rescap:Capability Name="userWebAccounts" />
+    <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="packageQuery" />
+    <rescap:Capability Name="smbios"/>
+    <uap:Capability Name="userAccountInformation" />
+  </Capabilities>
+</Package>

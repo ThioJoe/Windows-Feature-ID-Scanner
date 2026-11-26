@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-WindowsCore-HardwareAccelerators-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-WindowsCore-HardwareAccelerators" releaseType="Feature Pack">
+    <update name="70a560a2471259cad3a96383625d22c7" restart="required">
+      <driver inf="dsa.inf" ranking="normal">
+        <assemblyIdentity name="dual_dsa.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="c86e0ab699eed86088e77fdd83d6933c" restart="required">
+      <driver inf="iaa.inf" ranking="normal">
+        <assemblyIdentity name="dual_iaa.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="77a9eaf8c6d3ccbf3c411e02a33ddbca" restart="required">
+      <driver inf="sdxi.inf" ranking="normal">
+        <assemblyIdentity name="dual_sdxi.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="872e3caf7cebfabe7d7a446e6f7c8e4a">
+      <component>
+        <assemblyIdentity name="Microsoft-WindowsCore-HardwareAccelerators-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="101f763cd34a387edf58de1e6c841710">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-HardwareAccelerators-ClassExtension-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

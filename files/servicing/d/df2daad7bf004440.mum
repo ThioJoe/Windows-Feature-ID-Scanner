@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Windows PowerShell Integrated Scripting Environment (ISE) is a graphical editor for PowerShell scripts with syntax-coloring, tab completion, and visual debugging." displayName="Windows PowerShell ISE" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-PowerShell-ISE-FOD-Package" version="10.0.26100.1746" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="435" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="all" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.PowerShell.ISE" version="1.0" />
+      </capability>
+      <satelliteInfo>
+        <applyTo type="arch" value="wow64" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="3f590843593cec457d82dd1c3f86c6e1">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-PowerShell-ISE-FOD-FOD-wow64-Deployment" version="10.0.26100.1746" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

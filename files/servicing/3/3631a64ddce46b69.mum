@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables support for Printing functionality on Win4" displayName="Print Support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win4-Printing-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win4-Printing-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win2-MSXML6-Feature" />
+        <mum2:feature name="Microsoft-Win2-WMI-Feature" />
+        <mum2:feature name="Microsoft-Win4-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win4-Printing-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="cb02f9f5c85f65ef54fb22b5abb82b99">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win4-Printing-Drivers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7f99075cbc0bcf1ad8d5ef65f79e79cb">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-CloudPrint-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="0872869ac14994dc13765571ed3d6f43">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-DafIpp-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6ca2d9ac2b768099bd3aa1634bd7b886">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-InternetPrinting-Client-Opt-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="440269cc28f062e87550232f430526f4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-PortMon-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e20d088edd41b7f900dac9d76a331e65">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-PrintToPDFServices-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="fdf3fa589be1403f533b6c659ef7a01e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-XPS-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="970957d454fc290512da8a57541c31b8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Printing-XPSServices-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="01bb7ddf02a414ec70cb0e26b072e309">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-ContainerOS-Printing-NoShell-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

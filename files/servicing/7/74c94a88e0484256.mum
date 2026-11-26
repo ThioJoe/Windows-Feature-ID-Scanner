@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package02" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package02" releaseType="Feature Pack">
+    <update name="9eaa8ef9c71bec97536af232dd9623a7">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment020" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="9B037D471944D6FFAD5FF576B9D12F94D66CD6B0CBD4D9C39CD528DB97E30715" restart="required">
+      <driver inf="termbus.inf" ranking="normal">
+        <assemblyIdentity name="dual_termbus.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="FA9A4F5A75A087BA08766369C76B4CECE7EA8BF6D4A267B675C843ED04272A82" restart="required">
+      <driver inf="termkbd.inf" ranking="normal">
+        <assemblyIdentity name="dual_termkbd.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="DB808A3BBA5BFDD94986959B7E8AD2F35815F64210F8EDC39B083628E2672947" restart="required">
+      <driver inf="termmou.inf" ranking="normal">
+        <assemblyIdentity name="dual_termmou.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

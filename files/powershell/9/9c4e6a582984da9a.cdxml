@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ================================================== -->
+<!--                                                    -->
+<!--   Copyright (C) Microsoft. All rights reserved.    -->
+<!--                                                    -->
+<!-- ================================================== -->
+
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="Root/Microsoft/Windows/Wdac/MSFT_OdbcPerfCounterTask" ClassVersion="1.0">
+    <Version>1.0</Version>
+    <DefaultNoun>OdbcPerfCounter</DefaultNoun>
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="Disable" DefaultCmdletParameterSet="InputObject" ConfirmImpact="Medium" />
+        <Method MethodName="DisableByInputObject" CmdletParameterSet="InputObject">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="InputObject">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletParameterMetadata Aliases="PerfCounter" IsMandatory="true" Position="0" ValueFromPipeline="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="DisableByPlatform" CmdletParameterSet="Platform">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Enable" DefaultCmdletParameterSet="InputObject" ConfirmImpact="Medium" />
+        <Method MethodName="EnableByInputObject" CmdletParameterSet="InputObject">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="InputObject">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletParameterMetadata Aliases="PerfCounter" IsMandatory="true" Position="0" ValueFromPipeline="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+        <Method MethodName="EnableByPlatform" CmdletParameterSet="Platform">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata>
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      <Cmdlet>
+        <CmdletMetadata Verb="Get" />
+        <Method MethodName="Get">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <Parameter ParameterName="Platform">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata Position="0" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>32-bit</AllowedValue>
+                  <AllowedValue>64-bit</AllowedValue>
+                  <AllowedValue>All</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CmdletOutput">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+</PowerShellMetadata>
+
+
+<!-- SIG # Begin signature block -->
+<!-- MIIl4gYJKoZIhvcNAQcCoIIl0zCCJc8CAQExDzANBglghkgBZQMEAgEFADB5Bgor -->
+<!-- BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG -->
+<!-- KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCk+URT6a+KMNh4 -->
+<!-- HxmdOT7Z18GbedToo+XsDrEXcuDtD6CCCvQwggUlMIIEDaADAgECAhMzAAAAF9Tf -->
+<!-- 2eOVC+fvAAAAAAAXMA0GCSqGSIb3DQEBCwUAMGwxCzAJBgNVBAYTAlVTMR4wHAYD -->
+<!-- VQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBX -->
+<!-- aW5kb3dzIFByb2R1Y3Rpb24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYwHhcNMjYw -->
+<!-- ODA2MTc0OTIwWhcNMjcwODA1MTc0OTIwWjBwMQswCQYDVQQGEwJVUzETMBEGA1UE -->
+<!-- CBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9z -->
+<!-- b2Z0IENvcnBvcmF0aW9uMRowGAYDVQQDExFNaWNyb3NvZnQgV2luZG93czCCASIw -->
+<!-- DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJloWIQ6mqSt0azlXI7waB3Wtr/P -->
+<!-- 4yHQ69OTpOZCfjq2MwLoaQ7j8X+sGHqUI9z65TkZFWjED7Q55BK3nBqWfWdVhXn2 -->
+<!-- T5CgyJR2LqZAkIvx6jd3QmDgRMCZXz9pnzWzd2JKwfB31pyquRTG5MmdjtOi7Rle -->
+<!-- M4or3MjKCTGBxi8vaJllVqlA0/xdxaWI64WW1GcjgUbZbUfZ02MjfvmXesd/nCor -->
+<!-- 7HR2p3cizqBugUoNKjuB/bhpFJfsx11ccMuXQ3fC4hv/m/uZfSGBZwL2LrLBG2Em -->
+<!-- 9ZQC9jNQChs4o8rFKkhGW+IGpsnIQeeFjim3qciGwtZ9VqhIis/kpRmlfSUCAwEA -->
+<!-- AaOCAbowggG2MB8GA1UdJQQYMBYGCisGAQQBgjcKAwYGCCsGAQUFBwMDMB0GA1Ud -->
+<!-- DgQWBBSc21gFA3vFE4OHDFEiT4XhlWatCjBFBgNVHREEPjA8pDowODEeMBwGA1UE -->
+<!-- CxMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMRYwFAYDVQQFEw0yMjk4NzkrNTA4OTc3 -->
+<!-- MB8GA1UdIwQYMBaAFOfKJCr66qKUtVoWB+Zqacw1k3C8MHcGA1UdHwRwMG4wbKBq -->
+<!-- oGiGZmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY3JsL01pY3Jvc29m -->
+<!-- dCUyMFdpbmRvd3MlMjBQcm9kdWN0aW9uJTIwUENBJTIwMjAyNiUyMFJTQTIwNDgt -->
+<!-- U0hBMjU2LmNybDCBhAYIKwYBBQUHAQEEeDB2MHQGCCsGAQUFBzAChmhodHRwOi8v -->
+<!-- d3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jvc29mdCUyMFdpbmRv -->
+<!-- d3MlMjBQcm9kdWN0aW9uJTIwUENBJTIwMjAyNiUyMFJTQTIwNDgtU0hBMjU2LmNy -->
+<!-- dDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQBh6ENoggkphAvYTCux -->
+<!-- OkBjJrYSftpof+YjJGBvtzuGa003rLJA4Gq+7M63933J4Uh1KurEEhs4TEtmK5dS -->
+<!-- XLY84TKgQuo46+I84ozHjbjYhZ0Jtkz2jPVcXDUhxgKeZ+cSiVRPZ8/bBJOXx+wm -->
+<!-- H76oXEBaGUgkEnXDCLOot1HCO/YLiHrMNJsGwZDnUCOITVPKYB8c22DNqcEVZ3cb -->
+<!-- Qw6mZ6ZF+KY1bHaXT8hAXHDgcjbNShiBUOjuNow+ti/LqzCo/GufhFved5F20Ylg -->
+<!-- iTxxXO0SCvkUjXAtCQmtxBLH8TLHpcM8nP4ksOYx5YMpA3fwCGnhL15Qd8SWNe6I -->
+<!-- aGiDMIIFxzCCA6+gAwIBAgITMwAAAB7pNSvshgFUFQAAAAAAHjANBgkqhkiG9w0B -->
+<!-- AQsFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNV -->
+<!-- BAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAG -->
+<!-- A1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTAw -->
+<!-- HhcNMjYwODA0MTkzOTE1WhcNMzEwODA0MTk0OTE1WjBsMQswCQYDVQQGEwJVUzEe -->
+<!-- MBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMT0wOwYDVQQDEzRNaWNyb3Nv -->
+<!-- ZnQgV2luZG93cyBQcm9kdWN0aW9uIFBDQSAyMDI2IFJTQTIwNDgtU0hBMjU2MIIB -->
+<!-- IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApMZe82jAXg4ate5zqU+Tj14y -->
+<!-- uORQ6z7lETN2fqGvoqQcclelvX7NSXJxtDc0QpW5DPMa9aUEVFS73cxbfJeReeFc -->
+<!-- fHH1kltXrzQVIEiAEISP67hKXR6/si4JNrb++FxDPcJg11OI37SSubSkZBD+S2c/ -->
+<!-- uQtajuykrizFWjL0oXfYqkCcYUn8SjdOp6TuojJzMgn0B711x5vywd/cVf4mm/3k -->
+<!-- 2IDPqfJWC75+5jGiL4+7eKZBjck52f+iiWP1ahwniuPd3s1kemrW13xJe5Qs6vrD -->
+<!-- T67866ETsr/zgtGVI5dOQCxQ04qn82LnSx1RWcsc7Rl/7Dqja+QCJGkHT9a+5QID -->
+<!-- AQABo4IBQzCCAT8wEAYJKwYBBAGCNxUBBAMCAQAwHQYDVR0OBBYEFOfKJCr66qKU -->
+<!-- tVoWB+Zqacw1k3C8MBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQE -->
+<!-- AwIBhjAPBgNVHRMBAf8EBTADAQH/MB8GA1UdIwQYMBaAFNX2VsuP6KJcYmjRPZSQ -->
+<!-- W9fOmhjEMFYGA1UdHwRPME0wS6BJoEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNv -->
+<!-- bS9wa2kvY3JsL3Byb2R1Y3RzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNybDBa -->
+<!-- BggrBgEFBQcBAQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6Ly93d3cubWljcm9zb2Z0 -->
+<!-- LmNvbS9wa2kvY2VydHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3J0MA0GCSqG -->
+<!-- SIb3DQEBCwUAA4ICAQBhPerrXYM3sv/O84BFY9gQykq2S3T3Wi110PtO80dBsZsF -->
+<!-- fkuuWCeY4oD6LbLJ4NxgVc6asZsBo/Xtsz76ZNK5ezeqN+ieuFaj1GaAA3G7Zvay -->
+<!-- OMrtHVwnyUbTZ1qdlG1qnOe4xRBji+BnFnZffB0OnqR4Fl6Ydkjx8VxbarZq8Dsf -->
+<!-- 9A8IaiNyr5+ZLnNyeDWiVLJNv7f+Q7+3009BzpckNy4Z4adeaKkYFM8pF6w2JCQs -->
+<!-- aq6kztfO3iXmPr5bvbFju/KnZOwFfSruARIWg5AhANYPaZjZMWSvQES/Ez/dQCzA -->
+<!-- 7xxWwAeCLkqw7BP/I+g7V2c0c8UYMROXE5iztChSTymTVeHPEcmr2GnFhll8mSbs -->
+<!-- hwdnNi/a4rzFF5gWcfFVh3o7q0WL7Qpfd0XgimYFBP/FkxrmA+akK9mC1/5SRCSN -->
+<!-- e0IZQqmtBIyA2yD3E4ijyUAvrRHl42mFRE8+MHOi4+GWcPt8CWkIJbPE59aUzrw8 -->
+<!-- gZTDMgEcx2WconLvTbpG+k1Dv6W6Dd/GoUMJo3x9WKexkiApSs/twhj9UguA3LGa -->
+<!-- 2pQBj2YrRk8I73j0f805QdWPwrOLRYmGggJXvY2+GLiNltRAAN7PYv5c4owHpkLN -->
+<!-- jYo/ZwIwMe20aQ3MDI5LSEjZxDgZPR3Uu72jThVgzlxOjrKeKiBdfmXTQYSNLjGC -->
+<!-- GkQwghpAAgEBMIGDMGwxCzAJBgNVBAYTAlVTMR4wHAYDVQQKExVNaWNyb3NvZnQg -->
+<!-- Q29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBXaW5kb3dzIFByb2R1Y3Rp -->
+<!-- b24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYCEzMAAAAX1N/Z45UL5+8AAAAAABcw -->
+<!-- DQYJYIZIAWUDBAIBBQCggfowGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwLwYJ -->
+<!-- KoZIhvcNAQkEMSIEIKenR5J3jdQcUdpmvig67OAZdU9F76KW3hywpKQV5/UtMFAG -->
+<!-- CisGAQQBgjcKAxwxQgxAMTJGREE0MDJERTBENEYxNzExQTJFQzY5Q0YyMTEzNkQw -->
+<!-- QTE3MjVFQTJDN0JDQTVFRTlEQUFGREMyMEM3QTQxRjBaBgorBgEEAYI3AgEMMUww -->
+<!-- SqAkgCIATQBpAGMAcgBvAHMAbwBmAHQAIABXAGkAbgBkAG8AdwBzoSKAIGh0dHA6 -->
+<!-- Ly93d3cubWljcm9zb2Z0LmNvbS93aW5kb3dzMA0GCSqGSIb3DQEBAQUABIIBAFf4 -->
+<!-- /vYPf5kX8cODS7ROzDljeP4dVZRQxR/kwfQY1h99V/7KmXBF1bE7ruyh0saAOlKC -->
+<!-- Ev0NKrHE7rLgW5XmRm9m9JyNE+YGsUo0AVgRfIpZUtUDCN9kVgZDXrzT5VoHl6Pc -->
+<!-- gmj9VQmCmmFaNRjZi4tLAYZcygDLfqYEetguXprV+GHvZ1ZoIQf7TgLUbmVQUYca -->
+<!-- 60S0a13z5k5LaojZRdhBpuipnQO1U24knd4yt4txfaINyH8ewlcWjPHi21GM4HLY -->
+<!-- Pq0MsOAGVoQPXOKtH8upHbGAvZtsYvYRZrqqQeP2K8HIsbo4n+8vdzo+Syp50CJ9 -->
+<!-- KblREgXpoGRJ6+AH1DyhgheUMIIXkAYKKwYBBAGCNwMDATGCF4Awghd8BgkqhkiG -->
+<!-- 9w0BBwKgghdtMIIXaQIBAzEPMA0GCWCGSAFlAwQCAQUAMIIBUgYLKoZIhvcNAQkQ -->
+<!-- AQSgggFBBIIBPTCCATkCAQEGCisGAQQBhFkKAwEwMTANBglghkgBZQMEAgEFAAQg -->
+<!-- uvySo9Yp5bohPzibGKmhCofNb/vHP1mHO/FgDMZqiRcCBmriCco4dhgTMjAyNjEx -->
+<!-- MDkwMjE1MDQuNTQyWjAEgAIB9KCB0aSBzjCByzELMAkGA1UEBhMCVVMxEzARBgNV -->
+<!-- BAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jv -->
+<!-- c29mdCBDb3Jwb3JhdGlvbjElMCMGA1UECxMcTWljcm9zb2Z0IEFtZXJpY2EgT3Bl -->
+<!-- cmF0aW9uczEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNOOjM3MDMtMDVFMC1EOTQ3 -->
+<!-- MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNloIIR6jCCByAw -->
+<!-- ggUIoAMCAQICEzMAAAIfOnBp5KIwLpUAAQAAAh8wDQYJKoZIhvcNAQELBQAwfDEL -->
+<!-- MAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1v -->
+<!-- bmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWlj -->
+<!-- cm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTAwHhcNMjYwMjE5MTkzOTUxWhcNMjcw -->
+<!-- NTE3MTkzOTUxWjCByzELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24x -->
+<!-- EDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlv -->
+<!-- bjElMCMGA1UECxMcTWljcm9zb2Z0IEFtZXJpY2EgT3BlcmF0aW9uczEnMCUGA1UE -->
+<!-- CxMeblNoaWVsZCBUU1MgRVNOOjM3MDMtMDVFMC1EOTQ3MSUwIwYDVQQDExxNaWNy -->
+<!-- b3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8A -->
+<!-- MIICCgKCAgEAyzvFxTnHxqgKoIs9PgJkJhZd3WdGkxuFBSZKqjXTB8tvA2oXggbO -->
+<!-- jjbn7pMnuceNglpM4ESMvZBNlVsBJ7WfGZIMq8pAtGyKrCA+/uhcYLrHk139VcL5 -->
+<!-- tQ/NdOFZnraASZSeLhm7siWVL1w8eeZ1YedMoC082duFpELJz6b0Wb9pD3N/X924 -->
+<!-- S8h1bZx7Gv1v/Ola37XfgHxb3gPqjfxGPlxo+XPwzzFwmBAm9Gq2G/dnQyVrcM6c -->
+<!-- ga6eIHx5YGNVBKXOJeABhC639ieMK8U801vkjPF4VdXTjj62Iw9PNCG2ai/AfiBd -->
+<!-- EQnZ9uvWF6xiukCB4qc5ymXAkvIzd9GAB50yVTeWc7Orf9mLKgRg6rrw2ne/d+BR -->
+<!-- U8M71HDt1aCMnfd11sLz/P0ghVSYdtVvKBkE6bRh8pcvhZeIXp1TFWRdb+qLDrYq -->
+<!-- 1/BhU4hIZ3/J0XToO8mWACdMcvQrQ3212k5/3H9y6tzfxgmChYwvuZlAhPgCYZsT -->
+<!-- LjHb0lBpiogBXYjwI1E6rFlgQWSZtHgsIHhiRZpkAPle//fASnBPoFC+zvXlkQ0M -->
+<!-- CngHL6Oq8Tb9mOIyqxwOmf8It2v3ylISwjWREvKhna6QwJu6ofuhY2McrQG5IijO -->
+<!-- rkzcv1Cz5cLZWGaACQw0D+3mAssMFWzU2x10QUkvjXHAtLEgeFu1Ou8CAwEAAaOC -->
+<!-- AUkwggFFMB0GA1UdDgQWBBTZO9rBg5R9K+Q8L3xkeV8CSPAe2zAfBgNVHSMEGDAW -->
+<!-- gBSfpxVdAF5iXYP05dJlpxtTNRnpcjBfBgNVHR8EWDBWMFSgUqBQhk5odHRwOi8v -->
+<!-- d3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NybC9NaWNyb3NvZnQlMjBUaW1lLVN0 -->
+<!-- YW1wJTIwUENBJTIwMjAxMCgxKS5jcmwwbAYIKwYBBQUHAQEEYDBeMFwGCCsGAQUF -->
+<!-- BzAChlBodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jv -->
+<!-- c29mdCUyMFRpbWUtU3RhbXAlMjBQQ0ElMjAyMDEwKDEpLmNydDAMBgNVHRMBAf8E -->
+<!-- AjAAMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMIMA4GA1UdDwEB/wQEAwIHgDANBgkq -->
+<!-- hkiG9w0BAQsFAAOCAgEAZW7tyKMp5z89CtYj23jZ7Ho9m9eZebHZdhQBQQRk/ZUX -->
+<!-- XNoDVfCwCLrD2Bx4VL0Q3LMeJWzDYVSjxruEwy2qjbfwiPkhbRrqnUS6VT9VxPXA -->
+<!-- i8iqyj6XCRSQqj6Vfnn6ALWAZiFEHMccE+1iEO4GoPPq5Cr6zJAqEaiktJir/Cdb -->
+<!-- Cn4vOfhtroWf9UbXklXWGTmTo/km+MM6J0wk4+xLYDDfwV9+VuXU83e8CXRnqWJF -->
+<!-- YvO9XUqwtk69WRcwEe0uOHawlmaSeqYSWm1TTrDcRSSoEspLoDhls0N9fEa9zEz4 -->
+<!-- NrNwZ7PqVD1YDIo3eG1Dh9gZRLCzDMDnKJU02aoNR2K3WNY8aVACPYqYwUESDS/z -->
+<!-- u9OWfv39i4zZiUKKAlSVV9uGnaWedfUrH2sxqKlxrfdW5qiqNHyNPSJeLFB4eIoe -->
+<!-- q6YkAwZci+75rwno8FcWHr2OKlcE2f6N4L5fkdJRcWEvX3iDODXhtPlrA2e4y3Iu -->
+<!-- TBXrjcKLEGN89ul4NaI9FPbvp3Efbk1PsQZifAbZQnYUNd0TTF+T/pK0WDwd1wqf -->
+<!-- SZul2jtffeat9gCGZtZswRiOsh5b4l2hAuU8xojtS17j7V2VNl/d6ECWzKHt7/Pu -->
+<!-- Qjyq0GpRlsmLodmt1dacG4/ltBRJhBT6bvEyPqmDtSCEFlEkbxY17YeTm9NoTDIw -->
+<!-- ggdxMIIFWaADAgECAhMzAAAAFcXna54Cm0mZAAAAAAAVMA0GCSqGSIb3DQEBCwUA -->
+<!-- MIGIMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH -->
+<!-- UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMTIwMAYDVQQD -->
+<!-- EylNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkgMjAxMDAeFw0y -->
+<!-- MTA5MzAxODIyMjVaFw0zMDA5MzAxODMyMjVaMHwxCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1pY3Jvc29mdCBUaW1lLVN0YW1w -->
+<!-- IFBDQSAyMDEwMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA5OGmTOe0 -->
+<!-- ciELeaLL1yR5vQ7VgtP97pwHB9KpbE51yMo1V/YBf2xK4OK9uT4XYDP/XE/HZveV -->
+<!-- U3Fa4n5KWv64NmeFRiMMtY0Tz3cywBAY6GB9alKDRLemjkZrBxTzxXb1hlDcwUTI -->
+<!-- cVxRMTegCjhuje3XD9gmU3w5YQJ6xKr9cmmvHaus9ja+NSZk2pg7uhp7M62AW36M -->
+<!-- EBydUv626GIl3GoPz130/o5Tz9bshVZN7928jaTjkY+yOSxRnOlwaQ3KNi1wjjHI -->
+<!-- NSi947SHJMPgyY9+tVSP3PoFVZhtaDuaRr3tpK56KTesy+uDRedGbsoy1cCGMFxP -->
+<!-- LOJiss254o2I5JasAUq7vnGpF1tnYN74kpEeHT39IM9zfUGaRnXNxF803RKJ1v2l -->
+<!-- IH1+/NmeRd+2ci/bfV+AutuqfjbsNkz2K26oElHovwUDo9Fzpk03dJQcNIIP8BDy -->
+<!-- t0cY7afomXw/TNuvXsLz1dhzPUNOwTM5TI4CvEJoLhDqhFFG4tG9ahhaYQFzymei -->
+<!-- XtcodgLiMxhy16cg8ML6EgrXY28MyTZki1ugpoMhXV8wdJGUlNi5UPkLiWHzNgY1 -->
+<!-- GIRH29wb0f2y1BzFa/ZcUlFdEtsluq9QBXpsxREdcu+N+VLEhReTwDwV2xo3xwgV -->
+<!-- GD94q0W29R6HXtqPnhZyacaue7e3PmriLq0CAwEAAaOCAd0wggHZMBIGCSsGAQQB -->
+<!-- gjcVAQQFAgMBAAEwIwYJKwYBBAGCNxUCBBYEFCqnUv5kxJq+gpE8RjUpzxD/LwTu -->
+<!-- MB0GA1UdDgQWBBSfpxVdAF5iXYP05dJlpxtTNRnpcjBcBgNVHSAEVTBTMFEGDCsG -->
+<!-- AQQBgjdMg30BATBBMD8GCCsGAQUFBwIBFjNodHRwOi8vd3d3Lm1pY3Jvc29mdC5j -->
+<!-- b20vcGtpb3BzL0RvY3MvUmVwb3NpdG9yeS5odG0wEwYDVR0lBAwwCgYIKwYBBQUH -->
+<!-- AwgwGQYJKwYBBAGCNxQCBAweCgBTAHUAYgBDAEEwCwYDVR0PBAQDAgGGMA8GA1Ud -->
+<!-- EwEB/wQFMAMBAf8wHwYDVR0jBBgwFoAU1fZWy4/oolxiaNE9lJBb186aGMQwVgYD -->
+<!-- VR0fBE8wTTBLoEmgR4ZFaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraS9jcmwv -->
+<!-- cHJvZHVjdHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3JsMFoGCCsGAQUFBwEB -->
+<!-- BE4wTDBKBggrBgEFBQcwAoY+aHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraS9j -->
+<!-- ZXJ0cy9NaWNSb29DZXJBdXRfMjAxMC0wNi0yMy5jcnQwDQYJKoZIhvcNAQELBQAD -->
+<!-- ggIBAJ1VffwqreEsH2cBMSRb4Z5yS/ypb+pcFLY+TkdkeLEGk5c9MTO1OdfCcTY/ -->
+<!-- 2mRsfNB1OW27DzHkwo/7bNGhlBgi7ulmZzpTTd2YurYeeNg2LpypglYAA7AFvono -->
+<!-- aeC6Ce5732pvvinLbtg/SHUB2RjebYIM9W0jVOR4U3UkV7ndn/OOPcbzaN9l9qRW -->
+<!-- qveVtihVJ9AkvUCgvxm2EhIRXT0n4ECWOKz3+SmJw7wXsFSFQrP8DJ6LGYnn8Atq -->
+<!-- gcKBGUIZUnWKNsIdw2FzLixre24/LAl4FOmRsqlb30mjdAy87JGA0j3mSj5mO0+7 -->
+<!-- hvoyGtmW9I/2kQH2zsZ0/fZMcm8Qq3UwxTSwethQ/gpY3UA8x1RtnWN0SCyxTkct -->
+<!-- wRQEcb9k+SS+c23Kjgm9swFXSVRk2XPXfx5bRAGOWhmRaw2fpCjcZxkoJLo4S5pu -->
+<!-- +yFUa2pFEUep8beuyOiJXk+d0tBMdrVXVAmxaQFEfnyhYWxz/gq77EFmPWn9y8FB -->
+<!-- SX5+k77L+DvktxW/tM4+pTFRhLy/AsGConsXHRWJjXD+57XQKBqJC4822rpM+Zv/ -->
+<!-- Cuk0+CQ1ZyvgDbjmjJnW4SLq8CdCPSWU5nR0W2rRnj7tfqAxM328y+l7vzhwRNGQ -->
+<!-- 8cirOoo6CGJ/2XBjU02N7oJtpQUQwXEGahC0HVUzWLOhcGbyoYIDTTCCAjUCAQEw -->
+<!-- gfmhgdGkgc4wgcsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAw -->
+<!-- DgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24x -->
+<!-- JTAjBgNVBAsTHE1pY3Jvc29mdCBBbWVyaWNhIE9wZXJhdGlvbnMxJzAlBgNVBAsT -->
+<!-- Hm5TaGllbGQgVFNTIEVTTjozNzAzLTA1RTAtRDk0NzElMCMGA1UEAxMcTWljcm9z -->
+<!-- b2Z0IFRpbWUtU3RhbXAgU2VydmljZaIjCgEBMAcGBSsOAwIaAxUASyDINT+7Dbgl -->
+<!-- 6Zmx9iF09rV3hBCggYMwgYCkfjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2Fz -->
+<!-- aGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENv -->
+<!-- cnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EgMjAx -->
+<!-- MDANBgkqhkiG9w0BAQsFAAIFAO6bBt8wIhgPMjAyNjExMDgxNDM0MDdaGA8yMDI2 -->
+<!-- MTEwOTE0MzQwN1owdDA6BgorBgEEAYRZCgQBMSwwKjAKAgUA7psG3wIBADAHAgEA -->
+<!-- AgJFJzAHAgEAAgISgDAKAgUA7pxYXwIBADA2BgorBgEEAYRZCgQCMSgwJjAMBgor -->
+<!-- BgEEAYRZCgMCoAowCAIBAAIDB6EgoQowCAIBAAIDAYagMA0GCSqGSIb3DQEBCwUA -->
+<!-- A4IBAQCRmoJusz6jybhZoqpgAgY5Cizw/xwpB/vkzOUFq5O8znw9+3t21p3Ou0Rh -->
+<!-- VXGBgDfP9L+9UiERPi+f+V1Zq0OPNfIBt2Gmuikmj7IaGaTyecfjvSdGd6AnwChR -->
+<!-- 6Em8eqeLikcn++WHzgblJP3w9SJY5Apn74kg14XZLYvpM3AJ1FyMvnx9f1foBUU4 -->
+<!-- eNS1Lk3mZM3kcFF2WAj6W71VJduuPH/dC3CzJFQPkk1qGgFjzkkbzY19kL4AVu+D -->
+<!-- Msay7JOvOTiNZdtQ+JPRLxQiOswDJXOpB74ZeFIgcIFLtvlP8oEFe3BEGyCPqQa8 -->
+<!-- hx/JpJ1RjHWpKDfbiq4Z+YsD9myhMYIEDTCCBAkCAQEwgZMwfDELMAkGA1UEBhMC -->
+<!-- VVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNV -->
+<!-- BAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWljcm9zb2Z0IFRp -->
+<!-- bWUtU3RhbXAgUENBIDIwMTACEzMAAAIfOnBp5KIwLpUAAQAAAh8wDQYJYIZIAWUD -->
+<!-- BAIBBQCgggFKMBoGCSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAvBgkqhkiG9w0B -->
+<!-- CQQxIgQgtuXHpt991DQ6DEIufHdIP7BZrpDGOyFm5U6z9rga/+owgfoGCyqGSIb3 -->
+<!-- DQEJEAIvMYHqMIHnMIHkMIG9BCCwJArfVpArDLVEZBbuk2ND91F3UZwomLj2YXt8 -->
+<!-- pC38FDCBmDCBgKR+MHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9u -->
+<!-- MRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRp -->
+<!-- b24xJjAkBgNVBAMTHU1pY3Jvc29mdCBUaW1lLVN0YW1wIFBDQSAyMDEwAhMzAAAC -->
+<!-- HzpwaeSiMC6VAAEAAAIfMCIEIFlykcNsXuKMzEEug2uN+Crj9PixIBYvhU51kizw -->
+<!-- LOdxMA0GCSqGSIb3DQEBCwUABIICABBzCDmKyO5b4h5xItEX8w5SfEWXTkK+NbPO -->
+<!-- 4SIiU5mvT3W6kutxXejAc/jpaJTu8F8t5wr5eFqxuFTZHyIWH0u76BB+QMMU15JX -->
+<!-- 0GvhSO48VEU4py1nfD5mC2oxuAxEEyqZY9W00kTU5v9hiwnrRNjjl5tA4x/ofZ46 -->
+<!-- LH8jfpj2MtlTJfs4bClsZYINHNw7rkTqbxijQmjRKTOKs+QafoTUYFbLWbUOwTR7 -->
+<!-- K6QSjtTj+0GiAE43pVa0KNvh6U5vEphvgM0NQnmq5IRIhZvZ06fNS7/F66VDaAUx -->
+<!-- 1c6sn+rK/v6XYMnU2DolfDehIaewzSvXSkGGmTnxyRVATOUXDyEZSKy+OiCpRV58 -->
+<!-- aFhS23P2EUAeycsODrYztR1gYIyetSD1l15uFPTOcNY0RHvzwSY4u1TggSuh2rJl -->
+<!-- FKPPNJwJviuW72Vi40AVBF7tkoVvUiiHq0UMSNjQJp6EJ6VhEQfqD6oeicphCF34 -->
+<!-- VVJCiq5AWQSf2Ev6LHfDkivlvh5AMev244FDxlOOYtSaZOSuSz0zcAncS2Vbx7ra -->
+<!-- ow5QIhez3hS/DayL4IL0PsknGL2gqq4wBosvozHI98zAtvS5Olyp19DL2oS0T7pE -->
+<!-- aWIZWd/YqdEzKO2d3UgNoA+Vsd2sYPSi0eJr7Z9IvPuc/i5Dl9Hded+PuOtYQHmR -->
+<!-- jp8RIkUC -->
+<!-- SIG # End signature block -->

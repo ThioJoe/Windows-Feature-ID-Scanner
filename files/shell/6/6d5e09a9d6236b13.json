@@ -1,0 +1,130 @@
+{
+  "GETSTARTED.assistedSetupNthCopilot": {
+    "mode": "LinearFlow",
+    "start": "LandingPageAI",
+    "reconnectHandlerId": "NetworkError",
+    "LandingPageAI": {
+      "nodeId": "LandingPageAI",
+      "url": "https://sdx.microsoft.com/getstarted/landingpageai/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/landingpageai/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "backwardButtonEnabled": false,
+      "defaultId": "ClickToDo",
+      "cancelId": "LandingPage",
+      "measureId": 50780095
+    },
+    "ClickToDo": {
+      "nodeId": "ClickToDo",
+      "url": "https://sdx.microsoft.com/getstarted/clicktodo/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/clicktodo/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "PopularAppsAI",
+      "measureId": 63365476
+    },
+    "PopularAppsAI": {
+      "nodeId": "PopularAppsAI",
+      "url": "https://sdx.microsoft.com/getstarted/popularapps/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/popularapps/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "Cocreator",
+      "measureId": 63365472
+    },
+    "Cocreator": {
+      "nodeId": "Cocreator",
+      "url": "https://sdx.microsoft.com/getstarted/cocreator/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/cocreator/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "StudioEffects",
+      "measureId": 50780123
+    },
+    "StudioEffects": {
+      "nodeId": "StudioEffects",
+      "url": "https://sdx.microsoft.com/getstarted/studioeffects/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/studioeffects/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "LiveTranslations",
+      "measureId": 50780145
+    },
+    "LiveTranslations": {
+      "nodeId": "LiveTranslations",
+      "url": "https://sdx.microsoft.com/getstarted/livetranslate/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/livetranslate/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "OutroAI",
+      "measureId": 50780176
+    },
+    "OutroAI": {
+      "nodeId": "OutroAI",
+      "url": "https://sdx.microsoft.com/getstarted/outroai/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/outroai/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "forwardButtonEnabled": false,
+      "cancelId": "OutroPersonalize",
+      "measureId": 50780250
+    },
+    "LandingPage": {
+      "nodeId": "LandingPage",
+      "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+      "internetRequired": true,
+      "backwardButtonEnabled": false,
+      "defaultId": "PopularApps",
+      "measureId": 40424633
+    },
+    "PopularApps": {
+      "nodeId": "PopularApps",
+      "url": "https://sdx.microsoft.com/getstarted/popularapps/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/popularapps/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "Pinning",
+      "measureId": 63365472
+    },
+    "Pinning": {
+      "nodeId": "Pinning",
+      "url": "https://sdx.microsoft.com/getstarted/pinning/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/pinning/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "Personalize",
+      "measureId": 63365473
+    },
+    "Personalize": {
+      "nodeId": "Personalize",
+      "url": "https://sdx.microsoft.com/getstarted/personalize/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/personalize/index.html",
+      "internetRequired": true,
+      "defaultId": "WindowsUpdates",
+      "measureId": 63365475
+    },
+    "WindowsUpdates": {
+      "nodeId": "WindowsUpdates",
+      "url": "https://sdx.microsoft.com/getstarted/windowsupdates/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/windowsupdates/index.html",
+      "internetRequired": true,
+      "defaultId": "OutroPersonalize",
+      "measureId": 63365474
+    },
+    "OutroPersonalize": {
+      "nodeId": "OutroPersonalize",
+      "url": "https://sdx.microsoft.com/getstarted/outropersonalize/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/outropersonalize/index.html",
+      "internetRequired": true,
+      "forwardButtonEnabled": false,
+      "measureId": 50780284
+    },
+    "NetworkError": {
+      "nodeId": "NetworkError",
+      "localXaml": "NetworkError",
+      "excludeFromBackstack": true,
+      "measureId": 40426665
+    }
+  }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package041120" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package041120" releaseType="Feature Pack">
+    <update name="8504884CB3D454DF1B3F94E8D638B87DF60299FCF8512E6AFDE55ED18CE1D6F8">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment0411200" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="1a895b7734ab575f9f5bef83fa4bfdbd">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04112030" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="4773B7546EA2AF75BF33DFFAE0D78FE1C22145DEC976E62FDA4407D08744B1A5" restart="required">
+      <driver inf="usbcciddriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbcciddriver.inf" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+        <mum:driverExtended xmlns:mum="urn:schemas-microsoft-com:asm.v3" deviceInstallRequired="true" />
+      </driver>
+    </update>
+    <update name="25B974B46F2C50F9F3AB6792F2DACCC81592C0AFEE5E80DB9A587F984D7D6CF6" restart="required">
+      <driver inf="usbser.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbser.inf" version="10.0.26100.9278" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="AF38AD18E74D50549AFAB3124B29E117E19EB1B8B1BD3D18FEB0969AB95F2583">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Graphics-Required-Core-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="CEBD55F620EB4C561B7B65F5E9447ABD84968406B58E03F080A67E671D20C428">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04112031" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

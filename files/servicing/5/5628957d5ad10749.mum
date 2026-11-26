@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Win3-DWM-Package" version="10.0.26100.8521" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Win3-DWM-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Win3-DWM-Package" version="10.0.26100.8521" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="cc7f8bcb82879623464dfd559619dc62">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="CoreMessaging-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="25d858128bd4f4feec4a7321d35a1c82">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Kernel-AppCore-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="48ba4f8a8c154fc2dc73d9cf59a855ec">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-UserSessionManagement-Package" version="10.0.26100.6725" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="26b9e5d0b888b33e62fdf3c43c193cd5">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-ClientCore-DWM-Package" version="10.0.26100.8521" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,173 @@
+.BPT-DMBP-StateIcon {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: TRANSPARENT; /*[{plugin-editor-scrollbar-marker-breakpoint-color}]*/
+    background: TRANSPARENT; /*[{plugin-editor-scrollbar-marker-breakpoint-color}]*/
+    -ms-grid-column: 3;
+    margin: 2px 0 0 2px;
+    border-radius: 10px;
+    box-sizing: content-box;
+}
+
+.BPT-DMBP-UnboundIcon {
+    background-image: url(../images/i_warning.png); /*[url({f12-dmbp-unbound-icon})]*/
+    -ms-grid-column: 3;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position-y: -10px;
+    height: 10px;
+    position: relative;
+    top: 6px;
+    left: 8px;
+}
+
+.BPT-DMBP-Selected {
+    background-color: rgba(51, 153, 255, 0.18); /*[{plugin-font-editor-selected-background-color rgba(0.18)}]*/
+}
+
+.BPT-DMBP-EnablementToggle {
+    -ms-grid-column: 2;
+    width: 13px;
+    height: 22px;
+    margin: -2px 0 0;
+}
+
+.BPT-DMBP-ListItem .BPT-Style-Selector-Container {
+    -ms-grid-column: 4;
+}
+
+.BPT-DMBP-ListItem[data-state="enabled"] .BPT-DMBP-UnboundIcon, .BPT-DMBP-ListItem[data-state="disabled"] .BPT-DMBP-UnboundIcon {
+    display: none;
+}
+
+.BPT-DMBP-ListItem[data-state="unbound"] .BPT-DMBP-StateIcon {
+    background: transparent;
+}
+
+.BPT-DMBP-ListItem[data-state="disabled"] .BPT-DMBP-StateIcon {
+    background: transparent;
+}
+
+.BPT-DMBP-ListItem .BPT-DMBP-StateIcon:hover {
+    cursor: pointer;
+}
+
+.BPT-DMBP-ListItem > div > *:not(.BPT-Toolbar) {
+    font-family: "Segoe UI", Arial, sans-serif; /*[{plugin-font-family} , Arial, sans-serif]*/
+    font-size: 12px; /*[{plugin-font-size}]*/
+    /* Changes to line-height here also require changes in styleView.css (see references to line-height there). */
+    line-height: 1.3em;
+    padding: 0px;
+}
+
+.BPT-DMBP-ListItem .BPT-ExpandingList-Collapsed-Section {
+    margin-bottom: 10px;
+}
+
+/* Debugger needs special treatment */
+#DomBreakpointsWindow > #dmbpList {
+    padding: 8px;
+}
+
+#DomBreakpointsWindow {
+    overflow-y: auto;
+}
+
+.BPT-DMBP-List .BPT-ExpandingList-Header {
+    -ms-grid-columns: 17px 16px 24px 1fr 20px 20px;
+}
+
+.BPT-ExpandingList-Item .BPT-ActionIcon, #dmbpView .BPT-ActionIcon, #dmbpToolbar .BPT-ActionIcon {
+    background-size: 16px 48px; /* tri-state background sizing */
+    width: 16px;
+    height: 16px;
+    margin: 2px 0 2px 9px;
+}
+
+.BPT-ExpandingList-Item .BPT-ActionIcon {
+    margin: 2px 0 !important;
+}
+
+.BPT-ActionIcon {
+    /* For screen readers */
+    text-indent: -100000px;
+}
+
+.BPT-DMBP-ListItem .BPT-ActionIcon:hover, #dmbpToolbar > div:hover > .BPT-ActionIcon {
+    background-position-y: 32px;
+}
+
+#dmbpToolbar > div[data-enabled="false"] > .BPT-ActionIcon {
+    background-position-y: 64px;
+}
+
+.BPT-DMBP-ListItem:not([data-state="unbound"]) .BPT-Icon-DMBP-Rebind {
+    display: none;
+}
+
+.BPT-DMBP-ListItem .BPT-ActionIcon {
+    opacity: 0;
+}
+
+.BPT-DMBP-ListItem:hover .BPT-ActionIcon {
+    opacity: 1;
+}
+
+.BPT-DMBP-ListItem .BPT-Icon-DMBP-Rebind {
+    -ms-grid-column: 5;
+}
+
+.BPT-DMBP-ListItem .BPT-Icon-DMBP-Delete {
+    -ms-grid-column: 6;
+}
+
+.BPT-DMBP-ListItem .BPT-Icon-DMBP-Rebind .BPT-ActionIcon {
+    background-image: url('../images/refreshState.png'); /*[url({f12-dmbp-image-rebind-breakpoint})]*/
+}
+
+.BPT-DMBP-ListItem .BPT-Icon-DMBP-Delete .BPT-ActionIcon {
+    background-image: url('../images/i_delete.png'); /*[url({f12-dmbp-image-delete-breakpoint})]*/
+}
+
+.BPT-Dmbp-Selector:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#dmbpToolbar {
+    display: -ms-grid;
+    -ms-grid-columns: 1fr 26px 26px 26px;
+    height: 20px;
+    margin: 3px 20px;
+}
+
+#dmbpToolbar > div {
+    height: 20px;
+}
+
+#dmbpToolbar .BPT-Icon-DMBP-RebindAll {
+    -ms-grid-column: 2;
+}
+
+.BPT-Icon-DMBP-RebindAll .BPT-ActionIcon {
+    background-image: url('../images/refreshState.png'); /*[url({f12-dmbp-image-rebind-all})]*/
+}
+
+#dmbpToolbar .BPT-Icon-DMBP-ToggleEnableAll {
+    -ms-grid-column: 3;
+}
+
+.BPT-Icon-DMBP-ToggleEnableAll .BPT-ActionIcon {
+    background-image: url('images/domSelectAllBreakpoints.png'); /*[url({f12-dmbp-image-toggle-enable-all})]*/
+}
+
+#dmbpToolbar .BPT-Icon-DMBP-DeleteAll {
+    -ms-grid-column: 4;
+}
+
+.BPT-Icon-DMBP-DeleteAll .BPT-ActionIcon {
+    background-image: url('images/domSeleteAllBreakpoints.png'); /*[url({f12-dmbp-image-delete-all})]*/
+}

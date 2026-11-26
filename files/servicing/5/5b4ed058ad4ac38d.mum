@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-AddOn-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="IIS-WebServer-AddOn-Package" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-US-OC-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-OC-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-ServerCore-OC-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-Core-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-NanoServer-IIS-Internal-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent disposition="detect" integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent disposition="detect" integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Microsoft-Windows-IIS-WebServer-AddOn-ServerCommon-Package">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-AddOn-ServerCommon-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update description="Serve .htm, .html, and image files from a Web site" displayName="Static Content" name="IIS-StaticContent">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-CommonHttpFeatures" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allows you to specify a default file to be loaded when users do not specify a file in a request URL" displayName="Default Document" name="IIS-DefaultDocument">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-CommonHttpFeatures" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allow clients to see the contents of a directory on your Web server" displayName="Directory Browsing" name="IIS-DirectoryBrowsing">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-CommonHttpFeatures" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Publish and manage files on a Web server by using the HTTP protocol." displayName="WebDAV Publishing" name="IIS-WebDAV">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-CommonHttpFeatures" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-StaticContent" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-RequestFiltering" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-WebDAV-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="IIS 10.0 and ASP.NET 4.8 support writing server applications that communicate over the WebSocket Protocol." displayName="WebSocket Protocol" name="IIS-WebSockets">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Application Initialization perform expensive web application initialization tasks before serving web pages." displayName="Application Initialization" name="IIS-ApplicationInit">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allow ISAPI filters to modify Web server behavior" displayName="ISAPI Filters" name="IIS-ISAPIFilter">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allow ISAPI extensions to handle client requests" displayName="ISAPI Extensions" name="IIS-ISAPIExtensions">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable your Web server to host ASP.NET v4.8 applications" displayName="ASP.NET 4.8" name="IIS-ASPNET45">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-DefaultDocument" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-ISAPIFilter" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-ISAPIExtensions" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-NetFxExtensibility45" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ASPNET45-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable your Web server to host Classic ASP applications" displayName="ASP" name="IIS-ASP">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-RequestFiltering" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-ISAPIExtensions" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ASP-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable support for CGI executables" displayName="CGI" name="IIS-CGI">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Serve .stm, .shtm, and .shtml files from a Web site" displayName="Server-Side Includes" name="IIS-ServerSideIncludes">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ApplicationDevelopment" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable support for custom logging for Web servers, sites, and applications" displayName="Custom Logging" name="IIS-CustomLogging">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-HealthAndDiagnostics" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Require a valid Windows user name and password for connection." displayName="Basic Authentication" name="IIS-BasicAuthentication">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-Security" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Compress static content before returning it to a client" displayName="Static Content Compression" name="IIS-HttpCompressionStatic">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-Performance" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install Web server Management Console which supports management of local and remote Web servers." displayName="IIS Management Console" name="IIS-ManagementConsole">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-WebServerManagementTools" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ManagementConsole-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ClientShortCuts-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Allow the web server to be managed remotely from another computer via the Web server Management Console" displayName="IIS Management Service" name="IIS-ManagementService">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-WebServerManagementTools" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="NetFx4Extended-ASPNET45" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ManagementService-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install IIS 6.0 WMI scripting interfaces" displayName="IIS 6 WMI Compatibility" name="IIS-WMICompatibility">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-IIS6ManagementCompatibility" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-Metabase" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-WMICompatibility-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Install IIS 6.0 configuration scripts" displayName="IIS 6 Scripting Tools" name="IIS-LegacyScripts">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-IIS6ManagementCompatibility" />
+        </detectUpdate>
+        <detectUpdate>
+          <parent name="IIS-Metabase" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-WMICompatibility" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-LegacyScripts-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable your server to transfer files by using the FTP protocol." displayName="FTP Server" name="IIS-FTPServer">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-WebServerRole" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+    </update>
+    <update description="Enable FTP publishing on a Web server." displayName="FTP Service" name="IIS-FTPSvc">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="IIS-FTPServer" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-FTPSvc-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Customize FTP publishing by writing your own software extensions." displayName="FTP Extensibility" name="IIS-FTPExtensibility">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="IIS-FTPServer" />
+        </detectUpdate>
+        <detectUpdate>
+          <update name="IIS-FTPSvc" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-FTPExtensibility-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellProvider-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-BPA-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibrariesFeature-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

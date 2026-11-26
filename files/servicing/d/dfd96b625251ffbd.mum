@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0418" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0418" releaseType="Feature Pack">
+    <update name="1A455784C4BE7085B111FD99ECD6CF12034A0FB9A515E7F6352513A9080418B9">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04180" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="8CE5368CDDD592D5EE28D95E8EE3B3694D3927253A2C71AC211760856488B7B8" restart="required">
+      <driver inf="sensorsalsdriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorsalsdriver.inf" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5EF0B2FBB079C3DDF0DCB112FB9E901B1E92EE8D9A62004ECB36B844CF87C144" restart="required">
+      <driver inf="sensorsservicedriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorsservicedriver.inf" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6C316746440D63A4D5781DE29CAE3226D966F50F2DDF2D173A661B5C6DEFBA24" restart="required">
+      <driver inf="sensorshidclassdriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorshidclassdriver.inf" version="10.0.28000.3382" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0DF7F38492D9EF97F074D6BB8C16E06CA2F320D65081B054B26DCE3FAD013167" restart="required">
+      <driver inf="c_sensor.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_c_sensor.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

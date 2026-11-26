@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Container-Professional-Payload-Wrapper-Package" version="10.0.28000.2630" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Container-Professional-Payload-Wrapper-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-Container-Professional-Payload-Wrapper-Package" version="10.0.28000.2630" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="e7af915f591a9803fbb8a49cc9217bd7">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-Guest-Package" version="10.0.28000.2630" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="1afc863b5afc508ed868b9b90bc2ea3a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Containers-Client-Manager-Guest-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

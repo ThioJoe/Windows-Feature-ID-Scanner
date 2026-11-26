@@ -1,0 +1,434 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    line-height: 1.1em;
+    background-color: TRANSPARENT; /*[{plugin-font-editor-background-color}]*/
+    overflow: hidden;
+}
+
+#root {
+    display: -ms-grid;
+    -ms-grid-rows: auto 1fr;
+    -ms-grid-columns: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+.splitterEW {
+    cursor: ew-resize;
+}
+
+.windowtoolbar {
+    text-align: right;
+    height: 20px;
+    margin: 3px 20px 3px 20px;
+    overflow: hidden;
+}
+
+#storageContent {
+    -ms-grid-columns: 1fr 3px auto;
+    -ms-grid-row: 2;
+    -ms-grid-rows: 100%;
+    display: -ms-grid;
+    width: 100%;
+    height: 100%;
+}
+
+#leftBlock {
+    position: relative;
+    -ms-grid-column: 1;
+    display: -ms-grid;
+    -ms-grid-rows: 24px 1fr;
+    -ms-grid-columns: 100%;
+}
+
+#tabStripContainer {
+    -ms-grid-row: 1;
+    overflow: hidden;
+    height: 24px;
+    display: -ms-grid;
+    -ms-grid-columns: auto 1fr auto;
+    background: TRANSPARENT; /*[{f12-toolbar-background-color}]*/
+}
+
+.storageContentContainer {
+    -ms-grid-row: 2;
+    height: 100%;
+    width: 100%;
+}
+
+    .storageContentContainer > #resourcesView {
+        -ms-grid-column: 1;
+        -ms-grid-row: 1;
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+        .storageContentContainer > #resourcesView > .resourceHandler {
+            height: 100%;
+            width: 100%;
+        }
+
+
+
+
+.resourcePickerMenu {
+    z-index: -1; /* Start with the file picker behind other UI components. This gets moved forward in script. */
+    position: relative;
+    left: 0;
+    top: 22px;
+    height: 0;
+    width: 0;
+    border: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-border-color}]*/
+    box-shadow: 2px 2px 2px TRANSPARENT; /*[2px 2px 2px {plugin-textbox-border-color rgba(0.5)}]*/
+    background-color: TRANSPARENT; /*[{plugin-debugger-filepicker-background-color}]*/
+    overflow: visible;
+}
+
+    .resourcePickerMenu .fileListContainer {
+        position: absolute;
+        left: 0;
+        top: 10px;
+    }
+
+    .resourcePickerMenu.pinnedResourcePicker {
+        -ms-grid-row: 2;
+        height: 100% !important;
+        top: 0;
+        border-top-width: 0px;
+        -ms-grid-columns: 1fr;
+    }
+
+    .resourcePickerMenu.pinnedResourcePicker .fileListContainer {
+        height: calc(100% - 31px) !important;
+    }
+
+    .resourcePickerMenu .splitter {
+        background-color: TRANSPARENT; /*[{plugin-perftools-grid-column-sizer}]*/
+        width: 3px;
+        height: calc(100% + 1px);
+        cursor: ew-resize;
+    }
+
+    .resourcePickerMenu .resourcePickerItem {
+        float: left;
+        width: 14px;
+        height: 14px;
+        background-repeat: no-repeat;
+        background-size: 14px 14px;
+        background-color: transparent;
+    }
+
+    .resourcePickerMenu .localStorage, .resourcePickerMenu .sessionStorage, .resourcePickerMenu .storageChild {
+        background-image: url(""); /*[url({f12-storage-image-local-storage-node})]*/
+    }
+
+    .resourcePickerMenu .indexedDB, .resourcePickerMenu .cache {
+        background-image: url(""); /*[url({f12-storage-image-cache-node})]*/
+    }
+
+    .resourcePickerMenu .cookies {
+        background-image: url(""); /*[url({f12-storage-image-cookies-node})]*/
+    }
+
+    .resourcePickerMenu .fileName {
+        float: right;
+    }
+
+    .resourcePickerMenu .fileItem {
+        cursor: default;
+        white-space: pre;
+    }
+
+    .resourcePickerMenu .iconShell_16x16 {
+        float: right;
+        margin-top: -1px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+        .resourcePickerMenu .iconShell_16x16 .buttonIcon.icon_16x16 {
+            margin-top: 0px !important;
+            width: 19px;
+            height: 19px;
+        }
+
+        .resourcePickerMenu .listview-grid-row:hover .iconShell_16x16:hover > .buttonIcon {
+            background-position: 0px -18px;
+        }
+
+    .resourcePickerMenu .listview-grid-row:hover .libraryIcon > .buttonIcon,
+
+    .resourcePickerMenu .listview-grid-row .diffIcon > .buttonIcon,
+
+    .resourcePickerMenu .listview-grid-row-selected,
+    .resourcePickerMenu .listview-grid-row:hover {
+        color: TRANSPARENT; /*[{plugin-treeview-content-mouseover-color}]*/
+        background-color: TRANSPARENT; /*[{plugin-treeview-content-mouseover-background-color}]*/
+    }
+
+    .resourcePickerMenu .openedDocument .fileItem {
+        font-weight: bold;
+    }
+
+    .resourcePickerMenu .flatView .listview-grid-groupline {
+        display: none !important;
+    }
+
+    .resourcePickerMenu .refresh {
+        overflow: hidden;
+    }
+
+        .resourcePickerMenu .refresh .listview {
+            overflow: visible;
+        }
+
+    .resourcePickerMenu .flatView .listview-grid-cell {
+        margin-left: 0;
+    }
+
+#resourcePickerButton {
+    border: 1px solid transparent;
+    margin-left: 5px;
+    margin-right: 5px;
+    overflow: hidden;
+    width: 32px;
+    height: 22px;
+    background: url("") no-repeat center center; /*[url({f12-storage-image-file-picker}) no-repeat center center]*/
+    background-position: 0px 0px;
+    background-size: 27px 54px;
+    -ms-grid-column: 1;
+}
+
+    #resourcePickerButton:hover {
+        background-position-y: -18px;
+        border: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-hover-color}]*/
+        background-color: TRANSPARENT; /*[{f12-toolbar-button-hover-color}]*/
+    }
+
+    #resourcePickerButton.activated {
+        background-color: TRANSPARENT; /*[{f12-toolbar-button-selected-color}]*/
+        background-position-y: -18px;
+        height: 23px;
+        border-top: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-border-color}]*/
+        border-left: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-border-color}]*/
+        border-right: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-border-color}]*/
+        border-bottom: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-color}]*/
+        z-index: 1001;
+    }
+
+
+.resourcePickerMenu .listview-icon-tree-collapsed {
+    background-image: url(""); /*[url({f12-storage-images-item-collapsed})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .listview-icon-tree-expanded {
+    background-image: url(""); /*[url({f12-storage-images-item-expanded})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .flatView .listview-icon-tree-expanded,
+.resourcePickerMenu .flatView .listview-icon-tree-collapsed {
+    background-image: none;
+}
+
+.resourcePickerMenu .listview-grid-separator {
+    display: none;
+}
+
+.resourcePickerMenu .listview-grid-row-selected:focus {
+    color: TRANSPARENT; /*[{plugin-treeview-content-selected-color}]*/
+    background-color: TRANSPARENT; /*[{plugin-treeview-content-selected-background-color}]*/
+}
+
+.resourcePickerMenu .listview-grid-row {
+    -ms-user-select: none;
+}
+
+.plugin-contextmenu .menuitem .shortcut {
+    min-width: 20px;
+}
+
+.windowtoolbar > .toggledOn:not(.toolbarButtonStateDisabled) {
+    background-color: TRANSPARENT; /*[{f12-toolbar-button-selected-color}]*/
+    border-color: TRANSPARENT; /*[{f12-toolbar-button-selected-border-color}]*/
+}
+
+#storageAriaAlertZone {
+    font-size: 0px;
+    z-index: -1000;
+}
+
+#resizePane {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: transparent; /* Should act like a transparent pane */
+    z-index: -1000;
+}
+
+    #resizePane.showResizePane {
+        z-index: 1100;
+    }
+
+#tabControl {
+    -ms-grid-column: 2;
+    padding-right: 4px;
+}
+
+#documentToolbarSplitter {
+    -ms-grid-column: 3;
+    margin-top: 2px;
+    height: 18px;
+    width: 1px;
+    background-color: TRANSPARENT; /*[{plugin-debugger-document-toolbar-seperator-color}]*/
+}
+
+#documentToolbar {
+    -ms-grid-column: 4;
+}
+
+    #documentToolbar .BPT-Toolbar {
+        border-bottom: 0;
+        padding: 0;
+    }
+
+        #documentToolbar .BPT-Toolbar .BPT-ToolbarContents {
+            margin-top: 0;
+            padding-left: 8px;
+            padding-right: 5px;
+            margin-right: 6px;
+        }
+
+            #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons {
+                margin-right: 0;
+            }
+
+                /* ResourceGrid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.refreshStorageButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-button-image-resource-grid-refresh})]*/
+                }
+
+                /* Web storage grid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.simulateCapButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-button-image-resource-grid-simulateCap})]*/
+                }
+
+                /* Cookies grid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.clearAllCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-clear-cookies})]*/
+                }
+
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.clearAllSessionCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-clear-session-cookies})]*/
+                }
+
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.copyCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-copy-to-clipboard})]*/
+                }
+
+                /* ResourceGrid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.refreshStorageButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-button-image-resource-grid-refresh})]*/
+                }
+
+                /* Web storage grid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.simulateCapButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-button-image-resource-grid-simulateCap})]*/
+                }
+
+                /* Cookies grid toolbar buttons */
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.clearAllCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-clear-cookies})]*/
+                }
+
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.clearAllSessionCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-clear-session-cookies})]*/
+                }
+
+                #documentToolbar .BPT-Toolbar .BPT-ToolbarContents .buttons .BPT-button.copyCookiesButton .resourceButton {
+                    background-image: url(''); /*[url({f12-storage-toolbar-copy-to-clipboard})]*/
+                }
+
+
+.BPT-button.resourceButtonContainer {
+    margin-top: 1px;
+    margin-right: 2px;
+    padding: 1px;
+    height: 20px;
+    width: 20px;
+}
+
+.resourceButton {
+    background-size: 16px 48px;
+    height: 16px;
+    width: 16px;
+}
+
+.BPT-button:hover .resourceButton {
+    background-position-y: -16px;
+}
+
+.BPT-button.checked .resourceButton {
+    background-position-y: -16px;
+}
+
+.BPT-button.disabled .resourceButton {
+    background-position-y: -32px;
+}
+
+.resourceGrid .slick-cell.cookiesGrid-bool {
+    text-align: center;
+}
+
+.resourceGrid .slick-header-column.cookiesGrid-header-httpOnly,
+.resourceGrid .slick-header-column.cookiesGrid-header-secure {
+    background-position: 5px 5px;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    padding-bottom: 4px;
+}
+
+    .resourceGrid .slick-header-column.cookiesGrid-header-httpOnly .slick-column-name,
+    .resourceGrid .slick-header-column.cookiesGrid-header-secure .slick-column-name {
+        display: none;
+    }
+
+.resourceGrid .slick-header-column.cookiesGrid-header-httpOnly {
+    background-image: url(''); /*[url({f12-storage-image-grid-header-httpOnly})]*/
+}
+
+.resourceGrid .slick-header-column.cookiesGrid-header-secure {
+    background-image: url(''); /*[url({f12-storage-image-grid-header-secure})]*/
+}
+
+/* Override the * rule in commongridcontrol.css */
+#plugin-vs-tooltip,
+#plugin-vs-tooltip * {
+    box-sizing: content-box;
+}
+
+textarea.inputarea{
+    top:22px !important;
+    width:100% !important;
+    height:100% !important;
+    z-index:-1 !important;
+    font-size: 0px !important;
+}
+
+/* CSS for vertical mode */
+@media (max-width: 680px) {
+    #storageContent {
+        -ms-grid-columns: 1fr;
+    }
+
+    #leftBlock {
+        -ms-grid-column: inherit;
+        -ms-grid-row: 1;
+    }
+}

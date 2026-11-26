@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature extends Win3 with the app model support necessary to run progressive web apps (PWAs) in Edge." displayName="Windows Runlevel 4" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win4-WOW64-Feature" version="10.0.26100.9725" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win4-WOW64" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="f42d18dfdbe19f4a037a4c7d2191ece1">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win0-WOW64-Package" version="10.0.26100.9725" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="51d14497131593d48a9168bc90daafd4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win1-WOW64-Package" version="10.0.26100.9725" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9d3679412a495e3af9229628a13f71bb">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-WOW64-Package" version="10.0.26100.9725" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="75137a6a5550ca7bd49cab058764d7cc">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win3-WOW64-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e30747a37b84e52a232020527e090a95">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win4-WOW64-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

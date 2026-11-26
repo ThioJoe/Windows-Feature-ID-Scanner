@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package07" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package07" releaseType="Feature Pack">
+    <update name="6e88fc169da688d28e24cd57bd46a852">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment070" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="B614678894D7ED134E16581959152B6C2EE103F1C9A3978651A6E2185AD1B454" restart="required">
+      <driver inf="netvchannel.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvchannel.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1BDA69670C6CB4A1B28436265242BFAADF0E0BAC271E1327AEA95FEFB1ED3B03" restart="required">
+      <driver inf="netvwwanmp.inf" ranking="normal">
+        <assemblyIdentity name="dual_netvwwanmp.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="EBC05D9C5677FDA981C15C56C76685AA86DEDCEF6D6269F33B59C225254AB2A9" restart="required">
+      <driver inf="routepolicy.inf" ranking="normal">
+        <assemblyIdentity name="dual_routepolicy.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6FDCD974F2D7CFAFF4A1733ABCA161A9E2D398B0BFF8978F9BC3E6320534FB31" restart="required">
+      <driver inf="uicciso.inf" ranking="normal">
+        <assemblyIdentity name="dual_uicciso.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="97C15DA8CB94B65E34041DD469FED64F69875314B70546F1645C45525B54683C" restart="required">
+      <driver inf="hidtelephonydriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidtelephonydriver.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="310C7AB873ADAF8A6CAEC0B1BE6847175ED2AAF7604AF26CBF257D1FE7ACF12A" restart="required">
+      <driver inf="networkprivacypolicy.inf" ranking="normal">
+        <assemblyIdentity name="dual_networkprivacypolicy.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="format-detection" content="telephone=no" />
+    <title>Debugger</title>
+
+    <link id="pluginCss" rel="stylesheet" href="/23/frontend/host/api/data/plugin.css" type="text/css" data-plugin-theme="true" />
+    <link id="objectTreeView.css" rel="stylesheet" href="/23/common/ObjectView/objectTreeView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/controls/controls.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/Intellisense/intellisenseListBox.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/Grid/commonGridControl.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/ResourcesView/resourcesView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/TabControl/sharedTabControl.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/debugger/Breakpoints/breakpoints.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/debugger/Watches/watches.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/debugger/Debugger.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/dom/Styles/StyleView/styleView.css" type="text/css" data-plugin-theme="true">
+    <link rel="stylesheet" href="/23/common/ModelView/expandingListView.css" type="text/css" data-plugin-theme="true">
+    <link rel="stylesheet" href="/23/dom/Styles/WinningView/winningStyles.css" type="text/css" data-plugin-theme="true">
+    <link rel="stylesheet" href="/23/common/DomMutations/dmbp.css" type="text/css" data-plugin-theme="true">
+
+    <link rel="stylesheet" href="/23/common/SlickGrid/slick.grid.css" type="text/css" />
+
+    <!-- Below CSS file defines important overrides and should be the last one in the list of includes -->
+    <link rel="stylesheet" href="/23/common/editor/editor.css" type="text/css" data-plugin-theme="true" />
+
+    <script type="text/javascript" src="/23/common/monaco-editor/min/vs/loader.js"></script>
+    <script type="text/javascript" src="/23/common/monacoResolver.js"></script>
+
+    <script src="/23/common/common.bundle.js"></script>
+    <script type="text/javascript" src="/23/debugger/debugger.bundle.js"></script>
+    <script type="text/javascript" src="/23/selftest/SelfTestDebugger.js"></script>
+
+    <script id="intellisenseListBox" type="text/html">
+        <ul class="intellisenseListBox"></ul>
+    </script>
+
+    <script id="dmbpBreakpointTemplate" type="text/html">
+        <div class="BPT-ExpandingList-Item BPT-DMBP-ListItem" tabindex="1" data-state="%%state%%" data-bpid="%%breakpointId%%" data-euid="%%elementUniqueId%%" data-is-pending="%%isPending%%" data-pending-id="%%pendingId%%" data-state="%%state%%" data-id="%%id%%" aria-labelledby="dmbpSelector%%id%%">
+            <div class="BPT-ExpandingList-Header" role="group" aria-expanded="%%expanded%%">
+                <div class="BPT-ExpandingList-ExpandIcon"></div>
+                <input type="checkbox" tabindex="-1" aria-label="%%selector%%" class="BPT-DMBP-EnablementToggle" ##if(isChecked)##checked##endIf## />
+                <div class="BPT-DMBP-StateIcon"></div>
+                <div class="BPT-DMBP-UnboundIcon"></div>
+                <div class="BPT-Style-Selector-Container">
+                    <span class="BPT-Style-Selector BPT-Tooltip-Item BPT-Dmbp-Selector" data-tooltip="%%localizedTooltip%%" id="dmbpSelector%%id%%">%%selector%%</span>
+                </div>
+                <div class="BPT-Icon-DMBP-Rebind" data-tooltip-id="tooltipTextRebindThisDmbp">
+                    <div class="BPT-ActionIcon"></div>
+                </div>
+                <div class="BPT-Icon-DMBP-Delete" data-tooltip-id="tooltipTextDeleteThisDmbp">
+                    <div class="BPT-ActionIcon"></div>
+                </div>
+            </div>
+            <div class="BPT-ExpandingList-Collapsed-Section">
+                ##forEach(types)## ##include(dmbpBreakpointTypeTemplate)## ##endForEach##
+            </div>
+        </div>
+    </script>
+    <script id="dmbpBreakpointTypeTemplate" type="text/html">
+        <div class="BPT-Style-Property-Container">
+            <div class="BPT-Style-Property" role="treeitem" data-kind="%%breakpointType%%">
+                <div class="BPT-Style-PropertyValue-Container">
+                    <span class="BPT-Style-PropertyValue">%%breakpointTypeForDisplay%%</span>
+                </div>
+            </div>
+        </div>
+    </script>
+</head>
+
+<body>
+    <div id="resizePane"></div>
+    <div id="root" role="main" tabindex="-1">
+        <div id="toolbar"></div>
+        <div id="dataTipElement"></div>
+        <div id="debuggerContent">
+            <div id="leftBlock">
+                <div id="tabStripContainer">
+                    <div id="filePickerButton" role="button" tabindex="1"></div>
+                    <div id="tabControl" class="tabControl" role="tabpanel"></div>
+                    <div id="documentToolbarSplitter"></div>
+                    <div id="documentToolbar"></div>
+                </div>
+                <div class="filePickerMenu" id="filePickerMenu" role="menu"></div>
+                <div id="filePickerSplitter"></div>
+                <div id="editorContainer" class="editorContainer">
+                    <div id="resourcesView"></div>
+                    <div id="errorOverlayAnchor"></div>
+                    <div id="findInFilesSplitter"></div>
+                    <div id="findInFilesContainer"></div>
+                </div>
+            </div>
+            <div id="editorDataWindowsSplitter"></div>
+            <div id="controlsSplitPane" class="controlsSplitPane">
+                <div id="topDataWindowsParent" role="tabpanel"></div>
+                <div id="dataWindowsSplitter"></div>
+                <div id="bottomDataWindowsParent" role="tabpanel"></div>
+            </div>
+
+            <div id="Callstack" role="tab">
+                <div class="callstackwindow">
+                    <div class="windowtoolbar" role="toolbar">
+                        <div id="toggleJMCFramesButton" class="iconShell_18x18" role="button" tabindex="1">
+                            <div class="buttonIcon icon_14x14"></div>
+                        </div>
+                        <div id="toggleAsyncFramesButton" class="iconShell_18x18" role="button" tabindex="1">
+                            <div class="buttonIcon icon_14x14"></div>
+                        </div>
+                    </div>
+                    <div class="gridcontainer" role="treegrid">
+                    </div>
+                </div>
+            </div>
+
+            <div id="BreakpointWindow" role="tab">
+                <div class="windowtoolbar" role="toolbar">
+                    <div id="addXHRBreakpointButton" class="iconShell_18x18" role="button" tabindex="1">
+                        <div class="buttonIcon icon_14x14"></div>
+                    </div>
+                    <div id="addEventTracepointButton" class="iconShell_18x18" role="button" tabindex="1">
+                        <div class="buttonIcon icon_14x14"></div>
+                    </div>
+                    <div id="addEventBreakpointButton" class="iconShell_18x18" role="button" tabindex="1">
+                        <div class="buttonIcon icon_14x14"></div>
+                    </div>
+                    <div id="toggleAllBreakpointsButton" class="iconShell_18x18" role="button" tabindex="1">
+                        <div class="buttonIcon icon_14x14"></div>
+                    </div>
+                    <div id="deleteAllBreakpointsButton" class="iconShell_18x18" role="button" tabindex="1">
+                        <div class="buttonIcon icon_14x14"></div>
+                    </div>
+                </div>
+                <div class="breakpointgrid" role="grid">
+                </div>
+            </div>
+
+            <div id="DomBreakpointsWindow" role="tab" class="BPT-DataTree-Container BPT-DataTree-Container-KeepSelection">
+                <div id="dmbpToolbar" role="toolbar">
+                    <div><!-- Intentionally empty --></div>
+                    <div class="BPT-Icon-DMBP-RebindAll" tabindex="1" role="button" aria-labelledby="dmbp-rebind-all">
+                        <div class="BPT-ActionIcon" id="dmbp-rebind-all"></div>
+                    </div>
+                    <div class="BPT-Icon-DMBP-ToggleEnableAll" tabindex="1" role="button" aria-labelledby="dmbp-toggle-enable-all">
+                        <div class="BPT-ActionIcon" id="dmbp-toggle-enable-all"></div>
+                    </div>
+                    <div class="BPT-Icon-DMBP-DeleteAll" tabindex="1" role="button" aria-labelledby="dmbp-delete-all">
+                        <div class="BPT-ActionIcon" id="dmbp-delete-all"></div>
+                    </div>
+                </div>
+                <div id="dmbpList" role="tree" class="BPT-DMBP-List">
+
+                </div>
+            </div>
+
+            <div id="Watches" role="tab">
+                <div class="watchWindow">
+                    <div class="windowtoolbar" role="toolbar">
+                        <div id="addWatchButton" class="iconShell_18x18" role="button" tabindex="1">
+                            <div class="buttonIcon icon_14x14"></div>
+                        </div>
+                        <div id="deleteAllWatchesButton" class="iconShell_18x18" role="button" tabindex="1">
+                            <div class="buttonIcon icon_14x14"></div>
+                        </div>
+                    </div>
+                    <div class="gridWatchContainer" role="treegrid">
+                    </div>
+                </div>
+            </div>
+            <div id="debuggerAriaAlertZone" role="alert" aria-live="assertive" aria-atomic="true"></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0412" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0412" releaseType="Feature Pack">
+    <update name="908F521B0BFE35EE44812C7F202AA6FABB3579D7370A1278CFE577120302072C">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04120" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="A02C464C4515328B0B7F7B0FE6CB09902AB5E76E362419CA9E37B450FF9D3CF6" restart="required">
+      <driver inf="vdrvroot.inf" ranking="normal">
+        <assemblyIdentity name="dual_vdrvroot.inf" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="48C8ABCA33ADEA4A952317DDF9E73AA4F4B84201D432E94598C27FDC03AEF011" restart="required">
+      <driver inf="vhdmp.inf" ranking="normal">
+        <assemblyIdentity name="dual_vhdmp.inf" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

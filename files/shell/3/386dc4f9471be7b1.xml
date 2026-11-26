@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:wincap3="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3">
+	<Identity Name="Microsoft.Windows.PeopleExperienceHost" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.26100.6" ResourceId="neutral"/>
+	<Properties>
+		<DisplayName>ms-resource:PkgDisplayName</DisplayName>
+		<PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+	</Properties>
+	<Resources>
+		<Resource Language="en-us"/>
+	</Resources>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.26100.6"/>
+	</Dependencies>
+	<Applications>
+		<Application Id="App" Executable="PeopleExperienceHost.exe" EntryPoint="PeopleExperienceHost.App">
+			<uap:VisualElements DisplayName="ms-resource:AppName/Text" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\PeopleLogo.png" Description="ms-resource:AppDescription" BackgroundColor="#464646" AppListEntry="none">
+				<uap:SplashScreen Image="Assets\SplashScreen.png"/>
+			</uap:VisualElements>
+			<Extensions>
+				<wincap3:Extension Category="windows.internal.componentUI"/>
+				<!-- UAP extensions are added here from the .appxfragment files -->
+			</Extensions>
+		</Application>
+	</Applications>
+	<Capabilities>
+		<wincap:Capability Name="shellExperience"/>
+		<!-- Capabilities are added here from the .appxfragment files -->
+		<uap:Capability Name="contacts"/>
+		<Capability  Name="internetClient"/>
+		<wincap:Capability Name="targetedContent"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="activitySystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="contactsSystem"/>
+		<wincap:Capability Name="cloudStore"/>
+		<wincap:Capability Name="packageContents"/>
+		<wincap:Capability Name="visualElementsSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="chatSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="emailSystem"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="phoneCallHistorySystem"/>
+	</Capabilities>
+	<Extensions>
+		<!-- Extensions are added here from the .appxfragment files -->
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>Windows.UI.Shell.SharedUtilities.dll</Path>
+				<!-- ImportPath= Windows.UI.Shell.SharedUtilities -->
+				<ActivatableClass ActivatableClassId="SharedUtilities.ApplicationResourceLoader" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharedUtilities.LocalizationService" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharedUtilities.DeviceFamilyTrigger" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>PeopleBarContainer.dll</Path>
+				<!-- ImportPath= PeopleBarContainer -->
+				<ActivatableClass ActivatableClassId="PeopleBarContainer.peoplebarcontainer_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarContainer.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarContainer.MainPage" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>PeopleBarFlyout.dll</Path>
+				<!-- ImportPath= PeopleBarFlyout -->
+				<ActivatableClass ActivatableClassId="PeopleBarFlyout.peoplebarflyout_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarFlyout.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarFlyout.FlyoutViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarFlyout.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarFlyout.PersonContextMenuControlMenuFlyoutItemHost" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>PeopleBarJumpView.dll</Path>
+				<!-- ImportPath= PeopleBarJumpView -->
+				<ActivatableClass ActivatableClassId="PeopleBarJumpView.peoplebarjumpview_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarJumpView.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarJumpView.PeopleBarJumpViewPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleBarJumpView.PeopleBarJumpViewViewModel" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>PeoplePane.dll</Path>
+				<!-- ImportPath= PeoplePane -->
+				<ActivatableClass ActivatableClassId="PeoplePane.peoplepane_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.EmailPickerControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.EmailPromptControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.MainPageCollapsed" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.MainPageExpanded" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.MainPageShare" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.ErrorDialog" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeoplePane.Style" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>ShoulderTapView.dll</Path>
+				<!-- ImportPath= ShoulderTapView -->
+				<ActivatableClass ActivatableClassId="ShoulderTapView.shouldertapview_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ShoulderTapView.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ShoulderTapView.MainPage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="ShoulderTapView.AutomatableContentControl" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>WindowsInternal.People.PeoplePicker.dll</Path>
+				<!-- ImportPath= WindowsInternal.People.PeoplePicker -->
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.BooleanToObjectConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.InverseBooleanConverter" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.ButtonControlContent" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.peoplepicker_control_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.JumplistItemControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.QueryPromptControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.GalResultsControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.SuggestionControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.HighlightedTextBlock" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.PeoplePickerControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="WindowsInternal.People.PeoplePicker.ContactListView" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<!-- SystemControl -->
+				<Path>PeopleCommonControls.dll</Path>
+				<!-- ImportPath= PeopleCommonControls -->
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.peoplecommoncontrols_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Models.ComponentModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Models.PeopleModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Models.PersonModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Notification.PeopleBarNotificationHandler" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.ShoulderTapUpdateNotifier" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.PeopleBarDragEventArgs" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.BadgedPersonPicture" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.FlyoutButtonControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.PeopleBarControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.PersonContextMenuControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.PeopleListControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.PersonItemControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.Views.TaskbarRunnableControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.ViewModels.PeopleListViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.PeopleBar.ViewModels.PersonItemViewModel" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="PeopleCommonControls.UnifiedTileModelFactory" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+	</Extensions>
+</Package>

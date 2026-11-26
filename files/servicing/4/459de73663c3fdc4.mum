@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Portable-Devices-Package" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Portable-Devices" releaseType="Feature Pack">
+    <update name="5306bb5bb6b3cda62fec8a8b9a63eec2" restart="required">
+      <driver inf="bthmtpenum.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthmtpenum.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="31d190cbcb0e124b98843630d1265038" restart="required">
+      <driver inf="c_wpd.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_wpd.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="25e64bb4c56e62924c38231320e47975" restart="required">
+      <driver inf="wpdcomp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpdcomp.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="69fe60bda9c32d8bcdbc52f133b67d3b" restart="required">
+      <driver inf="wpdfs.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpdfs.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="169c13300bc7de53ba6cd51927661bfa" restart="required">
+      <driver inf="wpdmtp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpdmtp.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="01fed7f7dccaa22221d56d023b09ac0e" restart="required">
+      <driver inf="wpdmtphw.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpdmtphw.inf" version="10.0.29712.1013" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2ffed97f7f16649b38e2458002ff5681">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WPD-UltimatePortableDeviceFeature-Feature-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

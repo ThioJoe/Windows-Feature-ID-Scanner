@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Runlevel-Win2-Minimal-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Runlevel-Win2-Minimal" releaseType="Feature Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="Runlevel.Win2.Minimal" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <update name="91c42ae61b0803a8528d8576553eaa79">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-Minimal-merged-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="27a2c1955577a8279506b4db8e80b18f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CoreSystem-BootableSKU-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="78e9707db4f80acc50a4a25f75bf7a99">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CoreSystem-Core-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e992be4fba9b195c3bab56c9ba44885b">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-UMDF-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ee8f15e1dad2fafe9780c2c1376a670c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Foundation-Group-Package" version="10.0.26100.8875" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

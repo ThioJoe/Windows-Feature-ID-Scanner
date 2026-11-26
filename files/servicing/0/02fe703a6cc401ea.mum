@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win2-AppActivation-Background-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win2-AppActivation-Background-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="Win2.AppActivation.Background" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win2-AppActivation-Background-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="7aedfe1dfa33d34816a148378c41dca2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppActivation-Background-merged-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b0b9eeaf2e5d793438e512cf25393093">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-AppModel-ResourcePolicy-Group-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="a2c5d0c58a5f7ac3c7b1410e88c84fde">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-BackgroundBrokers-Group-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c455cdb8703988df0862418e8ff76e03">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-BackgroundExecution-Group-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="3b431af94a2342dae8111f366ed4bb16">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-ContinuousBackgroundTaskPolicy-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

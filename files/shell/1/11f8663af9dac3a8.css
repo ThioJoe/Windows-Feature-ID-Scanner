@@ -1,0 +1,47 @@
+body,html,#app {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  /* override plugin.css from Daytona in host because by default html's background-color is transparent */
+  background-color: Window
+}
+
+body {
+  font-family: "Consolas","Lucida Console",monospace;
+  font-size: 12px;
+  line-height: 1.3335;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+/*
+  VS Code has a bug where they don't hide icons despite config
+  https://github.com/Microsoft/monaco-editor/issues/434
+*/
+.monaco-editor .suggest-widget.no-icons .icon {
+  display: none !important;
+}
+
+/*
+  We were seeing some rendering artifacts with how they hide the <textarea>
+  This hides it by moving it into overflow instead of covering it with another div
+*/
+.monaco-editor .textAreaCover {
+  display: none;
+}
+
+.monaco-editor .inputarea {
+  left: -1px !important;
+  top: -1px !important;
+}

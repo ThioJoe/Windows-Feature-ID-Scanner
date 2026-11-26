@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Host-Compute-PowerShell-Module-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Host-Compute-PowerShell-Module-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-Host-Compute-PowerShell-Module-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="b71f4e1429a717aeb2a25aec3e0812be">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Host-Compute-PowerShell-Module-merged-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="8586e613cc7b7b53b80fa48b3efdd3e4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Host-Compute-Interop-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

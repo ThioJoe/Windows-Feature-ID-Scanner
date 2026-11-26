@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SimpleTCP-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-SimpleTCP" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="SimpleTCP" displayName="Simple TCPIP services (i.e. echo, daytime etc)" description="Install Simple TCPIP services">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Simple TCP/IP Services supports the following TCP/IP services: Character Generator, Daytime, Discard, Echo and Quote of the Day. Simple TCP/IP Services is provided for backward compatibility and should not be installed unless it is required." DisplayName="Simple TCP/IP Services" Id="43" Type="Feature" UniqueName="Simple-TCPIP">
+          <Deploys>
+            <Update Name="SimpleTCP" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged" absentIfCapabilityAbsent="true">
+        <detectNone default="false" />
+      </selectable>
+      <capability>
+        <capabilityIdentity name="Windows.SimpleTCP.Content" />
+      </capability>
+    </update>
+  </package>
+</assembly>

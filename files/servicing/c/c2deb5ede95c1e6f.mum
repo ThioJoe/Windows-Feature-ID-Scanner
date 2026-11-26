@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Server-Help-Package.ClientEnterprise" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Server-Help-Package.ClientEnterprise" releaseType="Feature Pack">
+    <parent integrate="subsume">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Microsoft Windows Enterprise Help" displayName="Windows Enterprise User Assistance" name="Server-Help-Package_ClientEnterprise-Update">
+      <component>
+        <assemblyIdentity name="Server-Help-Deployment.ClientEnterprise.CHM" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

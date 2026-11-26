@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Client-EmbeddedExp-WOW64-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-EmbeddedExp-WOW64" releaseType="Feature Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-Client-EmbeddedExp-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="5222a6722f6342bde4adeb987ee67b54">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-DialogBlocking-WOW64-Package" version="10.0.26100.8115" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e9e90c8cf23e7cd5fe380cf890615fb0">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-KeyboardFilter" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilter-WOW64-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d4c2ec397b625567b7c0ce43f2d98465">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilter-Core-WOW64-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="131bf4cabcafee1c4737a51aa9e37a7d">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Client-UnifiedWriteFilter" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Embedded-UnifiedWriteFilter-WOW64-Package" version="10.0.26100.8115" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

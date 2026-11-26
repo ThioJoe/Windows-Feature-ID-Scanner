@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Host-Guardian-Deployment-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Host-Guardian-Deployment" releaseType="Feature Pack">
+    <update name="61b93a900a9f760e52c3c394fe1a0778">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-Host-Guardian-Deployment-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="c9b0d45ddbb56d1f8c56c9649fcb31dd">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Shielded-VM-Service-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

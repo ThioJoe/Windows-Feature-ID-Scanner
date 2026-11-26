@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-WOW64-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-WOW64-Package" releaseType="Feature Pack">
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Client.WOW64" />
+      </capability>
+      <satelliteInfo>
+        <declare type="arch" value="WOW64" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="5F0445A9F512E0380D3D1A2C0316F6BA82C9DE898DB86AB83E5BD0A51A33EB20">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-wow64-deployment0" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="CC764997F1740A0D01F3A05D13DFDA1DFEB5EEC2A1B5EBBA2F4E4419DDDF0979" restart="required">
+      <driver inf="ntprint.inf" ranking="normal">
+        <assemblyIdentity name="dual_ntprint.inf" version="10.0.28000.3562" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="BDAFC7C21DB27CBAAA8E7681535A6BCAA78A744E43B8F130C327BE9D38184219" restart="required">
+      <driver inf="prnms003.inf" ranking="normal">
+        <assemblyIdentity name="dual_prnms003.inf" version="10.0.28000.3562" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="DB570029CD7DD7DA6AD21F93E31A9A8BAE1AF61287318FF37835E7E0F0AF617A">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Ntdll-WOW64-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="0020FDAF145B82F4428765C99D032B78FA75B4FE75289C875CFB35F17A760A95">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-System-Counters-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="90c4d72bef1b58820e9acb8c77ee0542">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-WOW64-Package00" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

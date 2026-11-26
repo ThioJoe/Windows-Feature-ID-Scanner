@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0412" version="10.0.26100.4349" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0412" releaseType="Feature Pack">
+    <update name="532A2239F1BE54D791EBEDF2D09BABFF4B2C6FCA69CE83158884A7A99C25BFCC">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04120" version="10.0.26100.4349" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="6A92EFEB52649C9790D3D3BD2BC41E3AB1FA54AB4939F3848FD07E0AA9F18CB1" restart="required">
+      <driver inf="basicdisplay.inf" ranking="normal">
+        <assemblyIdentity name="dual_basicdisplay.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="246CE41FE4BEA9CDCBCBB7802AE357A1FEE55F02250B56DF7B0323BAE60E963B" restart="required">
+      <driver inf="basicrender.inf" ranking="normal">
+        <assemblyIdentity name="dual_basicrender.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D812AE7F62C34166488BDB19EE1B05C435C23B43704FD59D3D427AFBA431E0CB" restart="required">
+      <driver inf="display.inf" ranking="normal">
+        <assemblyIdentity name="dual_display.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="3C96EC7A39BEB578ACA5D3F361C669100D8641262368BD9012ECDC0238AE8853" restart="required">
+      <driver inf="vdrvroot.inf" ranking="normal">
+        <assemblyIdentity name="dual_vdrvroot.inf" version="10.0.26100.1591" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B1D18E902B67301AB5E8F6619A2B855E16E65487E805C76170B2D9ABBA2CF730" restart="required">
+      <driver inf="vhdmp.inf" ranking="normal">
+        <assemblyIdentity name="dual_vhdmp.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

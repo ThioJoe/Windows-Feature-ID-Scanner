@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Windows-Defender-Client-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Windows-Defender-Client-WOW64-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Windows-Defender-Client-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="af0348ece12827358c84020e41933daf">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-Defender-AppLayer-Group-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="524533b0a89294d4d174d3a3449ebbca">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-Defender-Core-Group-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="db5b7a0a189e36a793e41d0fa766c156">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-Defender-Management-Powershell-Group-WOW64-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Scripting engine that can execute .vbs files." displayName="VBSCRIPT" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-VBSCRIPT-FoD-Package" version="10.0.26100.1746" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="880" />
+    </mum2:customInformation>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="VBSCRIPT" />
+      </capability>
+      <satelliteInfo>
+        <applyTo type="arch" value="wow64" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="37cf9a9cbbae2d0e6907447653c884de">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-VBSCRIPT-WOW64-Package" version="10.0.26100.1746" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

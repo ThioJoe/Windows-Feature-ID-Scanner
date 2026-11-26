@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0419" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0419" releaseType="Feature Pack">
+    <update name="84D1CA1E119AAF87BDDB7393DA641CB72475CE766F78DBA0CEE1B5AA6B05090D" restart="required">
+      <driver inf="sensorsalsdriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorsalsdriver.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="98F4B07BEB1702284D7A42F5A916BA05A881E6D4DDE5C5247FB4D0D945BBFFCD" restart="required">
+      <driver inf="sensorsservicedriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorsservicedriver.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2D418B75C657C33F36B523E109FDAAFF28C24BB2802183969A84E938EF4A9978">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04190" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="7A2BA5209DFDF8D1ED792AA3ABAD46FDFA38EED449A30F32A99C9CDD914AF7CF" restart="required">
+      <driver inf="sensorshidclassdriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_sensorshidclassdriver.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="63271A2BB11D5A2DEFF612928818B6ED22C61B91E231201C6ABD1165E7B3709B" restart="required">
+      <driver inf="c_sensor.inf" ranking="normal">
+        <assemblyIdentity name="Product-onecore__dual_c_sensor.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D46158291657239C4009C4D4D3B455B4998AE9126060D94D979523A29AE7A88F" restart="required">
+      <driver inf="mshidumdf.inf" ranking="normal">
+        <assemblyIdentity name="dual_mshidumdf.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B98E23720708269DE3201948352F1FDBFC8DF250246CE838EFE28FEB1E00B36F">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Storage-Tiering-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

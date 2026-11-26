@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetAdapterCx-UMDF-Package" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-NetAdapterCx-UMDF" releaseType="Feature Pack">
+    <update name="7dd1e53dd229a97c7b0b4a0ad7dcaeb6" restart="required">
+      <driver inf="netcxrd.inf" ranking="normal">
+        <assemblyIdentity name="dual_netcxrd.inf" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="cedb8e0b103c27ac806bd6dd45ded4d9">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetAdapterCx-UMDF-Deployment" version="10.0.26100.8737" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

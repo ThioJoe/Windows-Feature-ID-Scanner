@@ -1,0 +1,1 @@
+﻿var SearchAppWinJS;(function(n){n.initXYFocus=function(n){WinJS_Init(n,n)}})(SearchAppWinJS||(SearchAppWinJS={}))

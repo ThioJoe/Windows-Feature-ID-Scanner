@@ -1,0 +1,1742 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10" xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:uap17="http://schemas.microsoft.com/appx/manifest/uap/windows10/17" xmlns:virtualization="http://schemas.microsoft.com/appx/manifest/virtualization/windows10" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities" xmlns:trustedlaunch="http://schemas.microsoft.com/appx/manifest/trustedlaunch/windows10" IgnorableNamespaces="com mp rescap uap uap3 uap4 uap6 uap10 virtualization wincap">
+    <Identity Name="MicrosoftWindows.Client.Core" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1000.26100.151.0" ProcessorArchitecture="x64" />
+    <mp:PhoneIdentity PhoneProductId="3898fac3-1f84-4040-83ce-ef30739c0a64" PhonePublisherId="6145b212-a274-4517-8abe-1e015f21ff03" />
+    <Properties>
+        <DisplayName>ms-resource:ProductPkgDisplayName</DisplayName>
+        <PublisherDisplayName>Microsoft Windows</PublisherDisplayName>
+        <Logo>Assets\StoreLogo.png</Logo>
+        <desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
+        <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
+        <trustedlaunch:TrustedLaunch>true</trustedlaunch:TrustedLaunch>
+    </Properties>
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.21340.0" MaxVersionTested="10.0.32767.0" />
+    </Dependencies>
+    <Resources>
+        <Resource Language="en-US" />
+        <Resource Language="af-ZA" />
+        <Resource Language="am-ET" />
+        <Resource Language="ar-SA" />
+        <Resource Language="as-IN" />
+        <Resource Language="az-Latn-AZ" />
+        <Resource Language="be-BY" />
+        <Resource Language="bg-BG" />
+        <Resource Language="bn-BD" />
+        <Resource Language="bn-IN" />
+        <Resource Language="bs-Latn-BA" />
+        <Resource Language="ca-ES" />
+        <Resource Language="ca-Es-VALENCIA" />
+        <Resource Language="chr-Cher-US" />
+        <Resource Language="cs-CZ" />
+        <Resource Language="cy-GB" />
+        <Resource Language="da-DK" />
+        <Resource Language="de-DE" />
+        <Resource Language="el-GR" />
+        <Resource Language="en-GB" />
+        <Resource Language="es-ES" />
+        <Resource Language="es-MX" />
+        <Resource Language="et-EE" />
+        <Resource Language="eu-ES" />
+        <Resource Language="fa-IR" />
+        <Resource Language="fi-FI" />
+        <Resource Language="fil-PH" />
+        <Resource Language="fr-CA" />
+        <Resource Language="fr-FR" />
+        <Resource Language="ga-IE" />
+        <Resource Language="gd-gb" />
+        <Resource Language="gl-ES" />
+        <Resource Language="gu-IN" />
+        <Resource Language="ha-Latn-NG" />
+        <Resource Language="he-IL" />
+        <Resource Language="hi-IN" />
+        <Resource Language="hr-HR" />
+        <Resource Language="hu-HU" />
+        <Resource Language="hy-AM" />
+        <Resource Language="id-ID" />
+        <Resource Language="ig-NG" />
+        <Resource Language="is-IS" />
+        <Resource Language="it-IT" />
+        <Resource Language="ja-JP" />
+        <Resource Language="ka-GE" />
+        <Resource Language="kk-KZ" />
+        <Resource Language="km-KH" />
+        <Resource Language="kn-IN" />
+        <Resource Language="ko-KR" />
+        <Resource Language="kok-IN" />
+        <Resource Language="ku-Arab-IQ" />
+        <Resource Language="ky-KG" />
+        <Resource Language="lb-LU" />
+        <Resource Language="lo-LA" />
+        <Resource Language="lt-LT" />
+        <Resource Language="lv-LV" />
+        <Resource Language="mi-NZ" />
+        <Resource Language="mk-MK" />
+        <Resource Language="ml-IN" />
+        <Resource Language="mn-MN" />
+        <Resource Language="mr-IN" />
+        <Resource Language="ms-MY" />
+        <Resource Language="mt-MT" />
+        <Resource Language="nb-NO" />
+        <Resource Language="ne-NP" />
+        <Resource Language="nl-NL" />
+        <Resource Language="nn-NO" />
+        <Resource Language="nso-ZA" />
+        <Resource Language="or-IN" />
+        <Resource Language="pa-Arab-PK" />
+        <Resource Language="pa-IN" />
+        <Resource Language="pl-PL" />
+        <Resource Language="prs-AF" />
+        <Resource Language="pt-BR" />
+        <Resource Language="pt-PT" />
+        <Resource Language="quc-Latn-gt" />
+        <Resource Language="quz-PE" />
+        <Resource Language="ro-RO" />
+        <Resource Language="ru-RU" />
+        <Resource Language="rw-RW" />
+        <Resource Language="sd-Arab-PK" />
+        <Resource Language="si-LK" />
+        <Resource Language="sk-SK" />
+        <Resource Language="sl-SI" />
+        <Resource Language="sq-AL" />
+        <Resource Language="sr-Cyrl-BA" />
+        <Resource Language="sr-Cyrl-RS" />
+        <Resource Language="sr-Latn-RS" />
+        <Resource Language="sv-SE" />
+        <Resource Language="sw-KE" />
+        <Resource Language="ta-IN" />
+        <Resource Language="te-IN" />
+        <Resource Language="tg-Cyrl-TJ" />
+        <Resource Language="th-TH" />
+        <Resource Language="ti-ET" />
+        <Resource Language="tk-TM" />
+        <Resource Language="tn-ZA" />
+        <Resource Language="tr-TR" />
+        <Resource Language="tt-RU" />
+        <Resource Language="ug-CN" />
+        <Resource Language="uk-UA" />
+        <Resource Language="ur-PK" />
+        <Resource Language="uz-Latn-UZ" />
+        <Resource Language="vi-VN" />
+        <Resource Language="wo-SN" />
+        <Resource Language="xh-ZA" />
+        <Resource Language="yo-NG" />
+        <Resource Language="zh-CN" />
+        <Resource Language="zh-TW" />
+        <Resource Language="zu-ZA" />
+    </Resources>
+    <Applications>
+        <Application Id="PackageMetadata" StartPage="https://www.microsoft.com">
+            <uap:VisualElements DisplayName="DesktopPackageMetadata" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="PackageMetadata" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.telemetryid" Id="Id" PublicFolder="public" DisplayName="Id">
+                        <uap3:Properties>
+                            <TelemetryID>03E865F400970000</TelemetryID>
+                            <IsInboxPackage>1</IsInboxPackage>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="Default" PublicFolder="Public" DisplayName="Extension Package" />
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.AppListBackup" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.AppListBackup" Description="Global.AppListBackup" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none">
+                <uap:SplashScreen Image="Assets\SplashScreen.png" />
+            </uap:VisualElements>
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="AppListBackup" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>AppListBackupAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                  <uap3:AppExtension Name="com.microsoft.windows.extension.applistbackup" Id="AppListBackup" PublicFolder="Public" DisplayName="AppListBackup">
+                    <uap3:Properties>
+                      <Classes>
+                        <WindowsUdk.System.UserProfile.AppListBackupExtension>AppListBackup.AppListBackupImpl</WindowsUdk.System.UserProfile.AppListBackupExtension>
+                      </Classes>
+                    </uap3:Properties>
+                  </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.applistbackup" Id="AppListBackup" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <AppListBackupControl>AppListBackup.AppListBackupControl</AppListBackupControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>AppListBackup.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>AppListBackup.AppListBackupResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.BackupBanner" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.BackupBanner" Description="Global.BackupBanner" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="BackupBanner" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>BackupBannerAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml" Id="BackupBanner" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <BackupBannerControl>BackupBanner.BackupBannerControl</BackupBannerControl>
+                                <BackupBannerLockScreenControl>
+                                    BackupBanner.BackupBannerLockScreenControl</BackupBannerLockScreenControl>
+                                <BackupBannerWallpaperControl>
+                                    BackupBanner.BackupBannerWallpaperControl</BackupBannerWallpaperControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>BackupBanner.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>BackupBanner.BackupBannerResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.LiveCaptionsDesktop" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.LiveCaptionsDesktop" Description="Global.LiveCaptionsDesktop" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="LiveCaptionsAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>LiveCaptionsAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.app.livecaptions" Id="LiveCaptions" DisplayName="LiveCaptions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.LiveCaptionsExtension>LiveCaptionsDesktop.LiveCaptionsProvider</WindowsUdk.UI.Shell.LiveCaptionsExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.livecaptions" Id="LiveCaptions" DisplayName="LiveCaptions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.LiveCaptionsExtension>LiveCaptionsDesktop.LiveCaptionsProvider</WindowsUdk.UI.Shell.LiveCaptionsExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.livecaptions" Id="LiveCaptions" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <LiveCaptionsControl>DesktopSticLiveCaptionskerEditor.LiveCaptionsControl</LiveCaptionsControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>LiveCaptions.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>LiveCaptions.LiveCaptionsResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="LogonWebHost" Executable="LogonWebHostProduct.exe" EntryPoint="LogonWebHost.App">
+            <uap:VisualElements DisplayName="LogonWebHost" Description="LogonWebHost" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap:Extension Category="windows.aboveLockScreen" />
+                <uap:Extension Category="windows.protocol">
+                    <uap:Protocol Name="ms-lwh" ReturnResults="optional" />
+                </uap:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="LogonWebHost" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>LogonWebHostAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.app.logonwebhost" Id="LogonWebHost" DisplayName="Extension Metadata" />
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.logonwebhost" Id="LogonWebHost" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <LogonWebHostControl>LogonWebHost.LogonWebHostControl</LogonWebHostControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>LogonWebHost.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>LogonWebHost.LogonWebHostResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+            <uap:ApplicationContentUriRules>
+                <uap:Rule Type="include" Match="https://login.microsoftonline.com/" />
+            </uap:ApplicationContentUriRules>
+        </Application>
+        <Application Id="Global.MicrosoftGraphRecentItemsManager" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.MicrosoftGraphRecentItemsManager" Description="Global.MicrosoftGraphRecentItemsManager" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none">
+            </uap:VisualElements>
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="MicrosoftGraphRecentItemsManagerAlias" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>MicrosoftGraphRecentItemsManagerAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.storage.provider" Id="MicrosoftGraphRecentItemsManager" DisplayName="Microsoft Graph Recent Items Manager">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.Storage.Provider.MicrosoftGraphRecentItemsManagerExtension>MicrosoftGraphRecentItemsManager.MicrosoftGraphRecentItemsManagerImpl</WindowsUdk.Storage.Provider.MicrosoftGraphRecentItemsManagerExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="MicrosoftGraphRecentItemsManager" PublicFolder="Public" DisplayName="Extension Package" />
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.PreviewFlags" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.PreviewFlags" Description="Global.PreviewFlags" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+            </Extensions>
+        </Application>
+        <Application Id="ScreenClipping" Executable="ScreenClippingHost.exe" EntryPoint="ScreenClippingHost.App">
+      <uap:VisualElements DisplayName="ms-resource:ScreenClippingAppName/Text" AppListEntry="none" Square150x150Logo="ScreenClipping\Assets\Square150x150Logo.png" Square44x44Logo="ScreenClipping\Assets\Square44x44Logo.png" Description="ms-resource:ScreenClippingDescription" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="ScreenClipping\Assets\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="ScreenClipping\Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-screenclip">
+            <uap:DisplayName>ms-screenclip</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.app.screenclip" Id="ScreenClippingApp" PublicFolder="Public" DisplayName="Screen Snipping Experience" />
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>com.microsoft.windows.protocoloverride</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="SettingsModelService" StartPage="http://microsoft.com">
+      <uap:VisualElements DisplayName="SettingsModelService" Description="SettingsModelService" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+      <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="SettingsModelService.AppService" uap10:TrustLevel="mediumIL">
+          <uap3:AppService Name="com.microsoft.windows.settings.models" />
+        </uap:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="SettingsModelService" DisplayName="Extension Metadata">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>SettingsModelServiceAlias</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="Global.ShellMcpServers.AppLaunchMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.AppLaunchMcpServer" Description="Global.ShellMcpServers.AppLaunchMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="AppLaunchMcpServer" DisplayName="AppLaunchMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>AppLaunchMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.FilesAgentMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.FilesAgentMcpServer" Description="Global.ShellMcpServers.FilesAgentMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="FilesAgentMcpServer" DisplayName="FilesAgentMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>FilesAgentMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                            <Enablement RegistryKey="HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FilesAgent" ValueName="IsEnabled" />
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.SystemInfoMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.SystemInfoMcpServer" Description="Global.ShellMcpServers.SystemInfoMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="SystemInfoMcpServer" DisplayName="SystemInfoMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>SystemInfoMcpManifest.json</Registration>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.WindowingMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.WindowingMcpServer" Description="Global.ShellMcpServers.WindowingMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="WindowingMcpServer" DisplayName="WindowingMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>WindowingMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.SettingsMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.SettingsMcpServer" Description="Global.ShellMcpServers.SettingsMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="SettingsMcpServer" DisplayName="SettingsMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>SettingsMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                            <Enablement RegistryKey="HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SystemSettings\CommandSearch" ValueName="WindowsEnablement" />
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.AppInfoMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.AppInfoMcpServer" Description="Global.ShellMcpServers.AppInfoMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="AppInfoMcpServer" DisplayName="AppInfoMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>AppInfoMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.FileMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.FileMcpServer" Description="Global.ShellMcpServers.FileMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="FileMcpServer" DisplayName="FilesConnector" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>FileMcpManifest.json</Registration>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.FileSearchMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.FileSearchMcpServer" Description="Global.ShellMcpServers.FileSearchMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="FileSearchMcpServer" DisplayName="FileSearchMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>FileSearchMcpManifest.json</Registration>
+                            <UIContainerPolicy>userDesktopAccess</UIContainerPolicy>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.WindowUnderstandingMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.WindowUnderstandingMcpServer" Description="Global.ShellMcpServers.WindowUnderstandingMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="WindowUnderstandingMcpServer" DisplayName="WindowUnderstandingMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>WindowUnderstandingMcpManifest.json</Registration>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.TroubleshootingMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.TroubleshootingMcpServer" Description="Global.ShellMcpServers.TroubleshootingMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="TroubleshootingMcpServer" DisplayName="TroubleshootingMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>TroubleshootingMcpManifest.json</Registration>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.MagnifierMcpServer" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.MagnifierMcpServer" Description="Global.ShellMcpServers.MagnifierMcpServer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.ai.mcpServer" Id="MagnifierMcpServer" DisplayName="MagnifierMcpServer" PublicFolder="ShellMcpServers\Assets">
+                        <uap3:Properties>
+                            <Registration>MagnifierMcpManifest.json</Registration>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers" Description="Global.ShellMcpServers" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.shellmcpservers" Id="ShellMcpServers" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <RuntimeClassExample>ShellMcpServers.RuntimeClassExample</RuntimeClassExample>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.shellmcpserversservice" Id="ShellMcpServersService" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <ShellMcpServersService>ShellMcpServers.ShellMcpServer</ShellMcpServersService>
+                            </Classes>
+                            <ShellContentProperties>
+                                <UseWinUI3>true</UseWinUI3>
+                            </ShellContentProperties>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="ShellMcpServersService" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.shellmcpserversservice</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersService</ExtensionId>
+                                <InvocationProperties>
+                                    <SingleInstance>false</SingleInstance>
+                                </InvocationProperties>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.ConsentPrompts" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.ConsentPrompts" Description="Global.ShellMcpServers.ConsentPrompts" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="ShellMcpServersConsentPrompts" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>ShellMcpServersConsentPromptsResources</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.shellmcpservers" Id="ShellMcpServersConsentPrompts" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <UserControlResourceConsent>ShellMcpServers.ConsentPrompts.UserControlResourceConsent</UserControlResourceConsent>
+                                <UserControlHostUserConsent>ShellMcpServers.ConsentPrompts.UserControlHostUserConsent</UserControlHostUserConsent>
+                                <UserControlAgentSessionUserConsent>ShellMcpServers.ConsentPrompts.UserControlAgentSessionUserConsent</UserControlAgentSessionUserConsent>
+                                <UserControlAgentSessionUserConsent2>ShellMcpServers.ConsentPrompts.UserControlAgentSessionUserConsent2</UserControlAgentSessionUserConsent2>
+                                <UserControlAgentSingleCapabilityConsent>ShellMcpServers.ConsentPrompts.UserControlAgentSingleCapabilityConsent</UserControlAgentSingleCapabilityConsent>
+                                <UserControlAgentProvisionNoCapConsent>ShellMcpServers.ConsentPrompts.UserControlAgentProvisionNoCapConsent</UserControlAgentProvisionNoCapConsent>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>ShellMcpServers.ConsentPrompts.ShellMcpServers_ConsentPrompts_XamlTypeInfo.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ShellContentProperties>
+                                <UseWinUI3>true</UseWinUI3>
+                                <SizeWindowToContent>true</SizeWindowToContent>
+                            </ShellContentProperties>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlResourceConsent" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlResourceConsent</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlHostUserConsent" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlHostUserConsent</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlAgentSessionUserConsent" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlAgentSessionUserConsent</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlAgentSessionUserConsent2" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlAgentSessionUserConsent2</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlAgentSingleCapabilityConsent" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlAgentSingleCapabilityConsent</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="UserControlAgentProvisionNoCapConsent" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <SupportsProtocolLaunch>false</SupportsProtocolLaunch>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.xaml.shellmcpservers</ExtensionCategory>
+                                <ExtensionId>ShellMcpServersConsentPrompts</ExtensionId>
+                                <ControlName>UserControlAgentProvisionNoCapConsent</ControlName>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="ShellMcpServers.Packaging" Executable="ShellMcpServers.Packaging.exe" EntryPoint="Windows.FullTrustApplication">
+            <uap:VisualElements DisplayName="ShellMcpServers" Description="ShellMcpServers" BackgroundColor="transparent" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" AppListEntry="none">
+            </uap:VisualElements>
+            <Extensions>
+                <uap5:Extension Category="windows.appExecutionAlias" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5">
+                    <uap5:AppExecutionAlias>
+                        <uap5:ExecutionAlias Alias="ShellMcpServers.Packaging.exe" />
+                    </uap5:AppExecutionAlias>
+                </uap5:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ShellMcpServers.ToolExecutor" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ShellMcpServers.ToolExecutor" Description="Global.ShellMcpServers.ToolExecutor" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.shellmcpserverstoolexecutor" Id="ToolExecutorService" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <ToolExecutorService>ShellMcpServers.ToolExecutor.ToolExecutorService</ToolExecutorService>
+                            </Classes>
+                            <ShellContentProperties>
+                                <UseWinUI3>true</UseWinUI3>
+                            </ShellContentProperties>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shellhost.component" Id="ToolExecutorService" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <UXFrameComponentDefinition>
+                                <ExtensionCategory>com.microsoft.windows.extensions.shellmcpserverstoolexecutor</ExtensionCategory>
+                                <ExtensionId>ToolExecutorService</ExtensionId>
+                                <SupportsLaunchesFromToolExecutionBridge>true</SupportsLaunchesFromToolExecutionBridge>
+                                <InvocationProperties>
+                                    <SingleInstance>false</SingleInstance>
+                                </InvocationProperties>
+                            </UXFrameComponentDefinition>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.SnapLayout" StartPage="http://microsoft.com">
+      <uap:VisualElements DisplayName="Global.SnapLayout" Description="Global.SnapLayout" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+      <Extensions>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="SnapLayoutAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>SnapLayoutAlias</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+            <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.snaplayout" Id="SnapLayout" DisplayName="Microsoft Windows Extensions">
+                <uap3:Properties>
+                    <Classes>
+                        <WindowsUdk.UI.Shell.SnapLayoutPickerExtension>SnapLayout.SnapLayoutPickerProvider</WindowsUdk.UI.Shell.SnapLayoutPickerExtension>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>SnapLayout.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap3:Properties>
+            </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.assetreference" Id="SnapLauncherProtocol" PublicFolder="Public" DisplayName="SnapLauncherProtocol">
+            <uap3:Properties>
+              <AssetPath>SnapLauncherProtocol.exe</AssetPath>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="Global.SpeechSynthesizerExtension" StartPage="http://microsoft.com">
+      <uap:VisualElements DisplayName="Global.SpeechSynthesizerExtension" Description="Global.SpeechSynthesizerExtension" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none">
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="SpeechSynthesizerExtension" PublicFolder="Public" DisplayName="SpeechSynthesizerExtension">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>SpeechSynthesizerExtension</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extension.speechsynthesizer" Id="SpeechSynthesizerExtension" DisplayName="SpeechSynthesizerExtension">
+            <uap3:Properties>
+              <Classes>
+                  <WindowsUdk.Speech.SpeechSynthesizerExtension>SpeechSynthesizerExtension.SpeechSynthesizerExtensionImpl</WindowsUdk.Speech.SpeechSynthesizerExtension>
+              </Classes>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="Global.StartMenu" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.StartMenu" Description="Global.StartMenu" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="StartMenuAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>StartMenuAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.startmenu" Id="Start" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <StartInnerFrame>StartMenu.StartInnerFrame</StartInnerFrame>
+                                <StartBlendedFlexFrame>StartMenu.StartBlendedFlexFrame</StartBlendedFlexFrame>
+                                <StartAccountControl>StartMenu.StartAccountControl</StartAccountControl>
+                                <WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>StartMenu.StartController</WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>StartMenu.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>StartMenu.FluentResources</ResourceDictionary>
+                                <ResourceDictionary>StartMenu.StartResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.assetreference" Id="ExistenceCheck" PublicFolder="Public" DisplayName="ExistenceCheck">
+                        <uap3:Properties>
+                            <AssetPath>ExistenceCheck.txt</AssetPath>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.app.startmenu" Id="Id" PublicFolder="Public" DisplayName="Start Menu">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.StartScreen.StartScreenManagerExtension>StartMenu.StartScreenManager</WindowsUdk.UI.StartScreen.StartScreenManagerExtension>
+                                <WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>StartMenu.StartController</WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.startmenu" Id="Id" PublicFolder="Public" DisplayName="Start Menu">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.StartScreen.StartScreenManagerExtension>StartMenu.StartScreenManager</WindowsUdk.UI.StartScreen.StartScreenManagerExtension>
+                                <WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>StartMenu.StartController</WindowsUdk.UI.StartScreen.Implementation.StartControllerExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.windowservice.startmenu" Id="Id" PublicFolder="Public" DisplayName="Start Menu">
+                        <uap3:Properties>
+                            <StartScreenManagerWindowService WindowName="StartScreenManagerWindowService" ClassName="STATIC" ServiceClassId="4d91dafc-4687-406d-afca-fdd69e51cc79" />
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.FamilyValueProp" StartPage="http://microsoft.com">
+      <uap:VisualElements DisplayName="Global.FamilyValueProp" Description="Global.FamilyValueProp" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+      <Extensions>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>com.microsoft.windows.extensionpackage</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="FamilyValuePropAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>FamilyValuePropAlias</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+            <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml" Id="FamilyValueProp" DisplayName="Microsoft Windows Extensions">
+                <uap3:Properties>
+                    <Classes>
+                        <FamilyValuePropControl>FamilyValueProp.FamilyValuePropControl</FamilyValuePropControl>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>FamilyValueProp.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap3:Properties>
+            </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="Global.ValueBanner" StartPage="http://microsoft.com">
+      <uap:VisualElements DisplayName="Global.ValueBanner" Description="Global.ValueBanner" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+      <Extensions>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>com.microsoft.windows.extensionpackage</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="ValueBannerAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+            <uap3:Properties>
+              <PackageAliases>
+                <PackageAlias>ValueBannerAlias</PackageAlias>
+              </PackageAliases>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+            <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml" Id="ValueBannerAlertBanner" DisplayName="Microsoft Windows Extensions">
+                <uap3:Properties>
+                    <Classes>
+                        <AlertBannerControl>ValueBanner.AlertBannerControl</AlertBannerControl>
+                        <ValueBannerControl>ValueBanner.ValueBannerControl</ValueBannerControl>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>ValueBanner.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap3:Properties>
+            </uap3:AppExtension>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.appExtension">
+            <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml" Id="ValueBanner" DisplayName="Microsoft Windows Extensions">
+                <uap3:Properties>
+                    <Classes>
+                        <AlertBannerControl>ValueBanner.AlertBannerControl</AlertBannerControl>
+                        <WindowsUdk.UI.Shell.ValueBannerExtension>ValueBanner.ValueBannerControlProvider</WindowsUdk.UI.Shell.ValueBannerExtension>
+                        <WindowsUdk.UI.Shell.IdealStateFeatureExtension>ValueBanner.IdealStateFeatureControlProvider</WindowsUdk.UI.Shell.IdealStateFeatureExtension>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>ValueBanner.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap3:Properties>
+            </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="Global.SystemTray" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.SystemTray" Description="Global.SystemTray" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtensionHost">
+                    <uap3:AppExtensionHost>
+                        <uap3:Name>com.microsoft.windows.extensionpackage</uap3:Name>
+                    </uap3:AppExtensionHost>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="SystemTrayAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>SystemTrayAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.systemtray" Id="SystemTray" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.NotificationAreaControllerExtension>SystemTray.SystemTrayController</WindowsUdk.UI.Shell.NotificationAreaControllerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>SystemTray.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>SystemTray.SystemTrayResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.systemtray" Id="SystemTraySecondary" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.NotificationAreaControllerExtension>SystemTray.SystemTraySecondaryController</WindowsUdk.UI.Shell.NotificationAreaControllerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>SystemTray.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>SystemTray.SystemTrayResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.taskbar.extension" Id="Microsoft.Windows.SystemTray" PublicFolder="Public" DisplayName="SystemTray">
+                        <uap3:Properties>
+                            <Classes>
+                                <Microsoft.Windows.Taskbar.TaskbarXamlExtension>SystemTray.SystemTrayTaskbarExtension</Microsoft.Windows.Taskbar.TaskbarXamlExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>SystemTray.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>SystemTray.SystemTrayResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.Taskbar" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.Taskbar" Description="Global.Taskbar" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtensionHost">
+                    <uap3:AppExtensionHost>
+                        <uap3:Name>com.microsoft.windows.extensionpackage</uap3:Name>
+                    </uap3:AppExtensionHost>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="TaskbarAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>TaskbarAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.taskbar" Id="Taskbar" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.TaskbarControllerExtension>Taskbar.TaskbarController</WindowsUdk.UI.Shell.TaskbarControllerExtension>
+                                <WindowsUdk.UI.Shell.MultiTaskbarControllerExtension>Taskbar.MultiTaskbarController</WindowsUdk.UI.Shell.MultiTaskbarControllerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>Taskbar.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>Taskbar.TaskbarResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.assetreference" Id="TaskbarExistenceCheck" PublicFolder="Public" DisplayName="TaskbarExistenceCheck">
+                        <uap3:Properties>
+                            <AssetPath>TaskbarExistenceCheck.txt</AssetPath>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.TwinSxS" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.TwinSxS" Description="Global.TwinSxS" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="TwinSxS" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>TwinSxSAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.twinsxs" Id="TwinSxS" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <TwinSxSHelper>TwinSxS.TwinSxSHelper</TwinSxSHelper>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.VoiceAccessHost" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.VoiceAccessHost" Description="Global.VoiceAccessHost" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="VoiceAccessAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>VoiceAccessAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.app.voiceaccess" Id="VoiceAccess" DisplayName="VoiceAccess">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.VoiceAccessExtension>VoiceAccessHost.VoiceAccessExports</WindowsUdk.UI.Shell.VoiceAccessExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.voiceaccess" Id="VoiceAccess" DisplayName="VoiceAccess">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.VoiceAccessExtension>VoiceAccessHost.VoiceAccessExports</WindowsUdk.UI.Shell.VoiceAccessExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.voiceaccess" Id="VoiceAccess" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <VoiceAccessControl>VoiceAccess.VoiceAccessControl</VoiceAccessControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>VoiceAccess.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>VoiceAccess.VoiceAccessResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.SpeechRecognizerExtension" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.SpeechRecognizerExtension" Description="Global.SpeechRecognizerExtension" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="SpeechRecognizerExtensionAlias" PublicFolder="Public" DisplayName="SpeechRecognizerExtension">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>SpeechRecognizerExtensionAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.speechrecognizerextension" Id="SpeechRecognizerExtension" DisplayName="SpeechRecognizerExtension udk interface implementations">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.UI.Shell.SpeechRecognizerExtension>SpeechRecognizerExtension.SpeechRecognizerExtensionImpl</WindowsUdk.UI.Shell.SpeechRecognizerExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.VoiceAccessPlugin" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.VoiceAccessPlugin" Description="Global.VoiceAccessPlugin" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="VoiceAccessPluginAlias" PublicFolder="Public" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>VoiceAccessPluginAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.voiceaccessplugin" Id="VoiceAccessPlugin" DisplayName="VoiceAccessPlugin">
+                        <uap3:Properties>
+                            <Classes>
+                                <AIX.VAPluginExtension>VoiceAccessPlugin.VAPluginExtensionImpl</AIX.VAPluginExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.voiceaccessplugin" Id="VoiceAccessPlugin" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <VoiceAccessControl>VoiceAccess.VoiceAccessControl</VoiceAccessControl>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>VoiceAccess.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>VoiceAccess.VoiceAccessResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.WinAct" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.WinAct" Description="Global.WinAct" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="WinAct" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>WinActAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.winact" Id="WinAct" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <WinActPaletteItemSource>WinActCore.WinActPaletteItemSource</WinActPaletteItemSource>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.palettes" Id="WinAct.PaletteItemSource" DisplayName="Windows Actions">
+                        <uap3:Properties>
+                            <Classes>
+                                <Windows.UI.Palettes.IPaletteItemSourceExtension>WinActCore.WinActPaletteItemSource</Windows.UI.Palettes.IPaletteItemSourceExtension>
+                            </Classes>
+                            <ComObjects>
+                                <Windows.UI.Palettes.IPaletteItemSourceExtension>D7A3E1F5-8B2C-4D6E-A9F0-3C5B7E1D4A2F</Windows.UI.Palettes.IPaletteItemSourceExtension>
+                            </ComObjects>
+                            <ClassId>D7A3E1F5-8B2C-4D6E-A9F0-3C5B7E1D4A2F</ClassId>
+                            <MinimumPaletteApiVersion>2.0</MinimumPaletteApiVersion>
+                            <Kinds>
+                                <KindSpec>Command</KindSpec>
+                                <KindSpec>ZeroState.SystemComposer</KindSpec>
+                                <KindSpec>QueryResult.SystemComposer</KindSpec>
+                                <KindSpec>BuiltIn</KindSpec>
+                                <KindSpec>AcceptsExpectedKinds</KindSpec>
+                            </Kinds>
+                            <ContainedKinds>
+                                <KindSpec>WindowsAction</KindSpec>
+                                <KindSpec>Command</KindSpec>
+                                <KindSpec>Application</KindSpec>
+                                <KindSpec>Setting</KindSpec>
+                            </ContainedKinds>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.systemsettingscommandresolver" Id="WinAct.SettingsCommandResolver" DisplayName="Settings Command Resolver">
+                        <uap3:Properties>
+                            <Classes>
+                                <WindowsUdk.System.Profile.SystemSettingsCommandResolverExtension>WinActCore.WinActSettingsCommandResolverExtension</WindowsUdk.System.Profile.SystemSettingsCommandResolverExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+
+            </Extensions>
+        </Application>
+    </Applications>
+    <Capabilities>
+        <wincap:Capability Name="shellExperience" />
+        <wincap:Capability Name="packageContents" />
+        <Capability Name="internetClient" />
+        <wincap:Capability Name="dependencyTarget" />
+        <rescap:Capability Name="unvirtualizedResources" />
+        <wincap:Capability Name="packageQuery" />
+        <wincap:Capability Name="cloudExperienceHost" />
+        <wincap:Capability Name="liveIdService" />
+        <wincap:Capability Name="personalizationDeviceSettings" />
+        <wincap:Capability Name="userSigninSupport" />
+        <wincap:Capability Name="userAccountInformation" />
+        <rescap:Capability Name="windowsHelloCredentialAccess" />
+        <uap:Capability Name="picturesLibrary" />
+        <uap6:Capability Name="graphicsCapture" />
+        <uap11:Capability Name="graphicsCaptureWithoutBorder" xmlns:uap11="http://schemas.microsoft.com/appx/manifest/uap/windows10/11" />
+        <rescap:Capability Name="runFullTrust" />
+        <rescap:Capability Name="inputInjectionBrokered" />
+        <Capability Name="privateNetworkClientServer" />
+        <wincap:Capability Name="storeAppInstall" />
+        <wincap:Capability Name="storeLicenseManagement" />
+        <wincap:Capability Name="cloudStore" />
+        <rescap:Capability Name="activitySystem" />
+        <wincap:Capability Name="activityData" />
+        <wincap:Capability Name="targetedContent" />
+        <wincap:Capability Name="indexedContent" />
+        <uap4:CustomCapability Name="Microsoft.coreAppActivation_8wekyb3d8bbwe" />
+        <DeviceCapability Name="webcam" />
+    </Capabilities>
+    <Extensions>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>AppListBackup.dll</Path>
+                <ActivatableClass ActivatableClassId="AppListBackup.AppListBackupImpl" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="AppListBackup" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>AppListBackupAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>BackupBanner.dll</Path>
+                <ActivatableClass ActivatableClassId="BackupBanner.XamlMetaDataProvider" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerLockScreenControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerWallpaperControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerControlViewModel" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="BackupBanner.BackupBannerControlHelper" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="BackupBanner" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>BackupBannerAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>LiveCaptionsDesktop.dll</Path>
+                <ActivatableClass ActivatableClassId="LiveCaptionsDesktop.LiveCaptionsProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>LiveCaptions.dll</Path>
+                <ActivatableClass ActivatableClassId="LiveCaptions.LiveCaptionsWindowContent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="LiveCaptions.App" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="LiveCaptions.XamlMetadataProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>LiveCaptionsBackendDll.dll</Path>
+                <ActivatableClass ActivatableClassId="LiveCaptionsBackend.CaptionBackend" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>LiveCaptionsXamlApplication.dll</Path>
+                <ActivatableClass ActivatableClassId="LiveCaptionsXamlApplication.XamlApplication" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="LiveCaptionsAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>LiveCaptionsAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>LogonWebHost.dll</Path>
+                <ActivatableClass ActivatableClassId="LogonWebHost.XamlMetaDataProvider" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="LogonWebHost.LogonWebHostResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="LogonWebHost.LogonWebHostControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="LogonWebHost.Core.LogonScenario" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="LogonWebHost" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>LogonWebHostAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>MicrosoftGraphRecentItemsManager.dll</Path>
+                <ActivatableClass ActivatableClassId="MicrosoftGraphRecentItemsManager.MicrosoftGraphRecentItemsManagerImpl" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="MicrosoftGraphRecentItemsManagerAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>MicrosoftGraphRecentItemsManagerAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>PreviewFlags.AOT.dll</Path>
+                <ActivatableClass ActivatableClassId="PreviewFlags.Controls.PreviewFlagsControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="PreviewFlags.PreviewFlags_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="PreviewFlags" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>PreviewFlagsAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensions.xaml.pfextension" Id="PFExtension" DisplayName="Microsoft Windows Extensions">
+                <uap17:Properties>
+                    <Classes>
+                        <PFControl>PreviewFlags.Controls.PreviewFlagsControl</PFControl>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>PreviewFlags.PreviewFlags_XamlTypeInfo.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensions.xaml" Id="ExpOptIn" DisplayName="Microsoft Windows Extensions">
+                <uap17:Properties>
+                    <Classes>
+                        <ExpOptInControl>PreviewFlags.Controls.PreviewFlagsControl</ExpOptInControl>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>PreviewFlags.PreviewFlags_XamlTypeInfo.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensions.xaml" Id="PFExtension" DisplayName="Microsoft Windows Extensions">
+                <uap17:Properties>
+                    <Classes>
+                        <PFControl>PreviewFlags.Controls.PreviewFlagsControl</PFControl>
+                    </Classes>
+                    <MetadataProviders>
+                        <Provider>PreviewFlags.PreviewFlags_XamlTypeInfo.XamlMetaDataProvider</Provider>
+                    </MetadataProviders>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>SettingsModelService.AOT.dll</Path>
+                <ActivatableClass ActivatableClassId="SettingsModelService.AppService" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="SettingsModelService" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>SettingsModelServiceAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>ShellMcpServers.Packaging.dll</Path>
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlAgentSessionUserConsent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlAgentSessionUserConsent2" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlAgentSingleCapabilityConsent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlAgentProvisionNoCapConsent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlResourceConsent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.UserControlHostUserConsent" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ConsentPrompts.ShellMcpServers_ConsentPrompts_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="ShellMcpServersConsentPrompts" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>ShellMcpServersConsentPromptsResources</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>ShellMcpServers.Packaging.dll</Path>
+                <ActivatableClass ActivatableClassId="ShellMcpServers.ToolExecutor.ToolExecutorService" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SnapLayout.dll</Path>
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapLayoutControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapLayoutPicker" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapLayoutPickerLayout" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapLayoutPickerProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.XamlMetaDataProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapBarControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapBarHostControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SnapLayout.SnapBarVisibilityPolicy" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="SnapLayoutAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>SnapLayoutAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SpeechSynthesizerExtension.dll</Path>
+        <ActivatableClass ActivatableClassId="SpeechSynthesizerExtension.SpeechSynthesizerExtensionImpl" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="SpeechSynthesizerExtension" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>SpeechSynthesizerExtension</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>StartMenu.dll</Path>
+                <ActivatableClass ActivatableClassId="StartMenu.FluentResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.PinnedList" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.PinnedListAutomationPeer" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.PinnedListTile" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.PinnedListTileAutomationPeer" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.PinnedListCollapsedFolder" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.RowMajorUniformToFirstGridLayout" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartAccountControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartHome" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartController" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartInnerFrame" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartBlendedFlexFrame" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartMenuModel" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartScreenManager" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.StartResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.SuggestedItem" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.SuggestedItemsList" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="StartMenu.XamlMetaDataProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="StartMenuAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>StartMenuAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SystemSettingsExtensions.dll</Path>
+        <ActivatableClass ActivatableClassId="FamilyValueProp.FamilyValuePropControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="FamilyValueProp.FamilyValuePropControlViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="FamilyValueProp.BooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="FamilyValueProp.NegatedBooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="FamilyValueProp.XamlMetaDataProvider" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="FamilyValuePropAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>FamilyValuePropAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SystemSettingsExtensions.dll</Path>
+        <ActivatableClass ActivatableClassId="ValueBanner.AlertBannerControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.AlertBannerControlViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.BooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.CreativeListToColumnWidthConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.IdealStateFeatureControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.IdealStateFeatureControlProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.IdealStateHelpers" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.IdealStateResult" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.NegatedBooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.SharedHeightContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerControlProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerControlViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerCreativeViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerCreativeItemViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.ValueBannerDialog" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ValueBanner.XamlMetaDataProvider" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="ValueBannerAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>ValueBannerAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>SystemTray.dll</Path>
+        <ActivatableClass ActivatableClassId="SystemTray.AdaptiveTextBlock" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ChevronSystemTrayIconDataModel2" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ClockSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ClockSystemTrayIconDataModel2" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.EmojiAndMoreSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconClickedEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconConfiguration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconContentMetadata" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.IconViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ImageIconContent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ImageIconContentViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.ImeSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.InkWorkspaceSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.LocationSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.MicrophoneSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.MiracastConnection" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.NotificationAreaIcons" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.NotificationAreaIconsDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.OmniButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.Stack" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.StackConfiguration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.StackConfigurationChangedEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.StackListView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.StackViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayConfiguration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayConfigurationChangedEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayController" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTraySecondaryController" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayFrame" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.NotificationAreaOverflow" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.NotifyIconDragVisual" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayResources" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.SystemTrayViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.TextData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.TextIconContent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.TextIconContentViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.StudioEffectsSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.TouchKeyboardSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.WirelessDisplaySystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.VirtualTouchpadSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.WindowsUpdateSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.AudioSharingSystemTrayIconDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="SystemTray.XamlMetaDataProvider" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="SystemTrayAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>SystemTrayAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>Taskbar.View.dll</Path>
+                <ActivatableClass ActivatableClassId="DynamicLottie.DynamicLottieSource" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Taskbar.View.dll</Path>
+        <ActivatableClass ActivatableClassId="Taskbar.AepAnimatedIcon" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.AugmentedEntryPointButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.Badge" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.ExperienceToggleButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.FlyoutFrame" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.Gripper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.AppTaskHoverCardView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.MultiTaskbarController" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.OverflowFlyoutLayout" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.OverflowFlyoutList" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.OverflowToggleButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.ShareWindowButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarBackground" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarController" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarFrame" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarItemTemplateSelector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarResources" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskItemThumbnailList" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskItemThumbnailView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskItemThumbnailViewAutomationPeer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskListButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskListButtonAutomationPeer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskListButtonPanel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.TaskbarFrameAutomationPeer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.ThumbBarButtonAutomationPeer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.ViewServices" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Taskbar.XamlMetaDataProvider" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="TaskbarAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>TaskbarAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>TwinSxS.dll</Path>
+                <ActivatableClass ActivatableClassId="TwinSxS.XamlMetaDataProvider" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="TwinSxS.TwinSxSHelper" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="TwinSxS" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>TwinSxSAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>VoiceAccessHost.dll</Path>
+                <ActivatableClass ActivatableClassId="VoiceAccessHost.VoiceAccessExports" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="VoiceAccessAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>VoiceAccessAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>SpeechRecognizerExtension.dll</Path>
+                <ActivatableClass ActivatableClassId="SpeechRecognizerExtension.SpeechRecognizerExtensionImpl" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="SpeechRecognizerExtension" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>SpeechRecognizerExtensionAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>VoiceAccessPlugin.dll</Path>
+                <ActivatableClass ActivatableClassId="VoiceAccessPlugin.VAPluginExtensionImpl" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="VoiceAccessPluginAlias" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>VoiceAccessPluginAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>WinAct.AOT.dll</Path>
+                <ActivatableClass ActivatableClassId="WinActCore.WinActPaletteItemSource" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="WinActCore.WinActSettingsCommandResolverExtension" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="WinAct" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>WinActAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+    </Extensions>
+</Package>

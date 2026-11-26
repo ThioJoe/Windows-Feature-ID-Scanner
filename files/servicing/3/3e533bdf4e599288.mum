@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Bluetooth-Package" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Bluetooth" releaseType="Feature Pack">
+    <update name="56e8d96d9e1f97790f3d812656a10348" restart="required">
+      <driver inf="bth.inf" ranking="normal">
+        <assemblyIdentity name="dual_bth.inf" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="27d8250cdfc8773149cfd6f4505f4ff1" restart="required">
+      <driver inf="bthlcpen.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthlcpen.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1fa762dc9a5d1a46cebd038bbda6874c" restart="required">
+      <driver inf="bthleenum.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthleenum.inf" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="f6ca8cccdfbe84cac69a3dd69aab5bb3" restart="required">
+      <driver inf="bthoob.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthoob.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="e4afcbf9f805a68ecf649e79e32dfe2c" restart="required">
+      <driver inf="tdibth.inf" ranking="normal">
+        <assemblyIdentity name="dual_tdibth.inf" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="78dd90c948972e20129e34ff639d8695" restart="required">
+      <driver inf="umpass.inf" ranking="normal">
+        <assemblyIdentity name="dual_umpass.inf" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="256bd36882f001bf052dc6291a410b73">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Bluetooth-Deployment" version="10.0.26100.9711" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,92 @@
+﻿<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" id="_htmlRoot" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/deviceLink-page.js" src="/lib/require.js"></script>
+
+    <style>
+        .disabledText {
+            color: gray;
+        }        .error {
+            color: #d92c2c;
+        }
+
+        .success {
+            color: #00a300;
+        }
+
+        .optionTitle {
+            font-weight: bold;
+        }
+
+        .qr {
+            max-height: 95%;
+            max-width: 95%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .scroll-view {
+            min-width: unset !important; /* To keep the scroll view from clipping */
+        }
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container" id="dap-body-container">
+        <oobe-header params="title: $root.pageTitle" aria-live="assertive"></oobe-header>
+
+        <div class="container-content no-scroll" style="margin-bottom:20px">
+            <div id="scrollableSection" class="scroll-view body-sub-header">
+                <div id="deviceLinkOptionsVirtualPageSection" data-bind="if: $root.showDeviceLinkOptionsVirtualPage">
+                    <p id="option1Title" class="optionTitle" data-bind="html: $root.option1Title"></p>
+                    <p><img id="qrCodeImage" class="qr" /></p>
+                    <p id="option1Body" data-bind="html: $root.option1Body"></p>
+
+                    <p id="option2Title" class="optionTitle" data-bind="html: $root.option2Title"></p>
+                    <p id="option2Body1" data-bind="html: $root.option2Body1"></p>
+                    <div>
+                        <!-- Show the link as gray as long as it's still processing.  As long as it's processing, also disable click action. -->
+                        <a href="#" class="link" style="padding-left:10px" data-bind="css: { 'link' : $root.exportDeviceLinkInfoEnabled(), 'disabledText' : !$root.exportDeviceLinkInfoEnabled() }, text: $root.exportDeviceLinkInfoText, click: $root.exportDeviceLinkInfoEnabled() ? $root.onExportDeviceLinkInfoClickAsync.bind($root) : null"></a>
+                        <div id="exportLinkSuccessResultSection" data-bind="if: $root.showExportLinkSuccess">
+                            <p id="exportLinkSuccessResult" style="padding-left:10px; font-weight: bold;" class="success" data-bind="html: $root.exportLinkSuccessResult"></p>
+                        </div>
+                        <div id="exportLinkErrorResultSection" data-bind="if: $root.showExportLinkError">
+                            <p id="exportLinkErrorResult" style="padding-left:10px; font-weight: bold;" class="error" data-bind="html: $root.exportLinkErrorResult"></p>
+                        </div>
+                    </div>
+                    <p id="option2Body2" data-bind="html: $root.option2Body2"></p>
+                </div>
+
+                <div id="deviceLinkProgressVirtualPageSection" data-bind="if: $root.showDeviceLinkProgressVirtualPage">
+                    <oobe-light-progress params="progressText: progressStatusText"></oobe-light-progress>
+                </div>
+
+                <div id="deviceLinkSuccessResultVirtualPageSection" data-bind="if: $root.showDeviceLinkSuccessResultVirtualPage" aria-live="polite" aria-atomic="true">
+                    <p id="successResultBody" data-bind="html: $root.successResultBody"></p>
+                </div>
+
+                <div id="deviceLinkErrorResultVirtualPageSection" data-bind="if: $root.showDeviceLinkErrorResultVirtualPage" aria-live="polite" aria-atomic="true">
+                    <p id="errorResultBody" class="error" data-bind="html: $root.errorResultBody"></p>
+                </div>
+
+                <div id="deviceLinkNotSupportedResultVirtualPage" data-bind="if: $root.showDeviceLinkNotSupportedResultVirtualPage" aria-live="polite" aria-atomic="true">
+                    <p id="notSupportedResultBody" class="error" data-bind="html: $root.notSupportedResultBody"></p>
+                </div>
+            </div>
+        </div>
+
+        <oobe-footer class="holo-small-button" params="flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

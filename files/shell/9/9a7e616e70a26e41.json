@@ -1,0 +1,215 @@
+{
+  "manifest_version": "0.3",
+  "name": "filesearch-mcp-server",
+  "display_name": "File Search MCP",
+  "version": "0.3.0",
+  "description": "This agent connector helps search for local and cloud files.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "localization": {
+    "resources": "ShellMcpServers/Resources/${locale}/FileSearchMcpServer.json",
+    "default_locale": "en-US"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "FileSearch"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "filesearch-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "search_files",
+ 	          "description": "Search for files on all available folders by name, AQS syntax content or keywords. The search can optionally be filtered to a date range or extension. This file search will support finding local or cloud provider files, like OneDrive, using semantic and lexical search. Semantic search and cloud provider search is limited to Copilot+PCs. Other cloud providers can be supported if they join IStorageProviderSearchHandleFactor. Link files (shortcut.url and .lnk) are discluded from these search queries. The matched files are returned in the structured content under the \"results\" key, alongside notices and diagnostics.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "startingDir": {
+                    "description": "Starting root directory where the file search file will take place. For example: C:\\Users\\AdminUser\\Documents",
+                    "type": "string"
+                  },
+                  "searchPatterns": {
+                    "description": "Search patterns to match files or directories, for all files can use *. This can be natural language or can use AQS syntax, for example: \u0022date:\u003E5/5/2025 AND receipt\u0022",
+                    "type": "string"
+                  },
+                  "keyboardLanguage": {
+                    "description": "Language that the user is typing in using the culture name in the format languagecode2-country/regioncode2. Default is \u0022en-US\u0022",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": "en-US"
+                  },
+                  "fileTypes": {
+                    "description": "File extension to make file matches listing each file type with comma seperator. An example is \u0022.pdf,.txt,.docx,.pptx\u0022 for documents (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "searchOrder": {
+                    "description": "Specifies how to sort the results. Accepted values: OrderBySearchRank, OrderByTitle, OrderByDate. Default is OrderBySearchRank. Note: OrderByTitle and OrderByDate rely on the Windows Search index. Windows indexes the user's profile folders (Documents, Pictures, Desktop, Downloads, etc.) by default, and users may have added other locations. If the target location is not indexed, these sort orders are ignored and results are returned in default order instead — the search still succeeds, so it is always safe to request any sort order. (optional)",
+                    "type": "string",
+                    "default": "OrderBySearchRank"
+                  },
+                  "startDate": {
+                    "description": "Start date in a valid format for file search to start on (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "endDate": {
+                    "description": "End date in a valid format for file search to end on (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "shouldReturnSnippet": {
+                    "description": "Boolean value that if true, includes a short summary for each file is returned. This summary is only generated for text based file types like docx, pdf, pptx, txt, xlxs. Set to true when snippets are explicitly requested. (optional)",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "default": false
+                  },
+                  "filePropertiesRequested": {
+                    "description": "File properties [Windows.Storage.FileProperties] that the agent requests to be returned. This properties must be delimited by comma, for example, System.DateCreated,System.ItemPathDisplay (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  }
+                },
+                "required": [
+                  "startingDir",
+                  "searchPatterns"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "results": {
+                    "description": "The files matched by the search.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "snippet": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "filePropertiesRequested": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "notices": {
+                    "description": "Human-readable advisories about how the search was serviced, such as an unsupported sort order falling back to the default order, a non-indexed search location, or link files being excluded from the query.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "diagnostics": {
+                    "description": "Structured, machine-readable signals describing how the search was serviced (which indexers ran, whether sort order fell back, and the location's index state), mirroring the human-readable notices so clients can react programmatically instead of parsing notice text.",
+                    "type": "object",
+                    "properties": {
+                      "semanticIndexIncluded": {
+                        "description": "True if the semantic index was queried for this search. The semantic index matches files by intent and meaning using the model it is powered by, rather than by exact name or keyword hits. Requires a Copilot+ PC and a ready indexer (IndexedState PartiallyIndexed or FullyIndexed) at the searched location; false when the device lacks the semantic index or the location is not yet indexed, in which case only lexical results are returned. The semantic index does not rely on the system indexer directly, but a ready indexer is required to merge its matches into the combined result set.",
+                        "type": "boolean"
+                      },
+                      "cloudProvidersIncluded": {
+                        "description": "True if cloud providers such as OneDrive were queried for this search, so results may include files that are not present locally. Requires provider support and a ready indexer (IndexedState PartiallyIndexed or FullyIndexed) at the searched location; false when providers are unsupported or the location is not yet indexed, in which case only local files are returned. Cloud providers do not rely on the system indexer directly, but a ready indexer is required to merge their matches into the combined result set.",
+                        "type": "boolean"
+                      },
+                      "usedFallbackQuery": {
+                        "description": "True if the requested searchOrder relied on the Windows Search index (OrderByTitle or OrderByDate) but the searched location is not indexed, so that sort order was ignored and results were returned in the default order instead. The search still succeeds; only the ordering of results should not be relied upon.",
+                        "type": "boolean"
+                      },
+                      "indexedState": {
+                        "description": "How much of the searched location Windows Search has catalogued in its prebuilt index. Windows Classic search indexing is the default, and it only indexes a limited set of locations rather than the entire PC, so many locations are NotIndexed. Accepted values: FullyIndexed (all catalogued; fastest, best results), PartiallyIndexed (indexing still in progress), NotIndexed (not catalogued; scanned on demand, slower and lower quality), or Unknown. Semantic and cloud-provider search only run when FullyIndexed or PartiallyIndexed.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "semanticIndexIncluded",
+                      "cloudProvidersIncluded",
+                      "usedFallbackQuery",
+                      "indexedState"
+                    ]
+                  }
+                },
+                "required": [
+                  "results",
+                  "notices",
+                  "diagnostics"
+                ]
+              },
+              "execution": {
+                "taskSupport": "optional"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

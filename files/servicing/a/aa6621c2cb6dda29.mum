@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Facial Recognition (Windows Hello) Software Device" displayName="Facial Recognition (Windows Hello)" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Hello-Face-Package" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="24" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="all" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.17637.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Hello.Face.20134" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="18b2fdea17ba73e7fc526f913ca25b84" restart="required">
+      <driver inf="helloface.inf" ranking="normal">
+        <assemblyIdentity name="dual_helloface.inf" version="10.0.26100.9444" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+        <mum:driverExtended xmlns:mum="urn:schemas-microsoft-com:asm.v3" deviceInstallRequired="true" />
+      </driver>
+    </update>
+  </package>
+</assembly>

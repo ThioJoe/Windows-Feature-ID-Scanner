@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0415" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0415" releaseType="Feature Pack">
+    <update name="cef4e564f5c18cc322204a3557f14132">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04150" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="82FEB27CAEC6484002BC137C5F6F9B1CA5BBC59829D82E0192BA66231939377E">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-MinstoreEvents-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="76E3E79083759846D8335E415574D18D25B04F3E93154FAED87E194DAE7CA96C">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Storage-Tiering-Events-Container-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9EC1F0E36AF2BCEFE27C7D334834A78002FA293840AB928FBF25EBF9B8127DB9" restart="required">
+      <driver inf="bthprint.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthprint.inf" version="10.0.28000.3454" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="AE4C32DC0D99FB878FFB9B5B60FF37998B4924E26B20D1F48F4ABEA9AC8B10B7" restart="required">
+      <driver inf="bthspp.inf" ranking="normal">
+        <assemblyIdentity name="dual_bthspp.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B73A1913D7EE8931447918F51A476A1FCE187B53F980326174A42E12A0D76148">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-BootEnvironment-OS-Resume-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="704DCCA62193BDCB5DCE1422CD5C735E90DC615AE95D664B75E55121299A719C">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-CrashDump-Package" version="10.0.28000.3393" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2BD263FB4B7BE439D231DA5F5FB20D50556FDFA788F01CBF69C6F501FB7524AF">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-Crypto-RNG-instrumentation-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

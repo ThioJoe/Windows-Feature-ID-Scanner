@@ -1,0 +1,298 @@
+﻿<!-- ================================================== -->
+<!--                                                    -->
+<!--   Copyright (C) Microsoft. All rights reserved.    -->
+<!--                                                    -->
+<!-- ================================================== -->
+
+<Types>
+
+    <!-- For MSFT_OdbcDriver -->
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDriver</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Attribute</Name>
+                <GetScriptBlock>
+                    $h = @{};
+                    foreach ($keyValue in $this.KeyValuePair) 
+                    {
+                        $h.Add( $keyValue.Key, $keyValue.Value )
+                    }
+                    $h
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+
+    <!-- For MSFT_OdbcDsn -->
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDsn</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Attribute</Name>
+                <GetScriptBlock>
+                    $h = @{};
+                    foreach ($keyValue in $this.KeyValuePair) 
+                    {
+                        $h.Add( $keyValue.Key, $keyValue.Value )
+                    }
+                    $h
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>PropertyValue</Name>
+                <GetScriptBlock>
+                    $PropArray = @();
+                    foreach ($keyValue in $this.KeyValuePair) 
+                    {
+                        $PropArray = $PropArray + ($keyValue.Key + "=" + $keyValue.Value) 
+                    }
+                    $PropArray
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+
+    <!-- For MSFT_WdacBidTrace -->
+    <Type>
+        <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace</Name>
+        <Members>
+
+            <ScriptProperty>
+                <Name>TargetScope</Name>
+                <GetScriptBlock>
+                    switch ($this.Mode)
+                    {
+                        1 {$this.PathOrFolder}
+                        2 {$this.PathOrFolder + "\*"}
+                        3 {"*"}
+                        default {"Unknown Mode"}
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
+            <ScriptProperty>
+                <Name>TargetProcessId</Name>
+                <GetScriptBlock>
+                    if ($this.ProcessId -eq [System.UInt32]::maxvalue)
+                    {
+                        "*"
+                    }
+                    else
+                    {
+                        [System.String] $this.ProcessId
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+
+        </Members>
+    </Type>
+
+</Types>
+
+<!-- SIG # Begin signature block -->
+<!-- MIIl5QYJKoZIhvcNAQcCoIIl1jCCJdICAQExDzANBglghkgBZQMEAgEFADB5Bgor -->
+<!-- BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG -->
+<!-- KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCClZG+aJ3tXNkNU -->
+<!-- 5Hb3INI94Yc57vh/Y4qbfBc3F/uEDqCCCvQwggUlMIIEDaADAgECAhMzAAAAF9Tf -->
+<!-- 2eOVC+fvAAAAAAAXMA0GCSqGSIb3DQEBCwUAMGwxCzAJBgNVBAYTAlVTMR4wHAYD -->
+<!-- VQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBX -->
+<!-- aW5kb3dzIFByb2R1Y3Rpb24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYwHhcNMjYw -->
+<!-- ODA2MTc0OTIwWhcNMjcwODA1MTc0OTIwWjBwMQswCQYDVQQGEwJVUzETMBEGA1UE -->
+<!-- CBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9z -->
+<!-- b2Z0IENvcnBvcmF0aW9uMRowGAYDVQQDExFNaWNyb3NvZnQgV2luZG93czCCASIw -->
+<!-- DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJloWIQ6mqSt0azlXI7waB3Wtr/P -->
+<!-- 4yHQ69OTpOZCfjq2MwLoaQ7j8X+sGHqUI9z65TkZFWjED7Q55BK3nBqWfWdVhXn2 -->
+<!-- T5CgyJR2LqZAkIvx6jd3QmDgRMCZXz9pnzWzd2JKwfB31pyquRTG5MmdjtOi7Rle -->
+<!-- M4or3MjKCTGBxi8vaJllVqlA0/xdxaWI64WW1GcjgUbZbUfZ02MjfvmXesd/nCor -->
+<!-- 7HR2p3cizqBugUoNKjuB/bhpFJfsx11ccMuXQ3fC4hv/m/uZfSGBZwL2LrLBG2Em -->
+<!-- 9ZQC9jNQChs4o8rFKkhGW+IGpsnIQeeFjim3qciGwtZ9VqhIis/kpRmlfSUCAwEA -->
+<!-- AaOCAbowggG2MB8GA1UdJQQYMBYGCisGAQQBgjcKAwYGCCsGAQUFBwMDMB0GA1Ud -->
+<!-- DgQWBBSc21gFA3vFE4OHDFEiT4XhlWatCjBFBgNVHREEPjA8pDowODEeMBwGA1UE -->
+<!-- CxMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMRYwFAYDVQQFEw0yMjk4NzkrNTA4OTc3 -->
+<!-- MB8GA1UdIwQYMBaAFOfKJCr66qKUtVoWB+Zqacw1k3C8MHcGA1UdHwRwMG4wbKBq -->
+<!-- oGiGZmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY3JsL01pY3Jvc29m -->
+<!-- dCUyMFdpbmRvd3MlMjBQcm9kdWN0aW9uJTIwUENBJTIwMjAyNiUyMFJTQTIwNDgt -->
+<!-- U0hBMjU2LmNybDCBhAYIKwYBBQUHAQEEeDB2MHQGCCsGAQUFBzAChmhodHRwOi8v -->
+<!-- d3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jvc29mdCUyMFdpbmRv -->
+<!-- d3MlMjBQcm9kdWN0aW9uJTIwUENBJTIwMjAyNiUyMFJTQTIwNDgtU0hBMjU2LmNy -->
+<!-- dDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQBh6ENoggkphAvYTCux -->
+<!-- OkBjJrYSftpof+YjJGBvtzuGa003rLJA4Gq+7M63933J4Uh1KurEEhs4TEtmK5dS -->
+<!-- XLY84TKgQuo46+I84ozHjbjYhZ0Jtkz2jPVcXDUhxgKeZ+cSiVRPZ8/bBJOXx+wm -->
+<!-- H76oXEBaGUgkEnXDCLOot1HCO/YLiHrMNJsGwZDnUCOITVPKYB8c22DNqcEVZ3cb -->
+<!-- Qw6mZ6ZF+KY1bHaXT8hAXHDgcjbNShiBUOjuNow+ti/LqzCo/GufhFved5F20Ylg -->
+<!-- iTxxXO0SCvkUjXAtCQmtxBLH8TLHpcM8nP4ksOYx5YMpA3fwCGnhL15Qd8SWNe6I -->
+<!-- aGiDMIIFxzCCA6+gAwIBAgITMwAAAB7pNSvshgFUFQAAAAAAHjANBgkqhkiG9w0B -->
+<!-- AQsFADCBiDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNV -->
+<!-- BAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAG -->
+<!-- A1UEAxMpTWljcm9zb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTAw -->
+<!-- HhcNMjYwODA0MTkzOTE1WhcNMzEwODA0MTk0OTE1WjBsMQswCQYDVQQGEwJVUzEe -->
+<!-- MBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMT0wOwYDVQQDEzRNaWNyb3Nv -->
+<!-- ZnQgV2luZG93cyBQcm9kdWN0aW9uIFBDQSAyMDI2IFJTQTIwNDgtU0hBMjU2MIIB -->
+<!-- IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApMZe82jAXg4ate5zqU+Tj14y -->
+<!-- uORQ6z7lETN2fqGvoqQcclelvX7NSXJxtDc0QpW5DPMa9aUEVFS73cxbfJeReeFc -->
+<!-- fHH1kltXrzQVIEiAEISP67hKXR6/si4JNrb++FxDPcJg11OI37SSubSkZBD+S2c/ -->
+<!-- uQtajuykrizFWjL0oXfYqkCcYUn8SjdOp6TuojJzMgn0B711x5vywd/cVf4mm/3k -->
+<!-- 2IDPqfJWC75+5jGiL4+7eKZBjck52f+iiWP1ahwniuPd3s1kemrW13xJe5Qs6vrD -->
+<!-- T67866ETsr/zgtGVI5dOQCxQ04qn82LnSx1RWcsc7Rl/7Dqja+QCJGkHT9a+5QID -->
+<!-- AQABo4IBQzCCAT8wEAYJKwYBBAGCNxUBBAMCAQAwHQYDVR0OBBYEFOfKJCr66qKU -->
+<!-- tVoWB+Zqacw1k3C8MBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQE -->
+<!-- AwIBhjAPBgNVHRMBAf8EBTADAQH/MB8GA1UdIwQYMBaAFNX2VsuP6KJcYmjRPZSQ -->
+<!-- W9fOmhjEMFYGA1UdHwRPME0wS6BJoEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNv -->
+<!-- bS9wa2kvY3JsL3Byb2R1Y3RzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNybDBa -->
+<!-- BggrBgEFBQcBAQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6Ly93d3cubWljcm9zb2Z0 -->
+<!-- LmNvbS9wa2kvY2VydHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3J0MA0GCSqG -->
+<!-- SIb3DQEBCwUAA4ICAQBhPerrXYM3sv/O84BFY9gQykq2S3T3Wi110PtO80dBsZsF -->
+<!-- fkuuWCeY4oD6LbLJ4NxgVc6asZsBo/Xtsz76ZNK5ezeqN+ieuFaj1GaAA3G7Zvay -->
+<!-- OMrtHVwnyUbTZ1qdlG1qnOe4xRBji+BnFnZffB0OnqR4Fl6Ydkjx8VxbarZq8Dsf -->
+<!-- 9A8IaiNyr5+ZLnNyeDWiVLJNv7f+Q7+3009BzpckNy4Z4adeaKkYFM8pF6w2JCQs -->
+<!-- aq6kztfO3iXmPr5bvbFju/KnZOwFfSruARIWg5AhANYPaZjZMWSvQES/Ez/dQCzA -->
+<!-- 7xxWwAeCLkqw7BP/I+g7V2c0c8UYMROXE5iztChSTymTVeHPEcmr2GnFhll8mSbs -->
+<!-- hwdnNi/a4rzFF5gWcfFVh3o7q0WL7Qpfd0XgimYFBP/FkxrmA+akK9mC1/5SRCSN -->
+<!-- e0IZQqmtBIyA2yD3E4ijyUAvrRHl42mFRE8+MHOi4+GWcPt8CWkIJbPE59aUzrw8 -->
+<!-- gZTDMgEcx2WconLvTbpG+k1Dv6W6Dd/GoUMJo3x9WKexkiApSs/twhj9UguA3LGa -->
+<!-- 2pQBj2YrRk8I73j0f805QdWPwrOLRYmGggJXvY2+GLiNltRAAN7PYv5c4owHpkLN -->
+<!-- jYo/ZwIwMe20aQ3MDI5LSEjZxDgZPR3Uu72jThVgzlxOjrKeKiBdfmXTQYSNLjGC -->
+<!-- GkcwghpDAgEBMIGDMGwxCzAJBgNVBAYTAlVTMR4wHAYDVQQKExVNaWNyb3NvZnQg -->
+<!-- Q29ycG9yYXRpb24xPTA7BgNVBAMTNE1pY3Jvc29mdCBXaW5kb3dzIFByb2R1Y3Rp -->
+<!-- b24gUENBIDIwMjYgUlNBMjA0OC1TSEEyNTYCEzMAAAAX1N/Z45UL5+8AAAAAABcw -->
+<!-- DQYJYIZIAWUDBAIBBQCggfowGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwLwYJ -->
+<!-- KoZIhvcNAQkEMSIEIOnP+CKCsGY/RpbZDBCw4SR6Y5xk3pFTUb4vbxUS7kaBMFAG -->
+<!-- CisGAQQBgjcKAxwxQgxANDA0OUVBRUE0RTI3NjEyQUUwMzhDOEExNEZGMTQ4MzA1 -->
+<!-- MUYzRjA5NzI2NERBMjFCMTk1M0QwRjQxNzk0RDdDRjBaBgorBgEEAYI3AgEMMUww -->
+<!-- SqAkgCIATQBpAGMAcgBvAHMAbwBmAHQAIABXAGkAbgBkAG8AdwBzoSKAIGh0dHA6 -->
+<!-- Ly93d3cubWljcm9zb2Z0LmNvbS93aW5kb3dzMA0GCSqGSIb3DQEBAQUABIIBAGzv -->
+<!-- D490A9KtTAdVHxXD6o3/qOGyZQpSOjAuRf0F0zFwlNlKr0rg0p9POS87fTKbE0XJ -->
+<!-- CSCVoGtG6MyqEkpwOfCFEkmmINai0glTmRzAQKx4sJ8jRQyyo4zQj2/Rja0k5izr -->
+<!-- AWMrpKyz0q99m7ail2vqqZxkDCXO881nHrylM6KcDtTmfFa0KqRq9bZ38rExVClj -->
+<!-- GHBKZZeEpIkZA+v7xudaV11weOvoPRvbE0ZEIahQaT+M4wBlXwN7mj34iVmseyDA -->
+<!-- 9cS2CR69si6xrJVe1NnRwBCy8H3Kz+2KkN621X94+HMirFj82PmyM+H8L2yWdC9N -->
+<!-- PUAgWV94C0EOk8W/eFuhgheXMIIXkwYKKwYBBAGCNwMDATGCF4Mwghd/BgkqhkiG -->
+<!-- 9w0BBwKgghdwMIIXbAIBAzEPMA0GCWCGSAFlAwQCAQUAMIIBUgYLKoZIhvcNAQkQ -->
+<!-- AQSgggFBBIIBPTCCATkCAQEGCisGAQQBhFkKAwEwMTANBglghkgBZQMEAgEFAAQg -->
+<!-- zU3Gwmm0KFal//I7RNQGs4wK5I8sdrFaksn3agNT/BsCBmqqrVDe8BgTMjAyNjEx -->
+<!-- MDkwMjE1MDUuMDE3WjAEgAIB9KCB0aSBzjCByzELMAkGA1UEBhMCVVMxEzARBgNV -->
+<!-- BAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jv -->
+<!-- c29mdCBDb3Jwb3JhdGlvbjElMCMGA1UECxMcTWljcm9zb2Z0IEFtZXJpY2EgT3Bl -->
+<!-- cmF0aW9uczEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNOOkUwMDItMDVFMC1EOTQ3 -->
+<!-- MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNloIIR7TCCByAw -->
+<!-- ggUIoAMCAQICEzMAAAIpDtVkKrSX8hoAAQAAAikwDQYJKoZIhvcNAQELBQAwfDEL -->
+<!-- MAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1v -->
+<!-- bmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWlj -->
+<!-- cm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTAwHhcNMjYwMjE5MTk0MDA3WhcNMjcw -->
+<!-- NTE3MTk0MDA3WjCByzELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24x -->
+<!-- EDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlv -->
+<!-- bjElMCMGA1UECxMcTWljcm9zb2Z0IEFtZXJpY2EgT3BlcmF0aW9uczEnMCUGA1UE -->
+<!-- CxMeblNoaWVsZCBUU1MgRVNOOkUwMDItMDVFMC1EOTQ3MSUwIwYDVQQDExxNaWNy -->
+<!-- b3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8A -->
+<!-- MIICCgKCAgEAniLRauM9aAmEplGZqWA7GyVhLvvtW23PzM+z2tyNGV+RDjfloqwd -->
+<!-- Bb5xpchUVMpczuUyV2X1PEBTzlPeT9WNTmfCfqrgORvgFkgTq/+PLHJdLPUQaaoE -->
+<!-- zKv5W8qgc+AjJr1UdkHrwIFaeGtYW5jpvRu2FnsuvDeRea0g2FdMDJYOCMvGEbhY -->
+<!-- ETdngaVV7fSLxWhZgZ0C2X6Ntimdy/D1hB1IV1OXSzkmaE36qkPwfnXluegAjJ5x -->
+<!-- 4z8WbvrMx4WTC1KzFk4LPSewp/A7XpXCo/WjPtGau7ZEgxwq8KOngkn8N3JZLV0U -->
+<!-- a3ZrHHGpfEQg4jRRYGbMqcBdmhgBepIONfkJfrYV6ZzjFB+JjwgCWVqdMw1qMLCv -->
+<!-- 2KOYxy9aU/wIGy9xaAMuHG4TiOD29XkBRvo0+7JEthf2/mQAlANRA2fN9CvgbtMs -->
+<!-- PhaUhsvLaXdbM5N3FGIyKcyBuM96BTZokiTfGHTXeEh7BEeQ5LOW8Yim6b5n6zgN -->
+<!-- /Y02+xFtk0+8kloCSEn703s7i5kLE1UszbL2qVZR4RNswag8ONPZ7zrYrQhW54YV -->
+<!-- zX2rc29vhn9rV9rOmAWtedQgv/Pnpib73oF21jbnc2LfHBUaJtD2fnyUYYQX3Uqg -->
+<!-- qq/EHjhifFWJZsRV6sdUnQ0pEwkoKbLJBqmcIf+rpgNYOC+83hgTZ4ECAwEAAaOC -->
+<!-- AUkwggFFMB0GA1UdDgQWBBQnTUWki/QFvEL2kNtVo0QFyjeDOzAfBgNVHSMEGDAW -->
+<!-- gBSfpxVdAF5iXYP05dJlpxtTNRnpcjBfBgNVHR8EWDBWMFSgUqBQhk5odHRwOi8v -->
+<!-- d3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NybC9NaWNyb3NvZnQlMjBUaW1lLVN0 -->
+<!-- YW1wJTIwUENBJTIwMjAxMCgxKS5jcmwwbAYIKwYBBQUHAQEEYDBeMFwGCCsGAQUF -->
+<!-- BzAChlBodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpb3BzL2NlcnRzL01pY3Jv -->
+<!-- c29mdCUyMFRpbWUtU3RhbXAlMjBQQ0ElMjAyMDEwKDEpLmNydDAMBgNVHRMBAf8E -->
+<!-- AjAAMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMIMA4GA1UdDwEB/wQEAwIHgDANBgkq -->
+<!-- hkiG9w0BAQsFAAOCAgEAPcHO9pX/3Mw4adPU9zxgDDkIcZf8dOI6RO7d/RXqkEp9 -->
+<!-- lKeg1c4YMJ8wqmNzSIS7VGlq3ezcb64WQ3GvieMc760UDTx3kUKZyVXh7Mk7ud4E -->
+<!-- wZVAdU0SOjp2bfwFZkfaDCfzQTqgfnfkjm/D8es0YEcJOtrBZDpAeZYoPwzJ2BHk -->
+<!-- f2plvR3aPL13Cpmmvw20jgB0nX2RbfoqjGXzZZBDp+9f0QCkzb+EKav9hYXIzDJk -->
+<!-- pCIbIQXQVQdFY5pMBX4VVH+U07iyfbA0eBMgrzmSdweoOyMOlo0McnI8JH87FTE6 -->
+<!-- X7rCeUsHThy/Mhj1mTnj48GvCEl1rOpIlSv+ktPyVW9S6cacmCkREI51P+TnnCrd -->
+<!-- jl5R3cBVma8AIvfET2WuhBMXG/yxi39dLTR47tXk5aIWNI8zWUNAQ4ErjGYDFPvB -->
+<!-- BI7TEDCA55TxhFDjeyx1xx9Ci9BQNNTxFlWSq6/y1Drrg0zRc8OeNxTzKeIJAiBZ -->
+<!-- SnUbnIkdSFzpPl7Huq4/bSRWIFZ/uOAR6Ltl0HuUV99Hn9wEFmtJschg6icxrFd1 -->
+<!-- +fmzUHjFfPIlrpST6ubIJxhvTvx9fxx+B7DvWShl/1qyaUJhbkK0zkePV473mgtM -->
+<!-- WhZhrDYPkYW7Q+ak5J/iEg78NCCfxP1VzXc/8loKJeq+dO4U/LADLqZ4ZBdrsNQw -->
+<!-- ggdxMIIFWaADAgECAhMzAAAAFcXna54Cm0mZAAAAAAAVMA0GCSqGSIb3DQEBCwUA -->
+<!-- MIGIMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH -->
+<!-- UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMTIwMAYDVQQD -->
+<!-- EylNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkgMjAxMDAeFw0y -->
+<!-- MTA5MzAxODIyMjVaFw0zMDA5MzAxODMyMjVaMHwxCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1pY3Jvc29mdCBUaW1lLVN0YW1w -->
+<!-- IFBDQSAyMDEwMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA5OGmTOe0 -->
+<!-- ciELeaLL1yR5vQ7VgtP97pwHB9KpbE51yMo1V/YBf2xK4OK9uT4XYDP/XE/HZveV -->
+<!-- U3Fa4n5KWv64NmeFRiMMtY0Tz3cywBAY6GB9alKDRLemjkZrBxTzxXb1hlDcwUTI -->
+<!-- cVxRMTegCjhuje3XD9gmU3w5YQJ6xKr9cmmvHaus9ja+NSZk2pg7uhp7M62AW36M -->
+<!-- EBydUv626GIl3GoPz130/o5Tz9bshVZN7928jaTjkY+yOSxRnOlwaQ3KNi1wjjHI -->
+<!-- NSi947SHJMPgyY9+tVSP3PoFVZhtaDuaRr3tpK56KTesy+uDRedGbsoy1cCGMFxP -->
+<!-- LOJiss254o2I5JasAUq7vnGpF1tnYN74kpEeHT39IM9zfUGaRnXNxF803RKJ1v2l -->
+<!-- IH1+/NmeRd+2ci/bfV+AutuqfjbsNkz2K26oElHovwUDo9Fzpk03dJQcNIIP8BDy -->
+<!-- t0cY7afomXw/TNuvXsLz1dhzPUNOwTM5TI4CvEJoLhDqhFFG4tG9ahhaYQFzymei -->
+<!-- XtcodgLiMxhy16cg8ML6EgrXY28MyTZki1ugpoMhXV8wdJGUlNi5UPkLiWHzNgY1 -->
+<!-- GIRH29wb0f2y1BzFa/ZcUlFdEtsluq9QBXpsxREdcu+N+VLEhReTwDwV2xo3xwgV -->
+<!-- GD94q0W29R6HXtqPnhZyacaue7e3PmriLq0CAwEAAaOCAd0wggHZMBIGCSsGAQQB -->
+<!-- gjcVAQQFAgMBAAEwIwYJKwYBBAGCNxUCBBYEFCqnUv5kxJq+gpE8RjUpzxD/LwTu -->
+<!-- MB0GA1UdDgQWBBSfpxVdAF5iXYP05dJlpxtTNRnpcjBcBgNVHSAEVTBTMFEGDCsG -->
+<!-- AQQBgjdMg30BATBBMD8GCCsGAQUFBwIBFjNodHRwOi8vd3d3Lm1pY3Jvc29mdC5j -->
+<!-- b20vcGtpb3BzL0RvY3MvUmVwb3NpdG9yeS5odG0wEwYDVR0lBAwwCgYIKwYBBQUH -->
+<!-- AwgwGQYJKwYBBAGCNxQCBAweCgBTAHUAYgBDAEEwCwYDVR0PBAQDAgGGMA8GA1Ud -->
+<!-- EwEB/wQFMAMBAf8wHwYDVR0jBBgwFoAU1fZWy4/oolxiaNE9lJBb186aGMQwVgYD -->
+<!-- VR0fBE8wTTBLoEmgR4ZFaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraS9jcmwv -->
+<!-- cHJvZHVjdHMvTWljUm9vQ2VyQXV0XzIwMTAtMDYtMjMuY3JsMFoGCCsGAQUFBwEB -->
+<!-- BE4wTDBKBggrBgEFBQcwAoY+aHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraS9j -->
+<!-- ZXJ0cy9NaWNSb29DZXJBdXRfMjAxMC0wNi0yMy5jcnQwDQYJKoZIhvcNAQELBQAD -->
+<!-- ggIBAJ1VffwqreEsH2cBMSRb4Z5yS/ypb+pcFLY+TkdkeLEGk5c9MTO1OdfCcTY/ -->
+<!-- 2mRsfNB1OW27DzHkwo/7bNGhlBgi7ulmZzpTTd2YurYeeNg2LpypglYAA7AFvono -->
+<!-- aeC6Ce5732pvvinLbtg/SHUB2RjebYIM9W0jVOR4U3UkV7ndn/OOPcbzaN9l9qRW -->
+<!-- qveVtihVJ9AkvUCgvxm2EhIRXT0n4ECWOKz3+SmJw7wXsFSFQrP8DJ6LGYnn8Atq -->
+<!-- gcKBGUIZUnWKNsIdw2FzLixre24/LAl4FOmRsqlb30mjdAy87JGA0j3mSj5mO0+7 -->
+<!-- hvoyGtmW9I/2kQH2zsZ0/fZMcm8Qq3UwxTSwethQ/gpY3UA8x1RtnWN0SCyxTkct -->
+<!-- wRQEcb9k+SS+c23Kjgm9swFXSVRk2XPXfx5bRAGOWhmRaw2fpCjcZxkoJLo4S5pu -->
+<!-- +yFUa2pFEUep8beuyOiJXk+d0tBMdrVXVAmxaQFEfnyhYWxz/gq77EFmPWn9y8FB -->
+<!-- SX5+k77L+DvktxW/tM4+pTFRhLy/AsGConsXHRWJjXD+57XQKBqJC4822rpM+Zv/ -->
+<!-- Cuk0+CQ1ZyvgDbjmjJnW4SLq8CdCPSWU5nR0W2rRnj7tfqAxM328y+l7vzhwRNGQ -->
+<!-- 8cirOoo6CGJ/2XBjU02N7oJtpQUQwXEGahC0HVUzWLOhcGbyoYIDUDCCAjgCAQEw -->
+<!-- gfmhgdGkgc4wgcsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAw -->
+<!-- DgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24x -->
+<!-- JTAjBgNVBAsTHE1pY3Jvc29mdCBBbWVyaWNhIE9wZXJhdGlvbnMxJzAlBgNVBAsT -->
+<!-- Hm5TaGllbGQgVFNTIEVTTjpFMDAyLTA1RTAtRDk0NzElMCMGA1UEAxMcTWljcm9z -->
+<!-- b2Z0IFRpbWUtU3RhbXAgU2VydmljZaIjCgEBMAcGBSsOAwIaAxUAt7/YkjttsaG+ -->
+<!-- 2cTeXVwhKvvSL/+ggYMwgYCkfjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2Fz -->
+<!-- aGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENv -->
+<!-- cnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EgMjAx -->
+<!-- MDANBgkqhkiG9w0BAQsFAAIFAO6bqk8wIhgPMjAyNjExMDkwMjExMjdaGA8yMDI2 -->
+<!-- MTExMDAyMTEyN1owdzA9BgorBgEEAYRZCgQBMS8wLTAKAgUA7puqTwIBADAKAgEA -->
+<!-- AgIGYgIB/zAHAgEAAgIT9jAKAgUA7pz7zwIBADA2BgorBgEEAYRZCgQCMSgwJjAM -->
+<!-- BgorBgEEAYRZCgMCoAowCAIBAAIDB6EgoQowCAIBAAIDAYagMA0GCSqGSIb3DQEB -->
+<!-- CwUAA4IBAQCzpcvtyUiYVuaNM7kPcb51diQEG4ri87FrJfeufs9OGZw2tgKoqAuS -->
+<!-- jLSBkVgzksmgIP4REubs8oHEj78m0fGY64hyMr4WuiI4idHtrj3ZQc5/5AQmw3BX -->
+<!-- QUcR7RkH8hfUAmgmWl6n6F/E1ZtPhFeLrPQ1hF+Gy0fysSb6QxQj5KBNZXvyyou+ -->
+<!-- bro79gPSlDVQanwfvyl6el9uNfrvhfG24W7WHyQ7tOVJjjGJbrukXZOjxS5LhVC3 -->
+<!-- rTga6WT0CHittCFF1aAR/vyHqYZ/v8K9Yezfr+mdyzivvWFnqAxVU4c4r/eMxFUy -->
+<!-- rXEDxYcbFbQ8ZmcYPd3yKvaQtFpziFbuMYIEDTCCBAkCAQEwgZMwfDELMAkGA1UE -->
+<!-- BhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAc -->
+<!-- BgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWljcm9zb2Z0 -->
+<!-- IFRpbWUtU3RhbXAgUENBIDIwMTACEzMAAAIpDtVkKrSX8hoAAQAAAikwDQYJYIZI -->
+<!-- AWUDBAIBBQCgggFKMBoGCSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAvBgkqhkiG -->
+<!-- 9w0BCQQxIgQg9az5w8bZXOxmbL4IbSJrYyMJ+btjVi3gvz5i1d+pszowgfoGCyqG -->
+<!-- SIb3DQEJEAIvMYHqMIHnMIHkMIG9BCC3yj3xIrbw/5UrxLpsaj5JHjhLYJJihRFT -->
+<!-- LnpfaDq6kjCBmDCBgKR+MHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5n -->
+<!-- dG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9y -->
+<!-- YXRpb24xJjAkBgNVBAMTHU1pY3Jvc29mdCBUaW1lLVN0YW1wIFBDQSAyMDEwAhMz -->
+<!-- AAACKQ7VZCq0l/IaAAEAAAIpMCIEICFCy7Ldl/NoI+NsHOpKxwXXbvx/sVP/x9Si -->
+<!-- tNat+otvMA0GCSqGSIb3DQEBCwUABIICAHaOCX8tXuJCh3TAL1qhcmTH+BBwNNfQ -->
+<!-- bmXlqlgWKXODpyjiKtXXWZGJZIRQyFFd3PM5sXA5LVvWZkhCoTQb9RtNObOfp6Sb -->
+<!-- pRgMVqdB4I0FA9S1oSAL3OoY1vzr+9Ynl9uAgfQVfomCItsGiTB90wRqmvX4wvtz -->
+<!-- xs203z9AzTpFLyCUcM5Va2qhil3AKtYyiDa13z0ixRAy4ZENPSChr93M7aaNzPPJ -->
+<!-- C3nvZ2OZQNO77XGU3DZQOiNWz9yQ7aCoeiiknp/ihVtsjZMz2qYzNceyWxfe7GRA -->
+<!-- 0amlKsLXddwkF+sY3P2ljonBwkraoozTyPkouRwTvSUoC8e/J3jVZ6HLhGH5FXJX -->
+<!-- 4kGWHY3ZHx1bPz1iDAKmhysF5tMQQlgrLfPAP0e72pFJ6JNb2b9VNbC8P+RoSO8v -->
+<!-- nJnIrrC0Wb2X4aDb8MEK2WKuP0p2W6ImA6eGTvCUD6+jBZ+G8/Zq6kPNTt1tFJpz -->
+<!-- gac09kT1/lzBI8o524IzFbPnLTFd6NL/mDmcw/uDUbu5Qz3x89LbC8xXT0G5YBVI -->
+<!-- cj/piSv7OaB06HLshxOgJw5nRaf2y5n5whvvAdgU5durzLGk7atpgNq+4K1f8dkK -->
+<!-- rR2qY45xHZFQMisL4S9+0AMkZXSZJoJA3WYAbM4EzvASg7tWYcglJiKV2iIa/OJ/ -->
+<!-- pGzghnJXFrQw -->
+<!-- SIG # End signature block -->

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MSMQ-Client-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MSMQ-Client-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-MSMQ-Client-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="MSMQ-Container" displayName="Microsoft Message Queue (MSMQ) Server" description="Microsoft Message Queue (MSMQ) Server."></update>
+    <update name="MSMQ-DCOMProxy" displayName="MSMQ DCOM Proxy" description="The DCOM proxy feature enables MSMQ applications to use MSMQ DCOM API to connect to a remote MSMQ Server.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-dcomproxy-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Server" displayName="Microsoft Message Queue (MSMQ) Server Core" description="This feature installs the core components of MSMQ which enables you to perform basic Message queuing functions. This feature is a minimum requirement.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-server-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-COM-MSMQ-package">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-COM-MSMQ-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-ADIntegration" displayName="MSMQ Active Directory Domain Services Integration" description="Active Directory Domain Services Integration feature enables publishing of queue properties to Active Directory Domain Services, out-of-the-box authentication and encryption of messages using certificates registered in Active Directory Domain Services, and routing of messages across Windows sites. This feature becomes operational only when the computer joins a domain.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-adintegration-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-HTTP" displayName="MSMQ HTTP Support" description="The HTTP Support feature allows you to expose a queue to the internet such that applications can send messages to the queue using HTTP protocol. This feature requires Internet Information Server.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-http-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-MMC" displayName="MSMQ Management Tools" description="MSMQ Management Tools">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MSMQ-MMC-OptGroup-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Multicast" displayName="Multicasting Support" description="The Multicast support feature enables you to send messages to a Multicast IPAddress. Queues can be associated with a Multicast IPAddress. Messages sent to a Multicast IPAddress will be delivered to the queues that are associated with that IPAddress.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-multicast-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Runtime" displayName="MSMQ Runtime components" description="MSMQ Runtime components">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-runtime-Opt-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="MSMQ-Triggers" displayName="MSMQ Triggers" description="Message Queue Triggers enables the invocation of a COM component or an executable depending on the filters that you define for the incoming messages in a given queue.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-triggers-Opt-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

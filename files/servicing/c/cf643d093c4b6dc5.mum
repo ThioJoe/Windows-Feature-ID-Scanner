@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Feature-Containers-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Feature-Containers" releaseType="Feature Pack">
+    <update name="d0c07316ef01310617d99e0f6221e6ec">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Compute-Host-Containers-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="23bad0369164ebf4f04ee41a74386028">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-HvSocket-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="4738239b892ae36067bedb99a26fdaa3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Networking-Containers-Server-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

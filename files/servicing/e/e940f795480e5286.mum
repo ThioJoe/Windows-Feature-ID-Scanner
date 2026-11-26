@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Runlevel-Win2-Minimal-WOW64-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Runlevel-Win2-Minimal-WOW64-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="Runlevel.Win2.Minimal" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Runlevel-Win2-Minimal-WOW64-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="c7670fbd96c3233b816715032f6b80da">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-Minimal-WOW64-merged-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="1cf55c2db1717c10b705e30a86b26e41">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CoreSystem-BootableSKU-WOW64-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="e80585bd65702d2c15254ee987c498e3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CoreSystem-Core-WOW64-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="0099033b148950e2f100daae635068d2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Foundation-Group-WOW64-Package" version="10.0.26100.9549" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

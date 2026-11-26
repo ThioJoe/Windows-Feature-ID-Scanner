@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package041020" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package041020" releaseType="Feature Pack">
+    <update name="FA8B900BBBC2C170485A49CB34660CD5FF1DD8E0632FA830A2C1BF5DF04F6A2E">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment0410200" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="f15c745b326f1c121bc23b02e946600a">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package04102030" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="1C10482312A4634353E8C5FBD135BDA799CFF16E61F9DD26AEC4B488564868BF" restart="required">
+      <driver inf="usbcciddriver.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbcciddriver.inf" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="C315D98FB82F5346ECA83D9678A8E8C1A3BCA860F86A3F6D77D13EE7B60FF69C" restart="required">
+      <driver inf="hidlamparray.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidlamparray.inf" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

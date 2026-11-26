@@ -1,0 +1,306 @@
+{
+  "manifest_version": "0.3",
+  "name": "windowing-mcp-server",
+  "display_name": "Windowing MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for performing windowing operations.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "Windowing"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "close_window",
+      "description": "Close a window"
+    },
+    {
+      "name": "get_layout_for_snappable_windows",
+      "description": "Get the layout for snappable windows"
+    },
+    {
+      "name": "get_monitor_list",
+      "description": "Get a list of Monitors that are attached to system"
+    },
+    {
+      "name": "get_window_list",
+      "description": "Get a list of windows that can be interacted with using other tools"
+    },
+    {
+      "name": "snap_window",
+      "description": "Snap/Rearrange list of 2/3/4 windows to selected/desired layouts"
+    }
+  ],
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "windowing-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "get_layout_for_snappable_windows",
+              "description": "Get the layout for snappable windows",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "description": "Number of windows to be snapped from get_window_list tool",
+                    "type": "integer"
+                  },
+                  "monitorHandle": {
+                    "description": "Monitor data to be used for snap from GetMonitorList tool",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "number",
+                  "monitorHandle"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "workArea": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "width": {
+                        "type": "number"
+                      },
+                      "height": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "layouts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "zones": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "rectangle": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "type": "number"
+                                  },
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "height": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "close_window",
+              "description": "Close a window",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "windowId": {
+                    "description": "A windowId retrieved from the get_window_list command",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "windowId"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "snap_window",
+              "description": "Snap/Rearrange list of 2/3/4 windows to selected/desired layouts",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "request": {
+                    "description": "Snap window request containing window IDs, work area, and rectangles",
+                    "type": "object",
+                    "properties": {
+                      "windowIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
+                      },
+                      "workArea": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "height": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "rectangles": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "request"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "get_window_list",
+              "description": "Get a list of windows that can be interacted with using other tools",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "windows": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "get_monitor_list",
+              "description": "Get a list of Monitors that are attached to system",
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "monitors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "handle": {
+                          "type": "integer"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

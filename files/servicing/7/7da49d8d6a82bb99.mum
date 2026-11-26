@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0417" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0417" releaseType="Feature Pack">
+    <update name="112D779F775907CA84629F89B608B418D6CA587FED809CB53B114D39E7A321EC">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04170" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="231EDB0C5D0408D7CD03D1D6115080C8AD62F3146038B184ADF19857141E881D" restart="required">
+      <driver inf="msgpiowin32.inf" ranking="normal">
+        <assemblyIdentity name="dual_msgpiowin32.inf" version="10.0.28000.3023" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

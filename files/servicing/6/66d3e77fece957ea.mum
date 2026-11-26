@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables support for using MSXML6" displayName="MSXML6 support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win2-MSXML6-Feature" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win2-MSXML6" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win2-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="cfbfc370b52f15631a2e0e0ba44b4eff">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-MSXML6-Package" version="10.0.26100.8972" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

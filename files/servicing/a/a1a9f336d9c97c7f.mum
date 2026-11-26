@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DataCenterBridging-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-DataCenterBridging-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-DataCenterBridging-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="DataCenterBridging" displayName="Data Center Bridging" description="IEEE Data Center Bridging">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Data Center Bridging (DCB) is a suite of IEEE standards that are used to enhance Ethernet local area networks by providing hardware-based bandwidth guarantees and transport reliability. Use DCB to help enforce bandwidth allocation on a Converged Network Adapter for offloaded storage traffic such as Internet Small Computer System Interface, RDMA over Converged Ethernet, and Fibre Channel over Ethernet." DisplayName="Data Center Bridging" Id="401" Type="Feature" UniqueName="Data-Center-Bridging">
+          <Deploys>
+            <Update Name="DataCenterBridging" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-DataCenterBridging-Opt-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

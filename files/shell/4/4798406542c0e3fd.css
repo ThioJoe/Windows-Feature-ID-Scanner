@@ -1,0 +1,404 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    line-height: 1.1em;
+    background-color: TRANSPARENT; /*[{plugin-font-editor-background-color}]*/
+    overflow: hidden;
+}
+
+#root {
+    display: -ms-grid;
+    -ms-grid-rows: 100%;
+    -ms-grid-columns: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+.splitterEW {
+    cursor: ew-resize;
+}
+
+#serviceWorkerContent {
+    -ms-grid-columns: 1fr 3px auto;
+    -ms-grid-rows: 100%;
+    display: -ms-grid;
+    width: 100%;
+    height: 100%;
+}
+
+#leftBlock {
+    position: relative;
+    -ms-grid-column: 1;
+    display: -ms-grid;
+    -ms-grid-rows: 100%;
+    -ms-grid-columns: 100%;
+}
+
+.serviceworkerContentContainer {
+    -ms-grid-row: 1;
+    height: 100%;
+    width: 100%;
+}
+
+    .serviceworkerContentContainer > #resourcesView {
+        -ms-grid-column: 1;
+        -ms-grid-row: 1;
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+        .serviceworkerContentContainer > #resourcesView > .resourceHandler {
+            height: 100%;
+            width: 100%;
+        }
+
+
+
+.resourcePickerMenu {
+    z-index: -1; /* Start with the file picker behind other UI components. This gets moved forward in script. */
+    position: relative;
+    left: 0;
+    top: 22px;
+    height: 0;
+    width: 0;
+    border: 1px solid TRANSPARENT; /*[1px solid {f12-toolbar-button-selected-border-color}]*/
+    box-shadow: 2px 2px 2px TRANSPARENT; /*[2px 2px 2px {plugin-textbox-border-color rgba(0.5)}]*/
+    background-color: TRANSPARENT; /*[{plugin-debugger-filepicker-background-color}]*/
+    overflow: visible;
+}
+
+    .resourcePickerMenu .fileListContainer {
+        position: absolute;
+        left: 0;
+        top: 10px;
+    }
+
+    .resourcePickerMenu.pinnedResourcePicker {
+        -ms-grid-row: 1;
+        height: 100% !important;
+        top: 0;
+        border-top-width: 0px;
+        -ms-grid-columns: 1fr;
+    }
+
+    .resourcePickerMenu .serviceWorker {
+        background-image: url(""); /*[url({f12-serviceworker-image-service-worker-node})]*/
+    }
+
+    .resourcePickerMenu.pinnedResourcePicker .fileListContainer {
+        height: calc(100% - 31px) !important;
+    }
+
+    .resourcePickerMenu .splitter {
+        background-color: TRANSPARENT; /*[{plugin-perftools-grid-column-sizer}]*/
+        width: 3px;
+        height: calc(100% + 1px);
+        cursor: ew-resize;
+    }
+
+    .resourcePickerMenu .resourcePickerItem {
+        float: left;
+        width: 14px;
+        height: 14px;
+        background-repeat: no-repeat;
+        background-size: 14px 14px;
+        background-color: transparent;
+    }
+
+    .resourcePickerMenu .fileName {
+        float: right;
+    }
+
+    .resourcePickerMenu .fileItem {
+        cursor: default;
+        white-space: pre;
+    }
+
+    .resourcePickerMenu .iconShell_16x16 {
+        float: right;
+        margin-top: -1px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+        .resourcePickerMenu .iconShell_16x16 .buttonIcon.icon_16x16 {
+            margin-top: 0px !important;
+            width: 19px;
+            height: 19px;
+        }
+
+        .resourcePickerMenu .listview-grid-row:hover .iconShell_16x16:hover > .buttonIcon {
+            background-position: 0px -18px;
+        }
+
+    .resourcePickerMenu .listview-grid-row:hover .libraryIcon > .buttonIcon,
+
+    .resourcePickerMenu .listview-grid-row .diffIcon > .buttonIcon,
+
+    .resourcePickerMenu .listview-grid-row-selected,
+    .resourcePickerMenu .listview-grid-row:hover {
+        color: TRANSPARENT; /*[{plugin-treeview-content-mouseover-color}]*/
+        background-color: TRANSPARENT; /*[{plugin-treeview-content-mouseover-background-color}]*/
+    }
+
+    .resourcePickerMenu .openedDocument .fileItem {
+        font-weight: bold;
+    }
+
+    .resourcePickerMenu .flatView .listview-grid-groupline {
+        display: none !important;
+    }
+
+    .resourcePickerMenu .refresh {
+        overflow: hidden;
+    }
+
+        .resourcePickerMenu .refresh .listview {
+            overflow: visible;
+        }
+
+    .resourcePickerMenu .flatView .listview-grid-cell {
+        margin-left: 0;
+    }
+
+.resourcePickerMenu .listview-icon-tree-collapsed {
+    background-image: url(""); /*[url({f12-serviceWorker-images-item-collapsed})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .listview-icon-tree-expanded {
+    background-image: url(""); /*[url({f12-serviceWorker-images-item-expanded})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .flatView .listview-icon-tree-expanded,
+.resourcePickerMenu .flatView .listview-icon-tree-collapsed {
+    background-image: none;
+}
+
+.resourcePickerMenu .listview-grid-separator {
+    display: none;
+}
+
+.resourcePickerMenu .listview-grid-row-selected:focus {
+    color: TRANSPARENT; /*[{plugin-treeview-content-selected-color}]*/
+    background-color: TRANSPARENT; /*[{plugin-treeview-content-selected-background-color}]*/
+}
+
+.resourcePickerMenu .listview-grid-row {
+    -ms-user-select: none;
+}
+
+.resourcePickerMenu .listview-icon-tree-collapsed {
+    background-image: url(""); /*[url({f12-serviceworker-images-item-collapsed})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .listview-icon-tree-expanded {
+    background-image: url(""); /*[url({f12-serviceworker-images-item-expanded})]*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+.resourcePickerMenu .flatView .listview-icon-tree-expanded,
+.resourcePickerMenu .flatView .listview-icon-tree-collapsed {
+    background-image: none;
+}
+
+.resourcePickerMenu .listview-grid-separator {
+    display: none;
+}
+
+.resourcePickerMenu .listview-grid-row-selected:focus {
+    color: TRANSPARENT; /*[{plugin-treeview-content-selected-color}]*/
+    background-color: TRANSPARENT; /*[{plugin-treeview-content-selected-background-color}]*/
+}
+
+.resourcePickerMenu .listview-grid-row {
+    -ms-user-select: none;
+}
+
+.plugin-contextmenu .menuitem .shortcut {
+    min-width: 20px;
+}
+
+.windowtoolbar > .toggledOn:not(.toolbarButtonStateDisabled) {
+    background-color: TRANSPARENT; /*[{f12-toolbar-button-selected-color}]*/
+    border-color: TRANSPARENT; /*[{f12-toolbar-button-selected-border-color}]*/
+}
+
+#storageAriaAlertZone {
+    font-size: 0px;
+    z-index: -1000;
+}
+
+#resizePane {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: transparent; /* Should act like a transparent pane */
+    z-index: -1000;
+}
+
+    #resizePane.showResizePane {
+        z-index: 1100;
+    }
+
+.serviceWorkerContainer .flex {
+    flex: 1;
+}
+
+.serviceWorkerClients {
+    flex: 1;
+    padding-top: 0.2em;
+    max-width: calc(100% - 100px);
+}
+
+.serviceWorkerClientRow {
+    line-height: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    }
+
+.serviceWorkerActionButtons {
+    line-height: 2em;
+    float: right;
+    cursor: default;
+}
+
+.serviceWorkerActionButtons a{
+    display: inline-block;
+    line-height: 2em;
+    text-align: right;
+    font-weight: bold;
+}
+
+.serviceWorkerData {
+    display: inline-block;
+    line-height: 2em;
+    vertical-align: top;
+}
+
+.serviceWorkerDataRow {
+    display: inline-flex;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.serviceWorkerDivider {
+    border-bottom: 1px solid TRANSPARENT;
+    border-color: TRANSPARENT; /*[{plugin-border-color}]*/
+}
+
+
+.serviceWorkerFirstRow{
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.serviceWorkerScriptName {
+    margin-left: 22px;
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.serviceWorkerScope {
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.serviceWorkerRegistration {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 36px;
+    margin-top: 0px;
+    padding-top: 12px;
+    padding-bottom: 8px;
+}
+
+.serviceWorkerRegistrationBody {
+    padding-left: 14px;
+}
+
+.serviceWorkerRow {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 36px;
+    margin-top: 0px;
+    padding-top: 4px;
+    padding-bottom: 0px;
+}
+
+.serviceWorkerSection {
+    font-size: 12px;
+    padding-left: 22px;
+    padding-right: 22px;
+    line-height: 1.6em;
+    overflow: visible;
+}
+
+.serviceWorkerShell {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /*[{plugin-font-editor-background-color}]*/
+}
+
+.serviceWorkerShell label {
+    display: inline-flex;
+    width: 100px;
+    flex: none;
+    font-size: 12px;
+    line-height: 2em;
+    color: TRANSPARENT; /*[{plugin-subheading-color}]*/
+    margin-left: 22px;
+    vertical-align: top;
+}
+
+.serviceWorkerStatus {
+    font-weight: bold;
+}
+
+/* Override the * rule in commongridcontrol.css */
+#plugin-vs-tooltip,
+#plugin-vs-tooltip * {
+    box-sizing: content-box;
+}
+
+textarea.inputarea{
+    top:22px !important;
+    width:100% !important;
+    height:100% !important;
+    z-index:-1 !important;
+    font-size: 0px !important;
+}
+
+/* CSS for vertical mode */
+@media (max-width: 680px) {
+    #storageContent {
+        -ms-grid-columns: 1fr;
+    }
+
+    #leftBlock {
+        -ms-grid-column: inherit;
+        -ms-grid-row: 1;
+    }
+}

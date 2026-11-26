@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-SD-Package" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-SD" releaseType="Feature Pack">
+    <update name="c1de0988faaa47e380c44a72f39d07dd" restart="required">
+      <driver inf="sdbus.inf" ranking="normal">
+        <assemblyIdentity name="dual_sdbus.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="cfc4ce0e8c145c029a0eec2fb2e60d35" restart="required">
+      <driver inf="sdstor.inf" ranking="normal">
+        <assemblyIdentity name="dual_sdstor.inf" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="e3e694ab18cf2d7c6442864cc1cea73d">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-SD-Deployment" version="10.0.26100.1150" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

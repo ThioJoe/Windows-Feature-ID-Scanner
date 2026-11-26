@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-GroupPolicy-ClientTools-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-GroupPolicy-ClientTools-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-GroupPolicy-ClientTools-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="9482f69b5f6462c4caa6c6427a0139e9">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-GroupPolicy-ClientTools-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="22c761f402ccb8ebda533acee43534a0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-DiagnosticInfrastructure-Adm-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7678d1f5d1b2cfc3afbb5a61621b1c3a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-ErrorReporting-Adm-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7c66b81cd962cdb77cb1647c0e20cb1e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-EventLog-Adm-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="49dc77417e2fabd79489b8b9b9594887">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-FRSettingAPI-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b567a86f4128c9882e5021cc9913925e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-Defender-Group-Policy-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

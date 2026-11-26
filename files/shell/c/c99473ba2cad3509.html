@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="format-detection" content="telephone=no" />
+    <title>Emulation</title>
+
+    <link id="pluginCss" rel="stylesheet" href="/23/frontend/host/api/data/plugin.css" type="text/css" data-plugin-theme="true" />
+    <link id="toolwindow.css" rel="stylesheet" href="/23/common/toolwindow.css" type="text/css" data-plugin-theme="true" />
+    <link id="toolwindow.f12.css" rel="stylesheet" href="/23/common/toolwindow.f12.css" type="text/css" data-plugin-theme="true" />
+    <link id="button.css" rel="stylesheet" href="/23/common/button.css" type="text/css" data-plugin-theme="true" />
+    <link id="controls.css" rel="stylesheet" href="/23/common/controls/controls.css" type="text/css" data-plugin-theme="true" />
+    <link id="emulation.css" rel="stylesheet" href="/23/emulation/emulation.css" type="text/css" data-plugin-theme="true" />
+
+    <script type="text/html" id="validatedTextboxTemplate">
+        <span>
+            <input type="text" id="validatedTextbox" />
+            <img src="/23/common/images/critical.png" id="validationErrorIcon" class="validationErrorIcon" />
+            <label id="validationErrorHelper" class="hiddenLabel" aria-live="assertive"></label>
+        </span>
+    </script>
+    <script src="/23/common/common.bundle.js"></script>
+    <script type="text/javascript" src="/23/emulation/emulation.bundle.js"></script>
+</head>
+<body tabindex="-1">
+    <div id="mainContainer">
+        <div id="toolbar">
+        </div>
+        <div id="clientArea">
+            <div id="deviceSection"
+                 class="emulationSection">
+            </div>
+            <div id="modeSection"
+                 class="emulationSection">
+            </div>
+            <div class="emulationSection">
+                <h1 id="displayLabel"></h1>
+                <div id="displayBasicSubSection"></div>
+                <div id="customDisplaySizeSection" class="customSection">
+                    <label id="enterCustomResolutionLabel" class="minorHeadingLabel"></label>
+                    <div id="customDisplayInchesInfo" class="labeledTextBoxWithUnits">
+                        <label id="customDisplaySizeLabel"></label>
+                        <span id="displaySizeControlRoot"></span>
+                        <label id="displaySizeInchesLabel" class="unitsLabel"></label>
+                    </div>
+                    <div class="labeledTextBoxWithUnits">
+                        <label id="customDisplayWidthLabel"></label>
+                        <span id="displayWidthControlRoot"></span>
+                        <label id="widthPixelsLabel" class="unitsLabel"></label>
+                    </div>
+                    <div class="labeledTextBoxWithUnits">
+                        <label id="customDisplayHeightLabel"></label>
+                        <span id="displayHeightControlRoot"></span>
+                        <label id="heightPixelsLabel" class="unitsLabel"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="emulationSection">
+                <h1 id="geoLabel"></h1>
+                <div class="labeledRadioButton">
+                    <label id="gpsLabel"></label>
+                    <span role="radiogroup" aria-labelledby="gpsLabel">
+                        <input type="radio" name="gps" id="gpsOff" /><label id="gpsOffLabel" class="radioButtonLabel" for="gpsOff"></label>
+                        <input type="radio" name="gps" id="gpsOn" /><label id="gpsOnLabel" class="radioButtonLabel" for="gpsOn"></label>
+                        <input type="radio" name="gps" id="gpsOnNoSignal" /><label id="gpsOnNoSignalLabel" class="radioButtonLabel" for="gpsOnNoSignal"></label>
+                    </span>
+                </div>
+                <div id="geoLocationControlsRoot">
+                    <div class="labeledTextBoxWithUnits">
+                        <label id="latitudeLabel"></label>
+                        <span id="latitudeControlRoot"></span>
+                    </div>
+                    <div class="labeledTextBoxWithUnits">
+                        <label id="longitudeLabel"></label>
+                        <span id="longitudeControlRoot"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

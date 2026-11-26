@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-HypervisorPlatform-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-HypervisorPlatform" releaseType="Feature Pack">
+    <update name="f7f13b0ce40ee170b7c52a6ebee32004" restart="required">
+      <driver inf="wpcip.inf" ranking="normal">
+        <assemblyIdentity name="dual_wpcip.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="f2866e30243df6763292a5103b33fff5" restart="required">
+      <driver inf="wvpcivsp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wvpcivsp.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="4c686a808911eb4cfda0b957fe51829a">
+      <component>
+        <assemblyIdentity name="HyperV-HypervisorPlatform-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="fc0d60ecae9730160d4af9bb0ca3213e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-VID-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

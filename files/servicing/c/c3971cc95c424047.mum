@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MSMQ-Client-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MSMQ-Client-WOW64" releaseType="Feature Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-MSMQ-Client-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="e9079516626269f030c0ca87c03c2970">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MSMQ-DCOMProxy" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-dcomproxy-Opt-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="3bb3e58fe9730653ab34343780dfe6bf">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MSMQ-HTTP" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-http-Opt-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="3da65033abc07663b815e726ebbfd0bb">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MSMQ-MMC" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MSMQ-MMC-OptGroup-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ca44a59c9fddba3846001770b0afbe43">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MSMQ-Runtime" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-runtime-Opt-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="a0fdb8391a17e078f6381c63172b3c03">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MSMQ-Triggers" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-msmq-triggers-Opt-WOW64-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

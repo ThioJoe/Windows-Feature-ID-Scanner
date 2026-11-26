@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature supplies reverse forwarders to fill in gaps in the API surface for Win1" displayName="Win1 Reverse Forwarders" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win1-ReverseForwarders-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win1-ReverseForwarders-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win1-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win1-ReverseForwarders-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="d0a98fdf0ab124262b86fbd7665fd6c4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-ReverseForwarders-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9254f88eccc750fe203f6532fbae18ac">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-ReverseForwarders-Enable-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="265cf2fb9daca675a67705f970bae19f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-ReverseForwarders-ExtensionHosts-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c464be673a47f11237742ee268584bd2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-ReverseForwarders-ExtensionHosts-SchemaExt-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

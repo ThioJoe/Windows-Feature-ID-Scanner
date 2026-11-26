@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5127694" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5127694" creationTimeStamp="2026-10-09T03:59:12Z" lastUpdateTimeStamp="2026-10-09T03:59:12Z">
+  <assemblyIdentity name="Package_2_for_KB5127694" version="10.0.10008.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5127694" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-NetFx-Shared-Typelibs" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <parent buildCompare="EQ" integrate="separate" disposition="detect">
+        <assemblyIdentity name="WinPE-NetFx-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5127694-2_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-Scripting_Engine_TLB" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-Scripting_Engine_TLB" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="a9499343b98650f78e1c98fc6fc3248f" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-3_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorlib_tlb" version="4.0.15928.121" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorlib_tlb" version="4.0.15928.121" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="16a699fe35107e5b2f48b04036419566" version="4.0.15928.121" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-4_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYSTEM_DRAWING_TLB" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYSTEM_DRAWING_TLB" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="0d08801c6000b9c9f76fa4ff6937a25c" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-5_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYSTEM_TLB" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYSTEM_TLB" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="37a2bce641446bacdb9585f9a088279d" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-6_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-SYS_WINDOWS_FORMS_TLB" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-SYS_WINDOWS_FORMS_TLB" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="6e88f6e462a191a3faf62fa5256f9908" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-7_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscoree_tlb" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscoree_tlb" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="62caacf9ad0acfb8837ffad73e0b6e77" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5127694-8_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-system_enterpriseservices_tlb" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-system_enterpriseservices_tlb" version="4.0.15928.127" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="992d50789dce7600c3d4ceed0682321d" version="4.0.15928.127" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-IsolatedVm-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-IsolatedVm-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-IsolatedVm-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="4d93f5596da2b634478cbdd9e49b58d1">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-IsolatedVm-merged-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="4ae1ada3d441c5395726a139e0badc6e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-IsolatedVM-SVC-Package" version="10.0.26100.3624" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

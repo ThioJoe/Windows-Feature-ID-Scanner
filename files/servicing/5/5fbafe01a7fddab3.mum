@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5073122" displayName="Feature Enablement for Windows (Br) Insider Refresh - KB5073122 - 2026.07 C - Flight Cert Refresh" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="https://support.microsoft.com/help/5073122" creationTimeStamp="2026-07-21T17:42:35Z" lastUpdateTimeStamp="2026-07-21T17:42:35Z">
+  <assemblyIdentity name="Package_for_KB5073122" version="28000.2556.1.4" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5073122" applicabilityEvaluation="deep" releaseType="Update" restart="possible">
+    <mum2:customInformation Version="10.0.28000.2556" xmlns:mum2="urn:schemas-microsoft-com:asm.v3" PackageFormat="PSFX" PSFXDeltaFormat="ForwardOnly" />
+    <parent buildCompare="EQ" integrate="separate" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-UtilityVMEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-WinPE-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-WNCEdition" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="4285D744950784C015449E505EE36372B1D7FBA88A04E6CD93FD5EA85EE34638_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Br-28020-Version-Enablement-Package" version="10.0.28000.2556" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <mum2:packageExtended xmlns:mum2="urn:schemas-microsoft-com:asm.v3" completelyOfflineCapable="undetermined" packageSize="35943" />
+  </package>
+</assembly>

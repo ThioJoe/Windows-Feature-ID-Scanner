@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package01" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package01" releaseType="Feature Pack">
+    <update name="1e750254e71a08e5fb1da1d330524617">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment010" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="8C32D1C94E96626F1B2C7B3320B1DA98FBF02F927D40DA9FD8B51F2B2A0F9ACC" restart="required">
+      <driver inf="hsp.inf" ranking="normal">
+        <assemblyIdentity name="dual_hsp.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6527B223B106B2A5C48B3CAD78EBE2CB68D37DC4EEB12A60C0C254E3A1CDEA11" restart="required">
+      <driver inf="pluton-heci.inf" ranking="normal">
+        <assemblyIdentity name="dual_pluton-heci.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="46144B6A72EF863CE0F2A5EEC87BEF12B9C5B4E18D24074667288AE923CA3A2A" restart="required">
+      <driver inf="PlutonHsp2.inf" ranking="normal">
+        <assemblyIdentity name="dual_PlutonHsp2.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0F9F7DEB354B9A44BA65E9397B0DAE3633A0EC677DA109C435559198C991AB56" restart="required">
+      <driver inf="MptfCore.inf" ranking="normal">
+        <assemblyIdentity name="dual_MptfCore.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0912598D9BCA1FF71D9AC9062FB95F42253C9D41A3D9A9D28E5757F2C8163F99" restart="required">
+      <driver inf="MPTFCustomizeIOSignalClient.inf" ranking="normal">
+        <assemblyIdentity name="dual_MPTFCustomizeIOSignalClient.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="17F98763EB3ECE65F3D0A9D0363B1F9A34CECD4EC459CC204B0FE6A703EF0703" restart="required">
+      <driver inf="MptfPowerLimitClient.inf" ranking="normal">
+        <assemblyIdentity name="dual_MptfPowerLimitClient.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="07EE139B6628FF2B8C2F83641E59737958721C1E9D0761778575AC341893C7BA" restart="required">
+      <driver inf="MptfPowerSourceClient.inf" ranking="normal">
+        <assemblyIdentity name="dual_MptfPowerSourceClient.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1D1B129F613967DC8B16595D4E4A06887DD5FC6BC09518823C9807BCCF906BF2" restart="required">
+      <driver inf="MPTFPowerTrackerCore.inf" ranking="normal">
+        <assemblyIdentity name="dual_MPTFPowerTrackerCore.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="F5CF4D1FAE0324AF41BAB1D5EFD133E4377B1A5979A6E963C7695343EFB06875" restart="required">
+      <driver inf="MptfThermalPolicy.inf" ranking="normal">
+        <assemblyIdentity name="dual_MptfThermalPolicy.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="5061D1DF4A8DBD26310EB77081B3A461873085E1B9A85B2B8A16F18B5F8C0139" restart="required">
+      <driver inf="MSCustomizedIO.inf" ranking="normal">
+        <assemblyIdentity name="dual_MSCustomizedIO.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="7A346593A79E01D75A5FFE82968ED486FFA8C22D69EFBF3AB0D9194B72BBCC58" restart="required">
+      <driver inf="MSTemperatureSensor.inf" ranking="normal">
+        <assemblyIdentity name="dual_MSTemperatureSensor.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

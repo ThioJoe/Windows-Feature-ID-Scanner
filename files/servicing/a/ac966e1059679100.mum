@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for KB5049622" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="http://support.microsoft.com/?kbid=5049622" creationTimeStamp="2024-12-04T02:25:53Z" lastUpdateTimeStamp="2024-12-04T02:25:53Z">
+  <assemblyIdentity name="Package_1_for_KB5049622" version="10.0.9294.1" language="neutral" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5049622" releaseType="Update" restart="possible">
+    <parent buildCompare="EQ" integrate="separate" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <assemblyIdentity name="Microsoft-Windows-NetFx4-US-OC-Package" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+        <assemblyIdentity name="Microsoft-Windows-CoreCountrySpecificEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-CoreNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseGNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-EnterpriseSNEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ProfessionalNEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerAzureStackHCICorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerDatacenterEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerStandardEvalEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineCorEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerTurbineEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        <assemblyIdentity name="Microsoft-Windows-ServerWebEdition" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </parent>
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="5049622-1_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-clrjit_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-clrjit_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="1c81e13bb9d74b0c2d0fdfe8993ac61e" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-2_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Core" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="46db88a9de0dca43f84ef5f4eafb95fd" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-3_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorsvc_dll" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorsvc_dll" version="4.0.15912.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="c7612a610cafcac53fce32b581b9823a" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-4_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="79376f9613b1af6571f8a20817470bd3" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-5_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-csc.rsp" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-csc.rsp" version="4.0.15912.338" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="548bfe57d0a6a6850b513e02ca041e5c" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-6_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Activities.Presentation" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="0a73d9258038d98b753d30936214aaf4" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-7_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-diasymreader_dll" version="4.0.15912.410" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-diasymreader_dll" version="4.0.15912.410" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="c56a301fb9a0cff7a76256945c6e0aa6" version="4.0.15912.410" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-8_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Deployment" version="4.0.15912.292" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d11e5cbf78b3ffaa9380a5c8b3cfe936" version="4.0.15912.292" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-9_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-PresentationHostDLLMUI" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-PresentationHostDLLMUI" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="bddcccc963e600a1de1a4a946de4831a" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-10_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscordacwks_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscordacwks_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="78ac75ade0b0761319a0cbab2a8bca64" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-11_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-ngen_exe" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-ngen_exe" version="4.0.15912.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="419a31c8f7cc93c560666d4056dbb885" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-12_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="aspnet_regbrowsers" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="aspnet_regbrowsers" version="4.0.15912.355" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f561e99ad2449f7963d93e8047aa1708" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-13_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-aspnet_wp_exe" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-aspnet_wp_exe" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="62b2bfec3b8eea9abb5d2ef8f456cafd" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-14_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-PresentationNative" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-PresentationNative" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2cd4ac4b0d38a6c4b8b783988e140a6d" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-15_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-clr_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-clr_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="9c9c1232c3029d8a1397db13c6ba79a0" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-16_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.DirectoryServices.AccountManagement" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="178a5da0fcebc19e1ded3c6c58ff81e5" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-17_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-vbc.rsp" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-vbc.rsp" version="4.0.15912.355" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f99066efc88548f8d28762cd21976d5c" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-18_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="UIAutomationClientsideProviders" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7b08d06ba27c18986dbfa8bdca5cd4ad" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-19_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="UIAutomationTypes" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="390596f67685ef7f410baad480b5bcb1" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-20_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="PresentationCore" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+          <assemblyIdentity name="PresentationCore" version="4.0.15912.395" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2d67c2823059f6575928383f742c749f" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-21_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-dfdll_dll" version="4.0.15912.292" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-dfdll_dll" version="4.0.15912.292" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2fd4f70ddc4d1278594e7a7197e6fe7e" version="4.0.15912.292" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-22_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7289da50661c78d0086c562e0ae1f308" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-23_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-vbc_exe" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-vbc_exe" version="4.0.15912.355" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="dc8afeb5009fc9d0373e9d302116e9dc" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-24_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.Channels" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="8562ac3c23a616ff98348356b31364c1" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-25_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.IO.Compression" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="33bae3bac3d80b86bbc32f79c4ed6bc3" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-26_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-corperfmonext_dll" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-corperfmonext_dll" version="4.0.15912.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7284a44fbd43df667c8cb48f90c0dc0e" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-27_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-aspnet_perf_dll" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-aspnet_perf_dll" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f46e06fee7773a587bc4f536d19e108c" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-28_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-peverify_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-peverify_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="5d4e57e7e71babbf7a2b797046a44d4f" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-29_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.WasHosting" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="96d547e3d3ed989e078a73a401f844af" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-30_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorlib_ni" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorlib_ni" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="043846f5cd4aaf5af521195713909078" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-31_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-cscompui_dll" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-cscompui_dll" version="4.0.15912.338" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="3f009f550e72807270bc8074fed7ff37" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-32_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="aspnet_regsql" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="aspnet_regsql" version="4.0.15912.355" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="606899ac23a807c162e0addbc0dfcd0a" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-33_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscoreei_dll" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscoreei_dll" version="4.0.15912.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="6f75e634f1805c41d9fe71f0deec7d0f" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-34_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-PenIMC_v0400" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-PenIMC_v0400" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="b2b61331e16d5661016c6e79a1c03ac9" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-35_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WindowsFormsIntegration" version="4.0.15912.214" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="0b857132384a012d0331d5a760034e72" version="4.0.15912.214" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-36_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-ServiceMonikerSupport_dll" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-ServiceMonikerSupport_dll" version="4.0.15912.347" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="98df4f44d5b6be6a5782957cf88fd013" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-37_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-GlobalSansSerifCF" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-GlobalSansSerifCF" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="bef7dbcbbfc7da4433b49466b3961634" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-38_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-aspnet_state_perf_h" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-aspnet_state_perf_h" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="65b756e6edfd94dc13eaed213cdcc4e8" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-39_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-aspnet_regiis_exe" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-aspnet_regiis_exe" version="4.0.15912.355" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="28eac97117b079a1d15710131af01164" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-40_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorsvw_exe" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorsvw_exe" version="4.0.15912.100" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="718408b8dd4ceddad924ed190c8d2527" version="4.0.15912.100" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-41_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="UIAutomationClient" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d5d3c61887166ffd48b4d332d4475b9e" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-42_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-GlobalMonospaceCF" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-GlobalMonospaceCF" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="8edea56118f0efda908ebde9aab9b66b" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-43_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Data" version="4.0.15912.313" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+          <assemblyIdentity name="System.Data" version="4.0.15912.313" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="653c0d616dc8d0aa5c4c4567a286cd90" version="4.0.15912.313" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-44_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-PresentationHostDLL" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-PresentationHostDLL" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="533ab0bd32bd1af05422a63e7c92e495" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-45_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="mscorlib" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+          <assemblyIdentity name="mscorlib" version="4.0.15912.405" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2342d89463fca5382cf5935f511e102f" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-46_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-GlobalUserInterfaceCF" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-GlobalUserInterfaceCF" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="0bb59a06407484b6228f3596202dddf2" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-47_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscordbi_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscordbi_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="0d86e7909e807cd999c07ec5dc504933" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-48_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-clrcompression_dll" version="4.0.15912.365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-clrcompression_dll" version="4.0.15912.365" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="3641faebd76884927f5672a7b7ce49cb" version="4.0.15912.365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-49_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Runtime.Caching" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7365490577011f3705ad3b5252a878fd" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-50_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-GlobalSerifCF" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-GlobalSerifCF" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="4722a5c05b88dd3d0427e3683215197a" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-51_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-webengine_dll" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-webengine_dll" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="c52136c7f045dd5315f96cf85e481958" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-52_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Runtime.Serialization" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="e6fb7c082bed8f2df9cd8a1a1f9cb0fe" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-53_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-aspnet_state_perf_ini" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-aspnet_state_perf_ini" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="2bdd4f68d2b97096412759009767a28c" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-54_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-webengine4_dll" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-webengine4_dll" version="4.0.15912.400" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="b3603cbedc23ebb4bb906af66e264b1e" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-55_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.DirectoryServices" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="3fcf145d7ede9b5b1282746a4069267f" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-56_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Windows.Forms" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="4a78eb55266ff91ec19d2ada19d1587e" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-57_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-sos_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-sos_dll" version="4.0.15912.405" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="257223d6745f36bc65b4733db631731d" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-58_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-PenIMC" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-PenIMC" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="14cb4832c2f69f4bf407233efff963ae" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-59_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-mscorpehost_dll" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-mscorpehost_dll" version="4.0.15912.355" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="860b39c11b9089838988e018f812205f" version="4.0.15912.355" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-60_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-csc_exe" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-csc_exe" version="4.0.15912.338" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d01f8cbaf1ba5ba36be974173e9aefa4" version="4.0.15912.338" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-61_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="PresentationFramework-SystemData" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d74c4f3fb1e4d58cfc2b17b31c070a13" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-62_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.IdentityModel" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="f5614a6634039d56d8a4d13ffd2d2789" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-63_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="UIAutomationProvider" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="ee29fbcccdd06f6f244af1f163a92305" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-64_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.IdentityModel.Services" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="325fd94fa92058b0fd772b37e6660d6a" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-65_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-ilasm_exe" version="4.0.15912.146" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-ilasm_exe" version="4.0.15912.146" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="7f607a1de176bce0ab56476259eeb3c0" version="4.0.15912.146" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-66_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-compatjit_dll" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="a758e633321d964a11f195dc7cd960a8" version="4.0.15912.405" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-67_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="NetFx4-wpfgfx" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="NetFx4-wpfgfx" version="4.0.15912.395" processorArchitecture="x86" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="ab07cb26fcfecda4d3098f2f429320c0" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-68_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.Discovery" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="724f12ee3eaef2479af10aaa92931c74" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-69_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Web.ApplicationServices" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="e36565752fbedda99b0f6a6a149cbc0c" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-70_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Web" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+          <assemblyIdentity name="System.Web" version="4.0.15912.400" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="9126630c13afe9df8095bf98510b2416" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-71_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="PresentationFramework" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="eab2526e0083d3f6e77b72175b96da86" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-72_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Xaml" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d6cef080cfe1d859b306200db2024755" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-73_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Activities" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="b32bd95ef037e2c7be492d301800b321" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-74_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Web.Extensions" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="76d040b98f08b2b902af7de069fc8e69" version="4.0.15912.400" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-75_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="SMDiagnostics" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="87439219c3970f49e46c64f150df9147" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-76_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.ServiceModel.Internals" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="6c971143a1984392ce47c6125e77e821" version="4.0.15912.347" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-77_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Runtime.Remoting" version="4.0.15912.313" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="4b0d92164ce3a8fcd764e92af823f08b" version="4.0.15912.313" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-78_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="WindowsBase" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d91e3772ce579a20bba4f9cbe34696d4" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-79_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="revision">
+          <assemblyIdentity name="NetFx4-UpdateTargeting" version="4.0.15912.410" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="c6f00410c4aa9aeb1f55d55011df67b0" version="4.0.15912.410" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b03f5f7f11d50a3a" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="5049622-80_neutral">
+      <applicable disposition="staged">
+        <updateComponent elevate="build">
+          <assemblyIdentity name="System.Windows.Controls.Ribbon" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" />
+        </updateComponent>
+      </applicable>
+      <component>
+        <assemblyIdentity name="d54b0b55a2bfa84b0186e00bf55f950e" version="4.0.15912.395" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="b77a5c561934e089" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetFx3-OnDemand-Package" version="10.0.26100.4343" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft .NET Framework 3.0_en-US" releaseType="Language Pack">
+    <parent buildCompare="GE" disposition="staged" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-NetFx3-OnDemand-Package" version="10.0.26100.4343" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="NetFx3-FOD">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-NetFx3-Deployment-LanguagePack" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="NetFx3-WPF">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Presentation-Package" version="10.0.26100.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </package>
+    </update>
+  </package>
+</assembly>

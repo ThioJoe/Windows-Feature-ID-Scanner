@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="format-detection" content="telephone=no" />
+    <title>ServiceWorker</title>
+
+    <link id="pluginCss" rel="stylesheet" href="/23/frontend/host/api/data/plugin.css" type="text/css" data-plugin-theme="true" />
+    <link id="objectTreeView.css" rel="stylesheet" href="/23/common/ObjectView/objectTreeView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/controls/controls.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/Grid/commonGridControl.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/ResourcesView/resourcesView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/serviceworker/serviceworker.css" type="text/css" data-plugin-theme="true" />
+
+    <!-- Below CSS file defines important overrides and should be the last one in the list of includes -->
+    <script type="text/javascript" src="/23/common/jQuery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/23/common/jQuery/jquery.event.drag-2.2.js"></script>
+
+    <script src="/23/common/common.bundle.js"></script>
+    <script type="text/javascript" src="/23/serviceworker/serviceworker.bundle.js"></script>
+    <script type="text/javascript" src="/23/selftest/SelfTestServiceWorker.js"></script>
+</head>
+
+<body>
+    <div id="resizePane"></div>
+    <div id="root" role="main" tabindex="-1">
+        <div id="dataTipElement"></div>
+        <div id="serviceWorkerContent">
+            <div id="leftBlock">
+                <div class="resourcePickerMenu" id="resourcePickerMenu" role="menu"></div>
+                <div id="serviceworkerContentContainer" class="serviceworkerContentContainer">
+                    <div id="resourcesView"></div>
+                </div>
+            </div>
+            <div id="serviceWorkerAriaAlertZone" role="alert" aria-live="assertive" aria-atomic="true"></div>
+        </div>
+    </div>
+</body>
+
+</html>

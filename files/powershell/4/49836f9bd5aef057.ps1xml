@@ -1,0 +1,759 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- ================================================== -->
+<!--                                                    -->
+<!--   Copyright (C) Microsoft. All rights reserved.    -->
+<!--                                                    -->
+<!-- ================================================== -->
+
+<Configuration>
+    <ViewDefinitions>
+    
+        <!-- For MSFT_OdbcKeyValuePair (shared for MSFT_OdbcDriver and MSFT_OdbcDsn) -->
+        <View>
+            <Name>Formatting For MSFT_OdbcKeyValuePair (List View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcKeyValuePair</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>ParentKey</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Key</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Value</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        
+        <View>
+            <Name>Formatting For MSFT_OdbcKeyValuePair (Table View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcKeyValuePair</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Width>30</Width>
+                    </TableColumnHeader>
+
+                    <TableColumnHeader>
+                        <Width>30</Width>
+                    </TableColumnHeader>
+
+                    <TableColumnHeader>
+                        <Width>90</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>ParentKey</PropertyName>
+                            </TableColumnItem>
+
+                            <TableColumnItem>
+                                <PropertyName>Key</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Value</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <!-- For MSFT_OdbcDriver -->
+        <View>
+            <Name>Formatting For MSFT_OdbcDriver (List View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDriver</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Platform</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Attribute</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        
+        <View>
+            <Name>Formatting For MSFT_OdbcDriver (Table View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDriver</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Width>40</Width>
+                    </TableColumnHeader>
+
+                    <TableColumnHeader>
+                        <Label>Platform</Label>                    
+                        <Width>15</Width>
+                    </TableColumnHeader>
+
+                    <TableColumnHeader>
+                        <Width>65</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>Name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Platform</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Attribute</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>  
+            <Name>Formatting For MSFT_OdbcDriver (Custom View)</Name>  
+            <ViewSelectedBy>  
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDriver</TypeName>  
+            </ViewSelectedBy>  
+              
+            <Controls>  
+                <!-- formatting definitions used in the <CustomControlName> part of the view -->  
+                <Control>  
+                    <Name>FmtAttribute</Name>  
+                    <CustomControl>  
+                        <CustomEntries>  
+                            <CustomEntry>  
+                                <CustomItem>
+                                    <Frame>  
+                                        <LeftIndent>4</LeftIndent>  
+                                        <CustomItem>  
+                                            <ExpressionBinding>  
+                                                <!-- Assume the longest key name is of 20 characters -->   
+                                                <ScriptBlock>
+                                                    [String]::Format( "{0,-20}= {1}", $_.Name, $_.Value )
+                                                </ScriptBlock>
+                                            </ExpressionBinding>
+                                            <NewLine/>
+                                        </CustomItem>  
+                                    </Frame>  
+                                </CustomItem>  
+                            </CustomEntry>  
+                        </CustomEntries>  
+                    </CustomControl>  
+                </Control>  
+            </Controls>  
+              
+            <CustomControl>  
+                <CustomEntries>  
+                    <CustomEntry>  
+                        <CustomItem>  
+                            <!-- top level -->  
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "Name", $_.Name )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "Platform", $_.Platform )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+                            
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}:", "Attribute" )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+                              
+                            <!-- display the Attribute hash table with custom control -->  
+                            <ExpressionBinding>  
+                                <PropertyName>Attribute</PropertyName>  
+                                <EnumerateCollection/>  
+                                <CustomControlName>FmtAttribute</CustomControlName>  
+                            </ExpressionBinding>  
+                            <NewLine/>  
+                        </CustomItem>  
+                     </CustomEntry>  
+                </CustomEntries>  
+            </CustomControl>  
+        </View>  
+
+        <!-- For MSFT_OdbcDsn -->
+        <View>
+            <Name>Formatting For MSFT_OdbcDsn (List View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDsn</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Name</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>DsnType</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Platform</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>DriverName</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Attribute</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        
+        <View>
+            <Name>Formatting For MSFT_OdbcDsn (Table View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDsn</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Width>20</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>DsnType</Label> 
+                        <Width>15</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Platform</Label>                    
+                        <Width>15</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>40</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>65</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>Name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>DsnType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Platform</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>DriverName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Attribute</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>  
+            <Name>Formatting For MSFT_OdbcDsn (Custom View)</Name>  
+            <ViewSelectedBy>  
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcDsn</TypeName>  
+            </ViewSelectedBy>  
+              
+            <Controls>  
+                <!-- formatting definitions used in the <CustomControlName> part of the view -->  
+                <Control>  
+                    <Name>FmtAttribute</Name>  
+                    <CustomControl>  
+                        <CustomEntries>  
+                            <CustomEntry>  
+                                <CustomItem>
+                                    <Frame>  
+                                        <LeftIndent>4</LeftIndent>  
+                                        <CustomItem>  
+                                            <ExpressionBinding>  
+                                                <!-- Assume the longest key name is of 20 characters -->   
+                                                <ScriptBlock>
+                                                    [String]::Format( "{0,-20}= {1}", $_.Name, $_.Value )
+                                                </ScriptBlock>
+                                            </ExpressionBinding>
+                                            <NewLine/>
+                                        </CustomItem>  
+                                    </Frame>  
+                                </CustomItem>  
+                            </CustomEntry>  
+                        </CustomEntries>  
+                    </CustomControl>  
+                </Control>  
+            </Controls>  
+              
+            <CustomControl>  
+                <CustomEntries>  
+                    <CustomEntry>  
+                        <CustomItem>  
+                            <!-- top level -->  
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "Name", $_.Name )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "DsnType", $_.DsnType )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "Platform", $_.Platform )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}: {1}", "DriverName", $_.DriverName )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <ExpressionBinding>  
+                                <ScriptBlock>
+                                    [String]::Format( "{0,-11}:", "Attribute" )
+                                </ScriptBlock>
+                            </ExpressionBinding>
+                            <NewLine/>
+
+                            <!-- display the Attribute hash table with custom control -->  
+                            <ExpressionBinding>  
+                                <PropertyName>Attribute</PropertyName>  
+                                <EnumerateCollection/>  
+                                <CustomControlName>FmtAttribute</CustomControlName>  
+                            </ExpressionBinding>  
+                            <NewLine/>  
+                        </CustomItem>  
+                     </CustomEntry>  
+                </CustomEntries>  
+            </CustomControl>  
+        </View>  
+
+        <!-- For MSFT_OdbcPerfCounter -->
+        <View>
+            <Name>Formatting For MSFT_OdbcPerfCounter (List View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>Platform</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsEnabled</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        
+        <View>
+            <Name>Formatting For MSFT_OdbcPerfCounter (Table View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Platform</Label>                    
+                        <Width>15</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>20</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>Platform</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>IsEnabled</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>
+            <Name>Formatting For MSFT_OdbcPerfCounter (Wide View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_OdbcPerfCounter</TypeName>
+            </ViewSelectedBy>
+            <WideControl>
+                <AutoSize/>
+                <WideEntries>
+                    <WideEntry>
+                        <WideItem>
+                            <PropertyName>Platform</PropertyName>
+                        </WideItem>
+                    </WideEntry>
+                </WideEntries>
+            </WideControl>
+        </View>
+        
+
+        <!-- For MSFT_WdacBidTrace -->
+        <View>
+            <Name>Formatting For MSFT_WdacBidTrace (List View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>TargetScope</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>TargetProcessId</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>Platform</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>IsEnabled</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+        
+        <View>
+            <Name>Formatting For MSFT_WdacBidTrace (Table View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Width>50</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>18</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Platform</Label>                    
+                        <Width>15</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>20</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>TargetScope</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>TargetProcessId</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Platform</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>IsEnabled</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+
+        <View>
+            <Name>Formatting For MSFT_WdacBidTrace (Wide View)</Name>
+            <ViewSelectedBy>
+                <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_WdacBidTrace</TypeName>
+            </ViewSelectedBy>
+            <WideControl>
+                <AutoSize/>
+                <WideEntries>
+                    <WideEntry>
+                        <WideItem>
+                            <PropertyName>TargetScope</PropertyName>
+                        </WideItem>
+                    </WideEntry>
+                </WideEntries>
+            </WideControl>
+        </View>
+        
+    </ViewDefinitions>
+</Configuration>
+
+<!-- SIG # Begin signature block -->
+<!-- MIIonAYJKoZIhvcNAQcCoIIojTCCKIkCAQExDzANBglghkgBZQMEAgEFADB5Bgor -->
+<!-- BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG -->
+<!-- KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDDOQBVwPj6/3to -->
+<!-- 9DQZJl7ckSShvV9cW+X11MiQ1bhW2aCCDbkwggYZMIIEAaADAgECAhMzAAAHrFd0 -->
+<!-- 1sXez/AfAAAAAAesMA0GCSqGSIb3DQEBCwUAMH0xCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xJzAlBgNVBAMTHk1pY3Jvc29mdCBEZXZlbG9wbWVu -->
+<!-- dCBQQ0EgMjAxNDAeFw0yNjA2MTgyMzQzMjZaFw0yNzEwMzEyMzQzMjZaMHAxCzAJ -->
+<!-- BgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25k -->
+<!-- MR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xGjAYBgNVBAMTEU1pY3Jv -->
+<!-- c29mdCBXaW5kb3dzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5Q6L -->
+<!-- CEz6hHIBnwpQr5bkco+6YJiyszNATsnCtiDSwm0YSrPyeY+taPrAvoicZ4o1x+Fl -->
+<!-- Mg6N/Fuf3RohnlJHzY8g+sokZLALIXa1i6muRRxfYs0tzAvmaFswYJpTgprxXdtA -->
+<!-- LxrsDck5ckAqlxXYx1gzEDRmHvvHXIFY7zDWjLgY7sHKyBYk+fNAwotEWZiMmJLq -->
+<!-- k6MiHsijsk7WuZGbADf4eHBPaE23IytDgBEYHXuljks/Npxe138elBxD5GK76rRZ -->
+<!-- RzGQ1FDM9TR79gzMXwYrdV8fShPAoMQFy1ye95LGHnl2WkJJzxuAmJhLrhCLACOR -->
+<!-- whISHbklGDPHi0ictwIDAQABo4IBnTCCAZkwNwYDVR0lBDAwLgYKKwYBBAGCNwoD -->
+<!-- DQYKKwYBBAGCNwoDGwYKKwYBBAGCNwoDBgYIKwYBBQUHAwMwHQYDVR0OBBYEFI9h -->
+<!-- /0uRFMoe7s+TiidKf2VAYAncMEUGA1UdEQQ+MDykOjA4MR4wHAYDVQQLExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xFjAUBgNVBAUTDTIzMTA5Mys1MDgzNjMwHwYDVR0j -->
+<!-- BBgwFoAUhN0QNnsL0gijJlafIpUlQYUsCcAwXQYDVR0fBFYwVDBSoFCgToZMaHR0 -->
+<!-- cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jcmwvTWljcm9zb2Z0JTIwRGV2 -->
+<!-- ZWxvcG1lbnQlMjBQQ0ElMjAyMDE0LmNybDBqBggrBgEFBQcBAQReMFwwWgYIKwYB -->
+<!-- BQUHMAKGTmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY2VydHMvTWlj -->
+<!-- cm9zb2Z0JTIwRGV2ZWxvcG1lbnQlMjBQQ0ElMjAyMDE0LmNydDAMBgNVHRMBAf8E -->
+<!-- AjAAMA0GCSqGSIb3DQEBCwUAA4ICAQA1n4ybp1ZHK43iNXhpgJCshPUUy7txyPRI -->
+<!-- LDGVXzO+MlQCwzdUi+ASygRfcqOPY5VyOxcwKHtY23od7uTrY1Ao+bGc3eLrCgHc -->
+<!-- BFrOzl/GH3zaVYew+cD9DgQsAhSS5cl7AkoyqZPCQ/RgLVzhxHZky4ig3OKhSfDq -->
+<!-- joCOxYD79oY4rdrgv3MMcZ3K6ZO4bn+7a58pPJ3YcUI7izdavmh4j7mwfuzgwjKT -->
+<!-- ngqi+A7Xnzi44/dARXernO3BiyfbJqBdKMemjYTmGg7tqeCZUwLsVqO2qd1k5BU5 -->
+<!-- rRVIU+01IAkAlq2UUCiKA4kJDrdt+qeJdoGEIH5cLFbaVbv/p2+f+eE1BB1bkzBi -->
+<!-- unIFkp7QNZ8YPTU8ORw4VBhkBp1BldkQykZaqX1r/C353IhJQJgVHqtqnmYFMMRz -->
+<!-- 7OvAbeG4dDbSMvYov+oUx59e75YObjHh9c1fHzR7XkQFFVhxQ5F3YbhkFAXPsJt+ -->
+<!-- J5/VzaKiCScenX4shCGpiRk/bvjG/1a4IGUfjza6WA6znlV6l6RzPBKZ+VI7TFQN -->
+<!-- UdgPkgAKvYkO8y/xmT9TRkhmZR6rrHz2SgMHZ+qeDIwiGRZcnhYCzJYE0OJ1hcle -->
+<!-- bUQx9WtQK9377ommVSa9Khyuesc/pbBsJJIptzkUv5vVI9a7VTMhZxJeAtyut8Aw -->
+<!-- cL5zhsoVJTCCB5gwggWAoAMCAQICEzMAAAADxvm0w66+WUsAAAAAAAMwDQYJKoZI -->
+<!-- hvcNAQELBQAwgZQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAw -->
+<!-- DgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24x -->
+<!-- PjA8BgNVBAMTNU1pY3Jvc29mdCBEZXZlbG9wbWVudCBSb290IENlcnRpZmljYXRl -->
+<!-- IEF1dGhvcml0eSAyMDE0MB4XDTE0MDUyODE3MzMzM1oXDTI5MDUyODE3NDMzM1ow -->
+<!-- fTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1Jl -->
+<!-- ZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEnMCUGA1UEAxMe -->
+<!-- TWljcm9zb2Z0IERldmVsb3BtZW50IFBDQSAyMDE0MIICIjANBgkqhkiG9w0BAQEF -->
+<!-- AAOCAg8AMIICCgKCAgEAy1MMQflNRCTI2mVOZmzFgpVwcjPzty6GrhZBvNzUuGn7 -->
+<!-- EsCUvq+Uwn92nDzTVNS1iO2PsQwbUUqP6pDjrE7339ISe45/ctA1PKzo6WfM6TIy -->
+<!-- MehDX98UmkCPGAuZBxM7cZKbHRn5m5X3TzVhOFYysu1khBj6WoWxkr8BuMaWkwQ6 -->
+<!-- qOrsgurNHoLC5gDkmT2Jpd1xIJ6I3V5NrW3PCfOophNvDAPhDC6YtMKjB5wab1/T -->
+<!-- di++me6VxrCUX7G4pkuTLwLxzCPCQ5Y4pb+bfC1sHDVHuIA85/qfDJzv316Mz3QL -->
+<!-- DDOXf+oE1cUz0w+esJAl2rr9aJ7JtAFuqe9jMzDpCMjrk89bmb+hylQ6wIodk2yK -->
+<!-- 0LwvxyL+QONEdprSlN8XZUt7JoDO2UczTfVm5PzGzXKsfvFwkoM+ciGQwOyN/1mx -->
+<!-- W7MyUJTFwWx7albI+RB8SxqeYSyiIe5fnKRk7DLStHuaiEKpLFYuF5b+kytEDF6f -->
+<!-- I84C9juJmMBB/EHX+ih9RAHykbLRumKe2AVjBlamwhgBZv29RCtNWcLwmywQdDRv -->
+<!-- IKEqPVjOXPBR4SWh6b+zNXHJDWXFbHUBt8P8s5aTwtivTVkq/czPpvPDtZaSequ0 -->
+<!-- Sq44ogI95pGQ3aPsqSXJCMFRsakgXIxqOpHnCRJ/zsp4zyhDqnQLXJ4RcP/EWTUC -->
+<!-- AwEAAaOCAfcwggHzMBAGCSsGAQQBgjcVAQQDAgEAMB0GA1UdDgQWBBSE3RA2ewvS -->
+<!-- CKMmVp8ilSVBhSwJwDBkBgNVHSAEXTBbMAYGBFUdIAAwUQYMKwYBBAGCN0yDfQEB -->
+<!-- MEEwPwYIKwYBBQUHAgEWM2h0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMv -->
+<!-- RG9jcy9SZXBvc2l0b3J5Lmh0bTAZBgkrBgEEAYI3FAIEDB4KAFMAdQBiAEMAQTAL -->
+<!-- BgNVHQ8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAfBgNVHSMEGDAWgBSFcACfd1ke -->
+<!-- jKw8n3cmKBnMmsGPMjB4BgNVHR8EcTBvMG2ga6BphmdodHRwOi8vd3d3Lm1pY3Jv -->
+<!-- c29mdC5jb20vcGtpb3BzL2NybC9NaWNyb3NvZnQlMjBEZXZlbG9wbWVudCUyMFJv -->
+<!-- b3QlMjBDZXJ0aWZpY2F0ZSUyMEF1dGhvcml0eSUyMDIwMTQuY3JsMIGFBggrBgEF -->
+<!-- BQcBAQR5MHcwdQYIKwYBBQUHMAKGaWh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9w -->
+<!-- a2lvcHMvY2VydHMvTWljcm9zb2Z0JTIwRGV2ZWxvcG1lbnQlMjBSb290JTIwQ2Vy -->
+<!-- dGlmaWNhdGUlMjBBdXRob3JpdHklMjAyMDE0LmNydDANBgkqhkiG9w0BAQsFAAOC -->
+<!-- AgEATuodDP7TgtF1X/Aw33eNrINWsDTNvqcH83Ss7jxKXR/avSr2aPsqN0OXCXks -->
+<!-- Ab2h1Jp1OJSXYsjrc7yJlEPLKLRLVbnxVtUk4sun8EZA1v4w/ikyU+05IQNzMJUt -->
+<!-- arGHA99RfPFGE/n1BUTdD5JjOnHMz6BV8W0tlSHgdlRkldlmj39rJcWKhhlxNMVT -->
+<!-- IvbcVZvauual8vf2LHZG0mHeSNrjcB5V4DGMW/Szwh36/36xjbXe/pT9AUrL+h9M -->
+<!-- DbRaciKCtisjUwqdLt9VPfwYszJbTrGvAL+a+JFWLnFORFLHNXnTdUq4RKWl+WdE -->
+<!-- zycw3HhPfgnVoVHAaz+K41kLce/KkjWd0Sq3jHUgQ5J0LhLfTnp7WaYMZYfKm2lT -->
+<!-- dSKs2fbZDzm+xpNJ4W3YY3Llhlwpx9XbpflekzmwxYTJceIVVKbMiqkeRiRN5Dyf -->
+<!-- wQXfjDQzbgXBoUDZqAuVSXMMA0/Mw3xSI96kNsXNgj3L+PASfNgcLV23ugV+wA4Z -->
+<!-- n1J7Uz8Gmr2UJ2JPVQOW4omv88xnlTAtGrQAu1XHb4uQfU1PLEJQhGM+K3bDBPdW -->
+<!-- 4OAxdlDlAgwAqg5P9KQpHxKWYqhk3PHDDibXYuPGraRoAGcwQQEXH99hZIuDHTe6 -->
+<!-- gvFonbRpn62C3NsTUtZMVQsMzfPVuVnG93GLff9xXj3Z3gAxgho5MIIaNQIBATCB -->
+<!-- lDB9MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH -->
+<!-- UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMScwJQYDVQQD -->
+<!-- Ex5NaWNyb3NvZnQgRGV2ZWxvcG1lbnQgUENBIDIwMTQCEzMAAAesV3TWxd7P8B8A -->
+<!-- AAAAB6wwDQYJYIZIAWUDBAIBBQCggcYwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcC -->
+<!-- AQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwLwYJKoZIhvcNAQkEMSIE -->
+<!-- IH/kR/FnFnxBJSUptBRVCZKPToBI6vu3OGYEQeXgVO47MFoGCisGAQQBgjcCAQwx -->
+<!-- TDBKoCSAIgBNAGkAYwByAG8AcwBvAGYAdAAgAFcAaQBuAGQAbwB3AHOhIoAgaHR0 -->
+<!-- cDovL3d3dy5taWNyb3NvZnQuY29tL3dpbmRvd3MwDQYJKoZIhvcNAQEBBQAEggEA -->
+<!-- WR2nUE7ol7t3zW7PhHcGyDbLt752gj8fAniAT8LPInvn61mCvcQW17vAS4AKVIXm -->
+<!-- tQA5jEc5h7xLJqIDpgKELtZ5W8kMmEnfbt+cQoaRS5Xd1ydexDYKKsYOA3fR4TUp -->
+<!-- MwS2Rpn74tHc+84qdeoPxyc4poCvfVUeJRx6K+DDbVLg5TwkppwUOZEcIh2JFvzU -->
+<!-- YZZQwoJWLDz07ZaCcWpqLwdTxzVpB6NM299wCrYI4ak9YoSDdFIivNgjozBrDA78 -->
+<!-- ZzY96OzD2ainPk6s6I25e6lgJckttB528fDLIMfybe96+rJqLdT8aWi5O0ShVpAz -->
+<!-- XFAHcY6Pfn5Wg+BFzmGdbqGCF6wwgheoBgorBgEEAYI3AwMBMYIXmDCCF5QGCSqG -->
+<!-- SIb3DQEHAqCCF4UwgheBAgEDMQ8wDQYJYIZIAWUDBAIBBQAwggFZBgsqhkiG9w0B -->
+<!-- CRABBKCCAUgEggFEMIIBQAIBAQYKKwYBBAGEWQoDATAxMA0GCWCGSAFlAwQCAQUA -->
+<!-- BCAJATn3o+/vkRRnBMdZwcO29Ahg5N7UG8+CgmX+tevepAIGavNL/JwJGBIyMDI2 -->
+<!-- MTExNDIxMjAwMS44OFowBIACAfSggdmkgdYwgdMxCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xLTArBgNVBAsTJE1pY3Jvc29mdCBJcmVsYW5kIE9w -->
+<!-- ZXJhdGlvbnMgTGltaXRlZDEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNOOjMyMUEt -->
+<!-- MDVFMC1EOTQ3MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNl -->
+<!-- oIIR+zCCBygwggUQoAMCAQICEzMAAAIsPmW6OMVDMCwAAQAAAiwwDQYJKoZIhvcN -->
+<!-- AQELBQAwfDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNV -->
+<!-- BAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQG -->
+<!-- A1UEAxMdTWljcm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTAwHhcNMjYxMDE1MTgz -->
+<!-- NzMwWhcNMjgwMTExMTgzNzMwWjCB0zELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldh -->
+<!-- c2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBD -->
+<!-- b3Jwb3JhdGlvbjEtMCsGA1UECxMkTWljcm9zb2Z0IElyZWxhbmQgT3BlcmF0aW9u -->
+<!-- cyBMaW1pdGVkMScwJQYDVQQLEx5uU2hpZWxkIFRTUyBFU046MzIxQS0wNUUwLUQ5 -->
+<!-- NDcxJTAjBgNVBAMTHE1pY3Jvc29mdCBUaW1lLVN0YW1wIFNlcnZpY2UwggIiMA0G -->
+<!-- CSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDmCbpcnqTRTWBmsQi1esnDqF5BTw91 -->
+<!-- zw3716Ek6g8X/dta2OOKqKGK54v/h8BycTpSzDL0F3qnsHsOPVE3+oTu/I7VXi2n -->
+<!-- hWPO/ZhdhnoY6pPpaamBCJrl748z7ZnrmK/1ccIf/m09MXvbkE8Kx38VML7f3FtW -->
+<!-- URVsrdjy+NVPpdxJZwHuH1jeVm+gaQM1iDFk8ZrFqwDY6+fOzc16hklUbSRTvrz7 -->
+<!-- ABWWqBh2qE4OgkGyNouGQpozj/Me8yoPfOmL//LlXr9F0HIn8dCSzhzx0L/qrhkB -->
+<!-- yI9yY7wCvzbbcJHIcdupptTly8ACXp+FojLqXM4QaQUyf8kqA+UoXJOtBBwsgUNC -->
+<!-- oXNH1Cvhe6YN25YTDH26S9dfY0UiMzU4QLu2OLR8qGrtR1XC+xh0yZBeElPWIU+I -->
+<!-- K94FdHRYfxhtNKX6g1Xm0IEz6JISw6LiFpX5a450wtRdrJmrb7B78e/3mVrEZW92 -->
+<!-- mabiAIimpJXQhtplHOPHeDSURMGbtALuB/CQEE9ia2vgiUZrj640anLsgekYDoz6 -->
+<!-- hijkk0O5lj/h3d3NpQL/qO7jUHN76zslbgtXKqHWz54vQCXEdGCmgBGgbMzw4X8K -->
+<!-- 9pbG4geOGj1k5351qugXEx1BdgljeheDAAvG7VEjWskFFutmf6mhbcdd9qkDohQi -->
+<!-- 9u25ad0N5bRPAQIDAQABo4IBSTCCAUUwHQYDVR0OBBYEFCdDBLBzftZymjilJrah -->
+<!-- deF84HoBMB8GA1UdIwQYMBaAFJ+nFV0AXmJdg/Tl0mWnG1M1GelyMF8GA1UdHwRY -->
+<!-- MFYwVKBSoFCGTmh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvY3JsL01p -->
+<!-- Y3Jvc29mdCUyMFRpbWUtU3RhbXAlMjBQQ0ElMjAyMDEwKDEpLmNybDBsBggrBgEF -->
+<!-- BQcBAQRgMF4wXAYIKwYBBQUHMAKGUGh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9w -->
+<!-- a2lvcHMvY2VydHMvTWljcm9zb2Z0JTIwVGltZS1TdGFtcCUyMFBDQSUyMDIwMTAo -->
+<!-- MSkuY3J0MAwGA1UdEwEB/wQCMAAwFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwgwDgYD -->
+<!-- VR0PAQH/BAQDAgeAMA0GCSqGSIb3DQEBCwUAA4ICAQAEHPX5mEvrILin0YpR15Zq -->
+<!-- vNNnXEO+RioCeFZmKEl22QV1oz3F3lbHIrb8njarWboUMIHKYFj++B+MpYDb8ToJ -->
+<!-- p+iEkd80bzd92V4gL6rg/vELDddjn6tzNHrK1m8cAO45KUbJq2OJ27OipOAJPzrg -->
+<!-- viJmkD2dBKHxxsSADUw08sUrreBlrGw+R/HoLEQTgsEFzm5/i67wsJvgZCtg/5/n -->
+<!-- YM2iWduqxCDT+rt3xy6Pyeosid0bWCMosjtEULPAr9MZ4sCHOfLMPrtPlPsG6DQp -->
+<!-- puHX8iPlP3CVJt/4TMpZktvCLkcAOeNW9S4IEkxLaF2yRBGb3150YVJe0T20z51o -->
+<!-- WNvvR1qLAYWRbpmvk1axed9NOJ91aHDkcm4go6AgrsZNkhq4k9jXIcbxRpHcdN/I -->
+<!-- 3Av0U06l9Z/ZEvZfuMQgRLUrHHBkrnX2KSmEobqU/9zei4gVgSMiSKbdreb8ypRa -->
+<!-- sRmV+e/8VeRrlZ9Zq3TcqJvI321nNTW+4d05GtNR+2zxnmpImY2d2h7SxeqhIWig -->
+<!-- tpDDQsY3SfGjHmb18/MwP3Kq/NDISb3Tuc8AOqhkuhZuOxqk0VvzaDhb6hksJ00L -->
+<!-- mNrPjtMvaz7kSoTkgkMbjF/pnIqeqDC36CdPLDZyeNHdgXg7y0DxFnPo3YSKQ/zX -->
+<!-- qJO5KwBp14sdhAjrOkF9UzCCB3EwggVZoAMCAQICEzMAAAAVxedrngKbSZkAAAAA -->
+<!-- ABUwDQYJKoZIhvcNAQELBQAwgYgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNo -->
+<!-- aW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29y -->
+<!-- cG9yYXRpb24xMjAwBgNVBAMTKU1pY3Jvc29mdCBSb290IENlcnRpZmljYXRlIEF1 -->
+<!-- dGhvcml0eSAyMDEwMB4XDTIxMDkzMDE4MjIyNVoXDTMwMDkzMDE4MzIyNVowfDEL -->
+<!-- MAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1v -->
+<!-- bmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWlj -->
+<!-- cm9zb2Z0IFRpbWUtU3RhbXAgUENBIDIwMTAwggIiMA0GCSqGSIb3DQEBAQUAA4IC -->
+<!-- DwAwggIKAoICAQDk4aZM57RyIQt5osvXJHm9DtWC0/3unAcH0qlsTnXIyjVX9gF/ -->
+<!-- bErg4r25PhdgM/9cT8dm95VTcVrifkpa/rg2Z4VGIwy1jRPPdzLAEBjoYH1qUoNE -->
+<!-- t6aORmsHFPPFdvWGUNzBRMhxXFExN6AKOG6N7dcP2CZTfDlhAnrEqv1yaa8dq6z2 -->
+<!-- Nr41JmTamDu6GnszrYBbfowQHJ1S/rboYiXcag/PXfT+jlPP1uyFVk3v3byNpOOR -->
+<!-- j7I5LFGc6XBpDco2LXCOMcg1KL3jtIckw+DJj361VI/c+gVVmG1oO5pGve2krnop -->
+<!-- N6zL64NF50ZuyjLVwIYwXE8s4mKyzbnijYjklqwBSru+cakXW2dg3viSkR4dPf0g -->
+<!-- z3N9QZpGdc3EXzTdEonW/aUgfX782Z5F37ZyL9t9X4C626p+Nuw2TPYrbqgSUei/ -->
+<!-- BQOj0XOmTTd0lBw0gg/wEPK3Rxjtp+iZfD9M269ewvPV2HM9Q07BMzlMjgK8Qmgu -->
+<!-- EOqEUUbi0b1qGFphAXPKZ6Je1yh2AuIzGHLXpyDwwvoSCtdjbwzJNmSLW6CmgyFd -->
+<!-- XzB0kZSU2LlQ+QuJYfM2BjUYhEfb3BvR/bLUHMVr9lxSUV0S2yW6r1AFemzFER1y -->
+<!-- 7435UsSFF5PAPBXbGjfHCBUYP3irRbb1Hode2o+eFnJpxq57t7c+auIurQIDAQAB -->
+<!-- o4IB3TCCAdkwEgYJKwYBBAGCNxUBBAUCAwEAATAjBgkrBgEEAYI3FQIEFgQUKqdS -->
+<!-- /mTEmr6CkTxGNSnPEP8vBO4wHQYDVR0OBBYEFJ+nFV0AXmJdg/Tl0mWnG1M1Gely -->
+<!-- MFwGA1UdIARVMFMwUQYMKwYBBAGCN0yDfQEBMEEwPwYIKwYBBQUHAgEWM2h0dHA6 -->
+<!-- Ly93d3cubWljcm9zb2Z0LmNvbS9wa2lvcHMvRG9jcy9SZXBvc2l0b3J5Lmh0bTAT -->
+<!-- BgNVHSUEDDAKBggrBgEFBQcDCDAZBgkrBgEEAYI3FAIEDB4KAFMAdQBiAEMAQTAL -->
+<!-- BgNVHQ8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAfBgNVHSMEGDAWgBTV9lbLj+ii -->
+<!-- XGJo0T2UkFvXzpoYxDBWBgNVHR8ETzBNMEugSaBHhkVodHRwOi8vY3JsLm1pY3Jv -->
+<!-- c29mdC5jb20vcGtpL2NybC9wcm9kdWN0cy9NaWNSb29DZXJBdXRfMjAxMC0wNi0y -->
+<!-- My5jcmwwWgYIKwYBBQUHAQEETjBMMEoGCCsGAQUFBzAChj5odHRwOi8vd3d3Lm1p -->
+<!-- Y3Jvc29mdC5jb20vcGtpL2NlcnRzL01pY1Jvb0NlckF1dF8yMDEwLTA2LTIzLmNy -->
+<!-- dDANBgkqhkiG9w0BAQsFAAOCAgEAnVV9/Cqt4SwfZwExJFvhnnJL/Klv6lwUtj5O -->
+<!-- R2R4sQaTlz0xM7U518JxNj/aZGx80HU5bbsPMeTCj/ts0aGUGCLu6WZnOlNN3Zi6 -->
+<!-- th542DYunKmCVgADsAW+iehp4LoJ7nvfam++Kctu2D9IdQHZGN5tggz1bSNU5HhT -->
+<!-- dSRXud2f8449xvNo32X2pFaq95W2KFUn0CS9QKC/GbYSEhFdPSfgQJY4rPf5KYnD -->
+<!-- vBewVIVCs/wMnosZiefwC2qBwoEZQhlSdYo2wh3DYXMuLGt7bj8sCXgU6ZGyqVvf -->
+<!-- SaN0DLzskYDSPeZKPmY7T7uG+jIa2Zb0j/aRAfbOxnT99kxybxCrdTDFNLB62FD+ -->
+<!-- CljdQDzHVG2dY3RILLFORy3BFARxv2T5JL5zbcqOCb2zAVdJVGTZc9d/HltEAY5a -->
+<!-- GZFrDZ+kKNxnGSgkujhLmm77IVRrakURR6nxt67I6IleT53S0Ex2tVdUCbFpAUR+ -->
+<!-- fKFhbHP+CrvsQWY9af3LwUFJfn6Tvsv4O+S3Fb+0zj6lMVGEvL8CwYKiexcdFYmN -->
+<!-- cP7ntdAoGokLjzbaukz5m/8K6TT4JDVnK+ANuOaMmdbhIurwJ0I9JZTmdHRbatGe -->
+<!-- Pu1+oDEzfbzL6Xu/OHBE0ZDxyKs6ijoIYn/ZcGNTTY3ugm2lBRDBcQZqELQdVTNY -->
+<!-- s6FwZvKhggNWMIICPgIBATCCAQGhgdmkgdYwgdMxCzAJBgNVBAYTAlVTMRMwEQYD -->
+<!-- VQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNy -->
+<!-- b3NvZnQgQ29ycG9yYXRpb24xLTArBgNVBAsTJE1pY3Jvc29mdCBJcmVsYW5kIE9w -->
+<!-- ZXJhdGlvbnMgTGltaXRlZDEnMCUGA1UECxMeblNoaWVsZCBUU1MgRVNOOjMyMUEt -->
+<!-- MDVFMC1EOTQ3MSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2aWNl -->
+<!-- oiMKAQEwBwYFKw4DAhoDFQAeF5rbi1QnJJPHrWIhlMUnaRegU6CBgzCBgKR+MHwx -->
+<!-- CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRt -->
+<!-- b25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xJjAkBgNVBAMTHU1p -->
+<!-- Y3Jvc29mdCBUaW1lLVN0YW1wIFBDQSAyMDEwMA0GCSqGSIb3DQEBCwUAAgUA7qMP -->
+<!-- 3TAiGA8yMDI2MTExNDE2NTAzN1oYDzIwMjYxMTE1MTY1MDM3WjB0MDoGCisGAQQB -->
+<!-- hFkKBAExLDAqMAoCBQDuow/dAgEAMAcCAQACAhKsMAcCAQACAhtoMAoCBQDupGFd -->
+<!-- AgEAMDYGCisGAQQBhFkKBAIxKDAmMAwGCisGAQQBhFkKAwKgCjAIAgEAAgMHoSCh -->
+<!-- CjAIAgEAAgMBhqAwDQYJKoZIhvcNAQELBQADggEBAJIqGYjRnbMocPRcgR1XK1IL -->
+<!-- TkskhauYeCmUbqy2McRXg3EetmwF70fq9mHwS7hbhXxvKoj/MW92zIcgZM26APrn -->
+<!-- uKExYFs0gUm60Xm3Dg9ZrasDJX485afW/Y64KWUv+YZ8hll/K5my6NV+zKPXXMYV -->
+<!-- 5iipdSA07Mp4qxsAzITKdVItjihRHAXaZ43aAsD0JmQ5AfSLU+9+1yrAU2v/tEvH -->
+<!-- 9IiaHOZj86i5Fgv6SpQAWVksjiGIb0XA/JFcu601XeHDXFFyrOX+s2SIwJsaiLJy -->
+<!-- V15WMTZy81nlHIp1aiIShxUh9iZMmzerv6BnZJn1NcpSZzhCr5h2euSZsL1mHlgx -->
+<!-- ggQNMIIECQIBATCBkzB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3Rv -->
+<!-- bjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0 -->
+<!-- aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EgMjAxMAITMwAA -->
+<!-- Aiw+Zbo4xUMwLAABAAACLDANBglghkgBZQMEAgEFAKCCAUowGgYJKoZIhvcNAQkD -->
+<!-- MQ0GCyqGSIb3DQEJEAEEMC8GCSqGSIb3DQEJBDEiBCCt51D6rtq2YeOjRnFvtkxi -->
+<!-- 63Cw2uGzLMjfzqi79bqW+jCB+gYLKoZIhvcNAQkQAi8xgeowgecwgeQwgb0EIPXu -->
+<!-- qzVsx2R1r2+h7hCi26D25b0oEBQc0PwemO+O2WE+MIGYMIGApH4wfDELMAkGA1UE -->
+<!-- BhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAc -->
+<!-- BgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEmMCQGA1UEAxMdTWljcm9zb2Z0 -->
+<!-- IFRpbWUtU3RhbXAgUENBIDIwMTACEzMAAAIsPmW6OMVDMCwAAQAAAiwwIgQg7g9x -->
+<!-- zaqaKGuAM32xAyBD+lSU2T+QFyNIS1CGx6gB8xEwDQYJKoZIhvcNAQELBQAEggIA -->
+<!-- 4vKrhnpgG3GQACOHdWOB/K08fb5I5G0D+D4xNNWgb0uuISb/f/U6l170hRhoeqBN -->
+<!-- SIhXCHppF1+8Gxw/IFEsFHgWr/iFzG7a249xTtsCWtkrBhktWIEntijD3LLA5Rv+ -->
+<!-- FqJTYGIEiwLMLYlyAcZ6NPuShNOMqsCumz6URF62nHyzr7LKkV7vpYyDiGKnJ6Rv -->
+<!-- hqilbhct4KPF7BXlOCclixV1MtRL71wa9nH1wwWRmpGFaeTUqUHBfPMEdbXRWL8/ -->
+<!-- uxT5uLE8z8qgwTS/9Y5O5JFuSc9tkJEOdQmyxtlxQKUOPs6hPKGcqUjKC2DkaDem -->
+<!-- TYbu+IBV3LoSI2O3CvA+XtY5c6+fMFlJh6bxpscyJQqzwNfYdxJ18P1xQ9XE9ar8 -->
+<!-- /uvIa1p67t6JVScnXX1GZ359loVjsNWImbAONVBTfhnQgl351r3ZuAj6MAYoLMoO -->
+<!-- qiDOv05ZMkJt6VaIMoHT3B6stlOXJkY7D/A130xllqpDnZ6BQwQO4LVXGbSdbTwf -->
+<!-- LpZ7dPLlU/6xNMQ6tsFDQSvw5ErI4vlvDgQsvf3zHvWxzU6fFljHr/JQhNfx55IO -->
+<!-- Yu4J5S8cXxaaMR0bLFKAinnYsPs+BPqucBh6UIB4JwREQWRSoL/vMfX3Vt2QH6tL -->
+<!-- 5zBU6HmuPNN7uXxhFUAPgxGLQQm+SrVNB2CxjKeMHFY= -->
+<!-- SIG # End signature block -->

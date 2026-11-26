@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="OS sync engine for syncing mail, contacts and calendar data. This sync engine is used by UWP apps like Mail, Calendar and People" displayName="Exchange ActiveSync and Internet Mail Sync engine" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-OneCore-ApplicationModel-Sync-Desktop-FOD-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="422" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Server-Features-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="ar-SA" displayName="محرك Exchange ActiveSync ومزامنة بريد الإنترنت" description="محرك مزامنة نظام التشغيل لمزامنة البريد، وجهات الاتصال وبيانات التقويم. يتم استخدام محرك المزامنة هذا من خلال تطبيقات UWP مثل 'البريد' و'التقويم' و'الأشخاص'" />
+      <string language="bg-BG" displayName="Система за синхронизиране на Exchange ActiveSync и „Интернет поща“" description="Синхронизиращата система на ОС за синхронизиране на поща, контакти и данни от календара. Тази синхронизираща система се използва от приложения на UWP, като „Поща“, „Календар“ и „Хора“" />
+      <string language="cs-CZ" displayName="Protokol Exchange ActiveSync a modul Internet Mail Sync" description="Synchronizační modul OS pro synchronizaci dat z pošty, kontaktů a kalendáře. Využívají ho aplikace pro UPW, jako jsou Pošta, Kalendář a Lidé." />
+      <string language="da-DK" displayName="Exchange ActiveSync og program til synkronisering af internetmail" description="OS-synkroniseringsprogram til synkronisering af mail, kontakter og kalenderdata. Dette synkroniseringsprogram bruges af UWP-apps som Mail, Kalender og Personer." />
+      <string language="de-DE" displayName="Exchange ActiveSync- und Internet Mail Sync-Modul" description="Betriebssystem-Synchronisierungsmodul zum Synchronisieren von E-Mails, Kontakten und Kalenderdaten. Dieses Synchronisierungsmodul wird von UWP-Apps wie Mail, Kalender und Kontakte verwendet." />
+      <string language="el-GR" displayName="Exchange ActiveSync και μηχανισμός συγχρονισμού αλληλογραφίας Internet" description="Μηχανισμός συγχρονισμού του λειτουργικού συστήματος για τον συγχρονισμό αλληλογραφίας, επαφών και δεδομένων ημερολογίου. Αυτός ο μηχανισμός συγχρονισμού χρησιμοποιείται από εφαρμογές UWP όπως η Αλληλογραφία, το Ημερολόγιο και οι Επαφές." />
+      <string language="en-GB" displayName="Exchange ActiveSync and Internet Mail Sync engine" description="OS sync engine for syncing mail, contacts and calendar data. This sync engine is used by UWP apps like Mail, Calendar and People" />
+      <string language="en-US" displayName="Exchange ActiveSync and Internet Mail Sync engine" description="OS sync engine for syncing mail, contacts and calendar data. This sync engine is used by UWP apps like Mail, Calendar and People" />
+      <string language="es-ES" displayName="Motor de sincronización de correo de Internet y Exchange ActiveSync" description="Motor de sincronización de SO para sincronizar correo, contactos y datos del calendario. Este motor de sincronización lo usan aplicaciones para UWP, como Correo, Calendario y Contactos." />
+      <string language="es-MX" displayName="Exchange ActiveSync y motor de sincronización de correo de Internet" description="Motor de sincronización del SO para sincronizar datos del correo, los contactos y el calendario. Las aplicaciones para UWP (como Correo, Calendario y Contactos) usan este motor de sincronización." />
+      <string language="et-EE" displayName="Exchange ActiveSynci ja Internet Maili sünkroonimismootor" description="Opsüsteemi sünkroonimismootor meili, kontaktide ja kalendriandmete sünkroonimiseks. Seda sünkroonimismootorit kasutavad UWP-rakendused, näiteks Meil, Kalender ja Inimesed." />
+      <string language="fi-FI" displayName="Exchange ActiveSync- ja Internet Mail Sync -moduuli" description="Käyttöjärjestelmän synkronointimoduuli sähköpostin, yhteystietojen ja kalenteritietojen synkronointia varten. UWP-sovellukset, kuten Sähköposti, Kalenteri ja Ihmiset, käyttävät tätä synkronointimoduulia." />
+      <string language="fr-CA" displayName="Exchange ActiveSync et moteur de synchronisation de la messagerie Internet" description="Moteur de synchronisation du SE pour la synchronisation des courriers, contacts et données de calendrier. Ce moteur de synchronisation est utilisé par des applis UWP comme le courrier, le calendrier et les contacts" />
+      <string language="fr-FR" displayName="Exchange ActiveSync et moteur de synchronisation de la messagerie Internet" description="Moteur de synchronisation du système d'exploitation pour la synchronisation du courrier, des contacts et des données de calendrier. Ce moteur de synchronisation est utilisé par des applications UWP telles que Courrier, Calendrier et Contacts" />
+      <string language="he-IL" displayName="מנוע Exchange ActiveSync ו-Internet Mail Sync" description="מנוע סנכרון מערכת הפעלה לסנכרון נתוני דואר, אנשי קשר ולוח שנה. מנוע סנכרון זה משמש אפליקציות UWP כגון דואר, לוח שנה ואנשים" />
+      <string language="hr-HR" displayName="Modul za protokole Exchange ActiveSync i Internet Mail Sync" description="Modul OS sync za sinkronizaciju pošte, kontakata i podataka iz kalendara. Ovaj sinkronizacijski modul koriste UWP aplikacije, kao što je Pošta, Kalendar i Osobe" />
+      <string language="hu-HU" displayName="Exchange ActiveSync protokoll és Internet Mail Sync motor" description="Az operációs rendszer szinkronizálási motorja a levelek, névjegyek és naptáradatok szinkronizálásához. Ezt a szinkronizálási motort használják az UWP-alkalmazások, így például a Posta, a Naptár és a Kapcsolatok." />
+      <string language="it-IT" displayName="Exchange ActiveSync e motore Internet Mail Sync" description="Motore di sincronizzazione del sistema operativo per la sincronizzazione della posta elettronica, dei contatti e dei dati calendario. Questo motore di sincronizzazione è utilizzato dalle app della piattaforma UWP (Universal Windows Platform) quali Posta, Calendario e Contatti" />
+      <string language="ja-JP" displayName="Exchange ActiveSync および Internet Mail Sync エンジン" description="メール、連絡先、カレンダーのデータを同期するための OS 同期エンジンです。この同期エンジンは、メール、カレンダー、People などの UWP アプリで使用されます" />
+      <string language="ko-KR" displayName="Exchange ActiveSync 및 Internet Mail Sync 엔진" description="메일, 연락처 및 일정 데이터의 동기화를 위한 OS 동기화 엔진입니다. 이 동기화 엔진은 메일, 일정, 피플 같은 UWP 앱에서 사용합니다." />
+      <string language="lt-LT" displayName="„Exchange ActiveSync“ ir interneto pašto sinchronizavimo variklis" description="Pašto, kontaktų ir kalendoriaus duomenų sinchronizavimo OS sinchronizavimo variklis. Šį sinchronizavimo variklį naudoja UWP programėlės, pvz., Paštas, Kalendorius ir Žmonės" />
+      <string language="lv-LV" displayName="Protokols Exchange ActiveSync un interneta pasta sinhronizācijas programma" description="Operētājsistēmas sinhronizācijas programma pasta, kontaktpersonu un kalendāra datu sinhronizēšanai. Šo sinhronizācijas programmu izmanto tādas UWP programmas kā Pasts, Kalendārs un Personas" />
+      <string language="nb-NO" displayName="Exchange ActiveSync og Internet Mail Sync-motor" description="OS-motor for synkronisering av e-post-, kontakt- og kalenderdata. Denne synkroniseringsmotoren brukes av UWP-apper som E-post, Kalender og Personer" />
+      <string language="nl-NL" displayName="Exchange ActiveSync- en Internet Mail Sync-engine" description="Besturingssysteemsynchronisatie-engine voor het synchroniseren van e-mail, contactpersonen en agendagegevens. Deze synchronisatie-engine wordt gebruikt door UWP-apps zoals Mail, Agenda en Personen" />
+      <string language="pl-PL" displayName="Protokół Exchange ActiveSync i aparat synchronizacji poczty internetowej" description="Aparat synchronizacji systemu operacyjnego służący do synchronizowania poczty, kontaktów i danych kalendarza. Ten aparat synchronizacji jest używany przez aplikacje platformy UWP, takie jak Poczta, Kalendarz i Kontakty." />
+      <string language="qps-plocm" displayName="‏‏أبع[Exchange ActiveSync and Internet Mail Sync engine]לף" description="‏‏أبع[OS sync engine for syncing mail, contacts and calendar data. This sync engine is used by UWP apps like Mail, Calendar and People]לף" />
+      <string language="qps-ploc" displayName="[gtb95][Єжçнāήĝę ΔстіνеŚýπς ăηð Їйŧěŗи℮ť Мâїł Śýηç ęпġīňє !!! !!! !!! !!]" description="[lTyZS][ΩŠ ŝуņć εήĝіñē ƒοґ šÿήçîйğ мàĭŀ, ċθñτд¢ťś áńď çäŀелðàг δáтå. Ŧĥíŝ ѕўήс êηĝϊņę ĭš цšєď вў ÙŴР åрφš ļικе Μåįł, €ǻľёňðǻř αñđ Рëθрľě !!! !!! !!! !!! !!! !!! !!! !!! !!! !]" />
+      <string language="pt-BR" displayName="Mecanismo de Sincronização de Email da Internet e Exchange ActiveSync" description="Mecanismo de sincronização de sistema operacional para sincronização de dados de email, contatos e calendário. Usado por aplicativos UWP com Email, Calendário e Pessoas" />
+      <string language="pt-PT" displayName="Motor Exchange ActiveSync e Internet Mail Sync" description="Motor OS sync para sincronizar correio, contactos e dados do calendário. Este motor de sincronização é utilizado por aplicações como Correio, Calendário e Pessoas" />
+      <string language="ro-RO" displayName="Motor Exchange ActiveSync și Internet Mail Sync" description="Motor sincroniz. SO pentru sincroniz. mail , contacte și calendar. Acest motor de sincroniz. este utilizat de aplicații UWP precum Mail, Calendar sau Persoane." />
+      <string language="ru-RU" displayName="Модуль синхронизации почты в Интернете и Exchange ActiveSync" description="Модуль синхронизации ОС для синхронизации почты, контактов и данных календаря. Используется такими приложениями UWP, как &quot;Почта&quot;, &quot;Календарь&quot;, &quot;Люди&quot;." />
+      <string language="sk-SK" displayName="Protokol Exchange ActiveSync a synchronizačný stroj internetovej pošty" description="Synchronizačný stroj operačného systému na synchronizáciu pošty, kontaktov a údajov kalendára. Tento synchronizačný stroj používajú aplikácie UWP ako Pošta, Kalendár a Ľudia." />
+      <string language="sl-SI" displayName="Exchange ActiveSync in mehanizem Internet Mail Sync" description="Mehanizem za sinhronizacijo OS za sinhroniziranje e-pošte, stikov in podatkov v koledarju. Mehanizem za sinhronizacijo uporabljajo aplikacije UWP, na primer Pošta, Koledar in Ljudje" />
+      <string language="sr-Latn-RS" displayName="Mašina Exchange ActiveSync i Internet Mail Sync" description="Mašina za sinhronizaciju OS koja služi za sinhronizovanje pošte, kontakata i podataka iz kalendara. Ovu mašinu za sinhronizaciju koriste UWP aplikacije kao što su Pošta, Kalendar i Osobe" />
+      <string language="sv-SE" displayName="Synkningsmotor för Exchange ActiveSync och Internet Mail" description="Operativsystemets synkningsmotor för synkning av e-post, kontakter och kalenderdata. Den här synkningsmotorn används av UWP-appar som E-post, Kalender och Kontakter." />
+      <string language="th-TH" displayName="โปรแกรม Exchange ActiveSync และ Internet Mail Sync" description="โปรแกรมซิงค์ OS สำหรับการซิงค์จดหมาย รายชื่อผู้ติดต่อ และข้อมูลปฏิทิน โปรแกรมซิงค์นี้ถูกใช้โดยแอป UWP ต่างๆ เช่น จดหมาย ปฏิทิน และการเชื่อมต่อบุคคล" />
+      <string language="tr-TR" displayName="Exchange ActiveSync ve İnternet Mail Eşitleme altyapısı" description="Posta, kişi ve takvim verisi eşitleme için OS eşitleme altyapısı. Bu eşitleme altyapısı Posta, Takvim ve Kişiler gibi UWP uygulamaları tarafından kullanılır." />
+      <string language="uk-UA" displayName="Модуль синхронізації пошти в Інтернеті та протоколу безпроводової синхронізації Exchange ActiveSync" description="Модуль синхронізації ОС для синхронізації пошти, контактів і даних календаря. Використовується для таких програм UWP, як &quot;Пошта&quot;, &quot;Календар&quot;, &quot;Люди&quot;." />
+      <string language="zh-CN" displayName="Exchange ActiveSync 和 Internet 邮件同步引擎" description="用于同步邮件、联系人和日历数据的操作系统同步引擎。此同步引擎用于 UWP 应用(例如邮件、日历和人脉)" />
+      <string language="zh-TW" displayName="Exchange ActiveSync 與網際網路郵件同步引擎" description="用於同步處理郵件、連絡人和行事曆資料的 OS 同步引擎。這個同步引擎是供郵件、行事曆和連絡人這類 UWP 應用程式使用" />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="OneCoreUAP.OneSync" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="6d9aae62b264f131b829529aecf3e3c4">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-ApplicationModel-Sync-Desktop-FOD-Deployment" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="34b7d928dfea19030ae4874c25d5f3e6">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-ApplicationModel-Sync-Desktop-FOD-Package" version="10.0.28000.3571" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,227 @@
+{
+  "manifest_version": "0.3",
+  "name": "settings-mcp-server",
+  "display_name": "Windows Settings",
+  "version": "0.0.1",
+  "description": "Windows Settings lets users check, change settings, or navigate directly to specific pages such as display, mouse, keyboard, and sound using natural language.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/WindowsSettings.png",
+  "localization": {
+    "resources": "ShellMcpServers/Resources/${locale}/SettingsMcpServer.json",
+    "default_locale": "en-US"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "SettingsService"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "is_settings_change_applicable",
+      "description": "If considering a change to a well-known Windows Setting to a provided value this tool can be called first to determine if that change is both possible and relevant right now"
+    },
+    {
+      "name": "make_settings_change",
+      "description": "Change a well-known Windows Setting to the provided value"
+    },
+    {
+      "name": "open_settings_page",
+      "description": "Open the Windows Settings app to the page containing a well-known Windows Setting"
+    },
+    {
+      "name": "undo_settings_change",
+      "description": "Undo the recent change to a well-known Windows Setting back to the original value"
+    }
+  ],
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "resources": {
+              "listChanged": true
+            },
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "settings-mcp-server",
+            "version": "0.0.1"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "is_settings_change_applicable",
+              "description": "If considering a change to a well-known Windows Setting to a provided value this tool can be called first to determine if that change is both possible and relevant right now",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "SettingsChangeRequest": {
+                    "description": "A concise natural language statement of intent to change a particular setting to a particular value. This statement should contain no extraneous information about the reason for the change. This statement should be self-sufficient without any additional information needed for updating the corresponding settings action to the correct value, for example enable/disable or increase/decrease or connect/disconnect, and other similar options.",
+                    "type": "string"
+                  },
+                  "CallerId": {
+                    "description": "The id of the caller invoking the tool",
+                    "type": "string",
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "SettingsChangeRequest"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "ActionDescription": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "IsRollbackSupported": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "IsApplicable": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "IsApplicable"
+                ]
+              }
+            },
+            {
+              "name": "make_settings_change",
+              "description": "Change a well-known Windows Setting to the provided value",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "SettingsChangeRequest": {
+                    "description": "A concise natural language statement of intent to change a particular setting to a particular value. This statement should contain no extraneous information about the reason for the change. This statement should be self-sufficient without any additional information needed for updating the corresponding settings action to the correct value, for example enable/disable or increase/decrease or connect/disconnect, and other similar options.",
+                    "type": "string"
+                  },
+                  "CallerId": {
+                    "description": "The id of the caller invoking the tool",
+                    "type": "string",
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "SettingsChangeRequest"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "ActionDescription": {
+                    "type": "string"
+                  },
+                  "IsRollbackSupported": {
+                    "type": "boolean"
+                  },
+                  "UndoId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ActionDescription",
+                  "IsRollbackSupported",
+                  "UndoId"
+                ]
+              }
+            },
+            {
+              "name": "undo_settings_change",
+              "description": "Undo the recent change to a well-known Windows Setting back to the original value",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "UndoId": {
+                    "description": "The ID returned by the make_settings_change tool in the structured content.",
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "CallerId": {
+                    "description": "The id of the caller invoking the tool",
+                    "type": "string",
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "UndoId"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "ActionDescription": {
+                    "type": "string"
+                  },
+                  "IsRollbackSupported": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ActionDescription",
+                  "IsRollbackSupported"
+                ]
+              }
+            },
+            {
+              "name": "open_settings_page",
+              "description": "Open the Windows Settings app to the page containing a well-known Windows Setting",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "SettingsChangeRequest": {
+                    "description": "A concise natural language statement of intent to change a particular setting to a particular value. This statement should contain no extraneous information about the reason for the change. This statement should be self-sufficient without any additional information needed for updating the corresponding settings action to the correct value, for example enable/disable or increase/decrease or connect/disconnect, and other similar options.",
+                    "type": "string"
+                  },
+                  "CallerId": {
+                    "description": "The id of the caller invoking the tool",
+                    "type": "string",
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "SettingsChangeRequest"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "IsSuccessful": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "IsSuccessful"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

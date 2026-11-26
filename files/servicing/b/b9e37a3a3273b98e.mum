@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Containers-NanoServer-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Containers-NanoServer" releaseType="Feature Pack">
+    <update name="f9b4dfb0bfe92757c9480e8320df6359">
+      <component>
+        <assemblyIdentity name="Containers-NanoServer-Deployment" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="96063a2474a9d4b54834b643c954dc65">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="DiskIo-QoS-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="06e44202a17ca65c754a32aee96323da">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Feature-Containers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5459a04e4170520228da04d6782be47e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="MSMQ-Driver-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

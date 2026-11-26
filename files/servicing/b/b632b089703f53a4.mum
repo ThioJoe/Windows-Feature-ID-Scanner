@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-WinMgmt-Core-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="9f8c042d019edc12dcfeeb75f5f69fed">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-WinMgmt-Core-Deployment-LanguagePack" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="46e4efd6f9cb7726ef6dc6a7a9cd9ebf">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-WinMgmt-WMIv2-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="95feb8d48ad10454c84289f47ad81a20">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-WMI-Providers-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5ab7225d247e021ea8ae3c077909cd26">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WINOMI-Group-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

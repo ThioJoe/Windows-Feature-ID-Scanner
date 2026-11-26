@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Common-RegulatedPackages-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Common-RegulatedPackages" releaseType="Feature Pack">
+    <update name="Microsoft-Media-Foundation">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Media-Foundation-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-Media-Format">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Media-Format-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-Media-Streaming">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Media-Streaming-Package" version="10.0.28000.3445" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-MediaPlayback-OC">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MediaPlayback-OC-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-Portable-Devices">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Portable-Devices-Package" version="10.0.28000.3442" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-WebcamExperience">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WebcamExperience-Package" version="10.0.28000.3112" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Windows-WinSATMediaFiles">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WinSATMediaFiles-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

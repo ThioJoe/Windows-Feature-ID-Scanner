@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities">
+  <Identity Name="MicrosoftWindows.UndockedDevKit" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.28000.7" ResourceId="neutral"/>
+  <mp:PhoneIdentity PhoneProductId="F930ABEA-5C0C-4C09-B5DD-0E5A707EC93A" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde" />
+  <Properties>
+    <DisplayName>UDK Package</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+  <Resources>
+      <Resource Language="en-us"/>
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal"
+        MinVersion="10.0.0.0"
+        MaxVersionTested="10.0.28000.7"/>
+  </Dependencies>
+  <Capabilities>
+    <wincap:Capability Name="dependencyTarget"/>
+  </Capabilities>
+  <Extensions>
+  </Extensions>
+</Package>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="format-detection" content="telephone=no" />
+    <title>Storage</title>
+
+    <link id="pluginCss" rel="stylesheet" href="/23/frontend/host/api/data/plugin.css" type="text/css" data-plugin-theme="true" />
+    <link id="objectTreeView.css" rel="stylesheet" href="/23/common/ObjectView/objectTreeView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/controls/controls.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/Intellisense/intellisenseListBox.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/Grid/commonGridControl.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/ResourcesView/resourcesView.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/TabControl/sharedTabControl.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/storage/storage.css" type="text/css" data-plugin-theme="true" />
+    <link rel="stylesheet" href="/23/common/ModelView/expandingListView.css" type="text/css" data-plugin-theme="true">
+
+    <link rel="stylesheet" href="/23/common/SlickGrid/slick.grid.css" type="text/css" />
+
+    <!-- Below CSS file defines important overrides and should be the last one in the list of includes -->
+    <link rel="stylesheet" href="/23/common/editor/editor.css" type="text/css" data-plugin-theme="true" />
+
+    <script type="text/javascript" src="/23/common/jQuery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/23/common/jQuery/jquery.event.drag-2.2.js"></script>
+
+    <script type="text/javascript" src="/23/common/SlickGrid/slick.core.js"></script>
+    <script type="text/javascript" src="/23/common/SlickGrid/slick.formatters.js"></script>
+    <script type="text/javascript" src="/23/common/SlickGrid/slick.editors.js"></script>
+    <script type="text/javascript" src="/23/common/SlickGrid/slick.dataview.js"></script>
+    <script type="text/javascript" src="/23/common/SlickGrid/slick.grid.js"></script>
+    <script type="text/javascript" src="/23/common/SlickGrid/plugins/slick.rowselectionmodel.js"></script>
+
+    <script src="/23/common/common.bundle.js"></script>
+    <script type="text/javascript" src="/23/storage/storage.bundle.js"></script>
+    <script type="text/javascript" src="/23/selftest/SelfTestStorage.js"></script>
+
+    <script id="intellisenseListBox" type="text/html">
+        <ul class="intellisenseListBox"></ul>
+    </script>
+</head>
+
+<body>
+    <div id="resizePane"></div>
+    <div id="root" role="main" tabindex="-1">
+        <div id="toolbar"></div>
+        <div id="dataTipElement"></div>
+        <div id="storageContent">
+            <div id="leftBlock">
+                <div id="tabStripContainer">
+                    <div id="resourcePickerButton" role="button" tabindex="1"></div>
+                    <div id="tabControl" class="tabControl" role="tabpanel"></div>
+                    <div id="documentToolbarSplitter"></div>
+                    <div id="documentToolbar"></div>
+                </div>
+                <div class="resourcePickerMenu" id="resourcePickerMenu" role="menu"></div>
+                <div id="storageContentContainer" class="storageContentContainer">
+                    <div id="resourcesView"></div>
+                </div>
+            </div>
+            <div id="storageAriaAlertZone" role="alert" aria-live="assertive" aria-atomic="true"></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Windows WiFi Client Broadcom Bcmwl63a Networking Driver" displayName="Broadcom Bcmwl63a WiFi Networking Driver" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Wifi-Client-Broadcom-Bcmwl63a-FOD-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="493" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="hidden" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="en-US" displayName="Broadcom Bcmwl63a WiFi Networking Driver" description="Windows WiFi Client Broadcom Bcmwl63a Networking Driver" />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.Wifi.Client.Broadcom.Bcmwl63a" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="ea89570b06b8c253d2c9410f25e7c24d" restart="required">
+      <driver inf="netbc64.inf" ranking="normal">
+        <assemblyIdentity name="dual_netbc64.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <packageExtended packageSize="7675452" />
+  </package>
+</assembly>

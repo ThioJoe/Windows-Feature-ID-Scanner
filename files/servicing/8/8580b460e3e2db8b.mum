@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0417" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0417" releaseType="Feature Pack">
+    <update name="EC7FA2DB231B54567B657A61EBF2E3AE4C0FD2D2D127DA756E9DA009FD320334">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04170" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="4BCBC96188DE4651CB544C22B68BFA170098B6EB8029CDC6A4E7B0E802D65CD7" restart="required">
+      <driver inf="wudfrd.inf" ranking="normal">
+        <assemblyIdentity name="dual_wudfrd.inf" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

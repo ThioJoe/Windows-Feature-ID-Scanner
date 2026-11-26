@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package05111" version="10.0.26100.9168" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package05111" releaseType="Feature Pack">
+    <update name="add754de325f746fb8e99c7de928ea16">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment051110" version="10.0.26100.9168" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="0BC77C7C50179349689583AAF26ED836A27CA58EE333EC892B9328E9B83ED0BD" restart="required">
+      <driver inf="netnb.inf" ranking="normal">
+        <assemblyIdentity name="dual_netnb.inf" version="10.0.26100.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="17D1E34CC1F6D6EF5E1A16B7F4B6763F0D71B160A401816A3C388798B6F456E3" restart="required">
+      <driver inf="netpacer.inf" ranking="normal">
+        <assemblyIdentity name="dual_netpacer.inf" version="10.0.26100.8115" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

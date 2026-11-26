@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp rescap">
+
+  <Identity Name="Microsoft.Windows.SecureAssessmentBrowser"
+          Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+          ProcessorArchitecture="neutral"
+          ResourceId="neutral"
+          Version="10.0.28000.7"
+          />
+
+  <Properties>
+    <DisplayName>ms-resource:PackageDisplayName</DisplayName>
+    <Description>ms-resource:PackageDescription</Description>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0"/>
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application
+      Id="App"
+      Executable="SecureAssessmentBrowser.exe"
+      EntryPoint="Management.SecureAssessment.Browser.App"
+      >
+      <uap:VisualElements
+        DisplayName="ms-resource:PackageDisplayName"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="ms-resource:PackageDescription"
+        BackgroundColor="transparent"
+        AppListEntry="none"
+        >
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    <Extensions>
+      <uap:Extension Category="windows.protocol">
+        <uap:Protocol Name="ms-edu-secureassessment" DesiredView="default">
+          <uap:Logo>Assets\Square44x44Logo.png</uap:Logo>
+          <uap:DisplayName>Microsoft Secure Assessment Browser</uap:DisplayName>
+        </uap:Protocol>
+      </uap:Extension>
+      <uap:Extension Category="windows.aboveLockScreen"/>
+    </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="secureAssessment" />
+    <rescap:Capability Name="deviceManagementAdministrator" />
+    <rescap:Capability Name="deviceManagementRegistration" />
+    <DeviceCapability Name="microphone" />
+  </Capabilities>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Web.WebView2.Core.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2CompositionController" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2ControllerWindowReference" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2Environment" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2EnvironmentOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Web.WebView2.Core.CoreWebView2Controller" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+        <InProcessServer>
+            <Path>SecureAssessment_JSBridge.dll</Path>
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.examObj" ThreadingModel="both" />
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.securityObj" ThreadingModel="both" />
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.assessment" ThreadingModel="both" />
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.browser" ThreadingModel="both" />
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.SecureAssessmentSettings" ThreadingModel="both" />
+            <ActivatableClass ActivatableClassId="SecureAssessment_JSBridge.settingsObj" ThreadingModel="both" />
+        </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>WebView2Standalone.dll</Path>
+        <ActivatableClass ActivatableClassId="WebView2Standalone.Controls.WebView2" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="WebView2Standalone.Automation.Peers.WebView2AutomationPeer" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>WinRTAdapter.dll</Path>
+        <ActivatableClass ActivatableClassId="WinRTAdapter.Class" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="WinRTAdapter.DispatchAdapter" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
+</Package>

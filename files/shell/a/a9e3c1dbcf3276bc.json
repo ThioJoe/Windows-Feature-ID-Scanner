@@ -1,0 +1,155 @@
+{
+  "manifest_version": "0.3",
+  "name": "windowunderstanding-mcp-server",
+  "display_name": "Window Understanding MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for getting window context and performing actions.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "WindowUnderstanding"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "windowunderstanding-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "invoke_control",
+              "description": "Invoke control",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "windowId": {
+                    "description": "A windowId retrieved from the get_window_list command",
+                    "type": "string"
+                  },
+                  "control": {
+                    "description": "The control to invoke",
+                    "type": "string"
+                  },
+                  "action": {
+                    "description": "The action to perform on the control",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "The value to be entered, if the control supports one",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "windowId",
+                  "control",
+                  "action",
+                  "value"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "invoke_action",
+              "description": "Invoke action",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "windowId": {
+                    "description": "A windowId retrieved from the get_window_list command",
+                    "type": "string"
+                  },
+                  "action": {
+                    "description": "The action to invoke",
+                    "type": "string"
+                  },
+                  "parameters": {
+                    "description": "Parameters for the action, if any",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "windowId",
+                  "action",
+                  "parameters"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "get_window_ui_context",
+              "description": "Get UI context for a window",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "windowId": {
+                    "description": "A windowId retrieved from the get_window_list command",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "windowId"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

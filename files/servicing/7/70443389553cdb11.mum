@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Cortana, text-to-speech, and Narrator for English (US)" displayName="English (US) text-to-speech" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-LanguageFeatures-TextToSpeech-en-us-Package" version="10.0.29712.1000" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="330" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="installed" FeatureType="language" ManageFeatureSettings="page=SettingsPageTimeRegionLanguage" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <update name="665676e12bd99dcdd4ff375cc2075600">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-LanguageFeatures-TextToSpeech-en-us-FOD-wow64-Deployment" version="10.0.29712.1000" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

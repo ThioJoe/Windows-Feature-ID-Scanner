@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-removable-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-removable" releaseType="Feature Pack">
+    <update name="Microsoft-Windows-Shell-Wallpaper-Common">
+      <selectable disposition="absent">
+        <detectNone default="true" />
+        <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+          <mum2:EnableSelectabilityForEditions>
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-EnterpriseGEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSKEdition" />
+            <mum2:EnableSelectabilityForEdition name="Microsoft-Windows-IoTEnterpriseSEvalEdition" />
+          </mum2:EnableSelectabilityForEditions>
+        </mum2:customInformation>
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Shell-Wallpaper-Common-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

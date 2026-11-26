@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         IgnorableNamespaces="uap mp rescap">
+
+  <Identity Name="Microsoft.Windows.NarratorQuickStart"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="10.0.28000.7"
+            ResourceId="neutral"/>
+  <mp:PhoneIdentity PhoneProductId="9feb3dec-92a3-4fe7-a07e-d3416d36e446" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+
+  <Properties>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>assets\NarratorStoreLogo.png</Logo>
+    <Description>ms-resource:AppDescription</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17707.0" MaxVersionTested="10.0.17707.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+        Executable="NarratorQuickStart.exe"
+        EntryPoint="NarratorQuickStart.App">
+        <uap:VisualElements
+            DisplayName="ms-resource:AppDisplayName"
+            Square150x150Logo="assets\NarratorMedTile.png"
+            Square44x44Logo="assets\NarratorAppList.png"
+            Description="ms-resource:AppDescription"
+            BackgroundColor="transparent"
+            AppListEntry="none">
+            <uap:SplashScreen Image="assets\NarratorSplashScreen.png" />
+            <uap:DefaultTile Square71x71Logo="assets\NarratorSmallTile.png" Wide310x150Logo="assets\NarratorWideTile.png" Square310x310Logo="assets\NarratorLargeTile.png">
+                <uap:ShowNameOnTiles>
+                    <uap:ShowOn Tile="square150x150Logo"/>
+                    <uap:ShowOn Tile="wide310x150Logo"/>
+                    <uap:ShowOn Tile="square310x310Logo"/>
+                </uap:ShowNameOnTiles>
+            </uap:DefaultTile>
+            <uap:LockScreen BadgeLogo="assets\NarratorBadgeLogo.png" Notification="badge"/>
+        </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="confirmAppClose" />
+  </Capabilities>
+</Package>

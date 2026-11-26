@@ -1,0 +1,1979 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<!-- =========================================================================================================== -->
+<!-- IMPORTANT:                                                                                                  -->
+<!-- When making changes to the settings in this file please make sure to increment the CURRENT_SETTINGS_VERSION -->
+<!-- in /Src/Components/Search/SearchCore/Settings/SettingsContainer.cpp                                         -->
+<!-- =========================================================================================================== -->
+
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-Cortana-DefaultSettings"
+      version="1.0"
+      />
+  <containers>
+    <container path="">
+      <setting
+          name="ShouldShowCombinedConsent"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ShouldUnregisterAllBackgroundTasks"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="CortanaCapabilities"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RPSServerBing"
+          value="cortana.bing.com"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="RPSServerLive"
+          value="ssl.live.com"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices">
+      <setting
+          name="UseTestServer"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesRequest">
+      <setting
+          name="Id"
+          value="0x0000001E"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesRequest\HttpRequestCmd">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="X-Search-IG: %2&#13;&#10;X-Search-UILang: %3&#13;&#10;X-Search-Market: %4&#13;&#10;X-Search-ClientID: %5&#13;&#10;X-Agent-RulesVersion: %6&#13;&#10;X-Agent-Resolution: %7&#13;&#10;X-Agent-DeviceId: %8&#13;&#10;X-BM-OEM: %9&#13;&#10;X-BM-MO: %10&#13;&#10;X-Agent-PhoneOSVer: %11&#13;&#10;Timezone: %12"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x0000000C"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="%1"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesRequestUserSignals">
+      <setting
+          name="Id"
+          value="0x0000001F"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesRequestUserSignals\HttpRequestCmd">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="X-Search-IG: %2&#13;&#10;X-Search-UILang: %3&#13;&#10;X-Search-Market: %4&#13;&#10;X-Search-ClientID: %5&#13;&#10;X-Agent-RulesVersion: %6&#13;&#10;X-Agent-Resolution: %7&#13;&#10;X-Agent-DeviceId: %8&#13;&#10;X-BM-OEM: %9&#13;&#10;X-BM-MO: %10&#13;&#10;X-Agent-PhoneOSVer: %11&#13;&#10;Timezone: %12"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x0000000C"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="%1"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\CATUpload">
+      <setting
+          name="Id"
+          value="0x00000023"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\CATUpload\Data">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;Content-Encoding: gzip&#13;&#10;X-Search-Market: %1&#13;&#10;X-BM-OEM: %2&#13;&#10;X-BM-MO: %3&#13;&#10;Date: %4&#13;&#10;Timeoffset: %5&#13;&#10;X-Search-UILang: %6&#13;&#10;TimeZone: %7"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000007"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DataSmartRequirement"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\CATUploadBinary">
+      <setting
+          name="Id"
+          value="0x00000027"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\CATUploadBinary\BinaryData">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/octet-stream&#13;&#10;Content-Encoding: gzip&#13;&#10;X-Search-Market: %1&#13;&#10;X-BM-OEM: %2&#13;&#10;X-BM-MO: %3&#13;&#10;Date: %4&#13;&#10;Timeoffset: %5&#13;&#10;X-Search-UILang: %6&#13;&#10;TimeZone: %7&#13;&#10;X_HE_dataversion: %8&#13;&#10;X_deviceid: %9&#13;&#10;X_HE_dataid: %10&#13;&#10;X_HE_datatype: %11"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x0000000b"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DataSmartRequirement"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\IPEInstrUpload">
+      <setting
+          name="Id"
+          value="0x00000024"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\IPEInstrUpload\BinaryData">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/octet-stream&#13;&#10;X_HE_ContentEncoding: gzip&#13;&#10;X-Search-Market: %1&#13;&#10;X-BM-OEM: %2&#13;&#10;X-BM-MO: %3&#13;&#10;Date: %4&#13;&#10;Timeoffset: %5&#13;&#10;X-Search-UILang: %6&#13;&#10;TimeZone: %7&#13;&#10;X_HE_dataversion: %8&#13;&#10;X_deviceid: %9&#13;&#10;X_HE_dataid: %10&#13;&#10;X_HE_datatype: %11"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x0000000b"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DataSmartRequirement"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Entity">
+      <setting
+          name="Id"
+          value="0x00000025"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Entity\SendSuggestions">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;Content-Encoding: gzip&#13;&#10;X-Search-Market: %1&#13;&#10;X-BM-OEM: %2&#13;&#10;X-BM-MO: %3&#13;&#10;Date: %4&#13;&#10;Timeoffset: %5&#13;&#10;X-Search-UILang: %6&#13;&#10;TimeZone: %7"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000007"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="?type=suggestion"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DataSmartRequirement"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Entity\SendInterests">
+      <setting
+          name="Id"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;Content-Encoding: gzip&#13;&#10;X-Search-Market: %1&#13;&#10;X-BM-OEM: %2&#13;&#10;X-BM-MO: %3&#13;&#10;Date: %4&#13;&#10;Timeoffset: %5&#13;&#10;X-Search-UILang: %6&#13;&#10;TimeZone: %7"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000007"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="?type=interest"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DataSmartRequirement"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- Reminders sync settings -->
+    <container path="Sync\Reminders">
+      <setting
+          name="SyncInterval"
+          value="0x00000168"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="MaxRetryCount"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ServerETag"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- Limited to 1 because LocalNew uploads include the attachments -->
+      <setting
+          name="LocalNewBatchSize"
+          value="1"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="SyncStore"
+          value="Cortana.Reminders.ReminderSyncStore"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="NotificationTemplatesProcessor"
+          value="Cortana.Reminders.NotificationTemplatesProcessor"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+                  
+      <setting
+          name="SyncService"
+          value="Cortana.Reminders.ReminderSyncService"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="BackgroundFileSync"
+          value="1"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+      
+    <!-- Reminders notification templates sync settings -->
+    <container path="OnlineServices\Providers\SNR">
+      <setting
+          name="Id"
+          value="0x00000040"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\SNR\GetTemplateMetaData">
+      <setting
+          name="Id"
+          value="0x00000006"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HeaderTemplate"
+          value='X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-AcceptReminders: Ink, Sms, Triggerless, XDevice, AppContent, Photo, SmsMirror, StrongAuth, RecurrenceV2'
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="UrlTemplate"
+          value="/getTemplateMetaData"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="ParamCount"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HttpMethod"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+    </container>
+    <container path="OnlineServices\Providers\SNR\GetTemplates">
+      <setting
+          name="Id"
+          value="0x00000007"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HeaderTemplate"
+          value='X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-AcceptReminders: Ink, Sms, Triggerless, XDevice, AppContent, Photo, SmsMirror, StrongAuth, RecurrenceV2'
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="UrlTemplate"
+          value="/getTemplates"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="ParamCount"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+    </container>
+
+    <!-- Reminders service -->
+    <container path="OnlineServices\Providers\Reminders">
+      <setting
+          name="Id"
+          value="0x00000030"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\Create">
+      <!-- Placeholder for Create query, currently not used, so Id=0 is not recycled -->
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\GetAll">
+      <setting
+          name="Id"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value='X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-ETag: "%3"&#13;&#10;X-Halsey-AcceptReminders: %4'
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000004"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\GetMultiple">
+      <setting
+          name="Id"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-AcceptReminders: %3"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\CreateMultiple">
+      <setting
+          name="Id"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-AcceptReminders: Ink, Sms, Triggerless, XDevice, AppContent, Photo, SmsMirror, StrongAuth"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/createmultiple"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\Delete">
+      <setting
+          name="Id"
+          value="0x00000004"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-AcceptReminders: Ink, Sms, Triggerless, XDevice, AppContent, Photo, SmsMirror, StrongAuth"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/delete/%3"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\Get">
+      <!-- Placeholder for Get query, currently not used, so Id=5 is not recycled -->
+      <setting
+          name="Id"
+          value="0x00000009"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\Reminders\GetTimers">
+      <setting
+          name="Id"
+          value="0x00000005"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;Timezone: %3&#13;&#10;X-Halsey-AcceptReminders: Ink, Sms, Triggerless, XDevice, AppContent, Photo, SmsMirror, StrongAuth, RecurrenceV2"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/gettimers"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesV2Device">
+      <setting
+          name="Id"
+          value="0x00000032"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\RulesV2Device\HttpRequestCmd">
+      <setting
+          name="Id"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HeaderTemplate"
+          value="X-Search-IG: %2&#13;&#10;X-Search-UILang: %3&#13;&#10;X-Search-Market: %4&#13;&#10;X-Search-ClientID: %5&#13;&#10;X-Agent-RulesVersion: %6&#13;&#10;X-Agent-Resolution: %7&#13;&#10;X-Agent-DeviceId: %8&#13;&#10;X-BM-OEM: %9&#13;&#10;X-BM-MO: %10&#13;&#10;X-Agent-PhoneOSVer: %11&#13;&#10;Timezone: %12"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="ParamCount"
+          value="0x0000000C"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="UrlTemplate"
+          value="%1"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+      />
+    </container>
+
+    <!-- ContactPermissions sync settings -->
+    <container path="Sync\ContactPermissions">
+      <setting
+          name="SyncInterval"
+          value="0x00000168"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="MaxRetryCount"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ServerETag"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="SyncStore"
+          value="Cortana.ContactPermissions.ContactPermissionsSyncStore"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="SyncService"
+          value="Cortana.ContactPermissions.ContactPermissionsSyncService"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- ContactPermissions service -->
+    <container path="OnlineServices\Providers\ContactPermissions">
+      <setting
+          name="Id"
+          value="0x00000031"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\ContactPermissions\GetAll">
+      <setting
+          name="Id"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value='X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2&#13;&#10;X-Halsey-ETag: "%3"'
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/permissions/contacts"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000001"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\ContactPermissions\Get">
+      <setting
+          name="Id"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value='Content-Type: application/json&#13;&#10;X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2'
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/permissions/contacts"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\ContactPermissions\Create">
+      <setting
+          name="Id"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="Content-Type: application/json&#13;&#10;X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/permissions/contacts/create"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000002"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="OnlineServices\Providers\ContactPermissions\Delete">
+      <setting
+          name="Id"
+          value="0x00000004"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HeaderTemplate"
+          value="X-Agent-DeviceId: %1&#13;&#10;X-Search-IG: %2"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlTemplate"
+          value="/permissions/delete/%3"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ParamCount"
+          value="0x00000003"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HttpMethod"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="PayloadEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UrlEscapeBitField"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- DoNotDisturb settings -->
+    <container path="DoNotDisturb\Settings">
+      <setting
+          name="ModeAndContext"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="SessionId"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="AutoRulesEnabled"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MeetingDNDEnabled"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ScheduleDNDEnabled"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="SelectedCalendars"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+
+      <!-- value = 127 means every day (see DND_DAYS_OF_WEEK in CortanaDoNotDisturb.idl) -->
+      <setting
+          name="RepeatDays"
+          value="0x7F"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- Places sync settings -->
+    <container path="Places\Sync">
+      <setting
+          name="LastSyncStatus"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="LastSyncTimeHighPart"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="LastSyncTimeLowPart"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!--CSI-->
+    <container path="CSI">
+      <setting
+          name="InferenceExecutionIntervalInMinutes"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"/>
+      <setting
+          name="CsiEntryBgTaskIntervalInMinutes"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false" />
+      <setting
+          name="MaintenanceIntervalInMinutes"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"/>
+      <setting
+          name="CloudBaseUrl"
+          value="https://platform.bing.com/agents/"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false" />
+      <setting
+          name="CloudRequestTimeoutInMs"
+          value="0x00002710"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false" />
+    </container>
+
+    <!-- Feature settings -->
+    <container path="SearchFeatures">
+      <setting
+          name="SearchBoxEarlyFileSearch"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- Proactive settings -->
+    <container path="Proactive">
+      <setting
+          name="DssEndpointPath"
+          value="/proactive"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DssFiddlerDebugPort"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DisableNodeCaching"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DssServerVersionOverride"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UseChakraInDebugMode"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="CallDebuggerEnabledInDssStartupCode"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DisplayMetricsCard"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- true == disabled -->
+      <setting
+          name="DisableProactiveCaching"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- 10 seconds == 10000ms == 0x2710 -->
+      <setting
+          name="RequestTimeout"
+          value="0x2710"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- 4 hours == 14400000ms == 0xDBBA00 -->
+      <setting
+          name="DefaultLiveTileExpiration"
+          value="0xDBBA00"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HandshakeEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="DssServerConnectionsLimit"
+          value="0x12"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- CortanaSettingsUpdateService settings -->
+    <container path="CortanaSettingsUpdateService">
+      <setting
+          name="PreviousVoiceActivationValue"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="HasInitializedThisDevice"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- Feedback settings -->
+    <container path="Feedback">
+      <setting
+          name="HandshakeEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- MyStuff settings -->
+    <container path="MyStuff">
+      <setting
+          name="HandshakeEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- QueryFormulation settings -->
+    <container path="QueryFormulation">
+      <setting
+          name="HandshakeEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- Reactive settings -->
+    <container path="Reactive">
+      <setting
+          name="HandshakeEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- Cortana configuration -->
+    <container path="Configuration">
+      <setting
+          name="CortanaEnabled"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RegionLooseningEnabled"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="SpeechPackInstalled"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="HasMicWizLaunchedBefore"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="MeteredInternetConsent"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CloudSearchEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+           name="CloudSearchEnabledForMSA"
+           value="true"
+           valueType="BOOL"
+           alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CloudSearchEnabledForAAD"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="UserConsented"
+          value="0x2"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaRefused"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CortanaAboveLockEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CortanaAccessAboveLockEnabled"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CortanaCallNotificationsEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CortanaMissedCallNotificationsEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaAttentionRequired"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaAttentionRequiredErrorCode"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaAttentionRequiredRetryCount"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaAttentionRequiredAccountId"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="MsaAttentionRequiredAccountAuthority"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="DefaultConnectedAccountAuthority"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="TaskbarTidbitsEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="HistoryViewEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="PwiloNotificationsEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="DeviceSearchHistoryEnabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="SafeSearchMode"
+          value="0x1"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="FirstLaunch"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="FirstLaunchOnThisBuild"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="ConnectedToMSA"
+          value="0x2"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="HasDefaultMSA"
+          value="0x2"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="VoiceActivationRefused"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="SmileAnimationShown"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="SearchMUID"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="IntroductionPassed"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="OEMOptInRefused"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="BrowsingHistoryCapability"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CameraRollCapability"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ShowAccessGates"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="FirstEnabledTime"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CloudCapabilities"
+          value="0x0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="CgsvcGrammarBuildOnEnable"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- IntentExtraction -->
+    <container path="IntentExtraction">
+      <!-- 2 weeks -->
+      <setting
+          name="FirstScanRangeInSecond"
+          value="0x00127500"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="TimeOfFirstRun"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- IntentExtraction Win32Outlook -->
+    <container path="IntentExtraction\Win32Outlook">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="LastUrl"
+          value="None"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- IntentExtraction Win32Outlook maintenance -->
+    <container path="IntentExtraction\Win32Outlook\Maintenance">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="LastUrl"
+          value="None"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="IsTaskNeeded"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- IntentExtraction Unistore email -->
+    <container path="IntentExtraction\UnistoreEmail">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- IntentExtraction Unistore email maintenance -->
+    <container path="IntentExtraction\UnistoreEmail\Maintenance">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="IsTaskNeeded"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- IntentExtraction Unistore chat messages -->
+    <container path="IntentExtraction\UnistoreChatMessage">
+      <setting
+        name="LastDateTime"
+        value="1601-01-01 00:00:00"
+        valueType="DateTime"
+        alwaysMigrateOnUpgrade="true"
+      />
+      <setting
+        name="RetryCount"
+        value="0x00000000"
+        valueType="DWORD"
+        alwaysMigrateOnUpgrade="true"
+      />
+    </container>
+
+    <!-- CommitmentExtraction Win32Outlook -->
+    <container path="CommitmentExtraction\Win32Outlook">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="LastUrl"
+          value="None"
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- CommitmentExtraction Unistore email -->
+    <container path="CommitmentExtraction\UnistoreEmail">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="RetryCount"
+          value="0x00000000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- CommitmentExtraction Unistore chat messages -->
+    <container path="CommitmentExtraction\UnistoreChatMessage">
+      <setting
+        name="LastDateTime"
+        value="1601-01-01 00:00:00"
+        valueType="DateTime"
+        alwaysMigrateOnUpgrade="true"
+      />
+      <setting
+        name="RetryCount"
+        value="0x00000000"
+        valueType="DWORD"
+        alwaysMigrateOnUpgrade="true"
+      />
+    </container>
+
+    <!-- Reminders settings -->
+    <container path="Reminders">
+      <setting
+          name="CalendarLocalId"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="UseCloudRuleForLocationsWithEntityId"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="SaveChildRules"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="UserHasCreatedReminderBefore"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <!-- Maximum size of an attachment, in bytes (default = 307,000) -->
+      <setting
+          name="MaxAttachmentSizeInBytes"
+          value="0x4AF38"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- Maximum number of active + completed reminders (default = 250) -->
+      <setting
+          name="MaxReminderCount"
+          value="0xFA"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- Signals settings -->
+    <container path="Signals\Appointment">
+        <!-- Number of minutes 0x5A0=1440=60*24 ie 24-hour by default -->
+        <setting
+          name="UploadIntervalInMinutes"
+          value="0x5A0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+        <!-- Number of days 0xe=14 ie 14-day window by default -->
+        <setting
+          name="UploadWindowInDays"
+          value="0xe"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+        <setting
+          name="LatestUnistoreSnapshotTimestamp"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+        />
+        <setting
+          name="LatestMapiSnapshotTimestamp"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+        />
+        <setting
+          name="DeltaUploadDelayInSeconds"
+          value="0x1e"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+    </container>
+
+    <container path="Signals\IntentExtraction">
+      <setting
+          name="LatestIntentExtractionTimestamp"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <container path="Signals\CommunicationHistory">
+      <setting
+          name="LastCollectionTimestamp"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <!-- 60 days -->
+      <setting
+          name="FirstScanRangeInSecond"
+          value="0x004F1A00"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <container path="Signals\HistoryDatabase">
+      <setting
+          name="LastCollectionTimestamp"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <container path="Signals\LocationHistory">
+      <setting
+          name="Enabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <!-- Number of minutes (0x168 = 360 = 6 hours) between calls to the Location History API to pull data from the API into the Signal History DB -->
+      <setting
+          name="QueryInterval"
+          value="0x00000168"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+    <container path="Signals\Upload">
+        <!-- Number of minutes between normal uploads (12 hours == 720 minutes == 0x2D0) -->
+        <setting
+          name="UploadTaskInterval"
+          value="0x2D0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+        <!-- Number of minutes after any upload before the forced upload triggers (2 days == 2880 minutes == 0xB40) -->
+        <setting
+          name="ForcedUploadTaskInterval"
+          value="0xB40"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+        <!-- Maximum payload size in bytes (1024 KB/MB * 1024 byte/KB == 1048576 bytes == 0x100000) -->
+        <setting
+          name="PayloadSizeLimit"
+          value="0x100000"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="false"
+        />
+    </container>
+
+    <!-- App Indexer -->
+    <container path="AppIndexer">
+      <!-- Setting to determine the ui language of the system at the time of the last app index -->
+      <setting
+        name="IndexedLanguage"
+        value=""
+        valueType="SZ"
+        alwaysMigrateOnUpgrade="true"
+      />
+      <!-- Setting to determine whether the initial push has completed. We don't want to migrate this since we want to force a rebuild on each upgrade -->
+      <setting
+        name="HasInitialPushCompleted"
+        value="false"
+        valueType="BOOL"
+        alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+        name="CurrentScaleFactor"
+        value="0x64"
+        valueType="DWORD"
+        alwaysMigrateOnUpgrade="false"
+      />
+      <setting
+        name="IndexedScaleFactor"
+        value="0x64"
+        valueType="DWORD"
+        alwaysMigrateOnUpgrade="true"
+      />
+      <setting
+        name="LastSignalUploadTime"
+        value="1601-01-01 00:00:00"
+        valueType="DateTime"
+        alwaysMigrateOnUpgrade="true"
+      />
+    </container>
+
+    <!-- OEM settings -->
+    <container path="Oem">
+      <!-- Setting denoting if Cortana integration is enabled in OEM settings -->
+      <setting
+          name="CortanaEnabledInOem"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+      <!-- Setting denoting if OEM app is ready to receive requests from Cortana -->
+      <setting
+          name="OemHandshakeComplete"
+          value="false"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="false"
+          />
+    </container>
+
+    <!-- TaskbarTidbits settings -->
+    <container path="TaskbarTidbits">
+      <setting
+          name="NextEnticementIndex"
+          value="0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- HMDS Messages settings -->
+    <container path="HmdsMessages">
+      <setting
+          name="ContinuationToken"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="PullMaxRetry"
+          value="0x3"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="PeriodicPollIntervalTimeInMinutes"
+          value="0x5A0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+	
+	<!-- ToastNotificationHistory settings -->
+    <container path="ToastNotificationHistory">
+      <setting
+          name="LastActiveNotifications"
+          value=""
+          valueType="SZ"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- XDevice CDP Task -->
+    <container path="XDevice\Task">
+      <setting
+          name="ETagHighPart"
+          value="0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ETagLowPart"
+          value="0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- XDevice WPNotification -->
+    <container path="XDevice\WPNotification">
+      <setting
+          name="LastDateTime"
+          value="1601-01-01 00:00:00"
+          valueType="DateTime"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ETagHighPart"
+          value="0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+      <setting
+          name="ETagLowPart"
+          value="0"
+          valueType="DWORD"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- Collections Notifications -->
+    <container path="collections\global">
+       <setting
+          name="notificationsenabled"
+          value="true"
+          valueType="BOOL"
+          alwaysMigrateOnUpgrade="true"
+          />
+    </container>
+
+    <!-- Version Info -->
+    <container path="VersionInfo">
+      <setting
+        name="SnrBundleVersion"
+        value="2026.06.26.70069170"
+        valueType="SZ"
+        alwaysMigrateOnUpgrade="true"
+        />
+    </container>
+
+  </containers>
+</assembly>

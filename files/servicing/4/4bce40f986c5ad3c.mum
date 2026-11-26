@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-OneCore-Containers-Client-Opt-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-OneCore-Containers-Client-Opt" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Containers" displayName="Containers" description="Provides services and tools to create and manage Windows Server Containers and their resources.">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Provides services and tools to create and manage Windows Server Containers and their resources." DisplayName="Containers" Id="1018" Type="Feature" UniqueName="Containers">
+          <Deploys>
+            <Update Name="Containers" />
+          </Deploys>
+          <Version Major="10" Minor="0" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged">
+        <detectNone default="false" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Server-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Containers-HNS">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Parent="Containers" Type="Feature" UniqueName="Containers-HNS">
+          <Deploys>
+            <Update Name="Containers-HNS" />
+          </Deploys>
+          <Version Major="10" Minor="0" />
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="Containers" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Server-HNS-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Containers-SDN">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Parent="Containers" Type="Feature" UniqueName="Containers-SDN">
+          <Deploys>
+            <Update Name="Containers-SDN" />
+          </Deploys>
+          <Version Major="10" Minor="0" />
+          <MutualExclusion>
+            <MutualExclusionGroup Name="NetworkVirtualization" />
+          </MutualExclusion>
+        </ServerComponent>
+      </mum2:customInformation>
+      <applicable disposition="detect">
+        <detectUpdate>
+          <update name="Containers" />
+        </detectUpdate>
+      </applicable>
+      <selectable disposition="staged">
+        <detectNone default="true" />
+      </selectable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Containers-Client-SDN-Package" version="10.0.28000.3562" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

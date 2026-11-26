@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package0210" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package0210" releaseType="Feature Pack">
+    <update name="b17c46707f4382bff9f28a830dd136f6">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment02100" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="C092EEA271399D10AC44FF5E2A47927179A68111601205DEA6F98C7B74E7B8D7" restart="required">
+      <driver inf="oposdrv.inf" ranking="normal">
+        <assemblyIdentity name="dual_oposdrv.inf" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="3718F09430E16D8AEE1F0E13F247EFEB965D40EB9B18FA25749504D217A2EE1E">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-DebuggerTransport-USB-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="8C8E8EC8747598154282749932C4D11FA8D07D0D970E9AA515FFE0D42CB30010">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-DebuggerTransport-Single-NIC-Debug-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="DFA91D1CA6F31226799C43EEF60749EE8D0A4EDCFE6F2071ACCA75F5448B1327">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-DebuggerTransport-Network-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

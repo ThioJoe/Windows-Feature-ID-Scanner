@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature contains the minimal composition for edition product data and version information." displayName="Edition build, layer and version information" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win0-Product-Data-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win0-Product-Data-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win0-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win0-Product-Data-Feature" version="10.0.29712.1000" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="eae332c4681e144d679f21c0fbeaa648">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="55d38ec7efacbbc9c2baa8ff404b7412">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BaseBuildRevisionNumber-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2ebb34bee961eb298f278fecf6e97787">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BuildLayers-OneCoreUAP-BuildInfo-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="3161e9447f860a167fe5deb38eb5f2e3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-BuildLayers-OneCoreUAP-VersionInfo-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6845bea6e5334478e899abd20aa4eed3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-ControlsFolder-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="cf92fb88246b10df07582778b8b3564e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-DisplayVersion-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2b4d6c5aac7636b23bcd7c7ae40a0458">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-Legacy-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9c5b77f21dbd6be0fded027d61cd0b73">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-SBI-SourceBuild-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="25f516facf80ef2b4757bba3200ea791">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-SoftwareType-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="0a8aa8c3ebc22eaefa1b38d5ae4356d4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-VersionInfo-Dynamic-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="759a781aedc10746c2980e946e346da9">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Product-Data-VersionInfo-Static-Package" version="10.0.29712.1000" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

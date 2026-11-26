@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Multimedia-RestrictedCodecsCore-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Multimedia-RestrictedCodecsCore-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Multimedia-RestrictedCodecsCore-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="bfbc64d19f471c28de6d5cfb915c3a6a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Multimedia-RestrictedCodecsCore-WCOSHeadless-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="a193053188adb0cb0da24f2be387e522">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Multimedia-RestrictedCodecsCore-WCOSMinusHeadless-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

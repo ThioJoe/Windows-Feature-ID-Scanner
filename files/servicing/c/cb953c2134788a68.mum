@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PowerShell-V2-Client-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="PowerShell-V2-Client" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-PowerShell-V2-Client-Package" version="10.0.26100.6" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Adds or Removes Windows PowerShell 2.0" displayName="Windows PowerShell 2.0" name="MicrosoftWindowsPowerShellV2Root" />
+    <update description="Adds or Removes Windows PowerShell 2.0 Engine" displayName="Windows PowerShell 2.0 Engine" name="MicrosoftWindowsPowerShellV2">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="MicrosoftWindowsPowerShellV2" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-PowerShell-V2-Deployment-LanguagePack" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-PowerShell-V2-WOW64-Deployment-LanguagePack" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

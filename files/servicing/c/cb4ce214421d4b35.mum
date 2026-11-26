@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package0410" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Desktop-Required-Package0410" releaseType="Feature Pack">
+    <update name="BC0647A77B715F9084ACAFF9DDFEAC85380109AEB3A76EFB0194BD5B39F93D87">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-desktop-required-deployment04100" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="2167A34FB39F558D9BF0E2FF7CC44BF64F58406B3077468AFF2055193AA1A3A6">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Graphics-DXCore-Package" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="BC690D8391308A496CDD21378FD6E6F8BE3D33432DD50BF281A024F98CD84FC9" restart="required">
+      <driver inf="heat.inf" ranking="normal">
+        <assemblyIdentity name="dual_heat.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="F793C72A10FC4972C5F2EE987998A958CAA50E3537B58A923C4330C3BA839D2C" restart="required">
+      <driver inf="c_barcodescanner.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_barcodescanner.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1B3CE96B92E45EB0C7C6E35E44CB1FC92E2474D84BACB1DAD4E6FB4856F1B700" restart="required">
+      <driver inf="c_cashdrawer.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_cashdrawer.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D59D5730E8A7EDD7E96306EF3E3437FCD14F58840FFA9F3EDCC9323CB00B6F19" restart="required">
+      <driver inf="c_linedisplay.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_linedisplay.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B89949165D9181BFAE9961F7CA865851DFD293EDFCDE577A2E9FFF3243539350" restart="required">
+      <driver inf="c_magneticstripereader.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_magneticstripereader.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B0C31C01030FC3CD487F61C155E647423B9BD5291DBA745CA396BE27535BAF98" restart="required">
+      <driver inf="c_receiptprinter.inf" ranking="normal">
+        <assemblyIdentity name="dual_c_receiptprinter.inf" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="D59F097DF5CFC1D4B64218FCDFDE030B066867A3346F86FB73375C2969FF03C5" restart="required">
+      <driver inf="hidscanner.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidscanner.inf" version="10.0.28000.3302" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="432313FC1014775962018AD916DAC0C007E2A800B9A07D8179A8AF3D825434DD" restart="required">
+      <driver inf="idtsec.inf" ranking="normal">
+        <assemblyIdentity name="dual_idtsec.inf" version="10.0.28000.3393" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="37EAA572E5B402F1B0834B6AC995CAEEB15C7770948C4D7A135910866693E283" restart="required">
+      <driver inf="mgtdyn.inf" ranking="normal">
+        <assemblyIdentity name="dual_mgtdyn.inf" version="10.0.28000.3393" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="B9BE7447163103F1FBE2A7F086ABEC553D4534F14FDD13247B174417EDAEE698" restart="required">
+      <driver inf="remoteposdrv.inf" ranking="normal">
+        <assemblyIdentity name="dual_remoteposdrv.inf" version="10.0.28000.3393" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="EFE6B246BE0F5A15F86C20FCDD1BE3EC1A44E113246D2FDC435CED85059063F6" restart="required">
+      <driver inf="hidlamparray.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidlamparray.inf" version="10.0.28000.2912" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="2a031b5092355e36d47a2cb1443bffd5">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-AppRuntime-removable-Package" version="10.0.28000.3542" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="8bb6d5f947cbabb39de50767519183cb">
+      <package integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Client-Desktop-Required-Package041020" version="10.0.28000.3571" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

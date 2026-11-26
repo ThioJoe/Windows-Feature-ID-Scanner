@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Hyper-V-ClientEdition-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Hyper-V-ClientEdition-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Hyper-V-ClientEdition-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="Microsoft-Hyper-V-All" displayName="Hyper-V" description="Provides services and management tools for creating and running virtual machines and their resources."></update>
+    <update name="Microsoft-Hyper-V" displayName="Hyper-V Platform" description="Provides the services that you can use to create and manage virtual machines and their resources."></update>
+    <update name="Microsoft-Hyper-V-Tools-All" displayName="Hyper-V Management Tools" description="Includes GUI and command-line tools for managing Hyper-V."></update>
+    <update name="Microsoft-Hyper-V-Management-PowerShell" displayName="Hyper-V Module for Windows PowerShell" description="Includes Windows PowerShell cmdlets for managing Hyper-V.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-UX-PowerShell-Module-HyperV-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Hyper-V-Hypervisor" displayName="Hyper-V Hypervisor" description="Provides the Hyper-V Hypervisor.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Hyper-V-Hypervisor-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Hyper-V_base" displayName="Hyper-V BASE" description="Hyper-V BASE">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Hyper-V-Package-base-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Hyper-V-Services" displayName="Hyper-V Services" description="Provides the services that you can use to create and manage virtual machines and their resources.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Hyper-V-Services-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Onecore-SPP-VirtualDevice" displayName="Inherited Activation Virtual Device" description="Inherited Activation Virtual Device">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Onecore-SPP-VirtualDevice-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="HyperV-Networking-Containers-Package" displayName="Hyper-V Container Networking" description="Hyper-V Container Networking">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Networking-Containers-Package" version="10.0.26100.1746" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="Microsoft-Hyper-V-Management-Clients" displayName="Hyper-V GUI Management Tools" description="Includes the Hyper-V Manager snap-in and Virtual Machine Connection tool.">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-UX-UI-Client-Package" version="10.0.26100.6" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

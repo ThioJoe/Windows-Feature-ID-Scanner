@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Enables management of printers, printer drivers and printer servers." displayName="Print Management" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-Printing-PMCPPC-FoD-Package" version="10.0.26100.4343" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="438" />
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Enterprise-Desktop-Shared-Package" version="10.0.0.0" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Print.Management.Console" version="1.0" />
+      </capability>
+      <satelliteInfo>
+        <require type="language" value="*" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="d3e020e48f1dd2e94f64fb3593d114c7">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-Printing-PMCPPC-FoD-Deployment" version="10.0.26100.4202" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

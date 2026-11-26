@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature extends Win3 with the app model support necessary to run progressive web apps (PWAs) in Edge." displayName="Windows Runlevel 4" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win4-Feature" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win4-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win4-Feature" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="3cca9c8ae66c8a556501cc74abefa4bb">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win0-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7b713c046e17df7857665c8c8c56dfd8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win1-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b37fbb1d133c2fa69bd196791efa35ec">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ded6cb2a6e6d393747dbf1a3f4f92989">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win3-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="b7cbd6e79b5b8ae2eba71bbcb17f9a0d">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win4-Package" version="10.0.28000.7" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

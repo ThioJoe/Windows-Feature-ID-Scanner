@@ -1,0 +1,139 @@
+{
+  "manifest_version": "0.3",
+  "name": "appinfo-mcp-server",
+  "display_name": "App Info MCP Server",
+  "version": "0.1.0",
+  "description": "MCP server for getting recently installed/launched apps.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "AppInfo"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "most_recent_installed_apps",
+      "description": "Returns a list of the top N applications that were most recently installed on the system."
+    },
+    {
+      "name": "most_recent_used_apps",
+      "description": "Returns a list of the top N applications that were most recently launched or interacted with by the user."
+    }
+  ],
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "appinfo-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "most_recent_used_apps",
+              "description": "Returns a list of the top N applications that were most recently launched or interacted with by the user.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "n": {
+                    "description": "The number of applications to retrieve.",
+                    "type": "integer",
+                    "default": 10
+                  }
+                }
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "AppId": {
+                          "type": "string"
+                        },
+                        "LastUsed": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            },
+            {
+              "name": "most_recent_installed_apps",
+              "description": "Returns a list of the top N applications that were most recently installed on the system.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "n": {
+                    "description": "The number of applications to retrieve.",
+                    "type": "integer",
+                    "default": 10
+                  }
+                }
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "AppId": {
+                          "type": "string"
+                        },
+                        "InstalledDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

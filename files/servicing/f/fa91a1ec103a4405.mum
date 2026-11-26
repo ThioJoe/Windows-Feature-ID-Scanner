@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WinOcr-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-WinOcr" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.7" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="TIFFIFilter" displayName="Windows TIFF IFilter" description="Enables the indexing and searching of Tagged Image File Format (TIFF) files using Optical Character Recognition (OCR).">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Windows TIFF IFilter (Tagged Image File Format Index Filter) performs OCR (Optical Character Recognition) on TIFF 6.0-compliant files (.TIF and .TIFF extensions) and in that way enables indexing and full text search of those files." DisplayName="Windows TIFF IFilter" Id="352" Type="Feature" UniqueName="Windows-TIFF-IFilter">
+          <Deploys>
+            <Update Name="TIFFIFilter" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged" absentIfCapabilityAbsent="true">
+        <detectNone default="false" />
+      </selectable>
+      <capability>
+        <capabilityIdentity name="Windows.WinOcr" />
+      </capability>
+    </update>
+  </package>
+</assembly>

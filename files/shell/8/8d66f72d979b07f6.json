@@ -1,0 +1,177 @@
+{
+  "manifest_version": "0.3",
+  "name": "filesearch-mcp-server",
+  "display_name": "File Search MCP",
+  "version": "0.3.0",
+  "description": "This agent connector helps search for local and cloud files.",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/DefaultIcon.png",
+  "localization": {
+    "resources": "ShellMcpServers/Resources/${locale}/FileSearchMcpServer.json",
+    "default_locale": "en-US"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "FileSearch"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "filesearch-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "search_files",
+ 	          "description": "Search for files on all available folders by name, AQS syntax content or keywords. The search can optionally be filtered to a date range or extension. This file search will support finding local or cloud provider files, like OneDrive, using semantic and lexical search. Semantic search and cloud provider search is limited to Copilot+PCs. Other cloud providers can be supported if they join IStorageProviderSearchHandleFactor. Link files (shortcut.url and .lnk) are discluded from these search queries.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "startingDir": {
+                    "description": "Starting root directory where the file search file will take place. For example: C:\\Users\\AdminUser\\Documents",
+                    "type": "string"
+                  },
+                  "searchPatterns": {
+                    "description": "Search patterns to match files or directories, for all files can use *. This can be natural language or can use AQS syntax, for example: \u0022date:\u003E5/5/2025 AND receipt\u0022",
+                    "type": "string"
+                  },
+                  "keyboardLanguage": {
+                    "description": "Language that the user is typing in using the culture name in the format languagecode2-country/regioncode2. Default is \u0022en-US\u0022",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": "en-US"
+                  },
+                  "fileTypes": {
+                    "description": "File extension to make file matches listing each file type with comma seperator. An example is \u0022.pdf,.txt,.docx,.pptx\u0022 for documents (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "searchOrder": {
+                    "description": "Specifies how to sort the files in the query results. The accepted string inputs for this are: OrderBySearchRank, OrderByTitle, OrderByDate. The default is OrderBySearchRank. (optional)",
+                    "type": "string",
+                    "default": "OrderBySearchRank"
+                  },
+                  "startDate": {
+                    "description": "Start date in a valid format for file search to start on (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "endDate": {
+                    "description": "End date in a valid format for file search to end on (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  },
+                  "shouldReturnSnippet": {
+                    "description": "Boolean value that if true, includes a short summary for each file is returned. This summary is only generated for text based file types like docx, pdf, pptx, txt, xlxs. Set to true when snippets are explicitly requested. (optional)",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "default": false
+                  },
+                  "filePropertiesRequested": {
+                    "description": "File properties [Windows.Storage.FileProperties] that the agent requests to be returned. This properties must be delimited by comma, for example, System.DateCreated,System.ItemPathDisplay (optional)",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null
+                  }
+                },
+                "required": [
+                  "startingDir",
+                  "searchPatterns"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "snippet": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "filePropertiesRequested": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "execution": {
+                "taskSupport": "optional"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

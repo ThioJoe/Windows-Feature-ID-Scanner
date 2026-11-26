@@ -1,0 +1,604 @@
+{
+  "manifest_version": "0.3",
+  "name": "file-mcp-server",
+  "display_name": "File Operations MCP",
+  "version": "0.1.0",
+  "description": "This agent connector helps manage and organize your files",
+  "author": {
+    "name": "Microsoft Corporation",
+    "url": "https://aka.ms/MicrosoftWindows"
+  },
+  "icon": "Icons/MCPBIcons/FilesConnector.png",
+  "localization": {
+    "resources": "ShellMcpServers/Resources/${locale}/FileMcpServer.json",
+    "default_locale": "en-US"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "ShellMcpServers.Packaging.exe",
+    "mcp_config": {
+      "command": "ShellMcpServers.Packaging.exe",
+      "args": [
+        "loadComponent",
+        "ShellMcpServersService",
+        "Files"
+      ]
+    }
+  },
+  "tools_generated": false,
+  "license": "MIT",
+  "_meta": {
+    "com.microsoft.windows": {
+      "static_responses": {
+        "initialize": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "logging": {},
+            "resources": {
+              "listChanged": true
+            },
+            "tools": {
+              "listChanged": true
+            }
+          },
+          "serverInfo": {
+            "name": "file-mcp-server",
+            "version": "0.1.0"
+          }
+        },
+        "tools/list": {
+          "tools": [
+            {
+              "name": "get_file_details",
+              "description": "Get file details such as name, extension, size, creation time.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "description": "Path to the file",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "extension": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "size": {
+                    "type": "integer"
+                  },
+                  "creationTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "lastAccessTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "lastWriteTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "annotations": {
+                "destructiveHint": false,
+                "readOnlyHint": true
+              }
+            },
+            {
+              "name": "create_directory",
+              "description": "Create a directory on the given path",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "description": "Path to the directory",
+                    "type": "string"
+                  },
+                  "directoryName": {
+                    "description": "Name of the directory to create",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "directoryName"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "move_file",
+              "description": "Moves or renames file provided to the new location provided by path",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "oldFullPath": {
+                    "description": "Current directory path",
+                    "type": "string"
+                  },
+                  "newFullPath": {
+                    "description": "New directory path where the file will be moved",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "oldFullPath",
+                  "newFullPath"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "create_text_file",
+              "description": "Creates a text file on the given path, filename needs to include the extension and content is optional",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "description": "Path to the directory",
+                    "type": "string"
+                  },
+                  "filename": {
+                    "description": "Name of the file including extension",
+                    "type": "string"
+                  },
+                  "content": {
+                    "description": "Content to write to the file, can be empty",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "filename",
+                  "content"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "read_file",
+              "description": "Read the content of a file as a resource",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "filePath": {
+                    "description": "Path to the file",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filePath"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "Type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "uri": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "size": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "icons": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "src": {
+                          "type": "string"
+                        },
+                        "mimeType": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "sizes": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "theme": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "src"
+                      ]
+                    }
+                  },
+                  "type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "annotations": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "audience": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "assistant"
+                          ]
+                        }
+                      },
+                      "priority": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "lastModified": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "date-time"
+                      }
+                    }
+                  },
+                  "_meta": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "uri",
+                  "name"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": false,
+                "readOnlyHint": true
+              }
+            },
+            {
+              "name": "get_directories",
+              "description": "Returns the names of directories (including their paths) in the specified directory.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "description": "Path to the directory",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "pathType": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": false,
+                "readOnlyHint": true
+              }
+            },
+            {
+              "name": "unzip_folder",
+              "description": "Given a zip file path, this tool will decompress the zip file in the given folder path.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "zipPath": {
+                    "description": "Zip file path that will be decompressed",
+                    "type": "string"
+                  },
+                  "extractPath": {
+                    "description": "Destination folder where the zip file will be extracted",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "zipPath",
+                  "extractPath"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "pathType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "zip_folder",
+              "description": "Given a folder path, this tool will compress the folder as a zip file.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "folderPath": {
+                    "description": "path of a folder that will be compressed.",
+                    "type": "string"
+                  },
+                  "zipName": {
+                    "description": "optional parameter for the compressed file, if empty the folder name will be used instead.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "folderPath",
+                  "zipName"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "pathType": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "copy_file",
+              "description": "Copies provided file to the new location provided by path",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "sourceFilePath": {
+                    "description": "Source file path",
+                    "type": "string"
+                  },
+                  "destinationFilePath": {
+                    "description": "Destination file path",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "sourceFilePath",
+                  "destinationFilePath"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": false,
+                "readOnlyHint": false
+              }
+            },
+            {
+              "name": "read_text_file",
+              "description": "Given a path to a file this tool will get the text content. It supports Microsoft Office files if it is installed on your computer. By default it can get text from PDF, and any other text file formats.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "filePath": {
+                    "description": "Path to the file",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filePath"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": false,
+                "readOnlyHint": true
+              }
+            },
+            {
+              "name": "edit_text_file",
+              "description": "Edit the text file content",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "filePath": {
+                    "description": "Path to the file",
+                    "type": "string"
+                  },
+                  "oldText": {
+                    "description": "Text to replace",
+                    "type": "string"
+                  },
+                  "newText": {
+                    "description": "New text to insert",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filePath",
+                  "oldText",
+                  "newText"
+                ]
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "result"
+                ]
+              },
+              "annotations": {
+                "destructiveHint": true,
+                "readOnlyHint": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
