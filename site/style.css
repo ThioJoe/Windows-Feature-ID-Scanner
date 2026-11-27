@@ -165,6 +165,11 @@ th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--bord
 th { background: var(--panel); position: sticky; top: 0; cursor: pointer; user-select: none; white-space: nowrap; }
 tr:last-child td { border-bottom: none; }
 td.id { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
+td.id.wrap { white-space: normal; }  /* (IDs that can be long paths, .pri resources and XAML pages, which break after / _ and .) */
+td.sgm > .muted:only-child { white-space: nowrap; }  /* ("(none)") */
+.res-sign { font-weight: 600; }
+.res-sign.added { color: var(--added); }
+.res-sign.removed { color: var(--removed); }
 td.name { min-width: 180px; overflow-wrap: anywhere; }
 td.name.wide { min-width: min(300px, 100vw - 120px); }  /* (Beside a Modules column, which wraps anyway; on a phone, the screen beside the ID) */
 td.mods, td.store, td.seen { color: var(--muted); font-size: 12px; }

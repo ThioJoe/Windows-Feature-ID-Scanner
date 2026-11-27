@@ -8,12 +8,11 @@
 #       trace.json                         the build's latest feature trace (trace-features.ps1): its run, and what each target checked
 #   data/index.json                        List of tracked builds with summary counts (what the site loads first)
 #   data/first-seen.json                   For each architecture, the first tracked build(s) each feature ID appeared in
-#   data/diffs/<old>_to_<new>.json / .md   Changes between consecutive builds of the same architecture and version
 #
 # Usage:
 #   python scripts/update-data.py --summary summary.json --symbols symbol-features.json [--super-god-mode <folder>] [--trace <folder>]
 #                                          # add/replace a build, then regenerate everything
-#   python scripts/update-data.py          # only regenerate index, first-seen and diffs (and fill in what builds already here lack)
+#   python scripts/update-data.py          # only regenerate index and first-seen (and fill in what builds already here lack)
 #
 # features.json and details.json are written with one feature per line so git diffs between commits stay small and readable. The site
 # doesn't load details.json itself: build-site-data.py derives the files it loads when the site is published.
@@ -545,40 +544,6 @@ def diff_builds(old, new):
     }
 
 
-def diff_markdown(d):
-    def table(rows, cols):
-        out = ['| ' + ' | '.join(c for c, _ in cols) + ' |', '|' + '---|' * len(cols)]
-        for r in rows:
-            out.append('| ' + ' | '.join(str(fn(r)).replace('|', '\\|') for _, fn in cols) + ' |')
-        return out
-    named = lambda rows: [r for r in rows if r.get('name')]
-    lines = ['# Feature changes: %s → %s' % (d['old'], d['new']), '',
-             '| | Count | Named |', '|---|---|---|',
-             '| Added | %d | %d |' % (len(d['added']), len(named(d['added']))),
-             '| Removed | %d | %d |' % (len(d['removed']), len(named(d['removed']))),
-             '| Renamed | %d | |' % len(d['renamed']),
-             '| Newly named | %d | |' % len(d['newlyNamed']),
-             '| Name lost | %d | |' % len(d['nameLost']),
-             '| Feature store changes | %d | |' % len(d['storeChanged']),
-             '| Default changed | %d | |' % len(d['defaultChanged']), '']
-    mods = lambda r: ', '.join(r.get('modules', [])[:4]) + (' …' if len(r.get('modules', [])) > 4 else '')
-    for title, rows in (('Added', d['added']), ('Removed', d['removed'])):
-        lines += ['## %s' % title, '']
-        lines += table(rows, [('ID', lambda r: r['id']), ('Name', lambda r: r['name'] or ''), ('Modules', mods)]) if rows else ['None.']
-        lines.append('')
-    if d['renamed']:
-        lines += ['## Renamed', ''] + table(d['renamed'], [('ID', lambda r: r['id']), ('Old name', lambda r: r['oldName']), ('New name', lambda r: r['newName'])]) + ['']
-    if d['newlyNamed']:
-        lines += ['## Newly named', ''] + table(d['newlyNamed'], [('ID', lambda r: r['id']), ('Name', lambda r: r['name'])]) + ['']
-    if d['nameLost']:
-        lines += ['## Name lost', ''] + table(d['nameLost'], [('ID', lambda r: r['id']), ('Old name', lambda r: r['oldName'])]) + ['']
-    if d['defaultChanged']:
-        state = lambda x: ', '.join(x[k] for k in ('default', 'changeTime') if k in x)
-        lines += ['## Default changed', ''] + table(d['defaultChanged'], [('ID', lambda r: r['id']), ('Name', lambda r: r['name'] or ''),
-                                                                          ('Old', lambda r: state(r['old'])), ('New', lambda r: state(r['new']))]) + ['']
-    return '\n'.join(lines) + '\n'
-
-
 def regenerate(data_dir):
     builds = load_builds(data_dir)
     builds.sort(key=lambda b: (b['architecture'], version_tuple(b['build'])))
@@ -652,14 +617,12 @@ def regenerate(data_dir):
     with open(os.path.join(data_dir, 'first-seen.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump({'firstTrackedBuild': first_tracked, 'firstSeen': first_seen}, f, separators=(',', ':'), sort_keys=True)
 
-    # Diffs with the previous build of the same architecture and version (base build number), since builds of 25H2 and 26H2 come
-    # out side by side. A version's first build is compared with the other version's build at the same update instead (the same
-    # binaries, so what differs is the enablement package), or the newest one before it. Only versions whose base build numbers are
-    # less than 1,000 apart count: 24H2, 25H2 and 26H2 (26100, 26200, 26300) share their updates' numbers, but 26H1 (28000) and the
-    # Future Platforms builds (29000s) number their own.
-    diffs_dir = os.path.join(data_dir, 'diffs')
-    os.makedirs(diffs_dir, exist_ok=True)
-    wanted = set()
+    # Each build's previous build (the index's previous, which the site's compare view starts from, with the counts of what changed
+    # since it): the previous build of the same architecture and version (base build number), since builds of 25H2 and 26H2 come out
+    # side by side. A version's first build is compared with the other version's build at the same update instead (the same binaries,
+    # so what differs is the enablement package), or the newest one before it. Only versions whose base build numbers are less than
+    # 1,000 apart count: 24H2, 25H2 and 26H2 (26100, 26200, 26300) share their updates' numbers, but 26H1 (28000) and the Future
+    # Platforms builds (29000s) number their own. (The site compares any two builds from their features.json files.)
     for i, cur in enumerate(builds):
         earlier = [b for b in builds[:i] if b['architecture'] == cur['architecture']]
         same_version = [b for b in earlier if b['build'].split('.')[0] == cur['build'].split('.')[0]]
@@ -673,22 +636,13 @@ def regenerate(data_dir):
                 continue
             prev = max(others, key=lambda b: (version_tuple(b['build'])[1], version_tuple(b['build'])))
         d = diff_builds(prev, cur)
-        name = '%s_to_%s' % (prev['key'], cur['key'])
-        wanted.update({name + '.json', name + '.md'})
-        with open(os.path.join(diffs_dir, name + '.json'), 'w', encoding='utf-8', newline='\n') as f:
-            json.dump(d, f, indent=1)
-        with open(os.path.join(diffs_dir, name + '.md'), 'w', encoding='utf-8', newline='\n') as f:
-            f.write(diff_markdown(d))
         index_entry = next(x for x in index['builds'] if x['key'] == cur['key'])
         index_entry['previous'] = prev['key']
         index_entry['diff'] = {k: len(d[k]) for k in ('added', 'removed', 'renamed', 'newlyNamed', 'nameLost', 'storeChanged', 'defaultChanged')}
-    for fn in os.listdir(diffs_dir):
-        if fn not in wanted:
-            os.remove(os.path.join(diffs_dir, fn))  # Stale diff (e.g. a build was inserted between two others)
 
     with open(os.path.join(data_dir, 'index.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump(index, f, indent=1)
-    print('[data] %d builds indexed, %d diffs' % (len(builds), len(wanted) // 2))
+    print('[data] %d builds indexed' % len(builds))
 
 
 def main():

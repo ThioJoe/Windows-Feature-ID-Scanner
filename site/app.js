@@ -63,8 +63,32 @@ async function getJson(path, root = DATA) {
   return res.json();
 }
 
+// Each build's features.json comes from GitHub's raw file links at the commit the site was published from (derived/source.json, which
+// pages.yml writes), so that the published site, which GitHub Pages allows 1 GB, doesn't hold them. Without that file (the site
+// served locally with a copy of data/), from data/.
+let buildSource = null;
+const buildRoot = () => buildSource || (buildSource = fetch(DERIVED + 'source.json', { cache: 'no-cache' })
+  .then((res) => (res.ok ? res.json() : null)).catch(() => null)
+  .then((s) => (s && s.repository && s.commit ? `https://raw.githubusercontent.com/${s.repository}/${s.commit}/data/` : null)));
+
+async function rawJson(url) {
+  // GitHub answers HTTP 429 when one address reads many raw files in a short time: wait and try again, longer each time
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(url);
+    if (res.status === 429 && attempt < 5) {
+      await new Promise((resolve) => setTimeout(resolve, 2 ** attempt * (1000 + Math.random() * 1000)));
+      continue;
+    }
+    if (!res.ok) throw new Error(url + ': HTTP ' + res.status);
+    return res.json();
+  }
+}
+
 function loadBuild(key) {
-  if (!buildCache.has(key)) buildCache.set(key, getJson('builds/' + encodeURIComponent(key) + '/features.json'));
+  if (!buildCache.has(key)) {
+    const path = 'builds/' + encodeURIComponent(key) + '/features.json';
+    buildCache.set(key, buildRoot().then((raw) => (raw ? rawJson(raw + path) : getJson(path))));
+  }
   return buildCache.get(key);
 }
 

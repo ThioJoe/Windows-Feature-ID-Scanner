@@ -103,7 +103,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.ref }}  # The branch tip: the symbol cache the scan starts from
+          ref: ${{ github.ref }}  # The branch tip, the data the check looked at
+
+      # The symbol cache the scan starts from, from the cache branch (scripts/symbol-cache.py)
+      - name: Get the symbol cache
+        shell: powershell
+        run: |
+          python scripts\symbol-cache.py get --branch $env:GITHUB_REF_NAME
+          if ($LASTEXITCODE -ne 0) { Write-Error "symbol-cache.py failed with exit code $LASTEXITCODE"; exit 1 }
 
       # What the assets branch has already, which scan-resources.py doesn't write again (the branch's file list, without the files)
       - name: List what the assets branch has
@@ -177,7 +184,8 @@ jobs:
           path: output/
           if-no-files-found: warn
 
-      # The scan added what it found to its copy of the symbol cache (the PDBs it scanned); the commit job merges the copies
+      # The scan added what it found to its copy of the symbol cache (the PDBs it scanned); the commit job merges the copies and puts the
+      # result on the cache branch
       - name: Upload the symbol cache
         uses: actions/upload-artifact@v7
         with:
@@ -263,7 +271,11 @@ jobs:
           # (A folder per scan's cache, though download-artifact can put a lone one straight in symbol-caches/)
           mapfile -t caches < <(find symbol-caches -type f -name symbol-cache-AMD64.json 2>/dev/null | sort)
           if [ ${#keys[@]} -eq 0 ]; then echo "Only resource data: the symbol cache stays as it is"
-          elif [ ${#caches[@]} -gt 0 ]; then python3 scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"; else echo "No symbol cache came back from the scans"; fi
+          elif [ ${#caches[@]} -gt 0 ]; then
+            python3 scripts/merge-symbol-caches.py --data-dir data --out data/symbol-cache-AMD64.json "${caches[@]}"
+            # To the cache branch before the data, whose symbol catch-up needs what the scans read
+            python3 scripts/symbol-cache.py put --branch "$GITHUB_REF_NAME" --forget --message "Symbol cache of $GITHUB_REF_NAME after the scans of $(IFS=,; echo "${keys[*]}" | sed 's/,/, /g')"
+          else echo "No symbol cache came back from the scans"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
