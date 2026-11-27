@@ -11,6 +11,7 @@
   --changed: #9a6700;
   --checker-light-1: #8c959f;  /* The checkerboard behind an image that's almost all white (analyze-images.py) */
   --checker-light-2: #afb8c1;
+  --tag-shade: #eaeef2;  /* Behind an update's letters in the build picker's tags */
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -26,6 +27,7 @@
     --changed: #d29922;
     --checker-light-1: #30363d;  /* (The usual one, which is dark already) */
     --checker-light-2: transparent;
+    --tag-shade: #21262d;
   }
 }
 * { box-sizing: border-box; }
@@ -106,8 +108,8 @@ build-picker { position: relative; display: block; min-width: 0; }
 .picker-option.taken { background: var(--panel); box-shadow: inset 3px 0 0 var(--muted); }
 .picker-option.taken .picker-main { font-weight: 600; }
 .picker-tag { display: inline-flex; padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-size: 11px; }
-/* An update's letters (B, D, OOB) on the border's color, from halfway between the date and them to the tag's end (app.js) */
-.picker-tag-type { margin: 0 -5px 0 3px; padding: 0 5px 0 3px; border-radius: 0 3px 3px 0; background: var(--border); color: var(--fg); }
+/* An update's letters (B, D, OOB) on a shade of their own, from halfway between the date and them to the tag's end, centered (app.js) */
+.picker-tag-type { margin: 0 -5px 0 4px; padding: 0 4px; border-radius: 0 3px 3px 0; background: var(--tag-shade); }
 .picker-footer {
   position: sticky; bottom: -6px; margin: 6px 0 -6px; padding: 6px 12px;
   background: var(--panel); border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; white-space: normal; text-align: right;

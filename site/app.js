@@ -180,6 +180,7 @@ class BuildPicker extends HTMLElement {
     if (this.hasAttribute('data-show-all')) {
       this.list.addEventListener('change', (e) => {
         if (!e.target.closest('.picker-all')) return;
+        e.stopPropagation();  // The picker's own change event means a build was picked, which renders the comparison again
         setShowAllBuilds(e.target.checked);
         this.list.focus({ preventScroll: true });
       });
@@ -463,8 +464,8 @@ function latestBuild(arch) {
 
 // The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
 // first-seen.json counts them in (update-data.py), the first build of each Insider channel (of an architecture) in that order, the
-// builds that came out on each architecture's first tracked day, and the date each Insider build's channel's next build came out
-let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null, insiderUntil = null;
+// builds that came out on each architecture's first tracked day, and the release dates of each Insider channel's builds
+let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null, channelDates = null;
 // A build's release date, or the day it was scanned where that's not known
 const releaseDate = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
 function buildOrder() {
@@ -485,25 +486,34 @@ function buildOrder() {
       if (!earliest) earliestBuilds.set(b.architecture, [b.key]);
       else if (date(buildsByKey.get(earliest[0])) === date(b)) earliest.push(b.key);
     }
-    // (None for a channel's newest build.) From the list of Insider releases, which has the builds that weren't scanned, and the scanned builds.
-    insiderUntil = new Map();
-    const channelDates = new Map(((releases && releases.insider) || []).map((c) => [c.channel, (c.releases || []).map((r) => r.date)]));
-    for (const b of index.builds) {
-      if (!b.insiderChannel) continue;
-      const dates = [...(channelDates.get(b.insiderChannel) || []), ...index.builds.filter((x) => x.insiderChannel === b.insiderChannel).map(date)];
-      const next = dates.filter((d) => d && d > date(b)).sort()[0];
-      if (next) insiderUntil.set(b.key, next);
-    }
+    // From the list of Insider releases, which has the builds that weren't scanned, and the scanned builds
+    channelDates = new Map(((releases && releases.insider) || []).map((c) => [c.channel, (c.releases || []).map((r) => r.date).filter(Boolean)]));
+    for (const b of index.builds) if (b.insiderChannel) channelDates.set(b.insiderChannel, [...(channelDates.get(b.insiderChannel) || []), date(b)]);
   }
 }
 
-// Whether build x is older than build y, for the compare pickers. Released builds go by build number. An Insider build, whose number is
-// higher than any released build's, goes by release date: it counts as the same age as what came out while it was its channel's newest
-// build, from its release until the channel's next build, as newer than what came out before, and as older than what came out after.
+// Whether build x is older than build y, for the compare pickers. Released builds go by build number, and Insider builds, whose numbers
+// are higher than any released build's, by release date (two from the same day count as the same age). Between a released build and an
+// Insider build, the build of the Insider channel that came out closest to the released build is the channel's first build newer than it.
 function olderThan(x, y) {
   buildOrder();
   if (!x.insiderChannel && !y.insiderChannel) return compareVersions(x, y) < 0;
-  return x.insiderChannel ? (insiderUntil.get(x.key) || '9999-12-31') <= releaseDate(y) : releaseDate(x) < releaseDate(y);
+  if (x.insiderChannel && y.insiderChannel) return releaseDate(x) < releaseDate(y);
+  const [released, insider] = x.insiderChannel ? [y, x] : [x, y];
+  const newer = releaseDate(insider) >= firstNewer(released, insider.insiderChannel);
+  return x.insiderChannel ? !newer : newer;
+}
+
+// The release date of an Insider channel's first build newer than a released build: the one that came out closest to it, the later one
+// where two are as close
+function firstNewer(b, channel) {
+  const at = Date.parse(releaseDate(b));
+  let best = null;
+  for (const d of channelDates.get(channel) || []) {
+    const off = Math.abs(Date.parse(d) - at);
+    if (!best || off < best.off || (off === best.off && d > best.d)) best = { d, off };
+  }
+  return best ? best.d : '';
 }
 
 // Whether a build came out on its architecture's first tracked day, so that every feature it has counts as first seen in it by default
@@ -1249,15 +1259,13 @@ async function renderCompare() {
   buildOrder();
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
   const nb = buildsByKey.get(newKey), ob = buildsByKey.get(oldKey), allow = ' (check "Allow any build" below to pick it)';
-  const rule = 'Released builds are told apart by build number, and Insider builds by release date: an Insider build counts as the same age as ' +
-    "what came out while it was its channel's newest build, as newer than what came out before, and as older than what came out after.";
+  const rule = 'Released builds are told apart by build number, and Insider builds by release date. Between a released build and an Insider ' +
+    "build, the build of the Insider channel that came out closest to the released build counts as the channel's first build newer than it.";
   $('cmp-old').setRange(known ? (v) => !olderThan(nb, buildsByKey.get(v)) : null,
-    (v) => (!nb.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A higher build number than the new build'
-      : nb.insiderChannel ? "Released once the new build's channel had a newer build" : 'Released after the new build') + allow,
+    (v) => (!nb.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A higher build number than the new build' : 'Newer than the new build') + allow,
     known ? `Showing builds older than ${nb.build}` : '', rule);
   $('cmp-new').setRange(known ? (v) => !olderThan(buildsByKey.get(v), ob) : null,
-    (v) => (!ob.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A lower build number than the old build'
-      : buildsByKey.get(v).insiderChannel ? 'Its channel had a newer build by the time the old build came out' : 'Released before the old build') + allow,
+    (v) => (!ob.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A lower build number than the old build' : 'Older than the old build') + allow,
     known ? `Showing builds newer than ${ob.build}` : '', rule);
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
