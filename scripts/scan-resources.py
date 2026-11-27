@@ -11,17 +11,24 @@
 #   WinRT metadata (.winmd): its types and their members.
 #   Fonts (Segoe Fluent Icons, Segoe MDL2 Assets, Segoe UI Emoji, Segoe UI Variable): the files, and a hash of each character's glyph.
 #   Cursors (Windows\Cursors): each frame as PNG, with hotspots and timing.
+#   The shell's package resource indexes (.pri), which hold the UI resources of the shell and the system apps: the English and
+#   language-neutral strings, the images (stored like an executable's), the string table of each compiled XAML page (.xbf) in them,
+#   and the other files they hold (stored whole). Not the other languages' strings, nor the .pri files themselves.
 #   Whole files: the shell's UI files (SystemApps, ShellExperiences, ImmersiveControlPanel, ShellComponents, SystemResources: images,
-#   SVGs, Lottie and other JSON, web app files, compiled XAML, .pri, videos), Group Policy templates, wallpapers, sounds, themes,
+#   SVGs, Lottie and other JSON, web app files, compiled XAML, videos), Group Policy templates, wallpapers, sounds, themes,
 #   PowerShell's inbox modules, servicing package manifests and scheduled tasks.
 #   Registry (the SOFTWARE and SYSTEM hives): MDM/CSP policy definitions, services, ETW providers and WinRT activatable classes.
 #
 # Everything goes into a folder laid out like the repository's assets branch, where everything is stored once, by hash:
 #   icons/<W>x<H>/<h>/<hash>.png, cursors/..., bitmaps/..., images/<W>x<H>/<h>/<hash>.<ext> (images/svg/... for SVGs),
-#   files/<kind>/<h>/<hash><ext>, meta/<hh>/<hash>.json (what was read from a file version), registry/<hh>/<hash>.json,
-#   builds/<build>/files.csv.gz (every file of the build: path, size, hash) and builds/<build>/index.json.gz (each file this script
-#   reads, with the hashes of what it found in it, which is what comparing two builds starts from).
-# <hash> is the first 16 hex digits of the SHA-256 of the original data, <h> its first digit and <hh> its first two.
+#   files/<kind>/<h>/<hash><ext>, parts/<hh>/<hash>.json (a part of what was read from a file version: its strings, its exports, ...),
+#   registry/<hh>/<hash>.json, builds/<build>/files.csv.gz (every file of the build: path, size, hash) and builds/<build>/index.json.gz
+#   (each file this script reads, with the hashes of what it found in it, which is what comparing two builds starts from, and the
+#   rest of what was read from it, such as an executable's timestamp and version).
+# <hash> is the first 20 hex digits (80 bits) of the SHA-256 of the original data, or the first 16 (64 bits) for what the branch has had
+# since before November 2026, when everything was named that way: something that hasn't changed keeps its name (Store.name). <h> is its
+# first digit and <hh> its first two. What's only compared, where nothing is stored under it (each file in the index and in
+# files.csv.gz, each resource in an executable's resource table, each font glyph), has 16 digits.
 #
 #   python scripts/scan-resources.py --root F:\ --build 26300.10075-AMD64 --out <folder> [--inventory files.csv.gz] [--known known.txt]
 #     --inventory   the file list the VM's check wrote (verify-windows-files.py --inventory), for builds/<build>/files.csv.gz
@@ -46,11 +53,17 @@ def log(msg):
     print('[resources %s] %s' % (time.strftime('%H:%M:%S'), msg), flush=True)
 
 def h16(data):
+    """The first 16 hex digits of data's SHA-256: what tells two versions of something apart where nothing is stored under it (the
+    resources in an executable's resource table, font glyphs, the build's list of every file)"""
     return hashlib.sha256(data).hexdigest()[:16]
 
+def sha(data):
+    """data's SHA-256 in hex, which what's stored is named by (Store.name)"""
+    return hashlib.sha256(data).hexdigest()
+
 def digest(obj):
-    """The hash of a JSON value, for comparing what two versions of a file hold"""
-    return h16(json.dumps(obj, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8'))
+    """The SHA-256 of a JSON value, for comparing what two versions of a file hold"""
+    return sha(json.dumps(obj, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8'))
 
 def file_sha256(path):
     h = hashlib.sha256()
@@ -73,6 +86,13 @@ class Store:
 
     def has(self, path):
         return path in self.known or path in self.written
+
+    def name(self, full, *paths):
+        """The name of something to store whose SHA-256 is full: its first 20 hex digits (80 bits), or its first 16 (64 bits, as
+        everything was named until November 2026) if the branch has it under that name at one of paths (functions of a name), so that
+        something unchanged keeps its name"""
+        old = full[:16]
+        return old if any(self.has(path(old)) for path in paths) else full[:20]
 
     def put(self, path, data, replace=False):
         """Writes data at path unless the branch has it already (or replace: a build's own files, which a rescan replaces). Returns
@@ -103,26 +123,22 @@ class Store:
             return path
         return self.put(path, json.dumps(obj, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8'))
 
-def meta_path(hash_):
-    return 'meta/%s/%s.json' % (hash_[:2], hash_)
-
 def part_path(hash_):
     return 'parts/%s/%s.json' % (hash_[:2], hash_)
 
-def store_record(store, hash_, info, parts):
-    """Stores what was read from a file version: each of its parts (exports, icons, strings, ...) on its own, named by its hash, so a
-    part that a new version of the file has unchanged isn't stored again, and the rest (name, timestamp, version, ...) with the
-    hashes of the parts in meta/. Returns the meta path and the parts' hashes."""
+def record(store, info, parts, **entry):
+    """The index entry of a file version: each of its parts (exports, icons, strings, ...) is stored on its own, named by its hash, so
+    a part that a new version of the file has unchanged isn't stored again, and the entry has the parts' hashes ('d') and the rest of
+    what was read (timestamp, version, ...: 'info')"""
     header, digests = {}, {}
     for key, value in info.items():
         if key in parts:
             if value:
-                digests[key] = digest(value)
+                digests[key] = store.name(digest(value), part_path)
                 store.put_json(part_path(digests[key]), value)
-        else:
+        elif key not in ('kind', 'name'):  # (The index has the file's paths)
             header[key] = value
-    header['parts'] = digests
-    return store.put_json(meta_path(hash_), header), digests
+    return dict(entry, kind=info['kind'], info=header, d=digests)
 
 def image_path(kind, width, height, hash_, ext):
     return '%s/%dx%d/%s/%s.%s' % (kind, width, height, hash_[0], hash_, ext)
@@ -629,9 +645,10 @@ def store_image(store, kind, data, cursor=False):
     if cursor:
         hotspot = list(struct.unpack_from('<HH', data, 0))
         data = data[4:]
-    hash_ = h16(data)
+    full = sha(data)
     if data[:8] == PNG_SIGNATURE:
         w, h, bits = png_rgba_size(data)
+        hash_ = store.name(full, lambda x: image_path(kind, w, h, x, 'png'))
         store.put(image_path(kind, w, h, hash_, 'png'), bytes(data))
     else:
         header_size, w, h = struct.unpack_from('<Iii', data, 0)
@@ -639,6 +656,7 @@ def store_image(store, kind, data, cursor=False):
         if header_size == 12:
             w, h = struct.unpack_from('<HH', data, 4)
         h = abs(h) // 2
+        hash_ = store.name(full, lambda x: image_path(kind, w, h, x, 'png'))
         path = image_path(kind, w, h, hash_, 'png')
         if not store.has(path):
             png, w, h, bits = dib_to_png(data, icon=True)
@@ -646,13 +664,13 @@ def store_image(store, kind, data, cursor=False):
     return [w, h, bits, hash_] + hotspot
 
 def store_bitmap(store, data):
-    hash_ = h16(data)
     header_size = struct.unpack_from('<I', data, 0)[0]
     if header_size == 12:
         w, h = struct.unpack_from('<HH', data, 4)
     else:
         w, h = struct.unpack_from('<ii', data, 4)
     w, h = abs(w), abs(h)
+    hash_ = store.name(sha(data), lambda x: image_path('bitmaps', w, h, x, 'png'), lambda x: image_path('bitmaps', w, h, x, 'bmp'))
     path = image_path('bitmaps', w, h, hash_, 'png')
     if not store.has(path):
         try:
@@ -738,11 +756,11 @@ def read_pe(store, data, name):
             found = image_info(content[:4096]) if len(content) >= 16 else None
             if found:
                 ext, w, h = found
-                hash_ = h16(content)
+                hash_ = store.name(sha(content), lambda x: image_path('images', w, h, x, ext))
                 store.put(image_path('images', w, h, hash_, ext), bytes(content))
                 images['%s/%s' % (key_of(type_), key)] = [w, h, hash_, ext]
             elif content[:5] == b'<svg ' or content[:5] == b'<?xml' and b'<svg' in content[:512]:
-                hash_ = h16(content)
+                hash_ = store.name(sha(content), lambda x: 'images/svg/%s/%s.svg' % (x[0], x))
                 store.put('images/svg/%s/%s.svg' % (hash_[0], hash_), bytes(content))
                 images['%s/%s' % (key_of(type_), key)] = [0, 0, hash_, 'svg']
     if images:
@@ -1143,6 +1161,255 @@ def read_ani(store, data, name):
     return info
 
 # ---------------------------------------------------------------------------
+# Package resource indexes (.pri): the resources of the shell's and system apps' UI (strings in every language, images, compiled XAML)
+# ---------------------------------------------------------------------------
+
+PRI_VALUE_TYPES = {0: 'string', 1: 'path', 2: 'data', 3: 'asciiString', 4: 'utf8String', 5: 'asciiPath', 6: 'utf8Path'}
+PRI_QUALIFIERS = {0: 'Language', 1: 'Contrast', 2: 'Scale', 3: 'HomeRegion', 4: 'TargetSize', 5: 'LayoutDirection', 6: 'Theme',
+                  7: 'AlternateForm', 8: 'DXFeatureLevel', 9: 'Configuration', 10: 'DeviceFamily', 11: 'Custom'}
+PRI_LEFT_OUT = {'MicrosoftInternalMetadata/ContentChecksumValue'}  # A checksum of the file's resources, different in every build
+
+def _pri_string(b, pos):
+    """A null-terminated UTF-16 string"""
+    end = pos
+    while end + 1 < len(b) and (b[end] or b[end + 1]):
+        end += 2
+    return bytes(b[pos:end]).decode('utf-16-le', 'replace')
+
+def pri_sections(data):
+    """[(name, content)] of a .pri file's sections"""
+    if bytes(data[:8]) not in (b'mrm_pri0', b'mrm_pri1', b'mrm_pri2', b'mrm_pri3', b'mrm_prif'):
+        raise ValueError('not a .pri file')
+    size, toc, start = struct.unpack_from('<III', data, 12)
+    count = struct.unpack_from('<H', data, 24)[0]
+    if size != len(data):
+        raise ValueError('a .pri file of %d bytes, %d here' % (size, len(data)))
+    sections = []
+    for i in range(count):
+        name = bytes(data[toc + 32 * i:toc + 32 * i + 16]).rstrip(b'\0 ').decode('latin-1')
+        offset, length = struct.unpack_from('<II', data, toc + 32 * i + 24)
+        p = start + offset
+        if bytes(data[p:p + 16]).rstrip(b'\0 ').decode('latin-1') != name or struct.unpack_from('<I', data, p + length - 8)[0] != 0xDEF5FADE:
+            raise ValueError('section %d (%s) of the .pri file is damaged' % (i, name))
+        sections.append((name, data[p + 32:p + length - 8]))  # (Without the section's header and trailer)
+    return sections
+
+def pri_schema(b, extended):
+    """The full names of a hierarchical schema's items ('Resources/Name', 'Files/Assets/Logo.png'), by their index, and its name"""
+    b = bytes(b)
+    _, unique_length, name_length, _ = struct.unpack_from('<HHHH', b, 0)
+    p = 8
+    wide_names = False
+    if extended:
+        tag = bytes(b[p:p + 16]).rstrip(b'\0 ').decode('latin-1')
+        if tag not in ('[def_hnamesx]', '[def_hnames]'):
+            raise ValueError('schema names: %r' % tag)
+        wide_names = tag == '[def_hnamesx]'
+        p += 16
+    _, _, _, _, scopes, items = struct.unpack_from('<HHIIII', b, p)
+    p += 20
+    unique = _pri_string(b, p)
+    p += (unique_length + name_length) * 2
+    _, _, _, total, scopes2, items2, unicode_length, _ = struct.unpack_from('<HHHIIIII', b, p)
+    p += 26 + (4 if wide_names else 0)
+    if (total, scopes2, items2) != (scopes + items, scopes, items):
+        raise ValueError("the schema's counts don't agree")
+    nodes = []
+    for _ in range(scopes + items):
+        parent, _, _, _, flags, name_offset, index = struct.unpack_from('<HHHBBHH', b, p)
+        nodes.append((parent, bool(flags & 0x10), bool(flags & 0x20), name_offset | ((flags & 0xF) << 16), index))
+        p += 12
+    p += scopes * 8 + items * 2  # (Each scope's children, and the items by index)
+    unicode_at, ascii_at = p, p + unicode_length * 2
+    names = [b[ascii_at + offset:b.index(b'\0', ascii_at + offset)].decode('latin-1') if ascii else _pri_string(b, unicode_at + offset * 2)
+             for _, _, ascii, offset, _ in nodes]
+
+    def full(i):
+        parts = []
+        while i and nodes[i][0] != i:  # (Up to the root scope, whose name isn't part of the resources' names)
+            parts.append(names[i])
+            i = nodes[i][0]
+        return '/'.join(reversed(parts))
+    return unique, {index: full(i) for i, (_, is_scope, _, _, index) in enumerate(nodes) if not is_scope}
+
+def pri_decisions(b):
+    """Each decision's qualifier sets: [[((qualifier, value), ...), ...], ...]"""
+    n_distinct, n_qualifiers, n_sets, n_decisions, n_index, _ = struct.unpack_from('<6H', b, 0)
+    p = 12
+    decisions = [struct.unpack_from('<HH', b, p + 4 * i) for i in range(n_decisions)]
+    p += 4 * n_decisions
+    sets = [struct.unpack_from('<HH', b, p + 4 * i) for i in range(n_sets)]
+    p += 4 * n_sets
+    qualifiers = [struct.unpack_from('<H', b, p + 8 * i)[0] for i in range(n_qualifiers)]
+    p += 8 * n_qualifiers
+    distinct = [struct.unpack_from('<HHHHI', b, p + 12 * i) for i in range(n_distinct)]
+    p += 12 * n_distinct
+    index = struct.unpack_from('<%dH' % n_index, b, p)
+    p += 2 * n_index
+    values = [(PRI_QUALIFIERS.get(d[1], str(d[1])), _pri_string(b, p + d[4] * 2)) for d in distinct]
+    qualifier_sets = [tuple(values[qualifiers[index[first + j]]] for j in range(count)) for first, count in sets]
+    return [[qualifier_sets[index[first + j]] for j in range(count)] for first, count in decisions]
+
+def pri_data_items(b):
+    _, n_strings, n_blobs, _ = struct.unpack_from('<IHHI', b, 0)
+    at = 12 + n_strings * 4 + n_blobs * 8
+    items = []
+    for i in range(n_strings):
+        offset, length = struct.unpack_from('<HH', b, 12 + 4 * i)
+        items.append(b[at + offset:at + offset + length])
+    for i in range(n_blobs):
+        offset, length = struct.unpack_from('<II', b, 12 + n_strings * 4 + 8 * i)
+        items.append(b[at + offset:at + offset + length])
+    return items
+
+def pri_resources(data):
+    """The names of a .pri file's resource maps (its package and those it was merged with), and its resources: [(name, [(qualifiers,
+    value type, value), ...]), ...]"""
+    sections = pri_sections(data)
+    read = {}
+
+    def section(i, reader):
+        if i not in read:
+            read[i] = reader(sections[i][1])
+        return read[i]
+    maps, resources = [], []
+    for name, b in sections:
+        if name not in ('[mrm_res_map__]', '[mrm_res_map2_]'):
+            continue
+        environment_length, _, schema_i, schema_ref_length, decisions_i, n_types, n_item_groups, n_groups, n_infos, n_candidates, _, large_length = \
+            struct.unpack_from('<8HIIII', b, 0)
+        p = 32 + environment_length + schema_ref_length
+        types = [struct.unpack_from('<I', b, p + 8 * i + 4)[0] for i in range(n_types)]
+        p += 8 * n_types
+        item_groups = [struct.unpack_from('<HH', b, p + 4 * i) for i in range(n_item_groups)]
+        p += 4 * n_item_groups
+        groups = [struct.unpack_from('<HH', b, p + 4 * i) for i in range(n_groups)]
+        p += 4 * n_groups
+        infos = [struct.unpack_from('<HH', b, p + 4 * i) for i in range(n_infos)]
+        p += 4 * n_infos
+        if large_length:  # The same tables with 32-bit numbers, for a map too big for 16-bit ones
+            n_item_groups, n_groups, n_infos = struct.unpack_from('<III', b, p)
+            q = p + 12
+            item_groups += [struct.unpack_from('<II', b, q + 8 * i) for i in range(n_item_groups)]
+            q += 8 * n_item_groups
+            groups += [struct.unpack_from('<II', b, q + 8 * i) for i in range(n_groups)]
+            q += 8 * n_groups
+            infos += [struct.unpack_from('<II', b, q + 8 * i) for i in range(n_infos)]
+            p += large_length
+        candidates = []
+        for _ in range(n_candidates):
+            kind, value_type = b[p], types[b[p + 1]]
+            if kind == 1:  # In a data item section
+                item, data_section = struct.unpack_from('<HH', b, p + 4)
+                candidates.append((value_type, data_section, item))
+            elif kind == 0:  # In this section, after the candidates
+                length, offset = struct.unpack_from('<HI', b, p + 2)
+                candidates.append((value_type, None, (offset, length)))
+            else:
+                raise ValueError('candidate kind %d' % kind)
+            p += 8
+        strings_at = p
+        package, names = section(schema_i, lambda x: pri_schema(x, sections[schema_i][0] == '[mrm_hschemaex]'))
+        decisions = section(decisions_i, pri_decisions)
+        maps.append(package)
+        for first_item, group in item_groups:
+            size, first_info = groups[group] if group < len(groups) else (1, group - len(groups))
+            for k in range(size):
+                decision, first_candidate = infos[first_info + k]
+                values = []
+                for j, qualifiers in enumerate(decisions[decision]):
+                    value_type, data_section, where = candidates[first_candidate + j]
+                    if data_section is None:
+                        value = b[strings_at + where[0]:strings_at + where[0] + where[1]]
+                    else:
+                        value = section(data_section, pri_data_items)[where]
+                    values.append((qualifiers, PRI_VALUE_TYPES.get(value_type, str(value_type)), value))
+                resources.append((names.get(first_item + k, '#%d' % (first_item + k)), values))
+    return maps, resources
+
+def xbf_strings(data):
+    """The strings of a compiled XAML file's (XBF version 2) string table, which has the names of its elements, properties, resources
+    and x:Uid and x:Name values, and its literal text, and the hash its header has of the XAML it was compiled from; None if it isn't one"""
+    if len(data) < 136 or bytes(data[:4]) != b'XBF\0' or struct.unpack_from('<I', data, 12)[0] != 2:
+        return None
+    p = struct.unpack_from('<Q', data, 20)[0] + 12  # (The tables' offsets count from the end of the first three numbers)
+    strings = []
+    for _ in range(struct.unpack_from('<I', data, p)[0]):
+        length = struct.unpack_from('<I', data, p + 4)[0]
+        strings.append(bytes(data[p + 8:p + 8 + 2 * length]).decode('utf-16-le', 'replace'))
+        p += 4 + 2 * length + 2  # (Each string ends with a null character)
+    return sorted(set(strings)), bytes(data[68:84]).decode('ascii', 'replace')
+
+def read_pri(store, data, name):
+    """What a .pri file holds that's kept: its English and language-neutral strings, its images (stored like an executable's), the string
+    table of each compiled XAML page, and the other files it holds (stored whole). Resources for other languages are left out, as only
+    the English .mui files are read, and so is the file itself."""
+    maps, resources = pri_resources(data)
+    info = {'kind': 'pri', 'name': name, 'resourceMaps': maps, 'resources': len(resources)}
+    languages = set()
+    chosen = {}  # key -> (0 for English, 1 for neutral, value type, value, the resource's name)
+    for res_name, values in resources:
+        if res_name in PRI_LEFT_OUT:
+            continue
+        for qualifiers, value_type, value in values:
+            language = next((v for q, v in qualifiers if q == 'Language'), None)
+            if language:
+                languages.add(language.lower())
+                if language.lower() != 'en-us':
+                    continue
+            if 'path' in value_type.lower():
+                continue  # (A path to one of the package's files, which are read on their own)
+            other = ', '.join('%s=%s' % qv for qv in sorted(qualifiers) if qv[0] != 'Language')
+            key = '%s (%s)' % (res_name, other) if other else res_name
+            rank = 0 if language else 1
+            if key not in chosen or rank < chosen[key][0]:
+                chosen[key] = (rank, value_type, value, res_name)
+    info['languages'] = sorted(languages)
+    strings, images, icons, xaml, files, errors = {}, {}, {}, {}, {}, []
+    for key, (_, value_type, value, res_name) in sorted(chosen.items()):
+        if value_type in ('string', 'asciiString', 'utf8String'):
+            encoding = {'string': 'utf-16-le', 'asciiString': 'latin-1'}.get(value_type, 'utf-8')
+            strings[key] = bytes(value).decode(encoding, 'replace').rstrip('\0')
+            continue
+        value = bytes(value)
+        ext = os.path.splitext(res_name)[1].lower()
+        found = image_info(value[:1 << 20]) if len(value) >= 16 else None
+        if found:
+            image_ext, w, h = found
+            hash_ = store.name(sha(value), lambda x: image_path('images', w, h, x, image_ext))
+            store.put(image_path('images', w, h, hash_, image_ext), value)
+            images[key] = [w, h, hash_, image_ext]
+        elif value[:5] == b'<svg ' or (value.lstrip()[:5] == b'<?xml' and b'<svg' in value[:512]):
+            hash_ = store.name(sha(value), lambda x: 'images/svg/%s/%s.svg' % (x[0], x))
+            store.put('images/svg/%s/%s.svg' % (hash_[0], hash_), value)
+            images[key] = [0, 0, hash_, 'svg']
+        elif ext == '.xbf':
+            found = None
+            try:
+                found = xbf_strings(value)
+            except (struct.error, IndexError) as e:
+                errors.append('%s: %s' % (key, e))
+            xaml[key] = [h16(value)] + (list(found[::-1]) if found else [None, []])
+        else:
+            if ext == '.ico' and value[:4] == b'\0\0\1\0':
+                try:
+                    icons[key] = read_icon_file(store, value)[1]
+                    continue
+                except (ValueError, struct.error, IndexError) as e:
+                    errors.append('%s: %s' % (key, e))
+            hash_ = store.name(sha(value), lambda x: 'files/shell/%s/%s%s' % (x[0], x, ext))
+            files[key] = [hash_, len(value), store.put('files/shell/%s/%s%s' % (hash_[0], hash_, ext), value)]
+    for part, value in (('strings', strings), ('images', images), ('icons', icons), ('xaml', xaml), ('files', files)):
+        if value:
+            info[part] = value
+    if errors:
+        info['errors'] = errors[:50]
+    return info
+
+# Parts of a .pri file's record that are compared on their own
+PRI_PARTS = ('strings', 'images', 'icons', 'xaml', 'files')
+
+# ---------------------------------------------------------------------------
 # Registry hives (regf)
 # ---------------------------------------------------------------------------
 
@@ -1281,7 +1548,7 @@ def read_registry(config_dir, store):
             log('Registry: no %s\\%s' % (hive_name, key))
             continue
         tree = hive.export(offset, depth)
-        hash_ = digest(tree)
+        hash_ = store.name(digest(tree), lambda x: 'registry/%s/%s.json' % (x[:2], x))
         store.put_json('registry/%s/%s.json' % (hash_[:2], hash_), tree)
         found[label] = hash_
     return found
@@ -1296,7 +1563,7 @@ IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico'}
 # The shell's UI: every file but code (executables go through read_pe like all others)
 SHELL_ROOTS = ('windows\\systemapps\\', 'windows\\shellexperiences\\', 'windows\\immersivecontrolpanel\\', 'windows\\shellcomponents\\',
                'windows\\systemresources\\')
-SHELL_EXTENSIONS = {'.json', '.js', '.mjs', '.html', '.htm', '.css', '.xml', '.xbf', '.xaml', '.pri', '.webm', '.mp4', '.mkv', '.mp3',
+SHELL_EXTENSIONS = {'.json', '.js', '.mjs', '.html', '.htm', '.css', '.xml', '.xbf', '.xaml', '.webm', '.mp4', '.mkv', '.mp3',
                     '.wav', '.txt', '.resjson', '.resw', '.webp'}
 # Folders with machine-specific or generated content (as verify-windows-files.py skips), Store apps, and Edge and Copilot, which
 # update on their own
@@ -1307,7 +1574,7 @@ SKIP_PATHS = ('program files (x86)\\microsoft\\edge', 'program files (x86)\\micr
 
 def classify(rel):
     """What's kept of a file (its path relative to the installation's root, in lower case): 'pe', 'winmd', 'font', 'cursor', 'image',
-    'file:<kind>' for a whole file, or None"""
+    'pri', 'file:<kind>' for a whole file, or None"""
     name = rel.rsplit('\\', 1)[-1]
     ext = os.path.splitext(name)[1]
     if rel.startswith('windows\\fonts\\'):
@@ -1335,6 +1602,8 @@ def classify(rel):
     if rel.startswith('windows\\system32\\tasks\\'):
         return 'file:tasks'
     if rel.startswith(SHELL_ROOTS):
+        if ext == '.pri':
+            return 'pri'
         if ext in IMAGE_EXTENSIONS:
             return 'image'
         return 'file:shell' if ext in SHELL_EXTENSIONS else None
@@ -1347,50 +1616,64 @@ def is_lottie(data):
         return False
     return isinstance(value, dict) and 'layers' in value and 'v' in value and ('fr' in value or 'op' in value)
 
-def read_file(store, data, name, kind, hash_):
-    """Reads one file version, stores what's kept of it, and returns its index entry: what kind of file it is, where its parts are in
-    the assets branch, and the hashes of its parts ('d'), which are what tell two versions apart"""
+def read_file(store, data, name, kind, full):
+    """Reads one file version, whose SHA-256 is full, stores what's kept of it, and returns its key in the index (the first 16 hex
+    digits of full, like the build's list of every file, which is what tells two versions of a file apart) and its index entry: what
+    kind of file it is, the hashes of its parts ('d'), where they are in the assets branch, and the rest of what was read ('info')"""
+    key = full[:16]
     ext = os.path.splitext(name)[1].lower()
+    shell_file = lambda x: 'files/shell/%s/%s%s' % (x[0], x, ext)
     if kind in ('pe', 'winmd'):
         try:
             info = read_pe(store, data, name)
         except NotPe:
-            return {'kind': 'other'}
+            return key, {'kind': 'other'}
         if kind == 'winmd':
             pe = Pe(data)
             if pe.winmd():
                 info.update(read_winmd(pe, name))
         info['size'] = len(data)
-        meta, parts = store_record(store, hash_, info, PE_PARTS)
-        return {'kind': info['kind'], 'meta': meta, 'd': parts}
+        return key, record(store, info, PE_PARTS)
+    if kind == 'pri':
+        try:
+            info = read_pri(store, data, name)
+        except (ValueError, struct.error, IndexError, KeyError) as e:
+            # Not one this script reads: stored whole, as all were until November 2026
+            hash_ = store.name(full, shell_file)
+            return key, {'kind': 'file', 'file': store.put(shell_file(hash_), bytes(data)), 'error': '%s: %s' % (type(e).__name__, e)}
+        info['size'] = len(data)
+        return key, record(store, info, PRI_PARTS)
     if kind == 'font':
+        hash_ = store.name(full, lambda x: 'files/fonts/%s/%s%s' % (x[0], x, ext))
         path = store.put('files/fonts/%s/%s%s' % (hash_[0], hash_, ext), bytes(data))
-        meta, parts = store_record(store, hash_, read_font(data, name), ('codepoints', 'sequences', 'names'))
-        return {'kind': 'font', 'file': path, 'meta': meta, 'd': parts}
+        return key, record(store, read_font(data, name), ('codepoints', 'sequences', 'names'), file=path)
     if kind == 'cursor' or (kind == 'image' and ext == '.ico'):
         if ext == '.ani':
             info = read_ani(store, data, name)
         else:
             icon_kind, frames = read_icon_file(store, data)
             info = {'kind': 'cursor' if icon_kind == 2 else 'ico', 'name': name, 'frames': [frames]}
-        meta, parts = store_record(store, hash_, info, ('frames', 'rates', 'sequence'))
-        return {'kind': info['kind'], 'meta': meta, 'd': parts}
+        return key, record(store, info, ('frames', 'rates', 'sequence'))
     if kind == 'image':
         if ext == '.svg':
-            return {'kind': 'image', 'file': store.put('images/svg/%s/%s.svg' % (hash_[0], hash_), bytes(data))}
+            hash_ = store.name(full, lambda x: 'images/svg/%s/%s.svg' % (x[0], x))
+            return key, {'kind': 'image', 'file': store.put('images/svg/%s/%s.svg' % (hash_[0], hash_), bytes(data))}
         if ext == '.bmp' and data[:2] == b'BM':
             w, h, image_hash = store_bitmap(store, bytes(data[14:]))
-            return {'kind': 'image', 'file': image_path('bitmaps', w, h, image_hash, 'png'), 'size': [w, h]}
+            return key, {'kind': 'image', 'file': image_path('bitmaps', w, h, image_hash, 'png'), 'size': [w, h]}
         found = image_info(bytes(data[:1 << 20]))
         if not found:
-            return {'kind': 'file', 'file': store.put('files/shell/%s/%s%s' % (hash_[0], hash_, ext), bytes(data))}
+            hash_ = store.name(full, shell_file)
+            return key, {'kind': 'file', 'file': store.put(shell_file(hash_), bytes(data))}
         image_ext, w, h = found
-        return {'kind': 'image', 'file': store.put(image_path('images', w, h, hash_, image_ext), bytes(data)), 'size': [w, h]}
+        hash_ = store.name(full, lambda x: image_path('images', w, h, x, image_ext))
+        return key, {'kind': 'image', 'file': store.put(image_path('images', w, h, hash_, image_ext), bytes(data)), 'size': [w, h]}
     category = kind.split(':', 1)[1]
+    hash_ = store.name(full, lambda x: 'files/%s/%s/%s%s' % (category, x[0], x, ext))
     entry = {'kind': 'file', 'file': store.put('files/%s/%s/%s%s' % (category, hash_[0], hash_, ext), bytes(data))}
     if ext == '.json' and is_lottie(data):
         entry['lottie'] = True
-    return entry
+    return key, entry
 
 # What verify-windows-files.py's list of every file leaves out (machine-specific or generated content), when this script makes the list
 LIST_SKIP_DIRS = {'winsxs', 'softwaredistribution', 'logs', 'temp', 'prefetch', 'installer', 'serviceprofiles', 'panther', 'livekernelreports',
@@ -1443,8 +1726,7 @@ def _work(task):
         with open(path, 'rb') as f:
             data = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ) if size else b''
         try:
-            hash_ = h16(data)
-            entry = read_file(_store, data, os.path.basename(path), kind, hash_)
+            hash_, entry = read_file(_store, data, os.path.basename(path), kind, sha(data))
             error = None
         finally:
             if size:

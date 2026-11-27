@@ -99,12 +99,21 @@ function parseFileList(text) {
   return files;
 }
 
-const fileName = (path) => path.slice(path.lastIndexOf('\\') + 1);
+// A file's name; a .pri file's, which most are named alike (resources.pri), with its package's folder (without the publisher ID)
+const fileName = (path) => {
+  const name = path.slice(path.lastIndexOf('\\') + 1);
+  if (!/\.pri$/i.test(name)) return name;
+  const folders = path.split('\\').slice(0, -1);
+  const pris = folders.length > 1 && folders[folders.length - 1].toLowerCase() === 'pris';
+  return `${folders[folders.length - (pris ? 2 : 1)].replace(/_[a-z0-9]{13}$/i, '')}\\${pris ? 'pris\\' : ''}${name}`;
+};
 const fileCell = (r) => `<span title="${esc(r.path)}">${esc(fileName(r.path))}</span>`;
 const changeCell = (r) => `<span class="chg ${r.change}">${r.change}</span>`;
 const CHANGE_ORDER = { added: 0, removed: 1, changed: 2 };
 const changeColumn = { title: 'Change', value: (r) => r.change, sortKey: (r) => CHANGE_ORDER[r.change], html: changeCell };
 const textCell = (s) => (s === null || s === undefined ? '<span class="muted">(none)</span>' : `<span class="res-text">${esc(s)}</span>`);
+// An ID that can be a long path (a .pri file's resource, a XAML page), which may break after / _ and .
+const breakable = (s) => esc(s).replace(/([/_.])/g, '$1<wbr>');
 
 const imageUrl = (kind, w, h, hash, ext) => `${ASSETS}${kind}/${w}x${h}/${hash[0]}/${hash}.${ext || 'png'}`;
 const imgHtml = (src, title, max, light) => `<img class="res-img${light ? ' light' : ''}" loading="lazy" src="${esc(src)}" title="${esc(title)}" alt="" style="max-width:${max}px;max-height:${max}px">`;
@@ -171,6 +180,10 @@ function messageDiff(before, after) {
   for (const [k, v] of Object.entries(removed)) if (!(k in added)) rows.push({ change: 'removed', key: k, old: v, new: null });
   return rows;
 }
+
+// Whether two hashes of a file are of the same content: since November 2026, what scan-resources.py stores is named by 20 hex digits
+// of its SHA-256 instead of 16, except what the assets branch already had (which keeps its name), so one can be the start of the other
+const sameHash = (a, b) => a === b || (!!a && !!b && (a.startsWith(b) || b.startsWith(a)));
 
 function listDiff(before, after) {
   const o = new Set(before || []), n = new Set(after || []);
@@ -288,7 +301,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     if (copyB(k, n.hash)) continue;
     const o = fa.get(k);
     if (!o) changes.push({ path: n.path, change: 'added', old: null, new: ib.entries[n.hash] });
-    else if (o.hash !== n.hash) changes.push({ path: n.path, change: 'changed', old: ia.entries[o.hash], new: ib.entries[n.hash] });
+    else if (!sameHash(o.hash, n.hash)) changes.push({ path: n.path, change: 'changed', old: ia.entries[o.hash], new: ib.entries[n.hash] });
   }
   for (const [k, o] of fa) if (!fb.has(k) && !copyA(k, o.hash)) changes.push({ path: o.path, change: 'removed', old: ia.entries[o.hash], new: null });
   const partOf = (entry, part) => (entry && entry.d && entry.d[part]) || null;
@@ -420,17 +433,18 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     return `Not counted: ${fmt(sameImages.length)} image${sameImages.length === 1 ? '' : 's'} with the same pixels as before, only stored in a file compressed ` +
       `differently (in ${esc(names.slice(0, 5).join(', '))}${names.length > 5 ? ` and ${fmt(names.length - 5)} more files` : ''}).`;
   };
-  await sub('bitmaps', 'Bitmaps and images in executables', imageRows, [changeColumn,
+  await sub('bitmaps', 'Bitmaps and images in executables and .pri files', imageRows, [changeColumn,
     { title: 'File', value: (r) => fileName(r.path), html: fileCell, cls: 'name' },
     { title: 'ID', value: (r) => r.key, cls: 'id' },
     { title: 'Old', value: () => '', html: (r) => resourceImage(r, r.old), cls: 'res-cell' },
     { title: 'New', value: () => '', html: (r) => resourceImage(r, r.new), cls: 'res-cell' }], undefined, sameImagesNote);
 
-  // UI text: string and message tables, dialogs and menus
+  // UI text: string and message tables, dialogs and menus, and the strings of .pri files (by resource name)
   const dialogText = (d) => (d ? [d.title, ...(d.controls || []).map((x) => x[2]).filter((t) => t && !t.startsWith('#'))].filter(Boolean).join(' · ') : null);
   const textRows = Promise.all(changes.filter((c) => ['strings', 'messages', 'dialogs', 'menus'].some((p) => partChanged(c, p))).map(async (c) => {
     const rows = [];
-    for (const [part, kind] of [['strings', 'String'], ['messages', 'Message']]) {
+    const stringKind = (c.new || c.old).kind === 'pri' ? '.pri string' : 'String';
+    for (const [part, kind] of [['strings', stringKind], ['messages', 'Message']]) {
       if (!partChanged(c, part)) continue;
       const [o, n] = await loadBoth(c, part);
       rows.push(...(part === 'messages' ? messageDiff : objectDiff)(o, n).map((r) => ({ ...r, kind, old: r.old, new: r.new })));
@@ -451,9 +465,36 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   await sub('text', 'UI text', textRows, [changeColumn,
     { title: 'File', value: (r) => fileName(r.path), html: fileCell, cls: 'name' },
     { title: 'Kind', value: (r) => r.kind, cls: 'mods' },
-    { title: 'ID', value: (r) => r.key, sortKey: (r) => Number(r.key) || r.key, cls: 'id' },
+    { title: 'ID', value: (r) => r.key, html: (r) => breakable(r.key), sortKey: (r) => Number(r.key) || r.key, cls: 'id wrap' },
     { title: 'Old', value: (r) => r.old, html: (r) => textCell(r.old), cls: 'sgm' },
     { title: 'New', value: (r) => r.new, html: (r) => textCell(r.new), cls: 'sgm' }]);
+
+  // Compiled XAML pages (.xbf) in .pri files, with the strings their string tables gained and lost: the names of their elements,
+  // properties and resources, x:Uid and x:Name values, and literal text. Each is [hash, hash of the XAML it was compiled from (from its
+  // header), strings]. A changed page whose XAML is the same was only compiled again, and is left out.
+  const recompiled = [];
+  const xamlRows = Promise.all(changes.filter((c) => partChanged(c, 'xaml')).map(async (c) => {
+    const [o, n] = await loadBoth(c, 'xaml');
+    return objectDiff(o, n).map((r) => {
+      const before = new Set(r.old ? r.old[2] : []), after = new Set(r.new ? r.new[2] : []);
+      return { ...r, path: c.path, gained: [...after].filter((s) => !before.has(s)), lost: [...before].filter((s) => !after.has(s)) };
+    });
+  })).then((x) => x.flat().filter((r) => {
+    if (r.change === 'changed' && r.old[1] && r.old[1] === r.new[1]) {
+      recompiled.push(r);
+      return false;
+    }
+    return matchesQ(r.path, r.key, ...r.gained, ...r.lost);
+  }));
+  const stringsCell = (r) => [[r.gained, 'added', '+'], [r.lost, 'removed', '−']].filter(([list]) => list.length)
+    .map(([list, cls, sign]) => `<div><span class="res-sign ${cls}">${sign}</span> <span class="res-text">${esc(list.join(' · '))}</span></div>`).join('') ||
+    '<span class="muted">(the same strings)</span>';
+  await sub('xaml', 'XAML pages in .pri files', xamlRows, [changeColumn,
+    { title: 'File', value: (r) => fileName(r.path), html: fileCell, cls: 'name' },
+    { title: 'Page', value: (r) => r.key, html: (r) => breakable(r.key), cls: 'id wrap' },
+    { title: 'Strings gained (+) and lost (−)', value: (r) => [...r.gained, ...r.lost].join('\n'), html: stringsCell, cls: 'sgm' }], undefined,
+  () => (recompiled.length ? `Not counted: ${fmt(recompiled.length)} page${recompiled.length === 1 ? '' : 's'} compiled again from the same XAML ` +
+    '(by the hash of the XAML its header has).' : ''));
 
   // APIs: exported functions, and WinRT types and their members
   const apiRows = Promise.all(changes.filter((c) => partChanged(c, 'exports') || partChanged(c, 'types')).map(async (c) => {
@@ -481,7 +522,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   // Fonts: characters and emoji sequences whose glyph is new, gone or different, drawn with each build's own font file
   const fontFaces = new Map();
   const fontFamily = (entry) => {
-    const hash = entry.meta.split('/').pop().replace('.json', '');
+    const hash = entry.file.split('/').pop().split('.')[0];
     if (!fontFaces.has(hash)) {
       const face = new FontFace('res-' + hash, `url(${ASSETS}${entry.file})`);
       document.fonts.add(face);
@@ -515,7 +556,13 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   };
   const wholeRows = changes.filter((c) => ['image', 'file', 'ico', 'cursor', 'ani'].includes((c.new || c.old || {}).kind))
     .map((c) => ({ ...c, group: fileGroup(c.path) })).filter((r) => matchesQ(r.path, r.group));
-  await sub('files', 'Files', Promise.resolve(wholeRows), [changeColumn,
+  // The files a .pri file holds besides its strings, images and XAML pages (sounds, scripts, web pages), each [hash, size, path]
+  const embeddedRows = Promise.all(changes.filter((c) => partChanged(c, 'files')).map(async (c) => {
+    const [o, n] = await loadBoth(c, 'files');
+    return objectDiff(o, n).map((r) => ({ change: r.change, path: `${c.path} → ${r.key}`, group: 'Files in .pri files',
+      old: r.old && { kind: 'file', file: r.old[2] }, new: r.new && { kind: 'file', file: r.new[2] } }));
+  })).then((x) => x.flat().filter((r) => matchesQ(r.path, r.group)));
+  await sub('files', 'Files', embeddedRows.then((rows) => [...wholeRows, ...rows]), [changeColumn,
     { title: 'Kind', value: (r) => r.group, cls: 'mods' },
     { title: 'Path', value: (r) => r.path, html: (r) => `<span class="res-path">${esc(r.path)}</span>`, cls: 'sgm' },
     { title: 'Old', value: () => '', html: (r) => filePreview(r.old), cls: 'res-cell' },
@@ -545,7 +592,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     for (const [k, f] of lb) if (!la.has(k) && !selfUpdating(k) && !copyB(k, f.hash)) rows.push({ change: 'added', path: f.path, size: f.size });
     for (const [k, f] of la) if (!lb.has(k) && !selfUpdating(k) && !copyA(k, f.hash)) rows.push({ change: 'removed', path: f.path, size: f.size });
     let changed = 0;
-    for (const [k, f] of lb) if (la.has(k) && la.get(k).hash !== f.hash && !selfUpdating(k) && !copyB(k, f.hash)) changed++;
+    for (const [k, f] of lb) if (la.has(k) && !sameHash(la.get(k).hash, f.hash) && !selfUpdating(k) && !copyB(k, f.hash)) changed++;
     const shown = rows.filter((r) => matchesQ(r.path));
     shown.forEach((r, i) => { r.id = i; });
     allSec.querySelector('.count').innerHTML = `<span class="added">${fmt(shown.filter((r) => r.change === 'added').length)} added</span>, ` +
