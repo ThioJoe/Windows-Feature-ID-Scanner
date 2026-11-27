@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Server-Help-Package.ClientEnterprise" version="10.0.28000.1896" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Server-Help-Package.ClientEnterprise_en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Server-Help-Package.ClientEnterprise" version="10.0.28000.1896" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Microsoft Windows Enterprise Help" displayName="Windows Enterprise User Assistance" name="Server-Help-Package_ClientEnterprise-Update">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="Server-Help-Package_ClientEnterprise-Update" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Server-Help-Deployment.ClientEnterprise.CHM-LanguagePack" version="10.0.28000.1896" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

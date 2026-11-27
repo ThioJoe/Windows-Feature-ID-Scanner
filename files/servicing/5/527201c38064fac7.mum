@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Printer-Drivers-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Printer-Drivers" releaseType="Feature Pack">
+    <update name="7223a0f3a80e320d25d8e205d400f0a1" restart="required">
+      <driver inf="prnge001.inf" ranking="normal">
+        <assemblyIdentity name="dual_prnge001.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0f4bf99b2700017941e017b1b3da1312" restart="required">
+      <driver inf="prnms002.inf" ranking="normal">
+        <assemblyIdentity name="dual_prnms002.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

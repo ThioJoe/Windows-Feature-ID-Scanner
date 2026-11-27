@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Connectivity-UsbFunction-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Connectivity-UsbFunction" releaseType="Feature Pack">
+    <update name="c591a1c650cc609fc8e825c0b7da1bcc" restart="required">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <driver inf="genericusbfn.inf" ranking="normal">
+        <assemblyIdentity name="dual_genericusbfn.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="21a5f3ce317437b42705ba71538c3e33" restart="required">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <driver inf="ufxchipidea.inf" ranking="normal">
+        <assemblyIdentity name="dual_ufxchipidea.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="eb09c005fe970df869e7b3274eab3aa2" restart="required">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <driver inf="ufxsynopsys.inf" ranking="normal">
+        <assemblyIdentity name="dual_ufxsynopsys.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="916a2e89f016ac15f95a6b17b3b3bf10">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Connectivity-UsbFunction-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

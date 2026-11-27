@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TFTP-Client-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-TFTP-Client-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-TFTP-Client-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="TFTP" displayName="TFTP Client" description="Transfer files using the Trivial File Transfer Protocol">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Trivial File Transfer Protocol (TFTP) Client is used to read files from, or write files to, a remote TFTP server. TFTP is primarily used by embedded devices or systems that retrieve firmware, configuration information, or a system image during the boot process from a TFTP server." DisplayName="TFTP Client" Id="58" Type="Feature" UniqueName="TFTP-Client">
+          <Deploys>
+            <Update Name="TFTP" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Connectivity-UsbHost-Package" version="10.0.28000.1575" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Connectivity-UsbHost" releaseType="Feature Pack">
+    <update name="2e2c4a1858d5ce68064b4d6bea4f9c28" restart="required">
+      <driver inf="mausbhost.inf" ranking="normal">
+        <assemblyIdentity name="dual_mausbhost.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="81ab2cc890007eecbafaf02adb11b9bf" restart="required">
+      <driver inf="usb-platformdetection.inf" ranking="normal">
+        <assemblyIdentity name="dual_usb-platformdetection.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="134b7544be1d0ffc451a6b050af7fc1d" restart="required">
+      <driver inf="usb.inf" ranking="normal">
+        <assemblyIdentity name="dual_usb.inf" version="10.0.28000.1251" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="93f7b205ec4f1d7c1ee12354054acacc" restart="required">
+      <driver inf="usb4devicerouter.inf" ranking="normal">
+        <assemblyIdentity name="dual_usb4devicerouter.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6b210ecdbd0895e2c63521281e5d4789" restart="required">
+      <driver inf="usb4hostrouter.inf" ranking="normal">
+        <assemblyIdentity name="dual_usb4hostrouter.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="782f71753c4d774d6af86f5b57b88c72" restart="required">
+      <driver inf="usb4p2pnetadapter.inf" ranking="normal">
+        <assemblyIdentity name="dual_usb4p2pnetadapter.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="84f053253c2c0847e78cc43897fbdeb8" restart="required">
+      <driver inf="usbhub3.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbhub3.inf" version="10.0.28000.1575" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="984f10dfc45f5aa31c467c1ee0c5e8e8" restart="required">
+      <driver inf="usbport.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbport.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="ecf7e5ffc68dd5297d91b9d73d30be32" restart="required">
+      <driver inf="usbstor.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbstor.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="b12997088628f79779e41d14ee220958" restart="required">
+      <driver inf="usbxhci.inf" ranking="normal">
+        <assemblyIdentity name="dual_usbxhci.inf" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="47caf2bdda43bd20c98a32307a85f20b" restart="required">
+      <driver inf="winusb.inf" ranking="normal">
+        <assemblyIdentity name="dual_winusb.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="0bca7954890e2d775efbd1bd5e20bdcf">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Connectivity-UsbHost-Deployment" version="10.0.28000.1516" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

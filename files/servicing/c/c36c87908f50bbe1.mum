@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-HyperV-OptionalFeature-VirtualMachinePlatform-Client-Package" version="10.0.28000.2804" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-HyperV-OptionalFeature-VirtualMachinePlatform-Client-en-US" releaseType="Language Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-HyperV-OptionalFeature-VirtualMachinePlatform-Client-Package" version="10.0.28000.2804" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="4d0563544631105b3c751aa67c0b0cd0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Feature-VirtualMachinePlatform-Client-Package" version="10.0.28000.2804" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="45821143de411d6d1a7e90d9fbd73802">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Hyper-V-Hypervisor-Package" version="10.0.28000.2804" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

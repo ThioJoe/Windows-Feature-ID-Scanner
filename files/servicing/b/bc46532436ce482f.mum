@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-Graphics-BasicDrivers-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-Graphics-BasicDrivers" releaseType="Feature Pack">
+    <update name="aef17c134f45b87765ccf7409e559d23" restart="required">
+      <driver inf="basicdisplay.inf" ranking="normal">
+        <assemblyIdentity name="dual_basicdisplay.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="95638787418eee807565c432320a35a8" restart="required">
+      <driver inf="basicrender.inf" ranking="normal">
+        <assemblyIdentity name="dual_basicrender.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="75efd4f43f43822798beb8e59c183c6d" restart="required">
+      <driver inf="display.inf" ranking="normal">
+        <assemblyIdentity name="dual_display.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

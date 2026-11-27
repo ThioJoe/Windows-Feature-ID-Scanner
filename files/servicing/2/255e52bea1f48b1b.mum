@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Undocked-Hypervisor-hvservice.inf-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Undocked-Hypervisor-hvservice.inf" releaseType="Feature Pack">
+    <update name="37ff7e3eeaf19b48c74a4e59e9ae8496" restart="required">
+      <driver inf="hvservice.inf" ranking="normal">
+        <assemblyIdentity name="dual_hvservice.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="040054970d5b5aa9fad3a4611455f3b7">
+      <component>
+        <assemblyIdentity name="Undocked-Hypervisor-hvservice.inf-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

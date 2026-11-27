@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10" xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:uap17="http://schemas.microsoft.com/appx/manifest/uap/windows10/17" xmlns:virtualization="http://schemas.microsoft.com/appx/manifest/virtualization/windows10" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities" xmlns:trustedlaunch="http://schemas.microsoft.com/appx/manifest/trustedlaunch/windows10" IgnorableNamespaces="com mp rescap uap uap3 uap4 uap6 uap10 virtualization wincap">
+    <Identity Name="MicrosoftWindows.Client.CoreAI" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1000.28000.1575.0" ProcessorArchitecture="x64" />
+    <mp:PhoneIdentity PhoneProductId="3898fac3-1f84-4040-83ce-ef30739c0a64" PhonePublisherId="6145b212-a274-4517-8abe-1e015f21ff03" />
+    <Properties>
+        <DisplayName>ms-resource:AIXHost/ClickToDo/AppDisplayName</DisplayName>
+        <PublisherDisplayName>Microsoft Windows</PublisherDisplayName>
+        <Logo>AIXHost\Assets\ClickToDo\AppList.png</Logo>
+        <desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
+        <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
+        <trustedlaunch:TrustedLaunch>true</trustedlaunch:TrustedLaunch>
+    </Properties>
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.21340.0" MaxVersionTested="10.0.32767.0" />
+        <PackageDependency Name="Microsoft.WindowsAppRuntime.CBS.1.6" MinVersion="1.0.0.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+    </Dependencies>
+    <Resources>
+        <Resource Language="en-US" />
+        <Resource Language="af-ZA" />
+        <Resource Language="am-ET" />
+        <Resource Language="ar-SA" />
+        <Resource Language="as-IN" />
+        <Resource Language="az-Latn-AZ" />
+        <Resource Language="be-BY" />
+        <Resource Language="bg-BG" />
+        <Resource Language="bn-BD" />
+        <Resource Language="bn-IN" />
+        <Resource Language="bs-Latn-BA" />
+        <Resource Language="ca-ES" />
+        <Resource Language="ca-Es-VALENCIA" />
+        <Resource Language="chr-Cher-US" />
+        <Resource Language="cs-CZ" />
+        <Resource Language="cy-GB" />
+        <Resource Language="da-DK" />
+        <Resource Language="de-DE" />
+        <Resource Language="el-GR" />
+        <Resource Language="en-GB" />
+        <Resource Language="es-ES" />
+        <Resource Language="es-MX" />
+        <Resource Language="et-EE" />
+        <Resource Language="eu-ES" />
+        <Resource Language="fa-IR" />
+        <Resource Language="fi-FI" />
+        <Resource Language="fil-PH" />
+        <Resource Language="fr-CA" />
+        <Resource Language="fr-FR" />
+        <Resource Language="ga-IE" />
+        <Resource Language="gd-gb" />
+        <Resource Language="gl-ES" />
+        <Resource Language="gu-IN" />
+        <Resource Language="ha-Latn-NG" />
+        <Resource Language="he-IL" />
+        <Resource Language="hi-IN" />
+        <Resource Language="hr-HR" />
+        <Resource Language="hu-HU" />
+        <Resource Language="hy-AM" />
+        <Resource Language="id-ID" />
+        <Resource Language="ig-NG" />
+        <Resource Language="is-IS" />
+        <Resource Language="it-IT" />
+        <Resource Language="ja-JP" />
+        <Resource Language="ka-GE" />
+        <Resource Language="kk-KZ" />
+        <Resource Language="km-KH" />
+        <Resource Language="kn-IN" />
+        <Resource Language="ko-KR" />
+        <Resource Language="kok-IN" />
+        <Resource Language="ku-Arab-IQ" />
+        <Resource Language="ky-KG" />
+        <Resource Language="lb-LU" />
+        <Resource Language="lo-LA" />
+        <Resource Language="lt-LT" />
+        <Resource Language="lv-LV" />
+        <Resource Language="mi-NZ" />
+        <Resource Language="mk-MK" />
+        <Resource Language="ml-IN" />
+        <Resource Language="mn-MN" />
+        <Resource Language="mr-IN" />
+        <Resource Language="ms-MY" />
+        <Resource Language="mt-MT" />
+        <Resource Language="nb-NO" />
+        <Resource Language="ne-NP" />
+        <Resource Language="nl-NL" />
+        <Resource Language="nn-NO" />
+        <Resource Language="nso-ZA" />
+        <Resource Language="or-IN" />
+        <Resource Language="pa-Arab-PK" />
+        <Resource Language="pa-IN" />
+        <Resource Language="pl-PL" />
+        <Resource Language="prs-AF" />
+        <Resource Language="pt-BR" />
+        <Resource Language="pt-PT" />
+        <Resource Language="quc-Latn-gt" />
+        <Resource Language="quz-PE" />
+        <Resource Language="ro-RO" />
+        <Resource Language="ru-RU" />
+        <Resource Language="rw-RW" />
+        <Resource Language="sd-Arab-PK" />
+        <Resource Language="si-LK" />
+        <Resource Language="sk-SK" />
+        <Resource Language="sl-SI" />
+        <Resource Language="sq-AL" />
+        <Resource Language="sr-Cyrl-BA" />
+        <Resource Language="sr-Cyrl-RS" />
+        <Resource Language="sr-Latn-RS" />
+        <Resource Language="sv-SE" />
+        <Resource Language="sw-KE" />
+        <Resource Language="ta-IN" />
+        <Resource Language="te-IN" />
+        <Resource Language="tg-Cyrl-TJ" />
+        <Resource Language="th-TH" />
+        <Resource Language="ti-ET" />
+        <Resource Language="tk-TM" />
+        <Resource Language="tn-ZA" />
+        <Resource Language="tr-TR" />
+        <Resource Language="tt-RU" />
+        <Resource Language="ug-CN" />
+        <Resource Language="uk-UA" />
+        <Resource Language="ur-PK" />
+        <Resource Language="uz-Latn-UZ" />
+        <Resource Language="vi-VN" />
+        <Resource Language="wo-SN" />
+        <Resource Language="xh-ZA" />
+        <Resource Language="yo-NG" />
+        <Resource Language="zh-CN" />
+        <Resource Language="zh-TW" />
+        <Resource Language="zu-ZA" />
+    </Resources>
+    <Applications>
+        <Application Id="PackageMetadata" StartPage="https://www.microsoft.com">
+            <uap:VisualElements DisplayName="DesktopPackageMetadata" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="PackageMetadata" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.telemetryid" Id="Id" PublicFolder="public" DisplayName="Id">
+                        <uap3:Properties>
+                            <TelemetryID>03E86D6006270000</TelemetryID>
+                            <IsInboxPackage>1</IsInboxPackage>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="Default" PublicFolder="Public" DisplayName="Extension Package" />
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="aicontext" Executable="aicontext.exe" EntryPoint="$targetentrypoint$">
+      <uap:VisualElements DisplayName="aicontext" Description="aicontext" BackgroundColor="transparent" Square150x150Logo="Images\CoreAISquare150x150Logo.png" Square44x44Logo="Images\CoreAISquare44x44Logo.png" AppListEntry="none">
+        <uap:DefaultTile Wide310x150Logo="Images\CoreAIWide310x150Logo.png" />
+        <uap:SplashScreen Image="Images\CoreAISplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="AIContext" DisplayName="Extension Metadata" PublicFolder="Public" />
+        </uap3:Extension>
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="aicontext.exe" DisplayName="AIContextComServer">
+              <com:Class Id="FF16F214-5AC0-4EE7-9365-6D960255EC4D" DisplayName="AIContext" />
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+      </Extensions>
+    </Application>
+        <Application Id="ClickToDoApp" Executable="ClickToDo.exe" EntryPoint="Windows.FullTrustApplication">
+            <uap:VisualElements DisplayName="ms-resource:AIXHost/ClickToDo/AppDisplayName" Description="ms-resource:AIXHost/ClickToDo/AppDescription" Square150x150Logo="AIXHost\Assets\ClickToDo\MedTile.png" Square44x44Logo="AIXHost\Assets\ClickToDo\AppList.png" BackgroundColor="transparent">
+                <uap:DefaultTile Wide310x150Logo="AIXHost\Assets\ClickToDo\WideTile.png" Square310x310Logo="AIXHost\Assets\ClickToDo\LargeTile.png" Square71x71Logo="AIXHost\Assets\ClickToDo\SmallTile.png" />
+            </uap:VisualElements>
+            <Extensions>
+                <uap:Extension Category="windows.protocol">
+                    <uap:Protocol Name="ms-clicktodo">
+                        <uap:DisplayName>ms-resource:AIXHost/ClickToDo/AppDisplayName</uap:DisplayName>
+                    </uap:Protocol>
+                </uap:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="AIX" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>AIXAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.aix" Id="AIX" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>AIXHost.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>AIXHost.AIXResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extension.shelluihost" Id="ClickToDo" PublicFolder="Public" DisplayName="ClickToDo">
+                        <uap3:Properties>
+                            <LaunchPolicy>1</LaunchPolicy>
+                            <LogonPolicy>1</LogonPolicy>
+                            <LaunchTimeoutPolicy>1</LaunchTimeoutPolicy>
+                            <RelaunchPolicy>2</RelaunchPolicy>
+                            <FailedRelaunchAttemptsCap>3</FailedRelaunchAttemptsCap>
+                            <FailedRelaunchAttemptsCapCooldown>300000</FailedRelaunchAttemptsCapCooldown>
+                            <VelocityFeatureId>56085006</VelocityFeatureId>
+                            <EnterpriseFeatureId>56114500</EnterpriseFeatureId>
+                            <MdmPolicyArea>WindowsAI</MdmPolicyArea>
+                            <MdmPolicyName>DisableClickToDo</MdmPolicyName>
+                            <MdmPolicyEnabledBehavior>0</MdmPolicyEnabledBehavior>
+                            <RegionalPolicyGUID>d8aece8b-21e4-43ed-96ef-fba681cbb5c8</RegionalPolicyGUID>
+                            <RegionalPolicyGuidEnabledBehavior>1</RegionalPolicyGuidEnabledBehavior>
+                            <UserPolicyRegKey>Software\Microsoft\Windows\Shell\ClickToDo</UserPolicyRegKey>
+                            <UserPolicyRegValue>DisableClickToDo</UserPolicyRegValue>
+                            <UserPolicyEnabledBehavior>0</UserPolicyEnabledBehavior>
+                            <HardwareRequirement>0</HardwareRequirement>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.aix.existencecheck" Id="ExistenceCheck" PublicFolder="Public" DisplayName="ExistenceCheck">
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.ModelManagementUX" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.ModelManagementUX" Description="Global.ModelManagementUX" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="ModelManagementUX" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>ModelManagementUXAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.aix" Id="ModelManagementUX" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <AIX.ModelManagementUXManagerExtension>ModelManagementUX.ModelManagementUXManager</AIX.ModelManagementUXManagerExtension>
+                            </Classes>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.DiscoveryOverlay" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.DiscoveryOverlay" Description="Global.DiscoveryOverlay" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="DiscoveryOverlay" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>DiscoveryOverlayAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.aix" Id="DiscoveryOverlay" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <AIX.DiscoveryOverlayControllerExtension>DiscoveryOverlay.DiscoveryOverlayController</AIX.DiscoveryOverlayControllerExtension>
+                                <AIX.DiscoveryOverlayViewManagerExtension>DiscoveryOverlay.DiscoveryOverlayViewManager</AIX.DiscoveryOverlayViewManagerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>DiscoveryOverlay.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>DiscoveryOverlay.DiscoveryOverlayResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.assetreference" Id="DiscoveryOverlay" DisplayName="DiscoveryOverlay">
+                        <uap3:Properties>
+                            <AssetPath>DiscoveryOverlay</AssetPath>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.discoveryoverlay.existencecheck" Id="ExistenceCheck" PublicFolder="Public" DisplayName="ExistenceCheck">
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+        <Application Id="Global.Feedback" StartPage="http://microsoft.com">
+            <uap:VisualElements DisplayName="Global.Feedback" Description="Global.Feedback" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none" />
+            <Extensions>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensionpackage" Id="Feedback" DisplayName="Extension Metadata">
+                        <uap3:Properties>
+                            <PackageAliases>
+                                <PackageAlias>FeedbackAlias</PackageAlias>
+                            </PackageAliases>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.extensions.xaml.aix" Id="Feedback" DisplayName="Microsoft Windows Extensions">
+                        <uap3:Properties>
+                            <Classes>
+                                <AIX.FeedbackControllerExtension>Feedback.FeedbackController</AIX.FeedbackControllerExtension>
+                            </Classes>
+                            <MetadataProviders>
+                                <Provider>Feedback.XamlMetaDataProvider</Provider>
+                            </MetadataProviders>
+                            <ResourceDictionaries>
+                                <ResourceDictionary>Feedback.FeedbackResources</ResourceDictionary>
+                            </ResourceDictionaries>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+    </Applications>
+    <Capabilities>
+        <wincap:Capability Name="shellExperience" />
+        <wincap:Capability Name="packageContents" />
+        <Capability Name="internetClient" />
+        <wincap:Capability Name="dependencyTarget" />
+        <rescap:Capability Name="unvirtualizedResources" />
+        <rescap:Capability Name="runFullTrust" />
+        <rescap:Capability Name="packageManagement" />
+        <wincap:Capability Name="packageQuery" />
+        <uap4:CustomCapability Name="Microsoft.coreAppActivation_8wekyb3d8bbwe" />
+    </Capabilities>
+    <Extensions>
+        <Extension Category="windows.activatableClass.inProcessServer">
+          <InProcessServer>
+              <Path>AIContextService.dll</Path>
+              <ActivatableClass ActivatableClassId="WindowsInternal.AI.Context.ScreenContextSession" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="WindowsInternal.AI.Context.ScreenContextSessionConfiguration" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="WindowsInternal.AI.Context.ScreenContextAnalyzer" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="WindowsInternal.AI.Context.ScreenContextDataset" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="WindowsInternal.AI.Context.ScreenContextDatasetEntry" ThreadingModel="both" />
+          </InProcessServer>
+      </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+        <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="AIContext" DisplayName="Extension Package" />
+      </uap17:Extension>
+        <com:Extension Category="windows.comInterface">
+            <com:ComInterface>
+                <com:ProxyStub Id="7503E463-7485-4C1C-A923-2F5BE59FBF06" DisplayName="AIContext ProxyStub" Path="AIContextProxyStub.dll" />
+                <com:Interface Id="8e217fb0-835b-5786-9895-be834e495561" ProxyStubClsid="7503E463-7485-4C1C-A923-2F5BE59FBF06" />
+                <com:Interface Id="a84df483-167e-4e6a-9aa5-1c28ae08cab2" ProxyStubClsid="7503E463-7485-4C1C-A923-2F5BE59FBF06" />
+            </com:ComInterface>
+        </com:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>CoreAI.Client.dll</Path>
+                <ActivatableClass ActivatableClassId="Microsoft.Windows.AI.Platform.Core.SupportedFeatures" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>AIXView.dll</Path>
+                <ActivatableClass ActivatableClassId="AIX.EntitySelectionShowOptions" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIX.ForegroundWindowWatcher" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIX.SystemSettingsManager" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIX.FirstRunExperienceManager" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIX.IslandWindow" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIX.UIThreadServices" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIXHost.AIXResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="AIXHost.XamlMetaDataProvider" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="AIX" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>AIXAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>AIXView.dll</Path>
+                <ActivatableClass ActivatableClassId="ModelManagementUX.ModelManagementUXManager" ThreadingModel="both" />
+             </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="ModelManagementUX" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>ModelManagementUXAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>DiscoveryOverlay.dll</Path>
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.XamlMetaDataProvider" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.DiscoveryOverlayResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.ResourceHelpers" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.DiscoveryOverlayModel" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.DiscoveryOverlayController" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.DiscoveryOverlayViewManager" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.ContextEngineDataModel" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.ContextOverlayControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.ContentGroupControl" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="DiscoveryOverlay.ContentItemControl" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="DiscoveryOverlay" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>DiscoveryOverlayAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>Feedback.dll</Path>
+                <ActivatableClass ActivatableClassId="Feedback.XamlMetaDataProvider" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="Feedback.FeedbackResources" ThreadingModel="both" />
+                <ActivatableClass ActivatableClassId="Feedback.FeedbackController" ThreadingModel="both" />
+            </InProcessServer>
+        </Extension>
+        <uap17:Extension Category="windows.packageExtension">
+            <uap17:PackageExtension Name="com.microsoft.windows.extensionpackage" Id="Feedback" DisplayName="Extension Package">
+                <uap17:Properties>
+                    <PackageAliases>
+                        <PackageAlias>FeedbackAlias</PackageAlias>
+                    </PackageAliases>
+                </uap17:Properties>
+            </uap17:PackageExtension>
+        </uap17:Extension>
+    </Extensions>
+</Package>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" 
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="mp">
+
+  <Identity Name="Microsoft.AccountsControl" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.28000.1" ProcessorArchitecture="neutral"/>
+  <mp:PhoneIdentity PhoneProductId="39CF127B-8C67-C149-539A-C02271D07060" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde" />
+
+  <Properties>
+    <DisplayName>ms-resource:DisplayName</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.28000.1" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application Id="App" Executable="AccountsControlHost.exe" EntryPoint="AccountsControlHost.App">
+      <uap:VisualElements
+        DisplayName="ms-resource:DisplayName"
+        Description="ms-resource:Description"
+        Square150x150Logo="Assets\Logo.png"
+        Square44x44Logo="Assets\SmallLogo.png"
+        BackgroundColor="#464646"
+        AppListEntry="none">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <!-- #AppHosting: This is where each experience is registered -->
+        <Path>AccountsControlUI.dll</Path>
+        <ActivatableClass ActivatableClassId="AccountsControlUI.accountscontrolui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+        <!-- #AppHosting: The Application object must be listed here, so that its activation factory can be found -->
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Common.AccountsControlFrame" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Common.AccountsControlFrameBase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Common.MCCSUIFrame" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Common.Utilities" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AccountsDataModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.AccountsViewModel" ThreadingModel="both" />
+        <!-- #AppHosting: Each navigatable page must be listed here, as navigation is global -->
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.SavedAccountsView_FixHassles" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.BubbleHeadView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.ChooseAccountView_FixHassles" ThreadingModel="both" />
+        <!-- #AppHosting: MailContactsCalendarSyncUI classes -->
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AccountModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AccountPropertiesBase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.ActiveSyncAccountModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.ActiveSyncAccountProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.ActiveSyncSyncFrequency" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AutoDiscoveryFailureEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AutoDiscoveryProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AutoDiscoveryRequest" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AutoDiscoveryRequestManager" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.AutoDiscoverySuccessEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.CreateAccountCompletedEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.DomainAutoDiscoveryProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.EmailHistoryAge" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.FailedRequestEventArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.GoogleOAuthModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.InternetMailAccountModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.InternetMailAccountProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.InternetMailEmailHistoryAge" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.InternetMailSyncFrequency" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.SyncFrequency" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.UpnAutoDiscoveryProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Models.YahooOAuthModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.AADViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.AccountSettingsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ActiveSyncAdvancedSignInViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ActiveSyncSyncSettingsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.AllDoneViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.DelayedTextHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.DelegateCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.DeleteAccountViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.EmailPasswordSignInViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ExchangeAuthTypeDiscoveryViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.FixPasswordViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.GenericErrorViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.GoogleOAuthViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ImportAccountsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ImportedAccountDisplayProperties" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.InternetEmailAdvancedSignInViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.InternetMailSyncSettingsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.InvalidServerCertViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.MainPageViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.MSAViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.SelectAccountTypeViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.SyncSettingsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.SyncSettingsViewModelFactory" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.UsernameDomainSignInViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.ViewModelBase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.YahooOAuthViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.ViewModels.YourEmailDisplayNameViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.AADPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.AccountIdentifierUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.AccountSettingsPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.ActiveSyncAdvancedSignInPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.ActiveSyncSyncSettingsUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.AllDonePage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.BooleanToFontWeightConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.BooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.DeleteAccountPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.DescriptiveProgressBar" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.EmailPasswordSignInPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.ExchangeAuthTypeDiscoveryPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.FixPasswordPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.GenericErrorPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.GoogleOAuthPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.ImportAccountsPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.InternetEmailAdvancedSignInPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.InternetMailSyncSettingsUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.InvalidServerCertPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.InvertBooleanConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.InvertBooleanToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.MainPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.MSAPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.OutgoingServerAuthOptionsUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.PageBase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.SelectAccountTypePage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.SyncContentOptionsUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.SyncFrequencyUserControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.SyncSettingsPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.TextButtonToAutomationNameConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.UsernameDomainSignInPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.YahooOAuthPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="AccountsControlUI.Views.YourEmailDisplayNamePage" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="userDataAccountSetup" />
+    <rescap:Capability Name="userWebAccounts" />
+    <uap:Capability Name="contacts"/>
+    <uap:Capability Name="sharedUserCertificates" />
+    <uap:Capability Name="userAccountInformation" />
+  </Capabilities>
+
+</Package>

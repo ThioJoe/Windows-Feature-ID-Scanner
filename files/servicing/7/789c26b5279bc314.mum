@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TerminalServices-AppServer-Client-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-TerminalServices-AppServer-Client" releaseType="Feature Pack" restart="required">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Server-Gui-Mgmt-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Server-Shell-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-ServerCore-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-TerminalServices-Role-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="AppServerClient" displayName="Remote Desktop Services Application Server" description="Add or remove Remote Desktop Services Application Server">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <ServerComponent Description="Remote Desktop Session Host (RD Session Host) enables a server to host RemoteApp programs or session-based desktops. Users can connect to RD Session Host servers in a session collection to run programs, save files, and use resources on those servers. Users can access an RD Session Host server by using the Remote Desktop Connection client or by using RemoteApp programs." DisplayName="Remote Desktop Session Host" Id="130" Type="Feature" UniqueName="RDS-RD-Server">
+          <Deploys>
+            <Update Name="AppServerClient" />
+          </Deploys>
+          <SystemServices>
+            <SystemService DefaultMonitoring="true" Name="TermService" />
+          </SystemServices>
+        </ServerComponent>
+      </mum2:customInformation>
+      <selectable disposition="staged" absentIfCapabilityAbsent="true">
+        <detectNone default="false" />
+      </selectable>
+      <capability>
+        <capabilityIdentity name="Windows.TerminalServices.AppServerClient" />
+      </capability>
+    </update>
+  </package>
+</assembly>

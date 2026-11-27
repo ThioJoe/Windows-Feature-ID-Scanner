@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Vpci-VirtualDevice-FlexIo-Package" version="10.0.28000.2269" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Vpci-VirtualDevice-FlexIo-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <parent disposition="detect">
+      <assemblyIdentity name="HyperV-Vpci-VirtualDevice-FlexIo-Package" version="10.0.28000.2269" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="becfeb5f171cbb46c86efe9b7c9f762b">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Vpci-VirtualDevice-FlexIo-merged-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="53d4e062057b0c241d2f81471246c213">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-Vpci-VSP-Package" version="10.0.28000.2269" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

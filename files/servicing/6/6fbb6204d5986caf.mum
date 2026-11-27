@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Fix for ServicingStack 10.0.28000.3614" displayName="Servicing Stack 10.0.28000.3614" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="" creationTimeStamp="2026-11-12T16:52:06Z" lastUpdateTimeStamp="2026-11-12T16:52:06Z">
+  <assemblyIdentity name="Wrapper-0C1B76D789A66B82BECD788E700A0B1EE76B4814F518AD5DE7E322D8B583A785" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5132508" releaseType="Update" restart="possible" selfUpdate="true" permanence="permanent">
+    <parent buildCompare="EQ" integrate="standalone" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-ProfessionalEdition" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="Shared-1C8F7DDEB49AE6B457E9BEC599AC98928E3BF258EB78C9EB62E3405166D2A69B_amd64">
+      <package integrate="hidden">
+        <assemblyIdentity name="Shared-1C8F7DDEB49AE6B457E9BEC599AC98928E3BF258EB78C9EB62E3405166D2A69B" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-Storage-VSP-merged-Package" version="10.0.28000.1340" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-Storage-VSP-merged" releaseType="Feature Pack">
+    <update name="60337c6116bffe17332fdbe78f28bc61" restart="required">
+      <driver inf="wstorvsp.inf" ranking="normal">
+        <assemblyIdentity name="dual_wstorvsp.inf" version="10.0.28000.1340" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="dd0dbe2a605271e46f86eff319c72757">
+      <component>
+        <assemblyIdentity name="HyperV-Storage-VSP-merged-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

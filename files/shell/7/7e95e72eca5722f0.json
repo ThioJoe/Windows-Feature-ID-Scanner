@@ -1,0 +1,123 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "Image",
+          "url": "${image}",
+          "size": "Stretch",
+          "altText": "Feature image"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "spacing": "small",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "${Title}",
+                  "weight": "Bolder",
+                  "size": "medium",
+                  "wrap": true,
+                  "maxLines": 2,
+                  "spacing": "default",
+                  "separator": false,
+                  "horizontalAlignment": "left"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "${SubTitle}",
+                  "isSubtle": true,
+                  "size": "default",
+                  "wrap": true,
+                  "spacing": "none",
+                  "maxLines": 4,
+                  "horizontalAlignment": "left"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "large"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "$when": "${ButtonContent != ''}",
+          "type": "ColumnSet",
+          "spacing": "none",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch"
+            },
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "spacing": "none",
+                  "actions": [
+                    {
+                      "type": "Action.Execute",
+                      "title": "${ButtonContent}",
+                      "verb": "url-clicked"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch"
+            }
+          ]
+        },
+        {
+          "$when": "${SecondaryLinkContent != ''}",
+          "type": "Container",
+          "spacing": "${ButtonContent == '' ? 'extraLarge' : 'default'}",
+          "items": [
+            {
+              "type": "RichTextBlock",
+              "horizontalAlignment": "center",
+              "inlines": [
+                {
+                  "type": "TextRun",
+                  "text": "${SecondaryLinkContent}",
+                  "color": "Accent",
+                  "underline": true,
+                  "selectAction": {
+                    "type": "Action.Execute",
+                    "url": "${SecondaryLinkUrl}",
+                    "verb": "secondary-url-clicked"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "verticalContentAlignment": "center",
+      "height": "stretch"
+    }
+  ]
+}

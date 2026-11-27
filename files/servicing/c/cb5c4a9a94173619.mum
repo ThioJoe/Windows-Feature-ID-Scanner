@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="Windows PowerShell Integrated Scripting Environment (ISE) is a graphical editor for PowerShell scripts with syntax-coloring, tab completion, and visual debugging." displayName="Windows PowerShell ISE" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="Microsoft-Windows-PowerShell-ISE-FOD-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="435" />
+      <mum2:OptionalFeatures SchemaVersion="1.0">
+        <mum2:SettingsPageOptions Visibility="all" FeatureType="default" />
+      </mum2:OptionalFeatures>
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Server-Features-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="de-DE" displayName="Windows PowerShell ISE" description="Windows PowerShell Integrated Scripting Environment (ISE) ist ein grafischer Editor für PowerShell-Skripts mit Syntaxfarben, Vervollständigung mit der TAB-TASTE und visuellem Debuggen." />
+      <string language="en-US" displayName="Windows PowerShell ISE" description="Windows PowerShell Integrated Scripting Environment (ISE) is a graphical editor for PowerShell scripts with syntax-coloring, tab completion, and visual debugging." />
+      <string language="es-ES" displayName="Windows PowerShell ISE" description="El entorno de scripting integrado (ISE) de Windows PowerShell es un editor gráfico para scripts de PowerShell con colores para la sintaxis, finalización de pestañas y depuración visual." />
+      <string language="fr-FR" displayName="Windows PowerShell ISE" description="L'Environnement d'écriture de scripts intégré de Windows PowerShell (ISE) est un éditeur graphique pour les scripts PowerShell avec coloration syntaxique, saisie semi-automatique via la touche Tab et débogage visuel." />
+      <string language="it-IT" displayName="Windows PowerShell ISE" description="Windows PowerShell Integrated Scripting Environment (ISE) è un editor grafico per gli script di PowerShell con colori per la sintassi, completamento scheda e debug visivo." />
+      <string language="ja-JP" displayName="Windows PowerShell ISE" description="Windows PowerShell Integrated Scripting Environment (ISE) は、構文の色分け、タブ補完、ビジュアル デバッグの機能を備えた PowerShell スクリプト用のグラフィカル エディターです。" />
+      <string language="ko-KR" displayName="Windows PowerShell ISE" description="Windows PowerShell 통합 스크립팅 환경(ISE)는 구문 색 지정, 탭 완성 및 시각적 기능이 있는 PowerShell 스크립트용 그래픽 편집기입니다." />
+      <string language="qps-plocm" displayName="[Windows PowerShell ISE !!! !!! !!]" description="[Windows PowerShell Integrated Scripting Environment (ISE) is a graphical editor for PowerShell scripts with syntax-coloring, tab completion, and visual debugging. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!]" />
+      <string language="qps-ploc" displayName="[kpNlj][Щîиðθщś ΡôώęřЅħεŀľ ІŜΕ !!! !!]" description="[lxqlz][Ẃιņďöẅŝ Ρöẃ℮ѓŠћзľŀ Ίňţëĝřаŧёð Ѕċяϊρтĭŉģ Έńνΐřσŋmęŋţ (ІŞË) ìѕ à ĝřǻρћїċǻŀ єδΐŧόя ƒóř Рǿẃ℮ѓŜђęŀŀ ŝćяīφťѕ ŵíŧћ ѕŷⁿτаж-ĉòĺόřīⁿĝ, тãв сōmρļзťĩōή, аиð νіѕûáľ ďêьüġğĭŋğ. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]" />
+      <string language="pt-BR" displayName="Windows PowerShell ISE" description="O ISE (Ambiente de Script Integrado do Windows PowerShell) é um editor gráfico de scripts do PowerShell com coloração de sintaxe, preenchimento com tab e depuração visual." />
+      <string language="ru-RU" displayName="Интегрированная среда сценариев Windows PowerShell" description="Интегрированная среда сценариев (ISE) Windows PowerShell представляет собой графический редактор для сценариев PowerShell, в котором поддерживается раскраска синтаксических конструкций, заполнение нажатием клавиши TAB и визуальная отладка." />
+      <string language="zh-CN" displayName="Windows PowerShell ISE" description="Windows PowerShell 集成脚本环境(ISE)是一款适用于 PowerShell 脚本的图形编辑器，具有语法着色、Tab 自动补全和可视化调试功能。" />
+      <string language="zh-TW" displayName="Windows PowerShell ISE" description="Windows PowerShell 整合式指令碼環境 (ISE) 是 PowerShell 指令碼的圖形化編輯器，具有語法著色、索引標籤完成和視覺偵錯。" />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="Microsoft.Windows.PowerShell.ISE" version="1.0" />
+      </capability>
+      <satelliteInfo>
+        <require type="arch" value="wow64" />
+        <require type="language" value="*" />
+      </satelliteInfo>
+    </declareCapability>
+    <update name="4645dd662df9337a458d1e7c79caaf7a">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-PowerShell-ISE-FOD-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <packageExtended packageSize="3587800" />
+  </package>
+</assembly>

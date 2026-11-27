@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-IsolatedVM-SVC-Package" version="10.0.28000.1450" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="HyperV-IsolatedVM-SVC" releaseType="Feature Pack">
+    <update name="33b9353e18e68f974ca4e2643d7dd48a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="HyperV-IsolatedVM-SVC-merged-Package" version="10.0.28000.1450" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="aac69e0fc6c1578663b342f8f19f9c8d">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Undocked-Hypervisor-IsolatedVm-SVC-Extension-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

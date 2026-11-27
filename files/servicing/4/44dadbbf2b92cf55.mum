@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-EnterpriseClientSync-Host-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-EnterpriseClientSync-Host" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="WorkFolders-Client" displayName="Work Folders Client" description="Allows file synchronization with a configured file server.">
+      <selectable disposition="staged" absentIfCapabilityAbsent="true">
+        <detectNone default="true" />
+      </selectable>
+      <capability>
+        <capabilityIdentity name="Windows.WorkFolders.Client" />
+      </capability>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables functionality required on Win3 to support MSIX deployment, capabilities, device access, app activation, and background tasks." displayName="Support for Packaged Universal Windows Applications" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-PackagedUniversalApps-WOW64-Feature" version="10.0.28000.2113" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-PackagedUniversalApps-WOW64-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win3-PackagedUniversalApps-WOW64-Feature" version="10.0.28000.2113" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="deb186247c733f1ab0571c2b9d76dc45">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppActivation-WOW64-Package" version="10.0.28000.2113" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d20d5727e6a15aca5aafb7d3d27ad795">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppActivation-Background-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6727c354e380f9a085f8c251b0ad06ad">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-AppProcessManagement-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6c43b2a65962c64a5f61aa33c89a2e7e">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-CapabilityAccess-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ead6fa14affd15ab5a6a3b82f0bbacce">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-MSIX-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="f9ccbab48c51419f291ffd81cbb4da73">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-MSIX-RuntimeDependencies-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="01801bd93e322316a4fbd8e451e27693">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-CapabilityAccess-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c62fd84f49ea17f290884cbcff62eb67">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-COM-OLE-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c789ca849c32868344c6629c827cef17">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-DeviceAccess-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="619492da0da77e926973260dab57d6cc">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-MSIX-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

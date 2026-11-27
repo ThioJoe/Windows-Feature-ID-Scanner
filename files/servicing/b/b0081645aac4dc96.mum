@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-MSIX-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-MSIX-WOW64-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win3-MSIX-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="43bdfb50876e13f54f076a8107349764">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win3-MSIX-WOW64-merged-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9dac7eaf0a8cd73da182ba5f1d158767">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-PackagedDesktopApplications-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

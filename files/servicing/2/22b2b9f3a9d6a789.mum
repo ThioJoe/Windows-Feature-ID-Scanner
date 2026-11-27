@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Runlevel-Win3-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Runlevel-Win3-WOW64-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="Runlevel.Win3" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Runlevel-Win3-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="6cbe5334b66c3b627f5004f87813fd68">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win3-WOW64-merged-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="fbab356aab1d38d4e52088b89ec827c1">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-CoreSystem-OneCoreCommonProxyStub-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="99bd904df5389924ae4acf3d53bbde42">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-FileSystem-Support-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="2fed77bccd24018794becba19dcd3ff8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-International-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="22ce1a715a46910c324f182cc771556f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-TimeService-Core-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="dbad61d0bb9e2e8e10896a0c5045e0a8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-CredSSP-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="5b4407d83263b21ee16828b817f9ad0a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-DXG-Common-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="78887ef3bbece860516f945ce3d43f4b">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-Security-UserMgr-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="559d050d05b41c616581509138f87589">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-WINNLS-Core-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="a23ab1186fced1c99996c489a0d9415d">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-WinTrust-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7b88609a3bd0da5275c8b37eff8d6690">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Gdi32Full-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="bad7d7fbae4513053cef2c816d55d313">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-SXS-Runtime-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="6e41bba5c649b9ab19c8ccfc2400f2f4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-ClientCore-Shutdown-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="a2db3a47eddc19118b841b49af406ea0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Windows-ClientCore-Win32Bridge-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

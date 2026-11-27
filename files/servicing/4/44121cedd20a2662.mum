@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Connectivity-HIDMiniports-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-OneCore-Connectivity-HIDMiniports" releaseType="Feature Pack">
+    <update name="064535353e4b6b4e24ae334bc88e0b37" restart="required">
+      <driver inf="buttonconverter.inf" ranking="normal">
+        <assemblyIdentity name="dual_buttonconverter.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="e4bbfd654951879838a75bcd9ec59155" restart="required">
+      <driver inf="hidbth.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidbth.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6cf5c6ffebda10b53ca883149adbef1b" restart="required">
+      <driver inf="hidbthle.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidbthle.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="a9a3f3c476179eb6fb70eb25c405c0ee" restart="required">
+      <driver inf="hidi2c.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidi2c.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="12be741ac9b0f117358f24874ab0c43d" restart="required">
+      <driver inf="hidi3c.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidi3c.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="291d8eb36478b10839d2a08ec4b39380" restart="required">
+      <driver inf="hidinterrupt.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidinterrupt.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="1f6e1125ab151b1d47ce4295b47652d7" restart="required">
+      <driver inf="hidspi_km.inf" ranking="normal">
+        <assemblyIdentity name="dual_hidspi_km.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="cfaeec266d32fde6dcbb2c6c39ab5fc2">
+      <component>
+        <assemblyIdentity name="Microsoft-OneCore-Connectivity-HIDMiniports-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

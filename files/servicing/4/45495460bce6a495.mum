@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-AddOn-2-ServerCommon-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="IIS-WebServer-AddOn-2-ServerCommon-Package_en-US" releaseType="Language Pack">
+    <parent disposition="detect" integrate="separate">
+      <assemblyIdentity name="Microsoft-Windows-IIS-WebServer-AddOn-2-ServerCommon-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Centralized SSL Certificate Support enables you to manage SSL server certificates centrally using a file share. Maintaining SSL server certificates on a file share simplifies management since there is one place to manage them." displayName="Centralized SSL Certificate Support" name="IIS-CertProvider-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-CertProvider-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-CertProvider-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Authenticate clients by using NTLM or Kerberos." displayName="Windows Authentication" name="IIS-WindowsAuthentication-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-WindowsAuthentication-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-WindowsAuthentication-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Authenticate clients by sending a password hash to a Windows domain controller." displayName="Digest Authentication" name="IIS-DigestAuthentication-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-DigestAuthentication-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-DigestAuthentication-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Authenticate client certificates with Active Directory accounts." displayName="Client Certificate Mapping Authentication" name="IIS-ClientCertificateMappingAuthentication-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ClientCertificateMappingAuthentication-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ClientCertificateMappingAuthentication-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Map client certificates 1-to-1 or many-to-1 to a Windows security identity." displayName="IIS Client Certificate Mapping Authentication" name="IIS-IISCertificateMappingAuthentication-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-IISCertificateMappingAuthentication-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-IISCertificateMappingAuthentication-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update description="Enable support for logging to an ODBC-compliant database." displayName="ODBC Logging" name="IIS-ODBCLogging-ServerCommon">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="IIS-ODBCLogging-ServerCommon" />
+        </detectUpdate>
+      </applicable>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-ODBCLogging-ServerCommon-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-IIS-PowerShellCommands-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-WAS-ProcessModel-Deployment-LanguagePack" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>

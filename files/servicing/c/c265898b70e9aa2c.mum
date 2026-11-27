@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win2-MSIX-RuntimeDependencies-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win2-MSIX-RuntimeDependencies-en-US" releaseType="Language Pack" targetPartition="mainos" binaryPartition="false">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win2-MSIX-RuntimeDependencies-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="8cc3e3a43371ae46e5c8e5d6b6e8324b">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-MSIX-RuntimeDependencies-merged-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="40efc4a48e5298683ab3908d56ea19e4">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Client-License-Platform-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="90598e3e225c38480e77e81d379667b0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-WinRT-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d43e19bb1c9118cb09074a207ab11dc3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Network-Security-MPSSVC-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

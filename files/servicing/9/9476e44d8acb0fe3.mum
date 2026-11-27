@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables support for using cross-architecture (WoW) support for editions using win32kfull.sys. It does not include the WoW counterparts of individual features and those must be added separately." displayName="WOW and cross-architecture support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-WOWSupport-Feature" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-WOWSupport" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+        <mum2:feature name="Microsoft-Win2-WOWSupport-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="a14ef626f3aa7757a96c84e4f1ff61d2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-Package" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="9497efad476dbf06e289052110335129">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-Full-Package" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

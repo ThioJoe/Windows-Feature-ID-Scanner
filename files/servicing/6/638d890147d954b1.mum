@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-BootableSKU-Drivers-merged-Package" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-CoreSystem-BootableSKU-Drivers-merged" releaseType="Feature Pack">
+    <update name="5058a498bb1157b599246d59258c3b7f" restart="required">
+      <driver inf="disk.inf" ranking="normal">
+        <assemblyIdentity name="dual_disk.inf" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="06f78aaf9f2f8395e6ea5df9ad5b3e04" restart="required">
+      <driver inf="hal.inf" ranking="normal">
+        <assemblyIdentity name="dual_hal.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="d40ef2f5d75fffeadeb983e7047ca025" restart="required">
+      <driver inf="halextintclpiodma.inf" ranking="normal">
+        <assemblyIdentity name="dual_halextintclpiodma.inf" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="f53766230d2e2dd2350dc871c544bc61" restart="required">
+      <driver inf="halextpl080.inf" ranking="normal">
+        <assemblyIdentity name="dual_halextpl080.inf" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="6bda210363de7154428d4ccdbccd4d6d" restart="required">
+      <driver inf="nvmedisk.inf" ranking="normal">
+        <assemblyIdentity name="dual_nvmedisk.inf" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="7796cb4304c17971c00eccdc71cf4f90" restart="required">
+      <driver inf="scmvolume.inf" ranking="normal">
+        <assemblyIdentity name="dual_scmvolume.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="dc72249e318a667207e6bdec42fa2a36" restart="required">
+      <driver inf="smrdisk.inf" ranking="normal">
+        <assemblyIdentity name="dual_smrdisk.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="d0006eaf29b938ce05a619dfd9f1e050" restart="required">
+      <driver inf="smrvolume.inf" ranking="normal">
+        <assemblyIdentity name="dual_smrvolume.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="e40ac943c75a826dd0d62bed5b5caa06" restart="required">
+      <driver inf="spaceport.inf" ranking="normal">
+        <assemblyIdentity name="dual_spaceport.inf" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="b7d1b7c77645dc11e24b41bfbf646352" restart="required">
+      <driver inf="volmgr.inf" ranking="normal">
+        <assemblyIdentity name="dual_volmgr.inf" version="10.0.28000.3614" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="520191510d575734b1a3c9059dedc163" restart="required">
+      <driver inf="volume.inf" ranking="normal">
+        <assemblyIdentity name="dual_volume.inf" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+    <update name="ba82409894b3d807d96fc5c386b069c0">
+      <component>
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-BootableSKU-Drivers-merged-Deployment" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+  </package>
+</assembly>
