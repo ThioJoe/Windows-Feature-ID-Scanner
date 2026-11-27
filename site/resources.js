@@ -19,30 +19,45 @@ function resCached(map, key, load) {
   return map.get(key);
 }
 
-async function assetFetch(path) {
-  // GitHub answers HTTP 429 when one address reads many raw files in a short time (a comparison reads about a thousand): wait and try
-  // again, longer each time
-  for (let attempt = 0; ; attempt++) {
-    const res = await fetch(ASSETS + path);
-    if (res.status === 429 && attempt < 5) {
-      await new Promise((resolve) => setTimeout(resolve, 2 ** attempt * (1000 + Math.random() * 1000)));
-      continue;
+// At most MAX_FETCHES of the branch's files are read at a time: a comparison of builds of different versions reads thousands, more than
+// a browser lets a page have open at once (Chrome failed hundreds of them with net::ERR_INSUFFICIENT_RESOURCES)
+const MAX_FETCHES = 48;
+let fetching = 0;
+const fetchQueue = [];
+
+// A file of the branch, read with read(response)
+async function assetFetch(path, read) {
+  if (fetching < MAX_FETCHES) fetching++;
+  else await new Promise((resolve) => fetchQueue.push(resolve));  // (Then it has the place of a read that finished)
+  try {
+    // GitHub answers HTTP 429 when one address reads many raw files in a short time (a comparison reads about a thousand): wait and try
+    // again, longer each time
+    for (let attempt = 0; ; attempt++) {
+      const res = await fetch(ASSETS + path);
+      if (res.status === 429 && attempt < 5) {
+        await new Promise((resolve) => setTimeout(resolve, 2 ** attempt * (1000 + Math.random() * 1000)));
+        continue;
+      }
+      if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+      return await read(res);
     }
-    if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
-    return res;
+  } finally {
+    const next = fetchQueue.shift();
+    if (next) next();
+    else fetching--;
   }
 }
 
 // A .gz file's text (decompressed here, unless the browser already did on the way)
 async function assetGzText(path) {
-  const bytes = new Uint8Array(await (await assetFetch(path)).arrayBuffer());
+  const bytes = new Uint8Array(await assetFetch(path, (res) => res.arrayBuffer()));
   if (bytes[0] !== 0x1f || bytes[1] !== 0x8b) return new TextDecoder().decode(bytes);
   return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
 }
 
 const loadResIndex = (key) => resCached(resCaches.index, key, async () => JSON.parse(await assetGzText(`builds/${encodeURIComponent(key)}/index.json.gz`)));
-const loadPart = (hash) => resCached(resCaches.parts, hash, async () => (await assetFetch(`parts/${hash.slice(0, 2)}/${hash}.json`)).json());
-const loadRegistry = (hash) => resCached(resCaches.registry, hash, async () => (await assetFetch(`registry/${hash.slice(0, 2)}/${hash}.json`)).json());
+const loadPart = (hash) => resCached(resCaches.parts, hash, () => assetFetch(`parts/${hash.slice(0, 2)}/${hash}.json`, (res) => res.json()));
+const loadRegistry = (hash) => resCached(resCaches.registry, hash, () => assetFetch(`registry/${hash.slice(0, 2)}/${hash}.json`, (res) => res.json()));
 const loadFileList = (key) => resCached(resCaches.files, key, async () => parseFileList(await assetGzText(`builds/${encodeURIComponent(key)}/files.csv.gz`)));
 // derived/images.json (analyze-images.py, when the site is published): for each kind of image, the hashes of those whose files differ
 // from another's but whose pixels are the same, mapped to one of them, and those that are almost all white, which are shown on a
