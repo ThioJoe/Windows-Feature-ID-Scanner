@@ -50,7 +50,10 @@ COMPONENT_FOLDER = re.compile(r'^([a-z0-9]+)_(.+)_([0-9a-f]{16})_(\d+(?:\.\d+){3
 
 
 def log(msg):
-    print(msg, flush=True)
+    # A character the console can't show is replaced rather than stopping the check: in the VM, Python writes to a console in code page
+    # 1252, and a KB article's text can have characters it lacks (the link to KB5132059's file list ends in zero-width spaces)
+    encoding = getattr(sys.stdout, 'encoding', None) or 'utf-8'
+    print(str(msg).encode(encoding, 'replace').decode(encoding), flush=True)
 
 
 def fetch(url, retries=4):
