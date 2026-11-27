@@ -128,13 +128,19 @@ Log "Disk ready: $vhd"
 # QEMU from MSYS2's repository
 Log 'Installing QEMU (MSYS2)'
 $t = Get-Date
-& C:\msys64\usr\bin\bash.exe -lc 'pacman -Sy --noconfirm --needed mingw-w64-ucrt-x86_64-qemu' 2>&1 | Select-Object -Last 5 | Write-Host
+# Windows PowerShell turns a native command's error output into errors, and MSYS2 writes the notice of its first start's setup there
+$ErrorActionPreference = 'Continue'
+& C:\msys64\usr\bin\bash.exe -lc 'true' 2>&1 | Select-Object -Last 3 | ForEach-Object { Write-Host "$_" }
+& C:\msys64\usr\bin\bash.exe -lc 'pacman -Sy --noconfirm --needed mingw-w64-ucrt-x86_64-qemu' 2>&1 | Select-Object -Last 8 | ForEach-Object { Write-Host "$_" }
+$code = $LASTEXITCODE
+if ($code -ne 0) { throw "Installing QEMU failed ($code)" }
 Log ("QEMU installed in {0:N0} s" -f ((Get-Date) - $t).TotalSeconds)
-& C:\msys64\ucrt64\bin\qemu-system-aarch64.exe --version | Write-Host
+& C:\msys64\ucrt64\bin\qemu-system-aarch64.exe --version 2>&1 | ForEach-Object { Write-Host "$_" }
 # Its UEFI firmware for the virt machine, uncompressed if it comes compressed
 foreach ($name in 'edk2-aarch64-code.fd', 'edk2-arm-vars.fd') {
     $path = "C:\msys64\ucrt64\share\qemu\$name"
-    if (-not (Test-Path $path) -and (Test-Path "$path.bz2")) { & C:\msys64\usr\bin\bzip2.exe -dk "$path.bz2" }
+    if (-not (Test-Path $path) -and (Test-Path "$path.bz2")) { & C:\msys64\usr\bin\bzip2.exe -dk "$path.bz2" 2>&1 | ForEach-Object { Write-Host "$_" } }
     if (-not (Test-Path $path)) { throw "No $name in QEMU's share folder" }
 }
+$ErrorActionPreference = 'Stop'
 Get-ChildItem C:\msys64\ucrt64\share\qemu\edk2-a* | Format-Table Name, Length -AutoSize | Out-String | Write-Host
