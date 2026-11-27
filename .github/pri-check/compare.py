@@ -137,18 +137,20 @@ def compare_candidates(ours, theirs, problems, stats):
 
 def expected_kept(theirs):
     """What read_pri should keep by its rules, from the dump: {key: (kind, value)}, counts of what's left out and why, and the
-    resources with English candidates but none for en-US"""
+    resources with English candidates but none for en-US. English is en-US, else the language-neutral candidate, else another English
+    one (en-GB first)."""
     chosen, left_out, english_only = {}, collections.Counter(), []
+    label = lambda rank: 'en-US' if rank == (0,) else 'neutral' if rank == (1,) else 'another English'
     for name, cands in theirs.items():
         if name in sr.PRI_LEFT_OUT:
             left_out['ContentChecksumValue'] += len(cands)
             continue
         languages = {dict(q).get('language') for q, k, v in cands}
-        if 'en-us' not in languages and any(l and l.startswith('en') for l in languages):
+        if 'en-us' not in languages and any(l and (l == 'en' or l.startswith('en-')) for l in languages):
             english_only.append(name)
         for q, kind, value in cands:
             language = dict(q).get('language')
-            if language and language != 'en-us':
+            if language and language != 'en' and not language.startswith('en-'):
                 left_out['other languages'] += 1
                 continue
             if kind == 'path':
@@ -156,15 +158,17 @@ def expected_kept(theirs):
                 continue
             other = ', '.join('%s=%s' % qv for qv in q if qv[0] != 'language')
             key = canonical('%s (%s)' % (name, other) if other else name)
-            rank = 0 if language else 1
+            rank = (0,) if language == 'en-us' else (1,) if not language else (2, language != 'en-gb', language)
             if key in chosen:
-                kept_rank = min(rank, chosen[key][0])
-                left_out['same key, %s kept' % ('the en-US one' if kept_rank == 0 and rank != chosen[key][0] else 'the first')] += 1
-                if same(chosen[key][2], value) is None:
-                    left_out['same key, with another value'] += 1
-                if rank >= chosen[key][0]:
+                if rank == chosen[key][0]:
+                    left_out['the same key and language twice'] += 1
+                    continue
+                best, worse = sorted([rank, chosen[key][0]])
+                left_out['%s, where there is %s' % (label(worse), 'an en-US one' if best == (0,) else 'a neutral one' if best == (1,) else 'another English one')] += 1
+                if rank > chosen[key][0]:
                     continue
             chosen[key] = (rank, kind, value)
+    left_out['(kept: another English)'] += sum(1 for rank, _, _ in chosen.values() if rank[0] == 2)
     return {k: (kind, value) for k, (_, kind, value) in chosen.items()}, left_out, english_only
 
 

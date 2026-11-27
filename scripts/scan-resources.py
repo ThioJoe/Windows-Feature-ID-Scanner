@@ -1343,25 +1343,27 @@ def xbf_strings(data):
 def read_pri(store, data, name):
     """What a .pri file holds that's kept: its English and language-neutral strings, its images (stored like an executable's), the string
     table of each compiled XAML page, and the other files it holds (stored whole). Resources for other languages are left out, as only
-    the English .mui files are read, and so is the file itself."""
+    the English .mui files are read, and so is the file itself. English is en-US, else another English (en-GB first) where a resource
+    has neither an en-US nor a language-neutral value: all the Take a Test app's strings are en-GB."""
     maps, resources = pri_resources(data)
     info = {'kind': 'pri', 'name': name, 'resourceMaps': maps, 'resources': len(resources)}
     languages = set()
-    chosen = {}  # key -> (0 for English, 1 for neutral, value type, value, the resource's name)
+    chosen = {}  # key -> ((0) for en-US, (1) for neutral, (2, ...) for another English, value type, value, the resource's name)
     for res_name, values in resources:
         if res_name in PRI_LEFT_OUT:
             continue
         for qualifiers, value_type, value in values:
             language = next((v for q, v in qualifiers if q == 'Language'), None)
+            language = language and language.lower()
             if language:
-                languages.add(language.lower())
-                if language.lower() != 'en-us':
+                languages.add(language)
+                if language != 'en' and not language.startswith('en-'):
                     continue
             if 'path' in value_type.lower():
                 continue  # (A path to one of the package's files, which are read on their own)
             other = ', '.join('%s=%s' % qv for qv in sorted(qualifiers) if qv[0] != 'Language')
             key = '%s (%s)' % (res_name, other) if other else res_name
-            rank = 0 if language else 1
+            rank = (0,) if language == 'en-us' else (1,) if not language else (2, language != 'en-gb', language)
             if key not in chosen or rank < chosen[key][0]:
                 chosen[key] = (rank, value_type, value, res_name)
     info['languages'] = sorted(languages)
