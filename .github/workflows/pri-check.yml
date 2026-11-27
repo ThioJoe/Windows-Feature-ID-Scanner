@@ -1,0 +1,56 @@
+# Temporary: compares scan-resources.py's reading of the .pri files the assets branch has stored whole (all 647 of them, at the
+# branch's commit before they're removed) with Microsoft's own reading of them (makepri.exe dump, from the Windows SDK on the
+# runner). See .github/pri-check/compare.py. To be removed.
+name: PRI Check
+
+on:
+  push:
+    branches:
+      - claude/feature-trace
+    paths:
+      - '.github/workflows/pri-check.yml'
+      - '.github/pri-check/**'
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Get the .pri files of the assets branch
+        shell: bash
+        run: |
+          git init -q /c/pri-assets
+          cd /c/pri-assets
+          git remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          git fetch -q --filter=blob:none --depth 1 origin bc0574532f100ac369e3fa41f7f879512fef53d4
+          git ls-tree -r --name-only FETCH_HEAD | grep -i '\.pri$' > /c/pri-list.txt
+          echo "$(wc -l < /c/pri-list.txt) .pri files"
+          git sparse-checkout set --no-cone --stdin < /c/pri-list.txt
+          git checkout -q FETCH_HEAD
+          du -sh files
+
+      - name: Find makepri.exe
+        shell: powershell
+        run: |
+          $m = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin' -Recurse -Filter makepri.exe -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like '*\x64\*' } | Sort-Object FullName -Descending | Select-Object -First 1
+          if (-not $m) { Write-Error 'makepri.exe not found'; exit 1 }
+          Write-Host "$($m.FullName) $($m.VersionInfo.FileVersion)"
+          echo "MAKEPRI=$($m.FullName)" >> $env:GITHUB_ENV
+
+      - name: Compare
+        shell: powershell
+        run: |
+          python --version
+          python .github\pri-check\compare.py "$env:MAKEPRI" C:\pri-assets C:\pri-list.txt C:\pri-report\report.json C:\pri-report\samples
+          if ($LASTEXITCODE -ne 0) { Write-Error "compare.py found problems (exit code $LASTEXITCODE)"; exit 1 }
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: pri-report
+          path: C:\pri-report
