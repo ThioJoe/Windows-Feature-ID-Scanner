@@ -421,6 +421,14 @@ const CHANNEL_NOTES = {
 };
 // A channel's Windows core version: the end of its name in parentheses, none for the main channels
 const coreVersion = (channel) => (channel.match(/\(([^()]*)\)$/) || [])[1] || '';
+// Released versions on another Windows core than 24H2, 25H2 and 26H2, with what they are (a bulleted line each on their info icon in
+// the build picker). Their builds are numbered higher than the other versions', which they don't share updates with, so they're told
+// apart from those as an Insider channel's are (olderThan), and listed below the newest version's.
+const OTHER_CORE_VERSIONS = {
+  '26H1': ['Based on a newer core than 24H2, 25H2 and 26H2, despite the name. Only comes preinstalled on select new devices and isn\'t offered through Windows Update.'],
+};
+// The line of builds a build is in, for telling builds apart: its Insider channel, or a version on another core (26H1); '' for the others
+const branchOf = (b) => b.insiderChannel || (OTHER_CORE_VERSIONS[b.displayVersion] ? b.displayVersion : '');
 
 // Released builds by architecture (x64 first, a column each), then by Windows version, newest first; Insider builds in a column of their
 // own, by channel, with a line between channels of different Windows core versions as Flight Hub groups them (those named for one, such as
@@ -439,10 +447,11 @@ function fillBuildPicker(picker, selectedKey) {
   picker.setSections([...columns].sort(([x], [y]) => columnOrder(x) - columnOrder(y) || x.localeCompare(y)).map(([column, groups]) => ({
     label: column === 'Insider' ? 'Insider' : archName(column),
     note: column === 'Insider' ? insiderArchs : archName(column) !== column ? column : '',
-    groups: [...groups].map(([label, builds], i, all) => ({
+    // (A released column's versions by name, newest first: 26H1, whose build numbers are higher, below 26H2)
+    groups: (column === 'Insider' ? [...groups] : [...groups].sort(([x], [y]) => (x === 'Other') - (y === 'Other') || y.localeCompare(x))).map(([label, builds], i, all) => ({
       label,
       divider: column === 'Insider' && i > 0 && coreVersion(label) !== coreVersion(all[i - 1][0]),
-      notes: column === 'Insider' ? CHANNEL_NOTES[label] || [] : [],
+      notes: column === 'Insider' ? CHANNEL_NOTES[label] || [] : OTHER_CORE_VERSIONS[label] || [],
       items: builds.map((b) => ({
         value: b.key,
         text: b.build,
@@ -456,10 +465,13 @@ function fillBuildPicker(picker, selectedKey) {
   if (selectedKey) picker.value = selectedKey;
 }
 
-// The newest build (of an architecture): a released one when there is one, since the site opens on it
+// Released builds by their versions' names, then their build numbers: 26H2's come after 26H1's, which are numbered higher
+const byVersion = (x, y) => String(x.displayVersion || '').localeCompare(String(y.displayVersion || '')) || compareVersions(x, y);
+
+// The newest build (of an architecture): a released one of the newest version when there is one, since the site opens on it
 function latestBuild(arch) {
   const list = index.builds.filter((b) => !arch || b.architecture === arch).sort(compareVersions);
-  return list.filter((b) => !b.insiderChannel).pop() || list[list.length - 1];
+  return list.filter((b) => !b.insiderChannel).sort(byVersion).pop() || list[list.length - 1];
 }
 
 // The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
@@ -476,8 +488,8 @@ function buildOrder() {
     releaseRank = new Map(ordered.map((b, i) => [b.key, i]));
     const firsts = new Map();
     for (const b of ordered) {
-      const channel = `${b.architecture} ${b.insiderChannel}`;
-      if (b.insiderChannel && !firsts.has(channel)) firsts.set(channel, b.key);
+      const channel = `${b.architecture} ${branchOf(b)}`;
+      if (branchOf(b) && !firsts.has(channel)) firsts.set(channel, b.key);
     }
     channelFirst = new Set(firsts.values());
     earliestBuilds = new Map();
@@ -486,26 +498,32 @@ function buildOrder() {
       if (!earliest) earliestBuilds.set(b.architecture, [b.key]);
       else if (date(buildsByKey.get(earliest[0])) === date(b)) earliest.push(b.key);
     }
-    // From the list of Insider releases, which has the builds that weren't scanned, and the scanned builds
+    // From the lists of Insider releases and of the releases of each version on another core, which have the builds that weren't
+    // scanned, and the scanned builds
     channelDates = new Map(((releases && releases.insider) || []).map((c) => [c.channel, (c.releases || []).map((r) => r.date).filter(Boolean)]));
-    for (const b of index.builds) if (b.insiderChannel) channelDates.set(b.insiderChannel, [...(channelDates.get(b.insiderChannel) || []), date(b)]);
+    for (const v of (releases && releases.windows11) || []) {
+      if (OTHER_CORE_VERSIONS[v.version]) channelDates.set(v.version, (v.releases || []).map((r) => r.date).filter(Boolean));
+    }
+    for (const b of index.builds) if (branchOf(b)) channelDates.set(branchOf(b), [...(channelDates.get(branchOf(b)) || []), date(b)]);
   }
 }
 
 // Whether build x is older than build y, for the compare pickers. Released builds go by build number, and Insider builds, whose numbers
-// are higher than any released build's, by release date (two from the same day count as the same age). Between a released build and an
-// Insider build, the build of the Insider channel that came out closest to the released build is the channel's first build newer than it.
+// run ahead of those of the released builds on their core, by release date (two from the same day count as the same age). Between a
+// released build and an Insider build, the build of the Insider channel that came out closest to the released build is the channel's
+// first build newer than it. A version on another core (26H1) counts as such a channel next to the other versions' builds.
 function olderThan(x, y) {
   buildOrder();
-  if (!x.insiderChannel && !y.insiderChannel) return compareVersions(x, y) < 0;
-  if (x.insiderChannel && y.insiderChannel) return releaseDate(x) < releaseDate(y);
-  const [released, insider] = x.insiderChannel ? [y, x] : [x, y];
-  const newer = releaseDate(insider) >= firstNewer(released, insider.insiderChannel);
-  return x.insiderChannel ? !newer : newer;
+  const bx = branchOf(x), by = branchOf(y);
+  if (bx === by && !x.insiderChannel) return compareVersions(x, y) < 0;
+  if (bx && by) return releaseDate(x) < releaseDate(y);
+  const [released, insider] = bx ? [y, x] : [x, y];
+  const newer = releaseDate(insider) >= firstNewer(released, branchOf(insider));
+  return bx ? !newer : newer;
 }
 
-// The release date of an Insider channel's first build newer than a released build: the one that came out closest to it, the later one
-// where two are as close
+// The release date of an Insider channel's (or a version on another core's) first build newer than a released build: the one that came
+// out closest to it, the later one where two are as close
 function firstNewer(b, channel) {
   const at = Date.parse(releaseDate(b));
   let best = null;
@@ -1260,12 +1278,13 @@ async function renderCompare() {
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
   const nb = buildsByKey.get(newKey), ob = buildsByKey.get(oldKey), allow = ' (check "Allow any build" below to pick it)';
   const rule = 'Released builds are told apart by build number, and Insider builds by release date. Between a released build and an Insider ' +
-    "build, the build of the Insider channel that came out closest to the released build counts as the channel's first build newer than it.";
+    "build, the build of the Insider channel that came out closest to the released build counts as the channel's first build newer than it. " +
+    '26H1, on a newer Windows core, counts as such a channel next to the builds of 24H2, 25H2 and 26H2.';
   $('cmp-old').setRange(known ? (v) => !olderThan(nb, buildsByKey.get(v)) : null,
-    (v) => (!nb.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A higher build number than the new build' : 'Newer than the new build') + allow,
+    (v) => (!nb.insiderChannel && branchOf(nb) === branchOf(buildsByKey.get(v)) ? 'A higher build number than the new build' : 'Newer than the new build') + allow,
     known ? `Showing builds older than ${nb.build}` : '', rule);
   $('cmp-new').setRange(known ? (v) => !olderThan(buildsByKey.get(v), ob) : null,
-    (v) => (!ob.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A lower build number than the old build' : 'Older than the old build') + allow,
+    (v) => (!ob.insiderChannel && branchOf(ob) === branchOf(buildsByKey.get(v)) ? 'A lower build number than the old build' : 'Older than the old build') + allow,
     known ? `Showing builds newer than ${ob.build}` : '', rule);
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
@@ -1541,7 +1560,7 @@ async function init() {
   }
   const latest = latestBuild();
   // Compare the newest released build that has an earlier one to compare with (a first build of an architecture has none)
-  const compared = [...index.builds].filter((b) => b.previous && !b.insiderChannel).sort(compareVersions).pop() || latest;
+  const compared = [...index.builds].filter((b) => b.previous && !b.insiderChannel).sort(byVersion).pop() || latest;
   fillBuildPicker($('cmp-old'), compared.previous || compared.key);
   fillBuildPicker($('cmp-new'), compared.key);
   fillBuildPicker($('bld-select'), latest.key);
