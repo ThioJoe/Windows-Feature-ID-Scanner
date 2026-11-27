@@ -6,6 +6,10 @@
 #      Microsoft's servers with their hashes) that the target version can be reached from. The tool's link still points to a 24H2
 #      catalog from June 2025; the tool then asks Windows Update's metadata service for the current one, as this script does too.
 #      The image is applied to a virtual disk, and the VM boots from it without the setup screens (unattend.xml).
+#      The catalogs have no image of 26H1, a separate Windows core for new devices: its VM starts from the installation image of the
+#      whole build Windows Update gives a device in Release Preview 26H1, which is 26H1's base build (28000.1), made as an Insider
+#      build's VM is (Get-InsiderImage, see 3), and then gets its target cumulative update as the other versions do. A released
+#      build's update has no app packages, so the apps the edition comes with are those of the Beta (26H1) channel's build.
 #   2. The target cumulative update, from the Microsoft Update Catalog, is installed inside the running VM with DISM, the way Microsoft
 #      documents for cumulative updates that come with checkpoint updates. Windows 11 24H2, 25H2 and 26H2 share their code and their
 #      cumulative updates; only the version's enablement package differs.
@@ -127,6 +131,14 @@ $OlderProductsCatalogs = @(
        Sha256 = '2201BCCDFB68908EA5E9D543D32E1BAC1BF2EE9ED7CDD05C1B50478A7D2DB36C' }
 )
 
+# Versions the catalogs have no image of, and the channel whose build Windows Update gives with a new installation's files: Release
+# Preview 26H1's is 26H1's newest build, with the installation image of 26H1's base build, 28000.1, which any 26H1 build can be reached
+# from with its cumulative update (the Update Catalog has 26H1's with no checkpoint updates). 26H1 is the first version of its core,
+# so it has no enablement package. A released build's update has no app packages (Windows Update only offers 26H1 as a cumulative
+# update, to 26H1 devices, which have their apps): the apps the edition comes with are provisioned from a channel's build of the same
+# core, which has them as the Store's packages, and the Store then updates them as on any PC.
+$ImageChannels = @{ '26H1' = @{ Image = 'Release Preview 26H1'; Apps = 'Beta (26H1)' } }
+
 function Get-BaseImage {
     # Every image file in the catalogs, with its hash; the newest image whose base build isn't past the target version's (an image of
     # 26H2, base build 26300, can't become 25H2, 26200, while a 24H2 one, 26100, can become either), and whose revision isn't past the
@@ -234,7 +246,7 @@ function Get-CumulativeUpdate {
 # ---------------------------------------------------------------------------
 
 function New-ScanDisk([string]$esd, $insider) {
-    # $insider: an Insider build's own image instead (Get-InsiderImage)
+    # $insider: an Insider build's own image instead, or a version's base image from Windows Update (Get-InsiderImage)
     $vhd = Join-Path $WorkDir "$VmName.vhdx"
     if (Get-VM -Name $VmName -ErrorAction SilentlyContinue) { Stop-VM -Name $VmName -TurnOff -Force -ErrorAction SilentlyContinue; Remove-VM -Name $VmName -Force }
     if (Test-Path $vhd) { Dismount-VHD -Path $vhd -ErrorAction SilentlyContinue; Remove-Item $vhd -Force }
@@ -264,14 +276,14 @@ function New-ScanDisk([string]$esd, $insider) {
     & dism.exe /English /Apply-Image "/ImageFile:$esd" "/Index:$index" "/ApplyDir:$winRoot" @references | Select-Object -Last 2
     if ($LASTEXITCODE -ne 0) { throw "DISM /Apply-Image failed ($LASTEXITCODE)" }
 
-    # The image's files before Windows first starts, for the file check before the scan (files no update lists must be the image's)
-    Log 'Listing the files of the image'
-    & python.exe (Join-Path $RepoDir 'scripts\verify-windows-files.py') image --root $winRoot --out (Join-Path $WorkDir 'image-files.csv.gz')
-    if ($LASTEXITCODE -ne 0) { throw "Listing the image's files failed ($LASTEXITCODE)" }
-
     & bcdboot.exe "$($winRoot)Windows" /s $efiRoot /f UEFI | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "bcdboot failed ($LASTEXITCODE)" }
     if ($insider) { Set-InsiderImage $insider $winRoot $efiRoot }
+    # The image's files before Windows first starts, for the file check before the scan (files no update lists must be the image's):
+    # Microsoft's image as applied, or an image from Windows Update once DISM has made it the target edition and provisioned its apps
+    Log 'Listing the files of the image'
+    & python.exe (Join-Path $RepoDir 'scripts\verify-windows-files.py') image --root $winRoot --out (Join-Path $WorkDir 'image-files.csv.gz')
+    if ($LASTEXITCODE -ne 0) { throw "Listing the image's files failed ($LASTEXITCODE)" }
     Write-Unattend $winRoot
     $reg = "HKLM\OFFLINE_SOFTWARE"
     & reg.exe load $reg "$($winRoot)Windows\System32\config\SOFTWARE" | Out-Null
@@ -892,6 +904,7 @@ function Install-TargetVersion {
         Log "The VM is $Version already"
         return $false
     }
+    if ($ImageChannels[$Version]) { throw "The VM isn't $Version ($(Get-VmBuild)), though it was made from the image of $Version's base build, and $Version has no enablement package" }
     Invoke-InVM -Retry -arguments $Version {
         param($version)
         $policy = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
@@ -936,29 +949,37 @@ function Invoke-WindowsUpdatePy([string[]]$arguments) {
     return $LASTEXITCODE
 }
 
-function Get-InsiderImage {
+function Get-InsiderImage([string]$channel = $InsiderChannel, [switch]$ImageOnly, [string]$AppsChannel) {
     # The Insider build's own files, from Windows Update (windows_update.py image): a new installation's (the Pro edition image, the
     # package ESDs and WIMs that hold the files it refers to, the cabs of the features it has, and its apps), and the packages that
     # bring it to the build (the cumulative update with the checkpoint cumulative update it builds on, the enablement package and the
     # .NET Framework update). The VM can't be made from a released build's image instead: the channels' cumulative updates are built
     # on the channels' own baseline (ge_release_flt 26100.6, not 26100.1), which is why Microsoft's docs say a device joins a channel
-    # by an in-place upgrade. Returns what image.json in the download folder says.
+    # by an in-place upgrade. With -ImageOnly, only the new installation's files: the base image of a version the Media Creation Tool
+    # has none of ($ImageChannels), whose target cumulative update then comes from the Update Catalog, with its apps from the build of
+    # -AppsChannel. Returns what image.json in the download folder says.
     $folder = Join-Path $WorkDir 'insider'
     $file = Join-Path $folder 'image.json'
-    $arguments = @('image', '--channel', $InsiderChannel, '--out', $folder, '--json-out', $file)
-    if ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild, '--or-newer-revision') }
+    $arguments = @('image', '--channel', $channel, '--out', $folder, '--json-out', $file)
+    if ($ImageOnly) { $arguments += '--no-packages' }
+    if ($AppsChannel) { $arguments += @('--apps-channel', $AppsChannel) }
+    elseif ($ExpectedBuild) { $arguments += @('--expected-build', $ExpectedBuild, '--or-newer-revision') }
     Remove-Item $file -ErrorAction SilentlyContinue
     $code = Invoke-WindowsUpdatePy $arguments
-    if ($code -eq 3) { throw "Windows Update doesn't offer build $ExpectedBuild or a newer revision of it to a device in the $InsiderChannel channel (see above for what it offers)" }
-    if ($code -ne 0 -or -not (Test-Path $file)) { throw "Getting the $InsiderChannel channel's build from Windows Update failed ($code)" }
+    if ($code -eq 3) { throw "Windows Update doesn't offer build $ExpectedBuild or a newer revision of it to a device in the $channel channel (see above for what it offers)" }
+    if ($code -ne 0 -or -not (Test-Path $file)) { throw "Getting the $channel channel's build from Windows Update failed ($code)" }
     $image = Get-Content $file -Raw | ConvertFrom-Json
+    if ($ImageOnly) {
+        Log "Base image: $($image.image.image) of the build Windows Update gives the $channel channel, $($image.title)$(if ($image.apps.channel) { "; apps from the $($image.apps.channel) channel's build, $($image.apps.build)" })"
+        return $image
+    }
     if ($ExpectedBuild -and $image.build -ne $ExpectedBuild) {
         # A newer revision of the build than the release notes list yet (as 29712.1013 was for 29712.1000): the VM gets it, and it's
         # what the scan checks the VM's build against
-        Log "Windows Update gives the $InsiderChannel channel build $($image.build), a newer revision of $ExpectedBuild"
+        Log "Windows Update gives the $channel channel build $($image.build), a newer revision of $ExpectedBuild"
         $script:ExpectedBuild = $image.build
     }
-    Log "The $InsiderChannel channel's build: $($image.title) ($(if ($image.kb) { $image.kb } else { 'no KB' }), update $($image.updateId) revision $($image.revision))"
+    Log "The $channel channel's build: $($image.title) ($(if ($image.kb) { $image.kb } else { 'no KB' }), update $($image.updateId) revision $($image.revision))"
     return $image
 }
 
@@ -1013,10 +1034,12 @@ function Set-InsiderImage($image, [string]$winRoot, [string]$efiRoot) {
             if ($LASTEXITCODE -ne 0) { throw "bcdedit couldn't turn on flight signing for $entry ($LASTEXITCODE)" }
         }
     }
-    $updates = "$($winRoot)scan-updates"
-    New-Item -ItemType Directory -Force $updates | Out-Null
-    foreach ($p in @($image.packages)) { Copy-Item (Join-Path $image.folder $p.name) $updates -Force }
-    Log "The VM's disk has the build's packages: $((@($image.packages) | ForEach-Object { "$($_.role) $($_.kb)" }) -join ', ')"
+    if (@($image.packages)) {  # (None for a base image alone, Get-InsiderImage -ImageOnly)
+        $updates = "$($winRoot)scan-updates"
+        New-Item -ItemType Directory -Force $updates | Out-Null
+        foreach ($p in @($image.packages)) { Copy-Item (Join-Path $image.folder $p.name) $updates -Force }
+        Log "The VM's disk has the build's packages: $((@($image.packages) | ForEach-Object { "$($_.role) $($_.kb)" }) -join ', ')"
+    }
 }
 
 function Add-InsiderApps($image, [string]$winRoot) {
@@ -1050,7 +1073,9 @@ function Add-InsiderApps($image, [string]$winRoot) {
         }
     }
     Log "Provisioned $($done.Count) of $($apps.Count) apps$(if ($failed) { "; not: $($failed -join ', ')" })"
-    Save-Report 'insider-apps.json' @{ provisioned = $done; failed = $failed }
+    # (Apps from another channel's build, for a released build's image ($ImageChannels): which build, and the edition's apps it doesn't have)
+    Save-Report 'insider-apps.json' @{ provisioned = $done; failed = $failed; missing = @($image.apps.missing | Where-Object { $_ })
+                                       from = $(if ($image.apps.channel) { "the build Windows Update gives the $($image.apps.channel) channel, $($image.apps.build)" }) }
 }
 
 function Install-InsiderBuild {
@@ -1203,8 +1228,12 @@ function Add-ScanNotes {
     }
     $apps = Join-Path $OutputDir 'insider-apps.json'
     if (Test-Path $apps) {
-        $left = @(@((Get-Content $apps -Raw | ConvertFrom-Json).failed) | Where-Object { $_ })
+        $r = Get-Content $apps -Raw | ConvertFrom-Json
+        $left = @(@($r.failed) | Where-Object { $_ })
         if ($left) { $notes += "Apps that come with the build that couldn't be provisioned: $($left -join '; ')" }
+        if ($r.from) { $notes += "The apps that come with Windows were provisioned from $($r.from), since the released build's update has none, then updated by the Microsoft Store" }
+        $missing = @(@($r.missing) | Where-Object { $_ })
+        if ($missing) { $notes += "Apps the edition comes with that weren't provisioned, since that build doesn't have them: $($missing -join '; ')" }
     }
     $fields = @()
     if ($InsiderChannel) { $fields += '"insiderChannel": ' + (ConvertTo-Json $InsiderChannel -Compress) }
@@ -1643,7 +1672,11 @@ function Invoke-ResourceScan([string]$build) {
 # ---------------------------------------------------------------------------
 
 $esd = $null; $updateUrls = $null; $insiderImage = $null
-if ($Step -in 'All', 'Image', 'Disk') { if ($InsiderChannel) { $insiderImage = Get-InsiderImage } else { $esd = Get-BaseImage } }
+if ($Step -in 'All', 'Image', 'Disk') {
+    if ($InsiderChannel) { $insiderImage = Get-InsiderImage }
+    elseif ($ImageChannels[$Version]) { $insiderImage = Get-InsiderImage $ImageChannels[$Version].Image -ImageOnly -AppsChannel $ImageChannels[$Version].Apps }  # (26H1)
+    else { $esd = Get-BaseImage }
+}
 if ($Step -eq 'All' -and $esd -and -not $InsiderChannel -and $EnablementPackageKbs[$Version] -and
     -not $KnownEnablementPackages[$EnablementPackageKbs[$Version]] -and
     (-not $ExpectedBuild -or ($ExpectedBuild -split '\.')[0] -ne ((Split-Path $esd -Leaf) -split '\.')[0])) {

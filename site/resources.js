@@ -146,6 +146,32 @@ function objectDiff(before, after, equal = (x, y) => JSON.stringify(x) === JSON.
   return rows;
 }
 
+// objectDiff of two message tables by their text: a message the other table has under another ID isn't listed, and an added and a
+// removed message with the same ID are one changed row. A message table made from an event manifest is numbered in order, so an event
+// added to the manifest gives every message after it another ID.
+function messageDiff(before, after) {
+  before = before || {};
+  after = after || {};
+  const same = (k) => k in before && k in after && JSON.stringify(before[k]) === JSON.stringify(after[k]);
+  // The messages of one table that the other has under no other ID (each message of the other table matches one)
+  const unmatched = (from, other) => {
+    const left = new Map(), out = {};
+    for (const [k, v] of Object.entries(other)) if (!same(k)) left.set(JSON.stringify(v), (left.get(JSON.stringify(v)) || 0) + 1);
+    for (const [k, v] of Object.entries(from)) {
+      if (same(k)) continue;
+      const t = JSON.stringify(v);
+      if (left.get(t) > 0) left.set(t, left.get(t) - 1);
+      else out[k] = v;
+    }
+    return out;
+  };
+  const added = unmatched(after, before), removed = unmatched(before, after);
+  const rows = [];
+  for (const [k, v] of Object.entries(added)) rows.push(k in removed ? { change: 'changed', key: k, new: v, old: removed[k] } : { change: 'added', key: k, new: v, old: null });
+  for (const [k, v] of Object.entries(removed)) if (!(k in added)) rows.push({ change: 'removed', key: k, old: v, new: null });
+  return rows;
+}
+
 function listDiff(before, after) {
   const o = new Set(before || []), n = new Set(after || []);
   return [...[...n].filter((x) => !o.has(x)).map((x) => ({ change: 'added', key: x })), ...[...o].filter((x) => !n.has(x)).map((x) => ({ change: 'removed', key: x }))];
@@ -407,7 +433,7 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     for (const [part, kind] of [['strings', 'String'], ['messages', 'Message']]) {
       if (!partChanged(c, part)) continue;
       const [o, n] = await loadBoth(c, part);
-      rows.push(...objectDiff(o, n).map((r) => ({ ...r, kind, old: r.old, new: r.new })));
+      rows.push(...(part === 'messages' ? messageDiff : objectDiff)(o, n).map((r) => ({ ...r, kind, old: r.old, new: r.new })));
     }
     if (partChanged(c, 'dialogs')) {
       const [o, n] = await loadBoth(c, 'dialogs');

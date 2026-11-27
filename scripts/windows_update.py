@@ -18,6 +18,8 @@
 #   python scripts/windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
 #   python scripts/windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
 #   python scripts/windows_update.py image --channel Experimental --out <folder>              # and a new installation's files and apps (Windows only)
+#     --no-packages                             image: without the packages, for a VM that's brought to another build (a released 26H1 build's,
+#                                               whose cumulative update comes from the Update Catalog)
 #
 # The download links last from 10 minutes (small files) to several hours (the cumulative update), so they're asked for right before
 # the downloads. They're plain HTTP, as Windows Update's are; each file is checked against the SHA-256 in the update's metadata, which
@@ -392,7 +394,7 @@ def compdb(meta, name, folder):
     return ET.parse(expand_member(inner, member, os.path.join(folder, 'compdb'))).getroot()
 
 
-def app_files(update, meta, folder, wanted):
+def app_files(update, meta, folder, wanted, missing_ok=False):
     r"""The apps a new installation of the build has, which the update has as separate packages: wanted is the FeatureIDs of the apps
     the edition has (image_files), and the app database (DesktopTargetCompDB_App_Neutral in AggregatedMetadata.cab) has a feature for
     each app in the PreinstalledApps group, which has the file to provision (a bundle, whose packages are separate files that go next
@@ -401,7 +403,9 @@ def app_files(update, meta, folder, wanted):
     places in the database relative to the file to provision (a bundle's stub packages are in AppxMetadata\Stub, and some updates
     name the files with their folders in front, such as IPA_Weather_...): 'links' has each one's path there and its name in the update
     (link_files makes them). Returns {'apps': [{'id', 'type', 'main', 'dependencies', 'license'}], 'frameworks': {id: [files]},
-    'files': [file dicts], 'links': {path: name}}, where main is the path in the download folder of the file to provision."""
+    'files': [file dicts], 'links': {path: name}, 'missing': [FeatureIDs]}, where main is the path in the download folder of the file to
+    provision. With missing_ok (the apps of another update's build), apps the database has no feature for are left out and listed in
+    'missing' instead of failing."""
     ns = {'c': 'http://schemas.microsoft.com/embedded/2004/10/ImageUpdate'}
     root = compdb(meta, 'DesktopTargetCompDB_App_Neutral.xml.cab', folder)
     by_sha256 = {f['sha256']: f for f in update['files'] if f['sha256']}
@@ -411,8 +415,9 @@ def app_files(update, meta, folder, wanted):
         payloads[package.get('ID')] = [(path, f) for path, f in found if f]
     features = {f.get('FeatureID'): f for f in root.iterfind('c:Features/c:Feature', ns) if f.get('Group') == 'PreinstalledApps'}
     missing = [i for i in wanted if i not in features]
-    if missing:
+    if missing and not missing_ok:
         raise RuntimeError(f"the app database has no feature for {', '.join(missing)}")
+    wanted = [i for i in wanted if i in features]
     apps, frameworks, files, links = [], {}, {}, {}
 
     def own_files(feature_id):
@@ -446,7 +451,8 @@ def app_files(update, meta, folder, wanted):
         license = feature.find("c:CustomInformation/c:CustomInfo[@Key='licensedata']", ns)
         apps.append({'id': feature_id, 'type': feature.get('Type'), 'main': 'apps\\%s\\%s' % (feature_id, main[0][0][len(base):]),
                      'dependencies': dependencies, 'license': license.text.strip() if license is not None and license.text else None})
-    return {'apps': apps, 'frameworks': frameworks, 'files': sorted(files.values(), key=lambda f: f['name'].lower()), 'links': links}
+    return {'apps': apps, 'frameworks': frameworks, 'files': sorted(files.values(), key=lambda f: f['name'].lower()), 'links': links,
+            'missing': missing}
 
 
 def link_files(links, folder):
@@ -534,6 +540,9 @@ def main():
     parser.add_argument('--expected-build', help='An error unless Windows Update offers this build')
     parser.add_argument('--or-newer-revision', action='store_true',
                         help='With --expected-build: also take a newer revision of that build, which Windows Update can offer before the release notes list it')
+    parser.add_argument('--no-packages', action='store_true', help="image: only a new installation's files and apps, not the packages that bring it to the build")
+    parser.add_argument('--apps-channel', help="image: take the installation's apps from this channel's build, on the same Windows core, for an update that "
+                        "has none (a released build's, such as Release Preview 26H1's)")
     parser.add_argument('--out', help='download, image: the folder the files go in')
     parser.add_argument('--json-out', help='Also write the JSON to this file')
     args = parser.parse_args()
@@ -562,7 +571,7 @@ def main():
     result = {k: update[k] for k in ('channel', 'osBuild', 'title', 'build', 'kb', 'updateId', 'revision')}
     result['fileCount'] = len(update['files'])
     if args.action in ('links', 'download', 'image'):
-        picked = packages(client, update)
+        picked = [] if args.action == 'image' and args.no_packages else packages(client, update)
         for p in picked:
             log(f"  {p['role']}: {p['name']} ({p['size']:,} bytes)")
         if args.action == 'links':
@@ -573,12 +582,25 @@ def main():
             image = image_files(client, update, args.out, args.image_edition.lower(), args.language.lower())
             log(f"installation image: {image['image']}, with {len(image['references']) - 1} ESDs and WIMs and {len(image['cabs'])} cabs "
                 f"({sum(f['size'] for f in image['files']) / 1e9:.1f} GB)")
-            apps = app_files(update, image['metadata'], args.out, image['apps'])
-            log(f"apps: {len(apps['apps'])}, with {len(apps['frameworks'])} frameworks ({sum(f['size'] for f in apps['files']) / 1e9:.1f} GB)")
-            download(client, update, image['files'] + apps['files'] + picked, args.out)
+            apps_update, apps_meta = update, image['metadata']
+            if args.apps_channel:
+                # A released build's update has no app packages (a new installation of it gets its apps elsewhere), so they come from a build
+                # of the same core that has them: the Store's packages of the apps the edition has, which the Store then updates as any PC's
+                apps_update = offer(client, args.apps_channel, CHANNELS[args.apps_channel][2], args.edition)
+                apps_meta = os.path.join(args.out, 'AggregatedMetadata-apps.cab')
+                with open(apps_meta, 'wb') as f:
+                    f.write(metadata_cab(client, apps_update))
+                log(f"apps from the {args.apps_channel} channel's build: {apps_update['title']}")
+            apps = app_files(apps_update, apps_meta, args.out, image['apps'], missing_ok=bool(args.apps_channel))
+            log(f"apps: {len(apps['apps'])}, with {len(apps['frameworks'])} frameworks ({sum(f['size'] for f in apps['files']) / 1e9:.1f} GB)"
+                + (f"; not in that build: {', '.join(apps['missing'])}" if apps['missing'] else ''))
+            download(client, update, image['files'] + picked, args.out)
+            download(client, apps_update, apps['files'], args.out)
             link_files(apps['links'], args.out)
             result['image'] = {k: image[k] for k in ('edition', 'language', 'image', 'references', 'cabs')}
-            result['apps'] = {k: apps[k] for k in ('apps', 'frameworks')}
+            result['apps'] = {k: apps[k] for k in ('apps', 'frameworks', 'missing')}
+            if args.apps_channel:
+                result['apps'].update(channel=args.apps_channel, build=apps_update['build'])
             result['folder'] = os.path.abspath(args.out)
         result['packages'] = picked
     text = json.dumps(result, indent=1)
