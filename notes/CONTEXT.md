@@ -11,7 +11,7 @@ The `Windows Feature Scanner` workflow (`.github/workflows/windows-scanner.yml`)
 2. **`scan-features.ps1`** runs ViVeTool to dump the feature store (the IDs actually configured on the machine) and fills in names from step 1.
 3. **`run-super-god-mode.ps1`** runs the latest release of [Super God Mode](https://github.com/ThioJoe/Windows-Super-God-Mode) and keeps its statistics: CSV files listing the build's CLSID shell folders, named special folders, task links, `ms-settings:` pages, deep links, URL protocols and hidden app links, and the XML data the task links and deep links come from. The shortcuts it creates aren't kept. If it fails, the scan carries on without its statistics.
 4. **`trace-features.ps1`** records which features Windows' code checks while it runs, while it opens the shell's UI, the Start menu's apps and the pages and folders Super God Mode found (see [Feature traces](#feature-traces)). If it fails, the scan carries on without a trace.
-5. **`update-data.py`** puts all of it in the build's folder, `data/builds/<build>-<arch>/`, with the update the build came in (e.g. 2026-08 B), its release date and KB article from the list of released builds, and regenerates the index, first-seen table and diffs. The workflow commits the result and republishes the site.
+5. **`update-data.py`** puts all of it in the build's folder, `data/builds/<build>-<arch>/`, with the update the build came in (e.g. 2026-08 B), its release date and KB article from the list of released builds, and regenerates the index and first-seen table. The workflow commits the result and republishes the site.
 
 The workflow runs daily: a small check job reads the runner's Windows build and only starts a full scan when that build isn't in `data/` yet. It can also be started manually from the Actions tab, which always scans.
 
@@ -137,15 +137,16 @@ data/
 ├── symbol-cache-AMD64.json     The same for the x64 scans
 ├── first-seen.json             First tracked build each feature ID appeared in (a list when several came out that day), by release date, per architecture
 ├── releases.json               Every build Microsoft has released for each serviced Windows 11 version (the site lists the newest six), and the newest of each Insider channel
-├── builds/<build>-<arch>/      A folder per scanned build:
-│   ├── features.json           The build's update, release date and KB, then all its feature IDs, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
-│   ├── details.json            What each binary's code reveals about each feature, one per line (callers, strings, ...)
-│   ├── symbols.json            The build's PDBs, one per line, with what's needed to download their binaries, and which ones its scan didn't get (for the symbol catch-up)
-│   ├── super-god-mode/         Super God Mode's statistics for the build: its CSV and XML files as it writes them, and run.json
-│   ├── trace.json              The build's latest feature trace: the run, and the features each target it opened checked
-│   └── resources.json          That the build has resource data in the assets branch (see Resource data), with counts
-└── diffs/<old>_to_<new>.json   Changes between consecutive builds (.md versions for reading on GitHub)
+└── builds/<build>-<arch>/      A folder per scanned build:
+    ├── features.json           The build's update, release date and KB, then all its feature IDs, one per line: id, name (null if unknown), modules, default state, requirements, feature store state
+    ├── details.json            What each binary's code reveals about each feature, one per line (callers, strings, ...)
+    ├── symbols.json            The build's PDBs, one per line, with what's needed to download their binaries, and which ones its scan didn't get (for the symbol catch-up)
+    ├── super-god-mode/         Super God Mode's statistics for the build: its CSV and XML files as it writes them, and run.json
+    ├── trace.json              The build's latest feature trace: the run, and the features each target it opened checked
+    └── resources.json          That the build has resource data in the assets branch (see Resource data), with counts
 ```
+
+The changes between two builds aren't stored: the site compares any two builds from their `features.json` files.
 
 Every feature ID found is listed, named or not. Many features only have a number for a name in the symbols (the ID itself, or an obfuscated hash); those have `"name": null` and keep the raw symbol names in `symbolNames`. A feature whose code has been removed from every binary can still be configured in the feature store; it keeps the name an earlier build found for it (`"nameSource": "earlierBuild"`). The feature store entries Windows' rollout service writes (priority `Service (4)`, type `Experiment (1)`) stay in a build's data but count in neither first seen nor comparisons, where a feature only they have counts as absent: Windows writes them after it checks in with Microsoft, for features Microsoft is rolling out to a share of PCs or testing, so which ones a VM gets depends on the day and on chance (no features only they have in the 2024 and 2025 builds scanned on November 26, 2026, 74 in a September 2026 build scanned the same day, and 211 to 226 in the 24H2, 25H2 and 26H2 builds of July to November 2026 scanned November 18 to 20). A feature that ViVeTool's dictionary names differently from the symbols also has that name, as `viveToolName`. "First seen" counts builds in the order they came out (by release date), so a feature in an Insider build counts there, not in the released build with a lower number that gets it later. Builds that came out the same day count together: a feature that several of them were the first to have, such as a security update's builds of 24H2, 25H2 and 26H2, lists them all. For the first tracked build, and for the first build scanned of each Insider channel (for the features no earlier build had), it only means the feature existed at least that early; the site marks these with an info icon. A build scanned in the VM can have `notes`, such as Store apps the VM couldn't update, and an Insider build has its `insiderChannel`. A build whose scan didn't get the symbols of 25 or more binaries that had features in earlier versions has `symbolsPending`: how many such binaries, how many of its features are only known from those earlier versions (`"unverified"`), and until when the symbol catch-up asks for them. Every scan has a few, such as Store apps updated to versions whose symbols Microsoft hasn't published; their features are only marked unverified. `symbolsUpdated` is the last time it added some.
 
