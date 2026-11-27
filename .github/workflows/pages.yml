@@ -35,16 +35,17 @@ jobs:
           # When called from the scanner, check out the branch tip so the data it just committed is included
           ref: ${{ github.ref_name }}
 
-      # The site gets the data except each build's details.json, which it loads from files derived from them instead, its Super God
-      # Mode statistics, which it doesn't show, the symbol caches and each build's list of PDBs, which only the scans use, and each build's
-      # feature trace run (trace.json), what the trace saw of each feature being in features.json
+      # The site gets data/'s index, first-seen table and list of released builds. Each build's features.json it reads from GitHub's raw
+      # file links at this commit (derived/source.json), so that the published site, which GitHub Pages allows 1 GB, doesn't hold them;
+      # the rest of a build's folder it reads through the files build-site-data.py derives from them, or doesn't use
       - name: Assemble site
         run: |
-          mkdir -p _site
+          mkdir -p _site/data
           cp -r site/. _site/
-          cp -r data _site/data
-          rm -rf _site/data/builds/*/details.json _site/data/builds/*/super-god-mode _site/data/builds/*/symbols.json _site/data/builds/*/trace.json _site/data/symbol-cache*.json
+          cp data/index.json data/first-seen.json data/releases.json _site/data/
           python3 scripts/build-site-data.py --data data --out _site/derived
+          printf '{"repository": "%s", "commit": "%s"}\n' "$GITHUB_REPOSITORY" "$(git rev-parse HEAD)" > _site/derived/source.json
+          cat _site/derived/source.json
 
       # The images of the resource data in the assets branch whose files differ but whose pixels are the same, so that a comparison doesn't
       # count a PNG that was only compressed again as a changed image, and those that are almost all white, which the site shows on a darker
