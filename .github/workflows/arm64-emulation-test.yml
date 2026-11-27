@@ -44,7 +44,7 @@ jobs:
         run: '& .github\arm64-emulation-test\prep-arm.ps1'
       - name: Run the ARM64 VM emulated
         shell: powershell
-        run: '& .github\arm64-emulation-test\emulate.ps1 -LimitMinutes 260'
+        run: '& .github\arm64-emulation-test\emulate.ps1 -LimitMinutes 180'
       - name: Read the guest's results
         if: always()
         shell: powershell
