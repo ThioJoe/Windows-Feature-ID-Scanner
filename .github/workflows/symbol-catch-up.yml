@@ -45,6 +45,13 @@ jobs:
           ref: ${{ github.ref }}  # The branch tip, the data the check looked at
           fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
 
+      # The symbol caches, which have what the scans read, from the cache branch (scripts/symbol-cache.py)
+      - name: Get the symbol caches
+        shell: powershell
+        run: |
+          python scripts\symbol-cache.py get --branch $env:GITHUB_REF_NAME
+          if ($LASTEXITCODE -ne 0) { Write-Error "symbol-cache.py failed with exit code $LASTEXITCODE"; exit 1 }
+
       - name: Scan those PDBs and add them to the builds
         id: run
         shell: powershell
@@ -62,6 +69,9 @@ jobs:
         run: |
           # Only when it completed a build: otherwise all that changed is when the symbol server was last asked for the PDBs it doesn't have
           if (-not '${{ steps.run.outputs.completed }}') { Write-Host "No build was completed."; echo "committed=false" >> $env:GITHUB_OUTPUT; exit 0 }
+          # The symbol caches to the cache branch before the data
+          python scripts\symbol-cache.py put --branch "${{ github.ref_name }}" --forget --message "Symbol caches of ${{ github.ref_name }} after: ${{ steps.run.outputs.message }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "symbol-cache.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data

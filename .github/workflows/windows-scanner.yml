@@ -49,8 +49,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.ref }}  # The branch tip: the data and symbol cache the scan adds to
+          ref: ${{ github.ref }}  # The branch tip: the data the scan adds to
           fetch-depth: 0  # Full history so the data commit can be rebased onto the branch tip
+
+      # The symbol cache the scan adds to, from the cache branch (scripts/symbol-cache.py)
+      - name: Get the symbol cache
+        shell: powershell
+        run: |
+          python scripts\symbol-cache.py get --branch $env:GITHUB_REF_NAME
+          if ($LASTEXITCODE -ne 0) { Write-Error "symbol-cache.py failed with exit code $LASTEXITCODE"; exit 1 }
 
       - name: Get Windows version and build info
         id: windows-info
@@ -139,6 +146,9 @@ jobs:
         run: |
           python scripts\update-data.py --summary "$env:BUILD_FOLDER\summary.json" --symbols "$env:BUILD_FOLDER\symbol-features.json" --super-god-mode "$env:BUILD_FOLDER\super-god-mode" --trace "$env:BUILD_FOLDER\trace"
           if ($LASTEXITCODE -ne 0) { Write-Error "update-data.py failed with exit code $LASTEXITCODE"; exit 1 }
+          # The symbol cache to the cache branch before the data, whose symbol catch-up needs what the scan read
+          python scripts\symbol-cache.py put --branch $env:GITHUB_REF_NAME --forget --message "Symbol cache of $env:GITHUB_REF_NAME after the scan of ${{ steps.windows-info.outputs.full_build }}-${{ steps.windows-info.outputs.architecture }}"
+          if ($LASTEXITCODE -ne 0) { Write-Error "symbol-cache.py failed with exit code $LASTEXITCODE"; exit 1 }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
