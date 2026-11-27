@@ -219,10 +219,14 @@ function fileGroup(path) {
 // Folders of apps that update themselves (Edge, Copilot, the Store's apps): what they hold depends on when the build's VM ran, not on the build
 const SELF_UPDATING = ['program files (x86)\\microsoft\\edge', 'program files (x86)\\microsoft\\copilot\\', 'program files (x86)\\microsoft\\temp\\', 'program files\\windowsapps\\'];
 const selfUpdating = (key) => SELF_UPDATING.some((s) => key.startsWith(s));
-// Windows\SystemApps\Shared\<name>\<hash>\: copies of the system apps' files, each the same file as one in an app's own folder, in a folder
-// named with a hash that changes when the file does. Compared, a changed file would be listed as removed and added again, so the copies are
-// left out: the file is compared at the app's own path.
-const sharedCopy = (key) => /^windows\\systemapps\\shared\\[^\\]+\\[0-9a-f]{64}\\/.test(key);
+// Windows\SystemApps\Shared\<name>\<hash>\: copies of the system apps' files, in folders named with a hash that changes when the file does.
+// Compared by path, a changed file there would be listed as removed and added again, so a copy is left out where the same build has the
+// same file (the same hash) at another path, where it's compared. sharedCopies(): that test for one build's [key, hash] pairs.
+const sharedPath = (key) => /^windows\\systemapps\\shared\\[^\\]+\\[0-9a-f]{64}\\/.test(key);
+function sharedCopies(files) {
+  const elsewhere = new Set(files.filter(([key]) => !sharedPath(key)).map(([, hash]) => hash));
+  return (key, hash) => sharedPath(key) && elsewhere.has(hash);
+}
 
 // The compare view's resource sections. Adds nothing once isCurrent() says a newer render has started.
 async function renderResourcesCompare(out, a, b, q, isCurrent) {
@@ -252,14 +256,15 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
   // The files read in either build, and the changed ones
   const files = (ix) => { const m = new Map(); for (const [p, h] of Object.entries(ix.files)) setByFileKey(m, p, { path: p, hash: h }); return m; };
   const fa = files(ia), fb = files(ib);
+  const copyA = sharedCopies([...fa].map(([k, f]) => [k, f.hash])), copyB = sharedCopies([...fb].map(([k, f]) => [k, f.hash]));
   const changes = [];
   for (const [k, n] of fb) {
-    if (sharedCopy(k)) continue;
+    if (copyB(k, n.hash)) continue;
     const o = fa.get(k);
     if (!o) changes.push({ path: n.path, change: 'added', old: null, new: ib.entries[n.hash] });
     else if (o.hash !== n.hash) changes.push({ path: n.path, change: 'changed', old: ia.entries[o.hash], new: ib.entries[n.hash] });
   }
-  for (const [k, o] of fa) if (!fb.has(k) && !sharedCopy(k)) changes.push({ path: o.path, change: 'removed', old: ia.entries[o.hash], new: null });
+  for (const [k, o] of fa) if (!fb.has(k) && !copyA(k, o.hash)) changes.push({ path: o.path, change: 'removed', old: ia.entries[o.hash], new: null });
   const partOf = (entry, part) => (entry && entry.d && entry.d[part]) || null;
   const partChanged = (c, part) => partOf(c.old, part) !== partOf(c.new, part);
   const loadBoth = (c, part) => Promise.all([partOf(c.old, part), partOf(c.new, part)].map((h) => (h ? loadPart(h) : null)));
@@ -510,15 +515,16 @@ async function renderResourcesCompare(out, a, b, q, isCurrent) {
     const [la, lb] = await Promise.all([loadFileList(a.key), loadFileList(b.key)]);
     if (!isCurrent()) return;
     const rows = [];
-    for (const [k, f] of lb) if (!la.has(k) && !selfUpdating(k) && !sharedCopy(k)) rows.push({ change: 'added', path: f.path, size: f.size });
-    for (const [k, f] of la) if (!lb.has(k) && !selfUpdating(k) && !sharedCopy(k)) rows.push({ change: 'removed', path: f.path, size: f.size });
+    const copyA = sharedCopies([...la].map(([k, f]) => [k, f.hash])), copyB = sharedCopies([...lb].map(([k, f]) => [k, f.hash]));
+    for (const [k, f] of lb) if (!la.has(k) && !selfUpdating(k) && !copyB(k, f.hash)) rows.push({ change: 'added', path: f.path, size: f.size });
+    for (const [k, f] of la) if (!lb.has(k) && !selfUpdating(k) && !copyA(k, f.hash)) rows.push({ change: 'removed', path: f.path, size: f.size });
     let changed = 0;
-    for (const [k, f] of lb) if (la.has(k) && la.get(k).hash !== f.hash && !selfUpdating(k) && !sharedCopy(k)) changed++;
+    for (const [k, f] of lb) if (la.has(k) && la.get(k).hash !== f.hash && !selfUpdating(k) && !copyB(k, f.hash)) changed++;
     const shown = rows.filter((r) => matchesQ(r.path));
     shown.forEach((r, i) => { r.id = i; });
     allSec.querySelector('.count').innerHTML = `<span class="added">${fmt(shown.filter((r) => r.change === 'added').length)} added</span>, ` +
       `<span class="removed">${fmt(shown.filter((r) => r.change === 'removed').length)} removed</span> (and ${fmt(changed)} changed)`;
-    allSec.insertAdjacentHTML('beforeend', '<p class="muted">Not counted: Edge, Copilot and the Store\'s apps (Program Files\\WindowsApps), which update themselves, so what they have depends on when the build was scanned; and the copies of the system apps\' files in Windows\\SystemApps\\Shared, whose folders are named with a hash that changes when the file does (the same files are compared at the apps\' own paths).</p>');
+    allSec.insertAdjacentHTML('beforeend', '<p class="muted">Not counted: Edge, Copilot and the Store\'s apps (Program Files\\WindowsApps), which update themselves, so what they have depends on when the build was scanned; and the copies of the system apps\' files in Windows\\SystemApps\\Shared, whose folders are named with a hash that changes when the file does, where the build has the same file at another path.</p>');
     renderTable(allSec, shown, [changeColumn,
       { title: 'Path', value: (r) => r.path, html: (r) => `<span class="res-path">${esc(r.path)}</span>`, cls: 'sgm' },
       { title: 'Size', value: (r) => (r.size === '' ? null : Number(r.size)), html: (r) => (r.size === '' ? '' : fmt(r.size)), cls: 'mods' }]);
