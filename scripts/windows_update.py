@@ -18,6 +18,8 @@
 #   python scripts/windows_update.py links --channel Experimental --os-build 26300.9711       # its packages, with their download links
 #   python scripts/windows_update.py download --channel Experimental --os-build 26300.9711 --out <folder>   # downloads the packages
 #   python scripts/windows_update.py image --channel Experimental --out <folder>              # and a new installation's files and apps (Windows only)
+#     --no-packages                             image: without the packages, for a VM that's brought to another build (a released 26H1 build's,
+#                                               whose cumulative update comes from the Update Catalog)
 #
 # The download links last from 10 minutes (small files) to several hours (the cumulative update), so they're asked for right before
 # the downloads. They're plain HTTP, as Windows Update's are; each file is checked against the SHA-256 in the update's metadata, which
@@ -534,6 +536,7 @@ def main():
     parser.add_argument('--expected-build', help='An error unless Windows Update offers this build')
     parser.add_argument('--or-newer-revision', action='store_true',
                         help='With --expected-build: also take a newer revision of that build, which Windows Update can offer before the release notes list it')
+    parser.add_argument('--no-packages', action='store_true', help="image: only a new installation's files and apps, not the packages that bring it to the build")
     parser.add_argument('--out', help='download, image: the folder the files go in')
     parser.add_argument('--json-out', help='Also write the JSON to this file')
     args = parser.parse_args()
@@ -562,7 +565,7 @@ def main():
     result = {k: update[k] for k in ('channel', 'osBuild', 'title', 'build', 'kb', 'updateId', 'revision')}
     result['fileCount'] = len(update['files'])
     if args.action in ('links', 'download', 'image'):
-        picked = packages(client, update)
+        picked = [] if args.action == 'image' and args.no_packages else packages(client, update)
         for p in picked:
             log(f"  {p['role']}: {p['name']} ({p['size']:,} bytes)")
         if args.action == 'links':

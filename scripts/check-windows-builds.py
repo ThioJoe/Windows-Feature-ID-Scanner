@@ -52,8 +52,9 @@ FLIGHT_HUB_URL = 'https://learn.microsoft.com/en-us/windows-insider/flight-hub/'
 USER_AGENT = 'Windows-Feature-ID-Scanner'
 
 # The versions scan-in-vm.ps1 can build a VM of: those that the Media Creation Tool's catalogs have an image for (26H2, and 24H2,
-# which 25H2 starts from). 26H1 is a separate branch for new devices, with no image there.
-VM_VERSIONS = ('26H2', '25H2', '24H2')
+# which 25H2 starts from), and 26H1, a separate Windows core for new devices that the catalogs have no image of, whose image comes
+# from the build Windows Update gives a device in Release Preview 26H1.
+VM_VERSIONS = ('26H2', '26H1', '25H2', '24H2')
 ACTIVE_DAYS = 183        # A version whose newest update is older than this isn't serviced any more, and isn't listed
 LISTED = 6               # Newest builds listed per Insider channel in --releases (and shown per version on the site, which gets them all)
 MAX_NEW = 3              # Most builds of one version scanned in one run
