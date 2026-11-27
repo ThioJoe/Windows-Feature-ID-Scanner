@@ -243,7 +243,7 @@ class BuildPicker extends HTMLElement {
       o.classList.toggle('taken', v === this.taken);
       if (this.blocked(v)) {
         o.setAttribute('aria-disabled', 'true');
-        o.dataset.tip = v === this.taken ? this.takenNote : this.rangeNote;
+        o.dataset.tip = v === this.taken ? this.takenNote : typeof this.rangeNote === 'function' ? this.rangeNote(v) : this.rangeNote;
       } else {
         o.removeAttribute('aria-disabled');
         delete o.dataset.tip;
@@ -252,12 +252,13 @@ class BuildPicker extends HTMLElement {
   }
 
   // The values the list lets be picked unless "Allow any build" is checked: those keep() is true for, and the one picked (null: all of
-  // them); the others are greyed out, with the note, and the line above the checkbox says which can be picked (text). The compare
-  // pickers allow the builds with a build number no higher or no lower than the other's.
-  setRange(keep, note, text) {
+  // them); the others are greyed out, with the note (or note(value)), and the line above the checkbox says which can be picked (text),
+  // with how they're told apart when hovered (tip). The compare pickers allow the builds no newer or no older than the other's.
+  setRange(keep, note, text, tip) {
     this.keep = keep;
     this.rangeNote = note;
     this.rangeText = text;
+    this.rangeTip = tip;
     this.markRange();
   }
 
@@ -270,7 +271,10 @@ class BuildPicker extends HTMLElement {
     const box = this.list.querySelector('.picker-all input');
     if (box) box.checked = showAllBuilds;
     const line = this.list.querySelector('.picker-range-text');
-    if (line) line.textContent = showAllBuilds || !this.keep ? 'Showing all builds' : this.rangeText || '';
+    if (line) {
+      line.textContent = showAllBuilds || !this.keep ? 'Showing all builds' : this.rangeText || '';
+      line.title = showAllBuilds || !this.keep ? '' : this.rangeTip || '';
+    }
   }
 
   option(value) {
@@ -453,13 +457,15 @@ function latestBuild(arch) {
 }
 
 // The builds by key, each build's place in the order builds came out (its release date, then its build number), which is the order
-// first-seen.json counts them in (update-data.py), the first build of each Insider channel (of an architecture) in that order, and the
-// builds that came out on each architecture's first tracked day
-let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null;
+// first-seen.json counts them in (update-data.py), the first build of each Insider channel (of an architecture) in that order, the
+// builds that came out on each architecture's first tracked day, and the date each Insider build's channel's next build came out
+let buildsByKey = null, releaseRank = null, channelFirst = null, earliestBuilds = null, insiderUntil = null;
+// A build's release date, or the day it was scanned where that's not known
+const releaseDate = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
 function buildOrder() {
   if (!buildsByKey) {
     buildsByKey = new Map(index.builds.map((b) => [b.key, b]));
-    const date = (b) => (b.release && b.release.date) || String(b.scannedAt || '').slice(0, 10) || '9999-12-31';
+    const date = releaseDate;
     const ordered = [...index.builds].sort((x, y) => (date(x) < date(y) ? -1 : date(x) > date(y) ? 1 : compareVersions(x, y)));
     releaseRank = new Map(ordered.map((b, i) => [b.key, i]));
     const firsts = new Map();
@@ -474,7 +480,25 @@ function buildOrder() {
       if (!earliest) earliestBuilds.set(b.architecture, [b.key]);
       else if (date(buildsByKey.get(earliest[0])) === date(b)) earliest.push(b.key);
     }
+    // (None for a channel's newest build.) From the list of Insider releases, which has the builds that weren't scanned, and the scanned builds.
+    insiderUntil = new Map();
+    const channelDates = new Map(((releases && releases.insider) || []).map((c) => [c.channel, (c.releases || []).map((r) => r.date)]));
+    for (const b of index.builds) {
+      if (!b.insiderChannel) continue;
+      const dates = [...(channelDates.get(b.insiderChannel) || []), ...index.builds.filter((x) => x.insiderChannel === b.insiderChannel).map(date)];
+      const next = dates.filter((d) => d && d > date(b)).sort()[0];
+      if (next) insiderUntil.set(b.key, next);
+    }
   }
+}
+
+// Whether build x is older than build y, for the compare pickers. Released builds go by build number. An Insider build, whose number is
+// higher than any released build's, goes by release date: it counts as the same age as what came out while it was its channel's newest
+// build, from its release until the channel's next build, as newer than what came out before, and as older than what came out after.
+function olderThan(x, y) {
+  buildOrder();
+  if (!x.insiderChannel && !y.insiderChannel) return compareVersions(x, y) < 0;
+  return x.insiderChannel ? (insiderUntil.get(x.key) || '9999-12-31') <= releaseDate(y) : releaseDate(x) < releaseDate(y);
 }
 
 // Whether a build came out on its architecture's first tracked day, so that every feature it has counts as first seen in it by default
@@ -1215,14 +1239,21 @@ async function renderCompare() {
   // Each picker greys out the build the other one has, which it doesn't let be picked too
   $('cmp-old').setTaken(newKey, "Already selected as the new build; a build can't be compared with itself");
   $('cmp-new').setTaken(oldKey, "Already selected as the old build; a build can't be compared with itself");
-  // Unless "Allow any build" is checked, each also greys out the builds with a higher build number than the new build (the old one) or a
-  // lower one than the old build (the new one). Insider builds have higher numbers than the released ones.
+  // Unless "Allow any build" is checked, each also greys out the builds newer than the new build (the old one) or older than the old build
+  // (the new one), as olderThan() tells them apart: released builds by build number, Insider builds by release date.
   buildOrder();
   const known = buildsByKey.has(oldKey) && buildsByKey.has(newKey);
-  $('cmp-old').setRange(known ? (v) => compareVersions(buildsByKey.get(v), buildsByKey.get(newKey)) <= 0 : null,
-    'A higher build number than the new build (check "Allow any build" below to pick it)', known ? `Showing builds older than ${buildsByKey.get(newKey).build}` : '');
-  $('cmp-new').setRange(known ? (v) => compareVersions(buildsByKey.get(v), buildsByKey.get(oldKey)) >= 0 : null,
-    'A lower build number than the old build (check "Allow any build" below to pick it)', known ? `Showing builds newer than ${buildsByKey.get(oldKey).build}` : '');
+  const nb = buildsByKey.get(newKey), ob = buildsByKey.get(oldKey), allow = ' (check "Allow any build" below to pick it)';
+  const rule = 'Released builds are told apart by build number, and Insider builds by release date: an Insider build counts as the same age as ' +
+    "what came out while it was its channel's newest build, as newer than what came out before, and as older than what came out after.";
+  $('cmp-old').setRange(known ? (v) => !olderThan(nb, buildsByKey.get(v)) : null,
+    (v) => (!nb.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A higher build number than the new build'
+      : nb.insiderChannel ? "Released once the new build's channel had a newer build" : 'Released after the new build') + allow,
+    known ? `Showing builds older than ${nb.build}` : '', rule);
+  $('cmp-new').setRange(known ? (v) => !olderThan(buildsByKey.get(v), ob) : null,
+    (v) => (!ob.insiderChannel && !buildsByKey.get(v).insiderChannel ? 'A lower build number than the old build'
+      : buildsByKey.get(v).insiderChannel ? 'Its channel had a newer build by the time the old build came out' : 'Released before the old build') + allow,
+    known ? `Showing builds newer than ${ob.build}` : '', rule);
   if (!oldKey || !newKey) return;
   const render = ++compareRender;  // A slower earlier render must not add to a newer one
   $('cmp-status').textContent = 'Loading…';
