@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="OpenSSH-based secure shell (SSH) client, for secure key management and access to remote machines." displayName="OpenSSH Client" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved" supportInformation="http://support.microsoft.com/?kbid=777777">
+  <assemblyIdentity name="OpenSSH-Client-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB777778" releaseType="OnDemand Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:FodInformation Id="433" />
+    </mum2:customInformation>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-NanoServer-Edition-Core-Package" version="10.0.0.0" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Client-Features-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <parent buildCompare="GE" revisionCompare="GE">
+      <assemblyIdentity name="Microsoft-Windows-Server-Features-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <localizedStrings>
+      <string language="ar-SA" displayName="عميل OpenSSH" description="عميل shell (SSH) الآمن المستند إلى OpenSSH، لإدارة المفاتيح الآمنة والوصول إلى الأجهزة البعيدة." />
+      <string language="bg-BG" displayName="OpenSSH клиент" description="Secure shell (SSH) клиент, базиран на OpenSSH, за защитено управление на ключове и достъп до отдалечени машини." />
+      <string language="cs-CZ" displayName="Klient OpenSSH" description="Klient OpenSSH (SSH) pro zabezpečenou správu klíčů a přístup ke vzdáleným počítačům" />
+      <string language="da-DK" displayName="OpenSSH-klient" description="OpenSSH-baseret SSH-klient (Secure SHell) for sikker nøgleadministration og adgang til eksterne maskiner." />
+      <string language="de-DE" displayName="OpenSSH-Client" description="OpenSSH-basierter Secure Shell (SSH)-Client für die sichere Schlüsselverwaltung und den Zugriff auf Remote-Computer." />
+      <string language="el-GR" displayName="Υπολογιστής-πελάτης OpenSSH" description="Υπολογιστής-πελάτης secure shell (SSH) που βασίζεται σε OpenSSH, για ασφαλή διαχείριση κλειδιών και πρόσβαση σε απομακρυσμένους υπολογιστές." />
+      <string language="en-GB" displayName="OpenSSH Client" description="OpenSSH-based secure shell (SSH) client, for secure key management and access to remote machines." />
+      <string language="en-US" displayName="OpenSSH Client" description="OpenSSH-based secure shell (SSH) client, for secure key management and access to remote machines." />
+      <string language="es-ES" displayName="Cliente OpenSSH" description="Cliente Secure Shell (SSH) basado en OpenSSH, para la administración segura de claves y el acceso a equipos remotos." />
+      <string language="es-MX" displayName="Cliente OpenSSH" description="Cliente Secure Shell (SSH) basado en OpenSSH, para la administración segura de claves y el acceso a equipos remotos." />
+      <string language="et-EE" displayName="OpenSSH klient" description="OpenSSH-põhine turvalise kesta (SSH) klientrakendus turvaliseks võtmehalduseks ja kaugarvutitele juurdepääsuks." />
+      <string language="fi-FI" displayName="OpenSSH-asiakas" description="OpenSSH-pohjainen secure shell (SSH) -asiakas turvalliseen avainten hallintaan ja etäkoneiden käyttöön." />
+      <string language="fr-CA" displayName="Client OpenSSH" description="Client SSH (Secure Shell) basé sur OpenSSH, pour la gestion de clés sécurisée et l’accès aux ordinateurs distants." />
+      <string language="fr-FR" displayName="Client OpenSSH" description="Client SSH (Secure Shell) basé sur OpenSSH, pour la gestion de clés sécurisée et l’accès aux ordinateurs distants." />
+      <string language="he-IL" displayName="לקוח OpenSSH" description="לקוח של מעטפת מאובטחת שמבוססת על OpenSSH ‏(SSH), עבור ניהול מפתחות מאובטח וגישה למחשבים מרוחקים." />
+      <string language="hr-HR" displayName="Klijent za OpenSSH" description="OpenSSH klijent sigurne ljuske; za sigurno upravljanje ključevima i pristup udaljenim računalima." />
+      <string language="hu-HU" displayName="OpenSSH ügyfél" description="OpenSSH-alapú biztonságos felület (SSH) ügyfele a biztonságos kulcskezeléshez és távoli gépek eléréséhez." />
+      <string language="it-IT" displayName="Client OpenSSH" description="Client Secure Shell (SSH) basato su OpenSSH per la gestione sicura delle chiavi e l'accesso ai computer remoti." />
+      <string language="ja-JP" displayName="OpenSSH クライアント" description="OpenSSH ベースのセキュア シェル (SSH) クライアントで、セキュアなキー管理とリモート マシンへのアクセスを可能にします。" />
+      <string language="ko-KR" displayName="OpenSSH 클라이언트" description="안전한 키 관리 및 원격 컴퓨터로부터의 액세스를 위한 OpenSSH 기반 Secure Shell(SSH) 클라이언트입니다." />
+      <string language="lt-LT" displayName="„OpenSSH“ klientas" description="„OpenSSH“ pagrįsto saugaus apvalkalo (SSH) klientas, skirtas saugiam raktų valdymui ir prieigai prie nuotolinių kompiuterių." />
+      <string language="lv-LV" displayName="OpenSSH klients" description="OpenSSH Secure Shell (SSH) klients drošai atslēgu pārvaldībai un piekļuvei attāliem datoriem." />
+      <string language="nb-NO" displayName="OpenSSH-klient" description="Klient med OpenSSH-basert sikkert grensesnitt (SSH) for sikker nøkkelbehandling og tilgang til eksterne maskiner." />
+      <string language="nl-NL" displayName="OpenSSH-client" description="SSH-client (Secure Shell) op basis van OpenSSH, voor veilig sleutelbeheer en toegang tot externe computers." />
+      <string language="pl-PL" displayName="Klient OpenSSH" description="Oparty na pakiecie OpenSSH klient bezpiecznej powłoki (SSH) umożliwiający bezpieczne zarządzanie kluczami i uzyskiwanie dostępu do komputerów zdalnych." />
+      <string language="qps-plocm" displayName="‏‏أبع[OpenSSH Client]לף" description="‏‏أبع[OpenSSH-based secure shell (SSH) client, for secure key management and access to remote machines.]לף" />
+      <string language="qps-ploc" displayName="[AgV9z][ÒрєπЅЅΉ Ćļΐěⁿŧ !!!]" description="[kNySK][ŌρёŉŜŚΉ-ъäѕęδ śē¢ûяē şĥéℓł (ŚŚĤ) čĺΐéлţ, ƒòŕ şêčµґè κеý măņāğèмейť åπδ ăсćĕşš ťō яєmôŧè мâčĥιпеš. !!! !!! !!! !!! !!! !!! !!! ]" />
+      <string language="pt-BR" displayName="Cliente OpenSSH" description="Cliente Secure Shell (SSH) baseado no OpenSSH, para o gerenciamento de chaves seguras e acesso aos computadores remotos." />
+      <string language="pt-PT" displayName="Cliente OpenSSH" description="Cliente de shell seguro baseado em OpenSSH (SSH), para gestão de chaves seguras e acesso a computadores remotos." />
+      <string language="ro-RO" displayName="Client OpenSSH" description="Client Secure Shell (SSH) bazat pe OpenSSH, pentru gestionarea sigură a cheilor și accesul la mașinile de la distanță." />
+      <string language="ru-RU" displayName="Клиент OpenSSH" description="Клиент SSH на основе OpenSSH для безопасного управления ключами и доступом к удаленным компьютерам." />
+      <string language="sk-SK" displayName="Klient OpenSSH" description="Klient SSH (Secure Shell) založený na OpenSSH na zabezpečenú správu kľúčov a prístup k vzdialeným počítačom." />
+      <string language="sl-SI" displayName="Odjemalec OpenSSH" description="Odjemalec varne lupine (SSH) na osnovi lupine OpenSSH za varno upravljanje ključev in dostop do oddaljenih računalnikov." />
+      <string language="sr-Latn-RS" displayName="OpenSSH klijent" description="Klijent zasnovan na bezbednoj OpenSSH ljusci (SSH) za bezbedno upravljanje ključevima i pristup udaljenim računarima." />
+      <string language="sv-SE" displayName="OpenSSH-klient" description="OpenSSH-baserad Secure Shell-klient (SSH) för säker nyckelhantering och anslutning till fjärrdatorer." />
+      <string language="th-TH" displayName="ไคลเอ็นต์ OpenSSH" description="ไคลเอ็นต์ SSH ที่ปลอดภัยและทำงานบน OpenSSH สำหรับการจัดการคีย์ความปลอดภัยและการเข้าถึงเครื่องระยะไกล" />
+      <string language="tr-TR" displayName="OpenSSH İstemcisi" description="Güvenli anahtar yönetimi ve uzak makinelere erişim için OpenSSH tabanlı Secure Shell (SSH) istemcisi." />
+      <string language="uk-UA" displayName="Клієнт OpenSSH" description="Клієнт захищеної оболонки на основі OpenSSH (SSH) для безпечного керування ключами та отримання доступу до віддалених комп’ютерів." />
+      <string language="zh-CN" displayName="OpenSSH 客户端" description="基于 OpenSSH 的安全外壳(SSH)客户端，可用于安全密钥管理和远程计算机访问。" />
+      <string language="zh-TW" displayName="OpenSSH 用戶端" description="OpenSSH 型安全殼層 (SSH) 用戶端，用以提供安全的金鑰管理以及安全存取遠端電腦。" />
+    </localizedStrings>
+    <declareCapability>
+      <capability>
+        <capabilityIdentity name="OpenSSH.Client" version="1.0" />
+      </capability>
+    </declareCapability>
+    <update name="71465b25776f40e3b5566d0bc345e5f0">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-LibreSSL-Package" version="10.0.28000.3231" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="1ebb607184689da0ee32c42ead855e5c">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-OpenSSH-ClientOnly-Package" version="10.0.28000.3231" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="34ef48c4ff06db6983bd3b07e4284e09">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-OpenSSH-Common-Package" version="10.0.28000.3231" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

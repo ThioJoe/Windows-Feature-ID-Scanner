@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity name="Microsoft-Windows-Client-Features-Package01" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-Client-Features-Package01" releaseType="Feature Pack">
+    <update name="48ed34841e4c0adec865476809f24f2c">
+      <component>
+        <assemblyIdentity name="microsoft-windows-client-features-deployment010" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </component>
+    </update>
+    <update name="3A6D151445836CBDA616C492E09FEBBA2F3E99EA367C8CB9FD90C9519FC4A348" restart="required">
+      <driver inf="escl.inf" ranking="normal">
+        <assemblyIdentity name="dual_escl.inf" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" type="dualModeDriver" />
+      </driver>
+    </update>
+  </package>
+</assembly>

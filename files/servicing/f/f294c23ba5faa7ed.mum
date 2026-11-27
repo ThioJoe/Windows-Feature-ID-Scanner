@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables support for using cross-architecture (WoW) support for editions using win32kfull.sys. It does not include the WoW counterparts of individual features and those must be added separately." displayName="WOW and cross-architecture support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-WOWSupport-WOW64-Feature" version="10.0.28000.3501" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-WOWSupport-WOW64-en-US" releaseType="Language Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+        <mum2:feature name="Microsoft-Win2-WOWSupport-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Win3-WOWSupport-WOW64-Feature" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="dd1537d710df4c607ebdc00e5bb4f240">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MinWin-WOW-WOW64-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="ecdacd6342191b700b7207d35bb37e7f">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="402851aa463d3b118ba8115af4039ac8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-Full-WOW64-Package" version="10.0.28000.1" processorArchitecture="amd64" language="en-US" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

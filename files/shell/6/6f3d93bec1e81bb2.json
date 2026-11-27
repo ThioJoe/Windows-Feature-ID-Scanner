@@ -1,0 +1,64 @@
+{
+  "GETSTARTED.assistedSetup": {
+    "mode": "LinearFlow",
+    "start": "LandingPage",
+    "reconnectHandlerId": "NetworkError",
+    "LandingPage": {
+      "nodeId": "LandingPage",
+      "url": "https://sdx.microsoft.com/getstarted/wiplanding/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/wiplanding/index.html",
+      "internetRequired": true,
+      "backwardButtonEnabled": false,
+      "defaultId": "PopularApps",
+      "measureId": 40424633
+    },
+    "PopularApps": {
+      "nodeId": "PopularApps",
+      "url": "https://sdx.microsoft.com/getstarted/popularapps/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/popularapps/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "Pinning",
+      "measureId": 63365472
+    },
+    "Pinning": {
+      "nodeId": "Pinning",
+      "url": "https://sdx.microsoft.com/getstarted/pinning/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/pinning/index.html",
+      "internetRequired": true,
+      "visibility": false,
+      "defaultId": "Personalize",
+      "measureId": 63365473
+    },
+    "Personalize": {
+      "nodeId": "Personalize",
+      "url": "https://sdx.microsoft.com/getstarted/personalize/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/personalize/index.html",
+      "internetRequired": true,
+      "defaultId": "WindowsUpdates",
+      "measureId": 63365475
+    },
+    "WindowsUpdates": {
+      "nodeId": "WindowsUpdates",
+      "url": "https://sdx.microsoft.com/getstarted/windowsupdates/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/windowsupdates/index.html",
+      "internetRequired": true,
+      "defaultId": "OutroPersonalize",
+      "measureId": 63365474
+    },
+    "OutroPersonalize": {
+      "nodeId": "OutroPersonalize",
+      "url": "https://sdx.microsoft.com/getstarted/outropersonalize/index.html",
+      "urlint": "https://sdx.microsoft-int.com/getstarted/outropersonalize/index.html",
+      "internetRequired": true,
+      "forwardButtonEnabled": false,
+      "measureId": 50780284
+    },
+    "NetworkError": {
+      "nodeId": "NetworkError",
+      "localXaml": "NetworkError",
+      "excludeFromBackstack": true,
+      "measureId": 40426665
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MediaPlayer-Payload-WOW64-Package" version="10.0.28000.3501" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Windows-MediaPlayer-Payload-WOW64" releaseType="Feature Pack">
+    <parent disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-MediaPlayer-Payload-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update name="a00c7b67aa53d97bb0f5af1f2a7ae49b">
+      <applicable disposition="detect">
+        <detectUpdate>
+          <parent name="WindowsMediaPlayer" />
+        </detectUpdate>
+      </applicable>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MediaPlayer-Opt-WOW64-Package" version="10.0.28000.3501" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="11cbe0957e6c98e6ffe0d6f27bd74a2a">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WMPNetworkSharingService-WOW64-Package" version="10.0.28000.3365" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

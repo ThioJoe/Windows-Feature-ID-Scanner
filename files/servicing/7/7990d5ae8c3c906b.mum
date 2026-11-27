@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="" displayName="default" company="Microsoft Corporation" copyright="Microsoft Corporation" supportInformation="https://support.microsoft.com/help/5132059" creationTimeStamp="2026-11-09T07:01:00Z" lastUpdateTimeStamp="2026-11-09T07:01:00Z">
+  <assemblyIdentity name="Microsoft-Windows-WinOcr-FOD-Package-Wrapper" version="10.0.28000.3501" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="KB5132059" releaseType="Security Update" restart="possible">
+    <parent revisionCompare="GE" integrate="standalone" disposition="detect">
+      <assemblyIdentity name="Microsoft-Windows-WinOcr-FOD-Package" version="10.0.28000.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <installerAssembly name="Microsoft-Windows-ServicingStack" version="6.0.0.0" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" publicKeyToken="31bf3856ad364e35" />
+    <update name="Microsoft-Windows-WinOcr-FOD-Package_neutral_PACKAGE">
+      <package integrate="liberate">
+        <assemblyIdentity name="Microsoft-Windows-WinOcr-FOD-Package" version="10.0.28000.3501" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

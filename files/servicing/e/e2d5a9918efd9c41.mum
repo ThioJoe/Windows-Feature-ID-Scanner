@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature includes support for Windows Imaging (WIM) format on Win2 or higher" displayName="Windows Imaging (WIM) Support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win2-WIM-Feature" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win2-WIM" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win0-BootFromWim-Feature" />
+        <mum2:feature name="Microsoft-Win2-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="ae6eabbe984d7eef9be77716cbad0469">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-WIM-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SecureStartup-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="BitLocker" releaseType="Feature Pack">
+    <parent integrate="delegate">
+      <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </parent>
+    <update description="Provides full volume disk encryption for both boot volumes and data volumes." displayName="BitLocker Drive Encryption" name="BitLocker">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:Version Major="8" Minor="0" />
+        <ServerComponent Description="BitLocker Drive Encryption helps to protect data on lost, stolen, or inappropriately decommissioned computers by encrypting the entire volume and checking the integrity of early boot components. Data is only decrypted if those components are successfully verified and the encrypted drive is located in the original computer. Integrity checking requires a compatible Trusted Platform Module (TPM)." DisplayName="BitLocker Drive Encryption" Id="61" Type="Feature" UniqueName="BitLocker">
+          <NonAncestorDependencies>
+            <ServerComponent UniqueName="EnhancedStorage" />
+          </NonAncestorDependencies>
+          <Deploys>
+            <Update Name="BitLocker" />
+          </Deploys>
+        </ServerComponent>
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-SecureStartup-Subsystem-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </package>
+    </update>
+    <update description="Provides full volume disk encryption for both boot volumes and data volumes." displayName="BitLocker Drive Encryption" name="BitLocker-WOW64">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-SecureStartup-Subsystem-WOW64-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+      </package>
+    </update>
+  </package>
+</assembly>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Runlevel-Win2-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Runlevel-Win2" releaseType="Feature Pack" targetPartition="mainos" binaryPartition="false">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:phoneInformation phoneRelease="Production" phoneOwner="Microsoft" phoneOwnerType="Microsoft" phoneComponent="Runlevel.Win2" phoneSubComponent="" phoneGroupingKey="" />
+      <mum2:applicablePartitions>
+        <mum2:partition name="mainos" />
+      </mum2:applicablePartitions>
+    </mum2:customInformation>
+    <update name="8362ca2bd5dd2c3d1b6bce046b24b792">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-merged-Package" version="10.0.28000.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="f3afd0c91246fcc27bf87440ac9e1397">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-KernelDebugging-NetworkAdapter-Legacy-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="1665df9a617c452ea615d82b45ad35ff">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-OneCore-Troubleshooting-Aggregators-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="0c26dfe6bd5d9a45b861804946488cce">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Win2-EnterpriseNetworking-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="78091ff0334d6b7babeb2a6fc5b190a2">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-ApiSetSchemaExtension-Runlevel-Win2-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="7c549b2eedda2c5b353bda769e4e84f3">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-CoreSystem-DriverSupport-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="aa045a3cd5d8b43805b8548641496602">
+      <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+        <mum2:noAutoMerge />
+      </mum2:customInformation>
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-Kernel-Package-HardwareAccelerators-Core-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="15fce2baa2bf33e3860b946b7dbaf8f9">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MCUpdate-UpdateDLLs-IntelAMD-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="c2e41db7e9e9ed2b451fdb0dfc5c2c7d">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-WindowsCore-HardwareAccelerators-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="37493fb9cdbfde8cb0ac383ff16d29db">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Runlevel-Win2-Minimal-Package" version="10.0.28000.3501" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>
