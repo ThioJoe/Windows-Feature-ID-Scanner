@@ -211,7 +211,7 @@ class BuildPicker extends HTMLElement {
         for (const it of g.items) {
           html += `<div class="picker-option" role="option" id="${this.id}-o${this.items.length}" data-value="${esc(it.value)}" ` +
             `data-text="${esc(it.text.toLowerCase())}" aria-selected="false"><span class="picker-main">${esc(it.text)}</span>` +
-            `${it.tag ? `<span class="picker-tag"${it.tagTitle ? ` title="${esc(it.tagTitle)}"` : ''}>${esc(it.tag)}</span>` : ''}` +
+            `${it.tag ? `<span class="picker-tag"${it.tagTitle ? ` title="${esc(it.tagTitle)}"` : ''}>${tagHtml(it.tag)}</span>` : ''}` +
             `${it.meta ? `<span class="picker-meta">${esc(it.meta)}</span>` : ''}</div>`;
           this.items.push(it);
         }
@@ -373,6 +373,11 @@ const UPDATE_TYPES = {
   OOB: "Out-of-band update, released when a fix can't wait for the next monthly update",
 };
 const updateTypeTitle = (type) => UPDATE_TYPES[String(type || '').split(' ').pop()] || '';
+// A build picker tag's HTML: an update's letters (2026-11-19 D) on a shade of their own, so they stand apart from the date
+const tagHtml = (tag) => {
+  const i = tag.lastIndexOf(' ');
+  return i > 0 && UPDATE_TYPES[tag.slice(i + 1)] ? `${esc(tag.slice(0, i))}<span class="picker-tag-type">${esc(tag.slice(i + 1))}</span>` : esc(tag);
+};
 const UPDATE_TYPES_LEGEND = '<b>B</b> monthly security update (second Tuesday) · <b>D</b> optional preview (fourth week) · <b>OOB</b> out-of-band';
 
 // A build's update (e.g. 2026-10 B), shown in the build picker with its release date instead of the month where that's known (2026-10-14 B):
