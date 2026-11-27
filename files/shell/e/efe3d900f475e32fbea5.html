@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+    <!-- This script inclusion will work in both VS and Razzle as long as adaptivecards.js 
+        is on the same relative path as AdaptiveCardRenderer.html-->
+    <script src="adaptivecards.js"></script>
+    <script language="javascript" type="text/javascript">
+        function ReplaceActionsWithLinks(card, linkUris) {
+            var actionElements = card.getElementsByClassName('ac-selectable');
+            if (actionElements !== undefined) {
+                for (var i = 0; (i < actionElements.length) && (i < linkUris.length); i++) {
+                    if (linkUris[i] !== undefined) {
+                        actionElements[i].outerHTML = "<a href=\"" + linkUris[i] + "\">" + actionElements[i].outerHTML + "</a>";
+                    }
+                }
+            }
+        }
+
+        function RenderHtmlAdaptiveCard(cardStr, hostConfigStr, launchUriString) {
+            var adaptiveCard = new AdaptiveCards.AdaptiveCard();
+            adaptiveCard.parse(JSON.parse(cardStr));
+            var renderedCard = adaptiveCard.render();
+            if (hostConfigStr != "") {
+                adaptiveCard.hostConfig = new AdaptiveCards.HostConfig(JSON.parse(hostConfigStr));
+            }
+            // the onExecuteAction is in javascript, doesn't get copied over with the html element
+            // adaptiveCard.onExecuteAction = function (action) { location.href = 'http:\\www.bing.com'; }
+            // Instead, wrapping the button in a link as such
+            //<a href="http://www.bing.com"><button>click here</button></a>;
+            var acActionButtons = renderedCard.getElementsByTagName("button");
+            var acActions = adaptiveCard._actionCollection.items;
+
+            for (var i = 0; i < acActionButtons.length; i++) {
+                if (acActions[i].url != undefined) {
+                    var renderedButton = acActionButtons[i];
+                    var buttonWithLink = document.createElement("a");
+                    buttonWithLink.innerHTML = renderedButton.outerHTML;
+                    buttonWithLink.href = acActions[i].url;
+                    renderedButton.parentNode.replaceChild(buttonWithLink, renderedButton);
+                }
+            }
+
+            // Replace global tap action with a link at the bottom (use attribution link)
+            var sourceLink = document.createElement("a");
+            sourceLink.href = launchUriString;
+            var lastElement = renderedCard.children[renderedCard.children.length - 1]; // assume this is the attribution section
+            sourceLink.innerHTML = lastElement.outerHTML;
+            renderedCard.replaceChild(sourceLink, lastElement);
+
+            var traverseCardForActionUris = function (cardItem, urls) {
+                if (cardItem.selectAction != null) {
+                    urls.push(cardItem.selectAction.url); // There can be undefined urls, that is OK, we will ignore them
+                }
+
+                // Iterate recursively through possible children (NOTE: this may not be an exhaustive iteration for
+                // all kinds of Adaptive Cards, but should suffice for what the server is currently providing)
+                if (cardItem._items != null) {
+                    traverseCardForActionUris(cardItem._items, urls);
+                }
+                else if (cardItem._columns != null) {
+                    traverseCardForActionUris(cardItem._columns, urls);
+                }
+                else if (cardItem instanceof Array) {
+                    cardItem.forEach(item => traverseCardForActionUris(item, urls));
+                }
+            }
+
+            var actionUris = [];
+            traverseCardForActionUris(adaptiveCard, actionUris);
+            if (actionUris.length > 0) {
+                ReplaceActionsWithLinks(renderedCard, actionUris);
+            }
+
+            //Remove the smaller images in the collage
+            var images = renderedCard.getElementsByClassName("ac-image");
+            if (images.length > 1) {
+                for (var i = images.length - 1; i > 0; i--) {
+                    images[i].parentNode.removeChild(images[i]);
+                }
+            }
+            return renderedCard.outerHTML;
+        }
+    </script>
+</BODY>
+</HTML>
