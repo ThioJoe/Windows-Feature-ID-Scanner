@@ -6374,7 +6374,7 @@
     {"id":61118088,"name":"BugFix61118088","modules":["mssrch.dll"],"declaredIn":["AppXDeploymentClient.dll","Windows.Globalization.dll","Windows.UI.Xaml.dll"],"default":"disabled","changeTime":"reboot"},
     {"id":61118533,"name":null,"symbolNames":["61118533"],"modules":["twinui.pcshell.dll"],"declaredIn":["AppXDeploymentClient.dll"],"default":"enabled","changeTime":"moduleReload","requires":[58989070,59765208],"trace":{"stages":["enabled"],"results":["on"],"processes":["SystemSettings.exe","explorer.exe"],"targets":["`ms-settings:fonts`","`ms-settings:speech`"]}},
     {"id":61120743,"name":"InputSkipWFVB","modules":["dwmcore.dll"],"declaredIn":["Windows.UI.Xaml.dll"],"default":"enabled","changeTime":"reboot","requires":[61161268]},
-    {"id":61121285,"name":null,"modules":[],"store":[{"priority":"Service (4)","state":"Disabled (1)","type":"Experiment (1)"}]},
+    {"id":61121285,"name":"IntelligentCarveout","modules":[],"store":[{"priority":"Service (4)","state":"Disabled (1)","type":"Experiment (1)"}],"nameSource":"earlierBuild"},
     {"id":61121506,"name":"Servicing_DMPushTaskRetry","modules":["DMPushRouterCore.dll","DeviceEnroller.exe","enterprisecsps.dll"],"default":"enabled","changeTime":"moduleReload","requires":[61161304]},
     {"id":61124766,"name":"StorSvcContextLock","modules":["StorageUsage.dll"],"changeTime":"reboot","requires":[61152849]},
     {"id":61124773,"name":"CAM_PasskeyEnterprisePolicies","modules":["CapabilityAccessManager.dll","SettingsHandlers_CapabilityAccess.dll"],"default":"enabled","changeTime":"moduleReload","requires":[58989177],"trace":{"stages":["enabled"],"results":["on"],"processes":["svchost.exe"]}},
