@@ -14,8 +14,11 @@ $file = @($found)[0].FileLocations | Where-Object { $_.FileName -eq 'products.ca
 Invoke-WebRequest $file.Url -OutFile "$Work\products.cab" -UseBasicParsing
 $digest = [Convert]::ToBase64String((New-Object Security.Cryptography.SHA256Managed).ComputeHash([IO.File]::ReadAllBytes("$Work\products.cab")))
 if ($digest -ne $file.Digest) { throw 'products.cab hash mismatch' }
-& expand.exe "$Work\products.cab" -F:products.xml $Work | Out-Null
-[xml]$cat = Get-Content "$Work\products.xml"
+# (As scan-in-vm.ps1 reads it: the file in the cab into a folder of its own, whatever its name there)
+$xmlDir = "$Work\products"
+New-Item -ItemType Directory -Force $xmlDir | Out-Null
+& expand.exe "$Work\products.cab" -F:products.xml $xmlDir | Out-Null
+[xml]$cat = Get-Content (Get-ChildItem $xmlDir -File | Select-Object -First 1).FullName
 $all = @($cat.MCT.Catalogs.Catalog.PublishedMedia.Files.File | Where-Object { $_.LanguageCode -eq 'en-us' })
 Log ("en-us images: " + (($all | ForEach-Object { "$($_.Architecture)/$($_.Edition)/$($_.FileName)" }) -join '; '))
 $pick = $all | Where-Object { $_.Architecture -eq 'ARM64' -and $_.Edition -eq 'Enterprise' } | Sort-Object FileName | Select-Object -Last 1
