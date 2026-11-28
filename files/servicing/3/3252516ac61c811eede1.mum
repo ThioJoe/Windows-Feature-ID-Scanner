@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" description="This feature enables support for using cross-architecture (WoW) support for editions using win32kfull.sys. It does not include the WoW counterparts of individual features and those must be added separately." displayName="WOW and cross-architecture support" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Win3-WOWSupport-WOW64-Feature" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+  <package identifier="Microsoft-Win3-WOWSupport-WOW64" releaseType="Feature Pack">
+    <mum2:customInformation xmlns:mum2="urn:schemas-microsoft-com:asm.v3">
+      <mum2:featureDependencies>
+        <mum2:feature name="Microsoft-Win3-Feature" />
+        <mum2:feature name="Microsoft-Win2-WOWSupport-Feature" />
+      </mum2:featureDependencies>
+    </mum2:customInformation>
+    <update name="131dfc9301aace6f46868d7f6b039395">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-MinWin-WOW-WOW64-Package" version="10.0.28000.3365" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="33d2621cb210ef5a668d452aa59f83b8">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-WOW64-Package" version="10.0.28000.3231" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+    <update name="d9d294039890986567881ecc4be860fd">
+      <package contained="false" integrate="hidden">
+        <assemblyIdentity name="Microsoft-Windows-WOWSupport-Full-WOW64-Package" version="10.0.28000.3231" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </package>
+    </update>
+  </package>
+</assembly>
